@@ -14,8 +14,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      },
-      "derivedName": "EthereumL1Messenger"
+      }
     },
     {
       "name": "EthereumL2Messenger",
@@ -28,8 +27,7 @@
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
         "resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD"
-      },
-      "derivedName": "EthereumL2Messenger"
+      }
     },
     {
       "name": "OptimismL1Messenger",
@@ -42,8 +40,7 @@
         "$immutable": true,
         "nativeMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      },
-      "derivedName": "OptimismL1Messenger"
+      }
     },
     {
       "name": "ArbitrumL1Messenger",
@@ -57,8 +54,7 @@
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      },
-      "derivedName": "ArbitrumL1Messenger"
+      }
     },
     {
       "name": "EthereumRequestManager",
@@ -123,8 +119,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      },
-      "derivedName": "Resolver"
+      }
     },
     {
       "name": "EthereumFillManager",

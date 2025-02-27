@@ -8,6 +8,7 @@ import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
 import { Events } from './Events'
 import { FetchFlatSources } from './FetchFlatSources'
+import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindL2 } from './FindL2'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
@@ -39,6 +40,7 @@ export function getSubcommands() {
     FetchFlatSources,
     Flatten,
     FlattenAndDiff,
+    FindCelestiaNamespace,
     GetTokenMinters,
     MatchFlat,
     OPConfigs,

@@ -61,8 +61,7 @@
         "getRemoteGateway": "0x273D59aed2d793167c162E64b9162154B07583C0",
         "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "ZKLINK": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
-      },
-      "derivedName": "ArbitrumL2Gateway"
+      }
     },
     {
       "name": "ArbitrumOwner",
@@ -143,8 +142,7 @@
         "l2Bridge": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
         "l2TokenBeacon": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "zkLink",

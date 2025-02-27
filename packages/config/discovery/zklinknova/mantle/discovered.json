@@ -83,8 +83,7 @@
         "l2Bridge": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "zkLink",
@@ -208,8 +207,7 @@
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "ZKLINK": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
-      },
-      "derivedName": "MantleL2Gateway"
+      }
     },
     {
       "name": "MantleProxyAdmin",

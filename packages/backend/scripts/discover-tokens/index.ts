@@ -1,12 +1,6 @@
 import { writeFileSync } from 'fs'
 import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
-import {
-  type ChainConfig,
-  ProjectService,
-  layer2s,
-  layer3s,
-  tokenList,
-} from '@l2beat/config'
+import { type ChainConfig, ProjectService, tokenList } from '@l2beat/config'
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter } from '@l2beat/shared-pure'
@@ -26,17 +20,20 @@ const MIN_MARKET_CAP = 10_000_000
 const MIN_MISSING_VALUE = 10_000
 
 async function main() {
+  const ps = new ProjectService()
+  const projects = await ps.getProjects({
+    select: ['tvlConfig'],
+  })
   const escrowsByChain = groupBy(
-    [...layer2s, ...layer3s]
+    projects
       .flatMap((p) =>
-        p.config.escrows.flatMap((e) => ({ ...e, projectId: p.id })),
+        p.tvlConfig.escrows.flatMap((e) => ({ ...e, projectId: p.id })),
       )
       .filter((e) => e.chain !== 'mantle' && e.chain !== 'nova'),
     'chain',
   )
   const chainsToSupport = Object.keys(escrowsByChain)
 
-  const ps = new ProjectService()
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )

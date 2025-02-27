@@ -39,8 +39,7 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 2
-      },
-      "derivedName": "Committee"
+      }
     },
     {
       "name": "GpsFactRegistryAdapter",

@@ -30,8 +30,7 @@
           "severity": "LOW",
           "description": "Tip that gets added to a gas reimbursement for processing the rollup."
         }
-      },
-      "derivedName": "AztecFeeDistributor"
+      }
     },
     {
       "name": "TurboVerifier",

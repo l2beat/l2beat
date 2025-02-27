@@ -32,8 +32,7 @@
         "defaultFeeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98"
-      },
-      "derivedName": "Factory"
+      }
     },
     {
       "name": "DAI Pool",
@@ -539,8 +538,7 @@
         ],
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     },
     {
       "name": "sUSD Pool",
@@ -767,8 +765,7 @@
         "mintFeeOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "protocolFeeOwner": "0x65bb797c2B9830d891D87288F029ed8dACc19705"
-      },
-      "derivedName": "Router"
+      }
     },
     {
       "name": "StarGateFeeLibrary7",

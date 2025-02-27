@@ -135,8 +135,7 @@
           "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
           "type": "PERMISSION"
         }
-      },
-      "derivedName": "SuccinctGateway"
+      }
     },
     {
       "name": "BlobstreamMultisig",

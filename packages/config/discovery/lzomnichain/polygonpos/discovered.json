@@ -50,8 +50,7 @@
           "0x3823094993190Fbb3bFABfEC8365b8C18517566F"
         ],
         "owner": "0xF1a5F92F5F89e8b539136276f827BF1648375312"
-      },
-      "derivedName": "Endpoint"
+      }
     },
     {
       "name": "MPTValidator01",
@@ -1396,8 +1395,7 @@
           "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     },
     {
       "name": "",

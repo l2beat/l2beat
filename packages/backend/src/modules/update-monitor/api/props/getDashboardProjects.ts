@@ -1,10 +1,12 @@
 import type { Database } from '@l2beat/database'
-import type {
-  ConfigReader,
-  DiscoveryConfig,
-  DiscoveryDiff,
+import {
+  type ConfigReader,
+  type DiscoveryConfig,
+  type DiscoveryDiff,
+  diffDiscovery,
 } from '@l2beat/discovery'
-import { getDiff } from './utils/getDiff'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import { ChainId } from '@l2beat/shared-pure'
 
 export interface DashboardProject {
   name: string
@@ -33,4 +35,21 @@ export async function getDashboardProjects(
     projects.push(project)
   }
   return projects.sort((a, b) => a.name.localeCompare(b.name))
+}
+
+export async function getDiff(
+  db: Database,
+  discovery: DiscoveryOutput,
+  chainId: number,
+): Promise<DiscoveryDiff[]> {
+  const latest = await db.updateMonitor.findLatest(
+    discovery.name,
+    ChainId(chainId),
+  )
+
+  let diff: DiscoveryDiff[] = []
+  if (latest?.discovery.contracts) {
+    diff = diffDiscovery(discovery.contracts, latest.discovery.contracts)
+  }
+  return diff
 }

@@ -124,8 +124,7 @@
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
         "totalTokens": 184,
         "validators": ["0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
-      },
-      "derivedName": "Governance"
+      }
     },
     {
       "name": "TokenGovernance",
@@ -142,8 +141,7 @@
         "listingFeeToken": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "tokenListers": ["0xE24f4870Ab85DE8E356C5fC56138587206c70d99"],
         "treasury": "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
-      },
-      "derivedName": "TokenGovernance"
+      }
     },
     {
       "name": "UpgradeGatekeeper",
@@ -179,8 +177,7 @@
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
         "versionId": 11
-      },
-      "derivedName": "UpgradeGatekeeper"
+      }
     },
     {
       "name": "Verifier",
@@ -203,8 +200,7 @@
         "$implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206",
         "$pastUpgrades": [],
         "$upgradeCount": 0
-      },
-      "derivedName": "Verifier"
+      }
     },
     {
       "name": "NftFactory",

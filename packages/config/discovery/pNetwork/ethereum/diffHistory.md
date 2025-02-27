@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x0f14df70fd18a66cbb89b832db5dee1b9cdc83b4
+
+# Diff at Tue, 25 Feb 2025 13:12:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b171c901abf483bb022511bdc023137c55d589c block: 20420398
+- current block number: 20420398
+
+## Description
+
+Config: added lido related templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478) {
+    +++ description: None
+      template:
++        "tokens/Lido/EVMScriptRegistry"
+    }
+```
+
+```diff
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E) {
+    +++ description: None
+      template:
++        "tokens/Lido/MiniMeToken"
+    }
+```
+
 Generated with discovered.json: 0x8aca3656cae4efe07280e16ddcf39418a9bd0768
 
 # Diff at Mon, 20 Jan 2025 11:09:52 GMT:

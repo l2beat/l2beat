@@ -38,8 +38,7 @@
         "pendingDepositsCommitHead": 321,
         "pendingDepositsExecuteHead": 321,
         "pendingDepositsTail": 321
-      },
-      "derivedName": "RollupChain"
+      }
     },
     {
       "name": "Registry",

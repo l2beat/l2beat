@@ -1114,13 +1114,12 @@
       }
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
       ],
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -1134,7 +1133,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     }
   ],
   "eoas": [

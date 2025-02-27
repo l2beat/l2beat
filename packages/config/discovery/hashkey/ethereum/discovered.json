@@ -887,7 +887,6 @@
         "0x3b29e71f052c1c7a44bd31c31b4d7069b8b474d6706371250921740d001de5a8"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "OptimismPortal",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "issuedPermissions": [
         {
@@ -1798,7 +1797,7 @@
     "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
     "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
     "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
-    "opstack/OptimismPortal2": "0x4f4fd47650d0a6c200ce01c99bb6573854ddcbb6958312faef6a3fea21c76bf0",
+    "opstack/OptimismPortal2": "0x88e1ec872b590b2d98ed6383fc9d7759688e0f13d4b733cd63a7bcae7c5ce99d",
     "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
     "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",
     "opstack/SuperchainConfigFake": "0x22acab894d140303e6afb5f380229c06db820f2170c959036155a7e73688aef4",

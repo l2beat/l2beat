@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x628a60be6e288a5390635dc122c1dfc96a7bed64
+
+# Diff at Thu, 27 Feb 2025 11:45:28 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21428646
+- current block number: 21428646
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428646 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      name:
+-        "Lib_AddressManager"
++        "AddressManager"
+      displayName:
+-        "AddressManager"
+    }
+```
+
 Generated with discovered.json: 0xd2b3dc67e9bf1d40c72401fd56fb92b7c9e946d2
 
 # Diff at Wed, 26 Feb 2025 10:32:33 GMT:

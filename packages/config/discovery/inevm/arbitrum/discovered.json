@@ -5,7 +5,7 @@
   "configHash": "0xf629d8dddff3536339c3c59b4195b116da708ac25dbece9551e0a50799f2230e",
   "contracts": [
     {
-      "name": "L1OrbitCustomGateway",
+      "name": "CustomGateway",
       "address": "0x0bFd15d408c856aA5CC65f49B3A1d4441D9Cb11e",
       "template": "orbitstack/CustomGateway",
       "sourceHashes": [
@@ -13,7 +13,6 @@
         "0xee0b7e8945470e5da2cfe232d3703b0ec005472afd2eb66e4b2534c19f0100d0"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "CustomGateway",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
       "issuedPermissions": [
         {
@@ -43,10 +42,11 @@
         "router": "0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1OrbitCustomGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "L1OrbitERC20Gateway",
+      "name": "ERC20Gateway",
       "address": "0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -54,7 +54,6 @@
         "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -85,10 +84,11 @@
         "router": "0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1OrbitERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ERC20Inbox",
+      "name": "Inbox",
       "address": "0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -96,7 +96,6 @@
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -127,10 +126,11 @@
         "paused": false,
         "sequencerInbox": "0x51a68C63669109BED585347B847c23DcA1cF9713"
       },
+      "derivedName": "ERC20Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ERC20Bridge",
+      "name": "Bridge",
       "address": "0x2Bb27ECb6531B8978E1aFe0288C2cbC6505Ff5b7",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -138,7 +138,6 @@
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -180,10 +179,11 @@
         "sequencerMessageCount": 9015,
         "sequencerReportedSubMessageCount": 2121534
       },
+      "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20Outbox",
+      "name": "Outbox",
       "address": "0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -191,7 +191,6 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -226,6 +225,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A"
       },
+      "derivedName": "ERC20Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -734,7 +734,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20RollupEventInbox",
+      "name": "RollupEventInbox",
       "address": "0xBB769cAfc77b8Eadbcdeb8FAAE7369F9df244754",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
@@ -742,7 +742,6 @@
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "RollupEventInbox",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
@@ -768,7 +767,8 @@
         "$upgradeCount": 1,
         "bridge": "0x2Bb27ECb6531B8978E1aFe0288C2cbC6505Ff5b7",
         "rollup": "0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A"
-      }
+      },
+      "derivedName": "ERC20RollupEventInbox"
     },
     {
       "name": "OneStepProverMemory",
@@ -848,7 +848,7 @@
       }
     },
     {
-      "name": "L1OrbitGatewayRouter",
+      "name": "GatewayRouter",
       "address": "0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -856,7 +856,6 @@
         "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -887,6 +886,7 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1OrbitGatewayRouter",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {

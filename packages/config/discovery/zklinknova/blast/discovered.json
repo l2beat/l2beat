@@ -187,8 +187,7 @@
         "l2Bridge": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
         "l2TokenBeacon": "0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "BlastProxyAdmin",

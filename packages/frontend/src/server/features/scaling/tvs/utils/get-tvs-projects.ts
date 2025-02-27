@@ -9,7 +9,6 @@ import type {
   Layer3,
   Project,
 } from '@l2beat/config'
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
@@ -75,13 +74,17 @@ async function getBackendProjects() {
   return backendProjects
 }
 
-const projects = [...layer2s, ...layer3s, ...bridges]
-
 export async function getTvsProjects(
-  filter: (p: Layer2 | Layer3 | Bridge) => boolean,
+  filter: (p: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean,
   chains: ChainConfig[],
   previewRecategorisation?: boolean,
 ): Promise<TvsProject[]> {
+  const projects = await ps.getProjects({
+    select: ['statuses'],
+    where: ['tvlInfo'],
+    optional: ['scalingInfo', 'isBridge'],
+  })
+
   const filteredProjects = projects
     .filter((p) => filter(p))
     .filter((project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.id))
@@ -125,28 +128,28 @@ export async function getTvsProjects(
 }
 
 function getCategory(
-  p: Layer2 | Layer3 | Bridge,
+  p: Project<never, 'scalingInfo'>,
   previewRecategorisation?: boolean,
 ): 'rollups' | 'validiumsAndOptimiums' | 'others' | undefined {
-  if (p.type === 'bridge') {
+  if (!p.scalingInfo) {
     return undefined
   }
 
-  if (isProjectOther(p, previewRecategorisation)) {
+  if (isProjectOther(p.scalingInfo, previewRecategorisation)) {
     return 'others'
   }
 
   if (
-    p.display.category === 'Optimistic Rollup' ||
-    p.display.category === 'ZK Rollup'
+    p.scalingInfo.type === 'Optimistic Rollup' ||
+    p.scalingInfo.type === 'ZK Rollup'
   ) {
     return 'rollups'
   }
 
   if (
-    p.display.category === 'Validium' ||
-    p.display.category === 'Optimium' ||
-    p.display.category === 'Plasma'
+    p.scalingInfo.type === 'Validium' ||
+    p.scalingInfo.type === 'Optimium' ||
+    p.scalingInfo.type === 'Plasma'
   ) {
     return 'validiumsAndOptimiums'
   }

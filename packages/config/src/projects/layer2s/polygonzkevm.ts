@@ -11,17 +11,15 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 const discovery = new ProjectDiscovery('polygonzkevm')
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'PolygonZkEVMEtrog',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
+  discovery.getContractValue<string>('PolygonZkEVM', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
-  rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier_11'),
+  rollupModuleContract: discovery.getContract('PolygonZkEVM'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
@@ -162,7 +160,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       references: [
         {
           title:
-            'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
+            'PolygonZkEVM.sol - Etherscan source code, verifyBatches function',
           url: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
         },
       ],
@@ -172,7 +170,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       references: [
         {
           title:
-            'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
+            'PolygonZkEVM.sol - Etherscan source code, sequenceBatches function',
           url: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],

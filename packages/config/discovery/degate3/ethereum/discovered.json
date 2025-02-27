@@ -85,8 +85,7 @@
         "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxyOwner": "0xf2991507952d9594E71A44A54fb19f3109D213A5"
-      },
-      "derivedName": "DefaultDepositContract"
+      }
     },
     {
       "name": "Multisig1",
@@ -146,8 +145,7 @@
         "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x9C07A72177c5A05410cA338823e790876E79D73B"
-      },
-      "derivedName": "LoopringIOExchangeOwner"
+      }
     },
     {
       "name": "ExchangeV3",
@@ -256,8 +254,7 @@
           }
         },
         "version": "0.1.0"
-      },
-      "derivedName": "ExchangeV3"
+      }
     },
     {
       "name": "BlockVerifier",

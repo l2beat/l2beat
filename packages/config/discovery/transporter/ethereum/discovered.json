@@ -2291,8 +2291,7 @@
         "getBlockedFunctionSelectorCount": 0,
         "getMinDelay": 10800,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
-      },
-      "derivedName": "RBACTimelock"
+      }
     },
     {
       "name": "EVM2EVMOnRamp",
@@ -3251,8 +3250,7 @@
         "$immutable": true,
         "getRouter": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
         "typeAndVersion": "EtherSenderReceiver 1.5.0"
-      },
-      "derivedName": "EtherSenderReceiver"
+      }
     },
     {
       "name": "EVM2EVMOffRamp",

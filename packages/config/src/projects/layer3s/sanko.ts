@@ -11,11 +11,7 @@ const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 export const sanko: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
-  additionalBadges: [
-    BADGES.DA.DAC,
-    BADGES.L3ParentChain.Arbitrum,
-    BADGES.RaaS.Caldera,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -63,7 +59,7 @@ export const sanko: Layer3 = orbitStackL3({
   },
   gasTokens: { tracked: ['DMT'] },
   associatedTokens: ['DMT'],
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [

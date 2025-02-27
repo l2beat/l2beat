@@ -21,8 +21,7 @@
         "supportsInsurancePayment": true,
         "version": "1.0.0",
         "YIELD_MANAGER": "0xa230285d5683C74935aD14c446e137c8c8828438"
-      },
-      "derivedName": "DSRYieldProvider"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -173,8 +172,7 @@
         "portal": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
         "usdYieldManager": "0xa230285d5683C74935aD14c446e137c8c8828438",
         "version": "1.0.0"
-      },
-      "derivedName": "L1BlastBridge"
+      }
     },
     {
       "name": "LidoYieldProvider",
@@ -194,8 +192,7 @@
         "version": "1.0.0",
         "WITHDRAWAL_QUEUE": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "YIELD_MANAGER": "0x98078db053902644191f93988341E31289E1C8FE"
-      },
-      "derivedName": "LidoYieldProvider"
+      }
     },
     {
       "name": "BlastMultisig",
@@ -502,8 +499,7 @@
         "totalUSDShares": "269663073212147173556576",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
-      },
-      "derivedName": "LaunchBridge"
+      }
     },
     {
       "name": "BridgeOwner",
@@ -736,8 +732,7 @@
           "severity": "MEDIUM",
           "description": "Insurance fee taken from positive yields"
         }
-      },
-      "derivedName": "ETHYieldManager"
+      }
     },
     {
       "name": "USDYieldManager",
@@ -782,8 +777,7 @@
           "severity": "MEDIUM",
           "description": "Insurance fee taken from positive yields"
         }
-      },
-      "derivedName": "USDYieldManager"
+      }
     },
     {
       "name": "L1ERC721Bridge",

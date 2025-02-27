@@ -452,7 +452,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "L1CustomGateway",
+      "name": "CustomGateway",
       "address": "0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99",
       "template": "orbitstack/CustomGateway",
       "sourceHashes": [
@@ -460,7 +460,6 @@
         "0x8d9e1660cd96605e8727f611f7b96ef82ad6cd8a76db94cd253b74cddd1c6bce"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "CustomGateway",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
       "issuedPermissions": [
         {
@@ -490,10 +489,11 @@
         "router": "0xe507b9EF563DB6CcFDcE270160C50b2005BeED20",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1CustomGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "L1ERC20Gateway",
+      "name": "ERC20Gateway",
       "address": "0xB155C77a440DA7c282993a89FeA609598293017A",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -501,7 +501,6 @@
         "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -532,6 +531,7 @@
         "router": "0xe507b9EF563DB6CcFDcE270160C50b2005BeED20",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -667,7 +667,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "L1GatewayRouter",
+      "name": "GatewayRouter",
       "address": "0xe507b9EF563DB6CcFDcE270160C50b2005BeED20",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -675,7 +675,6 @@
         "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -706,6 +705,7 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1GatewayRouter",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {

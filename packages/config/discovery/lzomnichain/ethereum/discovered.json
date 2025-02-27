@@ -1687,8 +1687,7 @@
           "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     },
     {
       "name": "UsdcEscrow",
@@ -1850,8 +1849,7 @@
           "0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
         ],
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
-      },
-      "derivedName": "Endpoint"
+      }
     },
     {
       "name": "",

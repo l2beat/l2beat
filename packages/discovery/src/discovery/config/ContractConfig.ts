@@ -23,7 +23,8 @@ export function createContractConfig(
     categories: merge(categories, overrides.categories),
     pushValues: function (values: DiscoveryContract) {
       const newState = {
-        name: this.name,
+        // root names > display names
+        name: this.name ?? values.displayName ?? this.displayName,
         address: this.address,
         ...DiscoveryContract.parse(merge({}, values, this)),
       }

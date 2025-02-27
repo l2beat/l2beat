@@ -1948,6 +1948,20 @@
       "supply": "zero"
     },
     {
+      "name": "Everclear",
+      "coingeckoId": "everclear",
+      "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
+      "symbol": "CLEAR",
+      "decimals": 18,
+      "deploymentTimestamp": 1693777295,
+      "coingeckoListingTimestamp": 1736899200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52496/large/photo_2024-06-03_12-14-59_%281%29.png?1733450397",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Exorde Network Token",
       "coingeckoId": "exorde",
       "address": "0x02dE007D412266a2e0Fa9287C103474170F06560",
@@ -9657,6 +9671,28 @@
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "Everclear",
+      "coingeckoId": "everclear",
+      "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
+      "symbol": "CLEAR",
+      "decimals": 18,
+      "deploymentTimestamp": 1733349331,
+      "coingeckoListingTimestamp": 1736899200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52496/large/photo_2024-06-03_12-14-59_%281%29.png?1733450397",
+      "chainId": 25327,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "name": "aBTC",

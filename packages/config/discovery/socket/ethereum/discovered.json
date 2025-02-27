@@ -54,8 +54,7 @@
           "severity": "LOW",
           "description": "Fee charged for verifying transaction"
         }
-      },
-      "derivedName": "PolygonL1Switchboard"
+      }
     },
     {
       "name": "sdeUSD Vault Reya",
@@ -187,8 +186,7 @@
           "severity": "LOW",
           "description": "Fee charged for verifying transaction"
         }
-      },
-      "derivedName": "OptimismSwitchboard"
+      }
     },
     {
       "name": "USDT Vault Zora",
@@ -831,8 +829,7 @@
           "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.",
           "type": "CODE_CHANGE"
         }
-      },
-      "derivedName": "Socket"
+      }
     },
     {
       "name": "ETHFI Vault Kinto",
@@ -1053,8 +1050,7 @@
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
         "timeoutInSeconds": 7200
-      },
-      "derivedName": "FastSwitchboard"
+      }
     },
     {
       "name": "eUSD Vault Kinto",
@@ -1150,8 +1146,7 @@
           "severity": "LOW",
           "description": "Fee charged for verifying transaction"
         }
-      },
-      "derivedName": "ArbitrumL1Switchboard"
+      }
     },
     {
       "name": "USD0++ Vault Polynomial",
@@ -1247,8 +1242,7 @@
         "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9"
-      },
-      "derivedName": "TransmitManager"
+      }
     },
     {
       "name": "",

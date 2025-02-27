@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "celo",
   "blockNumber": 26689586,
-  "configHash": "0xc225a72a5c44d1a150cbf68d3a9989aba2312a9707ed354908b5d81deb580f96",
+  "configHash": "0xb02c39f74984f3a23faa69aa4cd3d60ae7fa940e05f47cb991f96808926dace0",
   "contracts": [
     {
       "name": "OpticsV2Governor",
@@ -38,38 +38,13 @@
     },
     {
       "name": "UpgradeBeacon",
-      "address": "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010",
+      "address": "0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d",
       "sourceHashes": [
         "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
       ],
       "proxyType": "immutable",
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
-    },
-    {
-      "name": "UpgradeBeaconController",
-      "address": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
-      "sourceHashes": [
-        "0x12e387edec9bf90c8c2ee351a4b607488ae3e01f861eb7dabbf3e4fdd078ad48"
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
-        }
-      ],
-      "values": {
-        "$immutable": true,
-        "owner": "0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1"
-      }
-    },
-    {
-      "name": "UpgradeBeaconProxy",
-      "address": "0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1",
-      "sourceHashes": [
-        "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
-      ],
-      "values": { "$immutable": true }
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -103,18 +78,18 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
+          "to": "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e",
           "via": []
         }
       ],
       "values": {
-        "$admin": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
-        "$implementation": "0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6",
+        "$admin": "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e",
+        "$implementation": "0xd37d1f682Ff556C5B6C4Eb58075a93747379A3d7",
         "$pastUpgrades": [
           [
-            "2022-07-12T10:32:51.000Z",
-            "0xde8dc7be51fd7efb7940f1c079ad9c47107e15911a3388264cd14a660af92fe5",
-            ["0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"]
+            "2021-11-26T21:02:52.000Z",
+            "0xa360ab72c136ac975030f7fab25f2f51bd9c8ed76a98d1e028c2c2767096bbdf",
+            ["0xd37d1f682Ff556C5B6C4Eb58075a93747379A3d7"]
           ]
         ],
         "$upgradeCount": 1,
@@ -123,7 +98,7 @@
         "governorDomain": 1667591279,
         "inRecovery": false,
         "localDomain": 1667591279,
-        "OpticsBeacon_beacon": "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010",
+        "OpticsBeacon_beacon": "0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d",
         "recoveryActiveAt": 0,
         "recoveryManager": "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509",
         "recoveryTimelock": 1209600,
@@ -131,6 +106,23 @@
         "xAppConnectionManager": "0xaa099aF87ACE9E437b9B410a687F263eeaeC4321"
       },
       "derivedName": "GovernanceRouter"
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "address": "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e",
+      "sourceHashes": [
+        "0x12e387edec9bf90c8c2ee351a4b607488ae3e01f861eb7dabbf3e4fdd078ad48"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
+        }
+      ],
+      "values": {
+        "$immutable": true,
+        "owner": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
+      }
     }
   ],
   "eoas": [
@@ -146,20 +138,9 @@
     "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509": [
       "constructor(address _singleton)"
     ],
-    "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010": [
+    "0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d": [
       "constructor(address _initialImplementation, address _controller) payable",
       "event Upgrade(address indexed implementation)"
-    ],
-    "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee": [
-      "event BeaconUpgraded(address indexed beacon, address implementation)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address _beacon, address _implementation)"
-    ],
-    "0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1": [
-      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
     "0x69f4D1788e39c87893C980c06EdF4b7f686e2938": [
       "constructor()",
@@ -210,7 +191,34 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6": [
+    "0x913EE05036f3cbc94Ee4afDea87ceb430524648a": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0xaa099aF87ACE9E437b9B410a687F263eeaeC4321": [
+      "constructor()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReplicaEnrolled(uint32 indexed domain, address replica)",
+      "event ReplicaUnenrolled(uint32 indexed domain, address replica)",
+      "event WatcherPermissionSet(uint32 indexed domain, address watcher, bool access)",
+      "function domainToReplica(uint32) view returns (address)",
+      "function home() view returns (address)",
+      "function isReplica(address _replica) view returns (bool)",
+      "function localDomain() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function ownerEnrollReplica(address _replica, uint32 _domain)",
+      "function ownerUnenrollReplica(address _replica)",
+      "function renounceOwnership()",
+      "function replicaToDomain(address) view returns (uint32)",
+      "function setHome(address _home)",
+      "function setWatcherPermission(address _watcher, uint32 _domain, bool _access)",
+      "function transferOwnership(address newOwner)",
+      "function unenrollReplica(uint32 _domain, bytes32 _updater, bytes _signature)",
+      "function watcherPermission(address _watcher, uint32 _domain) view returns (bool)"
+    ],
+    "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0xd37d1f682Ff556C5B6C4Eb58075a93747379A3d7": [
       "constructor(uint32 _localDomain, uint256 _recoveryTimelock)",
       "event ExitRecovery(address recoveryManager)",
       "event InitiateRecovery(address indexed recoveryManager, uint256 recoveryActiveAt)",
@@ -240,32 +248,13 @@
       "function transferRecoveryManager(address _newRecoveryManager)",
       "function xAppConnectionManager() view returns (address)"
     ],
-    "0x913EE05036f3cbc94Ee4afDea87ceb430524648a": [
-      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
-    ],
-    "0xaa099aF87ACE9E437b9B410a687F263eeaeC4321": [
-      "constructor()",
+    "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e": [
+      "event BeaconUpgraded(address indexed beacon, address implementation)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ReplicaEnrolled(uint32 indexed domain, address replica)",
-      "event ReplicaUnenrolled(uint32 indexed domain, address replica)",
-      "event WatcherPermissionSet(uint32 indexed domain, address watcher, bool access)",
-      "function domainToReplica(uint32) view returns (address)",
-      "function home() view returns (address)",
-      "function isReplica(address _replica) view returns (bool)",
-      "function localDomain() view returns (uint32)",
       "function owner() view returns (address)",
-      "function ownerEnrollReplica(address _replica, uint32 _domain)",
-      "function ownerUnenrollReplica(address _replica)",
       "function renounceOwnership()",
-      "function replicaToDomain(address) view returns (uint32)",
-      "function setHome(address _home)",
-      "function setWatcherPermission(address _watcher, uint32 _domain, bool _access)",
       "function transferOwnership(address newOwner)",
-      "function unenrollReplica(uint32 _domain, bytes32 _updater, bytes _signature)",
-      "function watcherPermission(address _watcher, uint32 _domain) view returns (bool)"
-    ],
-    "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE": [
-      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+      "function upgrade(address _beacon, address _implementation)"
     ]
   },
   "usedTemplates": {

@@ -21,8 +21,7 @@
           "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
         ],
         "unpauser": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      },
-      "derivedName": "PauserRegistry"
+      }
     },
     {
       "name": "StrategiesBeacon",
@@ -73,8 +72,7 @@
           "severity": "MEDIUM",
           "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
         }
-      },
-      "derivedName": "TokenHopper"
+      }
     },
     {
       "name": "AVSDirectory",
@@ -199,8 +197,7 @@
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060"
-      },
-      "derivedName": "AVSDirectory"
+      }
     },
     {
       "name": "EigenLayerOwningMultisig",
@@ -320,8 +317,7 @@
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "STAKER_DELEGATION_TYPEHASH": "0x39111bc4a4d688e1f685123d7497d4615370152a8ee4a0593e647bd06ad8bb0b",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "DelegationManager"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -618,8 +614,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyBeacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "StrategyFactory"
+      }
     },
     {
       "name": "EigenPod",
@@ -796,8 +791,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "rewardsUpdater": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "RewardsCoordinator"
+      }
     },
     {
       "name": "Safe",
@@ -987,8 +981,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyWhitelister": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
-      },
-      "derivedName": "StrategyManager"
+      }
     },
     {
       "name": "EigenLayerProxyAdmin",
@@ -1120,8 +1113,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "EigenPodManager"
+      }
     },
     {
       "name": "EigenLayerBeigenOwningMultisig",
@@ -1175,8 +1167,7 @@
         "firstSubmissionStartTimestamp": 1723680000,
         "firstSubmissionTriggerCutoff": 1727913600,
         "rewardsCoordinator": "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
-      },
-      "derivedName": "RewardAllStakersActionGenerator"
+      }
     },
     {
       "name": "EigenLayerTokenMultisig",
@@ -1515,8 +1506,7 @@
         "paused": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "Slasher"
+      }
     },
     {
       "name": "StrategyBase",

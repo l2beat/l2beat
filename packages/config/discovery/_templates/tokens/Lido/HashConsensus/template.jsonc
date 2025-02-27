@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": [
+    "getConsensusState",
+    "getCurrentFrame",
+    "getFastLaneMembers",
+    "getFrameConfig",
+    "getMembers",
+    "getReportVariants"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    }
+  }
+}

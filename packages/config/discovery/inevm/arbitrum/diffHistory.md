@@ -1,3 +1,98 @@
+Generated with discovered.json: 0x2fe3af78d7bcbc6e8026243ba446b906dd58c44a
+
+# Diff at Thu, 27 Feb 2025 11:47:27 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 287771173
+- current block number: 287771173
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287771173 (main branch discovery), not current.
+
+```diff
+    contract CustomGateway (0x0bFd15d408c856aA5CC65f49B3A1d4441D9Cb11e) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      name:
+-        "L1OrbitCustomGateway"
++        "CustomGateway"
+      displayName:
+-        "CustomGateway"
+    }
+```
+
+```diff
+    contract ERC20Gateway (0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      name:
+-        "L1OrbitERC20Gateway"
++        "ERC20Gateway"
+      displayName:
+-        "ERC20Gateway"
+    }
+```
+
+```diff
+    contract Inbox (0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "ERC20Inbox"
++        "Inbox"
+      displayName:
+-        "Inbox"
+    }
+```
+
+```diff
+    contract Bridge (0x2Bb27ECb6531B8978E1aFe0288C2cbC6505Ff5b7) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "ERC20Bridge"
++        "Bridge"
+      displayName:
+-        "Bridge"
+    }
+```
+
+```diff
+    contract Outbox (0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "ERC20Outbox"
++        "Outbox"
+      displayName:
+-        "Outbox"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xBB769cAfc77b8Eadbcdeb8FAAE7369F9df244754) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      name:
+-        "ERC20RollupEventInbox"
++        "RollupEventInbox"
+      displayName:
+-        "RollupEventInbox"
+    }
+```
+
+```diff
+    contract GatewayRouter (0xE72E807A72c7D36717a3ea9e7668ea690A2bf0E1) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      name:
+-        "L1OrbitGatewayRouter"
++        "GatewayRouter"
+      displayName:
+-        "GatewayRouter"
+    }
+```
+
 Generated with discovered.json: 0x987522c08ff669c3f4fbb31acbcc4c5982354822
 
 # Diff at Fri, 21 Feb 2025 14:12:28 GMT:

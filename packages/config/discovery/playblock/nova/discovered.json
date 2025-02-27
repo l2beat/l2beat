@@ -212,11 +212,10 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"]
       },
-      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "ERC20RollupEventInbox",
+      "name": "RollupEventInbox",
       "address": "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
@@ -224,7 +223,6 @@
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "RollupEventInbox",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
@@ -247,7 +245,8 @@
         "$upgradeCount": 1,
         "bridge": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
         "rollup": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
-      }
+      },
+      "derivedName": "ERC20RollupEventInbox"
     },
     {
       "name": "OneStepProver0",
@@ -354,7 +353,6 @@
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
         "totalChallengesCreated": 0
       },
-      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

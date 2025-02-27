@@ -1,10 +1,10 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { groupBy, sum } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { sumValuesPerSource } from './sum-values-per-source'
 
 /*
@@ -44,9 +44,9 @@ const getCachedProjectsLatestTvsUsd = cache(
   },
 )
 
-function getMockProjectsLatestTvsUsd(): ProjectsLatestTvsUsd {
-  const allProjects = [...layer2s, ...layer3s, ...bridges]
+async function getMockProjectsLatestTvsUsd(): Promise<ProjectsLatestTvsUsd> {
+  const projects = await ps.getProjects({ where: ['tvlConfig'] })
   return Object.fromEntries(
-    allProjects.map((project, i) => [project.id, allProjects.length - i]),
+    projects.map((project, i) => [project.id, projects.length - i]),
   )
 }

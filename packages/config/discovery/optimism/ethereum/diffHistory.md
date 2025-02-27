@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc0c590f9293b4d447bbb55c50e1eda8895d12852
+
+# Diff at Thu, 27 Feb 2025 12:01:46 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21829671
+- current block number: 21829671
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829671 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      displayName:
++        "OptimismPortal2"
+    }
+```
+
 Generated with discovered.json: 0xe79ecb7b53e573874c504a2b6fc82cca882f7c7f
 
 # Diff at Wed, 26 Feb 2025 10:32:56 GMT:

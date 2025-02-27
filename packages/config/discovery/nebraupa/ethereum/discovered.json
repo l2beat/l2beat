@@ -66,8 +66,7 @@
         "verifiedSubmissionIdxForAllocatedFee": 0,
         "version": 10201,
         "worker": "0x7545b173780F07BF9EFA7e1561bb35B52907974D"
-      },
-      "derivedName": "UpaVerifier"
+      }
     },
     {
       "name": "NebraOwner",

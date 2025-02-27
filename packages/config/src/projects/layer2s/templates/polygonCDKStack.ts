@@ -104,7 +104,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   }
 
   const upgradeDelay = shared.getContractValue<number>(
-    'PolygonZkEVMTimelock',
+    'Timelock',
     'getMinDelay',
   )
   const upgradeDelayString = formatSeconds(upgradeDelay)
@@ -129,7 +129,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
     'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
   )
-  const bridge = shared.getContract('PolygonZkEVMBridgeV2')
+  const bridge = shared.getContract('PolygonSharedBridge')
 
   const finalizationPeriod =
     templateVars.display.finality?.finalizationPeriod ?? 0
@@ -412,7 +412,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           references: explorerReferences(explorerUrl, [
             {
               title:
-                'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
+                'PolygonSharedBridge.sol - source code, claimAsset function',
               address: safeGetImplementation(bridge),
             },
           ]),
@@ -435,13 +435,11 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     upgradesAndGovernance:
       templateVars.upgradesAndGovernance ??
       `
-    The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
+The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
 
+The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
 
-    The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
-
-
-    Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
+Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
     milestones: templateVars.milestones,
     badges: mergeBadges(
       [

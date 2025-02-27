@@ -7,7 +7,7 @@
   "names": {
     "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE": "BeaconProxy",
     "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509": "OpticsV2Governor",
-    "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010": "UpgradeBeacon"
+    "0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d": "UpgradeBeacon"
   },
   "overrides": {
     "BeaconProxy": {

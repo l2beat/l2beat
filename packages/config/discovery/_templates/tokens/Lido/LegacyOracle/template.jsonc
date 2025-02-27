@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": [
+    "getBeaconSpec",
+    "getCurrentEpochId",
+    "getCurrentFrame",
+    "getLastCompletedEpochId",
+    "getLastCompletedReportDelta"
+  ]
+}

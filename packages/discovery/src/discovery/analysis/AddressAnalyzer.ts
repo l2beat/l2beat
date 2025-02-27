@@ -145,7 +145,6 @@ export class AddressAnalyzer {
       config.manualSourcePaths,
     )
 
-    const name = config.name ?? sources.name
     if (extendedTemplate === undefined) {
       const matchingTemplates = this.templateService.findMatchingTemplates(
         sources,
@@ -199,8 +198,11 @@ export class AddressAnalyzer {
       'selfMeta' | 'targetsMeta'
     > = {
       type: 'Contract',
-      name,
-      derivedName: config.name !== undefined ? sources.name : undefined,
+      name: config.name ?? sources.name,
+      derivedName:
+        config.name !== undefined && config.name !== sources.name
+          ? sources.name
+          : undefined,
       isVerified: sources.isVerified,
       address,
       deploymentTimestamp: deployment?.timestamp,

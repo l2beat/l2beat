@@ -13,7 +13,7 @@ import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('lumia')
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -86,7 +86,7 @@ export const lumia: Layer2 = polygonCDKStack({
     },
   },
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   chainConfig: {
     name: 'lumia',
