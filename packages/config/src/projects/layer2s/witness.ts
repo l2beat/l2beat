@@ -120,7 +120,7 @@ export const witness: Layer2 = polygonCDKStack({
     },
   ],
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
     newCryptography: {

@@ -164,7 +164,7 @@ export const winr: Layer3 = orbitStackL3({
       includeInTotal: false,
     },
   ],
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),

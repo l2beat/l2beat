@@ -104,7 +104,7 @@ export const gpt: Layer2 = polygonCDKStack({
     ],
   },
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   nonTemplateEscrows: [], // removed as their rpc is broken and last tvs was USD 81
   nonTemplateTechnology: {

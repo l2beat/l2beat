@@ -77,7 +77,7 @@ export const corn: Layer2 = orbitStackL2({
   },
   // associatedTokens: ['BTCN'],
   discovery,
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   chainConfig: {

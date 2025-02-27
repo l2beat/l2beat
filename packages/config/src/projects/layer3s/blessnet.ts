@@ -68,7 +68,7 @@ export const blessnet: Layer3 = orbitStackL3({
     ],
   },
   discovery,
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),

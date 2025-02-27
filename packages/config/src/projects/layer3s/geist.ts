@@ -60,7 +60,7 @@ export const geist: Layer3 = orbitStackL3({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['GHST'],
