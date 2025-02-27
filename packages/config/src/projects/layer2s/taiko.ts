@@ -115,14 +115,14 @@ assert(
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
-// const hasThreeTiers =
-//   discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
-//     .length === 3
+const numberActiveTiers =
+  discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
+    .length === 5
 
-// assert(
-//   hasThreeTiers,
-//   'Remove the header warning in case validity proofs are re-enabled.',
-// )
+assert(
+  numberActiveTiers,
+  'Review the technology section and riskView.stateValidation since the number of active tiers changed.',
+)
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -290,7 +290,7 @@ export const taiko: Layer2 = {
   riskView: {
     stateValidation: {
       description: `A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.
-        The system allows for an invalid state to be finalized by compromised Guardians (the highest tier) and does not enforce ZK proofs.`,
+        The system allows for an invalid state to be finalized by compromised Guardians (the highest two tiers) and does not enforce ZK proofs.`,
       sentiment: 'bad',
       value: 'Multi-proofs',
       secondLine: `${SGXcooldownWindow} challenge period`,
@@ -346,26 +346,27 @@ export const taiko: Layer2 = {
   technology: {
     stateCorrectness: {
       name: 'Multi-tier proof system',
-      description: `Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-      Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
+      description: `
+Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
+Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
 
-      When proposing a batch (containing one or multiple L2 blocks), the proposer is assigned the designated prover role for that batch and is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the batch, which will be returned once the batch is proven.
-      The default (lowest) SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit the proof for the batch. Once elapsed, proving is open to everyone able to submit SGX proofs and a *validity bond*. The two ZK tiers have a proving window of ${RISC0provingWindow}.
+When proposing a batch (containing one or multiple L2 blocks), the proposer is assigned the designated prover role for that batch and is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the batch, which will be returned once the batch is proven.
+The default (lowest) SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit the proof for the batch. Once elapsed, proving is open to everyone able to submit SGX proofs and a *validity bond*. The two ZK tiers have a proving window of ${RISC0provingWindow}.
 
-      After the proof is submitted and during its ${SGXcooldownWindow} *cooldown window*, anyone can contest the batch by submitting a *contest bond*. Provers have to submit a *validity bond* as a commitment to win a potential contest.
-      A *validity bond* is TAIKO ${SGXvalidityBond} for SGX vs ${RISC0validityBond} for ZK tiers, while a *contest bond* is TAIKO ${SGXcontestBond} for SGX vs. ${RISC0contestBond} for the two ZK tiers.
-      For the Minority guardian tier, *validity* and *contest bonds* are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively.
+After the proof is submitted and during its ${SGXcooldownWindow} *cooldown window*, anyone can dispute the batch by submitting a *contest bond*. Anyone can then prove this new dispute by submitting a *validity bond* as a commitment to win the respective higher-tier proof.
+A *validity bond* is TAIKO ${SGXvalidityBond} for SGX vs ${RISC0validityBond} for ZK tiers, while a *contest bond* is TAIKO ${SGXcontestBond} for SGX vs. ${RISC0contestBond} for the two ZK tiers.
+For the Minority guardian tier, *validity* and *contest bonds* are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. The highest Guardian tier does not require bonds.
 
-      It is not required to provide a proof for the batch to submit a contestation. When someone contests, a higher level tier has to step in to prove the contested batch. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
-      If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
+It is not required to provide a proof for the batch to submit a contestation. When someone contests, a higher level tier has to step in to prove the contested batch. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
+If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [
         {
           title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-          url: 'https://etherscan.io/address/0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66#code#F1#L26',
+          url: 'https://etherscan.io/address/0x44d307a9ec47aA55a7a30849d065686753C86Db6#code#F1#L26',
         },
         {
           title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          url: 'https://etherscan.io/address/0x2784423f7c61Bc7B75dB6CdA26959946f437588D#code',
+          url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
         },
       ],
       risks: [
@@ -391,7 +392,7 @@ export const taiko: Layer2 = {
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          url: 'https://etherscan.io/address/0x2784423f7c61Bc7B75dB6CdA26959946f437588D#code',
+          url: 'https://etherscan.io/address/0x5110634593Ccb8072d161A7d260A409A7E74D7Ca#code',
         },
       ],
       risks: [],

@@ -1,3 +1,126 @@
+Generated with discovered.json: 0xb3267f0296e067ef6816acadfa6e48d5e6e9aa61
+
+# Diff at Thu, 27 Feb 2025 08:48:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@12656ddc442b003f444057c1d2cf33819a024162 block: 21844977
+- current block number: 21936574
+
+## Description
+
+The forced zk tiers for the DAO fallback proposer have been removed. Any proposer/challenger/prover can choose among the 5 tiers:
+- tiers_[0] = LibTiers.TIER_SGX;
+- tiers_[1] = LibTiers.TIER_ZKVM_RISC0;
+- tiers_[2] = LibTiers.TIER_ZKVM_SP1;
+- tiers_[3] = LibTiers.TIER_GUARDIAN_MINORITY;
+- tiers_[4] = LibTiers.TIER_GUARDIAN;
+
+Update MainnetTierRouter with new cooldown and proving periods, new validity bond values (see above which tiers are active):
+
+| Tier | Parameter | Before | After |
+|------|-----------|--------|-------|
+| **TIER_OPTIMISTIC** | validityBond | 75 TKO | 50 TKO |
+|  | contestBond | 492.19 TKO | 328.13 TKO |
+|  | cooldownPeriod | 24 hours | 24 hours |
+|  | provingPeriod | 4.25 hours | 1 hour |
+| **TEE Tiers** (SGX, TDX, TEE_ANY) | validityBond | 150 TKO | 100 TKO |
+|  | contestBond | 984.38 TKO | 656.25 TKO |
+|  | cooldownPeriod | 4 hours | 4 hours |
+|  | provingPeriod | 5 hours | 5 hours |
+| **ZKVM Tiers** (RISC0, SP1, ANY, AND_TEE) | validityBond | 225 TKO | 150 TKO |
+|  | contestBond | 1476.56 TKO | 984.38 TKO |
+|  | cooldownPeriod | 4 hours | 4 hours |
+|  | provingPeriod | 7 hours | 7 hours |
+| **TIER_GUARDIAN_MINORITY** | validityBond | 225 TKO | 200 TKO |
+|  | contestBond | 1476.56 TKO | 1312.5 TKO |
+|  | cooldownPeriod | 4 hours | 4 hours |
+|  | provingPeriod | 0 hours | 2 hours |
+| **TIER_GUARDIAN** | validityBond | 0 TKO | 0 TKO |
+|  | contestBond | 0 TKO | 0 TKO |
+|  | cooldownPeriod | 4 hours | 8 hours |
+|  | provingPeriod | 0 hours | 0 hours |
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      sourceHashes.1:
+-        "0xb0f9a7fd86a26f933460b09bf9ddb6f3fcb1926850109b97c24801d6230186e3"
++        "0x8c8d91a3b010953954bbd3ba9f4c55f76112bf6d7f298dcd584c2de94a4ad1a4"
+      values.$implementation:
+-        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
++        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
+      values.$pastUpgrades.23:
++        ["2025-02-27T03:27:23.000Z","0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41",["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]]
+      values.$upgradeCount:
+-        23
++        24
+      values.impl:
+-        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
++        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
+      values.tier_router:
+-        "0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66"
++        "0x44d307a9ec47aA55a7a30849d065686753C86Db6"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetTierRouter (0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetTierRouter (0x44d307a9ec47aA55a7a30849d065686753C86Db6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../MainnetTierRouter.sol                          | 92 ++++++++++------------
+ .../TaikoL1Contract/MainnetTaikoL1.sol             |  2 +-
+ 2 files changed, 41 insertions(+), 53 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21844977 (main branch discovery), not current.
+
+```diff
+    contract MainnetTierRouter (0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66) {
+    +++ description: None
+      values.active_tiers:
+-        [["0x746965725f736778000000000000000000000000000000000000000000000000"],["0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"],["0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"],["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"],["0x746965725f677561726469616e00000000000000000000000000000000000000"]]
+      values.TIER_GUARDIAN:
+-        {"verifierName":"0x746965725f677561726469616e00000000000000000000000000000000000000","validityBond":0,"contestBond":0,"cooldownWindow":240,"provingWindow":240,"maxBlocksToVerifyPerProof":0}
+      values.TIER_GUARDIAN_MINORITY:
+-        {"verifierName":"0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":240,"maxBlocksToVerifyPerProof":0}
+      values.TIER_OPTIMISTIC:
+-        {"verifierName":"0x0000000000000000000000000000000000000000000000000000000000000000","validityBond":"75000000000000000000","contestBond":"492187500000000000000","cooldownWindow":1440,"provingWindow":255,"maxBlocksToVerifyPerProof":0}
+      values.tier_provider:
+-        "0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66"
+      values.TIER_RISC0:
+-        {"verifierName":"0x746965725f7a6b766d5f72697363300000000000000000000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":420,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SGX:
+-        {"verifierName":"0x746965725f736778000000000000000000000000000000000000000000000000","validityBond":"150000000000000000000","contestBond":"984375000000000000000","cooldownWindow":240,"provingWindow":300,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SGX_ZKVM:
+-        {"verifierName":"0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":420,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SP1:
+-        {"verifierName":"0x746965725f7a6b766d5f73703100000000000000000000000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":420,"maxBlocksToVerifyPerProof":0}
+      values.getProvider:
++        ["0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66","0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66","0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66","0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66","0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66"]
+      fieldMeta:
+-        {"TIER_SGX":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_RISC0":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_SP1":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN_MINORITY":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_OPTIMISTIC":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_SGX_ZKVM":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"}}
+      errors:
++        {"getProvider":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0xda5cba7130c3b689c9358371f2d5d13f14e6e2e3
 
 # Diff at Fri, 14 Feb 2025 13:24:42 GMT:
