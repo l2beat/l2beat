@@ -6,16 +6,16 @@
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
-      "name": "FflonkVerifier",
+      "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
-      "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
       "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

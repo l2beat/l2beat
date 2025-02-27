@@ -44,8 +44,7 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      },
-      "derivedName": "TokenMessaging"
+      }
     },
     {
       "name": "StargatePoolNative",

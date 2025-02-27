@@ -43,8 +43,7 @@
         "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
       ],
       "proxyType": "immutable",
-      "values": { "$immutable": true },
-      "derivedName": "UpgradeBeacon"
+      "values": { "$immutable": true }
     },
     {
       "name": "UpgradeBeaconController",

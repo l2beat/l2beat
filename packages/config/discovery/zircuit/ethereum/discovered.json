@@ -415,8 +415,7 @@
         ],
         "$upgradeCount": 4,
         "version": "c3131379c4bf618f2135c29547049b46923f7dca"
-      },
-      "derivedName": "Verifier"
+      }
     },
     {
       "name": "ZircuitSuperchainConfig",

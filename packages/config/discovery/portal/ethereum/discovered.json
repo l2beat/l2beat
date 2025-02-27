@@ -30,8 +30,7 @@
         "owner": "0x0000000000000000000000000000000000000000",
         "symbol": "",
         "totalSupply": 0
-      },
-      "derivedName": "TokenImplementation"
+      }
     },
     {
       "name": "WormholeRelayer",

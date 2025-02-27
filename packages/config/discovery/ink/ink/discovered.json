@@ -41,8 +41,7 @@
         "RELAY_GAS_CHECK_BUFFER": 5000,
         "RELAY_RESERVED_GAS": 40000,
         "version": "2.1.1-beta.1"
-      },
-      "derivedName": "L2CrossDomainMessenger"
+      }
     },
     {
       "name": "GasPriceOracle",
@@ -78,8 +77,7 @@
         "isFjord": true,
         "l1BaseFee": 675878815,
         "version": "1.3.1-beta.1"
-      },
-      "derivedName": "GasPriceOracle"
+      }
     },
     {
       "name": "L2StandardBridge",
@@ -110,8 +108,7 @@
         "otherBridge": "0x88FF1e5b602916615391F55854588EFcBB7663f0",
         "paused": false,
         "version": "1.11.1-beta.1"
-      },
-      "derivedName": "L2StandardBridge"
+      }
     },
     {
       "name": "SequencerFeeVault",
@@ -143,8 +140,7 @@
         "version": "1.5.0-beta.2",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
-      },
-      "derivedName": "SequencerFeeVault"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -171,8 +167,7 @@
         "bridge": "0x4200000000000000000000000000000000000010",
         "BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.10.1-beta.2"
-      },
-      "derivedName": "OptimismMintableERC20Factory"
+      }
     },
     {
       "name": "L1BlockNumber",
@@ -197,13 +192,15 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "version": "1.1.1-beta.1"
-      },
-      "derivedName": "L1BlockNumber"
+      }
     },
     {
       "name": "L2ERC721Bridge",
       "address": "0x4200000000000000000000000000000000000014",
-      "unverified": true,
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xf8e3171eeccb9b5e31480276120e77545d7f33ae218b16ee367370dc484149f2"
+      ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
       "issuedPermissions": [
@@ -218,9 +215,14 @@
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
         "$pastUpgrades": [],
-        "$upgradeCount": 0
-      },
-      "derivedName": ""
+        "$upgradeCount": 0,
+        "messenger": "0x4200000000000000000000000000000000000007",
+        "MESSENGER": "0x4200000000000000000000000000000000000007",
+        "OTHER_BRIDGE": "0x661235a238B11191211fa95D4Dd9E423d521E0Be",
+        "otherBridge": "0x661235a238B11191211fa95D4Dd9E423d521E0Be",
+        "paused": false,
+        "version": "1.7.1-beta.2"
+      }
     },
     {
       "name": "L1Block",
@@ -272,8 +274,7 @@
         "sequenceNumber": 6,
         "timestamp": 1740379475,
         "version": "1.5.1-beta.1"
-      },
-      "derivedName": "L1Block"
+      }
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -299,8 +300,7 @@
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
         "version": "1.1.1-beta.1"
-      },
-      "derivedName": "L2ToL1MessagePasser"
+      }
     },
     {
       "name": "OptimismMintableERC721Factory",
@@ -444,8 +444,7 @@
         "version": "1.5.0-beta.2",
         "WITHDRAWAL_NETWORK": 0,
         "withdrawalNetwork": 0
-      },
-      "derivedName": "BaseFeeVault"
+      }
     },
     {
       "name": "L1FeeVault",
@@ -502,8 +501,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "version": "1.3.1-beta.1"
-      },
-      "derivedName": "SchemaRegistry"
+      }
     },
     {
       "name": "EAS",
@@ -533,11 +531,11 @@
         "getRevokeTypeHash": "0xb5d556f07587ec0f08cf386545cc4362c702a001650c2058002615ee5c9d1e75",
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
         "version": "1.4.1-beta.1"
-      },
-      "derivedName": "EAS"
+      }
     }
   ],
   "eoas": [
+    { "address": "0x661235a238B11191211fa95D4Dd9E423d521E0Be" },
     { "address": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f" },
     {
       "name": "SuperchainProxyAdminOwner_L2Alias",
@@ -683,6 +681,16 @@
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x4200000000000000000000000000000000000013": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000014": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -879,6 +887,22 @@
     ],
     "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013": [
       "function getL1BlockNumber() view returns (uint256)",
+      "function version() view returns (string)"
+    ],
+    "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014": [
+      "constructor()",
+      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
+      "function initialize(address _l1ERC721Bridge)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
       "function version() view returns (string)"
     ],
     "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015": [

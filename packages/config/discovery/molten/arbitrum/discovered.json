@@ -274,7 +274,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "ERC20Inbox",
+      "name": "Inbox",
       "address": "0x235000876bd58336C802B3546Fc0250f285fCc79",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -282,7 +282,6 @@
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -313,10 +312,11 @@
         "paused": false,
         "sequencerInbox": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
       },
+      "derivedName": "ERC20Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "L1OrbitERC20Gateway",
+      "name": "ERC20Gateway",
       "address": "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -324,7 +324,6 @@
         "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -355,6 +354,7 @@
         "router": "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1OrbitERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -665,7 +665,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "ERC20RollupEventInbox",
+      "name": "RollupEventInbox",
       "address": "0x9676D55Ccd46ce72235b16bA645008D1D3350B14",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
@@ -673,7 +673,6 @@
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "RollupEventInbox",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
@@ -699,7 +698,8 @@
         "$upgradeCount": 1,
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
-      }
+      },
+      "derivedName": "ERC20RollupEventInbox"
     },
     {
       "name": "ValidatorUtils",
@@ -713,7 +713,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "L1OrbitGatewayRouter",
+      "name": "GatewayRouter",
       "address": "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -721,7 +721,6 @@
         "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -752,10 +751,11 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1OrbitGatewayRouter",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "ERC20Outbox",
+      "name": "Outbox",
       "address": "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -763,7 +763,6 @@
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -798,6 +797,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
       },
+      "derivedName": "ERC20Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -812,7 +812,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "ERC20Bridge",
+      "name": "Bridge",
       "address": "0xE1d32C985825562edAa906fAC39295370Db72195",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -820,7 +820,6 @@
         "0xc138999c828d091534e4fea5f3730160aa2a6366cea16b82a55b9c8de07670df"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -862,6 +861,7 @@
         "sequencerMessageCount": 18606,
         "sequencerReportedSubMessageCount": 9322066
       },
+      "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],

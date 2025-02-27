@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x4753e89929a90ebf5d09fbcd7e54508ddba42aaa
+
+# Diff at Thu, 27 Feb 2025 11:45:22 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21892618
+- current block number: 21892618
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21892618 (main branch discovery), not current.
+
+```diff
+    contract GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      name:
+-        "L1GatewayRouter"
++        "GatewayRouter"
+      displayName:
+-        "GatewayRouter"
+    }
+```
+
 Generated with discovered.json: 0x229ebd49117bef73bcdc5e6a9184bfad5306b5b6
 
 # Diff at Fri, 21 Feb 2025 12:11:24 GMT:

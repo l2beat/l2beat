@@ -74,8 +74,7 @@
         "l2Bridge": "0xa03248B029b4e348F156f4b1d93CB433a4e1361e",
         "l2TokenBeacon": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "BaseProxyAdmin",

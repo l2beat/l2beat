@@ -56,8 +56,7 @@
         "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "Challenge"
+      }
     },
     {
       "name": "ChainOracle",
@@ -92,8 +91,7 @@
         "proxiableUUID": "EXPECT_REVERT",
         "rlpReader": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "ChainOracle"
+      }
     },
     {
       "name": "LightLinkMultisig",
@@ -206,8 +204,7 @@
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "proxiableUUID": "EXPECT_REVERT",
         "systemVerifier": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1BridgeRegistry"
+      }
     },
     {
       "name": "LightLinkERC20Bridge",
@@ -314,8 +311,7 @@
         "publisher": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
         "startingTimestamp": 1717522271,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "CanonicalStateChain"
+      }
     },
     {
       "name": "RLPReader",

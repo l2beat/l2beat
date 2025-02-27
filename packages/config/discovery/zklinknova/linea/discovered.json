@@ -66,8 +66,7 @@
         "revertedBlocks": [],
         "validator": "0x4732015b3B1712A4FC5C059195300D12d529bb77",
         "zkSyncContract": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
-      },
-      "derivedName": "ValidatorTimelock"
+      }
     },
     {
       "name": "zkLink",
@@ -334,8 +333,7 @@
         "l2Bridge": "0x01c3f51294494e350AD69B999Db6B382b3B510b9",
         "l2TokenBeacon": "0x45A4e87354154EB95c2896A43B65bf1148F34908",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "LineaL2Gateway",
@@ -374,8 +372,7 @@
         "MESSAGE_SERVICE": "0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
         "owner": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "ZKLINK": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
-      },
-      "derivedName": "LineaL2Gateway"
+      }
     },
     {
       "name": "Verifier",

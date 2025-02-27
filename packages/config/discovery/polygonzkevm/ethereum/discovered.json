@@ -57,7 +57,7 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "PolygonZkEVMEtrog",
+      "name": "PolygonZkEVM",
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -65,7 +65,6 @@
         "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -144,6 +143,7 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
+      "derivedName": "PolygonZkEVMEtrog",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -184,16 +184,16 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "FflonkVerifier_11",
+      "name": "Verifier",
       "address": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x1b9299553467d8c5557640b4aa02efa58c4fd2cec8e008db1a70ce0a1c5a131b"
       ],
-      "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1726821035,
       "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier_11",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

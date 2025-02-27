@@ -111,8 +111,7 @@
         "newMPCEffectiveTime": 1726816907,
         "oldMPC": "0xaF4A61f99306Be8dFE69a1e369e5f8480Ea3687A",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
-      },
-      "derivedName": "BridgeV2"
+      }
     },
     {
       "name": "Portal",
@@ -179,8 +178,7 @@
         "requestCount": 31929,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "Portal"
+      }
     },
     {
       "name": "Bridge",
@@ -239,8 +237,7 @@
       "values": {
         "$immutable": true,
         "metaRouterGateway": "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"
-      },
-      "derivedName": "MetaRouter"
+      }
     },
     {
       "name": "MetaRouterGateway",

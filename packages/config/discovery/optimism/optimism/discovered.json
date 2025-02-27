@@ -66,8 +66,7 @@
         "$upgradeCount": 0,
         "owner": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
-      },
-      "derivedName": "DeployerWhitelist"
+      }
     },
     {
       "name": "L2CrossDomainMessenger",
@@ -104,8 +103,7 @@
         "RELAY_GAS_CHECK_BUFFER": 5000,
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.4.0"
-      },
-      "derivedName": "L2CrossDomainMessenger"
+      }
     },
     {
       "name": "GasPriceOracle",
@@ -152,8 +150,7 @@
         "isFjord": true,
         "l1BaseFee": 683646119,
         "version": "1.3.0"
-      },
-      "derivedName": "GasPriceOracle"
+      }
     },
     {
       "name": "L2StandardBridge",
@@ -182,8 +179,7 @@
         "MESSENGER": "0x4200000000000000000000000000000000000007",
         "OTHER_BRIDGE": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "version": "1.1.0"
-      },
-      "derivedName": "L2StandardBridge"
+      }
     },
     {
       "name": "SequencerFeeVault",
@@ -211,8 +207,7 @@
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "version": "1.1.0"
-      },
-      "derivedName": "SequencerFeeVault"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -238,8 +233,7 @@
         "$upgradeCount": 0,
         "BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
-      },
-      "derivedName": "OptimismMintableERC20Factory"
+      }
     },
     {
       "name": "L1BlockNumber",
@@ -264,8 +258,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "version": "1.0.0"
-      },
-      "derivedName": "L1BlockNumber"
+      }
     },
     {
       "name": "L2ERC721Bridge",
@@ -300,8 +293,7 @@
         "OTHER_BRIDGE": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "otherBridge": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "version": "1.1.0"
-      },
-      "derivedName": "L2ERC721Bridge"
+      }
     },
     {
       "name": "L1Block",
@@ -352,8 +344,7 @@
         "sequenceNumber": 1,
         "timestamp": 1740379355,
         "version": "1.2.0"
-      },
-      "derivedName": "L1Block"
+      }
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -379,8 +370,7 @@
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
         "version": "1.0.0"
-      },
-      "derivedName": "L2ToL1MessagePasser"
+      }
     },
     {
       "name": "OptimismMintableERC721Factory",
@@ -407,8 +397,7 @@
         "BRIDGE": "0x4200000000000000000000000000000000000014",
         "REMOTE_CHAIN_ID": 1,
         "version": "1.2.0"
-      },
-      "derivedName": "OptimismMintableERC721Factory"
+      }
     },
     {
       "name": "L2ProxyAdmin",
@@ -530,8 +519,7 @@
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "version": "1.1.0"
-      },
-      "derivedName": "BaseFeeVault"
+      }
     },
     {
       "name": "L1FeeVault",
@@ -558,8 +546,7 @@
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "version": "1.1.0"
-      },
-      "derivedName": "L1FeeVault"
+      }
     },
     {
       "name": "SchemaRegistry",
@@ -590,8 +577,7 @@
         ],
         "$upgradeCount": 1,
         "version": "1.0.1"
-      },
-      "derivedName": "SchemaRegistry"
+      }
     },
     {
       "name": "EAS",
@@ -627,8 +613,7 @@
         "getRevokeTypeHash": "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650",
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
         "version": "1.0.1"
-      },
-      "derivedName": "EAS"
+      }
     },
     {
       "name": "OPToken",
@@ -674,8 +659,7 @@
         "MINT_PERIOD": 31536000,
         "mintPermittedAfter": 0,
         "owner": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
-      },
-      "derivedName": "MintManager"
+      }
     }
   ],
   "eoas": [

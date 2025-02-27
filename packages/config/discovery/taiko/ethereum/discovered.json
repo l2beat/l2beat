@@ -342,8 +342,7 @@
         "proxiableUUID": "EXPECT_REVERT",
         "symbol": "TAIKO",
         "totalSupply": "1000000000000000000000000000"
-      },
-      "derivedName": "TaikoToken"
+      }
     },
     {
       "name": "MainnetProverSet",
@@ -408,8 +407,7 @@
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "Risc0Verifier"
+      }
     },
     {
       "name": "GuardianMinorityProver",
@@ -617,8 +615,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "sp1RemoteVerifier": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
       "name": "SP1RemoteVerifier",
@@ -832,8 +829,7 @@
         "TIER_SGX_ZKVM": {
           "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
         }
-      },
-      "derivedName": "MainnetTierRouter"
+      }
     },
     {
       "name": "AutomataDcapV3Attestation",
@@ -891,8 +887,7 @@
           "mrsigner": "0x8c4f5775d796503e96137f77c68a829a0056ac8ded70140b081b094490c57bff"
         },
         "sigVerifyLib": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
-      },
-      "derivedName": "AutomataDcapV3Attestation"
+      }
     },
     {
       "name": "SharedERC20Vault",

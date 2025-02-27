@@ -48,8 +48,7 @@
           "100034524092695877009538769",
           "100150034524092695877009517"
         ]
-      },
-      "derivedName": "VotingToken"
+      }
     },
     {
       "name": "Soneium_Adapter",
@@ -157,8 +156,7 @@
       "values": {
         "$immutable": true,
         "owner": "0xB524735356985D2f267FA010D681f061DfF03715"
-      },
-      "derivedName": "AcrossConfigStore"
+      }
     },
     {
       "name": "Finder",
@@ -189,8 +187,7 @@
         "l2ChainId": 137,
         "l2WrappedMatic": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
         "maticToken": "0x0000000000000000000000000000000000001010"
-      },
-      "derivedName": "PolygonTokenBridger"
+      }
     },
     {
       "name": "ProposerV2",
@@ -208,8 +205,7 @@
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "ProposerV2"
+      }
     },
     {
       "name": "Ethereum_Adapter",
@@ -312,8 +308,7 @@
         "UPDATE_BYTES32_DEPOSIT_DETAILS_HASH": "0x8d1994e2bbbd77564cdca06dd819e7ee2a5efa06c80dcb59a4a7b6e39edc538f",
         "withdrawalRecipient": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "Ethereum_SpokePool"
+      }
     },
     {
       "name": "Alephzero_Adapter",
@@ -364,8 +359,7 @@
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
         "numProposals": 205
-      },
-      "derivedName": "GovernorV2"
+      }
     },
     {
       "name": "LpTokenFactory",
@@ -511,8 +505,7 @@
         "ZodiacModule_guard": "0x0000000000000000000000000000000000000000",
         "ZodiacModule_modules": [],
         "ZodiacModule_target": "0xB524735356985D2f267FA010D681f061DfF03715"
-      },
-      "derivedName": "OptimisticGovernor"
+      }
     },
     {
       "name": "EmergencyProposer",
@@ -532,8 +525,7 @@
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "EmergencyProposer"
+      }
     },
     {
       "name": "WorldChain_Adapter",
@@ -726,8 +718,7 @@
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "HubPool"
+      }
     },
     {
       "name": "Base_Adapter",
@@ -819,8 +810,7 @@
         "proposers": ["0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"],
         "symbol": "ABT",
         "totalSupply": "28095402467539846062"
-      },
-      "derivedName": "BondToken"
+      }
     },
     {
       "name": "UMAOptimisticOracle",
@@ -926,8 +916,7 @@
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      },
-      "derivedName": "OptimisticOracleV3"
+      }
     }
   ],
   "eoas": [

@@ -304,8 +304,7 @@
         "$immutable": true,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "whitelisted": ["0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"]
-      },
-      "derivedName": "Whitelist"
+      }
     },
     {
       "name": "ZkEvmVerifierV2",
@@ -318,8 +317,7 @@
         "$immutable": true,
         "plonkVerifier": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
         "verifierDigest": "0x30513ba1873ce1b9598c4faf101dccd32498e93c39e1f31a423390cbb1f81f7a"
-      },
-      "derivedName": "ZkEvmVerifierV2"
+      }
     },
     {
       "name": "TimelockSlow",
@@ -377,8 +375,7 @@
       "values": {
         "$immutable": true,
         "plonkVerifier": "0x2293cd12e8564e8219d314b075867c2f66ac6941"
-      },
-      "derivedName": "ZkEvmVerifierV1"
+      }
     },
     {
       "name": "PlonkVerifierV0",
@@ -431,8 +428,7 @@
         "legacyVerifiersLength": [0, 0, 0, 0, 0],
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "verifierVersions": [0, 1, 2, 3, 4]
-      },
-      "derivedName": "MultipleVersionRollupVerifier"
+      }
     },
     {
       "name": "ZkEvmVerifierV0",
@@ -537,8 +533,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1ERC721Gateway"
+      }
     },
     {
       "name": "ZkEvmVerifierV1-1",
@@ -691,8 +686,7 @@
         "paused": false,
         "rollup": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "xDomainMessageSender": "0x0000000000000000000000000000000000000001"
-      },
-      "derivedName": "L1ScrollMessenger"
+      }
     },
     {
       "name": "Safe",
@@ -795,8 +789,7 @@
           "severity": "HIGH",
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
         }
-      },
-      "derivedName": "EnforcedTxGateway"
+      }
     },
     {
       "name": "L2ScrollMessengerFallback",
@@ -1001,8 +994,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
-      },
-      "derivedName": "ScrollOwner"
+      }
     },
     {
       "name": "L1WETHGateway",
@@ -1041,8 +1033,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      },
-      "derivedName": "L1WETHGateway"
+      }
     },
     {
       "name": "L2ERC721GatewayFallback",
@@ -1405,8 +1396,7 @@
           "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
         ],
         "verifier": "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
-      },
-      "derivedName": "ScrollChain"
+      }
     },
     {
       "name": "L1CustomERC20Gateway",
@@ -1444,8 +1434,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      },
-      "derivedName": "L1CustomERC20Gateway"
+      }
     },
     {
       "name": "L1ERC1155Gateway",
@@ -1483,8 +1472,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1ERC1155Gateway"
+      }
     },
     {
       "name": "ScrollEmergencyMultisig",
@@ -1768,8 +1756,7 @@
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
         "totalBridgedUSDC": 19661614051270,
         "withdrawPaused": false
-      },
-      "derivedName": "L1USDCGateway"
+      }
     },
     {
       "name": "L1GatewayRouter",
@@ -1802,8 +1789,7 @@
         "ethGateway": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
         "gatewayInContext": "0x0000000000000000000000000000000000000000",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
-      },
-      "derivedName": "L1GatewayRouter"
+      }
     }
   ],
   "eoas": [

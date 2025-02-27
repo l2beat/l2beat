@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x2bc8fc86c8976b7195bb37ebc2ea23d06921c29f
+
+# Diff at Thu, 27 Feb 2025 11:46:20 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "PolygonZkEVMEtrog"
++        "PolygonZkEVM"
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
+```diff
+    contract Verifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "FflonkVerifier_11"
++        "Verifier"
+      displayName:
+-        "Verifier"
+    }
+```
+
 Generated with discovered.json: 0xa802adbfc210dd392e41644df7670037a0af1835
 
 # Diff at Wed, 26 Feb 2025 10:32:58 GMT:

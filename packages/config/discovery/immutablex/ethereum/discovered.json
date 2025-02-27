@@ -29,8 +29,7 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 5
-      },
-      "derivedName": "Committee"
+      }
     },
     {
       "name": "OrderRegistry",

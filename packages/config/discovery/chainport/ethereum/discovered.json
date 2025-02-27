@@ -29,8 +29,7 @@
         "getMinimalQuorum": 3,
         "getNumberOfMembers": 4,
         "name": "ChainportCongressMembersRegistry"
-      },
-      "derivedName": "ChainportCongressMembersRegistry"
+      }
     },
     {
       "name": "MultisigVault2",
@@ -208,8 +207,7 @@
           "severity": "MEDIUM",
           "description": "The amount of proposals ever created. Goes up by 1 for each proposal."
         }
-      },
-      "derivedName": "ChainportCongress"
+      }
     }
   ],
   "eoas": [

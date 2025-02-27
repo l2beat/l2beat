@@ -18,8 +18,7 @@
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
-      },
-      "derivedName": "LoopringIOExchangeOwner"
+      }
     },
     {
       "name": "LoopringV3",
@@ -164,8 +163,7 @@
           }
         },
         "version": "0.1.0"
-      },
-      "derivedName": "ExchangeV3"
+      }
     },
     {
       "name": "DefaultDepositContract",

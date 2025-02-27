@@ -156,8 +156,7 @@
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
-      },
-      "derivedName": "SP1VerifierGateway"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -543,8 +542,7 @@
         "submissionInterval": 4320,
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "version": "v1.0.0-rc2"
-      },
-      "derivedName": "OPSuccinctL2OutputOracle"
+      }
     },
     {
       "name": "SuccinctGatewaySP1Multisig",
@@ -711,7 +709,6 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

@@ -15,8 +15,7 @@
         "$immutable": true,
         "chainId": 1,
         "owner": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622"
-      },
-      "derivedName": "GasOracle"
+      }
     },
     {
       "name": "AllbridgeMessenger",
@@ -121,8 +120,7 @@
         "chainId": 1,
         "otherChainIds": "0x0000010001010100010101010001000000000000000000000000000000000000",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
-      },
-      "derivedName": "WormholeMessenger"
+      }
     },
     {
       "name": "Validator",
@@ -261,8 +259,7 @@
         "chainId": 1,
         "getDomainByChainId": [5],
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
-      },
-      "derivedName": "CctpBridge"
+      }
     },
     {
       "name": "OldWormholeMessenger",

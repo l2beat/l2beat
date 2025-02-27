@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xe19486c0f950f6a6c8a0cb9047b93dd7473ece36
+
+# Diff at Thu, 27 Feb 2025 11:47:54 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 6881137
+- current block number: 6881137
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 6881137 (main branch discovery), not current.
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      unverified:
+-        true
+      values.messenger:
++        "0x4200000000000000000000000000000000000007"
+      values.MESSENGER:
++        "0x4200000000000000000000000000000000000007"
+      values.OTHER_BRIDGE:
++        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      values.otherBridge:
++        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      values.paused:
++        false
+      values.version:
++        "1.7.1-beta.2"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0xf8e3171eeccb9b5e31480276120e77545d7f33ae218b16ee367370dc484149f2"]
+    }
+```
+
 Generated with discovered.json: 0xb21b0a094164aa7fd1f8800e6424fe088522fc14
 
 # Diff at Mon, 24 Feb 2025 06:46:01 GMT:

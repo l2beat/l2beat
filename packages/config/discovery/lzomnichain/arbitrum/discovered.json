@@ -118,8 +118,7 @@
           "0xe4DD168822767C4342e54e6241f0b91DE0d3c241"
         ],
         "owner": "0xFE22f5D2755b06b9149656C5793Cb15A08d09847"
-      },
-      "derivedName": "Endpoint"
+      }
     },
     {
       "name": "MPTValidator01",
@@ -1597,8 +1596,7 @@
           "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     },
     {
       "name": "NonceContract",

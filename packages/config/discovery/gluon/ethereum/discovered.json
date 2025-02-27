@@ -63,8 +63,7 @@
         "submissionInterval": 36,
         "upgradeOperator": "0x0000000000000000000000000000000000000000",
         "visibilityDelay": 1
-      },
-      "derivedName": "SpotLogic"
+      }
     },
     {
       "name": "RegistryLogic",
@@ -122,8 +121,7 @@
         ],
         "totalAppsCount": 4,
         "version": "1.1.0"
-      },
-      "derivedName": "Gluon"
+      }
     },
     {
       "name": "ApiKeyRegistry",
@@ -178,8 +176,7 @@
           "0xdAC17F958D2ee523a2206206994597C13D831ec7"
         ],
         "upgradeOperator": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "StakeLogic"
+      }
     },
     {
       "name": "StakeData",
@@ -216,8 +213,7 @@
         ],
         "tokens": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"],
         "version": "2.0.2"
-      },
-      "derivedName": "LegacyTokensExtension"
+      }
     },
     {
       "name": "DerivativesLogic",
@@ -249,8 +245,7 @@
         "submissionInterval": 36,
         "upgradeOperator": "0x0000000000000000000000000000000000000000",
         "visibilityDelay": 1
-      },
-      "derivedName": "DerivativesLogic"
+      }
     }
   ],
   "eoas": [

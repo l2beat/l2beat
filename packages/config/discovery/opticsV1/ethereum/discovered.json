@@ -316,8 +316,7 @@
         "localDomain": 6648936,
         "owner": "0x42303634F37956687fB7ff2c6146AC842481A052",
         "watchers": ["0xeE42B7757798cf495CDaA8eDb0CC237F07c60C81"]
-      },
-      "derivedName": "XAppConnectionManager"
+      }
     },
     {
       "name": "HomeBeaconProxy",

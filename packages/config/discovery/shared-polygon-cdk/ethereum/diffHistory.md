@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x10917e985ceae936d9e950fcf60ef01adaa8cb97
+
+# Diff at Thu, 27 Feb 2025 11:46:35 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21802929
+- current block number: 21802929
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802929 (main branch discovery), not current.
+
+```diff
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
+      name:
+-        "PolygonZkEVMBridgeV2"
++        "PolygonSharedBridge"
+      displayName:
+-        "PolygonSharedBridge"
+    }
+```
+
+```diff
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      name:
+-        "PolygonZkEVMGlobalExitRootV2"
++        "PolygonGlobalExitRootV2"
+      displayName:
+-        "PolygonGlobalExitRootV2"
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      name:
+-        "PolygonZkEVMTimelock"
++        "Timelock"
+      displayName:
+-        "Timelock"
+    }
+```
+
 Generated with discovered.json: 0xd997d4561c3633ed6714606b73c62d3de3fbc674
 
 # Diff at Wed, 26 Feb 2025 10:33:07 GMT:

@@ -193,8 +193,7 @@
       ],
       "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1722153659,
-      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 46 },
-      "derivedName": "WLDGrant"
+      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 46 }
     },
     {
       "name": "RecurringGrantDrop",
@@ -212,8 +211,7 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "token": "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
         "worldIdRouter": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
-      },
-      "derivedName": "RecurringGrantDrop"
+      }
     },
     {
       "name": "GnosisSafeL2",

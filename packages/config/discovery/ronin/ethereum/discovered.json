@@ -108,8 +108,7 @@
         "getTotalWeight": 2200,
         "minimumVoteWeight": 1540,
         "totalBridgeOperator": 22
-      },
-      "derivedName": "MainchainBridgeManager"
+      }
     },
     {
       "name": "RoninManagerMultiSig",
@@ -281,8 +280,7 @@
         "name": "Wrapped Ether",
         "symbol": "WETH",
         "totalSupply": "2728790155190780839876210"
-      },
-      "derivedName": "WETH9"
+      }
     },
     {
       "name": "PauseEnforcer",
@@ -316,8 +314,7 @@
         "emergency": false,
         "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
         "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
-      },
-      "derivedName": "PauseEnforcer"
+      }
     }
   ],
   "eoas": [

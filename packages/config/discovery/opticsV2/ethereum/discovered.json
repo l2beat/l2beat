@@ -135,8 +135,7 @@
       "values": {
         "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
-      },
-      "derivedName": "UpgradeBeaconController"
+      }
     },
     {
       "name": "BridgeRouterBeaconProxy",
@@ -200,8 +199,7 @@
         "localDomain": 6648936,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "watchers": ["0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"]
-      },
-      "derivedName": "XAppConnectionManager"
+      }
     },
     {
       "name": "ReplicaUpgradeBeacon",
