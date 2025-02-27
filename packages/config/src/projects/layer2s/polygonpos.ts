@@ -112,22 +112,15 @@ export const polygonpos: Layer2 = {
         tokens: ['ETH'],
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://polygon.llamarpc.com',
-      defaultCallsPerMinute: 1500,
+    activityConfig: {
+      type: 'block',
       startBlock: 5000000,
     },
   },
   chainConfig: {
     name: 'polygonpos',
     chainId: 137,
-    blockscoutV2ApiUrl: 'https://polygon.blockscout.com/api/v2',
     explorerUrl: 'https://polygonscan.com',
-    explorerApi: {
-      url: 'https://api.polygonscan.com/api',
-      type: 'etherscan',
-    },
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -135,6 +128,15 @@ export const polygonpos: Layer2 = {
         sinceBlock: 25770160,
         version: '3',
       },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://polygon.llamarpc.com',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api.polygonscan.com/api' },
+      { type: 'blockscoutV2', url: 'https://polygon.blockscout.com/api/v2' },
     ],
   },
   dataAvailability: {

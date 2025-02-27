@@ -38,7 +38,17 @@ export const metal: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.metall2.com',
+  chainConfig: {
+    name: 'metal',
+    chainId: 1750,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.metall2.com',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1711567115),
   // finality: {
   //   type: 'OPStack-blob',

@@ -55,6 +55,17 @@ export const immutablezkevm: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'immutablezkevm',
+    chainId: 13371,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.immutable.com',
+        callsPerMinute: 500,
+      },
+    ],
+  },
   config: {
     associatedTokens: ['IMX'],
     escrows: [
@@ -65,11 +76,9 @@ export const immutablezkevm: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.immutable.com',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
-      defaultCallsPerMinute: 500,
     },
   },
   dataAvailability: {

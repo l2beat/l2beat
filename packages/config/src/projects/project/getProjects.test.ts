@@ -173,7 +173,9 @@ describe('getProjects', () => {
     it('every chainId is unique', () => {
       const encountered = new Set()
       for (const chain of chains) {
-        expect(encountered.has(chain.chainId)).toEqual(false)
+        if (encountered.has(chain.chainId)) {
+          expect(chain.chainId).toEqual(undefined)
+        }
         encountered.add(chain.chainId)
       }
     })
@@ -182,6 +184,16 @@ describe('getProjects', () => {
       for (const chain of chains) {
         if (chain.explorerUrl) {
           expect(chain.explorerUrl).toMatchRegex(/\w$/)
+        }
+      }
+    })
+
+    it('every api url uses https', () => {
+      for (const chain of chains) {
+        for (const api of chain.apis) {
+          if ('url' in api) {
+            expect(api.url).toMatchRegex(/^https:\/\//)
+          }
         }
       }
     })

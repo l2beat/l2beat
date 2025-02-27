@@ -96,6 +96,9 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
   async getRollupData(tx: EVMTransaction): Promise<Uint8Array[]> {
     switch (Number(tx.type)) {
       case 2:
+        if (tx.data === '0x') {
+          return []
+        }
         return [byteArrFromHexStr(tx.data)]
       case 3: {
         assert(
@@ -109,6 +112,10 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
             tx.blockNumber,
           )
         if (blobs.length === 0) return []
+        const data = getRollupData(blobs)
+        if (Number(data.toString()) === 0) {
+          return []
+        }
         return getRollupData(blobs)
       }
       default:

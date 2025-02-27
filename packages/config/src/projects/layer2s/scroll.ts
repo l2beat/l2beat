@@ -151,11 +151,7 @@ export const scroll: Layer2 = {
     name: 'scroll',
     chainId: 534352,
     explorerUrl: 'https://scrollscan.com',
-    explorerApi: {
-      url: 'https://api.scrollscan.com/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1696917600),
+    sinceTimestamp: new UnixTime(1696917600),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -165,6 +161,10 @@ export const scroll: Layer2 = {
       },
     ],
     coingeckoPlatform: 'scroll',
+    apis: [
+      { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },
+      { type: 'etherscan', url: 'https://api.scrollscan.com/api' },
+    ],
   },
   config: {
     associatedTokens: ['SCR'],
@@ -213,10 +213,8 @@ export const scroll: Layer2 = {
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.scroll.io',
-      defaultCallsPerMinute: 120,
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
     },
     daTracking: [

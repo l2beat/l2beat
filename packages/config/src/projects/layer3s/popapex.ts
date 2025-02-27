@@ -45,11 +45,20 @@ export const popapex: Layer3 = orbitStackL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'popapex',
+    chainId: 70700,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.apex.proofofplay.com',
+        callsPerMinute: 5000,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.apex.proofofplay.com',
-    defaultCallsPerMinute: 5000,
     adjustCount: { type: 'SubtractOne' },
   },
   milestones: [

@@ -35,7 +35,6 @@ export const soneium = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.soneium.org/',
   finality: {
     type: 'OPStack',
     minTimestamp: new UnixTime(1733134753),
@@ -49,14 +48,9 @@ export const soneium = opStackL2({
   chainConfig: {
     name: 'soneium',
     chainId: 1868,
-    blockscoutV2ApiUrl: 'https://soneium.blockscout.com/api/v2',
     explorerUrl: 'https://soneium.blockscout.com',
     coingeckoPlatform: 'soneium',
-    explorerApi: {
-      url: 'https://soneium.blockscout.com/api',
-      type: 'blockscout',
-    },
-    minTimestampForTvl: new UnixTime(1733134751),
+    sinceTimestamp: new UnixTime(1733134751),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -64,6 +58,11 @@ export const soneium = opStackL2({
         sinceBlock: 1,
         version: '3',
       },
+    ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.soneium.org/', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://soneium.blockscout.com/api' },
+      { type: 'blockscoutV2', url: 'https://soneium.blockscout.com/api/v2' },
     ],
   },
   nonTemplateEscrows: [

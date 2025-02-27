@@ -36,6 +36,7 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectActivityConfig,
   ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
@@ -52,12 +53,12 @@ import type {
   ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
   StageConfig,
-  TransactionApiConfig,
 } from '../../../types'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
+import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -130,8 +131,7 @@ interface OrbitStackConfigCommon {
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
-  rpcUrl?: string
-  transactionApi?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   milestones?: Milestone[]
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
@@ -836,17 +836,15 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           ],
           'address',
         ),
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+          adjustCount: { type: 'SubtractOne' },
+        },
+      ),
       daTracking: getDaTracking(templateVars),
       gasTokens:
         templateVars.gasTokens?.tracked?.concat(
@@ -1176,17 +1174,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+          adjustCount: { type: 'SubtractOne' },
+        },
+      ),
       daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,

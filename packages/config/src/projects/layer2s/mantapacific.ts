@@ -36,11 +36,8 @@ export const mantapacific: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://pacific-rpc.manta.network/http',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://pacific-rpc.manta.network/http',
-    defaultCallsPerMinute: 1500,
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
@@ -53,13 +50,9 @@ export const mantapacific: Layer2 = opStackL2({
     name: 'mantapacific',
     chainId: 169,
     explorerUrl: 'https://pacific-explorer.manta.network',
-    explorerApi: {
-      url: 'https://pacific-explorer.manta.network/api',
-      type: 'blockscout',
-    },
     // ~ Timestamp of block number 0 on MantaPacific
     // https://pacific-explorer.manta.network/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
     multicallContracts: [
       {
         sinceBlock: 332890,
@@ -75,6 +68,14 @@ export const mantapacific: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'manta-pacific',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://pacific-rpc.manta.network/http',
+        callsPerMinute: 1500,
+      },
+      { type: 'blockscout', url: 'https://pacific-explorer.manta.network/api' },
+    ],
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,

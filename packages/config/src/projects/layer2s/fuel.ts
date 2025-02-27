@@ -134,11 +134,18 @@ export const fuel: Layer2 = {
         },
       },
     ],
-    transactionApi: {
-      type: 'fuel',
-      defaultUrl: 'https://mainnet.fuel.network/v1/graphql',
-      defaultCallsPerMinute: 120,
-    },
+    activityConfig: { type: 'block' },
+  },
+  chainConfig: {
+    name: 'fuel',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'fuel',
+        url: 'https://mainnet.fuel.network/v1/graphql',
+        callsPerMinute: 120,
+      },
+    ],
   },
   riskView: {
     stateValidation: {

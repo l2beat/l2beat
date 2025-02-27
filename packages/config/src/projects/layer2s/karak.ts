@@ -31,7 +31,17 @@ export const karak: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.karak.network/',
+  chainConfig: {
+    name: 'karak',
+    chainId: 2410,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.karak.network/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start

@@ -92,6 +92,7 @@ export const avalanche: Bridge = {
         version: '3',
       },
     ],
+    apis: [],
   },
   riskView: {
     validatedBy: {

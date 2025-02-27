@@ -12,9 +12,11 @@ const Checkbox = ({
   className,
   children,
   name,
+  labelTitle,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
   name: string
+  labelTitle?: string
 }) => {
   const id = useId()
   const { track } = useTracking()
@@ -27,6 +29,7 @@ const Checkbox = ({
         props.disabled && 'cursor-not-allowed opacity-50',
         className,
       )}
+      title={labelTitle}
     >
       <CheckboxPrimitive.Root
         id={id}

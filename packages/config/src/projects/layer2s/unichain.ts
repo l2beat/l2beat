@@ -60,7 +60,6 @@ export const unichain: Layer2 = opStackL2({
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
-  rpcUrl: 'https://mainnet.unichain.org',
   associatedTokens: ['UNI'],
   finality: {
     type: 'OPStack',
@@ -79,10 +78,6 @@ export const unichain: Layer2 = opStackL2({
     chainId: 130,
     coingeckoPlatform: 'unichain',
     explorerUrl: 'https://uniscan.xyz',
-    explorerApi: {
-      url: 'https://api.uniscan.xyz/api',
-      type: 'etherscan',
-    },
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -91,7 +86,15 @@ export const unichain: Layer2 = opStackL2({
         version: '3',
       },
     ],
-    minTimestampForTvl: genesisTimestamp,
+    sinceTimestamp: genesisTimestamp,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.unichain.org',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api.uniscan.xyz/api' },
+    ],
   },
   milestones: [
     {

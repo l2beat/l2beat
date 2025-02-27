@@ -1,47 +1,141 @@
-Generated with discovered.json: 0x031713ba6c5dfb757f00f52e5ecde83d2f7b495f
+Generated with discovered.json: 0x4896f584e32c30c45de35c5820fdf4d674c49759
 
-# Diff at Thu, 27 Feb 2025 09:54:54 GMT:
+# Diff at Wed, 26 Feb 2025 16:19:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@12656ddc442b003f444057c1d2cf33819a024162 block: 9648418
-- current block number: 9901727
+- comparing to: main@9eb8b2d626938c85a098b11b809352a92a892736 block: 9648418
+- current block number: 9838404
 
 ## Description
 
-Config related.
+Config related: Add L2 contracts as templates with source.
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9648418 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      template:
++        "opstack/Layer2/L2CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      template:
++        "opstack/Layer2/GasPriceOracle"
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      template:
++        "opstack/Layer2/L2StandardBridge"
+    }
+```
 
 ```diff
     contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
     +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
-      values.$pastUpgrades.0:
-+        ["2024-12-05T19:19:37.000Z","0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]]
-      values.$upgradeCount:
--        0
-+        1
+      template:
++        "opstack/Layer2/SequencerFeeVault"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      template:
++        "opstack/Layer2/OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      template:
++        "opstack/Layer2/L1BlockNumber"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      template:
++        "opstack/Layer2/L2ERC721Bridge"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      template:
++        "opstack/Layer2/L1Block"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      template:
++        "opstack/Layer2/L2ToL1MessagePasser"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      template:
++        "opstack/Layer2/OptimismMintableERC721Factory"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: Administration contract for other contract proxies.
+      name:
+-        "L2ProxyAdmin"
++        "ProxyAdmin"
+      displayName:
++        "L2ProxyAdmin"
     }
 ```
 
 ```diff
     contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
     +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
-      values.$pastUpgrades.0:
-+        ["2024-12-05T19:19:37.000Z","0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]]
-      values.$upgradeCount:
--        0
-+        1
+      template:
++        "opstack/Layer2/BaseFeeVault"
     }
 ```
 
 ```diff
     contract L1FeeVault (0x420000000000000000000000000000000000001A) {
     +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
-      values.$pastUpgrades.0:
-+        ["2024-12-05T19:19:37.000Z","0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]]
-      values.$upgradeCount:
--        0
-+        1
+      template:
++        "opstack/Layer2/L1FeeVault"
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      template:
++        "opstack/Layer2/SchemaRegistry"
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      template:
++        "opstack/Layer2/EAS"
     }
 ```
 

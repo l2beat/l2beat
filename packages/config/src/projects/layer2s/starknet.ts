@@ -313,6 +313,17 @@ export const starknet: Layer2 = {
         "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet's costs represent a rough estimate, and we are working to provide more accurate values.",
     },
   },
+  chainConfig: {
+    name: 'starknet',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'starknet',
+        url: 'https://starknet-mainnet.public.blastapi.io',
+        callsPerMinute: 120,
+      },
+    ],
+  },
   config: {
     associatedTokens: ['STRK'],
     escrows: [
@@ -500,10 +511,8 @@ export const starknet: Layer2 = {
         ],
       }),
     ],
-    transactionApi: {
-      type: 'starknet',
-      defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
-      defaultCallsPerMinute: 120,
+    activityConfig: {
+      type: 'block',
     },
     daTracking: [
       {

@@ -67,13 +67,20 @@ export const xlayer: Layer2 = polygonCDKStack({
     name: 'xlayer',
     chainId: 196,
     explorerUrl: 'https://rpc.xlayer.tech',
-    minTimestampForTvl: new UnixTime(1711782180),
+    sinceTimestamp: new UnixTime(1711782180),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         batchSize: 150,
         sinceBlock: 47416,
         version: '3',
+      },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.xlayer.tech',
+        callsPerMinute: 1500,
       },
     ],
   },
@@ -119,7 +126,6 @@ export const xlayer: Layer2 = polygonCDKStack({
   ],
   rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier_13'),
-  rpcUrl: 'https://rpc.xlayer.tech',
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
     newCryptography: {

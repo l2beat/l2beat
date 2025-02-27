@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
@@ -15,7 +15,12 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
+import {
+  type CostsTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
+import { formatBytes } from '~/utils/number-format/format-bytes'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { formatNumber } from '~/utils/number-format/format-number'
 
@@ -40,6 +45,11 @@ const chartMeta = {
     color: 'hsl(var(--chart-costs-overhead))',
     indicatorType: { shape: 'square' },
   },
+  posted: {
+    label: 'Data posted',
+    color: 'hsl(var(--chart-emerald))',
+    indicatorType: { shape: 'line' },
+  },
 } satisfies ChartMeta
 
 interface CostsChartDataPoint {
@@ -48,6 +58,7 @@ interface CostsChartDataPoint {
   blobs: number | undefined
   compute: number
   overhead: number
+  posted?: number | null
 }
 
 interface Props {
@@ -55,7 +66,8 @@ interface Props {
   unit: CostsUnit
   isLoading: boolean
   milestones: Milestone[]
-  resolution: CostsResolution
+  range: CostsTimeRange
+  showDataPosted: boolean
   className?: string
 }
 
@@ -65,8 +77,11 @@ export function CostsChart({
   isLoading,
   milestones,
   className,
-  resolution,
+  range,
+  showDataPosted,
 }: Props) {
+  const resolution = rangeToResolution(range)
+
   return (
     <ChartContainer
       data={data}
@@ -75,9 +90,10 @@ export function CostsChart({
       milestones={milestones}
       className={className}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
+          yAxisId="left"
           dataKey="overhead"
           fill={chartMeta.overhead.color}
           fillOpacity={1}
@@ -88,6 +104,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
+          yAxisId="left"
           dataKey="compute"
           fill={chartMeta.compute.color}
           fillOpacity={1}
@@ -98,6 +115,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
+          yAxisId="left"
           dataKey="blobs"
           fill={chartMeta.blobs.color}
           fillOpacity={1}
@@ -108,6 +126,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
+          yAxisId="left"
           dataKey="calldata"
           fill={chartMeta.calldata.color}
           fillOpacity={1}
@@ -117,10 +136,38 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
+        {showDataPosted && range !== '1d' && (
+          <Line
+            yAxisId="right"
+            dataKey="posted"
+            strokeWidth={2}
+            stroke={chartMeta.posted.color}
+            type={resolution === 'hourly' ? 'stepAfter' : undefined}
+            dot={false}
+            isAnimationActive={false}
+          />
+        )}
+        {showDataPosted && (
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tickFormatter={(value: number) => formatBytes(value)}
+            tickLine={false}
+            axisLine={false}
+            mirror
+            tickCount={3}
+            dy={-10}
+            tick={{
+              width: 100,
+            }}
+          />
+        )}
+
         {getCommonChartComponents({
           data,
           isLoading,
           yAxis: {
+            yAxisId: 'left',
             tickFormatter: (value: number) =>
               unit === 'gas'
                 ? formatNumber(value)
@@ -130,7 +177,7 @@ export function CostsChart({
         <ChartTooltip
           content={<CustomTooltip unit={unit} resolution={resolution} />}
         />
-      </AreaChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }
@@ -147,7 +194,12 @@ function CustomTooltip({
 }) {
   if (!active || !payload || typeof label !== 'number') return null
   const reversedPayload = [...payload].reverse()
-  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+  const total = payload.reduce((acc, curr) => {
+    if (curr.name === 'posted') {
+      return acc
+    }
+    return acc + (curr?.value ?? 0)
+  }, 0)
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-40 flex-col gap-1">
@@ -183,7 +235,9 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">
-                  {formatCostValue(entry.value, unit, 'total')}
+                  {entry.name === 'posted'
+                    ? formatBytes(entry.value)
+                    : formatCostValue(entry.value, unit, 'total')}
                 </span>
               </div>
             )

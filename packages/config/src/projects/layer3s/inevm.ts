@@ -49,7 +49,17 @@ export const inevm: Layer3 = orbitStackL3({
   ],
   gasTokens: { untracked: ['INJ'] },
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  rpcUrl: 'https://inevm.calderachain.xyz/http',
+  chainConfig: {
+    name: 'inevm',
+    chainId: 2525,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://inevm.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

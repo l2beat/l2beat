@@ -35,7 +35,17 @@ export const muster: Layer3 = orbitStackL3({
       socialMedia: ['https://x.com/Cometh', 'https://blog.cometh.io/'],
     },
   },
-  rpcUrl: 'https://muster.alt.technology',
+  chainConfig: {
+    name: 'muster',
+    chainId: 4078,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://muster.alt.technology',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

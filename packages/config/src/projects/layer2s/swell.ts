@@ -33,7 +33,6 @@ export const swell = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.ankr.com/swell',
   finality: {
     type: 'OPStack',
     minTimestamp: new UnixTime(1732701647),
@@ -47,8 +46,14 @@ export const swell = opStackL2({
   chainConfig: {
     name: 'swell',
     chainId: 1923,
-    // coingeckoPlatform: '',
-    minTimestampForTvl: new UnixTime(1732696703),
+    sinceTimestamp: new UnixTime(1732696703),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ankr.com/swell',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

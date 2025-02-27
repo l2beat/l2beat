@@ -155,6 +155,11 @@ export const apex: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'apex',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['apex_usdc', 'apex_usdt'] }],
+  },
   config: {
     associatedTokens: ['APEX'],
     escrows: [
@@ -168,9 +173,8 @@ export const apex: Layer2 = {
         tokens: ['USDT'],
       }),
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['apex_usdc', 'apex_usdt'],
+    activityConfig: {
+      type: 'day',
       sinceTimestamp: new UnixTime(1660252039),
       resyncLastDays: 7,
     },

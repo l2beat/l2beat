@@ -15,12 +15,12 @@ export function getAggLayerL2TokenEntry(
   project: Project<'tvlConfig', 'chainConfig'>,
 ): AggLayerL2Token {
   assert(escrow.sharedEscrow?.type === 'AggLayer')
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+  assert(chain.sinceTimestamp, 'Chain should have sinceTimestamp')
   assert(token.address, 'Token address is required for AggLayer escrow')
 
   const source = escrow.source ?? 'canonical'
   const sinceTimestamp = UnixTime.max(
-    UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
+    UnixTime.max(chain.sinceTimestamp, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
   const untilTimestamp = getEscrowUntilTimestamp(

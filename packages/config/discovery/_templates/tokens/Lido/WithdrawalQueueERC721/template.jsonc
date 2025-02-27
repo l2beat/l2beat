@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getApproved",
+    "getLastCheckpointIndex",
+    "ownerOf",
+    "tokenURI"
+  ],
+  "ignoreInWatchMode": [
+    "getLastFinalizedRequestId",
+    "getLastRequestId",
+    "getLockedEtherAmount",
+    "unfinalizedRequestNumber",
+    "unfinalizedStETH"
+  ]
+}

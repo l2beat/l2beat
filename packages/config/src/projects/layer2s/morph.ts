@@ -102,11 +102,9 @@ export const morph: Layer2 = {
     },
   }),
   config: {
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.morphl2.io',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
-      defaultCallsPerMinute: 300,
     },
     escrows: [
       {
@@ -185,13 +183,20 @@ export const morph: Layer2 = {
     chainId: 2818,
     // explorerUrl: 'https://explorer.morphl2.io/', // needed?
     coingeckoPlatform: 'morph-l2',
-    minTimestampForTvl: new UnixTime(1729490400), // morph block 0
+    sinceTimestamp: new UnixTime(1729490400), // morph block 0
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         batchSize: 150,
         sinceBlock: 3654913,
         version: '3',
+      },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.morphl2.io',
+        callsPerMinute: 300,
       },
     ],
   },

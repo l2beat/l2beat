@@ -41,7 +41,17 @@ export const optopia: Layer2 = opStackL2({
   //   stateUpdate: 'disabled',
   // },
   isNodeAvailable: true,
-  rpcUrl: 'https://rpc-mainnet-2.optopia.ai', // chainId: 62050
+  chainConfig: {
+    name: 'optopia',
+    chainId: 62050,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-mainnet-2.optopia.ai',
+        callsPerMinute: 1500,
+      },
+    ],
+  }, // chainId: 62050
   milestones: [
     {
       title: 'Optopia Mainnet Launch',

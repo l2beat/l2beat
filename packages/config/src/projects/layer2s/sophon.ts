@@ -46,12 +46,18 @@ export const sophon: Layer2 = zkStackL2({
   },
   associatedTokens: ['SOPH'],
   gasTokens: { tracked: ['SOPH'] },
-  rpcUrl: 'https://rpc.sophon.xyz/',
   chainConfig: {
     name: 'sophon',
     chainId: 50104,
     explorerUrl: 'https://explorer.sophon.xyz',
-    minTimestampForTvl: new UnixTime(1729531437),
+    sinceTimestamp: new UnixTime(1729531437),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.sophon.xyz/',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {

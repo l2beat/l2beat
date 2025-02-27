@@ -5,7 +5,6 @@ import {
   tokenList,
 } from '@l2beat/config'
 import { assert, type AmountConfigEntry, type Token } from '@l2beat/shared-pure'
-import { keyBy } from 'lodash'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'
 import { aggLayerEscrowToEntries } from './amounts/custom/aggLayerEscrowToEntries'
@@ -73,7 +72,7 @@ export function getTvlAmountsConfig(
         }
         default: {
           for (const token of escrow.tokens) {
-            const chain = chains.find((x) => x.chainId === +token.chainId)
+            const chain = chains.find((x) => x.name === token.chainName)
             assert(chain, `Chain not found for token ${token.id}`)
             assert(
               chain.name === escrow.chain,
@@ -107,11 +106,11 @@ export function getTvlAmountsConfigForProject(
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
 
   const projectTokens = nonZeroSupplyTokens.filter(
-    (t) => t.chainId === project.chainConfig?.chainId,
+    (t) => t.chainName === project.chainConfig?.name,
   )
 
   for (const token of projectTokens) {
-    const chain = chains.find((x) => x.chainId === +token.chainId)
+    const chain = chains.find((x) => x.name === token.chainName)
     assert(chain, `Chain not found for token ${token.symbol}`)
 
     const configEntry = projectTokenToConfigEntry(chain, token, project)
@@ -119,7 +118,10 @@ export function getTvlAmountsConfigForProject(
     entries.push(configEntry)
   }
 
-  const chainMap = keyBy(chains, (e) => e.chainId)
+  const chainMap: Record<string, ChainConfig> = {}
+  for (const chain of chains) {
+    chainMap[chain.name] = chain
+  }
 
   for (const escrow of project.tvlConfig.escrows) {
     switch (escrow.sharedEscrow?.type) {
@@ -144,7 +146,7 @@ export function getTvlAmountsConfigForProject(
       }
       default: {
         for (const token of escrow.tokens) {
-          const chain = chainMap[+token.chainId]
+          const chain = chainMap[token.chainName]
           assert(chain, `Chain not found for token ${token.id}`)
           assert(
             chain.name === escrow.chain,
@@ -201,7 +203,7 @@ function findProjectAndChain(
   token: Token,
   projects: Project<'tvlConfig', 'chainConfig'>[],
 ) {
-  const project = projects.find((x) => x.chainConfig?.chainId === token.chainId)
+  const project = projects.find((x) => x.chainConfig?.name === token.chainName)
   assert(project, `Project not found for token ${token.symbol}`)
   const chain = project.chainConfig
   assert(chain, `Chain not found for token ${token.symbol}`)

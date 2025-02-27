@@ -116,7 +116,17 @@ export const orderly: Layer2 = opStackL2({
       },
     },
   ],
-  rpcUrl: 'https://rpc.orderly.network',
+  chainConfig: {
+    name: 'orderly',
+    chainId: 291,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.orderly.network',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1696566432),
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start

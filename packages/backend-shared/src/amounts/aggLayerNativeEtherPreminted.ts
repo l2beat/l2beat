@@ -13,7 +13,7 @@ export function getAggLayerNativeEtherPremintedEntry(
   project: Project<'tvlConfig', 'chainConfig'>,
 ): AggLayerNativeEtherPreminted {
   assert(escrow.sharedEscrow?.type === 'AggLayer')
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+  assert(chain.sinceTimestamp, 'Chain should have sinceTimestamp')
 
   // We are hardcoding assetId because aggLayerNativeEtherPreminted is a canonical token
   const assetId = AssetId.create('ethereum', 'native')
@@ -29,7 +29,7 @@ export function getAggLayerNativeEtherPremintedEntry(
   const isAssociated = false
   const symbol = 'ETH'
   const sinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
+    chain.sinceTimestamp,
     escrow.sinceTimestamp,
   )
   const untilTimestamp = escrow.untilTimestamp

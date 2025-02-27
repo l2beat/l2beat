@@ -3,18 +3,17 @@ import type {
   Layer2FinalityConfig,
   OnchainVerifier,
   Project,
+  ProjectActivityConfig,
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
-  ChainId,
   PriceConfigEntry,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
@@ -37,7 +36,7 @@ export interface Config {
   readonly flatSourceModuleEnabled: boolean
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
-  readonly chains: { name: string; chainId: ChainId }[]
+  readonly chains: { name: string; chainId: number | undefined }[]
   readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
   readonly chainConfig: ChainApi[]
@@ -144,7 +143,6 @@ export interface ChainTvlConfig {
   readonly chain: string
   readonly config?: {
     readonly projectId: ProjectId
-    readonly chainId: ChainId
     readonly providerUrl: string
     readonly providerCallsPerMinute: number
     readonly minBlockTimestamp: UnixTime
@@ -168,7 +166,10 @@ export interface ActivityConfig {
 
 export interface ActivityConfigProject {
   id: ProjectId
-  config: ActivityTransactionConfig
+  chainName: string
+  activityConfig: ProjectActivityConfig
+  /** @deprecated This should somehow be configured differently */
+  batchSize: number
 }
 
 export interface MetricsAuthConfig {

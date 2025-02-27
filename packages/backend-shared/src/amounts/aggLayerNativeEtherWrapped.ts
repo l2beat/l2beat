@@ -14,7 +14,7 @@ export function getAggLayerNativeEtherWrappedEntry(
   project: Project<'tvlConfig', 'chainConfig'>,
 ): AggLayerNativeEtherWrapped {
   assert(escrow.sharedEscrow?.type === 'AggLayer')
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+  assert(chain.sinceTimestamp, 'Chain should have sinceTimestamp')
   assert(escrow.sharedEscrow.wethAddress, 'WETH address is required')
   assert(l1WETH.address, 'Ethereum WETH token not found')
 
@@ -26,7 +26,7 @@ export function getAggLayerNativeEtherWrappedEntry(
   const source = 'canonical'
   const includeInTotal = true
   const sinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
+    chain.sinceTimestamp,
     escrow.sinceTimestamp,
   )
   const untilTimestamp = escrow.untilTimestamp

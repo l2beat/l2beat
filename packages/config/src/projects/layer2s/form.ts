@@ -42,12 +42,18 @@ export const form: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.form.network/http',
   chainConfig: {
     name: 'form',
     chainId: 478,
     explorerUrl: 'https://explorer.form.network',
-    minTimestampForTvl: genesisTimestamp,
+    sinceTimestamp: genesisTimestamp,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.form.network/http',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   discovery,
   genesisTimestamp,

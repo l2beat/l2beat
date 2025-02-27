@@ -10,7 +10,7 @@ export async function getFinalityConfig(
 ): Promise<FinalityConfig> {
   const projects = await ps.getProjects({
     select: ['finalityConfig'],
-    optional: ['transactionApiConfig'],
+    optional: ['chainConfig'],
     whereNot: ['isArchived'],
   })
 
@@ -27,28 +27,27 @@ export async function getFinalityConfig(
 
 function getChainFinalityConfig(
   env: Env,
-  project: Project<never, 'transactionApiConfig'>,
+  project: Project<never, 'chainConfig'>,
 ) {
-  if (
-    project.transactionApiConfig?.type === 'loopring' ||
-    project.transactionApiConfig?.type === 'degate3'
-  ) {
-    return {
-      url: project.transactionApiConfig.defaultUrl,
-      callsPerMinute: project.transactionApiConfig.defaultCallsPerMinute,
-    }
-  }
+  const rpc = project.chainConfig?.apis.find(
+    (x) => x.type === 'rpc' || x.type === 'loopring' || x.type === 'degate3',
+  )
+
+  const url = rpc?.url
+  const callsPerMinute = rpc?.callsPerMinute
 
   const ENV_NAME = project.id.toUpperCase().replace(/-/g, '_')
 
   return {
-    url: env.optionalString([
-      `${ENV_NAME}_RPC_URL_FOR_FINALITY`,
-      `${ENV_NAME}_RPC_URL`,
-    ]),
-    callsPerMinute: env.optionalInteger([
-      `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_FINALITY`,
-      `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
-    ]),
+    url:
+      env.optionalString([
+        `${ENV_NAME}_RPC_URL_FOR_FINALITY`,
+        `${ENV_NAME}_RPC_URL`,
+      ]) ?? url,
+    callsPerMinute:
+      env.optionalInteger([
+        `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_FINALITY`,
+        `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+      ]) ?? callsPerMinute,
   }
 }
