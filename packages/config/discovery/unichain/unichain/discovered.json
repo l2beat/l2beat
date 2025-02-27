@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "blockNumber": 9648418,
+  "blockNumber": 9901727,
   "configHash": "0x7e119fb0e48e81ae87c4943538efae7ef8f14bf0a49dd9b05de257cf2962b1c2",
   "contracts": [
     {
@@ -56,7 +56,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620027",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620040",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -96,14 +96,14 @@
         "$upgradeCount": 0,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 29394706,
+        "blobBaseFee": 1177737055,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 887166343,
+        "l1BaseFee": 657671785,
         "version": "1.3.1-beta.1"
       },
       "derivedName": "GasPriceOracle"
@@ -160,8 +160,14 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",
+            ["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "l1FeeWallet": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
@@ -288,10 +294,10 @@
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "basefee": 887166343,
+        "basefee": 657671785,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 29394706,
+        "blobBaseFee": 1177737055,
         "blobBaseFeeScalar": 900000,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -300,13 +306,13 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x0276d2a74d2bbe75b8d5c3efe240664226ac5d9d51ff9388e5a5e83e65b68e96",
+        "hash": "0x9ba02e84c529c651ad3b1e0cbea68aa9e3637d3db02d093ec23eb0fe2d70451d",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 21915901,
-        "sequenceNumber": 6,
-        "timestamp": 1740396719,
+        "number": 21936901,
+        "sequenceNumber": 7,
+        "timestamp": 1740650027,
         "version": "1.5.1-beta.1"
       },
       "derivedName": "L1Block"
@@ -481,8 +487,14 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",
+            ["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -513,8 +525,14 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",
+            ["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
