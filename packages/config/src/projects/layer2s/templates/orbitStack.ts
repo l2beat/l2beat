@@ -503,7 +503,6 @@ function orbitStackCommon(
         templateVars.overrideEscrows ??
         unionBy(
           [
-            ...(templateVars.nonTemplateEscrows ?? []),
             templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
               address: templateVars.bridge.address,
@@ -513,6 +512,7 @@ function orbitStackCommon(
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
+            ...(templateVars.nonTemplateEscrows ?? []),
           ],
           'address',
         ),
