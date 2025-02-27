@@ -31,6 +31,6 @@ transitivePermission(Receiver, Permission, Giver, (cons(tuple(Via, "act", Delay)
   permission(Receiver, "act", Via),
   defaultedPermissionDelay(Receiver, "act", Via, Delay).
 
-#show eoa/3.
-#show contract/3.
+#show eoa/4.
+#show contract/4.
 #show transitivePermission/4.

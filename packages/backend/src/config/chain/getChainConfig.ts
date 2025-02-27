@@ -56,8 +56,11 @@ export async function getChainConfig(
         case 'zksync':
           blockApis.push({
             type: api.type,
-            url: api.url,
-            callsPerMinute: api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
+            url: env.string(Env.key(chain, 'API_URL'), api.url),
+            callsPerMinute: env.integer(
+              Env.key(chain, 'API_CALLS_PER_MINUTE'),
+              api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
+            ),
             retryStrategy: 'RELIABLE',
           })
           break
