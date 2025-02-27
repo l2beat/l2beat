@@ -59,33 +59,25 @@ function createIndexers(
   const dataIndexers: PremintedIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
-  for (const chainConfig of config.chains) {
-    const chain = chainConfig.chain
-    if (!chainConfig.config) {
-      continue
-    }
-
+  for (const chain of config.chains) {
     const premintedTokens = config.amounts
-      .filter((a) => a.chain === chain)
+      .filter((a) => a.chain === chain.name)
       .filter((a): a is PremintedEntry => a.type === 'preminted')
 
     if (premintedTokens.length === 0) {
       continue
     }
 
-    const rpcClient = dependencies.clients.getRpcClient(chain)
+    const rpcClient = dependencies.clients.getRpcClient(chain.name)
 
     const amountService = new AmountService({
       rpcClient: rpcClient,
-      multicallClient: new MulticallClient(
-        rpcClient,
-        chainConfig.config.multicallConfig,
-      ),
-      logger: logger.tag({ tag: chain, chain }),
+      multicallClient: new MulticallClient(rpcClient, chain.multicallConfig),
+      logger: logger.tag({ tag: chain.name, chain: chain.name }),
     })
 
     const blockTimestampIndexer =
-      blockTimestampIndexers && blockTimestampIndexers.get(chain)
+      blockTimestampIndexers && blockTimestampIndexers.get(chain.name)
     assert(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',

@@ -64,15 +64,10 @@ function createIndexers(
   const dataIndexers: ElasticChainIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
-  for (const chainConfig of config.chains) {
-    const chain = chainConfig.chain
-    if (!chainConfig.config) {
-      continue
-    }
-
+  for (const chain of config.chains) {
     const elasticChainAmountEntries = config.amounts.filter(
       (a): a is ElasticChainAmountConfig =>
-        a.chain === chain &&
+        a.chain === chain.name &&
         (a.type === 'elasticChainL2Token' || a.type === 'elasticChainEther'),
     )
 
@@ -80,10 +75,10 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = dependencies.clients.getRpcClient(chain)
+    const rpcClient = dependencies.clients.getRpcClient(chain.name)
 
     const sharedEscrow = config.projects
-      .find((p) => p.id === chain)
+      .find((p) => p.id === chain.name)
       ?.tvlConfig.escrows.find(
         (e) => e.sharedEscrow && e.sharedEscrow.type === 'ElasticChain',
       )
@@ -94,31 +89,25 @@ function createIndexers(
 
     const elasticChainService = new ElasticChainService({
       rpcClient: rpcClient,
-      multicallClient: new MulticallClient(
-        rpcClient,
-        chainConfig.config.multicallConfig,
-      ),
+      multicallClient: new MulticallClient(rpcClient, chain.multicallConfig),
       bridgeAddress: sharedEscrow.sharedEscrow.l2BridgeAddress,
     })
 
     const blockTimestampIndexer =
-      blockTimestampIndexers && blockTimestampIndexers.get(chain)
+      blockTimestampIndexers && blockTimestampIndexers.get(chain.name)
     assert(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',
     )
 
-    const configurations = toConfigurations(
-      chainConfig,
-      elasticChainAmountEntries,
-    )
+    const configurations = toConfigurations(chain, elasticChainAmountEntries)
 
     const elasticChainIndexer = new ElasticChainIndexer({
       logger,
       parents: [blockTimestampIndexer],
       indexerService,
       configurations,
-      chain,
+      chain: chain.name,
       elasticChainService,
       serializeConfiguration,
       syncOptimizer,
@@ -166,17 +155,15 @@ function createIndexers(
 }
 
 function toConfigurations(
-  chainConfig: ChainTvlConfig,
+  chain: ChainTvlConfig,
   elasticChainAmountEntries: ElasticChainAmountConfig[],
 ) {
-  assert(chainConfig.config)
-  const chainMinTimestamp = chainConfig.config.minBlockTimestamp
   const elasticChainAmountConfigurations = elasticChainAmountEntries.map(
     (a) => ({
       id: createAmountId(a),
       properties: a,
-      minHeight: a.sinceTimestamp.lt(chainMinTimestamp)
-        ? chainMinTimestamp.toNumber()
+      minHeight: a.sinceTimestamp.lt(chain.minBlockTimestamp)
+        ? chain.minBlockTimestamp.toNumber()
         : a.sinceTimestamp.toNumber(),
       maxHeight: a.untilTimestamp?.toNumber() ?? null,
     }),

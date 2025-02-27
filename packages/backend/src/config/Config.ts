@@ -140,18 +140,15 @@ export interface EtherscanChainConfig {
 }
 
 export interface ChainTvlConfig {
-  readonly chain: string
-  readonly config?: {
-    readonly projectId: ProjectId
-    readonly providerUrl: string
-    readonly providerCallsPerMinute: number
-    readonly minBlockTimestamp: UnixTime
-    readonly blockExplorerConfig:
-      | EtherscanChainConfig
-      | BlockscoutChainConfig
-      | undefined
-    readonly multicallConfig: MulticallConfigEntry[]
-  }
+  readonly name: string
+  readonly providerUrl: string
+  readonly providerCallsPerMinute: number
+  readonly minBlockTimestamp: UnixTime
+  readonly blockExplorerConfig:
+    | EtherscanChainConfig
+    | BlockscoutChainConfig
+    | undefined
+  readonly multicallConfig: MulticallConfigEntry[]
 }
 
 export interface HealthConfig {
