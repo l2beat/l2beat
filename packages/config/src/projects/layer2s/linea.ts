@@ -689,5 +689,5 @@ export const linea: Layer2 = {
       type: 'general',
     },
   ],
-  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Other.L3HostChain],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
 }

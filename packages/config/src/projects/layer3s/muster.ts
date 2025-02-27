@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('muster', 'arbitrum')
 
 export const muster: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1718609683), // 2024-06-17T07:34:43Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

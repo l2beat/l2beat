@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getNodeOperator",
+    "getNodeOperatorIsActive",
+    "getNodeOperatorNonWithdrawnKeys",
+    "getNodeOperatorSummary",
+    "getNonce"
+  ],
+  "ignoreInWatchMode": [
+    "getActiveNodeOperatorsCount",
+    "depositQueue",
+    "getStakingModuleSummary"
+  ]
+}

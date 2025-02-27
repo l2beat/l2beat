@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('corn')
 export const corn: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

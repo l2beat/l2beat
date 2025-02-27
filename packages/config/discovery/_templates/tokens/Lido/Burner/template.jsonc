@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": [
+    "getCoverSharesBurnt",
+    "getExcessStETH",
+    "getNonCoverSharesBurnt",
+    "getSharesRequestedToBurn"
+  ]
+}

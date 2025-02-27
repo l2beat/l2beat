@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('fluence')
 export const fluence: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

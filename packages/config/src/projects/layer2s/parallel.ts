@@ -10,7 +10,6 @@ export const parallel: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
   isArchived: true,
   discovery,
-  additionalBadges: [],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Parallel',

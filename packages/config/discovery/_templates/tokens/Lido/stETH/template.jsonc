@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "stETH_tokenContract",
+  "ignoreMethods": [
+    "getPooledEthByShares",
+    "getSharesByPooledEth",
+    "getTotalELRewardsCollected"
+  ],
+  "ignoreInWatchMode": [
+    "totalSupply",
+    "getBeaconStat",
+    "getBufferedEther",
+    "getDepositableEther",
+    "getStakeLimitFullInfo",
+    "getTotalPooledEther",
+    "getTotalShares"
+  ]
+}

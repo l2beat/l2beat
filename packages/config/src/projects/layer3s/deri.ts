@@ -32,5 +32,4 @@ export const deri = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  usesBlobs: true,
 })

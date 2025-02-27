@@ -9,11 +9,7 @@ const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
 export const rari: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
-  additionalBadges: [
-    BADGES.DA.CelestiaBlobstream,
-    BADGES.L3ParentChain.Arbitrum,
-    BADGES.RaaS.Caldera,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],

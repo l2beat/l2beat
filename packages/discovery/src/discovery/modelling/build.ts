@@ -17,6 +17,7 @@ export function buildAndSaveModels(
   outputFolder: string,
 ) {
   const addressToNameMap = buildAddressToNameMap(
+    discoveryOutput.chain,
     discoveryOutput.contracts,
     discoveryOutput.eoas,
   )
@@ -55,7 +56,10 @@ export function buildTemplateModels(
 
     for (const path of templateModelPaths) {
       const content = readFileSync(path, 'utf8')
-      const values = contractValuesForInterpolation(contract)
+      const values = contractValuesForInterpolation(
+        discoveryOutput.chain,
+        contract,
+      )
       const interpolated = interpolateModelTemplate(
         content,
         values,
@@ -81,13 +85,14 @@ export function findTemplateModelFiles(templatePath: string): string[] {
 }
 
 export function buildAddressToNameMap(
+  chain: string,
   contracts: ContractParameters[],
   eoas: EoaParameters[],
 ): Record<string, string> {
   const result: Record<string, string> = {}
   for (const entity of [...contracts, ...eoas]) {
     const address = entity.address.toLowerCase()
-    const suffix = '_' + address
+    const suffix = `_${chain}_${address}`
     result[address] = (entity.name ?? 'eoa') + suffix
   }
   return result

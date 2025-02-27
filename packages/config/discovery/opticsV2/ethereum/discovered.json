@@ -1,7 +1,7 @@
 {
   "name": "opticsV2",
   "chain": "ethereum",
-  "blockNumber": 20878317,
+  "blockNumber": 21937191,
   "configHash": "0x350a19363eeadf16d76108236f8728385e94cc1e8d13f106cc6d29929358f841",
   "contracts": [
     {
@@ -48,7 +48,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "committedRoot": "0xb5156b94d857dfc1e57814de7c215442c7c89c442da8dea11ce45b604526e2ab",
+        "committedRoot": "0x45c93ed9db8741eddc463ca8cfd790f946d708adc0ddcb57de0048a26633f0f4",
         "homeDomainHash": "0x6b881beed7c8ffb30baea620e40be2b61ea2706b341014fb812bc7ff2f75fca1",
         "localDomain": 6648936,
         "OpticsBeacon_beacon": "0xA734EDE8229970776e1B68085D579b6b6E97dAd4",
@@ -250,8 +250,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "committedRoot": "0xd889c3c8d1a1e5348651bf0c111f0abf98c994adceb2aa74d4e8de5812b14588",
-        "count": 1696,
+        "committedRoot": "0xef77a5d128e5a891819e59950da0cf583432ce12a82619532bd4738351427dce",
+        "count": 1701,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
@@ -259,13 +259,13 @@
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "queueLength": 0,
-        "root": "0xd889c3c8d1a1e5348651bf0c111f0abf98c994adceb2aa74d4e8de5812b14588",
+        "root": "0xef77a5d128e5a891819e59950da0cf583432ce12a82619532bd4738351427dce",
         "state": 1,
         "suggestUpdate": {
           "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
-        "tree": 1696,
+        "tree": 1701,
         "updater": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0",
         "updaterManager": "0x81B97dfBB743c343983e9bE7B863dB636DbD7373",
         "VERSION": 0

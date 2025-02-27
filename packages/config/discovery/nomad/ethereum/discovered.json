@@ -1,7 +1,7 @@
 {
   "name": "nomad",
   "chain": "ethereum",
-  "blockNumber": 19531994,
+  "blockNumber": 21937195,
   "configHash": "0xa05b0e409ae2c341e0bfbec6d3df43711db7be126258c5cd45c492e0525e97b0",
   "contracts": [
     {
@@ -42,7 +42,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "committedRoot": "0xbdbc1d35568f4eba93ad3dddeb36adaa97b9362ec579bfe302bc4555758c79f9",
+        "committedRoot": "0xe4b36eb1b76ae0a0519308627ca33e93fa126308d5e90c9156967009db1877d1",
         "homeDomainHash": "0x6d99fb87e3b04d5511e33963be35e5bf1413faef07088eb5a343ed9bae06d90c",
         "LEGACY_STATUS_NONE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LEGACY_STATUS_PROCESSED": "0x0000000000000000000000000000000000000000000000000000000000000002",
