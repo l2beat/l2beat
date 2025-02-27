@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "CLEAR",
+      "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8"
+    },
+    {
       "symbol": "DOG",
       "address": "0xbaac2b4491727d78d2b78815144570b9f2fe8899"
     },
@@ -6135,5 +6139,22 @@
         ]
       }
     }
+  ],
+  "everclear": [
+    {
+      "symbol": "CLEAR",
+      "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
+      "source": "external",
+      "coingeckoId": "everclear",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
   ]
 }

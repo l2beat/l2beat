@@ -34,7 +34,7 @@ export const everclear: Layer2 = orbitStackL2({
       ],
     },
   },
-  associatedTokens: ['NEXT'],
+  associatedTokens: ['NEXT', 'CLEAR'],
   chainConfig: {
     name: 'everclear',
     chainId: 25327,
