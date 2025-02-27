@@ -870,6 +870,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   links: ProjectLinks
+  badges: Badge[]
 }
 
 export interface ProjectLinks {

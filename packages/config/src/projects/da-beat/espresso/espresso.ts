@@ -47,6 +47,7 @@ export const espresso: BaseProject = {
         'https://medium.com/@espressosys',
       ],
     },
+    badges: [],
   },
   daLayer: {
     type: 'DA Service',

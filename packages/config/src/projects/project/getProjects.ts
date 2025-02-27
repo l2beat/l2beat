@@ -67,6 +67,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     display: {
       description: p.display.description,
       links: p.display.links,
+      badges: p.badges ?? [],
     },
     contracts: p.contracts,
     permissions: p.permissions,
@@ -182,6 +183,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     display: {
       description: p.display.description,
       links: p.display.links,
+      badges: [],
     },
     bridgeInfo: {
       category: p.display.category,
