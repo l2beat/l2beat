@@ -26,7 +26,7 @@ export function Header<T extends { id: string }>({
         </div>
         <div className="absolute -bottom-2 left-0 h-2 w-full bg-surface-primary" />
       </PrimaryCard>
-      <div className="fixed top-0 -z-1 h-8 w-full bg-background" />
+      <div className="fixed top-0 z-1 hidden h-8 w-full bg-background md:block" />
       <PrimaryCard
         className={cn(
           'sticky top-0 z-10 w-full bg-surface-primary py-4 transition-all md:top-6 md:rounded-t-xl',

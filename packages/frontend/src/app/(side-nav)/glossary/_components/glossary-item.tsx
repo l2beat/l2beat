@@ -9,7 +9,7 @@ interface Props {
 export function GlossaryItem(props: Props) {
   return (
     <section
-      className="mt-6 scroll-m-12 first:mt-0 md:scroll-mt-24"
+      className="mt-6 scroll-m-12 first:mt-0 md:scroll-mt-[92px]"
       id={props.entry.id}
     >
       <div className="group flex items-center gap-2 pb-2 text-primary">

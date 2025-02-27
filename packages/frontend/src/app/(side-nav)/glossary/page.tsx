@@ -21,10 +21,10 @@ export default function Page() {
 
   return (
     <>
-      <MainPageHeader>Glossary</MainPageHeader>
+      <MainPageHeader className="relative z-10">Glossary</MainPageHeader>
       <Header glossaryEntries={glossaryEntries} />
       <main className="mt-0 flex gap-8 border-t border-divider md:-mt-2 md:border-t-0">
-        <PrimaryCard className="-z-10">
+        <PrimaryCard className="">
           {glossaryEntries.map((entry) => (
             <GlossaryItem key={entry.id} entry={entry} />
           ))}
