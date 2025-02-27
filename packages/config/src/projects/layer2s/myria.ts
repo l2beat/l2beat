@@ -94,6 +94,11 @@ export const myria: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'myria',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['myria'] }],
+  },
   config: {
     associatedTokens: ['MYRIA'],
     escrows: [
@@ -103,9 +108,8 @@ export const myria: Layer2 = {
         tokens: ['ETH'],
       }),
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['myria'],
+    activityConfig: {
+      type: 'day',
       sinceTimestamp: new UnixTime(1659542607),
       resyncLastDays: 7,
     },

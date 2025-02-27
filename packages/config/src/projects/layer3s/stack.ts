@@ -39,7 +39,17 @@ export const stack: Layer3 = opStackL3({
       ],
     },
   },
-  rpcUrl: 'https://rpc.stack.so',
+  chainConfig: {
+    name: 'stack',
+    chainId: 78225,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.stack.so',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1709683711),
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start

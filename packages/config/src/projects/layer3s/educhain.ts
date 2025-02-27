@@ -42,7 +42,17 @@ export const educhain: Layer3 = orbitStackL3({
       ],
     },
   },
-  rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
+  chainConfig: {
+    name: 'educhain',
+    chainId: 41923,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.edu-chain.raas.gelato.cloud',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   associatedTokens: ['EDU'],
   gasTokens: { tracked: ['EDU'] },
   nonTemplateEscrows: [

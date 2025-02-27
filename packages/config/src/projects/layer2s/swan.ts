@@ -45,7 +45,17 @@ export const swan: Layer2 = opStackL2({
   //   stateUpdate: 'disabled',
   // },
   isNodeAvailable: true,
-  rpcUrl: 'https://mainnet-rpc01.swanchain.io',
+  chainConfig: {
+    name: 'swan',
+    chainId: 254,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet-rpc01.swanchain.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   milestones: [
     {
       title: 'Mainnet launch',

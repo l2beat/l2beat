@@ -134,6 +134,11 @@ export const dydx: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'dydx',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['dydx'] }],
+  },
   config: {
     associatedTokens: ['DYDX'],
     escrows: [
@@ -144,9 +149,8 @@ export const dydx: Layer2 = {
         ...priorityExecutorUpgradeability,
       }),
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['dydx'],
+    activityConfig: {
+      type: 'day',
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
     },

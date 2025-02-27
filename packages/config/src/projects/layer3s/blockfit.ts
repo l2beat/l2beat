@@ -28,11 +28,20 @@ export const blockfit: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/Fit24updates', 'https://t.me/fit24updates'],
     },
   },
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'blockfit',
+    chainId: 202424,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.blockfitscan.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.blockfitscan.io',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
 }) //no escrow since gas token is not on CoinGecko

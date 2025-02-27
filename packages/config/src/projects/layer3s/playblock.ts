@@ -37,7 +37,13 @@ export const playblock: Layer3 = orbitStackL3({
   },
   gasTokens: { untracked: ['PBG'] },
   // associatedTokens: ['PBG'],
-  rpcUrl: 'https://playnance.drpc.org/',
+  chainConfig: {
+    name: 'playblock',
+    chainId: 1829,
+    apis: [
+      { type: 'rpc', url: 'https://playnance.drpc.org/', callsPerMinute: 1500 },
+    ],
+  },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

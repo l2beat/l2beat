@@ -35,7 +35,17 @@ export const everclear: Layer2 = orbitStackL2({
     },
   },
   associatedTokens: ['NEXT'],
-  rpcUrl: 'https://rpc.everclear.raas.gelato.cloud',
+  chainConfig: {
+    name: 'everclear',
+    chainId: 25327,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.everclear.raas.gelato.cloud',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

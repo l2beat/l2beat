@@ -37,7 +37,6 @@ export const lyra: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
@@ -817,13 +816,9 @@ export const lyra: Layer2 = opStackL2({
     name: 'lyra',
     chainId: 957,
     explorerUrl: 'https://explorer.lyra.finance',
-    explorerApi: {
-      url: 'https://explorer.lyra.finance/api',
-      type: 'blockscout',
-    },
     // ~ Timestamp of block number 0 on Lyra
     // https://explorer.lyra.finance/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
     multicallContracts: [
       {
         sinceBlock: 1935198,
@@ -831,6 +826,10 @@ export const lyra: Layer2 = opStackL2({
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         version: '3',
       },
+    ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.lyra.finance', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.lyra.finance/api' },
     ],
   },
 })

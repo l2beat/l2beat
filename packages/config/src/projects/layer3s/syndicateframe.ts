@@ -37,7 +37,17 @@ export const syndicateframe: Layer3 = opStackL3({
       ],
     },
   },
-  rpcUrl: 'https://rpc-frame.syndicate.io',
+  chainConfig: {
+    name: 'syndicateframe',
+    chainId: 5101,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-frame.syndicate.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1707371473),
   isNodeAvailable: 'UnderReview',
 })

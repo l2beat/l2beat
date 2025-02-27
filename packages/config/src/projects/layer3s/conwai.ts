@@ -34,11 +34,20 @@ export const conwai: Layer3 = underReviewL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'conwai',
+    chainId: 668668,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://conwai.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://conwai.calderachain.xyz/http',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
 }) //no escrow cause token is not on CG

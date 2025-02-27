@@ -74,20 +74,26 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.frax.com',
   genesisTimestamp: new UnixTime(1706811599),
   isNodeAvailable: true,
   chainConfig: {
     name: 'fraxtal',
     chainId: 252,
     explorerUrl: 'https://fraxscan.com',
-    explorerApi: {
-      url: 'https://api.fraxscan.com/api',
-      type: 'etherscan',
-    },
     // ~ Timestamp of block number 1
-    minTimestampForTvl: new UnixTime(1706810713),
+    sinceTimestamp: new UnixTime(1706810713),
     coingeckoPlatform: 'fraxtal',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.frax.com',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.fraxscan.com/api',
+      },
+    ],
   },
   nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['frxETH'],

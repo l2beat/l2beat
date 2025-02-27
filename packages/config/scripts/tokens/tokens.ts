@@ -50,9 +50,7 @@ async function main() {
     (x) => x.chainConfig,
   )
 
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-  )
+  const chainConverter = new ChainConverter(chains)
 
   function saveToken(token: GeneratedToken) {
     const index = result.findIndex(
@@ -200,13 +198,10 @@ function getCoingeckoClient() {
 }
 
 function getChainId(logger: ScriptLogger, chain: ChainConfig) {
-  let chainId: ChainId | undefined = undefined
-  try {
-    chainId = ChainId(chain.chainId)
-  } catch {
+  if (!chain.chainId) {
     logger.assert(false, `ChainId not found for`)
   }
-  return chainId
+  return ChainId(chain.chainId)
 }
 
 function getSource(

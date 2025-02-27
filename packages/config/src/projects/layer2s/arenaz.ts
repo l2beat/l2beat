@@ -29,7 +29,17 @@ export const arenaz = opStackL2({
       socialMedia: ['https://x.com/OfficialArenaZ'],
     },
   },
-  rpcUrl: 'https://rpc.arena-z.gg/',
+  chainConfig: {
+    name: 'arenaz',
+    chainId: 7897,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.arena-z.gg/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   finality: {
     type: 'OPStack',
     minTimestamp: genesisTimestamp,

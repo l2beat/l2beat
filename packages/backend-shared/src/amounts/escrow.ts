@@ -14,7 +14,7 @@ export function getEscrowEntry(
   escrow: ProjectTvlEscrow,
   project: Project<'tvlConfig', 'chainConfig'>,
 ): EscrowEntry {
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+  assert(chain.sinceTimestamp, 'Chain should have sinceTimestamp')
 
   const address = token.address ?? 'native'
   const assetId = AssetId.create(chain.name, address)
@@ -26,7 +26,7 @@ export function getEscrowEntry(
     token.symbol,
   )
   const sinceTimestamp = UnixTime.max(
-    UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
+    UnixTime.max(chain.sinceTimestamp, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
   const source = escrow.source ?? 'canonical'

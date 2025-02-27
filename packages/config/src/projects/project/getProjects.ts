@@ -105,7 +105,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
     tvlConfig: getTvlConfig(p),
-    transactionApiConfig: p.config.transactionApi,
+    activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
     costsInfo: getCostsInfo(p),
@@ -123,7 +123,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     isArchived: p.isArchived ? true : undefined,
     isUpcoming: p.isUpcoming ? true : undefined,
-    hasActivity: p.config.transactionApi ? true : undefined,
+    hasActivity: p.config.activityConfig ? true : undefined,
   }
 }
 

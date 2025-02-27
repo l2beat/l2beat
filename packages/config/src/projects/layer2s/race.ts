@@ -34,6 +34,16 @@ export const race: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://racemainnet.io',
+  chainConfig: {
+    name: 'race',
+    chainId: 6805,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://racemainnet.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   isNodeAvailable: true,
 })

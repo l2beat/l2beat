@@ -58,7 +58,6 @@ export const zircuit: Layer2 = opStackL2({
     architectureImage: 'zircuit',
   },
   genesisTimestamp: new UnixTime(1719936217),
-  rpcUrl: 'https://zircuit1-mainnet.p2pify.com/', // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/
   // Chain ID: 48900
   isNodeAvailable: 'UnderReview',
   nonTemplateTechnology: {
@@ -68,7 +67,24 @@ export const zircuit: Layer2 = opStackL2({
     name: 'zircuit',
     chainId: 48900,
     coingeckoPlatform: 'zircuit',
-    minTimestampForTvl: new UnixTime(1719936217),
+    sinceTimestamp: new UnixTime(1719936217),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://zircuit1-mainnet.p2pify.com/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'rpc',
+        url: 'https://zircuit1-mainnet.liquify.com/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'rpc',
+        url: 'https://zircuit-mainnet.drpc.org/',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
   l1StandardBridgePremintedTokens: ['ZRC'],

@@ -43,11 +43,19 @@ export const sxnetwork: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['SX'],
-  rpcUrl: 'https://rpc.sx-rollup.gelato.digital', //chainid 4162
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.sx-rollup.gelato.digital',
-    defaultCallsPerMinute: 1500,
+  chainConfig: {
+    name: 'sxnetwork',
+    chainId: 4162,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.sx-rollup.gelato.digital',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },

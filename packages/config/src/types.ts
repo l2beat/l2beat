@@ -38,24 +38,47 @@ export interface ChainConfig {
    * chain in configuration.
    */
   name: string
-  chainId: number
+  /** undefined is reserved for non-evm chains that don't have a notion of chain id! */
+  chainId: number | undefined
   explorerUrl?: string
-  explorerApi?: {
-    url: string
-    type: 'etherscan' | 'blockscout'
-    missingFeatures?: {
-      getContractCreation?: boolean
-    }
-  }
-  blockscoutV2ApiUrl?: string
+  multicallContracts?: MulticallContractConfig[]
+  coingeckoPlatform?: string
   /**
    * Setting this value for a chain does not always equal to grabbing the
    * timestamp of the first block. For example Optimism had block 0 on
    * January 2021 but the block 1 on November 2021.
    */
-  minTimestampForTvl?: UnixTime
-  multicallContracts?: MulticallContractConfig[]
-  coingeckoPlatform?: string
+  sinceTimestamp?: UnixTime
+  apis: ChainApiConfig[]
+}
+
+export type ChainApiConfig =
+  | ChainBasicApi<'rpc'>
+  | ChainBasicApi<'starknet'>
+  | ChainBasicApi<'zksync'>
+  | ChainBasicApi<'loopring'>
+  | ChainBasicApi<'degate3'>
+  | ChainBasicApi<'fuel'>
+  | ChainExplorerApi<'etherscan'>
+  | ChainExplorerApi<'blockscout'>
+  | ChainExplorerApi<'blockscoutV2'>
+  | ChainStarkexApi
+
+export interface ChainBasicApi<T extends string> {
+  type: T
+  url: string
+  callsPerMinute?: number
+}
+
+export interface ChainExplorerApi<T extends string> {
+  type: T
+  url: string
+  contractCreationUnsupported?: boolean
+}
+
+export interface ChainStarkexApi {
+  type: 'starkex'
+  product: string[]
 }
 
 export interface Milestone {
@@ -131,7 +154,7 @@ export interface ScalingProjectConfig {
   /** List of contracts in which L1 funds are locked */
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
-  transactionApi?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   /** Data availability tracking config */
   daTracking?: ProjectDaTrackingConfig[]
 }
@@ -400,19 +423,10 @@ export interface ProjectTechnologyChoice {
   isUnderReview?: boolean
 }
 
-export type TransactionApiConfig =
-  | RpcTransactionApi
-  | StarkexTransactionApi
-  | CustomTransactionApi<'starknet'>
-  | CustomTransactionApi<'zksync'>
-  | CustomTransactionApi<'loopring'>
-  | CustomTransactionApi<'degate3'>
-  | CustomTransactionApi<'fuel'>
+export type ProjectActivityConfig = BlockActivityConfig | DayActivityConfig
 
-export interface RpcTransactionApi {
-  type: 'rpc'
-  defaultUrl: string
-  defaultCallsPerMinute?: number
+export interface BlockActivityConfig {
+  type: 'block'
   adjustCount?: AdjustCount
   startBlock?: number
 }
@@ -421,9 +435,8 @@ export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
 
-export interface StarkexTransactionApi {
-  type: 'starkex'
-  product: string[]
+export interface DayActivityConfig {
+  type: 'day'
   sinceTimestamp: UnixTime
   resyncLastDays?: number
 }
@@ -810,7 +823,7 @@ export interface BaseProject {
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
-  transactionApiConfig?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig

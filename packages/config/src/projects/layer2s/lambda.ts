@@ -34,7 +34,6 @@ export const lambda: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['LAMB'],
-  rpcUrl: 'https://nrpc.lambda.im',
   genesisTimestamp: new UnixTime(1713345623),
   isNodeAvailable: true,
   milestones: [
@@ -50,12 +49,7 @@ export const lambda: Layer2 = opStackL2({
     name: 'lambda',
     chainId: 56026,
     explorerUrl: 'https://scan.lambda.im',
-    explorerApi: {
-      url: 'https://scan.lambda.im/api',
-      type: 'blockscout',
-    },
-    blockscoutV2ApiUrl: 'https://scan.lambda.im/api/v2',
-    minTimestampForTvl: new UnixTime(1713345623),
+    sinceTimestamp: new UnixTime(1713345623),
     multicallContracts: [
       // fails the tests since the address is not the usual one
       // {
@@ -64,6 +58,11 @@ export const lambda: Layer2 = opStackL2({
       //   sinceBlock: 1423879,
       //   version: '3',
       // },
+    ],
+    apis: [
+      { type: 'rpc', url: 'https://nrpc.lambda.im', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://scan.lambda.im/api' },
+      { type: 'blockscoutV2', url: 'https://scan.lambda.im/api/v2' },
     ],
   },
 })

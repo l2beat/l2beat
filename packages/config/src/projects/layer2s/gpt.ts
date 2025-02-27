@@ -59,7 +59,6 @@ export const gpt: Layer2 = polygonCDKStack({
     },
   },
   associatedTokens: ['GPT'],
-  rpcUrl: 'https://rpc.gptprotocol.io', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -93,8 +92,16 @@ export const gpt: Layer2 = polygonCDKStack({
   },
   chainConfig: {
     chainId: 1511670449,
-    minTimestampForTvl: new UnixTime(1716807971),
+    sinceTimestamp: new UnixTime(1716807971),
     name: 'gpt',
+    apis: [
+      {
+        type: 'rpc',
+        // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
+        url: 'https://rpc.gptprotocol.io',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier'),

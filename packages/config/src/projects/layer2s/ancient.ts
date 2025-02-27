@@ -43,7 +43,17 @@ export const ancient: Layer2 = opStackL2({
     },
   },
   upgradeability,
-  rpcUrl: 'https://rpc.ancient8.gg/',
+  chainConfig: {
+    name: 'ancient',
+    chainId: 888888888,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ancient8.gg/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1705985147),
   isNodeAvailable: 'UnderReview',
   celestiaDa: {

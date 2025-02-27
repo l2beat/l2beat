@@ -31,11 +31,20 @@ export const skynet: Layer3 = underReviewL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'skynet',
+    chainId: 619,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.skynet.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.skynet.io',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
 }) //no escrow since gas token is not on CoinGecko, very low TVS

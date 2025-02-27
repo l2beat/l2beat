@@ -90,6 +90,11 @@ export const tanx: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'brine',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['brine'] }],
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -99,9 +104,8 @@ export const tanx: Layer2 = {
         description: "Main entry point for users' deposits.",
       }),
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['brine'],
+    activityConfig: {
+      type: 'day',
       sinceTimestamp: new UnixTime(1657453320),
       resyncLastDays: 7,
     },

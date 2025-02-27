@@ -6,20 +6,20 @@ import type {
   Layer2,
   Layer2Display,
   Layer3,
+  ProjectActivityConfig,
   ProjectEscrow,
   ScalingProjectCapability,
   ScalingProjectDisplay,
-  TransactionApiConfig,
 } from '../../../types'
+import { getActivityConfig } from './activity'
 
 interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
   capability: ScalingProjectCapability
-  rpcUrl?: string
+  activityConfig?: ProjectActivityConfig
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
-  transactionApi?: TransactionApiConfig
   badges?: Badge[]
   isArchived?: boolean
 }
@@ -54,16 +54,14 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.escrows ?? [],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
@@ -88,16 +86,14 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.escrows ?? [],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
     },
     stage: {
       stage:

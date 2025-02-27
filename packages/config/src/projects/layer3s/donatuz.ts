@@ -39,6 +39,16 @@ export const donatuz: Layer3 = opStackL3({
     },
   },
   genesisTimestamp: new UnixTime(1719319433),
-  rpcUrl: 'https://rpc.donatuz.com',
+  chainConfig: {
+    name: 'donatuz',
+    chainId: 42026,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.donatuz.com',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   isNodeAvailable: true,
 })

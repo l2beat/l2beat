@@ -15,12 +15,12 @@ export function getElasticChainL2TokenEntry(
   project: Project<'tvlConfig', 'chainConfig'>,
 ): ElasticChainL2Token {
   assert(escrow.sharedEscrow?.type === 'ElasticChain')
-  assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+  assert(chain.sinceTimestamp, 'Chain should have sinceTimestamp')
   assert(token.address, 'Token address is required for ElasticChain escrow')
 
   const source = escrow.source ?? 'canonical'
   const sinceTimestamp = UnixTime.max(
-    UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
+    UnixTime.max(chain.sinceTimestamp, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
   const untilTimestamp = getEscrowUntilTimestamp(

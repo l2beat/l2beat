@@ -83,11 +83,7 @@ export const zksyncera: Layer2 = zkStackL2({
     name: 'zksync2',
     chainId: 324,
     explorerUrl: 'https://era.zksync.network',
-    explorerApi: {
-      url: 'https://api-era.zksync.network/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1676384520),
+    sinceTimestamp: new UnixTime(1676384520),
     multicallContracts: [
       {
         version: '3',
@@ -97,6 +93,14 @@ export const zksyncera: Layer2 = zkStackL2({
       },
     ],
     coingeckoPlatform: 'zksync',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.era.zksync.io',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api-era.zksync.network/api' },
+    ],
   },
   associatedTokens: ['ZK'],
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
@@ -143,7 +147,6 @@ export const zksyncera: Layer2 = zkStackL2({
       ...zkStackUpgrades,
     }),
   ],
-  rpcUrl: 'https://mainnet.era.zksync.io',
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

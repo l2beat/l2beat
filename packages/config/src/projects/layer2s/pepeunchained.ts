@@ -33,7 +33,17 @@ export const pepeunchained: Layer2 = opStackL2({
       socialMedia: ['https://x.com/pepe_unchained'],
     },
   },
-  rpcUrl: 'https://rpc-pepe-unchained-gupg0lo9wf.t.conduit.xyz',
+  chainConfig: {
+    name: 'pepeunchained',
+    chainId: 3409,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-pepe-unchained-gupg0lo9wf.t.conduit.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1733132700),
   isNodeAvailable: true,
   nonTemplateEscrows: [

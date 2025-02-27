@@ -33,7 +33,17 @@ export const thebinaryholdings: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.zero.thebinaryholdings.com',
+  chainConfig: {
+    name: 'thebinaryholdings',
+    chainId: 624,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.zero.thebinaryholdings.com',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1719397465),
   finality: {
     type: 'OPStack',

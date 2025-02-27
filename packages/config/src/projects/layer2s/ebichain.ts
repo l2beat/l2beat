@@ -36,7 +36,17 @@ export const ebichain: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.ebi.xyz',
+  chainConfig: {
+    name: 'ebichain',
+    chainId: 98881,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ebi.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

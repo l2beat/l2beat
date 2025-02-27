@@ -38,6 +38,7 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectActivityConfig,
   ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
@@ -57,12 +58,12 @@ import type {
   ScalingProjectTechnology,
   StageConfig,
   TableReadyValue,
-  TransactionApiConfig,
 } from '../../../types'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
+import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -128,8 +129,7 @@ interface OpStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
-  rpcUrl?: string
-  transactionApi?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -311,17 +311,15 @@ function opStackCommon(
         templateVars.gasTokens?.tracked?.concat(
           templateVars.gasTokens?.untracked ?? [],
         ) ?? [],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+          adjustCount: { type: 'SubtractOne' },
+        },
+      ),
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
