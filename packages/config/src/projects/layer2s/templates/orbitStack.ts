@@ -1038,7 +1038,6 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         sinceTimestamp: new UnixTime(genesisTimestamp),
       },
     },
-    // post-BOLD
     {
       uses: [
         { type: 'liveness', subtype: 'batchSubmissions' },
@@ -1050,7 +1049,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0x6e620055',
         functionSignature:
           'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: new UnixTime(genesisTimestamp), // or just genesisTS
+        sinceTimestamp: new UnixTime(genesisTimestamp),
       },
     },
     {
@@ -1081,7 +1080,6 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         sinceTimestamp: new UnixTime(genesisTimestamp),
       },
     },
-    // same for all
     {
       uses: [
         { type: 'liveness', subtype: 'stateUpdates' },
