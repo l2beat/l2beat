@@ -3,7 +3,7 @@ import {
   assert,
   EthereumAddress,
   ProjectId,
-  type UnixTime,
+  UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -747,7 +747,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     },
     config: {
       ...common.config,
-      trackedTxs: templateVars.trackedTxs,
+      trackedTxs: getTrackedTxs(templateVars),
       finality: templateVars.finality,
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
@@ -972,6 +972,131 @@ function getDAProvider(
       badge: BADGES.DA.DAC,
     }
   }
+}
+
+function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
+  const sequencerInbox = templateVars.discovery.getContract('SequencerInbox')
+  // TODO(radomski): This will be removed once displayName is merged
+  const outbox = templateVars.discovery.hasContract('Outbox')
+    ? templateVars.discovery.getContract('Outbox')
+    : templateVars.discovery.getContract('ERC20Outbox')
+
+  assert(
+    sequencerInbox.sinceTimestamp !== undefined,
+    'SequencerInbox must have a sinceTimestamp',
+  )
+  assert(
+    outbox.sinceTimestamp !== undefined,
+    'Outbox must have a sinceTimestamp',
+  )
+
+  const genesisTimestamp = Math.min(
+    sequencerInbox.sinceTimestamp,
+    outbox.sinceTimestamp,
+  )
+
+  return [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0xe0bc9729',
+        functionSignature:
+          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x8f111f3c',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    // post-BOLD
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x6e620055',
+        functionSignature:
+          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(genesisTimestamp), // or just genesisTS
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x69cacded',
+        functionSignature:
+          'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    // same for all
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: outbox.address,
+        selector: '0xa04cee60',
+        functionSignature:
+          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+  ]
 }
 
 function decideDA(
