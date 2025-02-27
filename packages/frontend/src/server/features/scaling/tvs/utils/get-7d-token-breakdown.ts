@@ -1,4 +1,3 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
@@ -75,11 +74,12 @@ export async function get7dTokenBreakdownData({
   }
 }
 
-function getMock7dTokenBreakdownData(): LatestTvs {
+async function getMock7dTokenBreakdownData(): Promise<LatestTvs> {
+  const projects = await ps.getProjects({ where: ['tvlConfig'] })
   return {
     total: 1000,
     projects: Object.fromEntries(
-      [...layer2s, ...layer3s, ...bridges].map((project) => [
+      projects.map((project) => [
         project.id,
         {
           breakdown: {
