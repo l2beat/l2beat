@@ -48,7 +48,7 @@ export function ProjectDaThroughputChart({
         <ProjectChartTimeRange range={chartRange} />
         <div className="flex justify-between gap-1">
           <Checkbox
-            name="showMainnetActivity"
+            name="showMaximumThroughput"
             checked={showMax}
             onCheckedChange={(state) => setShowMax(!!state)}
           >

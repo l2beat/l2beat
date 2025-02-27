@@ -80,9 +80,9 @@ export async function getL2ProjectDetails({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
-    api.costs.chart.prefetch({
+    api.costs.chartWithDataPosted.prefetch({
       range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
+      projectId: project.id,
     }),
   ])
   const [tvsChartData, activityChartData, costsChartData, tokens] =
@@ -96,9 +96,9 @@ export async function getL2ProjectDetails({
         range: '1y',
         filter: { type: 'projects', projectIds: [project.id] },
       }),
-      api.costs.chart({
+      api.costs.chartWithDataPosted({
         range: '1y',
-        filter: { type: 'projects', projectIds: [project.id] },
+        projectId: project.id,
       }),
       getTokensForProject(project),
     ])

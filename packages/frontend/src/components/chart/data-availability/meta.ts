@@ -18,7 +18,7 @@ export function getDaChartMeta({
     },
     avail: {
       label: 'Avail',
-      color: 'hsl(var(--chart-da-avail))',
+      color: 'hsl(var(--chart-emerald))',
       indicatorType: { shape },
     },
   } satisfies ChartMeta

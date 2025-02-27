@@ -5,14 +5,14 @@ import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { rangeToDays } from '~/utils/range/range-to-days'
+import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
 
-// [timestamp, value]
-export type ProjectDaThroughputDataPoint = [number, number]
+export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 
 export const ProjectDaThroughputChartParams = z.object({
-  range: DaThroughputTimeRange,
+  range: DaThroughputTimeRange.or(CostsTimeRange),
   projectId: z.string(),
 })
 export type ProjectDaThroughputChartParams = z.infer<

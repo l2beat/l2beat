@@ -22,6 +22,7 @@ const contractTemplate: InlineTemplate = {
   content: `
 contract(
   @self,
+  "#$.chain",
   "#$.address:raw",
   "#$.name").`,
   when: (c) => !c.isEoa,
@@ -37,6 +38,7 @@ const eoaTemplate: InlineTemplate = {
   content: `
 eoa(
   @self,
+  "#$.chain",
   "#$.address:raw",
   "#$.name").`,
   when: (c) => !!c.isEoa,
@@ -78,7 +80,10 @@ export function buildRelationsModels(
     ...discoveryOutput.eoas.map((eoa) => ({ ...eoa, isEoa: true })),
   ]
   for (const contractOrEoa of contractsAndEOAs) {
-    const contractValues = contractValuesForInterpolation(contractOrEoa)
+    const contractValues = contractValuesForInterpolation(
+      discoveryOutput.chain,
+      contractOrEoa,
+    )
 
     for (const template of [
       contractTemplate,
