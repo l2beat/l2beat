@@ -168,8 +168,7 @@
         "proxyType": 1,
         "REGISTRY_ADD_EXECUTOR_ROLE": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2",
         "REGISTRY_MANAGER_ROLE": "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
-      },
-      "derivedName": "EVMScriptRegistry"
+      }
     },
     {
       "name": "UOS Vault",
@@ -373,8 +372,7 @@
         "totalSupply": "8926751749751332015693664",
         "transfersEnabled": false,
         "version": "MMT_0.1"
-      },
-      "derivedName": "MiniMeToken"
+      }
     },
     {
       "name": "EthPntv2",
@@ -437,8 +435,7 @@
         "totalSupply": "14960000000000000000000000",
         "yearlyRateCap": 2000,
         "yearlyWithdrawableLimit": "19355045741928169125886545"
-      },
-      "derivedName": "EthPntv2"
+      }
     },
     {
       "name": "ACL",

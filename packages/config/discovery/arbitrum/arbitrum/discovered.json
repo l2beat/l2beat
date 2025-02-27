@@ -65,8 +65,7 @@
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "exitNum": 30482,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
-      },
-      "derivedName": "L2ERC20Gateway"
+      }
     },
     {
       "name": "ConstitutionHash",
@@ -485,8 +484,7 @@
         "counterpartGateway": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L2GatewayRouter"
+      }
     },
     {
       "name": "L2WethGateway",
@@ -552,8 +550,7 @@
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
-      },
-      "derivedName": "L2WethGateway"
+      }
     },
     {
       "name": "L2LPTGateway",
@@ -573,8 +570,7 @@
         "l2Lpt": "0x289ba1701C2F088cf0faf8B3705246331cB8A839",
         "l2Router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
         "paused": false
-      },
-      "derivedName": "L2LPTGateway"
+      }
     },
     {
       "name": "UpgradeExecRouteBuilder",
@@ -592,8 +588,7 @@
         "l1TimelockAddr": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
         "l1TimelockMinDelay": 259200,
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
-      },
-      "derivedName": "UpgradeExecRouteBuilder"
+      }
     },
     {
       "name": "TreasuryGovernor",
@@ -719,7 +714,6 @@
           "description": "The percentage of the total supply that can be minted by the owner once per year."
         }
       },
-      "derivedName": "L2ArbitrumToken",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     },
     {
@@ -736,8 +730,7 @@
         "actionContractId": "0x91a027369a797f7b79038b0977234c66212c6a4af81bff02b23b740c8fda9ddc",
         "SENTINEL_OWNERS": "0x0000000000000000000000000000000000000001",
         "store": "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
-      },
-      "derivedName": "SecurityCouncilMemberSyncAction"
+      }
     },
     {
       "name": "L2SecurityCouncilPropose",
@@ -1147,8 +1140,7 @@
           "severity": "MEDIUM",
           "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"
         }
-      },
-      "derivedName": "SecurityCouncilManager"
+      }
     },
     {
       "name": "L2GatewaysProxyAdmin",

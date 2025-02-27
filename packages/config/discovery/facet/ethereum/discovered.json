@@ -48,7 +48,6 @@
         "getDumbContract": "0x1673540243E793B0e77C038D4a88448efF524DcE",
         "getSigner": "0x314d660b083675f415cCAA9c545FeedF377d1006"
       },
-      "derivedName": "FacetEtherBridgeV6",
       "references": [
         {
           "text": "Source Code",
@@ -411,7 +410,6 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

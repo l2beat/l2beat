@@ -277,8 +277,7 @@
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "TIME_TO_FINALIZE": 604800
-      },
-      "derivedName": "FuelChainState"
+      }
     }
   ],
   "eoas": [

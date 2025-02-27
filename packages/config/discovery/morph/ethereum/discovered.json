@@ -106,8 +106,7 @@
         "slashRemaining": 0,
         "stakingValue": "1000000000000000000",
         "withdrawalLockBlocks": 3
-      },
-      "derivedName": "L1Staking"
+      }
     },
     {
       "name": "L1ETHGateway",
@@ -146,8 +145,7 @@
         "messenger": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
-      },
-      "derivedName": "L1ETHGateway"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -194,8 +192,7 @@
       "values": {
         "$immutable": true,
         "owner": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "L1MessageQueueWithGasPriceOracle",
@@ -245,8 +242,7 @@
         "pendingQueueIndex": 6155,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
-      },
-      "derivedName": "L1MessageQueueWithGasPriceOracle"
+      }
     },
     {
       "name": "L1StandardERC20Gateway",
@@ -287,8 +283,7 @@
         "messenger": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
-      },
-      "derivedName": "L1StandardERC20Gateway"
+      }
     },
     {
       "name": "MultipleVersionRollupVerifier",
@@ -310,8 +305,7 @@
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1]
-      },
-      "derivedName": "MultipleVersionRollupVerifier"
+      }
     },
     {
       "name": "L1GatewayRouter",
@@ -351,8 +345,7 @@
         "gatewayInContext": "0x0000000000000000000000000000000000000000",
         "gateways": ["0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"],
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
-      },
-      "derivedName": "L1GatewayRouter"
+      }
     },
     {
       "name": "MorphRollup",
@@ -723,8 +716,7 @@
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": true
-      },
-      "derivedName": "EnforcedTxGateway"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -774,8 +766,7 @@
         "paused": false,
         "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "xDomainMessageSender": "0x000000000000000000000000000000000000dEaD"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "ZkEvmVerifierV1",
@@ -789,8 +780,7 @@
         "$immutable": true,
         "programVkey": "0x001bdbe2a0f4839f3e7ca3b42ab1ca9d012e23249d17564c953d3557aede919c",
         "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      },
-      "derivedName": "ZkEvmVerifierV1"
+      }
     },
     {
       "name": "MorphUpgradeMultisig",
@@ -885,8 +875,7 @@
       "values": {
         "$immutable": true,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
-      },
-      "derivedName": "Whitelist"
+      }
     }
   ],
   "eoas": [

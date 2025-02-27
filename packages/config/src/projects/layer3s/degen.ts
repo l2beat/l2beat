@@ -59,7 +59,7 @@ export const degen: Layer3 = orbitStackL3({
       { type: 'blockscout', url: 'https://explorer.degen.tips/api' },
     ],
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateContractRisks: [

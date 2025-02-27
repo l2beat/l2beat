@@ -42,8 +42,7 @@
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "Governance"
+      }
     },
     {
       "name": "ZKsync",
@@ -545,8 +544,7 @@
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
         "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "ValidatorTimelock",

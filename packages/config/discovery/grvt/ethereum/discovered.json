@@ -159,8 +159,7 @@
           "0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
           "0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
         ]
-      },
-      "derivedName": "GRVTTransactionFilterer"
+      }
     },
     {
       "name": "ValidatorTimelock",
@@ -301,8 +300,7 @@
         },
         "owner": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "GRVTBridgeProxy"
+      }
     },
     {
       "name": "GrvtZkEvm",

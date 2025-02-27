@@ -126,8 +126,7 @@
           "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
         ],
         "owner": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827"
-      },
-      "derivedName": "Endpoint"
+      }
     },
     {
       "name": "",
@@ -1381,8 +1380,7 @@
           "267": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "274": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     }
   ],
   "eoas": [

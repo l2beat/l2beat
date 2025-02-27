@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x9ca12edc2675c06e9f0afbc12a0279d05150a132
+
+# Diff at Thu, 27 Feb 2025 12:01:47 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21931801
+- current block number: 21931801
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21931801 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20TokenBridge (0x2F543A7C9cc80Cc2427c892B96263098d23ee55a) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      name:
+-        "L1LidoTokensBridge"
++        "L1ERC20TokenBridge"
+      displayName:
+-        "L1ERC20TokenBridge"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x88e529A6ccd302c948689Cd5156C83D4614FAE92) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      displayName:
+-        "OptimismPortal"
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      name:
+-        "Lib_AddressManager"
++        "AddressManager"
+      displayName:
+-        "AddressManager"
+    }
+```
+
 Generated with discovered.json: 0x093f3dab64b8cbc670476958de7629ddb9915c16
 
 # Diff at Wed, 26 Feb 2025 16:48:30 GMT:

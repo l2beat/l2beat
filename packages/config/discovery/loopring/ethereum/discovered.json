@@ -107,8 +107,7 @@
         "proxyOwner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "shutdownTriggered": [],
         "version": "3.6.0"
-      },
-      "derivedName": "ExchangeV3"
+      }
     },
     {
       "name": "LoopringIOExchangeOwner",
@@ -138,8 +137,7 @@
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
-      },
-      "derivedName": "LoopringIOExchangeOwner"
+      }
     },
     {
       "name": "AgentRegistry",
@@ -292,8 +290,7 @@
         ],
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "AgentRegistry"
+      }
     },
     {
       "name": "ProtocolFeeVault",
@@ -344,8 +341,7 @@
         "numManagers": 5,
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "ForcedWithdrawalAgent"
+      }
     },
     {
       "name": "BlockVerifier",
@@ -372,8 +368,7 @@
         "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "DefaultDepositContract"
+      }
     },
     {
       "name": "Safe",
@@ -486,8 +481,7 @@
         "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
       ],
       "sinceTimestamp": 1603946697,
-      "values": { "$immutable": true },
-      "derivedName": "FastWithdrawalAgent"
+      "values": { "$immutable": true }
     },
     {
       "name": "UserStakingPool",
@@ -512,8 +506,7 @@
           "depositedAt": 0,
           "claimedAt": 1615983279
         }
-      },
-      "derivedName": "UserStakingPool"
+      }
     }
   ],
   "eoas": [

@@ -40,8 +40,7 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      },
-      "derivedName": "LivenessModule"
+      }
     },
     {
       "name": "GuardianMultisig",
@@ -90,8 +89,7 @@
         "l2DAITokenBridge": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
         "l2Token": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
         "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
-      },
-      "derivedName": "L1DAITokenBridge"
+      }
     },
     {
       "name": "AnchorStateRegistry",
@@ -319,7 +317,6 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -341,10 +338,9 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "15d 19h",
+        "timeSinceLastL2beatInteraction": "16d 21h",
         "version": "1.0.0"
-      },
-      "derivedName": "LivenessGuard"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -433,7 +429,6 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
       },
-      "derivedName": "L1CrossDomainMessenger",
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
       ],
@@ -822,7 +817,6 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
-      "derivedName": "L1ERC721Bridge",
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
       ],
@@ -840,8 +834,7 @@
         "$immutable": true,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
-      },
-      "derivedName": "SynthetixBridgeEscrow"
+      }
     },
     {
       "name": "MIPS",
@@ -1212,7 +1205,6 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
-      "derivedName": "SuperchainConfig",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1248,7 +1240,6 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
-      "derivedName": "L1StandardBridge",
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
       ],
@@ -1328,8 +1319,7 @@
         "proposalCount": 0,
         "proposals": [],
         "version": "1.1.2"
-      },
-      "derivedName": "PreimageOracle"
+      }
     },
     {
       "name": "FeesCollector",
@@ -1357,6 +1347,7 @@
         "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "OptimismPortal2",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
       "issuedPermissions": [
         {
@@ -1585,7 +1576,6 @@
         "permissionedGamesTotal": 617,
         "version": "1.0.0"
       },
-      "derivedName": "DisputeGameFactory",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
@@ -2597,7 +2587,7 @@
     "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
     "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
     "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
-    "opstack/OptimismPortal2": "0x4f4fd47650d0a6c200ce01c99bb6573854ddcbb6958312faef6a3fea21c76bf0",
+    "opstack/OptimismPortal2": "0x88e1ec872b590b2d98ed6383fc9d7759688e0f13d4b733cd63a7bcae7c5ce99d",
     "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
     "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",
     "opstack/SuperchainConfig": "0x38b312497b6b9a5247e304b69929d797dffc28d476435a84fdeb9f5d901bc1c2",

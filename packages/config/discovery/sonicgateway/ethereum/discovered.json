@@ -80,8 +80,7 @@
           "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
           "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
         ]
-      },
-      "derivedName": "ValidatorsRegistry"
+      }
     },
     {
       "name": "DirectExitAdministrator",
@@ -157,8 +156,7 @@
       ],
       "description": "Verifier contract for merkle proofs.",
       "sinceTimestamp": 1734690407,
-      "values": { "$immutable": true },
-      "derivedName": "MPTProofVerifier"
+      "values": { "$immutable": true }
     },
     {
       "name": "SonicGatewayMultisig",
@@ -284,8 +282,7 @@
         "proofVerifier": { "severity": "HIGH" },
         "stateOracle": { "severity": "HIGH" },
         "deadState": { "severity": "HIGH" }
-      },
-      "derivedName": "TokenDeposit"
+      }
     },
     {
       "name": "UpdateManager",
@@ -408,8 +405,7 @@
         "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
         "updateVerifier": "0x72965045A6691E5A74299D1e878f303264D4D910",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "UpdateManager"
+      }
     },
     {
       "name": "StateOracle",
@@ -435,8 +431,7 @@
         "lastState": "0x1e4dd2c7434e8393889f81a784a5baaf0930e50c8e620e5c4c774ef53eaf3c29",
         "lastUpdateTime": 1738593395,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-      },
-      "derivedName": "StateOracle"
+      }
     },
     {
       "name": "TokenPairs",
@@ -501,8 +496,7 @@
         "TERMINATOR_ROLE": "0x26aab3fbd9c7d505a96c193ccd3127894549d6ee75e38e08a6cef48fbab511e8",
         "UNREGISTER_ROLE": "0x822120e1e3a621ffae2121fc52e9eb301eb26b031334bbf3018f0954c7360700",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "TokenPairs"
+      }
     }
   ],
   "eoas": [

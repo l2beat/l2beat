@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xe15e14bdcec30d7ffc6b10c12fcc7511556fd7dc
+
+# Diff at Thu, 27 Feb 2025 11:45:52 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21845178
+- current block number: 21845178
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21845178 (main branch discovery), not current.
+
+```diff
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+      name:
+-        "TimeLock"
++        "L1Timelock"
+      displayName:
+-        "L1Timelock"
+    }
+```
+
 Generated with discovered.json: 0x899582a9d013bc2402c2096f2cfdaa6be2ba2a72
 
 # Diff at Wed, 26 Feb 2025 10:32:52 GMT:

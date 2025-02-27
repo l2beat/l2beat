@@ -78,8 +78,7 @@
         "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5"
-      },
-      "derivedName": "LoopringIOExchangeOwner"
+      }
     },
     {
       "name": "FeeVault",
@@ -205,8 +204,7 @@
           }
         },
         "version": "0.1.0"
-      },
-      "derivedName": "ExchangeV3"
+      }
     }
   ],
   "eoas": [

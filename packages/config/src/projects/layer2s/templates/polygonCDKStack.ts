@@ -104,7 +104,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   }
 
   const upgradeDelay = shared.getContractValue<number>(
-    'PolygonZkEVMTimelock',
+    'Timelock',
     'getMinDelay',
   )
   const upgradeDelayString = formatSeconds(upgradeDelay)
@@ -129,7 +129,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
     'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
   )
-  const bridge = shared.getContract('PolygonZkEVMBridgeV2')
+  const bridge = shared.getContract('PolygonSharedBridge')
 
   const finalizationPeriod =
     templateVars.display.finality?.finalizationPeriod ?? 0
@@ -412,7 +412,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           references: explorerReferences(explorerUrl, [
             {
               title:
-                'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
+                'PolygonSharedBridge.sol - source code, claimAsset function',
               address: safeGetImplementation(bridge),
             },
           ]),

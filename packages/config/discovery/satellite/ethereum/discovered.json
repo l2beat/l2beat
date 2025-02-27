@@ -41,8 +41,7 @@
         "implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "AxelarGasService"
+      }
     },
     {
       "name": "Gateway",
@@ -171,8 +170,7 @@
         "currentEpoch": 225,
         "owner": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "AxelarAuthWeighted"
+      }
     },
     {
       "name": "InterchainGovernance",

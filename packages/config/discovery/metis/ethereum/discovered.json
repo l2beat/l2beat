@@ -75,8 +75,7 @@
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
         "totalLocked": "489592026707194902745743",
         "totalRewardsLiquidated": "21186281823923435000000"
-      },
-      "derivedName": "LockingInfo"
+      }
     },
     {
       "name": "ChainStorageContainer-SCC-batches",
@@ -437,8 +436,7 @@
           "description": "Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers.",
           "type": "CODE_CHANGE"
         }
-      },
-      "derivedName": "Lib_AddressManager"
+      }
     },
     {
       "name": "MToken",
@@ -454,8 +452,7 @@
         "owner": "0x0000000000000000000000000000000000000000",
         "symbol": "Metis",
         "totalSupply": "10000000000000000000000000"
-      },
-      "derivedName": "MToken"
+      }
     },
     {
       "name": "StateCommitmentChain",
@@ -632,8 +629,7 @@
         "signerUpdateThrottle": 1,
         "totalSequencers": 10,
         "WITHDRAWAL_DELAY": 1814400
-      },
-      "derivedName": "LockingPool"
+      }
     },
     {
       "name": "MVM_Verifier",

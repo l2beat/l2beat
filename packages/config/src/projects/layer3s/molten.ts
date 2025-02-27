@@ -51,7 +51,7 @@ export const molten: Layer3 = orbitStackL3({
       },
     ],
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [

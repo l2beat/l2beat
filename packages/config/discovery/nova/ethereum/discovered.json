@@ -176,11 +176,10 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
-      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "L1CustomGateway",
+      "name": "CustomGateway",
       "address": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
       "template": "orbitstack/CustomGateway",
       "sourceHashes": [
@@ -188,7 +187,6 @@
         "0x60484a2ada75640a2144b3ecaae3bb7b51973a2494281beebf898308ffc35e90"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "CustomGateway",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
       "issuedPermissions": [
         {
@@ -235,6 +233,7 @@
         "router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1CustomGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -292,8 +291,7 @@
           ],
           false
         ]
-      },
-      "derivedName": "ValidatorUtils"
+      }
     },
     {
       "name": "OneStepProverMath",
@@ -658,8 +656,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "ArbitrumBridge",
@@ -972,8 +969,7 @@
         "l1Router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "l2Counterpart": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
         "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
-      },
-      "derivedName": "L1DaiGateway"
+      }
     },
     {
       "name": "L1Escrow",
@@ -1112,7 +1108,7 @@
       }
     },
     {
-      "name": "L1ERC20Gateway",
+      "name": "ERC20Gateway",
       "address": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -1120,7 +1116,6 @@
         "0x019cdda76fc455f2628f7f7f87fae92c1264e1d2e32cd2d47e6494780c790c61"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -1168,6 +1163,7 @@
         "router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1394,7 +1390,7 @@
       }
     },
     {
-      "name": "L1GatewayRouter",
+      "name": "GatewayRouter",
       "address": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -1402,7 +1398,6 @@
         "0x265fc73d2eec7f0b459f92a25a37b145c8db22527232f08f3022d5cc18d6af9d"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -1455,6 +1450,7 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1GatewayRouter",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {

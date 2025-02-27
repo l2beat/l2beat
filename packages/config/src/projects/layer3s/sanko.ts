@@ -59,7 +59,7 @@ export const sanko: Layer3 = orbitStackL3({
   },
   gasTokens: { tracked: ['DMT'] },
   associatedTokens: ['DMT'],
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [

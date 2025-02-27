@@ -32,8 +32,7 @@
         "$immutable": true,
         "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "unpauser": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      },
-      "derivedName": "PauserRegistry"
+      }
     },
     {
       "name": "MantleTokenProxyAdmin",
@@ -175,8 +174,7 @@
         "serviceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
         "strategiesConsideredAndMultipliersLength": [1, 1],
         "totalStake": ["1000000000000000000000000", 0]
-      },
-      "derivedName": "BLSRegistry"
+      }
     },
     {
       "name": "InvestmentManager",
@@ -225,8 +223,7 @@
         "paused": 0,
         "pauserRegistry": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
         "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
-      },
-      "derivedName": "InvestmentManager"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -421,8 +418,7 @@
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "symbol": "MNT",
         "totalSupply": "6219316794990000000000000000"
-      },
-      "derivedName": "L1MantleToken"
+      }
     },
     {
       "name": "SystemConfig",
@@ -854,8 +850,7 @@
         "pauserRegistry": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
         "quorumThresholdBasisPoints": 9000,
         "registry": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
-      },
-      "derivedName": "DataLayrServiceManager"
+      }
     },
     {
       "name": "TimelockController",
@@ -1006,13 +1001,12 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -1026,7 +1020,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xca35F8338054739D138884685e08b39EE2217794"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     },
     {
       "name": "PubkeyCompendium",
@@ -1200,8 +1195,7 @@
           "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
           "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323"
         ]
-      },
-      "derivedName": "RegistryPermission"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -1413,8 +1407,7 @@
           "0x4843774a80fc8385b31024f5bd18b42e62de439206ab9468d42d826796d41f67",
           "0x092d3e5f87f5293e7ab0cc2ca6b0b5e4adb5e0011656544915f7cea34e69e5ab"
         ]
-      },
-      "derivedName": "DataLayrChallengeUtils"
+      }
     },
     {
       "name": "Delegation",

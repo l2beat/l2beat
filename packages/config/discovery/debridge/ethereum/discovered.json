@@ -79,8 +79,7 @@
         "version": 421,
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wethGate": "0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59"
-      },
-      "derivedName": "DeBridgeGate"
+      }
     },
     {
       "name": "Admin Multisig",
@@ -266,8 +265,7 @@
         "requiredOraclesCount": 0,
         "submissionsInBlock": 1,
         "version": 201
-      },
-      "derivedName": "SignatureVerifier"
+      }
     },
     {
       "name": "GnosisSafe",

@@ -5,7 +5,7 @@
   "configHash": "0x226900c84d8d0b22870c806b3a8f97dc457f1c3713d2d6c5a7a6713e72269e06",
   "contracts": [
     {
-      "name": "OptimismMintablePermitERC20Factory",
+      "name": "OptimismMintableERC20Factory",
       "address": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
@@ -13,7 +13,6 @@
         "0x42f31c7757e8d3066477571abb4a04e8b817c654c63f6c9f12c96af2a3d000ca"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "OptimismMintableERC20Factory",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
@@ -42,7 +41,8 @@
         "bridge": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "BRIDGE": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintablePermitERC20Factory"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -387,13 +387,12 @@
       }
     },
     {
-      "name": "frxETH",
+      "name": "frxETH Token",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
       "template": "fraxtal/frxETH",
       "sourceHashes": [
         "0x35d2793b796cde40be8f1ddaa988ae1c8fd2ad9f55b4b4d74946d35832703efa"
       ],
-      "displayName": "frxETH Token",
       "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
       "issuedPermissions": [
         {
@@ -437,7 +436,8 @@
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "totalSupply": "135157925288926895591978"
-      }
+      },
+      "derivedName": "frxETH"
     },
     {
       "name": "SuperchainConfig",
@@ -581,13 +581,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "FraxEtherMinter",
+      "name": "frxETH Minter",
       "address": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
       "template": "fraxtal/FraxEtherMinter",
       "sourceHashes": [
         "0x69f04bb460f0627fa685c48813134972ea72a339b1add8185fdde04f92a6e1f3"
       ],
-      "displayName": "frxETH Minter",
       "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
       "issuedPermissions": [
         {
@@ -620,7 +619,8 @@
         "pendingTimelockAddress": "0x0000000000000000000000000000000000000000",
         "sfrxEthToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
         "timelockAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
-      }
+      },
+      "derivedName": "FraxEtherMinter"
     },
     {
       "name": "frxETHMultisig",
@@ -678,13 +678,12 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "Timelock",
+      "name": "FrxEthTimelock",
       "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
       "template": "fraxtal/Timelock",
       "sourceHashes": [
         "0xf74d5abe93255d485a607a353bb85161caf16d07541125865eb5fd9220bce6c7"
       ],
-      "displayName": "FrxEthTimelock",
       "description": "Allows for time-delayed execution of transactions. Current delay is 2d.",
       "directlyReceivedPermissions": [
         {
@@ -708,7 +707,8 @@
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Timelock"
     },
     {
       "name": "AddressManager",
@@ -811,8 +811,7 @@
         "symbol": "sfrxETH",
         "totalAssets": "104200370016776283449414",
         "totalSupply": "93603354625166337676954"
-      },
-      "derivedName": "sfrxETH"
+      }
     },
     {
       "name": "FraxtalTimelockMultisig",
@@ -877,13 +876,12 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "frxETHMinter",
+      "name": "frxETH Minter",
       "address": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
       "template": "fraxtal/FrxEthMinter",
       "sourceHashes": [
         "0xeb2d3e06200c7350a7bcb0c3b1b64c466c15459f1119fb068ae8a69483c30d55"
       ],
-      "displayName": "frxETH Minter",
       "description": "Accepts user-supplied ETH and converts it to frxETH.",
       "issuedPermissions": [
         {
@@ -922,7 +920,8 @@
         "submitPaused": false,
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "withholdRatio": 980000
-      }
+      },
+      "derivedName": "frxETHMinter"
     },
     {
       "name": "FraxtalMultisig",
