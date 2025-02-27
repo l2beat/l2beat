@@ -6,7 +6,7 @@ L2BEAT backend server.
 
 ### Dependencies
 
-To run or develop the backend you need to install and build its dependencies. You can do it by
+To run or develop the backend you need to install and build its dependencies. You can do this by
 running the following commands in the repository root:
 
 ```
@@ -28,19 +28,19 @@ docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test
 If you restart your system running `docker start l2beat_postgres` will bring the database back
 online.
 
-Alternatively you can simply run `./scripts/start_db.sh` which will always do what's needed.
+Alternatively, you can simply run `./scripts/start_db.sh`, which will always do what's needed.
 
 To update database schema to the latest version run `pnpm dev:migrate`. That way you will have the
-lastest schema in your local database.
+latest schema in your local database.
 
 ### Third party services
 
-You should also obtain an api key for the following services:
+You should also obtain an API key for the following services:
 
 - Alchemy: <https://alchemy.com>
 - Etherscan: <https://etherscan.io/apis>
 
-Optionally if you want to speed up the price collection obtain an api key from:
+Optionally if you want to speed up the price collection obtain an API key from:
 
 - Coingecko: <https://www.coingecko.com/en/api/pricing>
 
@@ -58,10 +58,10 @@ LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
 TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 ```
 
-If you used a different database setup modify those values accordingly. The `TEST_DB_URL` is used by
+If you used a different database setup, modify those values accordingly. The `TEST_DB_URL` is used by
 only the test suite. Omitting this variable will cause the database tests to be skipped.
 
-You might want to clear the database before running the backend. You can do it by setting
+You might want to clear the database before running the backend. You can do this by setting
 `FRESH_START=true` env variable.
 
 ### Features
@@ -158,7 +158,7 @@ The activity feature is configured via the following environment variables:
 
 ### `status` feature
 
-The status feature doesn't require any configuration.
+The `status` feature doesn't require any configuration.
 
 **Feature flags:**
 
@@ -179,7 +179,7 @@ The updateMonitor feature is configured via the following environment variables:
 
 ### `tvlCleaner` feature
 
-The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the
+The tvlCleaner feature is designed to remove redundant data kept in the database. It will only keep the
 sixHourly data 93 days to the past and hourly data 10 days to the past.
 
 **Feature flags:**
