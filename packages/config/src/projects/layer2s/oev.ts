@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('oevnetwork')
 export const oev: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
-  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

@@ -10,11 +10,7 @@ const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
 export const popapex: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1710836229), // 2024-03-19T08:17:09Z
-  additionalBadges: [
-    BADGES.DA.DAC,
-    BADGES.L3ParentChain.Arbitrum,
-    BADGES.RaaS.Conduit,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   discovery,
   bridge: discovery.getContract('Bridge'),
