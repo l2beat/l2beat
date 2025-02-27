@@ -76,13 +76,7 @@ function Display({
           <AddressIcon type={selected.type} />{' '}
           {selected.name ??
             (selected.type === 'Unverified' ? 'Unverified' : 'Unknown')}
-          {selected.displayName && (
-            <span className="text-coffee-400 text-xs">
-              ({selected.displayName})
-            </span>
-          )}
         </p>
-
         {'template' in selected && selected.template && (
           <p className="font-mono text-aux-orange text-xs">
             template/{selected.template}

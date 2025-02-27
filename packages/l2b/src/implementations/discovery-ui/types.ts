@@ -53,7 +53,6 @@ export type ApiAddressType =
 
 export interface ApiAddressEntry {
   name?: string
-  displayName?: string
   description?: string
   type: ApiAddressType
   referencedBy: AddressFieldValue[]

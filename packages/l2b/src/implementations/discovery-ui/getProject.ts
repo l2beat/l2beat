@@ -137,7 +137,6 @@ function contractFromDiscovery(
 
   return {
     name: getContractName(contract),
-    displayName: contract.displayName,
     type: getContractType(contract),
     template: contract.template,
     description: contract.description,

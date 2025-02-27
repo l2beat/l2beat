@@ -1122,8 +1122,6 @@ export interface ProjectContract {
   url?: string
   /** Solidity name of the contract */
   name: string
-  /** Display name of the contract */
-  displayName?: string
   /** Description of the contract's role in the system */
   description?: string
   /** Details about upgradeability */

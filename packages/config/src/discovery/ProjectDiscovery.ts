@@ -82,7 +82,6 @@ export class ProjectDiscovery {
 
     return {
       name: contract.name,
-      displayName: contract.displayName,
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
@@ -185,7 +184,7 @@ export class ProjectDiscovery {
       .map((m) => this.getContractByAddress(m))
       .filter(notUndefined)
       .map((contract) => ({
-        name: contract.displayName ?? contract.name,
+        name: contract.name,
         description: trimTrailingDots(contract.description ?? ''),
       }))
       .map(
@@ -236,7 +235,7 @@ export class ProjectDiscovery {
     ]
 
     return {
-      name: contract.displayName ?? contract.name,
+      name: contract.name,
       description: descriptionWithContractNames,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
@@ -444,7 +443,6 @@ export class ProjectDiscovery {
       address: contract.address,
       isVerified: isEntryVerified(contract),
       name: contract.name,
-      displayName: contract.displayName,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
@@ -588,7 +586,6 @@ export class ProjectDiscovery {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
-
     return contracts.filter((contract) => contract.name === name)
   }
 
@@ -628,7 +625,7 @@ export class ProjectDiscovery {
           contractOrEoa.address,
         ),
       )
-      .map((contract) => contract.displayName ?? contract.name)
+      .map((contract) => contract.name)
     return safesWithThisMember.length === 0
       ? []
       : ['Member of ' + safesWithThisMember.join(', ') + '.']
@@ -711,9 +708,8 @@ export class ProjectDiscovery {
     path: ResolvedPermissionPath,
     skipName: boolean = false,
   ): string {
-    const contract = this.getContractByAddress(path.address)
     const name =
-      contract?.displayName ?? contract?.name ?? path.address.toString()
+      this.getContractByAddress(path.address)?.name ?? path.address.toString()
 
     const result = skipName ? [] : [name]
     if (path.delay) {
@@ -782,13 +778,9 @@ export class ProjectDiscovery {
         'act',
       ]
       const showTargets = permissionsRequiringTarget.includes(permission)
-
       const addressesString = showTargets
         ? entries
-            .map((entry) => {
-              const contract = this.getContract(entry.from.toString())
-              return contract.displayName ?? contract.name
-            })
+            .map((entry) => this.getContract(entry.from.toString()).name)
             .join(', ')
         : ''
 
@@ -853,10 +845,7 @@ export class ProjectDiscovery {
       const showTargets = permissionsRequiringTarget.includes(permission)
       const addressesString = showTargets
         ? entries
-            .map((entry) => {
-              const contract = this.getContract(entry.from.toString())
-              return contract.displayName ?? contract.name
-            })
+            .map((entry) => this.getContract(entry.from.toString()).name)
             .join(', ')
         : ''
 
@@ -894,7 +883,7 @@ export class ProjectDiscovery {
     for (const address of addresses) {
       const contract = this.getContractByAddress(address)
       if (contract !== undefined) {
-        s = s.replace(address, contract.displayName ?? contract.name)
+        s = s.replace(address, contract.name)
       }
     }
     return s
