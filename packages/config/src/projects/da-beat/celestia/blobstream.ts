@@ -49,7 +49,6 @@ export const blobstream: BaseProject = {
     }),
     technology: {
       description: `
-  
       ## Architecture
         
       ![Celestia blobstream architecture](/images/da-bridge-technology/celestia/blobstream/architecture.png#center)
