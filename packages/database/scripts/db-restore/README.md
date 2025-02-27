@@ -15,5 +15,5 @@ DEV_REMOTE_DB_URL_READ_ONLY=
 ```
 3. Run the script
 ```
-./tvl-restore.sh <FEATURE>
+./db-restore.sh <FEATURE>
 ```
