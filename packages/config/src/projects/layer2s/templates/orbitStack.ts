@@ -56,7 +56,6 @@ import type {
   ScalingProjectTechnology,
   StageConfig,
   TableReadyValue,
-  TransactionApiConfig,
 } from '../../../types'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'

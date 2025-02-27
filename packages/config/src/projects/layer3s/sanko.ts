@@ -11,10 +11,7 @@ const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 export const sanko: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
-  additionalBadges: [
-    BADGES.L3ParentChain.Arbitrum,
-    BADGES.RaaS.Caldera,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

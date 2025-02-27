@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('reya')
 export const reya: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
-  additionalBadges: [ BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
