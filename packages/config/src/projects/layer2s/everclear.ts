@@ -45,7 +45,7 @@ export const everclear: Layer2 = orbitStackL2({
         callsPerMinute: 1500,
       },
     ],
-    sinceTimestamp: new UnixTime(1725539051) // block 1 ts
+    sinceTimestamp: new UnixTime(1725539051), // block 1 ts
   },
   discovery,
   bridge: discovery.getContract('Bridge'),
