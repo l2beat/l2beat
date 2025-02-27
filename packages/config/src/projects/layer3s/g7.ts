@@ -8,16 +8,12 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('game7', 'arbitrum')
 
-const L1OrbitERC20Gateway = discovery.getContract('L1OrbitERC20Gateway')
+const L1OrbitERC20Gateway = discovery.getContract('ERC20Gateway')
 
 export const g7: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1738899615),
   discovery,
-  additionalBadges: [
-    BADGES.DA.DAC,
-    BADGES.L3ParentChain.Arbitrum,
-    BADGES.RaaS.Conduit,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -69,7 +65,7 @@ export const g7: Layer3 = orbitStackL3({
       description: 'Main entry point for users depositing USDC.',
     }),
   ],
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [

@@ -123,8 +123,7 @@
         "tokenLister": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
         "totalFeeTokens": 8,
         "validators": ["0x5bd9404260D2B0D55081E599e4e085BE080141E2"]
-      },
-      "derivedName": "Governance"
+      }
     },
     {
       "name": "ZkSwapListing",
@@ -144,8 +143,7 @@
         "tokenDecimalsLimit": 32,
         "tokenNameLimit": 64,
         "tokenSymbolLimit": 64
-      },
-      "derivedName": "ZkSwapListing"
+      }
     },
     {
       "name": "UpgradeGatekeeper",
@@ -195,8 +193,7 @@
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
         "versionId": 1
-      },
-      "derivedName": "UpgradeGatekeeper"
+      }
     },
     {
       "name": "Verifier",
@@ -247,8 +244,7 @@
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
         "zkSyncAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-      },
-      "derivedName": "UniswapV2Factory"
+      }
     },
     {
       "name": "ZkSeaNFT",

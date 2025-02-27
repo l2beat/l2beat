@@ -241,8 +241,7 @@
         "isEvacuMode": false,
         "nomineeOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
-      },
-      "derivedName": "ZkTrueUp"
+      }
     },
     {
       "name": "Verifier",
@@ -331,8 +330,7 @@
         "0x7330507f8514566e42d7ae9942cb8825f30a89685dfadea06e8f02d6477e9ec8"
       ],
       "sinceTimestamp": 1716263891,
-      "values": { "$immutable": true, "isEvacuMode": false },
-      "derivedName": "EvacuationFacet"
+      "values": { "$immutable": true, "isEvacuMode": false }
     },
     {
       "name": "AccountFacet",
@@ -341,8 +339,7 @@
         "0xfe9a185d63abab90311e0fe1c1ac9cf8ff75eb18b8894eec37fc861eaad40d34"
       ],
       "sinceTimestamp": 1716263771,
-      "values": { "$immutable": true, "getAccountNum": 0 },
-      "derivedName": "AccountFacet"
+      "values": { "$immutable": true, "getAccountNum": 0 }
     },
     {
       "name": "RollupFacet",
@@ -355,8 +352,7 @@
         "$immutable": true,
         "getBlockNum": [0, 0, 0],
         "getL1RequestNum": [0, 0, 0]
-      },
-      "derivedName": "RollupFacet"
+      }
     },
     {
       "name": "EvacuVerifier",

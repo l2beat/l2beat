@@ -38,11 +38,13 @@ import type {
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
+  ProjectDataAvailability,
   ProjectEscrow,
   ProjectPermission,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
+  ScalingProject,
   ScalingProjectCapability,
   ScalingProjectDisplay,
   ScalingProjectPurpose,
@@ -53,6 +55,7 @@ import type {
   ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
   StageConfig,
+  TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
@@ -64,6 +67,13 @@ import {
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+
+type DAProvider = ProjectDataAvailability & {
+  riskViewDA: TableReadyValue
+  riskViewExitWindow: TableReadyValue
+  technology: ProjectTechnologyChoice
+  badge: Badge
+}
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -123,6 +133,9 @@ interface OrbitStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectDisplay['category']
+  }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
   finality?: Layer2FinalityConfig
@@ -140,7 +153,6 @@ interface OrbitStackConfigCommon {
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
-  upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
@@ -157,23 +169,18 @@ interface OrbitStackConfigCommon {
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
-    /* IMPORTANT: Block number on Celestia Network */
-    sinceBlock: number
+    sinceBlock: number // Block number on Celestia Network
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
     appId: string
-    /* IMPORTANT: Block number on Avail Network */
-    sinceBlock: number
+    sinceBlock: number // Block number on Avail Network
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ScalingProjectDisplay['category']
-  }
   stackedRiskView?: Partial<ScalingProjectRiskView>
 }
 
@@ -181,6 +188,7 @@ export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
+  upgradesAndGovernance?: string
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -327,14 +335,25 @@ const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
 ]
 
-// TO DO: Add blobstream delay when timelock is enabled
+// TODO: Add blobstream delay when timelock is enabled
 const BLOBSTREAM_DELAY_SECONDS = 0
 
 function orbitStackCommon(
+  type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
-  blockNumberOpcodeTimeSeconds: number,
-): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+  incomingNativeDA?: ProjectDataAvailability,
+): Omit<ScalingProject, 'type' | 'display'> & {
+  display: Pick<
+    ScalingProjectDisplay,
+    | 'stateValidationImage'
+    | 'architectureImage'
+    | 'purposes'
+    | 'stack'
+    | 'category'
+    | 'warning'
+  >
+} {
   const nativeContractRisks = templateVars.nonTemplateContractRisks ?? [
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
@@ -355,18 +374,19 @@ function orbitStackCommon(
     templateVars.discovery,
   )
 
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
+  }
+
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
-  const sequencerVersion = templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'sequencerVersion',
-  )
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
     'RollupProxy',
     'wasmModuleRoot',
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
+  const daProvider = getDAProvider(templateVars)
 
   const isUsingEspressoSequencer =
     templateVars.discovery.getContractValueOrUndefined<string>(
@@ -378,21 +398,29 @@ function orbitStackCommon(
       'espressoTEEVerifier',
     ) !== EthereumAddress.ZERO
 
+  const blockNumberOpcodeTimeSeconds =
+    templateVars.blockNumberOpcodeTimeSeconds ?? 12
+
   const minimumAssertionPeriod =
     templateVars.discovery.getContractValue<number>(
       'RollupProxy',
       'minimumAssertionPeriod',
-    ) * 12 // 12 seconds is the assumed block time
-  const postsToExternalDA = sequencerVersion !== '0x00'
-  if (postsToExternalDA) {
-    assert(
-      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
-      'DA badge is required for external DA',
-    )
+    ) * blockNumberOpcodeTimeSeconds
+
+  const postsToExternalDA = !postsToEthereum(templateVars)
+
+  let daBadge = daProvider?.badge
+  if (!postsToExternalDA) {
+    daBadge = usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata
   }
-  const daBadge = usesBlobs
-    ? BADGES.DA.EthereumBlobs
-    : BADGES.DA.EthereumCalldata
+
+  assert(daBadge !== undefined, 'DA badge must be defined')
+
+  const nativeDA = incomingNativeDA ?? {
+    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }
 
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
@@ -427,11 +455,78 @@ function orbitStackCommon(
   //     'validatorWhitelistDisabled',
   //   )
 
+  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daBadge]
+
+  if (isUsingEspressoSequencer) {
+    automaticBadges.push(BADGES.Other.EspressoPreconfs)
+  }
+
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream-espresso'
+      : isUsingValidBlobstreamWmr
+        ? 'orbit-optimium-blobstream'
+        : postsToExternalDA
+          ? 'orbit-optimium'
+          : 'orbit-rollup'
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
+    display: {
+      architectureImage,
+      stateValidationImage: 'orbit',
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
+      ...templateVars.display,
+      warning:
+        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+      stack: 'Arbitrum',
+      category:
+        templateVars.display.category ??
+        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
+    },
+    riskView: getRiskView(type, templateVars, daProvider),
+    stage: computedStage(templateVars),
+    config: {
+      associatedTokens: templateVars.associatedTokens,
+      escrows:
+        templateVars.overrideEscrows ??
+        unionBy(
+          [
+            templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: templateVars.bridge.address,
+              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
+              description: templateVars.gasTokens
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
+                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+              ...upgradeability,
+            }),
+            ...(templateVars.nonTemplateEscrows ?? []),
+          ],
+          'address',
+        ),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+          adjustCount: { type: 'SubtractOne' },
+        },
+      ),
+      daTracking: getDaTracking(templateVars),
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
+    },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
@@ -441,44 +536,26 @@ function orbitStackCommon(
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
-      dataAvailability:
-        (templateVars.nonTemplateTechnology?.dataAvailability ??
-        postsToExternalDA)
-          ? (() => {
-              if (isUsingValidBlobstreamWmr) {
-                return TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true)
-              } else {
-                const DAC = templateVars.discovery.getContractValue<{
-                  membersCount: number
-                  requiredSignatures: number
-                }>('SequencerInbox', 'dacKeyset')
-                const { membersCount, requiredSignatures } = DAC
-
-                return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
-                  membersCount,
-                  requiredSignatures,
-                })
-              }
-            })()
-          : {
-              ...(usesBlobs
-                ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
-                : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
-              references: [
-                {
-                  title:
-                    'Sequencing followed by deterministic execution - Arbitrum documentation',
-                  url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
-                },
-                ...explorerReferences(explorerUrl, [
-                  {
-                    title:
-                      'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
-                    address: safeGetImplementation(templateVars.sequencerInbox),
-                  },
-                ]),
-              ],
+      dataAvailability: templateVars.nonTemplateTechnology?.dataAvailability ??
+        daProvider?.technology ?? {
+          ...(usesBlobs
+            ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+            : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
+          references: [
+            {
+              title:
+                'Sequencing followed by deterministic execution - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
             },
+            ...explorerReferences(explorerUrl, [
+              {
+                title:
+                  'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                address: safeGetImplementation(templateVars.sequencerInbox),
+              },
+            ]),
+          ],
+        },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -552,19 +629,11 @@ function orbitStackCommon(
           existFastConfirmer,
         )
       })(),
-    upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones ?? [],
-    badges: mergeBadges(
-      [
-        BADGES.Stack.Orbit,
-        BADGES.VM.EVM,
-        daBadge,
-        ...(isUsingEspressoSequencer ? [BADGES.Other.EspressoPreconfs] : []),
-      ],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    dataAvailability: decideDA(daProvider, nativeDA),
   }
 }
 
@@ -575,22 +644,67 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
-  const blockNumberOpcodeTimeSeconds =
-    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+  const common = orbitStackCommon(
+    'layer3',
+    templateVars,
+    baseChain.chainConfig?.explorerUrl,
+    baseChain.dataAvailability,
+  )
+
+  const getStackedRisks = () => {
+    return {
+      stateValidation:
+        templateVars.stackedRiskView?.stateValidation ??
+        pickWorseRisk(
+          common.riskView.stateValidation,
+          baseChain.riskView.stateValidation,
+        ),
+      dataAvailability:
+        templateVars.stackedRiskView?.dataAvailability ??
+        pickWorseRisk(
+          common.riskView.dataAvailability,
+          baseChain.riskView.dataAvailability,
+        ),
+      exitWindow:
+        templateVars.stackedRiskView?.exitWindow ??
+        pickWorseRisk(
+          common.riskView.exitWindow,
+          baseChain.riskView.exitWindow,
+        ),
+      sequencerFailure:
+        templateVars.stackedRiskView?.sequencerFailure ??
+        sumRisk(
+          common.riskView.sequencerFailure,
+          baseChain.riskView.sequencerFailure,
+          RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
+        ),
+      proposerFailure:
+        templateVars.stackedRiskView?.sequencerFailure ??
+        sumRisk(
+          common.riskView.proposerFailure,
+          baseChain.riskView.proposerFailure,
+          RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+        ),
+    }
+  }
+
+  return {
+    type: 'layer3',
+    ...common,
+    hostChain: ProjectId(hostChain),
+    display: { ...common.display, ...templateVars.display },
+    stackedRiskView: getStackedRisks(),
+  }
+}
+
+export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
+  const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'confirmPeriodBlocks',
   )
-  const challengePeriodSeconds =
-    challengePeriodBlocks * blockNumberOpcodeTimeSeconds
-
-  const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'VALIDATOR_AFK_BLOCKS',
-  )
-  const validatorAfkTimeSeconds =
-    validatorAfkBlocks * blockNumberOpcodeTimeSeconds
+  const challengePeriodSeconds = challengePeriodBlocks * assumedBlockTime
 
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -598,255 +712,41 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
-  const sequencerVersion = templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'sequencerVersion',
+  const common = orbitStackCommon(
+    'layer2',
+    templateVars,
+    EXPLORER_URLS['ethereum'],
   )
-  const postsToExternalDA = sequencerVersion !== '0x00'
-
-  const nOfChallengers = templateVars.discovery.getContractValue<string[]>(
-    'RollupProxy',
-    'validators',
-  ).length
-
-  const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
-  }
-
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
-    'RollupProxy',
-    'wasmModuleRoot',
-  )
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
-
-  const riskView = {
-    stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
-      ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
-        nOfChallengers,
-        templateVars.hasAtLeastFiveExternalChallengers ?? false,
-        challengePeriodSeconds,
-      ),
-      secondLine: formatChallengePeriod(challengePeriodSeconds),
-    },
-    dataAvailability:
-      (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
-        ? (() => {
-            if (isUsingValidBlobstreamWmr) {
-              return RISK_VIEW.DATA_CELESTIA(true)
-            } else {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
-            }
-          })()
-        : RISK_VIEW.DATA_ON_CHAIN_L3,
-    exitWindow:
-      templateVars.nonTemplateRiskView?.exitWindow ??
-      (isUsingValidBlobstreamWmr
-        ? pickWorseRisk(
-            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-          )
-        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
-    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
-      secondLine: formatDelay(selfSequencingDelaySeconds),
-    },
-    proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-        challengePeriodSeconds + validatorAfkTimeSeconds,
-      ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-      secondLine: formatDelay(challengePeriodSeconds + validatorAfkTimeSeconds),
-    },
-  }
-
-  const getStackedRisks = () => {
-    return {
-      stateValidation:
-        templateVars.stackedRiskView?.stateValidation ??
-        pickWorseRisk(
-          riskView.stateValidation,
-          baseChain.riskView.stateValidation,
-        ),
-      dataAvailability:
-        templateVars.stackedRiskView?.dataAvailability ??
-        pickWorseRisk(
-          riskView.dataAvailability,
-          baseChain.riskView.dataAvailability,
-        ),
-      exitWindow:
-        templateVars.stackedRiskView?.exitWindow ??
-        pickWorseRisk(riskView.exitWindow, baseChain.riskView.exitWindow),
-      sequencerFailure:
-        templateVars.stackedRiskView?.sequencerFailure ??
-        sumRisk(
-          riskView.sequencerFailure,
-          baseChain.riskView.sequencerFailure,
-          RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
-        ),
-      proposerFailure:
-        templateVars.stackedRiskView?.sequencerFailure ??
-        sumRisk(
-          riskView.proposerFailure,
-          baseChain.riskView.proposerFailure,
-          RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
-        ),
-    }
-  }
-
-  const fastConfirmer =
-    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
-      'RollupProxy',
-      'anyTrustFastConfirmer',
-    ) ?? EthereumAddress.ZERO
-
-  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
-
-  const isUsingEspressoSequencer =
-    templateVars.discovery.getContractValueOrUndefined<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== undefined &&
-    templateVars.discovery.getContractValue<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== EthereumAddress.ZERO
-
-  const architectureImage = existFastConfirmer
-    ? 'orbit-optimium-fastconfirm'
-    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream-espresso'
-      : isUsingValidBlobstreamWmr
-        ? 'orbit-optimium-blobstream'
-        : postsToExternalDA
-          ? 'orbit-optimium'
-          : 'orbit-rollup'
 
   return {
-    type: 'layer3',
-    ...orbitStackCommon(
-      templateVars,
-      baseChain.chainConfig?.explorerUrl,
-      blockNumberOpcodeTimeSeconds,
-    ),
-    hostChain: ProjectId(hostChain),
+    type: 'layer2',
+    ...common,
     display: {
-      architectureImage,
-      stateValidationImage: 'orbit',
-      purposes: templateVars.overridingPurposes ?? [
-        'Universal',
-        ...(templateVars.additionalPurposes ?? []),
-      ],
+      ...common.display,
       ...templateVars.display,
-      warning:
-        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      stack: 'Arbitrum',
-      category:
-        templateVars.display.category ??
-        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
-    },
-    stage:
-      templateVars.stage ??
-      (postsToExternalDA
-        ? {
-            stage: 'NotApplicable',
-          }
-        : getStage(
-            {
-              stage0: {
-                callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
-                rollupNodeSourceAvailable:
-                  templateVars.isNodeAvailable ?? 'UnderReview',
-              },
-              stage1: {
-                principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: false,
-                usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: true,
-                securityCouncilProperlySetUp: false,
-              },
-              stage2: {
-                proofSystemOverriddenOnlyInCaseOfABug: false,
-                fraudProofSystemIsPermissionless: false,
-                delayWith30DExitWindow: false,
-              },
-            },
-            {
-              rollupNodeLink: templateVars.nodeSourceLink,
-            },
-          )),
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          if (isUsingValidBlobstreamWmr) {
-            return {
-              layer: DA_LAYERS.CELESTIA,
-              bridge: DA_BRIDGES.BLOBSTREAM,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          } else {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-
-            return {
-              layer: DA_LAYERS.DAC,
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          }
-        })()
-      : baseChain.dataAvailability,
-    stackedRiskView: getStackedRisks(),
-    riskView,
-    config: {
-      associatedTokens: templateVars.associatedTokens,
-      escrows:
-        templateVars.overrideEscrows ??
-        unionBy(
-          [
-            ...(templateVars.nonTemplateEscrows ?? []),
-            templateVars.discovery.getEscrowDetails({
-              includeInTotal: false,
-              address: templateVars.bridge.address,
-              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
-              description: templateVars.gasTokens
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
-                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-              ...upgradeability,
-            }),
-          ],
-          'address',
-        ),
-      activityConfig: getActivityConfig(
-        templateVars.activityConfig,
-        templateVars.chainConfig,
-        {
-          type: 'block',
-          startBlock: 1,
-          adjustCount: { type: 'SubtractOne' },
+      finality: { finalizationPeriod: challengePeriodSeconds },
+      liveness: ifPostsToEthereum(
+        templateVars,
+        templateVars.display.liveness ?? {
+          warnings: {
+            stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+          },
+          explanation: `${
+            templateVars.display.name
+          } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+            selfSequencingDelaySeconds,
+          )}. The state root gets finalized ${formatSeconds(
+            challengePeriodSeconds,
+          )} after it has been posted.`,
         },
       ),
-      daTracking: getDaTracking(templateVars),
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
     },
+    config: {
+      ...common.config,
+      trackedTxs: templateVars.trackedTxs,
+      finality: templateVars.finality,
+    },
+    upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
 
@@ -906,77 +806,47 @@ function getDaTracking(
         : undefined
 }
 
-export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
-  const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
-
-  const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'confirmPeriodBlocks',
+function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
   )
-  const challengePeriodSeconds = challengePeriodBlocks * assumedBlockTime
+  return sequencerVersion === '0x00'
+}
 
+function ifPostsToEthereum<T>(
+  templateVars: OrbitStackConfigCommon,
+  value: T,
+): T | undefined {
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  const postsToEthereum = sequencerVersion === '0x00'
+
+  return postsToEthereum ? value : undefined
+}
+
+function getRiskView(
+  type: (Layer2 | Layer3)['type'],
+  templateVars: OrbitStackConfigCommon,
+  daProvider: DAProvider | undefined,
+): ScalingProjectRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
 
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
-  const sequencerVersion = templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'sequencerVersion',
-  )
-  const postsToExternalDA = sequencerVersion !== '0x00'
+  const blockNumberOpcodeTimeSeconds =
+    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
 
-  const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
-  }
-
-  const category =
-    templateVars.display.category ??
-    (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
-
-  const fastConfirmer =
-    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
-      'RollupProxy',
-      'anyTrustFastConfirmer',
-    ) ?? EthereumAddress.ZERO
-
-  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
-
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+  const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
-    'wasmModuleRoot',
+    'confirmPeriodBlocks',
   )
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
-
-  const isUsingEspressoSequencer =
-    templateVars.discovery.getContractValueOrUndefined<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== undefined &&
-    templateVars.discovery.getContractValue<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== EthereumAddress.ZERO
-
-  const architectureImage = existFastConfirmer
-    ? 'orbit-optimium-fastconfirm'
-    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream-espresso'
-      : isUsingValidBlobstreamWmr
-        ? 'orbit-optimium-blobstream'
-        : postsToExternalDA
-          ? 'orbit-optimium'
-          : 'orbit-rollup'
-
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValueOrUndefined(
-      'SequencerInbox',
-      'postsBlobs',
-    ) ??
-    false
+  const challengePeriodSeconds =
+    challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
   const validatorWhitelistDisabled =
     templateVars.discovery.getContractValue<boolean>(
@@ -985,207 +855,171 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     )
 
   return {
-    type: 'layer2',
-    ...orbitStackCommon(templateVars, EXPLORER_URLS['ethereum'], 12),
-    display: {
-      architectureImage,
-      stateValidationImage: 'orbit',
-      purposes: templateVars.overridingPurposes ?? [
-        'Universal',
-        ...(templateVars.additionalPurposes ?? []),
-      ],
-      warning:
-        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      ...templateVars.display,
-      stack: 'Arbitrum',
-      category,
-      finality: {
-        finalizationPeriod: challengePeriodSeconds,
-      },
-      liveness: postsToExternalDA
-        ? undefined
-        : (templateVars.display.liveness ?? {
-            warnings: {
-              stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-            },
-            explanation: `${
-              templateVars.display.name
-            } is an ${category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
-              selfSequencingDelaySeconds,
-            )}. The state root gets finalized ${formatSeconds(
-              challengePeriodSeconds,
-            )} after it has been posted.`,
-          }),
+    stateValidation:
+      templateVars.nonTemplateRiskView?.stateValidation ??
+      (() => {
+        if (validatorWhitelistDisabled) {
+          return RISK_VIEW.STATE_FP_INT
+        }
+
+        const nOfChallengers = templateVars.discovery.getContractValue<
+          string[]
+        >('RollupProxy', 'validators').length
+
+        return {
+          ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
+            nOfChallengers,
+            templateVars.hasAtLeastFiveExternalChallengers ?? false,
+            challengePeriodSeconds,
+          ),
+          secondLine: formatChallengePeriod(challengePeriodSeconds),
+        }
+      })(),
+    dataAvailability:
+      templateVars.nonTemplateRiskView?.dataAvailability ??
+      (daProvider !== undefined
+        ? daProvider.riskViewDA
+        : type === 'layer2'
+          ? RISK_VIEW.DATA_ON_CHAIN
+          : RISK_VIEW.DATA_ON_CHAIN_L3),
+    exitWindow:
+      templateVars.nonTemplateRiskView?.exitWindow ??
+      (daProvider !== undefined
+        ? daProvider.riskViewExitWindow
+        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
+    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
+      secondLine: formatDelay(selfSequencingDelaySeconds),
     },
-    stage:
-      templateVars.stage ??
-      (postsToExternalDA
-        ? {
-            stage: 'NotApplicable',
-          }
-        : getStage(
-            {
-              stage0: {
-                callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
-                rollupNodeSourceAvailable:
-                  templateVars.isNodeAvailable ?? 'UnderReview',
-              },
-              stage1: {
-                principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: false,
-                usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: true,
-                securityCouncilProperlySetUp: false,
-              },
-              stage2: {
-                proofSystemOverriddenOnlyInCaseOfABug: false,
-                fraudProofSystemIsPermissionless: false,
-                delayWith30DExitWindow: false,
-              },
-            },
-            {
-              rollupNodeLink: templateVars.nodeSourceLink,
-            },
-          )),
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          if (isUsingValidBlobstreamWmr) {
-            return {
-              layer: DA_LAYERS.CELESTIA,
-              bridge: DA_BRIDGES.BLOBSTREAM,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          } else {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
+    proposerFailure:
+      templateVars.nonTemplateRiskView?.proposerFailure ??
+      (() => {
+        if (validatorWhitelistDisabled) {
+          return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
+        }
 
-            return {
-              layer: DA_LAYERS.DAC,
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          }
-        })()
-      : {
-          layer: usesBlobs
-            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-            : DA_LAYERS.ETH_CALLDATA,
-          bridge: DA_BRIDGES.ENSHRINED,
-          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        },
-    riskView: {
-      stateValidation:
-        templateVars.nonTemplateRiskView?.stateValidation ??
-        (() => {
-          if (validatorWhitelistDisabled) {
-            return RISK_VIEW.STATE_FP_INT
-          }
+        const validatorAfkBlocks =
+          templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'VALIDATOR_AFK_BLOCKS',
+          )
+        const validatorAfkTimeSeconds =
+          validatorAfkBlocks * blockNumberOpcodeTimeSeconds
 
-          const nOfChallengers = templateVars.discovery.getContractValue<
-            string[]
-          >('RollupProxy', 'validators').length
-
-          return {
-            ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
-              nOfChallengers,
-              templateVars.hasAtLeastFiveExternalChallengers ?? false,
-              challengePeriodSeconds,
-            ),
-            secondLine: formatChallengePeriod(challengePeriodSeconds),
-          }
-        })(),
-      dataAvailability:
-        (templateVars.nonTemplateRiskView?.dataAvailability ??
-        postsToExternalDA)
-          ? (() => {
-              if (isUsingValidBlobstreamWmr) {
-                return RISK_VIEW.DATA_CELESTIA(true)
-              } else {
-                const DAC = templateVars.discovery.getContractValue<{
-                  membersCount: number
-                  requiredSignatures: number
-                }>('SequencerInbox', 'dacKeyset')
-                const { membersCount, requiredSignatures } = DAC
-                return RISK_VIEW.DATA_EXTERNAL_DAC({
-                  membersCount,
-                  requiredSignatures,
-                })
-              }
-            })()
-          : RISK_VIEW.DATA_ON_CHAIN,
-      exitWindow:
-        templateVars.nonTemplateRiskView?.exitWindow ??
-        (isUsingValidBlobstreamWmr
-          ? pickWorseRisk(
-              RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-            )
-          : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
-      sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
-        ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
-        secondLine: formatDelay(selfSequencingDelaySeconds),
-      },
-      proposerFailure:
-        templateVars.nonTemplateRiskView?.proposerFailure ??
-        (() => {
-          if (validatorWhitelistDisabled) {
-            return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
-          }
-          const validatorAfkBlocks =
-            templateVars.discovery.getContractValue<number>(
-              'RollupProxy',
-              'VALIDATOR_AFK_BLOCKS',
-            )
-          const validatorAfkTimeSeconds = validatorAfkBlocks * assumedBlockTime
-
-          return {
-            ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-              challengePeriodSeconds + validatorAfkTimeSeconds,
-            ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-            secondLine: formatDelay(
-              challengePeriodSeconds + validatorAfkTimeSeconds,
-            ),
-          }
-        })(),
-    },
-    config: {
-      associatedTokens: templateVars.associatedTokens,
-      escrows: templateVars.overrideEscrows ?? [
-        templateVars.discovery.getEscrowDetails({
-          address: templateVars.bridge.address,
-          tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
-          description: templateVars.gasTokens
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
-            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-          ...upgradeability,
-        }),
-        ...(templateVars.nonTemplateEscrows ?? []),
-      ],
-      activityConfig: getActivityConfig(
-        templateVars.activityConfig,
-        templateVars.chainConfig,
-        {
-          type: 'block',
-          startBlock: 1,
-          adjustCount: { type: 'SubtractOne' },
-        },
-      ),
-      daTracking: getDaTracking(templateVars),
-      trackedTxs: templateVars.trackedTxs,
-      finality: templateVars.finality,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
-    },
+        return {
+          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+            challengePeriodSeconds + validatorAfkTimeSeconds,
+          ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+          secondLine: formatDelay(
+            challengePeriodSeconds + validatorAfkTimeSeconds,
+          ),
+        }
+      })(),
   }
+}
+
+function getDAProvider(
+  templateVars: OrbitStackConfigCommon,
+): DAProvider | undefined {
+  if (postsToEthereum(templateVars)) {
+    return undefined
+  }
+
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
+
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
+
+  if (isUsingValidBlobstreamWmr) {
+    return {
+      riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
+      riskViewExitWindow: pickWorseRisk(
+        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+      ),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
+      layer: DA_LAYERS.CELESTIA,
+      bridge: DA_BRIDGES.BLOBSTREAM,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: BADGES.DA.CelestiaBlobstream,
+    }
+  } else {
+    const DAC = templateVars.discovery.getContractValue<{
+      membersCount: number
+      requiredSignatures: number
+    }>('SequencerInbox', 'dacKeyset')
+
+    return {
+      riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+      layer: DA_LAYERS.DAC,
+      bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: BADGES.DA.DAC,
+    }
+  }
+}
+
+function decideDA(
+  daProvider: DAProvider | undefined,
+  nativeDA: ProjectDataAvailability | undefined,
+): ProjectDataAvailability | undefined {
+  if (daProvider !== undefined) {
+    return {
+      layer: daProvider.layer,
+      bridge: daProvider.bridge,
+      mode: daProvider.mode,
+    }
+  }
+
+  return nativeDA
+}
+
+function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
+  const postsToL1 = postsToEthereum(templateVars)
+
+  if (templateVars.stage !== undefined) {
+    return templateVars.stage
+  }
+  if (!postsToL1) {
+    return { stage: 'NotApplicable' }
+  }
+
+  return getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable:
+          templateVars.isNodeAvailable ?? 'UnderReview',
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: templateVars.nodeSourceLink,
+    },
+  )
 }

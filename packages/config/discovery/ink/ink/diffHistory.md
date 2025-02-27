@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xc57a14ec38df9011215e85fbdfde3fad6d4a84d1
+
+# Diff at Thu, 27 Feb 2025 12:17:02 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@498566f068804b86055f6b4fe0c93bc7215cc136 block: 7087697
+- current block number: 7087697
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 7087697 (main branch discovery), not current.
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: Administration contract for other contract proxies.
+      name:
+-        "ProxyAdmin"
++        "L2ProxyAdmin"
+      displayName:
+-        "L2ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x4df0da577a3b1875047b38f816dd33599e2e54e8
 
 # Diff at Wed, 26 Feb 2025 16:18:31 GMT:

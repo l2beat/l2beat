@@ -136,8 +136,7 @@
       "values": {
         "$immutable": true,
         "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
-      },
-      "derivedName": "CallForwardingProxy"
+      }
     },
     {
       "name": "BridgedToken",
@@ -757,8 +756,7 @@
         "ZodiacModule_guard": "0x0000000000000000000000000000000000000000",
         "ZodiacModule_modules": ["0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"],
         "ZodiacModule_target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
-      },
-      "derivedName": "Roles"
+      }
     },
     {
       "name": "ProxyAdmin",

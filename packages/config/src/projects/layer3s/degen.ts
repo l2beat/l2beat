@@ -12,11 +12,7 @@ const discovery = new ProjectDiscovery('degen', 'base')
 export const degen: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
   discovery,
-  additionalBadges: [
-    BADGES.DA.DAC,
-    BADGES.L3ParentChain.Base,
-    BADGES.RaaS.Alchemy,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   additionalPurposes: ['Social'],
   gasTokens: { tracked: ['DEGEN'] },
   reasonsForBeingOther: [
@@ -63,7 +59,7 @@ export const degen: Layer3 = orbitStackL3({
       { type: 'blockscout', url: 'https://explorer.degen.tips/api' },
     ],
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateContractRisks: [

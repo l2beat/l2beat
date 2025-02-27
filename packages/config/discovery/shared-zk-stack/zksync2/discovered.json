@@ -103,7 +103,6 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkTokenGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -326,7 +325,6 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkGovOpsGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -519,7 +517,6 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkProtocolGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },

@@ -91,8 +91,7 @@
         "TREASURY": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
-      },
-      "derivedName": "CanonicalBridge"
+      }
     },
     {
       "name": "AuthorityMultisig",
@@ -189,8 +188,7 @@
         "paused": true,
         "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "EtherBridge"
+      }
     },
     {
       "name": "Mailbox",
@@ -232,8 +230,7 @@
         "proxiableUUID": "EXPECT_REVERT",
         "TRUSTED_RELAYER_ROLE": "0xe8a0628d2ba937241981f34311d9db59dd5cf223365e8b6132bca13fc7ae519c",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "Mailbox"
+      }
     },
     {
       "name": "Upgrader0to1",
@@ -264,8 +261,7 @@
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
-      },
-      "derivedName": "Upgrader0to1"
+      }
     },
     {
       "name": "Treasury",
@@ -356,8 +352,7 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53"
-      },
-      "derivedName": "Treasury"
+      }
     }
   ],
   "eoas": [

@@ -148,8 +148,7 @@
         "l2Bridge": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
         "l2TokenBeacon": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "OptimismProxyAdmin",
@@ -203,8 +202,7 @@
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "ZKLINK": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
-      },
-      "derivedName": "OptimismL2Gateway"
+      }
     }
   ],
   "eoas": [

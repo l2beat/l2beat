@@ -278,7 +278,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "L1ERC20Gateway",
+      "name": "ERC20Gateway",
       "address": "0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -286,7 +286,6 @@
         "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -317,6 +316,7 @@
         "router": "0xeA685ba6f0C3ec5e7891C17CfFBD009EbAdC9E49",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -797,7 +797,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "L1GatewayRouter",
+      "name": "GatewayRouter",
       "address": "0xeA685ba6f0C3ec5e7891C17CfFBD009EbAdC9E49",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -805,7 +805,6 @@
         "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -836,6 +835,7 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1GatewayRouter",
       "category": { "name": "External Bridges", "priority": 1 }
     }
   ],

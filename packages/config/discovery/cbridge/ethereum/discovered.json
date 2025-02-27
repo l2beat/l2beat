@@ -157,8 +157,7 @@
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,
         "THRESHOLD_DECIMAL": 100
-      },
-      "derivedName": "MessageBusOwner"
+      }
     },
     {
       "name": "OriginalTokenVaultV2",
@@ -237,8 +236,7 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      },
-      "derivedName": "OriginalTokenVault"
+      }
     },
     {
       "name": "Sentinel",
@@ -307,8 +305,7 @@
           "severity": "MEDIUM",
           "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)"
         }
-      },
-      "derivedName": "Sentinel"
+      }
     },
     {
       "name": "SimpleGovernance",
@@ -348,8 +345,7 @@
         "MIN_ACTIVE_PERIOD": 3600,
         "nextProposalId": 93,
         "THRESHOLD_DECIMAL": 100
-      },
-      "derivedName": "SimpleGovernance"
+      }
     }
   ],
   "eoas": [

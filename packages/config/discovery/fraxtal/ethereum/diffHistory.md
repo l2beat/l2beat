@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xbb6a36353c27eb99ad1bd57e1c9fdfbe15adcac0
+
+# Diff at Thu, 27 Feb 2025 11:45:42 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21802913
+- current block number: 21802913
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802913 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      name:
+-        "OptimismMintablePermitERC20Factory"
++        "OptimismMintableERC20Factory"
+      displayName:
+-        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract frxETH Token (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+      name:
+-        "frxETH"
++        "frxETH Token"
+      displayName:
+-        "frxETH Token"
+    }
+```
+
+```diff
+    contract frxETH Minter (0x7Bc6bad540453360F744666D625fec0ee1320cA3) {
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+      name:
+-        "FraxEtherMinter"
++        "frxETH Minter"
+      displayName:
+-        "frxETH Minter"
+    }
+```
+
+```diff
+    contract FrxEthTimelock (0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA) {
+    +++ description: Allows for time-delayed execution of transactions. Current delay is 2d.
+      name:
+-        "Timelock"
++        "FrxEthTimelock"
+      displayName:
+-        "FrxEthTimelock"
+    }
+```
+
+```diff
+    contract frxETH Minter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138) {
+    +++ description: Accepts user-supplied ETH and converts it to frxETH.
+      name:
+-        "frxETHMinter"
++        "frxETH Minter"
+      displayName:
+-        "frxETH Minter"
+    }
+```
+
 Generated with discovered.json: 0xbd7faa97b639f68640256298b25e4555c4f02fb7
 
 # Diff at Wed, 26 Feb 2025 10:32:48 GMT:

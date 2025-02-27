@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('inevm', 'arbitrum')
 export const inevm: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
   additionalPurposes: ['Interoperability'],
-  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -61,7 +61,7 @@ export const inevm: Layer3 = orbitStackL3({
     ],
   },
   discovery,
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),

@@ -56,10 +56,12 @@ export function normalizeId(s: string) {
 }
 
 export function contractValuesForInterpolation(
+  chain: string,
   contract: ContractParameters | EoaParameters,
 ): Record<string, ContractValue | undefined> {
   const values = 'values' in contract ? (contract.values ?? {}) : {}
   return {
+    '$.chain': chain,
     '$.address': contract.address.toLowerCase(),
     '$.name': contract.name ?? '',
     '$.description': contract.description,

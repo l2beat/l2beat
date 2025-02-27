@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('alephzero')
 export const alephzero: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -44,7 +44,7 @@ export const alephzero: Layer2 = orbitStackL2({
       },
     ],
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [

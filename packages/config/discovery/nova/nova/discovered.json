@@ -52,8 +52,7 @@
         "counterpartGateway": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "defaultGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
         "router": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L2GatewayRouter"
+      }
     },
     {
       "name": "L2SurplusFee",
@@ -167,8 +166,7 @@
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "0x722E8BdD2ce80A4422E880164f2079488e115365",
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
-      },
-      "derivedName": "L2WethGateway"
+      }
     },
     {
       "name": "L2UpgradeExecutor",
@@ -533,8 +531,7 @@
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "exitNum": 878,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
-      },
-      "derivedName": "L2ERC20Gateway"
+      }
     },
     {
       "name": "UpgradeableBeacon",

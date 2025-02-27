@@ -133,8 +133,7 @@
         "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
       ],
       "sinceTimestamp": 1612752276,
-      "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsYColumn"
+      "values": { "$immutable": true }
     },
     {
       "name": "CairoBootloaderProgram",
@@ -423,8 +422,7 @@
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "wethDYDX",
         "totalSupply": "546945056713322374333760466"
-      },
-      "derivedName": "WrappedEthereumDydxToken"
+      }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -450,8 +448,7 @@
           "80",
           "0"
         ]
-      },
-      "derivedName": "CpuFrilessVerifier"
+      }
     },
     {
       "name": "EcdsaPointsXColumn",
@@ -460,8 +457,7 @@
         "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
       ],
       "sinceTimestamp": 1612752276,
-      "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsXColumn"
+      "values": { "$immutable": true }
     },
     {
       "name": "LiquidityStaking",
@@ -830,8 +826,7 @@
         "getVotingDelay": 6570,
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "VOTE_EMITTED_TYPEHASH": "0x4e031542a9553ed1c4e810c54674ab4b984243e335b246aa3de73663bf4c11ee"
-      },
-      "derivedName": "DydxGovernor"
+      }
     },
     {
       "name": "GpsStatementVerifier",
@@ -853,8 +848,7 @@
         ],
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2020_1"
-      },
-      "derivedName": "GpsStatementVerifier"
+      }
     },
     {
       "name": "Committee",
@@ -875,8 +869,7 @@
         "hasRegisteredFact": false,
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 1
-      },
-      "derivedName": "Committee"
+      }
     },
     {
       "name": "DydxToken",
@@ -905,8 +898,7 @@
         "symbol": "DYDX",
         "totalSupply": "1000000000000000000000000000",
         "TRANSFER_RESTRICTION_LIFTED_NO_LATER_THAN": 1631977200
-      },
-      "derivedName": "DydxToken"
+      }
     },
     {
       "name": "ChainlinkAdapter",
@@ -932,8 +924,7 @@
         "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
       ],
       "sinceTimestamp": 1612752231,
-      "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsXColumn"
+      "values": { "$immutable": true }
     },
     {
       "name": "PriorityExecutor",
@@ -963,8 +954,7 @@
         "PROPOSITION_THRESHOLD": 50,
         "VOTE_DIFFERENTIAL": 50,
         "VOTING_DURATION": 26280
-      },
-      "derivedName": "PriorityExecutor"
+      }
     },
     {
       "name": "LiquidityStakingProxyAdmin",
@@ -1002,8 +992,7 @@
         "vestingBegin": 1628002800,
         "vestingCliff": 1628002800,
         "vestingEnd": 1785769200
-      },
-      "derivedName": "TreasuryVester"
+      }
     },
     {
       "name": "GovernanceStrategyV2",
@@ -1017,8 +1006,7 @@
         "DYDX_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "STAKED_DYDX_TOKEN": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC",
         "WRAPPED_ETHEREUM_DYDX_TOKEN": "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
-      },
-      "derivedName": "GovernanceStrategyV2"
+      }
     },
     {
       "name": "EcdsaPointsYColumn",
@@ -1027,8 +1015,7 @@
         "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
       ],
       "sinceTimestamp": 1612752276,
-      "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsYColumn"
+      "values": { "$immutable": true }
     },
     {
       "name": "StarkPerpetual",

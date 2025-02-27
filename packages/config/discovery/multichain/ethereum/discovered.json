@@ -17,8 +17,7 @@
         "factory": "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
         "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
         "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "AnyswapV4Router"
+      }
     },
     {
       "name": "AnyswapV6Router",
@@ -34,8 +33,7 @@
         "factory": "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
         "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
         "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "AnyswapV6Router"
+      }
     }
   ],
   "eoas": [

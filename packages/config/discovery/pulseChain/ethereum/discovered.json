@@ -44,8 +44,7 @@
         "tokenFactory": "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02",
         "upgradeabilityOwner": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
         "version": 1
-      },
-      "derivedName": "ForeignOmnibridge"
+      }
     },
     {
       "name": "BridgeValidators",
@@ -98,8 +97,7 @@
           "0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
         ],
         "version": 1
-      },
-      "derivedName": "BridgeValidators"
+      }
     },
     {
       "name": "WETHOmnibridgeRouter",
@@ -112,8 +110,7 @@
         "$immutable": true,
         "bridge": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
         "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
-      },
-      "derivedName": "WETHOmnibridgeRouter"
+      }
     },
     {
       "name": "TokenFactory",
@@ -200,8 +197,7 @@
         "upgradeabilityOwner": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "validatorContract": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
         "version": 1
-      },
-      "derivedName": "ForeignAMB"
+      }
     }
   ],
   "eoas": [

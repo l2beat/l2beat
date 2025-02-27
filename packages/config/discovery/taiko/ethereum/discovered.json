@@ -347,8 +347,7 @@
         "proxiableUUID": "EXPECT_REVERT",
         "symbol": "TAIKO",
         "totalSupply": "1000000000000000000000000000"
-      },
-      "derivedName": "TaikoToken"
+      }
     },
     {
       "name": "MainnetProverSet",
@@ -523,8 +522,7 @@
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "Risc0Verifier"
+      }
     },
     {
       "name": "GuardianMinorityProver",
@@ -732,8 +730,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "sp1RemoteVerifier": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
-      },
-      "derivedName": "SP1Verifier"
+      }
     },
     {
       "name": "SP1RemoteVerifier",
@@ -840,6 +837,116 @@
       "derivedName": "MainnetProverSet"
     },
     {
+      "name": "MainnetTierRouter",
+      "address": "0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66",
+      "sourceHashes": [
+        "0x442a9e00ff78c1f18f6096d2a234b6cde2e01e2b9b2e5e0ff914042405d7ce3a"
+      ],
+      "sinceTimestamp": 1734656183,
+      "values": {
+        "$immutable": true,
+        "active_tiers": [
+          [
+            "0x746965725f736778000000000000000000000000000000000000000000000000"
+          ],
+          [
+            "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"
+          ],
+          [
+            "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"
+          ],
+          [
+            "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"
+          ],
+          ["0x746965725f677561726469616e00000000000000000000000000000000000000"]
+        ],
+        "BOND_UNIT": "75000000000000000000",
+        "DAO_FALLBACK_PROPOSER": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+        "getTierIds": [200, 250, 251, 900, 1000],
+        "GRACE_PERIOD": 240,
+        "TIER_GUARDIAN": {
+          "verifierName": "0x746965725f677561726469616e00000000000000000000000000000000000000",
+          "validityBond": 0,
+          "contestBond": 0,
+          "cooldownWindow": 240,
+          "provingWindow": 240,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_GUARDIAN_MINORITY": {
+          "verifierName": "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 240,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_OPTIMISTIC": {
+          "verifierName": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "validityBond": "75000000000000000000",
+          "contestBond": "492187500000000000000",
+          "cooldownWindow": 1440,
+          "provingWindow": 255,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "tier_provider": "0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66",
+        "TIER_RISC0": {
+          "verifierName": "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 420,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SGX": {
+          "verifierName": "0x746965725f736778000000000000000000000000000000000000000000000000",
+          "validityBond": "150000000000000000000",
+          "contestBond": "984375000000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 300,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SGX_ZKVM": {
+          "verifierName": "0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 420,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SP1": {
+          "verifierName": "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 420,
+          "maxBlocksToVerifyPerProof": 0
+        }
+      },
+      "fieldMeta": {
+        "TIER_SGX": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_RISC0": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_SP1": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_GUARDIAN_MINORITY": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_GUARDIAN": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_OPTIMISTIC": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_SGX_ZKVM": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        }
+      }
+    },
+    {
       "name": "AutomataDcapV3Attestation",
       "address": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
       "sourceHashes": [
@@ -895,8 +1002,7 @@
           "mrsigner": "0x8c4f5775d796503e96137f77c68a829a0056ac8ded70140b081b094490c57bff"
         },
         "sigVerifyLib": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
-      },
-      "derivedName": "AutomataDcapV3Attestation"
+      }
     },
     {
       "name": "SharedERC20Vault",
