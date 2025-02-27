@@ -48,19 +48,13 @@ function DashboardPage(props: DashboardPageProps) {
                           <ChangedDetectedDropdown
                             project={project}
                             summary={
-                              <a
-                                href={`/status/discovery/${chainName}/${project.name}`}
-                              >
-                                {`${project.name} (Changes Detected!)`}
-                              </a>
+                              <div
+                                style={{ color: '#cecbc4' }}
+                              >{`${project.name} (Changes Detected!)`}</div>
                             }
                           />
                         ) : (
-                          <a
-                            href={`/status/discovery/${chainName}/${project.name}`}
-                          >
-                            {project.name}
-                          </a>
+                          <div>{project.name}</div>
                         )
                       }
                     />
