@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { type JSX, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from './api/api'
 import { MultiView } from './multi-view/MultiView'

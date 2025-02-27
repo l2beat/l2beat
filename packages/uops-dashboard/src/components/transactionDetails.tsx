@@ -1,6 +1,6 @@
 import type { Chain } from '@/chains'
 import type { CountedOperation, CountedTransaction } from '@/types'
-import { type JSX, useState } from 'react'
+import { useState } from 'react'
 
 export function TransactionDetails({
   tx,
