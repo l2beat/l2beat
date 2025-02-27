@@ -21,7 +21,7 @@ export function MobileNavbar({
 }: { groups: NavGroup[]; logoLink: string; className?: string }) {
   const { isScalingMainPage } = useRecategorisationPreviewContext()
   return (
-    <div className={cn('lg:hidden', className)}>
+    <div className={cn('z-10 lg:hidden', className)}>
       <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-divider bg-header-primary px-3.5">
         {/* Left side */}
         <div className="flex items-center gap-3">

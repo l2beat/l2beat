@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 
 import { glossarySectionTreshold } from '~/components/nav/consts'
@@ -16,7 +16,6 @@ interface Props<T> {
 }
 
 export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
-  const selectedItem = useRef<HTMLLIElement>(null)
   const overflowContainer = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection(glossarySectionTreshold)
 
@@ -26,34 +25,31 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
     [],
   )
 
-  useEffect(() => {
-    if (!selectedItem.current || !overflowContainer.current) return
-    scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [currentSection, scrollToItem])
-
   const optionsWithEntry = getOptionsWithEntry(props.entries)
 
   return (
-    <div data-role="alphabet-selector">
-      <OverflowWrapper ref={overflowContainer}>
-        <ul className="flex gap-2">
-          {optionsWithEntry.map(({ char, entry }) => {
-            const selected = currentSection
-              ? isSelected(currentSection?.id, char)
-              : false
-            return (
-              <AlphabetSelectorChar
-                key={`alphabet-selector-${char}`}
-                char={char}
-                href={entry ? `#${entry.id}` : undefined}
-                selected={selected}
-                ref={selected ? selectedItem : undefined}
-              />
-            )
-          })}
-        </ul>
-      </OverflowWrapper>
-    </div>
+    <OverflowWrapper ref={overflowContainer}>
+      <ul className="flex gap-2">
+        {optionsWithEntry.map(({ char, entry }) => {
+          const selected = currentSection
+            ? isSelected(currentSection?.id, char)
+            : false
+          return (
+            <AlphabetSelectorChar
+              key={`alphabet-selector-${char}`}
+              char={char}
+              href={entry ? `#${entry.id}` : undefined}
+              selected={selected}
+              ref={(node) => {
+                if (node && selected && overflowContainer.current) {
+                  scrollToItem(node, overflowContainer.current)
+                }
+              }}
+            />
+          )
+        })}
+      </ul>
+    </OverflowWrapper>
   )
 }
 
