@@ -66,7 +66,7 @@ describe(interpolateModelTemplate.name, () => {
       [EthereumAddress.from('0x789').toString()]: 'MemberB',
     }
 
-    const values = contractValuesForInterpolation(contract)
+    const values = contractValuesForInterpolation('ethereum', contract)
     const result = interpolateModelTemplate(modelFile, values, addressToNameMap)
     expect(result).toEqual(`
       msig(contactMsigA, 2).
@@ -93,7 +93,7 @@ describe(interpolateModelTemplate.name, () => {
       },
     }
 
-    const values = contractValuesForInterpolation(contract)
+    const values = contractValuesForInterpolation('ethereum', contract)
     expect(() => interpolateModelTemplate(modelFile, values, {})).toThrow(
       'Field "two" not found in contract ContactMsigA',
     )
@@ -112,8 +112,9 @@ describe(contractValuesForInterpolation.name, () => {
       },
     }
 
-    const values = contractValuesForInterpolation(contract)
+    const values = contractValuesForInterpolation('ethereum', contract)
     expect(values).toEqual({
+      '$.chain': 'ethereum',
       '$.address': '0x00000000000000000000000000000000deadbeef',
       '$.name': 'ContractA',
       '$.description': 'Description of ContractA',
