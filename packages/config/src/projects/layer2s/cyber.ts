@@ -73,11 +73,7 @@ export const cyber: Layer2 = opStackL2({
     chainId: 7560,
     explorerUrl: 'https://cyberscan.co',
     coingeckoPlatform: 'cyber',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1713428569), // block 1 ts
+    sinceTimestamp: new UnixTime(1713428569), // block 1 ts
     multicallContracts: [
       {
         sinceBlock: 1,
@@ -86,10 +82,20 @@ export const cyber: Layer2 = opStackL2({
         version: '3',
       },
     ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://cyber.alt.technology/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
+      },
+    ],
   },
   genesisTimestamp: new UnixTime(1713428569),
   isNodeAvailable: 'UnderReview',
-  rpcUrl: 'https://cyber.alt.technology/',
   customDa: {
     type: 'DA Challenges',
     name: 'CyberDA',

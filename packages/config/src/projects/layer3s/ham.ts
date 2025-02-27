@@ -47,5 +47,15 @@ export const ham: Layer3 = opStackL3({
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k=',
   },
   isNodeAvailable: true,
-  rpcUrl: 'https://rpc.ham.fun', // chainId: 5112
+  chainConfig: {
+    name: 'ham',
+    chainId: 5112,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ham.fun',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
 })

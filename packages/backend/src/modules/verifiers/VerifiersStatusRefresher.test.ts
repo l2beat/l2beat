@@ -38,7 +38,12 @@ describe(VerifiersStatusRefresher.name, () => {
 
       const chainConfigMock = mockObject<ChainConfig>({
         chainId: verifierChainId.valueOf(),
-        blockscoutV2ApiUrl: 'https://eth.blockscout.com/api/v2',
+        apis: [
+          {
+            type: 'blockscoutV2',
+            url: 'https://eth.blockscout.com/api/v2',
+          },
+        ],
       })
 
       const refresher = createVerifierStatusRefresher({
@@ -51,7 +56,7 @@ describe(VerifiersStatusRefresher.name, () => {
       refresher.getBlockscoutClient(verifierChainId)
 
       expect(getClientMock).toHaveBeenCalledWith(BlockscoutV2Client, {
-        url: chainConfigMock.blockscoutV2ApiUrl,
+        url: 'https://eth.blockscout.com/api/v2',
       })
     })
 

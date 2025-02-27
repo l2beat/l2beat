@@ -29,7 +29,17 @@ export const polynomial: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.polynomial.fi',
+  chainConfig: {
+    name: 'polynomial',
+    chainId: 8008,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.polynomial.fi',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   finality: {
     type: 'OPStack',
     genesisTimestamp: new UnixTime(1718038175),

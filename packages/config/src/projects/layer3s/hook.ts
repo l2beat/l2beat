@@ -32,12 +32,20 @@ export const hook: Layer3 = underReviewL3({
       ],
     },
   },
-  // rpcUrl: 'https://hook.calderachain.xyz/http',
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'hook',
+    chainId: 4665,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://hook.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://hook.calderachain.xyz/http',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
   escrows: [

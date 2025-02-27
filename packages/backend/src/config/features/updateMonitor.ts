@@ -22,7 +22,11 @@ export function getChainDiscoveryConfig(
     throw new Error('Missing multicallV3 for chain: ' + chain)
   }
 
-  if (!chainConfig.explorerApi) {
+  const explorerApi = chainConfig.apis.find(
+    (x) => x.type === 'etherscan' || x.type === 'blockscout',
+  )
+
+  if (!explorerApi) {
     throw new Error('Missing explorerApi for chain: ' + chain)
   }
 
@@ -50,20 +54,24 @@ export function getChainDiscoveryConfig(
       multicallV3.batchSize,
     ),
     explorer:
-      chainConfig.explorerApi.type === 'blockscout'
+      explorerApi.type === 'blockscout'
         ? {
-            type: chainConfig.explorerApi.type,
-            url: chainConfig.explorerApi.url,
-            unsupported: chainConfig.explorerApi.missingFeatures,
+            type: explorerApi.type,
+            url: explorerApi.url,
+            unsupported: {
+              getContractCreation: explorerApi.contractCreationUnsupported,
+            },
           }
         : {
-            type: chainConfig.explorerApi.type,
-            url: chainConfig.explorerApi.url,
+            type: explorerApi.type,
+            url: explorerApi.url,
             apiKey: env.string([
               `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
               `${ENV_NAME}_ETHERSCAN_API_KEY`,
             ]),
-            unsupported: chainConfig.explorerApi.missingFeatures,
+            unsupported: {
+              getContractCreation: explorerApi.contractCreationUnsupported,
+            },
           },
   }
 }

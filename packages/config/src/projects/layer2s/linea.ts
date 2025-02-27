@@ -161,9 +161,8 @@ export const linea: Layer2 = {
         tokens: '*',
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://linea-mainnet.infura.io/v3',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
     },
     daTracking: [
@@ -376,13 +375,8 @@ export const linea: Layer2 = {
   chainConfig: {
     name: 'linea',
     chainId: 59144,
-    blockscoutV2ApiUrl: 'https://api-explorer.linea.build/api/v2',
     explorerUrl: 'https://lineascan.build',
-    explorerApi: {
-      url: 'https://api.lineascan.build/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -392,6 +386,11 @@ export const linea: Layer2 = {
       },
     ],
     coingeckoPlatform: 'linea',
+    apis: [
+      { type: 'rpc', url: 'https://linea-mainnet.infura.io/v3' },
+      { type: 'etherscan', url: 'https://api.lineascan.build/api' },
+      { type: 'blockscoutV2', url: 'https://api-explorer.linea.build/api/v2' },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

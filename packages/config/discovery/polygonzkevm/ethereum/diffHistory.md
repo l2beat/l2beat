@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xa802adbfc210dd392e41644df7670037a0af1835
+
+# Diff at Wed, 26 Feb 2025 10:32:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21744722
+- current block number: 21744722
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract FflonkVerifier_11 (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0x88752e661203fd086c8212b6e90afa67b7677b4e
 
 # Diff at Mon, 03 Feb 2025 05:30:02 GMT:

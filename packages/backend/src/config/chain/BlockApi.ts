@@ -7,6 +7,7 @@ interface BlockBasedApi {
 
 interface StarkexApi {
   type: 'starkex'
+  product: string[]
   apiKey: string
   callsPerMinute: number
   retryStrategy: 'RELIABLE' | 'UNRELIABLE'

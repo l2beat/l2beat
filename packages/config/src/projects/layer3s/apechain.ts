@@ -40,7 +40,17 @@ export const apechain: Layer3 = orbitStackL3({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  rpcUrl: 'https://rpc.apechain.com/http',
+  chainConfig: {
+    name: 'apechain',
+    chainId: 33139,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.apechain.com/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   // associatedTokens: ['APE'],
   gasTokens: { tracked: ['APE'] },
   overrideEscrows: [],

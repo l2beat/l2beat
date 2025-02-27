@@ -55,5 +55,5 @@ Go to the .ts file of the chain those are added to in `config\src\layer2s`,
   - `explorerUrl`
   - `explorerApi{}`, containing `url` and `type`
   - `multicallContracts[]` - could be empty if not deployed
-  - `minTimestampForTvl` - the timestamp of the first/second block on the chain
+  - `sinceTimestamp` - the timestamp of the first/second block on the chain
   - `coingeckoPlatform` - the name of the platform on Coingecko. Check `pnpm coingecko:platforms`.

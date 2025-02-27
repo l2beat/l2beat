@@ -1,5 +1,5 @@
 import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
-import { assert, type AmountConfigEntry, ChainId } from '@l2beat/shared-pure'
+import { assert, type AmountConfigEntry } from '@l2beat/shared-pure'
 import { getEscrowEntry } from '../escrow'
 
 export function addSharedEscrowsL1Tokens(
@@ -12,7 +12,7 @@ export function addSharedEscrowsL1Tokens(
     return entries
   }
 
-  const ethereum = chains.find((x) => x.chainId === ChainId.ETHEREUM)
+  const ethereum = chains.find((x) => x.name === 'ethereum')
   assert(ethereum !== undefined)
 
   projectsWithL1Tokens.forEach((project) => {

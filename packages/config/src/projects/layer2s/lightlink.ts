@@ -104,10 +104,8 @@ export const lightlink: Layer2 = {
         tokens: '*',
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://replicator.phoenix.lightlink.io/rpc/v1',
-      defaultCallsPerMinute: 1500,
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
     },
   },
@@ -116,16 +114,20 @@ export const lightlink: Layer2 = {
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
   },
-  // chainConfig: {
-  //   name: 'lightlink',
-  //   chainId: 1890,
-  //   explorerUrl: 'https://phoenix.lightlink.io',
-  //   explorerApi: {
-  //     url: 'https://phoenix.lightlink.io/api',
-  //     type: 'blockscout',
-  //   },
-  //   minTimestampForTvl: new UnixTime(1692181067),
-  // },
+  chainConfig: {
+    name: 'lightlink',
+    chainId: 1890,
+    explorerUrl: 'https://phoenix.lightlink.io',
+    sinceTimestamp: new UnixTime(1692181067),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://replicator.phoenix.lightlink.io/rpc/v1',
+        callsPerMinute: 1500,
+      },
+      { type: 'blockscout', url: 'https://phoenix.lightlink.io/api' },
+    ],
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,

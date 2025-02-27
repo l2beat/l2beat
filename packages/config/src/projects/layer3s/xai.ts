@@ -40,7 +40,13 @@ export const xai: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
   gasTokens: { tracked: ['XAI'] },
-  rpcUrl: 'https://xai-chain.net/rpc',
+  chainConfig: {
+    name: 'xai',
+    chainId: 660279,
+    apis: [
+      { type: 'rpc', url: 'https://xai-chain.net/rpc', callsPerMinute: 1500 },
+    ],
+  },
   nonTemplateTechnology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',

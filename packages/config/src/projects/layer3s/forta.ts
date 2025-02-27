@@ -26,11 +26,20 @@ export const forta: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/FortaNetwork'],
     },
   },
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'forta',
+    chainId: 80931,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-forta-chain-8gj1qndmfc.t.conduit.xyz/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc-forta-chain-8gj1qndmfc.t.conduit.xyz/',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
   escrows: [

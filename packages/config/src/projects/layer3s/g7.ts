@@ -42,7 +42,17 @@ export const g7: Layer3 = orbitStackL3({
       ],
     },
   },
-  rpcUrl: 'https://mainnet-rpc.game7.io',
+  chainConfig: {
+    name: 'g7',
+    chainId: 2187,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet-rpc.game7.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   associatedTokens: ['G7'],
   gasTokens: { tracked: ['G7'] },
   nonTemplateEscrows: [

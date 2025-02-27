@@ -32,12 +32,16 @@ export const clique: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/STP_Network', 'https://t.me/STPofficial'],
     },
   },
-  rpcUrl: 'https://rpc.myclique.io/',
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'clique',
+    chainId: 8853,
+    apis: [
+      { type: 'rpc', url: 'https://rpc.myclique.io/', callsPerMinute: 1500 },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.myclique.io/',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
   escrows: [

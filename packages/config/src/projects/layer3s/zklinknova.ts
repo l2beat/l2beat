@@ -120,19 +120,14 @@ export const zklinknova: Layer3 = {
     name: 'zklinknova',
     chainId: 810180,
     explorerUrl: 'https://explorer.zklink.io',
-    explorerApi: {
-      url: 'https://explorer-api.zklink.io/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1709273393),
+    sinceTimestamp: new UnixTime(1709273393),
+    apis: [
+      { type: 'etherscan', url: 'https://explorer-api.zklink.io/api' },
+      { type: 'rpc', url: 'https://rpc.zklink.io', callsPerMinute: 1500 },
+    ],
   },
   config: {
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.zklink.io',
-      defaultCallsPerMinute: 1500,
-      startBlock: 1,
-    },
+    activityConfig: { type: 'block', startBlock: 1 },
     associatedTokens: ['ZKL'],
     escrows: [
       {

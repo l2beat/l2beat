@@ -11,8 +11,9 @@ const clingoFactGrammar = grammar(String.raw`
     Param     = ConsList | Fact | String | Number | atom
     String    = "\"" ("\\\"" | ~"\"" any)* "\""
     Number    = "-"? digit+ ("." digit+)?
-    atom      = "nil" | ~"cons" (alnum | "_" )+
+    atom      = "nil" | ~keyword<"cons"> (alnum | "_" )+
     ConsList  = "cons" "(" Param "," Param ")"
+    keyword<word> = word ~(alnum | "_")
   }
 `)
 

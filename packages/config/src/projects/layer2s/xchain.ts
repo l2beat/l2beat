@@ -36,15 +36,13 @@ export const xchain: Layer2 = orbitStackL2({
     name: 'xchain',
     chainId: 94524,
     explorerUrl: 'https://xchain-explorer.idex.io',
-    explorerApi: {
-      url: 'https://xchain-explorer.idex.io/api',
-      type: 'blockscout',
-    },
     multicallContracts: [],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
+    apis: [
+      { type: 'rpc', url: 'https://xchain-rpc.idex.io/', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://xchain-explorer.idex.io/api' },
+    ],
   },
-  rpcUrl: 'https://xchain-rpc.idex.io/',
-
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

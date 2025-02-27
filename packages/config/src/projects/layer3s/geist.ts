@@ -44,12 +44,21 @@ export const geist: Layer3 = orbitStackL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://geist-mainnet.g.alchemy.com/public',
-    defaultCallsPerMinute: 600,
-    adjustCount: { type: 'SubtractOne' },
+  chainConfig: {
+    name: 'geist',
+    chainId: 63157,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://geist-mainnet.g.alchemy.com/public',
+        callsPerMinute: 600,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

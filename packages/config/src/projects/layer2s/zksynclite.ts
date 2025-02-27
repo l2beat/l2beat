@@ -95,6 +95,17 @@ export const zksynclite: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'zksync',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'zksync',
+        url: 'https://api.zksync.io/api/v0.2',
+        callsPerMinute: 3_000,
+      },
+    ],
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -103,10 +114,8 @@ export const zksynclite: Layer2 = {
         tokens: '*',
       }),
     ],
-    transactionApi: {
-      type: 'zksync',
-      defaultUrl: 'https://api.zksync.io/api/v0.2',
-      defaultCallsPerMinute: 3_000,
+    activityConfig: {
+      type: 'block',
     },
     trackedTxs: [
       {

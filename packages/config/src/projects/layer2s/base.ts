@@ -201,9 +201,8 @@ export const base: Layer2 = {
           'Maker-controlled vault for USDS ans sUSDS bridged with canonical messaging.',
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://developer-access-mainnet.base.org',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
@@ -272,16 +271,11 @@ export const base: Layer2 = {
   },
   chainConfig: {
     name: 'base',
-    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
     chainId: 8453,
     explorerUrl: 'https://basescan.org',
-    explorerApi: {
-      url: 'https://api.basescan.org/api',
-      type: 'etherscan',
-    },
     // ~ Timestamp of block number 0 on Base
     // https://basescan.org/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -291,6 +285,15 @@ export const base: Layer2 = {
       },
     ],
     coingeckoPlatform: 'base',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://developer-access-mainnet.base.org',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api.basescan.org/api' },
+      { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

@@ -125,12 +125,21 @@ export const parallel: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.parallel.fi',
-    defaultCallsPerMinute: 120,
-    adjustCount: { type: 'SubtractOne' },
+  chainConfig: {
+    name: 'parallel',
+    chainId: 1024,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.parallel.fi',
+        callsPerMinute: 120,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   milestones: [
     {

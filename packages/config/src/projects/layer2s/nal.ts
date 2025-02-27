@@ -22,12 +22,20 @@ export const nal: Layer2 = underReviewL2({
       socialMedia: ['https://x.com/nal_network'],
     },
   },
-  rpcUrl: 'https://rpc.nal.network/',
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'nal',
+    chainId: 328527,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.nal.network/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.nal.network/',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
   escrows: [

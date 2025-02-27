@@ -90,6 +90,11 @@ export const sorare: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'sorare',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['sorare'] }],
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -98,9 +103,8 @@ export const sorare: Layer2 = {
         tokens: ['ETH'],
       }),
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['sorare'],
+    activityConfig: {
+      type: 'day',
       sinceTimestamp: new UnixTime(1626352527),
       resyncLastDays: 7,
     },

@@ -44,13 +44,13 @@ describe('tokens', () => {
     expect(everyUnique).toEqual(true)
   })
 
-  it('every token has a chain with minTimestampForTvl', () => {
+  it('every token has a chain with sinceTimestamp', () => {
     for (const token of tokenList) {
       const chain = chains.find((c) => c.chainId === +token.chainId)
       assert(chain, `Chain not found for token ${token.symbol}`)
       assert(
-        chain.minTimestampForTvl,
-        `Token ${token.symbol} added for chain without minTimestampForTvl ${chain.name}`,
+        chain.sinceTimestamp,
+        `Token ${token.symbol} added for chain without sinceTimestamp ${chain.name}`,
       )
     }
   })

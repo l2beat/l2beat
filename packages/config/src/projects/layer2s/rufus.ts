@@ -35,12 +35,21 @@ export const rufus: Layer2 = underReviewL2({
     },
   },
   associatedTokens: ['ELON'],
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rufus.calderachain.xyz/http',
-    defaultCallsPerMinute: 1500,
-    adjustCount: { type: 'SubtractOne' },
+  chainConfig: {
+    name: 'rufus',
+    chainId: 2420,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rufus.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {

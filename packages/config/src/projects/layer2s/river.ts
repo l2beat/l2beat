@@ -37,7 +37,17 @@ export const river: Layer2 = opStackL2({
     },
   },
   isNodeAvailable: true,
-  rpcUrl: 'https://mainnet.rpc.river.build',
+  chainConfig: {
+    name: 'river',
+    chainId: 550,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.rpc.river.build',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1716094800), //first sequencer tx
   milestones: [
     {

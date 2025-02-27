@@ -42,7 +42,17 @@ export const alienx: Layer2 = orbitStackL2({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  rpcUrl: 'https://rpc.alienxchain.io/http',
+  chainConfig: {
+    name: 'alienx',
+    chainId: 10241024,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.alienxchain.io/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

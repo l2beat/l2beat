@@ -38,7 +38,17 @@ export const huddle01: Layer3 = underReviewL3({
       ],
     },
   },
-  rpcUrl: 'https://huddle01.calderachain.xyz/http',
+  chainConfig: {
+    name: 'huddle01',
+    chainId: 12323,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://huddle01.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0x4A346da02EA2Fa6E49834C409165c6D6527ae522'), // bridge

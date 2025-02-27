@@ -58,7 +58,17 @@ export const automata: Layer2 = opStackL2({
   associatedTokens: ['ATA'],
   nonTemplateOptimismPortalEscrowTokens: ['ATA'],
   isNodeAvailable: 'UnderReview',
-  rpcUrl: 'https://rpc.ata.network/',
+  chainConfig: {
+    name: 'automata',
+    chainId: 65536,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ata.network/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   genesisTimestamp: new UnixTime(1721183063),
   daProvider: DACHALLENGES_DA_PROVIDER(

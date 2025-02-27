@@ -137,6 +137,17 @@ export const degate3: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'degate3',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'degate3',
+        url: 'https://v1-mainnet-backend.degate.com/order-book-api',
+        callsPerMinute: 120,
+      },
+    ],
+  },
   config: {
     associatedTokens: ['DG'],
     escrows: [
@@ -146,11 +157,7 @@ export const degate3: Layer2 = {
         tokens: '*',
       }),
     ],
-    transactionApi: {
-      type: 'degate3',
-      defaultUrl: 'https://v1-mainnet-backend.degate.com/order-book-api',
-      defaultCallsPerMinute: 120,
-    },
+    activityConfig: { type: 'block' },
     trackedTxs: [
       {
         uses: [

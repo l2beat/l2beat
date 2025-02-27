@@ -44,7 +44,17 @@ export const fluence: Layer2 = orbitStackL2({
   ],
   gasTokens: { tracked: ['FLT'] },
   associatedTokens: ['FLT'],
-  rpcUrl: 'https://rpc.mainnet.fluence.dev',
+  chainConfig: {
+    name: 'fluence',
+    chainId: 9999999,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.mainnet.fluence.dev',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

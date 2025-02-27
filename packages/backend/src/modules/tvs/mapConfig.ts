@@ -98,10 +98,7 @@ function createToken(
       source = escrow.source ?? legacyToken.source
       break
     case 'totalSupply':
-      assert(
-        chain.minTimestampForTvl,
-        'Chain with token should have minTimestamp',
-      )
+      assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
 
       id = TokenId.create(chain.name, legacyToken.address ?? 'native')
 
@@ -113,16 +110,13 @@ function createToken(
       } as TotalSupplyAmountFormula
 
       sinceTimestamp = UnixTime.max(
-        chain.minTimestampForTvl,
+        chain.sinceTimestamp,
         legacyToken.sinceTimestamp,
       )
       source = legacyToken.source
       break
     case 'circulatingSupply':
-      assert(
-        chain.minTimestampForTvl,
-        'Chain with token should have minTimestamp',
-      )
+      assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
 
       id = TokenId.create(chain.name, legacyToken.address ?? 'native')
 
@@ -132,7 +126,7 @@ function createToken(
       } as CirculatingSupplyAmountFormula
 
       sinceTimestamp = UnixTime.max(
-        chain.minTimestampForTvl,
+        chain.sinceTimestamp,
         legacyToken.sinceTimestamp,
       )
       source = legacyToken.source

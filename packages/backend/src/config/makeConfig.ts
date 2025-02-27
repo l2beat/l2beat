@@ -2,7 +2,7 @@ import { join } from 'path'
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ChainId, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
@@ -137,9 +137,9 @@ export async function makeConfig(
       'implementationChangeReporter',
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
-    chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
-    chainConfig: getChainConfig(env, chains),
+    chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString([
         'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
@@ -169,7 +169,7 @@ export async function makeConfig(
 function getEthereumMinTimestamp(chains: ChainConfig[]) {
   const minBlockTimestamp = chains.find(
     (c) => c.name === 'ethereum',
-  )?.minTimestampForTvl
+  )?.sinceTimestamp
   if (!minBlockTimestamp) {
     throw new Error('Missing minBlockTimestamp for ethereum')
   }

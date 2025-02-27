@@ -87,7 +87,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     name: 'astarzkevm',
     chainId: 3776,
     explorerUrl: 'https://astar-zkevm.explorer.startale.com',
-    minTimestampForTvl: new UnixTime(1708632059),
+    sinceTimestamp: new UnixTime(1708632059),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -96,8 +96,14 @@ export const astarzkevm: Layer2 = polygonCDKStack({
         version: '3',
       },
     ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.startale.com/astar-zkevm',
+        callsPerMinute: 1500,
+      },
+    ],
   },
-  rpcUrl: 'https://rpc.startale.com/astar-zkevm',
   discovery,
   isForcedBatchDisallowed,
   nonTemplateEscrows: [

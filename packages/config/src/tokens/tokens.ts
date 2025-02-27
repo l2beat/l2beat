@@ -30,14 +30,14 @@ function toToken(generated: GeneratedToken): Token {
   const chain = chains.find((c) => c.chainId === +generated.chainId)
   assert(chain, `Chain nor found for ${generated.symbol}`)
   assert(
-    chain.minTimestampForTvl,
-    `Token added for chain without minTimestampForTvl ${chain.name}`,
+    chain.sinceTimestamp,
+    `Token added for chain without sinceTimestamp ${chain.name}`,
   )
 
   const sinceTimestamp = new UnixTime(
     Math.max(
       generated.deploymentTimestamp.toNumber(),
-      chain.minTimestampForTvl.toNumber(),
+      chain.sinceTimestamp.toNumber(),
       generated.coingeckoListingTimestamp.toNumber(),
     ),
   )

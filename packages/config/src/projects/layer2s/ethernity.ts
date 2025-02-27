@@ -38,7 +38,17 @@ export const ethernity: Layer2 = opStackL2({
   },
   associatedTokens: ['ERN'],
   isNodeAvailable: true,
-  rpcUrl: 'https://mainnet.ethernitychain.io',
+  chainConfig: {
+    name: 'ethernity',
+    chainId: 183,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.ethernitychain.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1723547737),
   milestones: [
     // {

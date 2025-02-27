@@ -35,7 +35,6 @@ export const zora: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.zora.energy',
   finality: {
     type: 'OPStack',
     genesisTimestamp: new UnixTime(1686693839),
@@ -48,14 +47,10 @@ export const zora: Layer2 = opStackL2({
     name: 'zora',
     chainId: 7777777,
     explorerUrl: 'https://explorer.zora.energy',
-    explorerApi: {
-      url: 'https://explorer.zora.energy/api',
-      type: 'blockscout',
-    },
     // ~ Timestamp of block number 0 on Zora
     // The first full hour timestamp that will return the block number
     // https://explorer.zora.energy/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -65,6 +60,10 @@ export const zora: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'zora',
+    apis: [
+      { type: 'rpc', url: 'https://rpc.zora.energy', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.zora.energy/api' },
+    ],
   },
   genesisTimestamp: new UnixTime(1686695915),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),

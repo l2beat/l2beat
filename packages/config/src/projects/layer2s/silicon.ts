@@ -47,7 +47,6 @@ export const silicon: Layer2 = polygonCDKStack({
       socialMedia: ['https://x.com/0xSilicon'],
     },
   },
-  rpcUrl: 'https://rpc.silicon.network',
   rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
@@ -85,7 +84,10 @@ export const silicon: Layer2 = polygonCDKStack({
     name: 'silicon',
     chainId: 2355,
     explorerUrl: 'https://scope.silicon.network',
-    minTimestampForTvl: new UnixTime(1724183531),
+    sinceTimestamp: new UnixTime(1724183531),
+    apis: [
+      { type: 'rpc', url: 'https://rpc.silicon.network', callsPerMinute: 1500 },
+    ],
   },
   nonTemplateTechnology: {
     newCryptography: {

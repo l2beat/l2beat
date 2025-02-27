@@ -30,6 +30,7 @@ import type {
   Layer2Display,
   Layer2TxConfig,
   Milestone,
+  ProjectActivityConfig,
   ProjectContract,
   ProjectEscrow,
   ProjectPermissions,
@@ -41,11 +42,11 @@ import type {
   ScalingProjectStateValidation,
   ScalingProjectTechnology,
   TableReadyValue,
-  TransactionApiConfig,
 } from '../../../types'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { getStage } from '../common/stages/getStage'
+import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -66,8 +67,7 @@ export interface PolygonCDKStackConfig {
   customDa?: CustomDa
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
-  rpcUrl?: string
-  transactionApi?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplatePermissions?: Record<string, ProjectPermissions>
@@ -170,16 +170,14 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       associatedTokens: templateVars.associatedTokens,
       gasTokens: templateVars.gasTokens,
       escrows: templateVars.nonTemplateEscrows,
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
       trackedTxs:
         templateVars.daProvider !== undefined
           ? undefined

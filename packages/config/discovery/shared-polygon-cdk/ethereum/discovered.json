@@ -206,7 +206,8 @@
           "severity": "HIGH",
           "description": "pauses the bridge, managed by the PolygonRollupManager."
         }
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "PolygonSecurityCouncil",
@@ -703,7 +704,8 @@
           "description": "Lists any rollupID that sends a pessimistic proof."
         }
       },
-      "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }]
+      "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }],
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "PolygonZkEVMGlobalExitRootV2",
@@ -757,7 +759,8 @@
         "depositCount": 54048,
         "getRoot": "0xbae721eef85de84b961e6ab30e0fab0656314bc717b9b013071fa0ca5786e07e",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "PolygonCreateRollupMultisig",
@@ -1186,7 +1189,8 @@
           "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
         ]
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     }
   ],
   "eoas": [
@@ -1587,9 +1591,9 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x8df3c096ecc62af8dc3487c1ebe776e068f75928ec5018e9a735429cd189e19b",
-    "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
-    "polygon-cdk/Timelock": "0x12c313e51e4ceff4837a44c8e1549ff0834ae3661dfad024b895eb1c975f0b46"
+    "polygon-cdk/PolygonGlobalExitRootV2": "0x75cc9862e96eb2a8e076fd553e1c729decfc584304d456003762d3723ee3e596",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x8574f67c4c0c0f40efb066c6029a163cc79af6464e05c04b046eb34199784ea9",
+    "polygon-cdk/PolygonSharedBridge": "0x7c6fe6c28a9c090b0f04dcb3b30a58343dd07fd39421e73f2a7317828767e522",
+    "polygon-cdk/Timelock": "0x27daafce564beac7f1a3b4ddb0321c30d7630d1db27ad0e585a8b2e9faa82f7d"
   }
 }
