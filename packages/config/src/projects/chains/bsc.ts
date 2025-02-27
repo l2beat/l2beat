@@ -11,10 +11,6 @@ export const bsc: BaseProject = {
     name: 'bsc',
     chainId: 56,
     explorerUrl: 'https://bscscan.com',
-    explorerApi: {
-      url: 'https://api.bscscan.com/api',
-      type: 'etherscan',
-    },
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -23,5 +19,6 @@ export const bsc: BaseProject = {
         version: '3',
       },
     ],
+    apis: [{ type: 'etherscan', url: 'https://api.bscscan.com/api' }],
   },
 }

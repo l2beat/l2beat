@@ -9,7 +9,7 @@ import {
 } from '@l2beat/config'
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { assert, ChainConverter, ChainId } from '@l2beat/shared-pure'
+import { assert, ChainConverter } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers, utils } from 'ethers'
 import { chunk, groupBy } from 'lodash'
@@ -49,12 +49,7 @@ async function main() {
   )
   const coingeckoClient = getCoingeckoClient()
 
-  const chainConverter = new ChainConverter(
-    chains.map((c) => ({
-      chainId: ChainId(c.chainId),
-      name: c.name,
-    })),
-  )
+  const chainConverter = new ChainConverter(chains)
 
   const coingeckoTokens = await coingeckoClient.getCoinList({
     includePlatform: true,
@@ -386,25 +381,20 @@ function getEtherscanClient(chain: string, chains: ChainConfig[]) {
   const env = getEnv()
   const config = chains.find((c) => c.name === chain)
 
-  assert(config?.explorerApi)
-  const chainConfig = config.explorerApi
-    ? config.explorerApi.type === 'etherscan'
+  const api = config?.apis.find(
+    (x) => x.type === 'etherscan' || x.type === 'blockscout',
+  )
+  assert(api)
+  const chainConfig =
+    api.type === 'etherscan'
       ? {
-          type: config.explorerApi.type,
+          type: api.type,
           apiKey: env.string([
-            `${config.name.toUpperCase()}_ETHERSCAN_API_KEY`,
+            `${config?.name.toUpperCase()}_ETHERSCAN_API_KEY`,
           ]),
-          url: config.explorerApi.url,
+          url: api.url,
         }
-      : {
-          type: config.explorerApi.type,
-          url: config.explorerApi.url,
-        }
-    : undefined
-
-  if (!chainConfig) {
-    return undefined
-  }
+      : { type: api.type, url: api.url }
 
   return new BlockIndexerClient(
     new HttpClient(),

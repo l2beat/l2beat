@@ -67,7 +67,17 @@ export const gmnetwork: Layer2 = opStackL2({
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
   genesisTimestamp: new UnixTime(1717656409),
-  rpcUrl: 'https://rpc.gmnetwork.ai/',
+  chainConfig: {
+    name: 'gmnetwork',
+    chainId: 2777,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.gmnetwork.ai/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   customDa: {
     type: 'DA Challenges',
     name: 'GM Network DA',

@@ -4,7 +4,6 @@ import type {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import type { ChainId } from '@l2beat/shared-pure'
 import { getDiff } from './utils/getDiff'
 
 export interface DashboardProject {
@@ -18,7 +17,7 @@ export async function getDashboardProjects(
   configReader: ConfigReader,
   db: Database,
   chain: string,
-  chainId: ChainId,
+  chainId: number,
 ): Promise<DashboardProject[]> {
   const projects: DashboardProject[] = []
   for (const config of configs) {

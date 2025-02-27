@@ -22,10 +22,15 @@ export const pandasea: Layer2 = underReviewL2({
       apps: ['https://bridge.pandasea.io/'],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc1.pandasea.io',
-    defaultCallsPerMinute: 1500,
+  chainConfig: {
+    name: 'pandasea',
+    chainId: 7776,
+    apis: [
+      { type: 'rpc', url: 'https://rpc1.pandasea.io', callsPerMinute: 1500 },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },

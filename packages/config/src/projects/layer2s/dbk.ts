@@ -26,7 +26,17 @@ export const dbk: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.mainnet.dbkchain.io/',
+  chainConfig: {
+    name: 'dbk',
+    chainId: 20240603,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.mainnet.dbkchain.io/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1717461337),
   // incompatible
   // finality: {

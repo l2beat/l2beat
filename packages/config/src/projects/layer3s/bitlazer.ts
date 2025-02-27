@@ -34,12 +34,21 @@ export const bitlazer: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/bitlazer', 'https://t.me/bitlazer_io'],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://bitlazer.calderachain.xyz/http',
-    defaultCallsPerMinute: 1500,
-    adjustCount: { type: 'SubtractOne' },
+  chainConfig: {
+    name: 'bitlazer',
+    chainId: 14235,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://bitlazer.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {

@@ -34,7 +34,17 @@ export const hashkey = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://mainnet.hsk.xyz',
+  chainConfig: {
+    name: 'hashkey',
+    chainId: 177,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.hsk.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   finality: {
     type: 'OPStack',
     minTimestamp: genesisTimestamp,

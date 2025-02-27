@@ -24,12 +24,21 @@ export const snaxchain: Layer2 = underReviewL2({
       explorers: ['https://explorer.snaxchain.io'],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://mainnet.snaxchain.io',
-    defaultCallsPerMinute: 1500,
-    adjustCount: { type: 'SubtractOne' },
+  chainConfig: {
+    name: 'snaxchain',
+    chainId: 2192,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.snaxchain.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {

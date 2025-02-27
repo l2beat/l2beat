@@ -25,7 +25,17 @@ export const superposition: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/Superpositionso'],
     },
   },
-  rpcUrl: 'https://rpc.superposition.so',
+  chainConfig: {
+    name: 'superposition',
+    chainId: 55244,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.superposition.so',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0xEca0fEB4aA6112a3923823559e7197294Bc49CC7'), // Bridge

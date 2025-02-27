@@ -1,18 +1,14 @@
-import type { StarkexClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { DayProvider } from '../../../../providers/DayProviders'
 import { activityRecord } from '../../utils/aggregatePerDay.test'
-import { StarkexTxsCountService } from './StarkexTxsCountService'
+import { DayTxsCountService } from './DayTxsCountService'
 
-describe(StarkexTxsCountService.prototype.getTxsCount.name, () => {
+describe(DayTxsCountService.prototype.getTxsCount.name, () => {
   it('should return txs count', async () => {
-    const client = mockStarkexClient([2, 3, 4, 5])
+    const provider = mockProvider([2000, 3000])
 
-    const txsCountProvider = new StarkexTxsCountService(
-      client,
-      ProjectId('a'),
-      ['a', 'b'],
-    )
+    const txsCountProvider = new DayTxsCountService(provider, ProjectId('a'))
 
     const start = UnixTime.fromDays(5)
     const end = UnixTime.fromDays(6)
@@ -26,7 +22,7 @@ describe(StarkexTxsCountService.prototype.getTxsCount.name, () => {
       activityRecord(
         'a',
         start,
-        5,
+        2000,
         null,
         start.toNumber(),
         start.add(1, 'days').add(-1, 'seconds').toNumber(),
@@ -34,21 +30,21 @@ describe(StarkexTxsCountService.prototype.getTxsCount.name, () => {
       activityRecord(
         'a',
         end,
-        9,
+        3000,
         null,
         end.toNumber(),
         end.add(1, 'days').add(-1, 'seconds').toNumber(),
       ),
     ])
-    expect(client.getDailyCount).toHaveBeenCalledTimes(4)
+    expect(provider.getDailyCount).toHaveBeenCalledTimes(2)
   })
 })
 
-function mockStarkexClient(counts: number[]) {
+function mockProvider(counts: number[]) {
   const mockGetDailyCount = mockFn()
   counts.forEach((count) => mockGetDailyCount.resolvesToOnce(count))
 
-  return mockObject<StarkexClient>({
+  return mockObject<DayProvider>({
     getDailyCount: mockGetDailyCount,
   })
 }

@@ -145,11 +145,7 @@ export const nova: Layer2 = orbitStackL2({
     name: 'nova',
     chainId: 42170,
     explorerUrl: 'https://nova.arbiscan.io',
-    explorerApi: {
-      url: 'https://api-nova.arbiscan.io/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1656122488),
+    sinceTimestamp: new UnixTime(1656122488),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -159,8 +155,15 @@ export const nova: Layer2 = orbitStackL2({
       },
     ],
     coingeckoPlatform: 'arbitrum-nova',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://nova.arbitrum.io/rpc',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api-nova.arbiscan.io/api' },
+    ],
   },
-  rpcUrl: 'https://nova.arbitrum.io/rpc',
   upgradesAndGovernance: getNitroGovernance(
     l2CoreQuorumPercent,
     l2TimelockDelay,

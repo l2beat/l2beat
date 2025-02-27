@@ -84,15 +84,10 @@ export const rss3: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {
     name: 'rss3',
     chainId: 12553,
     explorerUrl: 'https://scan.rss3.io',
-    explorerApi: {
-      url: 'https://scan.rss3.io/api',
-      type: 'blockscout',
-    },
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -100,6 +95,10 @@ export const rss3: Layer2 = opStackL2({
         sinceBlock: 14193,
         version: '3',
       },
+    ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.rss3.io/', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://scan.rss3.io/api' },
     ],
   },
   genesisTimestamp: new UnixTime(1709858519),

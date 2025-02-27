@@ -98,6 +98,11 @@ export const rhinofi: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'deversifi',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['rhinofi'] }],
+  },
   config: {
     escrows: [
       {
@@ -107,9 +112,8 @@ export const rhinofi: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['rhinofi'],
+    activityConfig: {
+      type: 'day',
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },

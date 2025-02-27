@@ -56,7 +56,17 @@ export const blessnet: Layer3 = orbitStackL3({
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   gasTokens: { untracked: ['BLESS'] },
   // associatedTokens: ['BLESS'],
-  rpcUrl: 'https://blessnet.calderachain.xyz/http',
+  chainConfig: {
+    name: 'blessnet',
+    chainId: 45513,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://blessnet.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

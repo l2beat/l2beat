@@ -75,23 +75,32 @@ export const ink: Layer2 = opStackL2({
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
-  rpcUrl: 'https://rpc-gel.inkonchain.com',
   chainConfig: {
     name: 'ink',
     chainId: 57073,
-    blockscoutV2ApiUrl: 'https://explorer.inkonchain.com/api/v2/',
     explorerUrl: 'https://explorer.inkonchain.com',
-    explorerApi: {
-      url: 'https://explorer.inkonchain.com/api',
-      type: 'blockscout',
-    },
-    minTimestampForTvl: genesisTimestamp,
+    sinceTimestamp: genesisTimestamp,
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         batchSize: 150,
         sinceBlock: 1,
         version: '3',
+      },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-gel.inkonchain.com',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'blockscout',
+        url: 'https://explorer.inkonchain.com/api',
+      },
+      {
+        type: 'blockscoutV2',
+        url: 'https://explorer.inkonchain.com/api/v2/',
       },
     ],
   },

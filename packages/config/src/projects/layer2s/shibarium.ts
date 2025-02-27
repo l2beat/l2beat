@@ -33,7 +33,17 @@ export const shibarium: Layer2 = underReviewL2({
     },
   },
   associatedTokens: ['SHIB', 'BONE', 'LEASH'],
-  rpcUrl: 'https://www.shibrpc.com',
+  chainConfig: {
+    name: 'shibarium',
+    chainId: 109,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://www.shibrpc.com',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0xc3897302aB4B42931cB4857050Fa60f53B775870'), // etherpredicate

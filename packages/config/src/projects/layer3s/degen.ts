@@ -40,22 +40,16 @@ export const degen: Layer3 = orbitStackL3({
     },
   },
   blockNumberOpcodeTimeSeconds: 2, // block.number opcode on Base (Degen host chain) counts Base L2 block numbers that have 2 seconds block time (different to OP stack host chains that count the L1 blocks)
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.degen.tips',
-    defaultCallsPerMinute: 5000,
-    adjustCount: { type: 'SubtractOne' },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   chainConfig: {
     name: 'degen',
     chainId: 666666666,
     explorerUrl: 'https://explorer.degen.tips',
-    explorerApi: {
-      url: 'https://explorer.degen.tips/api',
-      type: 'blockscout',
-    },
-    minTimestampForTvl: new UnixTime(1710087539),
+    sinceTimestamp: new UnixTime(1710087539),
     multicallContracts: [
       {
         address: EthereumAddress('0x79035Dc4436bA9C95016D3bF6304e5bA78B1066A'),
@@ -63,6 +57,10 @@ export const degen: Layer3 = orbitStackL3({
         sinceBlock: 2279171,
         version: '3',
       },
+    ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.degen.tips', callsPerMinute: 5000 },
+      { type: 'blockscout', url: 'https://explorer.degen.tips/api' },
     ],
   },
   bridge: discovery.getContract('ERC20Bridge'),

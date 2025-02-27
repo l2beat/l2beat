@@ -102,6 +102,11 @@ export const immutablex: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'immutablex',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['immutable'] }],
+  },
   config: {
     associatedTokens: ['IMX'],
     escrows: [
@@ -112,9 +117,8 @@ export const immutablex: Layer2 = {
         description: 'Main StarkEx contract, used also as an escrow.',
       }),
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['immutable'],
+    activityConfig: {
+      type: 'day',
       sinceTimestamp: new UnixTime(1615389188),
       resyncLastDays: 7,
     },

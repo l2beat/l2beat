@@ -13,7 +13,7 @@ export function getCirculatingSupplyEntry(
   project: Project<'tvlConfig', 'chainConfig'>,
 ): CirculatingSupplyEntry {
   assert(token.supply === 'circulatingSupply')
-  assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')
+  assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
 
   const address = token.address ?? 'native'
   const assetId = AssetId.create(chain.name, address)
@@ -23,7 +23,7 @@ export function getCirculatingSupplyEntry(
     token.symbol,
   )
   const sinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
+    chain.sinceTimestamp,
     token.sinceTimestamp,
   )
 

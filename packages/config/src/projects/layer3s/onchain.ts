@@ -34,7 +34,17 @@ export const onchain: Layer3 = underReviewL3({
       ],
     },
   },
-  rpcUrl: 'https://rpc.onchainpoints.xyz',
+  chainConfig: {
+    name: 'onchain',
+    chainId: 17071,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.onchainpoints.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0x2e5AfeEfeA725e23d0B54f9e28Fd9ACDD4c312E9'), // bridge (native token: POP)

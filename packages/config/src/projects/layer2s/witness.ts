@@ -88,9 +88,15 @@ export const witness: Layer2 = polygonCDKStack({
   chainConfig: {
     chainId: 1702448187,
     name: 'witness',
-    minTimestampForTvl: new UnixTime(1718569535),
+    sinceTimestamp: new UnixTime(1718569535),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
+        callsPerMinute: 1500,
+      },
+    ],
   },
-  rpcUrl: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
   nonTemplateEscrows: [
     // TVS was 31 doler on 2025-01-28 when this was archived
     // shared.getEscrowDetails({

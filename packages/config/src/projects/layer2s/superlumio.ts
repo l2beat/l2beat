@@ -29,7 +29,17 @@ export const superlumio: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://mainnet.lumio.io',
+  chainConfig: {
+    name: 'superlumio',
+    chainId: 8866,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.lumio.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1708984633),
   finality: {
     type: 'OPStack',

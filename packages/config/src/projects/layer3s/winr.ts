@@ -34,7 +34,13 @@ export const winr: Layer3 = orbitStackL3({
       socialMedia: ['https://x.com/WINRProtocol'],
     },
   },
-  rpcUrl: 'https://rpc.winr.games',
+  chainConfig: {
+    name: 'winr',
+    chainId: 777777,
+    apis: [
+      { type: 'rpc', url: 'https://rpc.winr.games', callsPerMinute: 1500 },
+    ],
+  },
   associatedTokens: ['WINR'],
   gasTokens: { tracked: ['WINR'] },
   nonTemplateEscrows: [

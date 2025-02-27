@@ -45,16 +45,18 @@ export const b3: Layer3 = opStackL3({
     name: 'b3',
     chainId: 8333,
     explorerUrl: 'https://explorer.b3.fun',
-    explorerApi: {
-      url: 'https://explorer.b3.fun/api/v2/',
-      type: 'blockscout',
-    },
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet-rpc.b3.fun/http',
+        callsPerMinute: 800,
+      },
+      { type: 'blockscout', url: 'https://explorer.b3.fun/api/v2/' },
+    ],
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://mainnet-rpc.b3.fun/http',
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: new UnixTime(1722378840),

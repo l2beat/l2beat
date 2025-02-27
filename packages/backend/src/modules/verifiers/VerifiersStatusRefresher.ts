@@ -74,15 +74,14 @@ export class VerifiersStatusRefresher {
 
   getBlockscoutClient(chainId: ChainId): BlockscoutV2Client {
     const chain = this.$.chains.find((c) => c.chainId === chainId.valueOf())
-
-    if (!chain?.blockscoutV2ApiUrl) {
+    const blockscoutV2 = chain?.apis.find((x) => x.type === 'blockscoutV2')
+    if (!blockscoutV2) {
       throw new Error(
         `Blockscout API URL is not configured for chain ${chainId}`,
       )
     }
-
     return this.$.peripherals.getClient(BlockscoutV2Client, {
-      url: chain.blockscoutV2ApiUrl,
+      url: blockscoutV2.url,
     })
   }
 }
