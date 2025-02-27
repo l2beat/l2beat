@@ -1,5 +1,4 @@
 import type { DaBridgeRisks, DaLayerRisks, Project } from '@l2beat/config'
-import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
@@ -10,16 +9,17 @@ import {
 import { getDaUsers } from '../utils/get-da-users'
 
 export async function getDaRiskEntries() {
-  const [layers, bridges] = await Promise.all([
+  const [layers, bridges, dacs] = await Promise.all([
     ps.getProjects({ select: ['daLayer', 'statuses'] }),
     ps.getProjects({ select: ['daBridge', 'statuses'] }),
+    ps.getProjects({ select: ['customDa', 'statuses'] }),
   ])
 
-  const uniqueProjectsInUse = getDaUsers(layers, bridges)
+  const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
   const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
   const getTvs = pickTvsForProjects(tvsPerProject)
 
-  const entries = layers
+  const layerEntries = layers
     .filter((project) => project.id !== ProjectId.ETHEREUM)
     .map((project) =>
       getDaRiskEntry(
@@ -28,11 +28,10 @@ export async function getDaRiskEntries() {
         getTvs,
       ),
     )
-    .sort((a, b) => b.tvs - a.tvs)
 
-  const dacEntries = getDacEntries(getTvs)
+  const dacEntries = dacs.map((dac) => getDacEntry(dac, getTvs))
 
-  return [...entries, ...dacEntries]
+  return [...layerEntries, ...dacEntries].sort((a, b) => b.tvs - a.tvs)
 }
 
 export interface DaRiskEntry extends CommonProjectEntry {
@@ -105,47 +104,29 @@ function getDaRiskEntry(
   }
 }
 
-function getDacEntries(
+function getDacEntry(
+  project: Project<'customDa' | 'statuses'>,
   getTvs: (projectIds: ProjectId[]) => { latest: number; sevenDaysAgo: number },
-): DaRiskEntry[] {
-  const projects = [...layer2s, ...layer3s]
-    .filter((project) => project.customDa)
-    .map((project) => ({
-      parentProject: project,
-      daLayer: project.customDa,
-    }))
-
-  return projects
-    .map(({ parentProject, daLayer }) => {
-      if (!daLayer) {
-        return undefined
-      }
-
-      const tvs = getTvs([parentProject.id])
-
-      const bridgeEntry: DaBridgeRiskEntry = {
-        name: daLayer.name ?? `${parentProject.display.name} DAC`,
-        slug: parentProject.display.slug,
-        href: `/scaling/projects/${parentProject.display.slug}`,
-        statuses: {},
-        tvs: tvs.latest,
-        risks: daLayer.risks,
-      }
-
-      const projectEntry: DaRiskEntry = {
-        id: parentProject.id,
-        slug: parentProject.display.slug,
-        name: daLayer.name ?? `${parentProject.display.name} DAC`,
-        nameSecondLine: daLayer.type,
-        href: `/scaling/projects/${parentProject.display.slug}`,
-        statuses: {},
-        risks: daLayer.risks,
-        isPublic: false,
-        tvs: tvs.latest,
-        bridges: [bridgeEntry],
-      }
-
-      return projectEntry
-    })
-    .filter((x) => x !== undefined)
+): DaRiskEntry {
+  const tvs = getTvs([project.id])
+  const bridgeEntry: DaBridgeRiskEntry = {
+    name: project.customDa.name ?? `${project.name} DAC`,
+    slug: project.slug,
+    href: `/scaling/projects/${project.slug}`,
+    statuses: {},
+    tvs: tvs.latest,
+    risks: project.customDa.risks,
+  }
+  return {
+    id: project.id,
+    slug: project.slug,
+    name: project.customDa.name ?? `${project.name} DAC`,
+    nameSecondLine: project.customDa.type,
+    href: `/scaling/projects/${project.slug}`,
+    statuses: {},
+    risks: project.customDa.risks,
+    isPublic: false,
+    tvs: tvs.latest,
+    bridges: [bridgeEntry],
+  }
 }

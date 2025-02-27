@@ -821,6 +821,7 @@ export interface BaseProject {
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
+  customDa?: CustomDa
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
   activityConfig?: ProjectActivityConfig

@@ -100,6 +100,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       stacked: undefined,
     },
     scalingDa: p.dataAvailability,
+    customDa: p.customDa,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
