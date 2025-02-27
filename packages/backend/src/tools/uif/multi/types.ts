@@ -51,5 +51,8 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
       and move the configuration state to minHeight
   */
   configurationsTrimmingDisabled?: boolean
+  /** Some indexers do not include configurationId in the data table
+      which makes it impossible to remove data of removed configuration
+  */
   dataWipingAfterDeleteDisabled?: boolean
 }
