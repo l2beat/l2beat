@@ -233,12 +233,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-da-avail))',
+          color: 'hsl(var(--chart-emerald))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-da-avail))',
+          color: 'hsl(var(--chart-emerald))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta

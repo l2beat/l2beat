@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf189023bd403d8c07f12f05b95bf605630a9d506
+Generated with discovered.json: 0x4896f584e32c30c45de35c5820fdf4d674c49759
 
-# Diff at Thu, 27 Feb 2025 11:48:02 GMT:
+# Diff at Wed, 26 Feb 2025 16:19:31 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 9648418
-- current block number: 9648418
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9eb8b2d626938c85a098b11b809352a92a892736 block: 9648418
+- current block number: 9838404
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related: Add L2 contracts as templates with source.
 
 ## Config/verification related changes
 
@@ -17,335 +17,126 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 9648418 (main branch discovery), not current.
 
 ```diff
-    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
-    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-    }
-```
-
-```diff
     contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
     +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.l1CrossDomainMessenger:
--        "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
-+        "0x448A37330A60494E666F6DD60aD48d930AEbA381"
-      values.OTHER_MESSENGER:
--        "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
-+        "0x448A37330A60494E666F6DD60aD48d930AEbA381"
-      values.otherMessenger:
--        "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
-+        "0x448A37330A60494E666F6DD60aD48d930AEbA381"
+      template:
++        "opstack/Layer2/L2CrossDomainMessenger"
     }
 ```
 
 ```diff
     contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
     +++ description: Provides the current gas price for L2 transactions.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
+      template:
++        "opstack/Layer2/GasPriceOracle"
     }
 ```
 
 ```diff
     contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
     +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.l1TokenBridge:
--        "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
-+        "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2"
-      values.OTHER_BRIDGE:
--        "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
-+        "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2"
-      values.otherBridge:
--        "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
-+        "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2"
+      template:
++        "opstack/Layer2/L2StandardBridge"
     }
 ```
 
 ```diff
     contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
     +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
-      sourceHashes:
--        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0xbf16b8057a2beae4130302910e769f47307e0e0e5afd365093b06effa159019c"]
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.$implementation:
--        "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011"
-+        "0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"
-      values.$pastUpgrades.0:
-+        ["2024-10-21T17:07:26.000Z","0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]]
-      values.$upgradeCount:
--        0
-+        1
-      values.l1FeeWallet:
--        "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001"
-      values.MIN_WITHDRAWAL_AMOUNT:
--        1
-      values.minWithdrawalAmount:
--        1
-      values.recipient:
--        "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001"
-      values.RECIPIENT:
--        "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001"
-      values.version:
--        "1.5.0-beta.2"
-      values.WITHDRAWAL_NETWORK:
--        1
-      values.withdrawalNetwork:
--        1
-      unverified:
-+        true
+      template:
++        "opstack/Layer2/SequencerFeeVault"
     }
 ```
 
 ```diff
     contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
     +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
+      template:
++        "opstack/Layer2/OptimismMintableERC20Factory"
     }
 ```
 
 ```diff
     contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
     +++ description: Simple contract that returns the latest L1 block number.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
+      template:
++        "opstack/Layer2/L1BlockNumber"
     }
 ```
 
 ```diff
     contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
     +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.OTHER_BRIDGE:
--        "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf"
-+        "0x4696b5e042755103fe558738Bcd1ecEe7A45eBfe"
-      values.otherBridge:
--        "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf"
-+        "0x4696b5e042755103fe558738Bcd1ecEe7A45eBfe"
+      template:
++        "opstack/Layer2/L2ERC721Bridge"
     }
 ```
 
 ```diff
     contract L1Block (0x4200000000000000000000000000000000000015) {
     +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.batcherHash:
--        "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd"
-+        "0x0000000000000000000000004ab3387810ef500bfe05a49dc53a44c222cbab3e"
+      template:
++        "opstack/Layer2/L1Block"
     }
 ```
 
 ```diff
     contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
     +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
+      template:
++        "opstack/Layer2/L2ToL1MessagePasser"
     }
 ```
 
 ```diff
     contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
     +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.REMOTE_CHAIN_ID:
--        1
-+        11155111
+      template:
++        "opstack/Layer2/OptimismMintableERC721Factory"
     }
 ```
 
 ```diff
-    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    contract ProxyAdmin (0x4200000000000000000000000000000000000018) {
     +++ description: Administration contract for other contract proxies.
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.owner:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
+      name:
+-        "L2ProxyAdmin"
++        "ProxyAdmin"
+      displayName:
++        "L2ProxyAdmin"
     }
 ```
 
 ```diff
     contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
     +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
-      sourceHashes:
--        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x0706f7ff4b2f4c1e03bff710e9b98afa6f716ae6ac7b5e61797f9cb40a58221a"]
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.$implementation:
--        "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019"
-+        "0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"
-      values.$pastUpgrades.0:
-+        ["2024-10-21T17:07:26.000Z","0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]]
-      values.$upgradeCount:
--        0
-+        1
-      values.MIN_WITHDRAWAL_AMOUNT:
--        1
-      values.minWithdrawalAmount:
--        1
-      values.recipient:
--        "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001"
-      values.RECIPIENT:
--        "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001"
-      values.version:
--        "1.5.0-beta.2"
-      values.WITHDRAWAL_NETWORK:
--        1
-      values.withdrawalNetwork:
--        1
-      unverified:
-+        true
+      template:
++        "opstack/Layer2/BaseFeeVault"
     }
 ```
 
 ```diff
     contract L1FeeVault (0x420000000000000000000000000000000000001A) {
     +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
-      sourceHashes:
--        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x6cd48142610d7634a3e49c7a9f181be68c6ca47b0ed2777c884a26a219ebb034"]
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.$implementation:
--        "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A"
-+        "0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"
-      values.$pastUpgrades.0:
-+        ["2024-10-21T17:07:26.000Z","0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]]
-      values.$upgradeCount:
--        0
-+        1
-      values.MIN_WITHDRAWAL_AMOUNT:
--        1
-      values.minWithdrawalAmount:
--        1
-      values.recipient:
--        "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001"
-      values.RECIPIENT:
--        "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001"
-      values.version:
--        "1.5.0-beta.2"
-      values.WITHDRAWAL_NETWORK:
--        1
-      values.withdrawalNetwork:
--        1
-      unverified:
-+        true
+      template:
++        "opstack/Layer2/L1FeeVault"
     }
 ```
 
 ```diff
     contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
     +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
+      template:
++        "opstack/Layer2/SchemaRegistry"
     }
 ```
 
 ```diff
     contract EAS (0x4200000000000000000000000000000000000021) {
     +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
-      issuedPermissions.0.to:
--        "0x7E6c183F538abb8572F5cd17109C617b994d6944"
-+        "0xe474339ee47775888df411A163c586a8bDEaaEd0"
-      sinceTimestamp:
--        1730748360
-+        1726852429
-      values.getDomainSeparator:
--        "0xd940a73236ef2df8e7b3d43c8c02045c7ebbbb3aeeedcd94a46d96d33838769c"
-+        "0x5a5284068d55c22c45565d9f13b18a7979b2266f8aaa214632769fda54ccc456"
+      template:
++        "opstack/Layer2/EAS"
     }
-```
-
-```diff
--   Status: DELETED
-    contract FeeSplitter (0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract L1Splitter (0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract L1Splitter (0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract NetFeeSplitter (0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004)
-    +++ description: None
 ```
 
 Generated with discovered.json: 0x5c5b07d387624e06d18a3bd29e34c7d66a008d89

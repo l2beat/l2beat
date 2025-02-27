@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
-  additionalBadges: [BADGES.RaaS.Gelato, BADGES.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Interoperability'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

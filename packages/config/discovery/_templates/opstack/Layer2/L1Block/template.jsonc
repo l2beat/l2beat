@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
+  "ignoreInWatchMode": [
+    "basefee",
+    "hash",
+    "number",
+    "timestamp",
+    "sequenceNumber",
+    "blobBaseFee"
+  ]
+}

@@ -41,7 +41,7 @@ export async function getChainConfig(
         case 'rpc':
           blockApis.push({
             type: 'rpc',
-            url: api.url,
+            url: env.string(Env.key(chain, 'RPC_URL'), api.url),
             callsPerMinute: env.integer(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
@@ -90,24 +90,6 @@ export async function getChainConfig(
       }
     }
 
-    for (const url of getConfiguredRpcs(env, chain)) {
-      // TODO: every rpc for a given chain has the same calls per minute!
-      const callsPerMinute = env.integer(
-        Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
-        DEFAULT_CALLS_PER_MINUTE,
-      )
-      // only add previously unknown urls
-      if (!blockApis.some((x) => x.type === 'rpc' && x.url === url)) {
-        blockApis.push({
-          type: 'rpc',
-          url,
-          callsPerMinute,
-          // TODO: add configuration param
-          retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
-        })
-      }
-    }
-
     if (indexerApis.length > 0 || blockApis.length > 0) {
       apis.push({ name: chain, indexerApis, blockApis })
     }
@@ -117,17 +99,6 @@ export async function getChainConfig(
   apis.push(...exceptions)
 
   return apis
-}
-
-function getConfiguredRpcs(env: Env, chain: string) {
-  if (chain === 'starknet' || chain === 'paradex') {
-    return []
-  }
-  return [
-    env.optionalString(Env.key(chain, 'RPC_URL')),
-    env.optionalString(Env.key(chain, 'RPC_URL_FOR_TVL')),
-    env.optionalString(Env.key(chain, 'RPC_URL_FOR_ACTIVITY')),
-  ].filter((x) => x !== undefined)
 }
 
 function getExceptions(env: Env): ChainApi[] {

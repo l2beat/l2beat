@@ -39,6 +39,9 @@ export class ChannelBank {
     this.dropOutdatedChannels(blockNumber)
 
     const channelIds = new Set(frames.map((f) => f.channelId))
+    if (channelIds.size === 0) {
+      return null
+    }
     assert(
       channelIds.size === 1,
       'All frames should belong to the same channel',

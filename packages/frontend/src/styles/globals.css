@@ -33,6 +33,7 @@
     --chart-pink: 321 84.3% 60%;
     --chart-cyan: 180 50.2% 42.5%;
     --chart-yellow: 44.9 100% 33.5%;
+    --chart-emerald: 151 90% 48%;
 
     --chart-tvs-native: 320 100% 63.7%;
     --chart-tvs-external: 45 100% 51.4%;
@@ -44,7 +45,6 @@
     --chart-costs-overhead: 266deg 57.7% 52.7%;
 
     --chart-da-celestia: 284 100% 78%;
-    --chart-da-avail: 151 90% 48%;
 
     /* Chart gradients */
 
@@ -94,6 +94,7 @@
     --chart-pink: 284 87.1% 75.7%;
     --chart-cyan: 190 73.6% 55.5%;
     --chart-yellow: 54.2 70.9% 56.9%;
+    --chart-emerald: 151 90.2% 48%;
 
     --chart-tvs-native: 320 100% 63.7%;
     --chart-tvs-external: 45 100% 51.4%;
@@ -105,7 +106,6 @@
     --chart-costs-overhead: 266deg 57.7% 52.7%;
 
     --chart-da-celestia: 285 62.7% 52.7%;
-    --chart-da-avail: 151 90.2% 48%;
 
     /* Chart gradients */
 

@@ -146,6 +146,7 @@
     {
       "name": "EVMScriptRegistry",
       "address": "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478",
+      "template": "tokens/Lido/EVMScriptRegistry",
       "sourceHashes": [
         "0x3cab9c9a12a52c625f55b2d3d9693f8eb062cb0d41841589b557888ad01afced",
         "0x00350407c4a32b62d60dbac5ac3093bf4bffd482f40b2df2a9cd3268365b84e5"
@@ -352,6 +353,7 @@
     {
       "name": "MiniMeToken",
       "address": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
+      "template": "tokens/Lido/MiniMeToken",
       "sourceHashes": [
         "0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46"
       ],
@@ -991,6 +993,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "tokens/Lido/EVMScriptRegistry": "0x8228a3c805da8d57d6a0e3b2616cb2c7bf14dcc41d58d0d3db37347af278de24",
+    "tokens/Lido/MiniMeToken": "0x1b2cc52391bb51e1adb2b3daeffcdbe04cc5fc42c5c2bcc152b81e725421370d"
   }
 }
