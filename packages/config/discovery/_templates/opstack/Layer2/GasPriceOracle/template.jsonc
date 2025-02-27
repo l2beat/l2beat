@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Provides the current gas price for L2 transactions.",
+  "ignoreMethods": ["overhead", "scalar", "getL1FeeUpperBound"],
+  "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
+}
