@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x98bcfef4fbf3b43e9a8abf4c37a86ec35f70f6af
+
+# Diff at Thu, 27 Feb 2025 11:12:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd67aa263dbf676cd3ff7e986b95cc7a52f3991b block: 26689586
+- current block number: 26689586
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeacon (0x4a594E07D5295E4e4cd1fF728e85a317A20A5010)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeaconController (0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeaconProxy (0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1)
+    +++ description: None
+```
+
+```diff
+    contract BeaconProxy (0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee"
++        "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e"
+      values.$admin:
+-        "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee"
++        "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e"
+      values.$implementation:
+-        "0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"
++        "0xd37d1f682Ff556C5B6C4Eb58075a93747379A3d7"
+      values.$pastUpgrades.0.2.0:
+-        "0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"
++        "0xd37d1f682Ff556C5B6C4Eb58075a93747379A3d7"
+      values.$pastUpgrades.0.1:
+-        "0xde8dc7be51fd7efb7940f1c079ad9c47107e15911a3388264cd14a660af92fe5"
++        "0xa360ab72c136ac975030f7fab25f2f51bd9c8ed76a98d1e028c2c2767096bbdf"
+      values.$pastUpgrades.0.0:
+-        "2022-07-12T10:32:51.000Z"
++        "2021-11-26T21:02:52.000Z"
+      values.OpticsBeacon_beacon:
+-        "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010"
++        "0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeacon (0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xcb4d9b8d6731b5fb65c0e30ab76c7b7647c45010
 
 # Diff at Mon, 20 Jan 2025 11:10:46 GMT:

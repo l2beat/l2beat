@@ -1,7 +1,7 @@
 {
   "name": "opticsV1",
   "chain": "ethereum",
-  "blockNumber": 19532023,
+  "blockNumber": 21937199,
   "configHash": "0x961adc4d5c6778586ca74a7ff2313c82332ddc889079dc01b8035bf18b10f88f",
   "contracts": [
     {
@@ -347,8 +347,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "committedRoot": "0x3a7147efac09479034f1b7ef0041d7fac3a3fe0fe6919ecbceb2fd30255eb677",
-        "count": 2247,
+        "committedRoot": "0xb009576a87c5ba9be5b7eef33372aec7a379a1219a212f0c861d5d976fb25c48",
+        "count": 2248,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
@@ -356,13 +356,13 @@
         "owner": "0x42303634F37956687fB7ff2c6146AC842481A052",
         "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "queueLength": 0,
-        "root": "0x3a7147efac09479034f1b7ef0041d7fac3a3fe0fe6919ecbceb2fd30255eb677",
+        "root": "0xb009576a87c5ba9be5b7eef33372aec7a379a1219a212f0c861d5d976fb25c48",
         "state": 1,
         "suggestUpdate": {
           "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
-        "tree": 2247,
+        "tree": 2248,
         "updater": "0xDB2091535eb0Ee447Ce170DDC25204FEA822dd81",
         "updaterManager": "0x2CC80EE8a3f9c85309866F4C6BDF82f6846891EC",
         "VERSION": 0
