@@ -507,6 +507,9 @@ importers:
 
   packages/frontend:
     dependencies:
+      '@l2beat/backend':
+        specifier: workspace:*
+        version: link:../backend
       '@l2beat/backend-shared':
         specifier: workspace:*
         version: link:../backend-shared
@@ -639,6 +642,9 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
+      sqlite3:
+        specifier: 5.1.6
+        version: 5.1.6(encoding@0.1.13)
       superjson:
         specifier: ^2.2.1
         version: 2.2.1

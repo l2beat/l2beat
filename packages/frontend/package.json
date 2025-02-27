@@ -20,6 +20,7 @@
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
+    "@l2beat/backend": "workspace:*",
     "@l2beat/backend-shared": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -64,6 +65,7 @@
     "react-dom": "19.0.0",
     "recharts": "^2.15.1",
     "sharp": "^0.33.5",
+    "sqlite3": "5.1.6",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.3.0",
     "vaul": "^0.9.1",
