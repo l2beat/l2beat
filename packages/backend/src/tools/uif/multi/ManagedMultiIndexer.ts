@@ -93,8 +93,10 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
           )
         }
 
-        if (diff.toWipeDataAfterDelete.length > 0) {
-          await this.removeData(diff.toWipeDataAfterDelete)
+        if (!this.options.dataWipingAfterDeleteDisabled) {
+          if (diff.toWipeDataAfterDelete.length > 0) {
+            await this.removeData(diff.toWipeDataAfterDelete)
+          }
         }
       })
       .then(() => {
@@ -165,13 +167,6 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   // #region invalidate
 
   async invalidate(targetHeight: number): Promise<number> {
-    if (this.options.logErrorgOnInvalidation) {
-      const ids = this.options.configurations.map((c) => c.id)
-      this.logger.error(`Invalidation detected`, {
-        targetHeight: targetHeight,
-        configurations: JSON.stringify(ids),
-      })
-    }
     return await Promise.resolve(targetHeight)
   }
 
@@ -237,10 +232,12 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         configurations: diff.toDelete.length,
       })
     }
-    if (diff.toWipeDataAfterDelete.length > 0) {
-      this.logger.info('Wiped data after delete', {
-        configurations: diff.toWipeDataAfterDelete.length,
-      })
+    if (!this.options.dataWipingAfterDeleteDisabled) {
+      if (diff.toWipeDataAfterDelete.length > 0) {
+        this.logger.info('Wiped data after delete', {
+          configurations: diff.toWipeDataAfterDelete.length,
+        })
+      }
     }
   }
 }
