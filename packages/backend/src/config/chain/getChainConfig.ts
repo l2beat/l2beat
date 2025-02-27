@@ -41,7 +41,7 @@ export async function getChainConfig(
         case 'rpc':
           blockApis.push({
             type: 'rpc',
-            url: api.url,
+            url: env.string(Env.key(chain, 'RPC_URL'), api.url),
             callsPerMinute: env.integer(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
