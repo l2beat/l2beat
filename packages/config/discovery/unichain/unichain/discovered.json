@@ -16,11 +16,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
@@ -28,7 +28,8 @@
         "$upgradeCount": 0,
         "owner": "0x0000000000000000000000000000000000000000",
         "version": "1.1.1-beta.1"
-      }
+      },
+      "derivedName": "DeployerWhitelist"
     },
     {
       "name": "L2CrossDomainMessenger",
@@ -43,25 +44,25 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["messageNonce"],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1CrossDomainMessenger": "0x448A37330A60494E666F6DD60aD48d930AEbA381",
+        "l1CrossDomainMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
         "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620038",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x448A37330A60494E666F6DD60aD48d930AEbA381",
-        "otherMessenger": "0x448A37330A60494E666F6DD60aD48d930AEbA381",
+        "OTHER_MESSENGER": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
+        "otherMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "paused": false,
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
@@ -83,12 +84,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
@@ -120,21 +121,21 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1TokenBridge": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2",
+        "l1TokenBridge": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
         "messenger": "0x4200000000000000000000000000000000000007",
         "MESSENGER": "0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2",
-        "otherBridge": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2",
+        "OTHER_BRIDGE": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "otherBridge": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
         "paused": false,
         "version": "1.11.1-beta.1"
       }
@@ -152,16 +153,22 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",
+            ["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "l1FeeWallet": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
@@ -185,11 +192,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
@@ -213,11 +220,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013",
@@ -239,11 +246,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
@@ -251,8 +258,8 @@
         "$upgradeCount": 0,
         "messenger": "0x4200000000000000000000000000000000000007",
         "MESSENGER": "0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "0x4696b5e042755103fe558738Bcd1ecEe7A45eBfe",
-        "otherBridge": "0x4696b5e042755103fe558738Bcd1ecEe7A45eBfe",
+        "OTHER_BRIDGE": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
+        "otherBridge": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
         "paused": false,
         "version": "1.7.1-beta.2"
       }
@@ -270,7 +277,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -282,7 +289,7 @@
         "sequenceNumber",
         "blobBaseFee"
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
@@ -323,11 +330,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
@@ -350,18 +357,18 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "BRIDGE": "0x4200000000000000000000000000000000000014",
-        "REMOTE_CHAIN_ID": 11155111,
+        "REMOTE_CHAIN_ID": 1,
         "version": "1.4.1-beta.1"
       }
     },
@@ -379,7 +386,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -449,7 +456,7 @@
           "from": "0x4200000000000000000000000000000000000021"
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
@@ -473,16 +480,22 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",
+            ["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -505,16 +518,22 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2024-12-05T19:19:37.000Z",
+            "0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",
+            ["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -537,11 +556,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020",
@@ -563,18 +582,18 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "sinceTimestamp": 1726852429,
+      "sinceTimestamp": 1730748360,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getAttestTypeHash": "0xfeb2925a02bae3dae48d424a0437a2b6ac939aa9230ddc55a1a76f065d988076",
-        "getDomainSeparator": "0x5a5284068d55c22c45565d9f13b18a7979b2266f8aaa214632769fda54ccc456",
+        "getDomainSeparator": "0xd940a73236ef2df8e7b3d43c8c02045c7ebbbb3aeeedcd94a46d96d33838769c",
         "getName": "EAS",
         "getRevokeTypeHash": "0xb5d556f07587ec0f08cf386545cc4362c702a001650c2058002615ee5c9d1e75",
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
@@ -594,6 +613,49 @@
         "NET_FEE_RECIPIENT": "0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004",
         "OPTIMISM_WALLET": "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002"
       }
+    },
+    {
+      "name": "L1Splitter",
+      "address": "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002",
+      "sourceHashes": [
+        "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
+      ],
+      "sinceTimestamp": 1730748360,
+      "values": {
+        "$immutable": true,
+        "feeDisbursementInterval": 86400,
+        "l1Recipient": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+        "lastDisbursementTime": 0,
+        "minWithdrawalAmount": "10000000000000000000",
+        "owner": "0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "L1Splitter",
+      "address": "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003",
+      "sourceHashes": [
+        "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
+      ],
+      "sinceTimestamp": 1730748360,
+      "values": {
+        "$immutable": true,
+        "feeDisbursementInterval": 86400,
+        "l1Recipient": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
+        "lastDisbursementTime": 0,
+        "minWithdrawalAmount": "10000000000000000000",
+        "owner": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "NetFeeSplitter",
+      "address": "0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004",
+      "sourceHashes": [
+        "0x3ce35b9a968810e9a9f15e947ea37fd6403fb3feb01252004814d90926556ea1"
+      ],
+      "sinceTimestamp": 1730748360,
+      "values": { "$immutable": true }
     }
   ],
   "eoas": [
@@ -601,7 +663,8 @@
     { "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd" },
     { "address": "0x4200000000000000000000000000000000000042" },
     {
-      "address": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
+      "name": "UnichainProxyAdminOwner_L2Alias",
+      "address": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -691,7 +754,13 @@
         }
       ]
     },
-    { "address": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2" },
+    { "address": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA" },
+    { "address": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6" },
+    { "address": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2" },
+    { "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa" },
+    { "address": "0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB" },
+    { "address": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf" },
+    { "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001" },
     { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" }
   ],
   "abis": {
@@ -855,6 +924,103 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001": [
+      "constructor(address optimismWallet, address l1FeeRecipient, address netFeeRecipient)",
+      "error AddressZero()",
+      "error Locked()",
+      "error MustWithdrawToFeeSplitter()",
+      "error MustWithdrawToL2()",
+      "error OnlyVaults()",
+      "error TransferFailed()",
+      "event FeesDistributed(uint256 optimismShare, uint256 l1Fees, uint256 netShare)",
+      "event NoFeesCollected()",
+      "function L1_FEE_RECIPIENT() view returns (address)",
+      "function NET_FEE_RECIPIENT() view returns (address)",
+      "function OPTIMISM_WALLET() view returns (address)",
+      "function distributeFees() returns (bool feesDistributed)"
+    ],
+    "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002": [
+      "constructor(address initialOwner, address l1Wallet, uint48 feeDisbursementInterval_, uint256 minWithdrawalAmount_)",
+      "error AddressZero()",
+      "error DisbursementIntervalNotReached()",
+      "error InsufficientWithdrawalAmount()",
+      "error MinDisbursementInterval()",
+      "error MinWithdrawalAmount()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event FeeDisbursementIntervalUpdated(uint48 oldInterval, uint48 newInterval)",
+      "event L1RecipientUpdated(address indexed oldRecipient, address indexed newRecipient)",
+      "event MinWithdrawalAmountUpdated(uint256 oldAmount, uint256 newAmount)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Withdrawal(address indexed recipient, uint256 amount)",
+      "function acceptOwnership()",
+      "function feeDisbursementInterval() view returns (uint48)",
+      "function l1Recipient() view returns (address)",
+      "function lastDisbursementTime() view returns (uint48)",
+      "function minWithdrawalAmount() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function updateFeeDisbursementInterval(uint48 newInterval)",
+      "function updateL1Recipient(address newRecipient)",
+      "function updateMinWithdrawalAmount(uint256 newAmount)",
+      "function withdraw() returns (uint256 balance)"
+    ],
+    "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003": [
+      "constructor(address initialOwner, address l1Wallet, uint48 feeDisbursementInterval_, uint256 minWithdrawalAmount_)",
+      "error AddressZero()",
+      "error DisbursementIntervalNotReached()",
+      "error InsufficientWithdrawalAmount()",
+      "error MinDisbursementInterval()",
+      "error MinWithdrawalAmount()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event FeeDisbursementIntervalUpdated(uint48 oldInterval, uint48 newInterval)",
+      "event L1RecipientUpdated(address indexed oldRecipient, address indexed newRecipient)",
+      "event MinWithdrawalAmountUpdated(uint256 oldAmount, uint256 newAmount)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Withdrawal(address indexed recipient, uint256 amount)",
+      "function acceptOwnership()",
+      "function feeDisbursementInterval() view returns (uint48)",
+      "function l1Recipient() view returns (address)",
+      "function lastDisbursementTime() view returns (uint48)",
+      "function minWithdrawalAmount() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function updateFeeDisbursementInterval(uint48 newInterval)",
+      "function updateL1Recipient(address newRecipient)",
+      "function updateMinWithdrawalAmount(uint256 newAmount)",
+      "function withdraw() returns (uint256 balance)"
+    ],
+    "0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004": [
+      "constructor(address[] initialRecipients, tuple(address setter, uint256 allocation)[] recipientData)",
+      "error AllocationZero()",
+      "error DuplicateRecipient()",
+      "error InsufficientAllocation()",
+      "error InvalidRecipients()",
+      "error InvalidTotalAllocation()",
+      "error RecipientZero()",
+      "error SetterAlreadySet()",
+      "error SetterZero()",
+      "error Unauthorized()",
+      "error WithdrawalFailed()",
+      "event AllocationTransferred(address indexed setter, address indexed from, address indexed to, uint256 allocation)",
+      "event SetterTransferred(address indexed recipient, address indexed previousSetter, address indexed newSetter)",
+      "event Withdrawn(address indexed recipient, address indexed to, uint256 amount)",
+      "function balanceOf(address recipient) view returns (uint256)",
+      "function earnedFees(address account) view returns (uint256)",
+      "function recipients(address recipient) view returns (address setter, uint256 allocation)",
+      "function setterOf(address recipient) view returns (address)",
+      "function transferAllocation(address oldRecipient, address newRecipient, uint256 allocation)",
+      "function transferAllocationAndSetSetter(address oldRecipient, address newRecipient, address newSetter, uint256 allocation)",
+      "function transferSetter(address recipient, address newSetter)",
+      "function withdrawFees(address to) returns (uint256 amount)"
+    ],
     "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
       "event OwnerChanged(address oldOwner, address newOwner)",
       "event WhitelistDisabled(address oldOwner)",
@@ -942,6 +1108,21 @@
       "function version() pure returns (string)",
       "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
       "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
+    ],
+    "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function l1FeeWallet() view returns (address)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
     ],
     "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012": [
       "constructor()",
@@ -1040,6 +1221,34 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
+    ],
+    "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": [
+      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function WITHDRAWAL_NETWORK() view returns (uint8)",
+      "function minWithdrawalAmount() view returns (uint256 amount_)",
+      "function recipient() view returns (address recipient_)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()",
+      "function withdrawalNetwork() view returns (uint8 network_)"
     ],
     "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020": [
       "error AlreadyExists()",
