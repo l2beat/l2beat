@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21900569,
+  "blockNumber": 21937181,
   "configHash": "0xa5cbf7995fa87c1471d7ffede27df352e7f4bf97372ead0dbceaa1bd478d43ec",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -941,7 +941,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1668201,
+        "l1ToL2MessageNonce": 1668386,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -962,9 +962,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1171478285064165251369241432732006887631944699870625104323436730909124284668",
-        "stateBlockNumber": 1171396,
-        "stateRoot": "2376114595185136999928130087451995763450463249413852625112446328057746455212",
+        "stateBlockHash": "1258143905650001335968299560865860252105586361305473674182269126222322580871",
+        "stateBlockNumber": 1185177,
+        "stateRoot": "476082259951634465958025129403171585666687423473495473752748889180681616831",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },

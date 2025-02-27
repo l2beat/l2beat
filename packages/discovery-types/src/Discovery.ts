@@ -53,6 +53,8 @@ export type PermissionType =
   | 'validateBridge2'
   | 'relay'
   | 'aggregatePolygon'
+  | 'operateStarknet'
+  | 'governStarknet'
 
 export interface ResolvedPermissionPath {
   address: EthereumAddress
