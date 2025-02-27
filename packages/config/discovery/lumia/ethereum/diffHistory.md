@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x9281631086bea2c2187c57b993e756484782f94d
+
+# Diff at Wed, 26 Feb 2025 10:32:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21764836
+- current block number: 21764836
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21764836 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0x3b97f93a3bd06060e37b48d338dea3ab8adf93ce
 
 # Diff at Mon, 10 Feb 2025 19:04:12 GMT:

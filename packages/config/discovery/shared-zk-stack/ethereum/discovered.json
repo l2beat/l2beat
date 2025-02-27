@@ -144,7 +144,8 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
-      "derivedName": "ChainAdmin"
+      "derivedName": "ChainAdmin",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "BridgeHub",
@@ -258,7 +259,8 @@
           "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs."
         }
       },
-      "derivedName": "Bridgehub"
+      "derivedName": "Bridgehub",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "GnosisSafe",
@@ -669,7 +671,8 @@
           "severity": "HIGH",
           "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
         }
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "GnosisSafe",
@@ -863,7 +866,8 @@
           "text": "Security Council members - ZK Nation docs",
           "href": "https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"
         }
-      ]
+      ],
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ProxyAdmin",
@@ -965,7 +969,8 @@
         "protocolVersion": 107374182400,
         "storedBatchZero": "0x83325e26523f69ee6ea60aea582325d22f3c6a85db5e4890e14d62a377635a6b",
         "validatorTimelock": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "GnosisSafe",
@@ -1074,7 +1079,8 @@
           "text": "Guardians - ZK Nation docs",
           "href": "https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians"
         }
-      ]
+      ],
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "L1SharedBridge",
@@ -1131,7 +1137,8 @@
         "paused": false,
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "EmergencyUpgradeBoard",
@@ -1189,7 +1196,8 @@
         "PROTOCOL_UPGRADE_HANDLER": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "SECURITY_COUNCIL": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GnosisSafe",
@@ -1812,14 +1820,14 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/BridgeHub": "0x50673b2776e86157908a9abad2272f5f1be81dcbc17dc2b0a1ad674e80e524bf",
-    "shared-zk-stack/ChainAdmin": "0x9e6c69705a47c98e16eb9d2fc299b67fbc863a6d7315b4b3519eecb96f5b20e5",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0xd2c003ba542c948d40157c8a7f6063ee4baae7f7ddb0e403960a5953b338df05",
+    "shared-zk-stack/BridgeHub": "0xde0af5a3f8a91464429b95799ce4283902cf96e2c28439e7146b6d967dc914f9",
+    "shared-zk-stack/ChainAdmin": "0x21362d1e1f6039b145ce8e607cf8c1f6f2d4b7e32cea642e1253fe0302cdb5d6",
+    "shared-zk-stack/EmergencyUpgradeBoard": "0x948712aabe7f05cbc6e1633d6843efe53638a67d5c14d20bd45ec7f7a41c3d44",
     "shared-zk-stack/GenesisUpgrade": "0x72a1c243c1a0b0bd5ca442b3746ffc2f7ffa645ed13529bad13e515264e18d6b",
-    "shared-zk-stack/Guardians": "0x3592a220130238ec08b2fa983b8468f927149ec8ae54a34751ed6a3987e50316",
-    "shared-zk-stack/L1SharedBridge": "0x5e200cbf2118a7974fe79c938780232b663438e34bc603974740bceb42fb2036",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0x244b68da8814229584b9d9561f4d08307b2d203b972e0204fa741a2b6630d32a",
-    "shared-zk-stack/SecurityCouncil": "0x5f387d9c32588f862d7069c10e8bb49218ac9cd0155d39b43db3770ced8ce63b",
-    "shared-zk-stack/StateTransitionManager": "0xab8279f00640345e03c6390759cebb40d8a98fcbf4d329274af78fb30a245034"
+    "shared-zk-stack/Guardians": "0x16f50acae053e052f68e51a684cce1b26ae63463f998b5da0c5ed4e163e2198d",
+    "shared-zk-stack/L1SharedBridge": "0x5388c2d5f463b7fd28ed2a90a5cac7b7e0ff2ced789fb7a38dd0672a7a98a5af",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0xf34bc34991e8766debc1512713b7e184dc643c084a590a10ce130aeafbc45ef7",
+    "shared-zk-stack/SecurityCouncil": "0x87e0adc2a1e574876e1221c8f98856984803a02867ad94dc110cb2c6708cb7b9",
+    "shared-zk-stack/StateTransitionManager": "0xb1344a1a1ee8c6443e263eb382d17777f08477c985763c4e737cf0d457034c29"
   }
 }

@@ -15,7 +15,8 @@
       "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PolygonDataCommittee",
@@ -67,7 +68,8 @@
         ],
         "owner": "0x258862dec9a77db57b398c441390783293E2a7A1",
         "requiredAmountOfSignatures": 1
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Validium",
@@ -151,7 +153,8 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
-      "derivedName": "PolygonValidiumStorageMigration"
+      "derivedName": "PolygonValidiumStorageMigration",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProxyAdmin",
@@ -401,8 +404,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "polygon-cdk/PolygonDataCommittee": "0x31cd17cf72567c89c63efc52c1e02df7c736621657d2c0fa8007a75fca167219",
-    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
-    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
+    "polygon-cdk/PolygonDataCommittee": "0x94ff847d4abbe9deb28dd2529a1549d9b5b2144a2d61677e595d5bb40f193bda",
+    "polygon-cdk/PolygonZkEVM": "0xa3db9cd4750e048e231aadcba1dd439bc7ca32cfc261f65c34038f8df919df94",
+    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
   }
 }
