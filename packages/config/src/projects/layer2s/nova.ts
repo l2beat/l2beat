@@ -95,7 +95,6 @@ export const nova: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     BADGES.VM.WasmVM,
-    BADGES.DA.DAC,
     BADGES.Stack.Nitro,
     BADGES.Other.Governance,
     BADGES.Other.L3HostChain,

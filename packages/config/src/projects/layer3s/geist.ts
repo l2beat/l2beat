@@ -13,7 +13,6 @@ export const geist: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   additionalPurposes: ['Gaming', 'NFT'],
   additionalBadges: [
-    BADGES.DA.DAC,
     BADGES.L3ParentChain.Base,
     BADGES.RaaS.Alchemy,
   ],

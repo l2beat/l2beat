@@ -12,7 +12,6 @@ export const molten: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1716471996), // 2024-05-23T13:46:36Z
   discovery,
   additionalBadges: [
-    BADGES.DA.DAC,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.RaaS.Caldera,
   ],

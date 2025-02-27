@@ -14,7 +14,6 @@ export const g7: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1738899615),
   discovery,
   additionalBadges: [
-    BADGES.DA.DAC,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.RaaS.Conduit,
   ],

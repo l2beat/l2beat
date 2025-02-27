@@ -3,7 +3,7 @@ import {
   assert,
   EthereumAddress,
   ProjectId,
-  UnixTime,
+  type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -73,6 +73,7 @@ type DAProvider = ProjectDataAvailability & {
   riskViewDA: TableReadyValue
   riskViewExitWindow: TableReadyValue
   technology: ProjectTechnologyChoice
+  badge: Badge
 }
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
@@ -346,7 +347,6 @@ function orbitStackCommon(
   type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
-  blockNumberOpcodeTimeSeconds: number,
   incomingNativeDA?: ProjectDataAvailability,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
@@ -385,10 +385,6 @@ function orbitStackCommon(
 
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
-  const sequencerVersion = templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'sequencerVersion',
-  )
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
     'RollupProxy',
     'wasmModuleRoot',
@@ -407,22 +403,23 @@ function orbitStackCommon(
       'espressoTEEVerifier',
     ) !== EthereumAddress.ZERO
 
+  const blockNumberOpcodeTimeSeconds =
+    templateVars.blockNumberOpcodeTimeSeconds ?? 12
+
   const minimumAssertionPeriod =
     templateVars.discovery.getContractValue<number>(
       'RollupProxy',
       'minimumAssertionPeriod',
-    ) * 12 // 12 seconds is the assumed block time
-  const postsToExternalDA = sequencerVersion !== '0x00'
-  if (postsToExternalDA) {
-    assert(
-      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
-      'DA badge is required for external DA',
-    )
+    ) * blockNumberOpcodeTimeSeconds
+
+  const postsToExternalDA = !postsToEthereum(templateVars)
+
+  let daBadge = daProvider?.badge
+  if (!postsToExternalDA) {
+    daBadge = usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata
   }
 
-  const daBadge = usesBlobs
-    ? BADGES.DA.EthereumBlobs
-    : BADGES.DA.EthereumCalldata
+  assert(daBadge !== undefined, 'DA badge must be defined')
 
   const nativeDA = incomingNativeDA ?? {
     layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
@@ -462,6 +459,12 @@ function orbitStackCommon(
   //     'RollupProxy',
   //     'validatorWhitelistDisabled',
   //   )
+
+  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daBadge]
+
+  if (isUsingEspressoSequencer) {
+    automaticBadges.push(BADGES.Other.EspressoPreconfs)
+  }
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
@@ -632,15 +635,7 @@ function orbitStackCommon(
         )
       })(),
     milestones: templateVars.milestones ?? [],
-    badges: mergeBadges(
-      [
-        BADGES.Stack.Orbit,
-        BADGES.VM.EVM,
-        daBadge,
-        ...(isUsingEspressoSequencer ? [BADGES.Other.EspressoPreconfs] : []),
-      ],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: decideDA(daProvider, nativeDA),
@@ -654,8 +649,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
-  const blockNumberOpcodeTimeSeconds =
-    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+  const common = orbitStackCommon(
+    'layer3',
+    templateVars,
+    baseChain.chainConfig?.explorerUrl,
+    baseChain.dataAvailability,
+  )
 
   const getStackedRisks = () => {
     return {
@@ -694,14 +693,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     }
   }
 
-  const common = orbitStackCommon(
-    'layer3',
-    templateVars,
-    baseChain.chainConfig?.explorerUrl,
-    blockNumberOpcodeTimeSeconds,
-    baseChain.dataAvailability,
-  )
-
   return {
     type: 'layer3',
     ...common,
@@ -730,7 +721,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     'layer2',
     templateVars,
     EXPLORER_URLS['ethereum'],
-    assumedBlockTime,
   )
 
   return {
@@ -827,124 +817,6 @@ function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
     'sequencerVersion',
   )
   return sequencerVersion === '0x00'
-}
-
-function getTrackedTxs(): Layer2TxConfig[] | undefined {
-  return [
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        selector: '0x8f111f3c',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(1661457944),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        selector: '0x6f12b0c9',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
-        sinceTimestamp: new UnixTime(1661457944),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        selector: '0xe0bc9729',
-        functionSignature:
-          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(1661457944),
-        untilTimestamp: new UnixTime(1739368811), // deprecated (reverts)
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        selector: '0x3e5aa082',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(1710427823),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        selector: '0x6e620055',
-        functionSignature:
-          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: new UnixTime(1739368811),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        selector: '0x917cf8ac',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: new UnixTime(1739368811),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        selector: '0x69cacded',
-        functionSignature:
-          'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: new UnixTime(1739368811),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
-        selector: '0xa04cee60',
-        functionSignature:
-          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-        sinceTimestamp: new UnixTime(1661455766),
-      },
-    },
-  ]
 }
 
 function ifPostsToEthereum<T>(
@@ -1083,6 +955,7 @@ function getDAProvider(
       layer: DA_LAYERS.CELESTIA,
       bridge: DA_BRIDGES.BLOBSTREAM,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: BADGES.DA.CelestiaBlobstream,
     }
   } else {
     const DAC = templateVars.discovery.getContractValue<{
@@ -1097,6 +970,7 @@ function getDAProvider(
       layer: DA_LAYERS.DAC,
       bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: BADGES.DA.DAC,
     }
   }
 }

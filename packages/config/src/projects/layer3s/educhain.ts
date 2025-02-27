@@ -13,7 +13,6 @@ export const educhain: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   discovery,
   additionalBadges: [
-    BADGES.DA.DAC,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.RaaS.Gelato,
   ],

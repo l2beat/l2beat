@@ -12,7 +12,6 @@ export const sanko: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
   additionalBadges: [
-    BADGES.DA.DAC,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.RaaS.Caldera,
   ],

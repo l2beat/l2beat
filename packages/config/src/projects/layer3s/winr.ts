@@ -12,7 +12,6 @@ export const winr: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   additionalBadges: [
-    BADGES.DA.DAC,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.RaaS.Conduit,
   ],
