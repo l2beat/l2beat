@@ -23,11 +23,12 @@ interface Props {
 
 export function ScalingProjectStats({ project, className }: Props) {
   const isAppchain = project.capability === 'appchain'
+  console.log(project.stageConfig)
 
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5',
+        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5',
         className,
       )}
     >
@@ -42,7 +43,7 @@ export function ScalingProjectStats({ project, className }: Props) {
           project.header.activity ? (
             <ValueWithPercentageChange
               change={project.header.activity.uopsWeeklyChange}
-              className="font-medium !leading-none md:text-xl md:font-bold"
+              className="font-medium !leading-none md:text-lg md:font-bold"
               changeClassName="md:text-base md:font-medium !leading-none"
             >
               {project.header.activity.lastDayUops.toFixed(2)}
@@ -57,6 +58,16 @@ export function ScalingProjectStats({ project, className }: Props) {
         value={
           project.header.activity ? (
             formatNumber(project.header.activity.uopsCount)
+          ) : (
+            <NoDataBadge />
+          )
+        }
+      />
+      <ProjectStat
+        title="30D tx count"
+        value={
+          project.header.activity ? (
+            formatNumber(project.header.activity.tpsCount)
           ) : (
             <NoDataBadge />
           )
@@ -118,7 +129,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
+      <span className="text-lg font-medium !leading-none md:font-bold">
         {props.value}
       </span>
     </li>
