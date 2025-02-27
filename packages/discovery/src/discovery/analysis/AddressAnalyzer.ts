@@ -199,10 +199,7 @@ export class AddressAnalyzer {
     > = {
       type: 'Contract',
       name: config.name ?? sources.name,
-      derivedName:
-        config.name !== undefined && config.name !== sources.name
-          ? sources.name
-          : undefined,
+      derivedName: config.name !== undefined ? sources.name : undefined,
       isVerified: sources.isVerified,
       address,
       deploymentTimestamp: deployment?.timestamp,
