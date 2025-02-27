@@ -104,7 +104,7 @@ function createIndexers(
         priceConfigs: [configMapping.getPriceConfigFromAmountConfig(preminted)],
         amountConfigs: [preminted],
         project: ProjectId(preminted.project),
-        dataSource: `${chain}_preminted_${preminted.address}`,
+        dataSource: `${chain.name}_preminted_${preminted.address}`,
         syncOptimizer,
         parents: [descendantPriceIndexer, indexer],
         indexerService,
