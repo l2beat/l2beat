@@ -15,6 +15,10 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
+import {
+  type CostsTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/format-bytes'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -62,7 +66,7 @@ interface Props {
   unit: CostsUnit
   isLoading: boolean
   milestones: Milestone[]
-  resolution: CostsResolution
+  range: CostsTimeRange
   showDataPosted: boolean
   className?: string
 }
@@ -73,9 +77,11 @@ export function CostsChart({
   isLoading,
   milestones,
   className,
-  resolution,
+  range,
   showDataPosted,
 }: Props) {
+  const resolution = rangeToResolution(range)
+
   return (
     <ChartContainer
       data={data}
@@ -130,7 +136,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
-        {showDataPosted && (
+        {showDataPosted && range !== '1d' && (
           <Line
             yAxisId="right"
             dataKey="posted"

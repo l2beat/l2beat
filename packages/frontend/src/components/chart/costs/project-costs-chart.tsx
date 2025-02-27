@@ -7,7 +7,6 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
@@ -23,8 +22,6 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [range, setRange] = useState<CostsTimeRange>('1y')
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const [showDataPosted, setShowDataPosted] = useState(false)
-
-  const resolution = rangeToResolution(range)
 
   const { data, isLoading } = api.costs.chartWithDataPosted.useQuery({
     range,
@@ -107,7 +104,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}
-        resolution={resolution}
+        range={range}
         showDataPosted={showDataPosted}
         className="mb-2 mt-4"
       />
