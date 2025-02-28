@@ -76,7 +76,7 @@ export function ScalingProjectSummary({ project }: Props) {
               <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
               <ScalingProjectStats
                 project={project}
-                className="md:col-span-2"
+                className="md:order-first md:col-span-2 [@media(min-width:1000px)]:order-none"
               />
             </div>
           </div>
