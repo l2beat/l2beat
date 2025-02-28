@@ -7,11 +7,8 @@ import {
   type RawDiscoveryConfig,
 } from '@l2beat/discovery'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
-import {
-  ProjectDiscovery,
-  formatAsBulletPoints,
-  trimTrailingDots,
-} from './ProjectDiscovery'
+import { ProjectDiscovery, formatAsBulletPoints } from './ProjectDiscovery'
+import { trimTrailingDots } from './factRendering'
 
 describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
@@ -21,7 +18,14 @@ describe(ProjectDiscovery.name, () => {
     readDiscovery: () => discoveredJsonStub,
   })
 
-  const discovery = new ProjectDiscovery(projectName, 'ethereum', configReader)
+  const discovery = new ProjectDiscovery(
+    projectName,
+    'ethereum',
+    configReader,
+    {
+      skipKnowledgeBase: true,
+    },
+  )
 
   describe(ProjectDiscovery.prototype.getContract.name, () => {
     it('should return contract for given address', () => {
@@ -83,6 +87,9 @@ describe(ProjectDiscovery.name, () => {
       'ExampleProject',
       'arbitrum',
       configReader,
+      {
+        skipKnowledgeBase: true,
+      },
     )
     const contract = discovery.getContract(contractStub.address.toString())
 
@@ -95,6 +102,9 @@ describe(ProjectDiscovery.name, () => {
         'ExampleProject',
         'ethereum',
         configReader,
+        {
+          skipKnowledgeBase: true,
+        },
       )
       const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([

@@ -22,15 +22,17 @@ permission(Receiver, "act", Msig) :-
   msig(Msig, Threshold),
   Threshold == 1.
 
-transitivePermission(Receiver, Permission, Giver, (cons(tuple(Giver, Permission, Delay), nil))) :-
+transitivePermission(Receiver, Permission, Giver, Delay, Description, nil) :-
   permission(Receiver, Permission, Giver),
-  defaultedPermissionDelay(Receiver, Permission, Giver, Delay).
+  defaultedPermissionDelay(Receiver, Permission, Giver, Delay),
+  defaultedPermissionDescription(Receiver, Permission, Giver, Description).
 
-transitivePermission(Receiver, Permission, Giver, (cons(tuple(Via, "act", Delay), IndirectVia))) :-
-  transitivePermission(Via, Permission, Giver, IndirectVia),
+transitivePermission(Receiver, Permission, Giver, OriginalDelay, OriginalDescription, (cons(tuple(Via, "act", Delay), IndirectVia))) :-
+  transitivePermission(Via, Permission, Giver, OriginalDelay, OriginalDescription, IndirectVia),
   permission(Receiver, "act", Via),
-  defaultedPermissionDelay(Receiver, "act", Via, Delay).
+  defaultedPermissionDelay(Receiver, "act", Via, Delay),
+  Permission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
 #show eoa/4.
 #show contract/4.
-#show transitivePermission/4.
+#show transitivePermission/6.

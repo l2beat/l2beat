@@ -1,5 +1,12 @@
+import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
-import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  KnowledgeBase,
+  RolePermissionEntries,
+  groupFacts,
+  parseExportedFacts,
+} from '@l2beat/discovery'
 import {
   type ContractParameters,
   type ContractValue,
@@ -34,15 +41,30 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
+import {
+  DirectPermissionToPrefix,
+  type GroupedTransitivePermissionFact,
+  UltimatePermissionToPrefix,
+  formatPermissionDelay,
+  renderGroupedTransitivePermissionFact,
+  trimTrailingDots,
+} from './factRendering'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
+  private knowledgeBase: KnowledgeBase | undefined
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
     configReader = new ConfigReader(join(process.cwd(), '../config')),
+    options: {
+      skipKnowledgeBase?: boolean
+    } = {},
   ) {
+    if (!options.skipKnowledgeBase) {
+      this.knowledgeBase = this.createKnowledgeBase(configReader, projectName)
+    }
     const discovery = configReader.readDiscovery(projectName, chain)
     this.discoveries = [
       discovery,
@@ -50,6 +72,18 @@ export class ProjectDiscovery {
         configReader.readDiscovery(module, chain),
       ),
     ]
+  }
+
+  private createKnowledgeBase(
+    configReader: ConfigReader,
+    projectName: string,
+  ): KnowledgeBase | undefined {
+    const projectPath = configReader.getProjectPath(projectName)
+    const projectPageFactsPath = join(projectPath, 'projectPageFacts.json')
+    if (existsSync(projectPageFactsPath)) {
+      const factsFile = readFileSync(projectPageFactsPath, 'utf8')
+      return new KnowledgeBase(projectName, parseExportedFacts(factsFile).facts)
+    }
   }
 
   getEOAName(address: EthereumAddress): string {
@@ -725,26 +759,6 @@ export class ProjectDiscovery {
   describeUltimatelyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
-    const ultimatePermissionToPrefix: {
-      [key in PermissionType]: string | undefined
-    } = {
-      interact: 'Is allowed to interact with',
-      upgrade: 'Can upgrade the implementation of',
-      act: undefined,
-      guard: 'A Guardian',
-      challenge: 'A Challenger',
-      propose: 'A Proposer',
-      sequence: 'A Sequencer',
-      validate: 'A Validator',
-      operateLinea: 'An Operator',
-      fastconfirm: 'A FastConfirmer',
-      validateZkStack: 'A Validator',
-      relay: 'A Relayer',
-      validateBridge: 'A Validator',
-      validateBridge2: 'A Validator',
-      aggregatePolygon: 'A trusted Aggregator',
-    }
-
     const formatVia = (via: ResolvedPermissionPath[]) =>
       `- acting via ${via.map((p) => this.formatViaPath(p)).join(', ')}`
 
@@ -767,7 +781,7 @@ export class ProjectDiscovery {
       const description = key.split('►')[2] ?? ''
       const condition = key.split('►')[3] ?? ''
       const delay = key.split('►')[4] ?? ''
-      const prefix = ultimatePermissionToPrefix[permission]
+      const prefix = UltimatePermissionToPrefix[permission]
       if (prefix === undefined) {
         return ''
       }
@@ -785,7 +799,7 @@ export class ProjectDiscovery {
         : ''
 
       return `${[
-        ultimatePermissionToPrefix[permission as PermissionType],
+        UltimatePermissionToPrefix[permission as PermissionType],
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
@@ -801,26 +815,6 @@ export class ProjectDiscovery {
   describeDirectlyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
-    const directPermissionToPrefix: {
-      [key in PermissionType]: string | undefined
-    } = {
-      interact: 'Can be used to interact with',
-      upgrade: 'Can be used to upgrade implementation of',
-      act: 'Can act on behalf of',
-      guard: 'Can act as a Guardian',
-      challenge: 'Can act as a Challenger',
-      propose: 'Can act as a Proposer',
-      sequence: 'Can act as a Sequencer',
-      validate: 'Can act as a Validator',
-      operateLinea: 'Can act as an Operator',
-      fastconfirm: 'Can act as a FastConfirmer',
-      validateZkStack: 'Can act as a Validator',
-      relay: 'Can act as a Relayer',
-      validateBridge: 'Can act as a Validator',
-      validateBridge2: 'Can act as a Validator',
-      aggregatePolygon: 'Can act as a trusted Aggregator',
-    }
-
     return Object.entries(
       groupBy(
         contractOrEoa.directlyReceivedPermissions ?? [],
@@ -850,7 +844,7 @@ export class ProjectDiscovery {
         : ''
 
       return `${[
-        directPermissionToPrefix[permission],
+        DirectPermissionToPrefix[permission],
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
@@ -862,17 +856,49 @@ export class ProjectDiscovery {
     })
   }
 
+  describePermissionsFromFacts(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string[] {
+    if (this.knowledgeBase === undefined) {
+      throw new Error('Knowledge base not found')
+    }
+    const id = this.knowledgeBase.getId(
+      this.chain,
+      contractOrEoa.address.toLowerCase(),
+    )
+    const transitivePermissionFacts = this.knowledgeBase.getFacts(
+      'transitivePermission',
+      [id],
+    )
+    const grouped = groupFacts(transitivePermissionFacts, 2)
+    const result: string[] = []
+    for (const fact of grouped) {
+      const rendered = renderGroupedTransitivePermissionFact(
+        fact as GroupedTransitivePermissionFact,
+      )
+      result.push(this.knowledgeBase.replaceIdsWithNames(rendered))
+    }
+    return result
+  }
+
   describeContractOrEoa(
     contractOrEoa: ContractParameters | EoaParameters,
     includeDirectPermissions: boolean = true,
   ): string[] {
+    const permissions =
+      this.knowledgeBase === undefined
+        ? [
+            ...(includeDirectPermissions
+              ? this.describeDirectlyReceivedPermissions(contractOrEoa)
+              : []),
+            ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
+          ]
+        : this.describePermissionsFromFacts(contractOrEoa)
+
     return [
       contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
-      ...(includeDirectPermissions
-        ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-        : []),
-      ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
+      ...permissions,
     ].filter(notUndefined)
   }
 
@@ -1237,20 +1263,12 @@ export function formatAsBulletPoints(description: string[]): string {
     : description.join(' ')
 }
 
-export function trimTrailingDots(s: string): string {
-  return s.replace(/\.*$/, '')
-}
-
 function formatPermissionDescription(description: string): string {
   return description !== '' ? `- ${trimTrailingDots(description)}` : ''
 }
 
 function formatPermissionCondition(condition: string): string {
   return condition !== '' ? `if ${trimTrailingDots(condition)}` : ''
-}
-
-function formatPermissionDelay(delay: number): string {
-  return ` with ${formatSeconds(delay)} delay`
 }
 
 function isMultisigLike(contract: ContractParameters | undefined): boolean {

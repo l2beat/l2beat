@@ -63,7 +63,7 @@ export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { DiscoverCommandArgs } from './cli/discoverCommand'
 export { ProviderStats } from './discovery/provider/Stats'
-export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
+export { KnowledgeBase, groupFacts } from './discovery/modelling/KnowledgeBase'
 export {
   type ClingoFact,
   type ClingoValue,
