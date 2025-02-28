@@ -25,9 +25,11 @@ const cache: Map<string, Hash256> = new Map()
 // even when there are multiple sources.
 // In the future it may be reimplemented to support
 // all sources for comparison with templates.
-export function flattenFirstSource(
-  sources: ContractSources,
-): string | undefined {
+export function hashFirstSource(sources: ContractSources): Hash256 | undefined {
+  if (!sources.isVerified || sources.sources.length < 1) {
+    return undefined
+  }
+
   const source =
     sources.sources.length === 1 ? sources.sources[0] : sources.sources[1]
 
@@ -35,23 +37,7 @@ export function flattenFirstSource(
     throw Error('No sources found')
   }
 
-  const input: FileContent[] = Object.entries(source.source.files)
-    .map(([fileName, content]) => ({
-      path: fileName,
-      content,
-    }))
-    .filter((e) => e.path.endsWith('.sol'))
-
-  if (input.length === 0) {
-    return undefined
-  }
-
-  const output = flattenStartingFrom(
-    source.name,
-    input,
-    source.source.remappings,
-  )
-  return output
+  return source.hash !== undefined ? Hash256(source.hash) : undefined
 }
 
 export function contractFlatteningHash(
@@ -68,12 +54,14 @@ export function contractFlatteningHash(
     }))
     .filter((e) => e.path.endsWith('.sol'))
 
-  const content =
+  const hash =
     input.length === 0
-      ? Object.values(source.files).join('\n')
-      : flattenStartingFrom(source.name, input, source.remappings)
+      ? sha2_256bit(Object.values(source.files).join('\n'))
+      : flatteningHash(
+          flattenStartingFrom(source.name, input, source.remappings),
+        )
 
-  return flatteningHash(content)
+  return hash
 }
 
 export function flatteningHash(source: string): Hash256 {
@@ -88,7 +76,7 @@ export function flatteningHash(source: string): Hash256 {
   return value
 }
 
-export function formatIntoHashable(source: string) {
+function formatIntoHashable(source: string) {
   let formatted = format(source)
 
   if (formatted.startsWith('pragma')) {
@@ -104,44 +92,6 @@ export function formatIntoHashable(source: string) {
 
 export function sha2_256bit(str: string): Hash256 {
   return Hash256(`0x${createHash('sha256').update(str).digest('hex')}`)
-}
-
-export function removeComments(source: string): string {
-  let result = ''
-  let isInSingleLineComment = false
-  let isInMultiLineComment = false
-
-  for (let i = 0; i < source.length; i++) {
-    if (isInSingleLineComment && source[i] === '\n') {
-      isInSingleLineComment = false
-      result += source[i] // Keep newline characters
-    } else if (
-      isInMultiLineComment &&
-      source[i] === '*' &&
-      source[i + 1] === '/'
-    ) {
-      isInMultiLineComment = false
-      i++ // Skip the '/'
-    } else if (
-      !isInMultiLineComment &&
-      source[i] === '/' &&
-      source[i + 1] === '/'
-    ) {
-      isInSingleLineComment = true
-      i++ // Skip the second '/'
-    } else if (
-      !isInSingleLineComment &&
-      source[i] === '/' &&
-      source[i + 1] === '*'
-    ) {
-      isInMultiLineComment = true
-      i++ // Skip the '*'
-    } else if (!isInSingleLineComment && !isInMultiLineComment) {
-      result += source[i]
-    }
-  }
-
-  return result
 }
 
 export function buildSimilarityHashmap(input: string): HashedChunks[] {

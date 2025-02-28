@@ -10,10 +10,8 @@ import {
   type json,
 } from '@l2beat/shared-pure'
 import {
-  flattenFirstSource,
   flatteningHash,
-  formatIntoHashable,
-  sha2_256bit,
+  hashFirstSource,
 } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -249,16 +247,4 @@ function listAllPaths(path: string): string[] {
     result = result.concat(listAllPaths(subPath))
   }
   return result
-}
-
-export function hashFirstSource(sources: ContractSources): Hash256 | undefined {
-  if (!sources.isVerified || sources.sources.length < 1) {
-    return
-  }
-
-  const flattenedSource = flattenFirstSource(sources)
-  if (flattenedSource === undefined) {
-    return
-  }
-  return sha2_256bit(formatIntoHashable(flattenedSource))
 }
