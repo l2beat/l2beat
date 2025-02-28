@@ -1,7 +1,3 @@
-import {
-  ContractFieldSeverity,
-  ContractValueType,
-} from '@l2beat/discovery-types'
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
@@ -52,6 +48,18 @@ export type PermissionConfiguration = RawPermissionConfiguration & {
   target: EthereumAddress
   delay: number
 }
+
+export type ContractValueType = z.infer<typeof ContractValueType>
+export const ContractValueType = z.enum([
+  'CODE_CHANGE',
+  'L2',
+  'EXTERNAL',
+  'RISK_PARAMETER',
+  'PERMISSION',
+])
+
+export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
+export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
 export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
