@@ -1,20 +1,21 @@
-import type { Project, ReasonForBeingInOther } from '@l2beat/config'
+import type { ProjectScalingInfo, ReasonForBeingInOther } from '@l2beat/config'
 import { featureFlags } from '~/consts/feature-flags'
 
-export function isProjectOther2(
-  p: Project<'scalingInfo'>,
+export function isProjectOther(
+  scalingInfo: ProjectScalingInfo,
   previewRecategorisation?: boolean,
 ) {
   const migrated = featureFlags.othersMigrated() || !!previewRecategorisation
   return (
     (migrated &&
-      !!p.scalingInfo.reasonsForBeingOther &&
-      p.scalingInfo.reasonsForBeingOther.length > 0) ||
-    p.scalingInfo.type === 'Other'
+      !!scalingInfo.reasonsForBeingOther &&
+      scalingInfo.reasonsForBeingOther.length > 0) ||
+    scalingInfo.type === 'Other'
   )
 }
 
-export function isProjectOther<
+/** @deprecated */
+export function isProjectOther_legacy<
   T extends {
     reasonsForBeingOther?: ReasonForBeingInOther[]
     display: {

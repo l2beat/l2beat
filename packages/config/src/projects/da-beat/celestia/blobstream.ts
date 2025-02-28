@@ -39,6 +39,7 @@ export const blobstream: BaseProject = {
         'https://github.com/succinctlabs/blobstreamx',
       ],
     },
+    badges: [],
   },
   daBridge: {
     name: 'Blobstream',
