@@ -95,7 +95,7 @@ export const getCachedRecategorisedTvsChartData = cache(
       },
     )
   },
-  ['recategorised-tvs-chart-data'],
+  ['recategorised-tvs-chart-data-v2'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
