@@ -109,6 +109,7 @@ export const metis: Layer2 = {
       type: 'block',
       startBlock: 1,
     },
+    gasTokens: ['METIS'],
   },
   dataAvailability: {
     layer: DA_LAYERS.MEMO,

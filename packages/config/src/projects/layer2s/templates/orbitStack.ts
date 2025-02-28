@@ -502,10 +502,10 @@ function orbitStackCommon(
         },
       ),
       daTracking: getDaTracking(templateVars),
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
+      gasTokens: [
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
     },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
