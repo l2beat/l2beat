@@ -14,7 +14,7 @@ import {
   discoveryDiffToMarkdown,
   getChainConfig,
 } from '@l2beat/discovery'
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 

@@ -10,6 +10,7 @@ export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export {
+  Permission,
   RawDiscoveryConfig,
   BasePermissionEntries,
   RolePermissionEntries,
@@ -68,3 +69,12 @@ export {
   type ClingoValue,
   parseExportedFacts,
 } from './discovery/modelling/factTypes'
+export type {
+  DiscoveryOutput,
+  ContractParameters,
+  EoaParameters,
+  ReceivedPermission,
+  ResolvedPermissionPath,
+} from './discovery/output/types'
+export type { ContractValue } from './discovery/utils/types'
+export { get$Implementations } from './discovery/utils/extractors'

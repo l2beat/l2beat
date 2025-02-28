@@ -10,7 +10,7 @@
     "build": "turbo run build",
     "build:backend": "turbo run build --filter=@l2beat/backend",
     "build:frontend": "turbo run build --filter=@l2beat/frontend",
-    "build:public": "turbo run build --filter=@l2beat/backend-tools --filter=@l2beat/discovery --filter=@l2beat/discovery-types --filter=@l2beat/uif",
+    "build:public": "turbo run build --filter=@l2beat/backend-tools --filter=@l2beat/discovery --filter=@l2beat/uif",
     "build:protocolbeat": "turbo run build --filter=@l2beat/protocolbeat",
     "build:tools": "turbo run build --filter=@l2beat/tools",
     "build:uops-dashboard": "turbo run build --filter=@l2beat/uops-dashboard",

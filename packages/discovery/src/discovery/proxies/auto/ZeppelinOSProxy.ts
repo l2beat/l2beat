@@ -1,7 +1,8 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../../provider/IProvider'
+import type { ContractValue } from '../../utils/types'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 // keccak256('org.zeppelinos.proxy.implementation')
 const IMPLEMENTATION_SLOT = Bytes.fromHex(

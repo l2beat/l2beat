@@ -1,10 +1,10 @@
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { get$Implementations } from '@l2beat/discovery-types'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import type { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
+import { get$Implementations } from './extractors'
 
 export class FunctionSelectorDecoder {
   readonly proxyDetector: ProxyDetector

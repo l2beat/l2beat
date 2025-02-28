@@ -4,10 +4,7 @@ import {
   DiscoveryConfig,
   type DiscoveryDiff,
 } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-} from '@l2beat/discovery-types'
+import type { ContractParameters, DiscoveryOutput } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,

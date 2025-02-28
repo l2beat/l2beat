@@ -1,4 +1,3 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type {
@@ -6,6 +5,7 @@ import type {
   PermissionConfiguration,
 } from '../config/RawDiscoveryConfig'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
+import type { ContractValue } from '../utils/types'
 import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
   type ContractMeta,

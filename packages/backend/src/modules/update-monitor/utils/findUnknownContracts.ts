@@ -1,5 +1,5 @@
 import type { ConfigReader } from '@l2beat/discovery'
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export function findUnknownContracts(

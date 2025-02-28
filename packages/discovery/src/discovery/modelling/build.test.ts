@@ -1,6 +1,6 @@
-import type { ContractParameters, EoaParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { ContractParameters, EoaParameters } from '../output/types'
 import { buildAddressToNameMap } from './build'
 
 describe(buildAddressToNameMap.name, () => {
