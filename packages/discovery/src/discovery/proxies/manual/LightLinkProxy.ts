@@ -1,5 +1,5 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../utils/types'
 import type { ProxyDetails } from '../types'
 
 import type { IProvider } from '../../provider/IProvider'

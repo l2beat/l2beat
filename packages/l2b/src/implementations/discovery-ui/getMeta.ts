@@ -1,4 +1,4 @@
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { getContractType } from './getContractType'
 import type { ApiAddressType } from './types'

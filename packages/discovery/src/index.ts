@@ -68,3 +68,12 @@ export {
   type ClingoValue,
   parseExportedFacts,
 } from './discovery/modelling/factTypes'
+export type {
+  DiscoveryOutput,
+  ContractParameters,
+  EoaParameters,
+  PermissionType,
+  ReceivedPermission,
+  ResolvedPermissionPath,
+} from './discovery/output/types'
+export type { ContractValue } from './discovery/utils/types'

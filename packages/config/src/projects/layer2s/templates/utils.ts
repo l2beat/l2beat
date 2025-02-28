@@ -1,7 +1,5 @@
-import {
-  type ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery'
+import { get$Implementations } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
 import { unionBy } from 'lodash'
 import type {

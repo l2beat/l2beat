@@ -1,5 +1,5 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { type Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../utils/types'
 
 export function bytes32ToContractValue(
   value: Bytes,

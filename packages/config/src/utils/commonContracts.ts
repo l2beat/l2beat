@@ -1,9 +1,9 @@
-import { ConfigReader } from '@l2beat/discovery'
 import {
+  ConfigReader,
   type ContractValue,
   type DiscoveryOutput,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+} from '@l2beat/discovery'
+import { get$Implementations } from '@l2beat/discovery-types'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import { bridges } from '../projects/bridges'

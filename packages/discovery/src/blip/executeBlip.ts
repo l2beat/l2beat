@@ -1,5 +1,5 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
+import type { ContractValue } from '../discovery/utils/types'
 import type { BlipSexp } from './type'
 
 export function executeBlip(v: ContractValue, blip: BlipSexp): ContractValue {

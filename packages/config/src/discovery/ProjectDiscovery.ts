@@ -1,13 +1,15 @@
 import { join } from 'path'
 import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
+import type {
+  ContractParameters,
+  ContractValue,
+  DiscoveryOutput,
+  EoaParameters,
+  PermissionType,
+  ReceivedPermission,
+  ResolvedPermissionPath,
+} from '@l2beat/discovery'
 import {
-  type ContractParameters,
-  type ContractValue,
-  type DiscoveryOutput,
-  type EoaParameters,
-  type PermissionType,
-  type ReceivedPermission,
-  type ResolvedPermissionPath,
   get$Admins,
   get$Implementations,
   toAddressArray,

@@ -1,9 +1,6 @@
 import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-} from '@l2beat/discovery-types'
+import type { ContractParameters, DiscoveryOutput } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
 import { bridges } from '../projects/bridges'

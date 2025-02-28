@@ -1,5 +1,5 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import type { utils } from 'ethers'
+import type { ContractValue } from '../utils/types'
 
 import { assert } from '@l2beat/shared-pure'
 import type { DiscoveryCustomType } from '../config/RawDiscoveryConfig'

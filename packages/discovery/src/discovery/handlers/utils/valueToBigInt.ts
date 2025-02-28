@@ -1,5 +1,5 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { Bytes } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../utils/types'
 
 export function valueToBigInt(value: bigint | Bytes | ContractValue): bigint {
   if (value instanceof Bytes) {
