@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21944906,
-  "configHash": "0x1eba0908ea27ba4c4a5f0333117d3435a7213c9b372318afdcead413b306f247",
+  "configHash": "0x50788e58309ca1be9d5bfe22c70e0347eafcd5e8c9165b0ef7f5503c4b51129e",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -16,6 +16,36 @@
       "proxyType": "gnosis safe",
       "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
@@ -32,6 +62,156 @@
           "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
         },
         {
+          "permission": "interact",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
+        {
           "permission": "upgrade",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
         },
@@ -41,7 +221,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "delay": 259200
         },
         {
           "permission": "upgrade",
@@ -54,19 +235,23 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "delay": 259200
         },
         {
           "permission": "upgrade",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "delay": 259200
         },
         {
           "permission": "upgrade",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "delay": 259200
         },
         {
           "permission": "upgrade",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "delay": 259200
         },
         {
           "permission": "upgrade",
@@ -82,7 +267,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "delay": 259200
         },
         {
           "permission": "upgrade",
@@ -327,15 +513,36 @@
     {
       "name": "WBTCBridge",
       "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "delay": 259200,
           "via": []
         }
       ],
@@ -413,32 +620,84 @@
             "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
           }
         },
+        "bridgedToken": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x033796B61cD66eD49d22a786cbA12a8D76717302",
         "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
     {
       "name": "FXSBridge",
       "address": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -491,22 +750,54 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "bridgedToken": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x428144D0D0Dbf8b7bFbC44306a3386Aa95a24296",
         "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
@@ -735,15 +1026,36 @@
     {
       "name": "USDTBridge",
       "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "delay": 259200,
           "via": []
         }
       ],
@@ -821,35 +1133,88 @@
             "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
           }
         },
+        "bridgedToken": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0xCc6d9c3Dd8A2A05B1075d55E5967F42296f16Bd0",
         "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
     {
       "name": "wstETHBridge",
       "address": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x53dd98b4b8b7867686e1dba07dd739c1bdb6b4a5e11d04efbbe743cb975dbc8c",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "delay": 259200,
           "via": []
         }
       ],
@@ -907,20 +1272,52 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "bridgedToken": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x1713B7fA72079d4EDDf291103CcbE41E78a9615C",
         "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
@@ -1067,15 +1464,36 @@
     {
       "name": "STRKBridge",
       "address": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "delay": 259200,
           "via": []
         }
       ],
@@ -1148,37 +1566,90 @@
             "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
           }
         },
+        "bridgedToken": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getEnableWindowDuration": 1209600,
         "getUpgradeActivationDelay": 259200,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0xEB7e3917D6994A03C13405Ba42867f83D85F085d",
         "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
     {
       "name": "rETHBridge",
       "address": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "delay": 259200,
           "via": []
         }
       ],
@@ -1233,33 +1704,85 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "bridgedToken": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x34F7C385fD4F4540d5668f1bE3EDE0D3Bb1B9D4d",
         "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
     {
       "name": "sfrxETHBridge",
       "address": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -1312,34 +1835,86 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "bridgedToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x635C207e3da73332282Aa2132058022520fA0179",
         "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
     {
       "name": "FRAXBridge",
       "address": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -1392,34 +1967,86 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "bridgedToken": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0xACD89f99539A152B96E72DaEe6A7a3734AA5299a",
         "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
     {
       "name": "LUSDBridge",
       "address": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
@@ -1472,33 +2099,85 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "bridgedToken": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x6246A7a3012Dd35B0ed728e3c455aF2647385C80",
         "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
     {
       "name": "MultiBridge",
       "address": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+      "template": "starknet/StarknetMultiBridge",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
         "0xd3e96d9fb623969bd9cc3e5fed6779ce42c5de753b49fc73da783863d4043a2f"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "StarkGate Multibridge canonical bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -1544,37 +2223,91 @@
             "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
           }
         },
+        "bridgedToken": "0x0000000000000000000000000000000000000000",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getEnableWindowDuration": 1209600,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetTokenBridge_2.0_4",
         "implementation": "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x8d591C2807316d992BbC3bB1A5C1821630589256",
         "manager": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance_EKUBO": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetTokenBridge"
     },
     {
       "name": "USDCBridge",
       "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "delay": 259200,
           "via": []
         }
       ],
@@ -1652,20 +2385,52 @@
             "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
           }
         },
+        "bridgedToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x217e808319ffCC1C5A6A463F7d8FA2dA48218196",
         "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     },
@@ -1716,12 +2481,32 @@
     {
       "name": "UNIBridge",
       "address": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+      "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x28ffce7fadb62d041968d5ce5d5fe471d2bedf36c28e342957a33d63a00b872c",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -1774,22 +2559,54 @@
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
+        "bridgedToken": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getEnableWindowDuration": 1209600,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
         "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "isFrozen": false,
         "isNotFinalized": true,
+        "l2TokenContract": "0x4bbDfbc7c046b4b9D7cf31B79647540C85b8EC79",
         "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetERC20Bridge"
     }
@@ -1812,6 +2629,7 @@
     { "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b" },
     {
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2924,6 +3742,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "starknet/Starknet": "0x493ed1d3bc009faef5b83fbd84cc539d05bef06228d2508d14f4344a492a7f2a",
-    "starknet/StarknetEthBridge": "0x1eaf3f9a3eb080a0d7a2c58f2d7488a1d159c03a88824dd5e1eb7b55edf2625f"
+    "starknet/StarknetERC20Bridge": "0x110c7c847d0eb372c175d4ddb4f0465b60912cf3aefcc63918535629b10cd655",
+    "starknet/StarknetEthBridge": "0x1eaf3f9a3eb080a0d7a2c58f2d7488a1d159c03a88824dd5e1eb7b55edf2625f",
+    "starknet/StarknetMultiBridge": "0xba354c960cd9bb6635b2c63a74b5157804bc37ab06dcbf04cf10d69ecb1d5f53"
   }
 }
