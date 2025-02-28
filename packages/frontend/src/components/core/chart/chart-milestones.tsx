@@ -4,15 +4,18 @@ import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/custom-link'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
+import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
+import { Button } from '../button'
 import { DialogTitle } from '../dialog'
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
+  DrawerFooter,
   DrawerHeader,
   DrawerTrigger,
 } from '../drawer'
@@ -39,6 +42,9 @@ export function ChartMilestones<T extends { timestamp: number }>({
     () => getTimestampedMilestones(data, milestones),
     [data, milestones],
   )
+  const [openedMilestoneIndex, setOpenedMilestoneIndex] = useState<
+    number | null
+  >(null)
 
   useEffect(() => {
     if (!ref.current) return
@@ -52,16 +58,26 @@ export function ChartMilestones<T extends { timestamp: number }>({
 
   if (!timestampedMilestones || width === undefined) return null
 
+  const validMilestones = timestampedMilestones.filter((data) => data.milestone)
+
   return (
     <div data-role="milestones">
       {timestampedMilestones?.map((data, index) => {
         if (!data.milestone) return null
         const x = index / (timestampedMilestones.length - 1)
+        const milestoneIndex = validMilestones.findIndex(
+          (m) => m.milestone?.date === data.milestone?.date,
+        )
+
         return (
           <ChartMilestone
             key={data.milestone.date}
             milestone={data.milestone}
             left={x * width - 10}
+            milestoneIndex={milestoneIndex}
+            totalMilestones={validMilestones.length}
+            setOpenedMilestoneIndex={setOpenedMilestoneIndex}
+            openedMilestoneIndex={openedMilestoneIndex}
           />
         )
       })}
@@ -72,9 +88,17 @@ export function ChartMilestones<T extends { timestamp: number }>({
 function ChartMilestone({
   milestone,
   left,
+  milestoneIndex,
+  totalMilestones,
+  setOpenedMilestoneIndex,
+  openedMilestoneIndex,
 }: {
   milestone: Milestone
   left: number
+  milestoneIndex: number
+  totalMilestones: number
+  setOpenedMilestoneIndex: (a: number | null) => void
+  openedMilestoneIndex: number | null
 }) {
   const isMobile = useIsMobile()
 
@@ -83,7 +107,16 @@ function ChartMilestone({
     'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-8'
   if (isMobile) {
     return (
-      <Drawer>
+      <Drawer
+        open={openedMilestoneIndex === milestoneIndex}
+        onOpenChange={(isOpen) => {
+          if (isOpen) {
+            setOpenedMilestoneIndex(milestoneIndex)
+          } else if (openedMilestoneIndex === milestoneIndex) {
+            setOpenedMilestoneIndex(null)
+          }
+        }}
+      >
         <DrawerTrigger asChild>
           <Icon className={cn(common, 'scale-75')} style={{ left }} />
         </DrawerTrigger>
@@ -101,6 +134,33 @@ function ChartMilestone({
               <CustomLink href={milestone.url}>Learn more</CustomLink>
             </DrawerDescription>
           </DrawerHeader>
+          <DrawerFooter className="flex flex-row items-center justify-between px-0 py-4">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-32"
+              onClick={() => setOpenedMilestoneIndex(milestoneIndex - 1)}
+              aria-label="Previous milestone"
+              disabled={milestoneIndex === 0}
+            >
+              <ChevronIcon className="mr-1 size-4 rotate-90" />
+              Previous
+            </Button>
+            <div className="text-xs text-secondary">
+              {milestoneIndex + 1} of {totalMilestones}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-32"
+              onClick={() => setOpenedMilestoneIndex(milestoneIndex + 1)}
+              aria-label="Next milestone"
+              disabled={milestoneIndex === totalMilestones - 1}
+            >
+              Next
+              <ChevronIcon className="ml-1 size-4 -rotate-90" />
+            </Button>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     )
