@@ -103,20 +103,23 @@ const TableCell = ({
   children,
   href,
   align,
+  tdClassName,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
   href?: string
   align?: 'right' | 'center'
+  tdClassName?: string
 }) => (
   <td
     className={cn(
       'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
       !href && [
-        'pr-3 first:pl-2 last:pr-2 md:pr-4',
+        'pr-3 first:pl-2 last:pr-4 md:pr-4',
         align === 'center' && 'text-center',
         align === 'right' && 'text-right',
         className,
       ],
+      tdClassName,
     )}
     {...props}
   >
@@ -124,7 +127,7 @@ const TableCell = ({
       <LinkWithOnHoverPrefetch
         href={href}
         className={cn(
-          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
+          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-4 md:pr-4',
           align === 'center' && 'justify-center',
           align === 'right' && 'justify-end',
           className,

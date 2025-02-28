@@ -67,7 +67,7 @@ export default async function Page(props: Props) {
         </div>
       )}
       <BridgesProjectSummary project={projectEntry} />
-      <ContentWrapper mobileFull>
+      <ContentWrapper mobileFull className="header-height-project">
         {isNavigationEmpty ? (
           <ProjectDetails items={projectEntry.projectDetails} />
         ) : (
