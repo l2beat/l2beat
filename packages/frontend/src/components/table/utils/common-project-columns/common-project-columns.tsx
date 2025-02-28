@@ -10,6 +10,7 @@ export interface CommonProjectColumnsEntry {
 
 export interface CommonProjectColumnsOptions {
   activity?: boolean
+  summary?: boolean
 }
 
 export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(

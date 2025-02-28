@@ -24,7 +24,7 @@ export function PizzaRosetteCell(props: PizzaRosetteCellProps) {
           values={props.values}
           className="size-6 md:size-8"
           isUnderReview={isUnderReview}
-          background={undefined}
+          background={false}
         />
       </TooltipTrigger>
       <TooltipContent fitContent>

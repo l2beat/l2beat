@@ -118,6 +118,7 @@ function getScalingSummaryEntry(
       changes,
       syncWarning: activitySyncWarning,
     }),
+    href: undefined,
     stage:
       project.scalingInfo.isOther || !project.scalingStage
         ? { stage: 'NotApplicable' as const }

@@ -183,12 +183,13 @@ export function BasicTableRow<T extends CommonProjectEntry>({
     <>
       <TableRow
         className={cn(
-          getRowTypeClassNames(rowType),
+          row.original.href && getRowTypeClassNames(rowType),
           row.getIsExpanded() &&
             props.renderSubComponent?.({ row }) &&
             '!border-none',
           className,
         )}
+        id={row.original.slug}
       >
         {row.getVisibleCells().map((cell) => {
           const { meta } = cell.column.columnDef
@@ -209,7 +210,8 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                 href={href}
                 align={meta?.align}
                 className={cn(
-                  cell.column.getIsPinned() &&
+                  row.original.href &&
+                    cell.column.getIsPinned() &&
                     getRowTypeClassNamesWithoutOpacity(rowType),
                   groupParams?.isFirstInGroup && 'pl-6',
                   groupParams?.isLastInGroup && '!pr-6',
