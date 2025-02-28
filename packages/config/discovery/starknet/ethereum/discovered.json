@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21944906,
-  "configHash": "0x0d228da04064cb2a04243fbd610152fe739b48d5c66bb4e78a98c3b5f3d5b160",
+  "configHash": "0xb8545532a135d287d4dbc3d1c815d2ecbd18ef4acbc068cb92ccf26f3b7b5634",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -18,6 +18,16 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+        },
+        {
+          "permission": "interact",
+          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "description": "manage critical access control roles related to upgrades."
+        },
+        {
+          "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
           "description": "disable the withdrawal limit."
         },
@@ -29,7 +39,7 @@
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -44,7 +54,7 @@
         {
           "permission": "interact",
           "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -59,7 +69,7 @@
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -74,7 +84,7 @@
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -89,7 +99,7 @@
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -104,7 +114,7 @@
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -119,7 +129,7 @@
         {
           "permission": "interact",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -134,7 +144,7 @@
         {
           "permission": "interact",
           "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -149,7 +159,7 @@
         {
           "permission": "interact",
           "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -164,7 +174,7 @@
         {
           "permission": "interact",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -179,7 +189,7 @@
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -194,7 +204,7 @@
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "interact",
@@ -209,7 +219,7 @@
         {
           "permission": "interact",
           "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+          "description": "manage critical access control roles related to upgrades."
         },
         {
           "permission": "upgrade",
@@ -324,12 +334,26 @@
     {
       "name": "StarkgateManager",
       "address": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+      "template": "starknet/StarkgateManager",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
         "0x542e548d4e5b9c6da6613f9a5618cfe1f3f2aedf1449c2f52fa6c565eb90e51d"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -365,30 +389,40 @@
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "APP_ROLE_ADMIN": {
+          "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": {
+            "adminRole": "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
+            "members": []
+          },
+          "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": {
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": {
+            "adminRole": "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
+            "members": []
+          },
           "TOKEN_ADMIN": {
-            "adminRole": "APP_ROLE_ADMIN",
+            "adminRole": "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
             "members": ["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]
           },
-          "UPGRADE_GOVERNOR": {
+          "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": {
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_ADMIN": {
-            "adminRole": "SECURITY_ADMIN",
+          "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": {
+            "adminRole": "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+          "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": {
+            "adminRole": "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+            "members": []
+          }
         },
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getEnableWindowDuration": 1209600,
         "getRegistry": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarkgateManager_2.0_1",
         "implementation": "0x64608BDF1867110f622391196989bF4cE37BBb33",
         "isFrozen": false,
@@ -396,17 +430,36 @@
         "MAX_UPGRADE_DELAY": 15552000,
         "PROXY_VERSION": "5.0.0",
         "StarkWareProxy_upgradeDelay": 0,
+        "tokenAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        },
+        "tokenAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       }
     },
     {
       "name": "StarkgateRegistry",
       "address": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+      "template": "starknet/StarkgateRegistry",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
         "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -427,35 +480,6 @@
           ]
         ],
         "$upgradeCount": 1,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "GOVERNANCE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
-          },
-          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "APP_ROLE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
-          },
-          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "TOKEN_ADMIN": {
-            "adminRole": "APP_ROLE_ADMIN",
-            "members": ["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]
-          },
-          "UPGRADE_GOVERNOR": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
-          },
-          "SECURITY_ADMIN": {
-            "adminRole": "SECURITY_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
-          },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
-        },
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getEnableWindowDuration": 1209600,
         "getUpgradeActivationDelay": 0,
@@ -467,6 +491,12 @@
         "PROXY_VERSION": "5.0.0",
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        }
       }
     },
     {
@@ -543,7 +573,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -718,7 +748,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -934,7 +964,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -1104,7 +1134,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -1279,7 +1309,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -1574,7 +1604,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -1746,7 +1776,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -1899,7 +1929,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -2047,7 +2077,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -2195,7 +2225,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -2342,7 +2372,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -2509,7 +2539,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -2728,7 +2758,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "description": "manage critical access control roles related to upgrades.",
           "via": []
         },
         {
@@ -4045,9 +4075,11 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "starknet/StarkgateManager": "0x170461a309ff84227aee6a47eb960cb4b24b52e49790776a0bdc0002cb7dd643",
+    "starknet/StarkgateRegistry": "0xd53ee72950118426daf7b54282c2d524e773ee16c4643b9975ef75beac81acf8",
     "starknet/Starknet": "0x493ed1d3bc009faef5b83fbd84cc539d05bef06228d2508d14f4344a492a7f2a",
-    "starknet/StarknetERC20Bridge": "0x481196dae30f695d8be7a4b2c69fa0d274524d8b21a418cef2e744406dfdc53c",
-    "starknet/StarknetEthBridge": "0x535f23279895cece5fbd17d307865e1513119d40616525c3a1e703cf3fce193f",
-    "starknet/StarknetMultiBridge": "0x625f05cc2e9b80981f71848e10f7f92aa8a5f20e4e7f6def51bf5ec1dfb017ae"
+    "starknet/StarknetERC20Bridge": "0xd0c10fbb1e240fb243e5e1ee2a9225d7e1442c91eb9d7ad8a018b695a489adff",
+    "starknet/StarknetEthBridge": "0xbc764117c5294455ed25dc511f46d9e02810fb226827c9c2323d3237172b04d3",
+    "starknet/StarknetMultiBridge": "0xc20086fc6bbecbb406d4c5f853b9b672b11448ded9a7c802b9af7daa23b3c496"
   }
 }

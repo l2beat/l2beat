@@ -1,11 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
-  "ignoreRelatives": [
-    "l2TokenContract",
-    "bridgedToken",
-    "maxTotalTokenBalance"
-  ],
   "fields": {
     "$admin": {
       "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
@@ -24,8 +19,10 @@
       "severity": "HIGH",
       "handler": {
         "type": "accessControl",
-        "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
-        "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN"
+        "roleNames": {
+          "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+          "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN"
+        }
       }
     },
     "govAdminAC": {

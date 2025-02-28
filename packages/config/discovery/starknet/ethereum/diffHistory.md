@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe3b2b0ed1baf7f33c3db367c173096ede5d82a72
+Generated with discovered.json: 0x2cd1918a679931332513b1c12d490e09433a9d1c
 
-# Diff at Fri, 28 Feb 2025 15:25:36 GMT:
+# Diff at Fri, 28 Feb 2025 15:58:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21900569
@@ -19,100 +19,104 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 ```diff
     contract StarkgateBridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
     +++ description: None
-      receivedPermissions.52:
+      receivedPermissions.54:
 +        {"permission":"upgrade","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"}
-      receivedPermissions.51:
+      receivedPermissions.53:
 +        {"permission":"upgrade","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","delay":259200}
-      receivedPermissions.50:
+      receivedPermissions.52:
 +        {"permission":"upgrade","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
-      receivedPermissions.49:
+      receivedPermissions.51:
 +        {"permission":"upgrade","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"}
-      receivedPermissions.48:
+      receivedPermissions.50:
 +        {"permission":"upgrade","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"}
-      receivedPermissions.47:
+      receivedPermissions.49:
 +        {"permission":"upgrade","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","delay":259200}
-      receivedPermissions.46:
+      receivedPermissions.48:
 +        {"permission":"upgrade","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","delay":259200}
-      receivedPermissions.45:
+      receivedPermissions.47:
 +        {"permission":"upgrade","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","delay":259200}
-      receivedPermissions.44:
+      receivedPermissions.46:
 +        {"permission":"upgrade","from":"0xbb3400F107804DFB482565FF1Ec8D8aE66747605","delay":259200}
-      receivedPermissions.43:
+      receivedPermissions.45:
 +        {"permission":"upgrade","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","delay":259200}
-      receivedPermissions.42:
+      receivedPermissions.44:
 +        {"permission":"upgrade","from":"0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"}
-      receivedPermissions.41:
+      receivedPermissions.43:
 +        {"permission":"upgrade","from":"0x283751A21eafBFcD52297820D27C1f1963D9b5b4","delay":259200}
-      receivedPermissions.40:
+      receivedPermissions.42:
 +        {"permission":"upgrade","from":"0x1268cc171c54F2000402DfF20E93E60DF4c96812"}
-      receivedPermissions.39:
+      receivedPermissions.41:
 +        {"permission":"upgrade","from":"0x0c5aE94f8939182F2D06097025324D1E537d5B60"}
-      receivedPermissions.38:
-+        {"permission":"interact","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.37:
+      receivedPermissions.40:
++        {"permission":"interact","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.39:
 +        {"permission":"interact","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B","description":"enable the withdrawal limit."}
-      receivedPermissions.36:
+      receivedPermissions.38:
 +        {"permission":"interact","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B","description":"disable the withdrawal limit."}
-      receivedPermissions.35:
-+        {"permission":"interact","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.34:
+      receivedPermissions.37:
++        {"permission":"interact","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.36:
 +        {"permission":"interact","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"enable the withdrawal limit."}
-      receivedPermissions.33:
+      receivedPermissions.35:
 +        {"permission":"interact","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"disable the withdrawal limit."}
-      receivedPermissions.32:
-+        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.31:
+      receivedPermissions.34:
++        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.33:
 +        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"enable the withdrawal limit."}
-      receivedPermissions.30:
+      receivedPermissions.32:
 +        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"disable the withdrawal limit."}
-      receivedPermissions.29:
-+        {"permission":"interact","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.28:
+      receivedPermissions.31:
++        {"permission":"interact","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.30:
 +        {"permission":"interact","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5","description":"enable the withdrawal limit."}
-      receivedPermissions.27:
+      receivedPermissions.29:
 +        {"permission":"interact","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5","description":"disable the withdrawal limit."}
-      receivedPermissions.26:
-+        {"permission":"interact","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.25:
+      receivedPermissions.28:
++        {"permission":"interact","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.27:
 +        {"permission":"interact","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","description":"enable the withdrawal limit."}
-      receivedPermissions.24:
+      receivedPermissions.26:
 +        {"permission":"interact","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","description":"disable the withdrawal limit."}
-      receivedPermissions.23:
-+        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.22:
+      receivedPermissions.25:
++        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.24:
 +        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"enable the withdrawal limit."}
-      receivedPermissions.21:
+      receivedPermissions.23:
 +        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"disable the withdrawal limit."}
-      receivedPermissions.20:
-+        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.19:
+      receivedPermissions.22:
++        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.21:
 +        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"enable the withdrawal limit."}
-      receivedPermissions.18:
+      receivedPermissions.20:
 +        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"disable the withdrawal limit."}
-      receivedPermissions.17:
-+        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
-      receivedPermissions.16:
+      receivedPermissions.19:
++        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.18:
 +        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"enable the withdrawal limit."}
-      receivedPermissions.15:
+      receivedPermissions.17:
 +        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"disable the withdrawal limit."}
+      receivedPermissions.16:
++        {"permission":"interact","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.15:
++        {"permission":"interact","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","description":"enable the withdrawal limit."}
       receivedPermissions.14:
-+        {"permission":"interact","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."}
++        {"permission":"interact","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","description":"disable the withdrawal limit."}
       receivedPermissions.13.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.13.from:
 -        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
-+        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
       receivedPermissions.13.description:
-+        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades."
       receivedPermissions.12.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.12.from:
 -        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
-+        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
       receivedPermissions.12.description:
-+        "disable the withdrawal limit."
++        "enable the withdrawal limit."
       receivedPermissions.11.permission:
 -        "upgrade"
 +        "interact"
@@ -120,23 +124,23 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 -        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
 +        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
       receivedPermissions.11.description:
-+        "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
++        "disable the withdrawal limit."
       receivedPermissions.10.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.10.from:
 -        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
-+        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
       receivedPermissions.10.description:
-+        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades."
       receivedPermissions.9.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.9.from:
 -        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
-+        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
       receivedPermissions.9.description:
-+        "disable the withdrawal limit."
++        "enable the withdrawal limit."
       receivedPermissions.8.permission:
 -        "upgrade"
 +        "interact"
@@ -144,23 +148,23 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 -        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
 +        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
       receivedPermissions.8.description:
-+        "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
++        "disable the withdrawal limit."
       receivedPermissions.7.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.7.from:
 -        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
-+        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
       receivedPermissions.7.description:
-+        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades."
       receivedPermissions.6.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.6.from:
 -        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
-+        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
       receivedPermissions.6.description:
-+        "disable the withdrawal limit."
++        "enable the withdrawal limit."
       receivedPermissions.5.permission:
 -        "upgrade"
 +        "interact"
@@ -168,41 +172,41 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 -        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
 +        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
       receivedPermissions.5.description:
-+        "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
++        "disable the withdrawal limit."
       receivedPermissions.4.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.4.from:
 -        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
-+        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
       receivedPermissions.4.description:
-+        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades."
       receivedPermissions.3.permission:
 -        "upgrade"
 +        "interact"
+      receivedPermissions.3.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
       receivedPermissions.3.description:
-+        "disable the withdrawal limit."
++        "enable the withdrawal limit."
       receivedPermissions.2.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.2.description:
-+        "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
++        "disable the withdrawal limit."
       receivedPermissions.1.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.1.from:
 -        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
-+        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
       receivedPermissions.1.description:
-+        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades."
       receivedPermissions.0.permission:
 -        "upgrade"
 +        "interact"
-      receivedPermissions.0.from:
--        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
-+        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
       receivedPermissions.0.description:
-+        "disable the withdrawal limit."
++        "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
       severity:
 +        "HIGH"
     }
@@ -210,9 +214,71 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 
 ```diff
     contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
-    +++ description: None
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+      values.accessControl.APP_GOVERNOR:
+-        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
+-        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.OPERATOR:
+-        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN.adminRole:
+-        "APP_ROLE_ADMIN"
++        "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+      values.accessControl.UPGRADE_GOVERNOR:
+-        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_ADMIN:
+-        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
+-        {"adminRole":"SECURITY_ADMIN","members":[]}
+      values.accessControl.0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068:
++        {"adminRole":"0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99","members":[]}
+      values.accessControl.0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7:
++        {"adminRole":"0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99","members":[]}
+      values.accessControl.0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3:
++        {"adminRole":"0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96:
++        {"adminRole":"0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3","members":[]}
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.tokenAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      template:
++        "starknet/StarkgateManager"
+      description:
++        "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows."
       receivedPermissions:
 +        [{"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"enroll new tokens or deactivate deposits into the escrow (for each token individually)."}]
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."},"tokenAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"GOVERNANCE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"APP_GOVERNOR":{"adminRole":"APP_ROLE_ADMIN","members":[]},"APP_ROLE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"OPERATOR":{"adminRole":"APP_ROLE_ADMIN","members":[]},"TOKEN_ADMIN":{"adminRole":"APP_ROLE_ADMIN","members":["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"UPGRADE_GOVERNOR":{"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"SECURITY_ADMIN":{"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"SECURITY_AGENT":{"adminRole":"SECURITY_ADMIN","members":[]}}
+      template:
++        "starknet/StarkgateRegistry"
+      description:
++        "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."}}
     }
 ```
 
@@ -233,7 +299,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -284,7 +350,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -335,7 +401,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -378,7 +444,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -429,7 +495,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -497,7 +563,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -548,7 +614,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -599,7 +665,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -650,7 +716,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -701,7 +767,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -757,7 +823,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"interact","to":"0x0c5aE94f8939182F2D06097025324D1E537d5B60","description":"enroll new tokens or deactivate deposits into the escrow (for each token individually).","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -805,7 +871,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
@@ -864,7 +930,7 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).","via":[]}
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
       issuedPermissions.0.permission:
