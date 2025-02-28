@@ -147,7 +147,7 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+            "description": "manage critical access control roles related to upgrades."
           }
         ]
       }
