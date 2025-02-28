@@ -120,8 +120,8 @@ export async function checkForEigenDA(
   provider: IProvider,
   sequencerTxs: Transaction[],
 ) {
-  // Byte-check step - filter out non-Eigen-like transactions
-  const eigenCommitments =
+  // Byte-check step + RLP decode attempt
+  const eigenBlobInfos =
     sequencerTxs.length > 0 &&
     sequencerTxs.flatMap((tx) => {
       const thirdByte = tx.input.slice(6, 8)
@@ -138,24 +138,23 @@ export async function checkForEigenDA(
         return []
       }
 
-      const decodedCommitment = tryRlpDecode(tx.input)
+      const eigenBlobInfo = tryParsingEigenDaBlobInfo(tx.input)
 
-      if (!decodedCommitment) {
-        console.log('No decoded commitment', tx.hash, tx.input)
+      if (!eigenBlobInfo) {
         return []
       }
 
-      return { decodedCommitment }
+      return { eigenBlobInfo }
     })
 
   // If we have no Eigen-like transactions, we can return false immediately
-  if (!eigenCommitments || eigenCommitments.length === 0) {
+  if (!eigenBlobInfos || eigenBlobInfos.length === 0) {
     return false
   }
 
   // Decode step - decode the commitment from the transaction input
-  const outgoingBatchHeaderHashes = eigenCommitments.map(
-    ({ decodedCommitment }) => extractBlobBatchHeaderHash(decodedCommitment),
+  const outgoingBatchHeaderHashes = eigenBlobInfos.map(({ eigenBlobInfo }) =>
+    extractBlobBatchHeaderHash(eigenBlobInfo),
   )
 
   // Get step - get the confirmed batch header hashes from ethereum
@@ -212,9 +211,7 @@ async function getEthereumBlock(provider: IProvider) {
   return correspondingEthereumBlock
 }
 
-function extractBlobBatchHeaderHash(
-  decoded: EigenDABlobVerificationProof,
-): string {
+function extractBlobBatchHeaderHash(decoded: EigenDaBlobInfo): string {
   /**
    * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
    * @commit 733bcbe
@@ -235,7 +232,7 @@ function extractBlobBatchHeaderHash(
   return blobBatchHeaderHash.toLowerCase()
 }
 
-function tryRlpDecode(inputData: string): EigenDABlobVerificationProof | null {
+function tryParsingEigenDaBlobInfo(inputData: string): EigenDaBlobInfo | null {
   try {
     // strip three commitment type bytes + 0x
     const eigenCommitment = inputData.slice(4 * 2)
@@ -246,9 +243,8 @@ function tryRlpDecode(inputData: string): EigenDABlobVerificationProof | null {
 
     const rlp = RLP.decode('0x' + noTypeCommitment)
 
-    return EigenDABlobVerificationProofSchema.parse(rlp)
-  } catch (e) {
-    console.log('Error decoding commitment', inputData, e)
+    return EigenDaBlobInfo.parse(rlp)
+  } catch {
     return null
   }
 }
@@ -257,43 +253,47 @@ function tryRlpDecode(inputData: string): EigenDABlobVerificationProof | null {
  * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
  * @commit 733bcbe
  */
-type EigenDABlobVerificationProof = z.infer<
-  typeof EigenDABlobVerificationProofSchema
->
-const EigenDABlobVerificationProofSchema = z.tuple([
+type EigenDaBlobInfo = z.infer<typeof EigenDaBlobInfo>
+const EigenDaBlobInfo = z.tuple([
+  // Blob header
   z.tuple([
+    // KZG commitment
     z.tuple([
-      z.string(), // hash1
-      z.string(), // hash2
+      z.string(), // x
+      z.string(), // y
     ]),
-    z.string(), // version
+    z.string(), // data length
+    // repeated BlobQuorumParams
     z.array(
       z.tuple([
-        z.string(), // byte1
-        z.string(), // byte2
-        z.string(), // byte3
-        z.string(), // byte4
+        z.string(), // quorum number
+        z.string(), // adversary threshold percentage
+        z.string(), // confirmation threshold percentage
+        z.string(), // chunk length
       ]),
     ),
   ]),
+  // Blob verification proof
   z.tuple([
-    z.string(), // size
-    z.string(), // count
+    z.string(), // batch id
+    z.string(), // blob index
+    // Batch metadata
     z.tuple([
+      // Batch header
       z.tuple([
-        z.string(), // hash
-        z.string(), // version
-        z.string(), // size
-        z.string(), // timestamp
+        z.string(), // batch root
+        z.string(), // quorum numbers
+        z.string(), // quorum signed
+        z.string(), // reference block number
       ]),
+      z.string(), // signatory record hash
+      z.string(), // fee
+      z.string(), // confirmation height
       z
         .string()
-        .length(64 + 2), // batchHeaderHash
-      z.string(), // referenceBlockNumber
-      z.string(), // timestamp
-      z.string(), // batchRoot
+        .length(64 + 2), // batch header hash <---
     ]),
-    z.string(), // signature
-    z.string(), // version
+    z.string(), // inclusion proof
+    z.string(), // quorum index
   ]),
 ])
