@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21937181,
-  "configHash": "0xa5cbf7995fa87c1471d7ffede27df352e7f4bf97372ead0dbceaa1bd478d43ec",
+  "blockNumber": 21944906,
+  "configHash": "0x1eba0908ea27ba4c4a5f0333117d3435a7213c9b372318afdcead413b306f247",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -14,7 +14,23 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN)."
+        },
         {
           "permission": "upgrade",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
@@ -33,7 +49,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "delay": 259200
         },
         {
           "permission": "upgrade",
@@ -269,6 +286,10 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        },
         {
           "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
@@ -560,15 +581,36 @@
     {
       "name": "ETHBridge",
       "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "template": "starknet/StarknetEthBridge",
       "sourceHashes": [
         "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
         "0x7e4d647efdbbd67f7c4af48b29a4ece562fe1383101cd94625402008a572ba87"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "delay": 259200,
           "via": []
         }
       ],
@@ -646,6 +688,7 @@
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarknetEthBridge_2.0_4",
         "implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
         "isFrozen": false,
@@ -657,8 +700,35 @@
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
+        "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
+        "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": [],
+        "withdrawLimitPct": 5
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+        },
+        "withdrawalLimitStatus": {
+          "severity": "HIGH",
+          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+        },
+        "maxTotalBalance": {
+          "description": "The maximum total balance that can be locked in the bridge."
+        },
+        "withdrawLimitPct": {
+          "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
       },
       "derivedName": "StarknetEthBridge"
     },
@@ -857,12 +927,28 @@
     {
       "name": "Starknet",
       "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "template": "starknet/Starknet",
       "sourceHashes": [
         "0xce548bceca83c22eb3686987781754a8d9527dde81c86ae4a13d5a9ba5395d62",
         "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
       ],
       "proxyType": "StarkWare proxy",
       "issuedPermissions": [
+        {
+          "permission": "governStarknet",
+          "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
@@ -939,7 +1025,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1668386,
+        "l1ToL2MessageNonce": 1668431,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -960,9 +1046,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1258143905650001335968299560865860252105586361305473674182269126222322580871",
-        "stateBlockNumber": 1185177,
-        "stateRoot": "476082259951634465958025129403171585666687423473495473752748889180681616831",
+        "stateBlockHash": "778272442692017822703868152075145550507524262500244274449339683164983569026",
+        "stateBlockNumber": 1188964,
+        "stateRoot": "1504878571137867116129081062537238218421896129609675678037638256302031157406",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1592,6 +1678,12 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1738599755,
       "values": {
@@ -1704,12 +1796,19 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0000000000000000000000000000000000455448" },
     { "address": "0x030ceEE5D4CBc304287234720B11E00f47695755" },
     { "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2" },
     { "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac" },
     { "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD" },
-    { "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7" },
+    {
+      "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        }
+      ]
+    },
     { "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b" },
     {
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
@@ -1730,7 +1829,6 @@
     { "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7" },
     { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
     { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
-    { "address": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82" },
     { "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645" },
     { "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b" },
     { "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0" },
@@ -2824,6 +2922,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "starknet/Starknet": "0x493ed1d3bc009faef5b83fbd84cc539d05bef06228d2508d14f4344a492a7f2a",
+    "starknet/StarknetEthBridge": "0x1eaf3f9a3eb080a0d7a2c58f2d7488a1d159c03a88824dd5e1eb7b55edf2625f"
   }
 }
