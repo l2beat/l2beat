@@ -1,5 +1,6 @@
-import type { Layer2, Layer3 } from '@l2beat/config'
-import { isVerified, layer2s } from '@l2beat/config'
+import type { Layer2, Layer3, Project } from '@l2beat/config'
+import { isVerified, layer2s, layer3s } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -21,36 +22,43 @@ export type ScalingProjectEntry = Awaited<
   ReturnType<typeof getScalingProjectEntry>
 >
 
-export async function getScalingProjectEntry(project: ScalingProject) {
+export async function getScalingProjectEntry(
+  project: Project<'display' | 'scalingInfo'>,
+) {
+  const legacy =
+    layer2s.find((x) => x.id === project.id) ??
+    layer3s.find((x) => x.id === project.id)
+  assert(legacy)
+
   const [projectsChangeReport, header] = await Promise.all([
     getProjectsChangeReport(),
-    getHeader(project),
+    getHeader(legacy),
   ])
 
-  const changes = projectsChangeReport.getChanges(project.id)
+  const changes = projectsChangeReport.getChanges(legacy.id)
   const common = {
-    type: project.type,
-    capability: project.capability,
-    name: project.display.name,
-    slug: project.display.slug,
+    type: legacy.type,
+    capability: legacy.capability,
+    name: legacy.display.name,
+    slug: legacy.display.slug,
     underReviewStatus: getUnderReviewStatus({
-      isUnderReview: !!project.isUnderReview,
+      isUnderReview: !!legacy.isUnderReview,
       ...changes,
     }),
-    isArchived: !!project.isArchived,
-    isUpcoming: !!project.isUpcoming,
+    isArchived: !!legacy.isArchived,
+    isUpcoming: !!legacy.isUpcoming,
     header,
-    reasonsForBeingOther: project.reasonsForBeingOther,
-    countdowns: getCountdowns(project),
+    reasonsForBeingOther: legacy.reasonsForBeingOther,
+    countdowns: getCountdowns(legacy),
   }
-  const daSolution = await getDaSolution(project)
+  const daSolution = await getDaSolution(legacy)
 
-  const rosetteValues = getScalingRosetteValues(project.riskView)
-  const isProjectVerified = isVerified(project)
+  const rosetteValues = getScalingRosetteValues(legacy.riskView)
+  const isProjectVerified = isVerified(legacy)
 
-  if (project.type === 'layer2') {
+  if (legacy.type === 'layer2') {
     const projectDetails = await getL2ProjectDetails({
-      project,
+      project: legacy,
       isVerified: isProjectVerified,
       projectsChangeReport,
       rosetteValues,
@@ -59,30 +67,30 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 
     return {
       ...common,
-      type: project.type,
-      stageConfig: isProjectOther_legacy(project)
+      type: legacy.type,
+      stageConfig: isProjectOther_legacy(legacy)
         ? {
             stage: 'NotApplicable' as const,
           }
-        : project.stage,
+        : legacy.stage,
       projectDetails,
       header,
     }
   }
 
   // L3
-  const hostChain = layer2s.find((layer2) => layer2.id === project.hostChain)
+  const hostChain = layer2s.find((layer2) => layer2.id === legacy.hostChain)
   const baseLayerRosetteValues = hostChain
     ? getScalingRosetteValues(hostChain.riskView)
     : undefined
-  const stackedRosetteValues = project.stackedRiskView
-    ? getScalingRosetteValues(project.stackedRiskView)
+  const stackedRosetteValues = legacy.stackedRiskView
+    ? getScalingRosetteValues(legacy.stackedRiskView)
     : undefined
   const isHostChainVerified =
     hostChain === undefined ? false : isVerified(hostChain)
 
   const projectDetails = await getL3ProjectDetails({
-    project,
+    project: legacy,
     hostChain,
     isVerified: isProjectVerified,
     daSolution,
@@ -95,7 +103,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 
   return {
     ...common,
-    type: project.type,
+    type: legacy.type,
     stageConfig: {
       stage: 'NotApplicable' as const,
     },
