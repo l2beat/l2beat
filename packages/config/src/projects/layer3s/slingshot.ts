@@ -18,7 +18,7 @@ export const slingshot: Layer3 = upcomingL3({
     links: {
       websites: ['https://slingshotdao.com/'],
       apps: ['https://app.slingshotdao.com/'],
-      documentation: ['http://docs.slingshotdao.com/'],
+      documentation: ['https://docs.slingshotdao.com/'],
       explorers: ['https://explorer-slingshot-uivc8ajsjn.t.conduit.xyz/'],
       socialMedia: [
         'https://x.com/SlingShotDAO',
