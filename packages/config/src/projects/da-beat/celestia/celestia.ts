@@ -33,6 +33,7 @@ export const celestia: BaseProject = {
         'https://t.me/CelestiaCommunity',
       ],
     },
+    badges: [],
   },
   daLayer: {
     type: 'Public Blockchain',

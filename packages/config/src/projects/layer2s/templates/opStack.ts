@@ -197,7 +197,7 @@ function opStackCommon(
   type: (Layer2 | Layer3)['type'],
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
-  incomingNativeDA?: ProjectDataAvailability,
+  hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
     ScalingProjectDisplay,
@@ -214,31 +214,11 @@ function opStackCommon(
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
-  const daProvider = getDAProvider(templateVars)
-  const postsToEthereum = daProvider === undefined
-
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValue<{
-      isSequencerSendingBlobTx: boolean
-    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  let daBadge: Badge | undefined = daProvider?.badge
-  if (postsToEthereum) {
-    daBadge = usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata
-  }
-
-  assert(daBadge !== undefined, 'DA badge must be defined')
+  const daProvider = getDAProvider(templateVars, hostChainDA)
 
   const automaticBadges = templateVars.usingAltVm
-    ? [BADGES.Stack.OPStack, daBadge]
-    : [BADGES.Stack.OPStack, BADGES.VM.EVM, daBadge]
-
-  const nativeDA = incomingNativeDA ?? {
-    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }
+    ? [BADGES.Stack.OPStack, daProvider.badge]
+    : [BADGES.Stack.OPStack, BADGES.VM.EVM, daProvider.badge]
 
   const portal = getOptimismPortal(templateVars)
   const l1StandardBridgeEscrow =
@@ -251,7 +231,10 @@ function opStackCommon(
   const fraudProofType = getFraudProofType(templateVars)
 
   // archi images defined locally in the project.ts take precedence over this one
-  const architectureImage = ['opstack', postsToEthereum ? 'rollup' : 'optimium']
+  const architectureImage = [
+    'opstack',
+    postsToEthereum(templateVars) ? 'rollup' : 'optimium',
+  ]
   const partOfSuperchain = isPartOfSuperchain(templateVars)
   if (partOfSuperchain) {
     architectureImage.push('superchain')
@@ -298,7 +281,7 @@ function opStackCommon(
       stack: 'OP Stack',
       category:
         templateVars.display.category ??
-        (postsToEthereum ? 'Optimistic Rollup' : 'Optimium'),
+        (postsToEthereum(templateVars) ? 'Optimistic Rollup' : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -344,7 +327,7 @@ function opStackCommon(
       ],
       daTracking: getDaTracking(templateVars),
     },
-    technology: getTechnology(templateVars, explorerUrl),
+    technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
@@ -357,8 +340,10 @@ function opStackCommon(
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),
     riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
-    stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
-    dataAvailability: decideDA(daProvider, nativeDA),
+    stage:
+      templateVars.stage ??
+      computedStage(templateVars, postsToEthereum(templateVars)),
+    dataAvailability: extractDA(daProvider),
   }
 }
 
@@ -460,7 +445,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    baseChain.dataAvailability,
+    hostChainDAProvider(baseChain),
   )
 
   const stackedRisk = {
@@ -802,8 +787,8 @@ function computedStage(
 function getTechnology(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
+  daProvider: DAProvider | undefined,
 ): ScalingProjectTechnology {
-  const daProvider = getDAProvider(templateVars)
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
@@ -1111,19 +1096,12 @@ function getTechnologyExitMechanism(
   return result
 }
 
-function decideDA(
-  daProvider: DAProvider | undefined,
-  nativeDA: ProjectDataAvailability | undefined,
-): ProjectDataAvailability | undefined {
-  if (daProvider !== undefined) {
-    return {
-      layer: daProvider.layer,
-      bridge: daProvider.bridge,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }
+function extractDA(daProvider: DAProvider): ProjectDataAvailability {
+  return {
+    layer: daProvider.layer,
+    bridge: daProvider.bridge,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }
-
-  return nativeDA
 }
 
 function technologyDA(
@@ -1143,7 +1121,8 @@ function technologyDA(
 
 function getDAProvider(
   templateVars: OpStackConfigCommon,
-): DAProvider | undefined {
+  hostChainDA?: DAProvider,
+): DAProvider {
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
@@ -1158,6 +1137,30 @@ function getDAProvider(
       templateVars.isNodeAvailable !== undefined,
       'isNodeAvailable must be defined if no DA provider is defined',
     )
+  }
+
+  if (daProvider === undefined) {
+    const usesBlobs =
+      templateVars.usesBlobs ??
+      templateVars.discovery.getContractValue<{
+        isSequencerSendingBlobTx: boolean
+      }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
+    return {
+      layer:
+        (hostChainDA?.layer ?? usesBlobs)
+          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+          : DA_LAYERS.ETH_CALLDATA,
+      bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
+      badge:
+        (hostChainDA?.badge ?? usesBlobs)
+          ? BADGES.DA.EthereumBlobs
+          : BADGES.DA.EthereumCalldata,
+      riskView: RISK_VIEW.DATA_ON_CHAIN,
+      technology: usesBlobs
+        ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+        : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
+    }
   }
 
   return daProvider
@@ -1288,11 +1291,27 @@ function getTrackedTxs(
   }
 }
 
+function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
+  return daProvider === undefined
+}
+
 function ifPostsToEthereum<T>(
   templateVars: OpStackConfigCommon,
   value: T,
 ): T | undefined {
-  return getDAProvider(templateVars) === undefined ? value : undefined
+  if (postsToEthereum(templateVars)) {
+    return value
+  }
 }
 
 function getOptimismPortal(
@@ -1357,4 +1376,25 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
+}
+
+function hostChainDAProvider(hostChain: Layer2): DAProvider {
+  const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
+  assert(DABadge !== undefined, 'Host chain must have data availability badge')
+  assert(
+    hostChain.technology.dataAvailability !== undefined,
+    'Host chain must have technology data availability',
+  )
+  assert(
+    hostChain.dataAvailability !== undefined,
+    'Host chain must have data availability',
+  )
+
+  return {
+    layer: hostChain.dataAvailability.layer,
+    bridge: hostChain.dataAvailability.bridge,
+    riskView: hostChain.riskView.dataAvailability,
+    technology: hostChain.technology.dataAvailability,
+    badge: DABadge,
+  }
 }

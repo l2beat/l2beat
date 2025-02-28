@@ -2,7 +2,7 @@ import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { ps } from '~/server/projects'
-import { isProjectOther2 } from '../../utils/is-project-other'
+import { isProjectOther } from '../../utils/is-project-other'
 
 export const CostsProjectsFilter = z.discriminatedUnion('type', [
   z.object({
@@ -45,11 +45,11 @@ function filterToCondition(
       return (p) =>
         (p.scalingInfo.type === 'Optimistic Rollup' ||
           p.scalingInfo.type === 'ZK Rollup') &&
-        !isProjectOther2(p, previewRecategorisation) &&
+        !isProjectOther(p.scalingInfo, previewRecategorisation) &&
         !(previewRecategorisation && p.statuses.isUnderReview) // If previewRecategorisation is true, we exclude projects that are under review
     case 'others':
       return (p) =>
-        isProjectOther2(p, previewRecategorisation) &&
+        isProjectOther(p.scalingInfo, previewRecategorisation) &&
         !(previewRecategorisation && p.statuses.isUnderReview)
     case 'projects':
       return (p) => new Set(filter.projectIds).has(p.id)

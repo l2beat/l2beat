@@ -342,7 +342,7 @@ function orbitStackCommon(
   type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
-  incomingNativeDA?: ProjectDataAvailability,
+  hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
     ScalingProjectDisplay,
@@ -362,13 +362,6 @@ function orbitStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValueOrUndefined(
-      'SequencerInbox',
-      'postsBlobs',
-    ) ??
-    false
 
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -386,7 +379,7 @@ function orbitStackCommon(
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
-  const daProvider = getDAProvider(templateVars)
+  const daProvider = getDAProvider(type, templateVars, explorerUrl, hostChainDA)
 
   const isUsingEspressoSequencer =
     templateVars.discovery.getContractValueOrUndefined<string>(
@@ -408,19 +401,6 @@ function orbitStackCommon(
     ) * blockNumberOpcodeTimeSeconds
 
   const postsToExternalDA = !postsToEthereum(templateVars)
-
-  let daBadge = daProvider?.badge
-  if (!postsToExternalDA) {
-    daBadge = usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata
-  }
-
-  assert(daBadge !== undefined, 'DA badge must be defined')
-
-  const nativeDA = incomingNativeDA ?? {
-    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }
 
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
@@ -455,7 +435,7 @@ function orbitStackCommon(
   //     'validatorWhitelistDisabled',
   //   )
 
-  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daBadge]
+  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daProvider.badge]
 
   if (isUsingEspressoSequencer) {
     automaticBadges.push(BADGES.Other.EspressoPreconfs)
@@ -491,7 +471,7 @@ function orbitStackCommon(
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
-    riskView: getRiskView(type, templateVars, daProvider),
+    riskView: getRiskView(templateVars, daProvider),
     stage: computedStage(templateVars),
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -536,26 +516,9 @@ function orbitStackCommon(
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
-      dataAvailability: templateVars.nonTemplateTechnology?.dataAvailability ??
-        daProvider?.technology ?? {
-          ...(usesBlobs
-            ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
-            : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
-          references: [
-            {
-              title:
-                'Sequencing followed by deterministic execution - Arbitrum documentation',
-              url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
-            },
-            ...explorerReferences(explorerUrl, [
-              {
-                title:
-                  'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
-                address: safeGetImplementation(templateVars.sequencerInbox),
-              },
-            ]),
-          ],
-        },
+      dataAvailability:
+        templateVars.nonTemplateTechnology?.dataAvailability ??
+        daProvider.technology,
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -633,7 +596,7 @@ function orbitStackCommon(
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
-    dataAvailability: decideDA(daProvider, nativeDA),
+    dataAvailability: extractDA(daProvider),
   }
 }
 
@@ -648,7 +611,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    baseChain.dataAvailability,
+    hostChainDAProvider(baseChain),
   )
 
   const getStackedRisks = () => {
@@ -828,9 +791,8 @@ function ifPostsToEthereum<T>(
 }
 
 function getRiskView(
-  type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
-  daProvider: DAProvider | undefined,
+  daProvider: DAProvider,
 ): ScalingProjectRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -877,16 +839,10 @@ function getRiskView(
       })(),
     dataAvailability:
       templateVars.nonTemplateRiskView?.dataAvailability ??
-      (daProvider !== undefined
-        ? daProvider.riskViewDA
-        : type === 'layer2'
-          ? RISK_VIEW.DATA_ON_CHAIN
-          : RISK_VIEW.DATA_ON_CHAIN_L3),
+      daProvider.riskViewDA,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      (daProvider !== undefined
-        ? daProvider.riskViewExitWindow
-        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
+      daProvider.riskViewExitWindow,
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -919,10 +875,61 @@ function getRiskView(
 }
 
 function getDAProvider(
+  type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
-): DAProvider | undefined {
+  explorerUrl: string | undefined,
+  hostChainDA?: DAProvider,
+): DAProvider {
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
+
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
+
   if (postsToEthereum(templateVars)) {
-    return undefined
+    const usesBlobs =
+      templateVars.usesBlobs ??
+      templateVars.discovery.getContractValueOrUndefined(
+        'SequencerInbox',
+        'postsBlobs',
+      ) ??
+      false
+
+    return {
+      layer:
+        (hostChainDA?.layer ?? usesBlobs)
+          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+          : DA_LAYERS.ETH_CALLDATA,
+      bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
+      mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge:
+        hostChainDA?.badge ??
+        (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
+      riskViewDA:
+        type === 'layer2'
+          ? RISK_VIEW.DATA_ON_CHAIN
+          : RISK_VIEW.DATA_ON_CHAIN_L3,
+      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology: {
+        ...(usesBlobs
+          ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+          : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
+        references: [
+          {
+            title:
+              'Sequencing followed by deterministic execution - Arbitrum documentation',
+            url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+          },
+          ...explorerReferences(explorerUrl, [
+            {
+              title:
+                'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+              address: safeGetImplementation(templateVars.sequencerInbox),
+            },
+          ]),
+        ],
+      },
+    }
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
@@ -932,12 +939,6 @@ function getDAProvider(
 
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
-
-  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
-    templateVars.discovery,
-  )
-
-  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   if (isUsingValidBlobstreamWmr) {
     return {
@@ -1090,19 +1091,12 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
   ]
 }
 
-function decideDA(
-  daProvider: DAProvider | undefined,
-  nativeDA: ProjectDataAvailability | undefined,
-): ProjectDataAvailability | undefined {
-  if (daProvider !== undefined) {
-    return {
-      layer: daProvider.layer,
-      bridge: daProvider.bridge,
-      mode: daProvider.mode,
-    }
+function extractDA(daProvider: DAProvider): ProjectDataAvailability {
+  return {
+    layer: daProvider.layer,
+    bridge: daProvider.bridge,
+    mode: daProvider.mode,
   }
-
-  return nativeDA
 }
 
 function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
@@ -1142,4 +1136,27 @@ function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
       rollupNodeLink: templateVars.nodeSourceLink,
     },
   )
+}
+
+function hostChainDAProvider(hostChain: Layer2): DAProvider {
+  const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
+  assert(DABadge !== undefined, 'Host chain must have data availability badge')
+  assert(
+    hostChain.technology.dataAvailability !== undefined,
+    'Host chain must have technology data availability',
+  )
+  assert(
+    hostChain.dataAvailability !== undefined,
+    'Host chain must have data availability',
+  )
+
+  return {
+    layer: hostChain.dataAvailability.layer,
+    bridge: hostChain.dataAvailability.bridge,
+    mode: hostChain.dataAvailability.mode,
+    riskViewDA: hostChain.riskView.dataAvailability,
+    riskViewExitWindow: hostChain.riskView.exitWindow,
+    technology: hostChain.technology.dataAvailability,
+    badge: DABadge,
+  }
 }

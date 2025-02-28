@@ -821,6 +821,7 @@ export interface BaseProject {
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
+  customDa?: CustomDa
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
   activityConfig?: ProjectActivityConfig
@@ -869,6 +870,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   links: ProjectLinks
+  badges: Badge[]
 }
 
 export interface ProjectLinks {
