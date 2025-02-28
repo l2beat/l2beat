@@ -1,15 +1,15 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 import {
-  type ContractFieldSeverity,
   type ContractValue,
-  type ContractValueType,
   get$Admins,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import { groupBy, uniqBy } from 'lodash'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
+  ContractFieldSeverity,
+  ContractValueType,
   DiscoveryContractField,
   ExternalReference,
   PermissionConfiguration,
