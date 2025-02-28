@@ -28,7 +28,7 @@ export const bugbuster: Layer3 = {
     BADGES.Stack.Cartesi,
     BADGES.VM.AppChain,
     BADGES.VM.CartesiVM,
-    BADGES.DA.EthereumCalldata,
+    BADGES.DA.EthereumBlobs,
     BADGES.L3ParentChain.OpMainnet,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
