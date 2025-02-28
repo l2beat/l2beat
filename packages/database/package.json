@@ -20,7 +20,6 @@
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/discovery": "workspace:*",
-    "@l2beat/discovery-types": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "kysely": "^0.27.3",
