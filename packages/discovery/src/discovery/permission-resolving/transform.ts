@@ -6,7 +6,6 @@ import type {
 } from '../config/RawDiscoveryConfig'
 import type {
   IssuedPermission,
-  PermissionType,
   ReceivedPermission,
   ResolvedPermissionPath,
 } from '../output/types'
@@ -104,7 +103,7 @@ export function transformToReceived(
   }
 }
 
-function internalPermissionToExternal(permission: Permission): PermissionType {
+function internalPermissionToExternal(permission: Permission): Permission {
   if (permission === 'member') {
     return 'act'
   }
