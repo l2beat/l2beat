@@ -1,0 +1,13 @@
+{
+    "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+    "chain": "ethereum",
+    "name": "gasp",
+    "import": ["../../ethereumConfig.jsonc"],
+    "initialAddresses": [
+    //   "0x3aDdEb54ddd43Eb40235eC32DfA7928F28A44bb5", // AVS ServiceManager
+      "0x79d968d9017B96f202aD4673A2c1BBbdc905A4ca" // Rolldown (Bridge?)
+    ],
+    "names": {},
+    "overrides": {}
+  }
+  
