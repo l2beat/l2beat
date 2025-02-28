@@ -96,7 +96,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   return {
     ...common,
     type: project.type,
-    stageConfig: isProjectOther(project)
+    stageConfig: isProjectOther_legacy(project)
       ? {
           stage: 'NotApplicable' as const,
         }
