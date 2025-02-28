@@ -60,7 +60,8 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = await ps.getProject({
     slug: params.slug,
-    select: ['display', 'scalingInfo'],
+    select: ['display', 'scalingInfo', 'tvlConfig'],
+    optional: ['chainConfig'],
   })
   if (!project) {
     notFound()

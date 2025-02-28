@@ -1,5 +1,6 @@
-import type { Bridge, TableReadyValue } from '@l2beat/config'
-import { isVerified } from '@l2beat/config'
+import type { Project, TableReadyValue } from '@l2beat/config'
+import { bridges, isVerified } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -12,65 +13,62 @@ export type BridgesProjectEntry = Awaited<
   ReturnType<typeof getBridgesProjectEntry>
 >
 
-export async function getBridgesProjectEntry(project: Bridge) {
-  const [projectsChangeReport, header] = await Promise.all([
+export async function getBridgesProjectEntry(
+  project: Project<'tvlConfig', 'chainConfig'>,
+) {
+  const legacy = bridges.find((x) => x.id === project.id)
+  assert(legacy)
+  const [projectsChangeReport, tvsProjectStats] = await Promise.all([
     getProjectsChangeReport(),
-    getHeader(project),
+    getTvsProjectStats(project),
   ])
 
-  const isProjectVerified = isVerified(project)
-  const changes = projectsChangeReport.getChanges(project.id)
+  const isProjectVerified = isVerified(legacy)
+  const changes = projectsChangeReport.getChanges(legacy.id)
+  const associatedTokens = legacy.config.associatedTokens ?? []
 
   return {
-    type: project.type,
-    name: project.display.name,
-    slug: project.display.slug,
+    type: legacy.type,
+    name: legacy.display.name,
+    slug: legacy.display.slug,
     underReviewStatus: getUnderReviewStatus({
-      isUnderReview: !!project.isUnderReview,
+      isUnderReview: !!legacy.isUnderReview,
       ...changes,
     }),
-    isArchived: !!project.isArchived,
-    isUpcoming: !!project.isUpcoming,
-    header,
+    isArchived: !!legacy.isArchived,
+    isUpcoming: !!legacy.isUpcoming,
+    header: {
+      description: legacy.display.description,
+      warning: legacy.display.warning,
+      links: getProjectLinks(legacy.display.links),
+      tvs: tvsProjectStats
+        ? {
+            tokenBreakdown: {
+              ...tvsProjectStats.tokenBreakdown,
+              warnings: compact([
+                tvsProjectStats.tokenBreakdown.total > 0 &&
+                  getAssociatedTokenWarning({
+                    associatedRatio:
+                      tvsProjectStats.tokenBreakdown.associated /
+                      tvsProjectStats.tokenBreakdown.total,
+                    name: legacy.display.name,
+                    associatedTokens,
+                  }),
+              ]),
+              associatedTokens,
+            },
+            tvsBreakdown: tvsProjectStats.tvsBreakdown,
+          }
+        : undefined,
+      destination: getDestination(legacy.technology.destination),
+      category: legacy.display.category,
+      validatedBy: legacy.riskView?.validatedBy,
+    },
     projectDetails: await getBridgeProjectDetails(
-      project,
+      legacy,
       isProjectVerified,
       projectsChangeReport,
     ),
-  }
-}
-
-async function getHeader(project: Bridge) {
-  const tvsProjectStats = await getTvsProjectStats(project)
-
-  const associatedTokens = project.config.associatedTokens ?? []
-
-  return {
-    description: project.display.description,
-    warning: project.display.warning,
-    links: getProjectLinks(project.display.links),
-    tvs: tvsProjectStats
-      ? {
-          tokenBreakdown: {
-            ...tvsProjectStats.tokenBreakdown,
-            warnings: compact([
-              tvsProjectStats.tokenBreakdown.total > 0 &&
-                getAssociatedTokenWarning({
-                  associatedRatio:
-                    tvsProjectStats.tokenBreakdown.associated /
-                    tvsProjectStats.tokenBreakdown.total,
-                  name: project.display.name,
-                  associatedTokens,
-                }),
-            ]),
-            associatedTokens,
-          },
-          tvsBreakdown: tvsProjectStats.tvsBreakdown,
-        }
-      : undefined,
-    destination: getDestination(project.technology.destination),
-    category: project.display.category,
-    validatedBy: project.riskView?.validatedBy,
   }
 }
 

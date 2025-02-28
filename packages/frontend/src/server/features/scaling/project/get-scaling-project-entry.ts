@@ -23,17 +23,58 @@ export type ScalingProjectEntry = Awaited<
 >
 
 export async function getScalingProjectEntry(
-  project: Project<'display' | 'scalingInfo'>,
+  project: Project<'display' | 'scalingInfo' | 'tvlConfig', 'chainConfig'>,
 ) {
   const legacy =
     layer2s.find((x) => x.id === project.id) ??
     layer3s.find((x) => x.id === project.id)
   assert(legacy)
 
-  const [projectsChangeReport, header] = await Promise.all([
-    getProjectsChangeReport(),
-    getHeader(legacy),
-  ])
+  const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      getActivityProjectStats(project.id),
+      getTvsProjectStats(project),
+    ])
+  const associatedTokens = legacy.config.associatedTokens ?? []
+
+  const header = {
+    description: legacy.display.description,
+    warning: legacy.display.headerWarning,
+    redWarning: legacy.display.redWarning,
+    category: isProjectOther_legacy(legacy) ? 'Other' : legacy.display.category,
+    purposes: legacy.display.purposes,
+    activity: activityProjectStats,
+    rosetteValues: getScalingRosetteValues(legacy.riskView),
+    links: getProjectLinks(legacy.display.links),
+    hostChain:
+      legacy.type === 'layer3'
+        ? (layer2s.find((l) => l.id === legacy.hostChain)?.display.name ??
+          legacy.hostChain)
+        : undefined,
+    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(legacy.id.toString())
+      ? {
+          breakdown: tvsProjectStats?.tvsBreakdown,
+          warning: legacy.display.tvlWarning,
+          tokens: {
+            breakdown: tvsProjectStats?.tokenBreakdown,
+            warnings: compact([
+              tvsProjectStats &&
+                tvsProjectStats.tokenBreakdown.total > 0 &&
+                getAssociatedTokenWarning({
+                  associatedRatio:
+                    tvsProjectStats.tokenBreakdown.associated /
+                    tvsProjectStats.tokenBreakdown.total,
+                  name: legacy.display.name,
+                  associatedTokens,
+                }),
+            ]),
+            associatedTokens,
+          },
+        }
+      : undefined,
+    badges: legacy.badges,
+  }
 
   const changes = projectsChangeReport.getChanges(legacy.id)
   const common = {
@@ -111,53 +152,5 @@ export async function getScalingProjectEntry(
     stackedRosetteValues,
     hostChainName: hostChain?.display.name,
     projectDetails,
-  }
-}
-
-async function getHeader(project: ScalingProject) {
-  const [activityProjectStats, tvsProjectStats] = await Promise.all([
-    getActivityProjectStats(project.id),
-    getTvsProjectStats(project),
-  ])
-
-  const associatedTokens = project.config.associatedTokens ?? []
-  return {
-    description: project.display.description,
-    warning: project.display.headerWarning,
-    redWarning: project.display.redWarning,
-    category: isProjectOther_legacy(project)
-      ? 'Other'
-      : project.display.category,
-    purposes: project.display.purposes,
-    activity: activityProjectStats,
-    rosetteValues: getScalingRosetteValues(project.riskView),
-    links: getProjectLinks(project.display.links),
-    hostChain:
-      project.type === 'layer3'
-        ? (layer2s.find((l) => l.id === project.hostChain)?.display.name ??
-          project.hostChain)
-        : undefined,
-    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id.toString())
-      ? {
-          breakdown: tvsProjectStats?.tvsBreakdown,
-          warning: project.display.tvlWarning,
-          tokens: {
-            breakdown: tvsProjectStats?.tokenBreakdown,
-            warnings: compact([
-              tvsProjectStats &&
-                tvsProjectStats.tokenBreakdown.total > 0 &&
-                getAssociatedTokenWarning({
-                  associatedRatio:
-                    tvsProjectStats.tokenBreakdown.associated /
-                    tvsProjectStats.tokenBreakdown.total,
-                  name: project.display.name,
-                  associatedTokens,
-                }),
-            ]),
-            associatedTokens,
-          },
-        }
-      : undefined,
-    badges: project.badges,
   }
 }
