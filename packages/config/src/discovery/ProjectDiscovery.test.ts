@@ -23,7 +23,7 @@ describe(ProjectDiscovery.name, () => {
     'ethereum',
     configReader,
     {
-      skipKnowledgeBase: true,
+      ignoreClingoFacts: true,
     },
   )
 
@@ -88,7 +88,7 @@ describe(ProjectDiscovery.name, () => {
       'arbitrum',
       configReader,
       {
-        skipKnowledgeBase: true,
+        ignoreClingoFacts: true,
       },
     )
     const contract = discovery.getContract(contractStub.address.toString())
@@ -103,7 +103,7 @@ describe(ProjectDiscovery.name, () => {
         'ethereum',
         configReader,
         {
-          skipKnowledgeBase: true,
+          ignoreClingoFacts: true,
         },
       )
       const sequencers = discovery.getPermissionsByRole('sequence')

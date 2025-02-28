@@ -59,10 +59,10 @@ export class ProjectDiscovery {
     public readonly chain: string = 'ethereum',
     configReader = new ConfigReader(join(process.cwd(), '../config')),
     options: {
-      skipKnowledgeBase?: boolean
+      ignoreClingoFacts?: boolean
     } = {},
   ) {
-    if (!options.skipKnowledgeBase) {
+    if (!options.ignoreClingoFacts) {
       this.knowledgeBase = this.createKnowledgeBase(configReader, projectName)
     }
     const discovery = configReader.readDiscovery(projectName, chain)
