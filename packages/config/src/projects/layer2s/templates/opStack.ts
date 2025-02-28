@@ -307,10 +307,10 @@ function opStackCommon(
     chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
+      gasTokens: [
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
       activityConfig: getActivityConfig(
         templateVars.activityConfig,
         templateVars.chainConfig,
