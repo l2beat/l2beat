@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xbb09ace3bb73ce4409deab3c0816e853b699adfb
+
+# Diff at Thu, 27 Feb 2025 12:01:48 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21914468
+- current block number: 21914468
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21914468 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      displayName:
+-        "OptimismPortal"
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      name:
+-        "Lib_AddressManager"
++        "AddressManager"
+      displayName:
+-        "AddressManager"
+    }
+```
+
 Generated with discovered.json: 0x9affe905223db3c288adccaa2a984c4ba5054436
 
 # Diff at Wed, 26 Feb 2025 10:33:15 GMT:

@@ -20,8 +20,7 @@
         "owner": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "paused": false,
         "whiteLister": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
-      },
-      "derivedName": "EthCrossChainManager"
+      }
     },
     {
       "name": "Lock Proxy 1",
@@ -94,8 +93,7 @@
         "isOwner": false,
         "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
         "paused": false
-      },
-      "derivedName": "EthCrossChainManagerProxy"
+      }
     },
     {
       "name": "Lock Proxy 6",
@@ -156,8 +154,7 @@
           "severity": "LOW",
           "description": "This is the number of lockProxy escrows registered in the bridge."
         }
-      },
-      "derivedName": "PolyWrapper"
+      }
     },
     {
       "name": "EthCrossChainData",
@@ -175,8 +172,7 @@
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "paused": false
-      },
-      "derivedName": "EthCrossChainData"
+      }
     },
     {
       "name": "Lock Proxy 8",

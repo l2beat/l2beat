@@ -168,16 +168,16 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "FflonkVerifier_13",
+      "name": "Verifier",
       "address": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x88e9672f9076cd809934d036a15eb65c30e0e253eccbfc4a15962b6580c8fcd3"
       ],
-      "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1734710375,
       "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier_13",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],

@@ -1169,8 +1169,7 @@
           "317": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     },
     {
       "name": "NonceContract",
@@ -1235,8 +1234,7 @@
           "0x58D53a2d6a08B72a15137F3381d21b90638bd753"
         ],
         "owner": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0"
-      },
-      "derivedName": "Endpoint"
+      }
     },
     {
       "name": "FPValidator",

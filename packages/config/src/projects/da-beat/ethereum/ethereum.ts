@@ -41,6 +41,7 @@ export const ethereum: BaseProject = {
       ],
       socialMedia: ['https://x.com/ethereum'],
     },
+    badges: [],
   },
   daLayer: {
     type: 'Public Blockchain',

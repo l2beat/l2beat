@@ -162,7 +162,6 @@
         "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "OptimismPortal",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
       "issuedPermissions": [
         {
@@ -1420,13 +1419,12 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
       ],
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -1440,7 +1438,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     }
   ],
   "eoas": [
@@ -2426,7 +2425,7 @@
     "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
     "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
     "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
-    "opstack/OptimismPortal2": "0x4f4fd47650d0a6c200ce01c99bb6573854ddcbb6958312faef6a3fea21c76bf0",
+    "opstack/OptimismPortal2": "0x88e1ec872b590b2d98ed6383fc9d7759688e0f13d4b733cd63a7bcae7c5ce99d",
     "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
     "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",
     "opstack/SuperchainConfig": "0x38b312497b6b9a5247e304b69929d797dffc28d476435a84fdeb9f5d901bc1c2",

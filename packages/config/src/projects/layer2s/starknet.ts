@@ -1184,7 +1184,7 @@ export const starknet: Layer2 = {
       actors: [
         discovery.getMultisigPermission(
           'StarknetSecurityCouncil',
-          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
+          'Can upgrade the central Starknet constract, potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),

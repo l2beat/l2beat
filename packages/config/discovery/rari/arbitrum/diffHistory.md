@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x585eaf19a44690de6e3d1ae1cbc0f966bb0b5031
+
+# Diff at Thu, 27 Feb 2025 11:47:36 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 303211044
+- current block number: 303211044
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 303211044 (main branch discovery), not current.
+
+```diff
+    contract GatewayRouter (0x2623C144B4d167f70893f6A8968B98c89a6C5F97) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      name:
+-        "L1GatewayRouter"
++        "GatewayRouter"
+      displayName:
+-        "GatewayRouter"
+    }
+```
+
+```diff
+    contract QuoteVerifier (0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.
+      name:
+-        "V3QuoteVerifier"
++        "QuoteVerifier"
+      displayName:
+-        "QuoteVerifier"
+    }
+```
+
+```diff
+    contract ERC20Gateway (0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      name:
+-        "L1ERC20Gateway"
++        "ERC20Gateway"
+      displayName:
+-        "ERC20Gateway"
+    }
+```
+
+```diff
+    contract CustomGateway (0x8bE956aB42274056ef4471BEb211b33e258b7324) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      name:
+-        "L1CustomGateway"
++        "CustomGateway"
+      displayName:
+-        "CustomGateway"
+    }
+```
+
 Generated with discovered.json: 0xa0df5547b2a032e1a17406ccfa392c468e8e7965
 
 # Diff at Fri, 21 Feb 2025 14:12:37 GMT:

@@ -66,8 +66,7 @@
         "$upgradeCount": 0,
         "owner": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
-      },
-      "derivedName": "DeployerWhitelist"
+      }
     },
     {
       "name": "L2CrossDomainMessenger",
@@ -672,8 +671,7 @@
         "MINT_PERIOD": 31536000,
         "mintPermittedAfter": 0,
         "owner": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
-      },
-      "derivedName": "MintManager"
+      }
     }
   ],
   "eoas": [

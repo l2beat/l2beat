@@ -40,8 +40,7 @@
         "ownerOf": [],
         "symbol": "NIO",
         "tokenURI": []
-      },
-      "derivedName": "NioGuardians"
+      }
     },
     {
       "name": "NioGovernor",
@@ -88,8 +87,7 @@
         "version": "1",
         "votingDelay": 259200,
         "votingPeriod": 432000
-      },
-      "derivedName": "NioGovernor"
+      }
     },
     {
       "name": "BridgedKinto",
@@ -161,8 +159,7 @@
         "TREASURY": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
-      },
-      "derivedName": "BridgedKinto"
+      }
     },
     {
       "name": "Faucet",
@@ -237,8 +234,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      },
-      "derivedName": "Faucet"
+      }
     },
     {
       "name": "SponsorPaymaster",
@@ -351,8 +347,7 @@
         "RATE_LIMIT_THRESHOLD_TOTAL": 50,
         "userOpMaxCost": "30000000000000000",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      },
-      "derivedName": "SponsorPaymaster"
+      }
     },
     {
       "name": "EntryPoint",
@@ -676,8 +671,7 @@
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "transmitManager__": "0x6332e56A423480A211E301Cb85be12814e9238Bb",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
-      },
-      "derivedName": "Socket"
+      }
     },
     {
       "name": "KintoAppRegistry",
@@ -897,8 +891,7 @@
           "severity": "HIGH",
           "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
         }
-      },
-      "derivedName": "KintoAppRegistry"
+      }
     },
     {
       "name": "Treasury",
@@ -936,8 +929,7 @@
         "$upgradeCount": 1,
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "Treasury"
+      }
     },
     {
       "name": "",
@@ -1207,8 +1199,7 @@
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
         "totalWallets": 72511
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
-      "derivedName": "KintoWalletFactory"
+      "fieldMeta": { "owner": { "severity": "HIGH" } }
     },
     {
       "name": "BundleBulker",
@@ -1506,8 +1497,7 @@
         "RolesRevoked": {
           "description": "List of roles revoked from accounts."
         }
-      },
-      "derivedName": "AccessManager"
+      }
     },
     {
       "name": "RewardsDistributor",
@@ -1586,8 +1576,7 @@
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      },
-      "derivedName": "RewardsDistributor"
+      }
     },
     {
       "name": "KintoID",
@@ -1836,8 +1825,7 @@
         "KYC_PROVIDERs": { "severity": "MEDIUM" },
         "GOVERNANCErs": { "severity": "HIGH" },
         "DEFAULT_ADMINs": { "severity": "HIGH" }
-      },
-      "derivedName": "KintoID"
+      }
     }
   ],
   "eoas": [

@@ -431,8 +431,7 @@
         "validatorsAndThreshold": {
           "description": "Validators and threshold of a random USDC message from Eclipse to Ethereum."
         }
-      },
-      "derivedName": "StaticMerkleRootMultisigIsm"
+      }
     },
     {
       "name": "Mailbox",
@@ -486,8 +485,7 @@
         "defaultIsm": {
           "description": "The default ISM contract that is used for all destination contracts that do not override it."
         }
-      },
-      "derivedName": "Mailbox"
+      }
     },
     {
       "name": "HypERC20Collateral",
@@ -574,8 +572,7 @@
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
         "module": { "severity": "HIGH" }
-      },
-      "derivedName": "DomainRoutingIsm"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -713,8 +710,7 @@
         "mailbox": "0xc005dc82818d67AF737725bD4bf75435d065D239",
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "wrappedToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "HypERC20Collateral"
+      }
     },
     {
       "name": "HypERC20Collateral",
@@ -816,8 +812,7 @@
         "validatorsAndThreshold": {
           "description": "Validators and threshold of a random USDC message from Eclipse to Ethereum."
         }
-      },
-      "derivedName": "StaticMessageIdMultisigIsm"
+      }
     }
   ],
   "eoas": [

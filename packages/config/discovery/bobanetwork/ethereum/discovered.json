@@ -412,13 +412,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
       ],
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -432,7 +431,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     },
     {
       "name": "SuperchainConfig",

@@ -1,7 +1,7 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 21910109,
+  "blockNumber": 21943925,
   "configHash": "0x1155515670e367ca1b73543337977c7d3c08c849b64ad65bcae0707ccbcb7f64",
   "contracts": [
     {
@@ -154,8 +154,7 @@
           "severity": "HIGH",
           "description": "The default receive lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed."
         }
-      },
-      "derivedName": "EndpointV2"
+      }
     },
     {
       "name": "BlockedMessageLib",
@@ -737,8 +736,7 @@
         "ulnConfig_CYBER": {
           "description": "The verification config of the CYBEROFTAdapter for all messages coming from BSC. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
         }
-      },
-      "derivedName": "SendUln302"
+      }
     },
     {
       "name": "ReceiveUln302",
@@ -752,8 +750,7 @@
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
-      },
-      "derivedName": "ReceiveUln302"
+      }
     },
     {
       "name": "CyberTokenAdapter",

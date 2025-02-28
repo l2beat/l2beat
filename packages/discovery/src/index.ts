@@ -52,7 +52,6 @@ export { NoCache } from './discovery/provider/NoCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,
-  removeComments,
 } from './flatten/utils'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
@@ -63,3 +62,9 @@ export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { DiscoverCommandArgs } from './cli/discoverCommand'
 export { ProviderStats } from './discovery/provider/Stats'
+export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
+export {
+  type ClingoFact,
+  type ClingoValue,
+  parseExportedFacts,
+} from './discovery/modelling/factTypes'

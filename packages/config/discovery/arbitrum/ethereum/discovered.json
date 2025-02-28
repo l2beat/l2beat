@@ -298,7 +298,6 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
       },
-      "derivedName": "Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -381,7 +380,6 @@
         "implementation": "0xc4940069140142236D4065b866018f7b2BeC77fD",
         "owner": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
-      "derivedName": "UpgradeableBeacon",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -522,7 +520,6 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
-      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -774,7 +771,6 @@
         "paused": false,
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
       },
-      "derivedName": "Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -896,7 +892,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1135,7 +1130,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "L1GatewayRouter",
+      "name": "GatewayRouter",
       "address": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -1143,7 +1138,6 @@
         "0x265fc73d2eec7f0b459f92a25a37b145c8db22527232f08f3022d5cc18d6af9d"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -1222,6 +1216,7 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1GatewayRouter",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1370,7 +1365,6 @@
         "sequencerMessageCount": 820924,
         "sequencerReportedSubMessageCount": 286067940
       },
-      "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1422,7 +1416,6 @@
       ],
       "sinceTimestamp": 1632133470,
       "values": { "$immutable": true },
-      "derivedName": "L1Escrow",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1507,7 +1500,6 @@
         "l2BeaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
-      "derivedName": "L1ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1567,7 +1559,6 @@
         "stakeAmounts": [0, "555000000000000000000", "79000000000000000000"],
         "stakeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "derivedName": "EdgeChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1594,7 +1585,6 @@
         "numRemaining": 0,
         "root": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
-      "derivedName": "OutboxEntry",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1683,7 +1673,6 @@
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
-      "derivedName": "L1CustomGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1745,7 +1734,6 @@
         "l2Counterpart": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
         "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
       },
-      "derivedName": "L1DaiGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {

@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x0f3b02dbacc0016e5e1e7bc0775e9434bdcab4ff
+
+# Diff at Thu, 27 Feb 2025 14:44:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6fe2d9909e2842e4f6333df986a5df30c18337ea block: 21922694
+- current block number: 21938183
+
+## Description
+
+mute tokens disco.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21922694 (main branch discovery), not current.
+
+```diff
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa) {
+    +++ description: Ethereum Beacon Chain deposit contract.
+      template:
++        "global/DepositContract"
+      description:
++        "Ethereum Beacon Chain deposit contract."
+    }
+```
+
+```diff
+    contract ValidatorsExitBusOracle (0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      values.getLastProcessingRefSlot:
+-        11135999
+      template:
++        "tokens/Lido/ValidatorsExitBusOracle"
+    }
+```
+
+```diff
+    contract wstETH_tokenContract (0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0) {
+    +++ description: None
+      name:
+-        "WstETH"
++        "wstETH_tokenContract"
+      displayName:
+-        "wstETH_tokenContract"
+    }
+```
+
+```diff
+    contract stETH_tokenContract (0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      name:
+-        "Lido"
++        "stETH_tokenContract"
+      displayName:
+-        "stETH_tokenContract"
+    }
+```
+
+```diff
+    contract STRK_tokenContract (0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) {
+    +++ description: None
+      name:
+-        "StarkNetToken"
++        "STRK_tokenContract"
+      displayName:
+-        "STRK_tokenContract"
+    }
+```
+
 Generated with discovered.json: 0x5a65b2e8697fdbcc17d906e8eb1eb7a55c4c894a
 
 # Diff at Tue, 25 Feb 2025 13:08:53 GMT:

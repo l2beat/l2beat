@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('xai', 'arbitrum')
 export const xai: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.L3ParentChain.Arbitrum],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -35,7 +35,7 @@ export const xai: Layer3 = orbitStackL3({
       ],
     },
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],

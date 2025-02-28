@@ -54,8 +54,7 @@
         "optimisticMode": {
           "description": "When it's disabled, all roots must be passed via canonical rollup AMBs."
         }
-      },
-      "derivedName": "MainnetSpokeConnector"
+      }
     },
     {
       "name": "VotingToken",
@@ -117,8 +116,7 @@
         "ZodiacModule_guard": "0x0000000000000000000000000000000000000000",
         "ZodiacModule_modules": [],
         "ZodiacModule_target": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
-      },
-      "derivedName": "OptimisticGovernor"
+      }
     },
     {
       "name": "BaseHubConnector",
@@ -257,8 +255,7 @@
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "ProposerV2"
+      }
     },
     {
       "name": "RootManager",
@@ -336,8 +333,7 @@
           "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
           "type": "PERMISSION"
         }
-      },
-      "derivedName": "RootManager"
+      }
     },
     {
       "name": "LineaHubConnector",
@@ -359,8 +355,7 @@
         "proposedTimestamp": 0,
         "renounced": false,
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A"
-      },
-      "derivedName": "LineaHubConnector"
+      }
     },
     {
       "name": "MantleHubConnector",
@@ -384,8 +379,7 @@
         "renounced": false,
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A",
         "stateCommitmentChain": "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa"
-      },
-      "derivedName": "MantleHubConnector"
+      }
     },
     {
       "name": "OptimismHubConnector",
@@ -409,8 +403,7 @@
         "proposedTimestamp": 0,
         "renounced": false,
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A"
-      },
-      "derivedName": "OptimismHubConnector"
+      }
     },
     {
       "name": "Relayer10",
@@ -493,8 +486,7 @@
           "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
           "type": "PERMISSION"
         }
-      },
-      "derivedName": "WatcherManager"
+      }
     },
     {
       "name": "GovernorV2",
@@ -513,8 +505,7 @@
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
         "numProposals": 205
-      },
-      "derivedName": "GovernorV2"
+      }
     },
     {
       "name": "ModeHubConnector",
@@ -601,8 +592,7 @@
         "proposedTimestamp": 1712618303,
         "renounced": false,
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A"
-      },
-      "derivedName": "PolygonZkHubConnector"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -658,8 +648,7 @@
         "renounced": false,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A"
-      },
-      "derivedName": "ArbitrumHubConnector"
+      }
     },
     {
       "name": "ConnextBridge",
@@ -1004,8 +993,7 @@
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "EmergencyProposer"
+      }
     },
     {
       "name": "Relayer5",
@@ -1114,8 +1102,7 @@
         "refundAddress": "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
         "renounced": false,
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A"
-      },
-      "derivedName": "WormholeHubConnector"
+      }
     },
     {
       "name": "RelayerProxyHub3",
@@ -1275,8 +1262,7 @@
         "renounced": false,
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A",
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036"
-      },
-      "derivedName": "PolygonHubConnector"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -1348,8 +1334,7 @@
         "proposedTimestamp": 0,
         "renounced": false,
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A"
-      },
-      "derivedName": "GnosisHubConnector"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -1435,8 +1420,7 @@
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      },
-      "derivedName": "OptimisticOracleV3"
+      }
     }
   ],
   "eoas": [

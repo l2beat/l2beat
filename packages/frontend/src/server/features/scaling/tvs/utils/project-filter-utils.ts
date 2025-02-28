@@ -1,4 +1,4 @@
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { isProjectOther } from '../../utils/is-project-other'
@@ -23,30 +23,34 @@ export type TvsProjectFilter = z.infer<typeof TvsProjectFilter>
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
   previewRecategorisation?: boolean,
-): (project: Layer2 | Layer3 | Bridge) => boolean {
+): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
   switch (filter.type) {
     case 'layer2':
+      return (project) => !!project.scalingInfo
     case 'bridge':
-      return (project) => project.type === filter.type
+      return (project) => !!project.isBridge
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'rollups':
       return (project) =>
-        !isProjectOther(project, previewRecategorisation) &&
-        !(previewRecategorisation && project.isUnderReview) && // If previewRecategorisation is true, we exclude projects that are under review
-        (project.display.category === 'Optimistic Rollup' ||
-          project.display.category === 'ZK Rollup')
+        !!project.scalingInfo &&
+        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        !(previewRecategorisation && project.statuses.isUnderReview) && // If previewRecategorisation is true, we exclude projects that are under review
+        (project.scalingInfo.type === 'Optimistic Rollup' ||
+          project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
-        !isProjectOther(project, previewRecategorisation) &&
-        !(previewRecategorisation && project.isUnderReview) &&
-        (project.display.category === 'Validium' ||
-          project.display.category === 'Optimium' ||
-          project.display.category === 'Plasma')
+        !!project.scalingInfo &&
+        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        !(previewRecategorisation && project.statuses.isUnderReview) &&
+        (project.scalingInfo.type === 'Validium' ||
+          project.scalingInfo.type === 'Optimium' ||
+          project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
-        isProjectOther(project, previewRecategorisation) &&
-        !(previewRecategorisation && project.isUnderReview)
+        !!project.scalingInfo &&
+        isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        !(previewRecategorisation && project.statuses.isUnderReview)
     default:
       assertUnreachable(filter)
   }

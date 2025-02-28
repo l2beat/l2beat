@@ -894,8 +894,7 @@
           "301": "0x000000000000000000000000fe5dfa6b4d6be848b57dd378b0798af60f1e6d35",
           "303": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     },
     {
       "name": "LayerZero Multisig",
@@ -1020,8 +1019,7 @@
           "0x443CAa8CD23D8CC1e04B3Ce897822AEa6ad3EbDA"
         ],
         "owner": "0x5e306343ecf32B605d88c1e44f3879699ab5144D"
-      },
-      "derivedName": "Endpoint"
+      }
     },
     {
       "name": "FPValidator",

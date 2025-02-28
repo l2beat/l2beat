@@ -1,4 +1,3 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
@@ -42,10 +41,7 @@ const getCached7dTokenBreakdown = cache(
       (p) => p.chainConfig,
     )
     const tvsValues = await getTvsValuesForProjects(
-      await getTvsProjects(
-        (project) => project.type === 'layer2' || project.type === 'layer3',
-        chains,
-      ),
+      await getTvsProjects((project) => !!project.scalingInfo, chains),
       '7d',
     )
 
@@ -142,11 +138,12 @@ const getCached7dTokenBreakdown = cache(
   },
 )
 
-function getMockTvsBreakdownData(): SevenDayTvsBreakdown {
+async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
+  const projects = await ps.getProjects({ where: ['tvlConfig'] })
   return {
     total: 1000,
     projects: Object.fromEntries(
-      [...layer2s, ...layer3s, ...bridges].map((project) => [
+      projects.map((project) => [
         project.id,
         {
           breakdown: {

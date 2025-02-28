@@ -170,8 +170,7 @@
         "FEE_ADMIN": "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e",
         "ORACLE": "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8",
         "UPGRADER": "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c"
-      },
-      "derivedName": "CronosZkEVMAdmin"
+      }
     },
     {
       "name": "CronosZkEvm",
@@ -450,8 +449,7 @@
         "$immutable": true,
         "owner": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "TransactionFiltererDenyList"
+      }
     },
     {
       "name": "TxFiltererOwnerMultisig",

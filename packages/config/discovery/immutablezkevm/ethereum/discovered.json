@@ -68,8 +68,7 @@
         "initializerAddress": "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
         "rootBridge": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
         "TARGET_MANAGER_ROLE": "0x28a0840e09502c63ed1e83b95421995a3ea654657390bb15ac27b2b85aef53b2"
-      },
-      "derivedName": "RootAxelarBridgeAdaptor"
+      }
     },
     {
       "name": "ChildERC20",

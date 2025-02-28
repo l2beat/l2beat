@@ -148,7 +148,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "PolygonZkEVMBridgeV2",
+      "name": "PolygonSharedBridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "template": "polygon-cdk/PolygonSharedBridge",
       "sourceHashes": [
@@ -156,7 +156,6 @@
         "0x058729592838a622eff2eb394278ff5d53065feeca04c216a67e973178ac1ac2"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonSharedBridge",
       "description": "The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.",
       "issuedPermissions": [
         {
@@ -207,6 +206,7 @@
           "description": "pauses the bridge, managed by the PolygonRollupManager."
         }
       },
+      "derivedName": "PolygonZkEVMBridgeV2",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -708,7 +708,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "PolygonZkEVMGlobalExitRootV2",
+      "name": "PolygonGlobalExitRootV2",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "template": "polygon-cdk/PolygonGlobalExitRootV2",
       "sourceHashes": [
@@ -716,7 +716,6 @@
         "0x5cd6999aa568aa00dc997f5d179426b88bf3797f4618bc4cce28b6cf5f8e76d6"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonGlobalExitRootV2",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
       "issuedPermissions": [
         {
@@ -760,6 +759,7 @@
         "getRoot": "0xbae721eef85de84b961e6ab30e0fab0656314bc717b9b013071fa0ca5786e07e",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
+      "derivedName": "PolygonZkEVMGlobalExitRootV2",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -804,13 +804,12 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "PolygonZkEVMTimelock",
+      "name": "Timelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
       "template": "polygon-cdk/Timelock",
       "sourceHashes": [
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
       ],
-      "displayName": "Timelock",
       "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
       "issuedPermissions": [
         {
@@ -1190,6 +1189,7 @@
           "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
         ]
       },
+      "derivedName": "PolygonZkEVMTimelock",
       "category": { "name": "Governance", "priority": 3 }
     }
   ],

@@ -231,8 +231,7 @@
           "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506"
         ],
         "version": 2
-      },
-      "derivedName": "BridgeValidators"
+      }
     },
     {
       "name": "DaiForeignBridge",

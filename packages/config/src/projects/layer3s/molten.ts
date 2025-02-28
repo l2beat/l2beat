@@ -11,11 +11,7 @@ const discovery = new ProjectDiscovery('molten', 'arbitrum')
 export const molten: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1716471996), // 2024-05-23T13:46:36Z
   discovery,
-  additionalBadges: [
-    BADGES.DA.DAC,
-    BADGES.L3ParentChain.Arbitrum,
-    BADGES.RaaS.Caldera,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -55,7 +51,7 @@ export const molten: Layer3 = orbitStackL3({
       },
     ],
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [

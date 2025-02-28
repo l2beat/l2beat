@@ -13,7 +13,7 @@ const discovery = new ProjectDiscovery('real')
 export const real: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -58,7 +58,7 @@ export const real: Layer2 = orbitStackL2({
   },
   associatedTokens: ['RWA'], // native token reETH not on coingecko yet
   isNodeAvailable: 'UnderReview',
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   gasTokens: { untracked: ['reETH'] },

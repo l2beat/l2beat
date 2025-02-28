@@ -18,8 +18,7 @@
         "feeLimit": "100000000000000000000",
         "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
         "rollupProcessor": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
-      },
-      "derivedName": "AztecFeeDistributor"
+      }
     },
     {
       "name": "DefiBridgeProxy",
@@ -214,8 +213,7 @@
         ],
         "rollupStateHash": "0x795a52c2d8cb26fde9cbc3df5fba2149ceba20f20ad3006d0921f84fedfa51ef",
         "verifier": "0xb7baA1420f88b7758E341c93463426A2b7651CFB"
-      },
-      "derivedName": "RollupProcessorV3"
+      }
     }
   ],
   "eoas": [

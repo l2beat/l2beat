@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x71876173bf16b69ab343673e41833f65ba8224c9
+
+# Diff at Thu, 27 Feb 2025 11:45:43 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21723939
+- current block number: 21723939
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723939 (main branch discovery), not current.
+
+```diff
+    contract RollupEventInbox (0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      name:
+-        "ERC20RollupEventInbox"
++        "RollupEventInbox"
+      displayName:
+-        "RollupEventInbox"
+    }
+```
+
 Generated with discovered.json: 0x0136c194a96315acbdf5c99885f1e1e15df32be9
 
 # Diff at Fri, 21 Feb 2025 14:07:11 GMT:

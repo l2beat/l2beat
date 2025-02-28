@@ -264,7 +264,7 @@ export class ProjectDiscovery {
       )
       assert(
         contracts.length === 1,
-        `Found no contract of ${identifier} name (${this.projectName})`,
+        `Found no contract of ${identifier} name (${this.projectName}) on ${this.chain}`,
       )
 
       return contracts[0]

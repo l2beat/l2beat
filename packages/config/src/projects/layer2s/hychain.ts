@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('hychain', 'ethereum')
 
 export const hychain: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1710846977), // 2024-03-19T11:16:17Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -37,7 +37,7 @@ export const hychain: Layer2 = orbitStackL2({
   discovery,
   gasTokens: { tracked: ['TOPIA'] },
   associatedTokens: ['TOPIA'],
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   chainConfig: {

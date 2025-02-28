@@ -61,8 +61,7 @@
         "hermezRollup": "0xA68D85dF56E733A06443306A095646317B5Fa633",
         "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
         "tokenHEZ": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
-      },
-      "derivedName": "HermezAuctionProtocol"
+      }
     },
     {
       "name": "Verifier2048",
@@ -233,8 +232,7 @@
         "withdrawalDelay": 259200,
         "withdrawDelayerContract": "0x392361427Ef5e17b69cFDd1294F31ab555c86124",
         "withdrawVerifier": "0x4464A1E499cf5443541da6728871af1D5C4920ca"
-      },
-      "derivedName": "Hermez"
+      }
     },
     {
       "name": "GnosisSafe",

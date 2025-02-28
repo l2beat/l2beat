@@ -29,8 +29,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
-      },
-      "derivedName": "History"
+      }
     },
     {
       "name": "InputBox",
@@ -39,8 +38,7 @@
         "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
       ],
       "sinceTimestamp": 1690464923,
-      "values": { "$immutable": true },
-      "derivedName": "InputBox"
+      "values": { "$immutable": true }
     },
     {
       "name": "ERC20Portal",
@@ -52,8 +50,7 @@
       "values": {
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
-      },
-      "derivedName": "ERC20Portal"
+      }
     },
     {
       "name": "Authority",
@@ -66,8 +63,7 @@
         "$immutable": true,
         "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
         "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
-      },
-      "derivedName": "Authority"
+      }
     }
   ],
   "eoas": [

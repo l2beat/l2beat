@@ -38,28 +38,28 @@ export const getCachedRecategorisedActivityChartData = cache(
     previewRecategorisation: boolean,
   ) => {
     const db = getDb()
-    const projects = getActivityProjects().filter(
+    const projects = (await getActivityProjects()).filter(
       createActivityProjectsFilter(filter, previewRecategorisation),
     )
 
     const rollups = projects
       .filter(
         (p) =>
-          (p.display.category === 'ZK Rollup' ||
-            p.display.category === 'Optimistic Rollup') &&
-          !isProjectOther(p, previewRecategorisation),
+          (p.scalingInfo.type === 'ZK Rollup' ||
+            p.scalingInfo.type === 'Optimistic Rollup') &&
+          !isProjectOther(p.scalingInfo, previewRecategorisation),
       )
       .map((p) => p.id)
     const validiumsAndOptimiums = projects
       .filter(
         (p) =>
-          (p.display.category === 'Validium' ||
-            p.display.category === 'Optimium') &&
-          !isProjectOther(p, previewRecategorisation),
+          (p.scalingInfo.type === 'Validium' ||
+            p.scalingInfo.type === 'Optimium') &&
+          !isProjectOther(p.scalingInfo, previewRecategorisation),
       )
       .map((p) => p.id)
     const others = projects
-      .filter((p) => isProjectOther(p, previewRecategorisation))
+      .filter((p) => isProjectOther(p.scalingInfo, previewRecategorisation))
       .map((p) => p.id)
 
     const adjustedRange = getFullySyncedActivityRange(range)

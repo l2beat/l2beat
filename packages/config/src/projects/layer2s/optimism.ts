@@ -132,7 +132,6 @@ export const optimism: Layer2 = {
     BADGES.DA.EthereumBlobs,
     BADGES.Stack.OPStack,
     BADGES.Infra.Superchain,
-    BADGES.Other.L3HostChain,
     BADGES.Other.Governance,
   ],
   display: {

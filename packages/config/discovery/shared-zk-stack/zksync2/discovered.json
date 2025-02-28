@@ -1,9 +1,75 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 55387644,
-  "configHash": "0x1e7fb9bfd4ef675b1219d368f9aae16a792c38fdfe0b298abc2aed6ecb1b9482",
+  "blockNumber": 56755451,
+  "configHash": "0x2ff4a748267927c93feaae320418b14c02b98f130f94cebb82fe9329cddaa032",
   "contracts": [
+    {
+      "name": "ProtocolTimelockController",
+      "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+      "template": "shared-zk-stack/TimelockController",
+      "sourceHashes": [
+        "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
+      ],
+      "description": "This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "description": "propose transactions.",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1738853604,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x085b8B6407f150D62adB1EF926F7f304600ec714"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+          }
+        },
+        "Canceller": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 0,
+        "getMinDelay_formatted": "0s",
+        "Proposer": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "derivedName": "TimelockController"
+    },
     {
       "name": "ZkTokenGovernor",
       "address": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
@@ -72,7 +138,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1738834448,
+        "clock": 1740739456,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -103,75 +169,8 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkTokenGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "name": "ProtocolTimelockController",
-      "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
-      "template": "shared-zk-stack/TimelockController",
-      "sourceHashes": [
-        "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
-      ],
-      "description": "Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "cancel queued transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "execute transactions that are ready.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
-          "description": "propose transactions.",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1723144916,
-      "values": {
-        "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "TIMELOCK_ADMIN_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"]
-          },
-          "PROPOSER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
-          },
-          "EXECUTOR_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
-          },
-          "CANCELLER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
-          }
-        },
-        "Canceller": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
-        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
-        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "getMinDelay": 0,
-        "getMinDelay_formatted": "0s",
-        "Proposer": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
-        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      },
-      "derivedName": "TimelockController"
     },
     {
       "name": "TokenTimelockController",
@@ -297,7 +296,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1738834448,
+        "clock": 1740739456,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -326,7 +325,6 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkGovOpsGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -424,7 +422,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1738834448,
+        "clock": 1740739456,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -445,7 +443,7 @@
         "MinterAdmin": ["0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "12468942832985200000000000000"
+        "totalSupply": "12990000568015200000000000000"
       },
       "derivedName": "ZkTokenV2"
     },
@@ -460,24 +458,24 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "cancel queued transactions."
         },
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "execute transactions that are ready."
         },
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "propose transactions."
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714"
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -491,7 +489,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1738834448,
+        "clock": 1740739456,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -506,20 +504,19 @@
           "extensions": []
         },
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
-        "lateQuorumVoteExtension": 604800,
+        "lateQuorumVoteExtension": 259200,
         "name": "ZkProtocolGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 4,
+        "proposalQueuedCount": 6,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
-        "timelock": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+        "timelock": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
         "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
-        "votingDelay": 604800,
+        "votingDelay": 259200,
         "votingPeriod": 604800
       },
-      "derivedName": "ZkProtocolGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -719,6 +716,45 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
+    "0x085b8B6407f150D62adB1EF926F7f304600ec714": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
     "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": [
       "constructor(tuple(string name, address token, address timelock, uint48 initialVotingDelay, uint32 initialVotingPeriod, uint256 initialProposalThreshold, uint224 initialQuorum, uint64 initialVoteExtension, address vetoGuardian, address proposeGuardian, bool isProposeGuarded) params)",
       "error Empty()",
@@ -792,45 +828,6 @@
       "function voteWeightCast(uint256 proposalId, address account) view returns (uint128)",
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
-    ],
-    "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": [
-      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
-      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
-      "event CallSalt(bytes32 indexed id, bytes32 salt)",
-      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
-      "event Cancelled(bytes32 indexed id)",
-      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function CANCELLER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EXECUTOR_ROLE() view returns (bytes32)",
-      "function PROPOSER_ROLE() view returns (bytes32)",
-      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
-      "function cancel(bytes32 id)",
-      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
-      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
-      "function getMinDelay() view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getTimestamp(bytes32 id) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
-      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
-      "function isOperation(bytes32 id) view returns (bool)",
-      "function isOperationDone(bytes32 id) view returns (bool)",
-      "function isOperationPending(bytes32 id) view returns (bool)",
-      "function isOperationReady(bytes32 id) view returns (bool)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
-      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function updateDelay(uint256 newDelay)"
     ],
     "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",

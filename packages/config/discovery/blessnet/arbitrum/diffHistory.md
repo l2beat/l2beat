@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x5ca5b98b16cb13c7462efb657c468157b8aff6cb
+
+# Diff at Thu, 27 Feb 2025 11:47:22 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 308389533
+- current block number: 308389533
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308389533 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "ERC20Outbox"
++        "Outbox"
+      displayName:
+-        "Outbox"
+    }
+```
+
+```diff
+    contract Inbox (0x46B6462301182B393ac5f014779687d3B6d4FB57) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "ERC20Inbox"
++        "Inbox"
+      displayName:
+-        "Inbox"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x67B01721383baedF4b27B745bf533F6F7bDc4AE4) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      name:
+-        "ERC20RollupEventInbox"
++        "RollupEventInbox"
+      displayName:
+-        "RollupEventInbox"
+    }
+```
+
+```diff
+    contract Bridge (0xC1bf6E0Ac80e92A331c4D448652C4824D4195459) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "ERC20Bridge"
++        "Bridge"
+      displayName:
+-        "Bridge"
+    }
+```
+
 Generated with discovered.json: 0xf76ceec34efab8b820bf6d548bdadd938f094895
 
 # Diff at Fri, 21 Feb 2025 14:12:23 GMT:

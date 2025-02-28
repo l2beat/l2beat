@@ -69,15 +69,10 @@ function createIndexers(
   const dataIndexers: AggLayerIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
-  for (const chainConfig of config.chains) {
-    const chain = chainConfig.chain
-    if (!chainConfig.config) {
-      continue
-    }
-
+  for (const chain of config.chains) {
     const aggLayerAmountEntries = config.amounts.filter(
       (a): a is AggLayerAmountConfig =>
-        a.chain === chain &&
+        a.chain === chain.name &&
         (a.type === 'aggLayerL2Token' ||
           a.type === 'aggLayerNativeEtherPreminted' ||
           a.type === 'aggLayerNativeEtherWrapped'),
@@ -87,32 +82,29 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = dependencies.clients.getRpcClient(chain)
+    const rpcClient = dependencies.clients.getRpcClient(chain.name)
 
     const aggLayerService = new AggLayerService({
       rpcClient: rpcClient,
-      multicallClient: new MulticallClient(
-        rpcClient,
-        chainConfig.config.multicallConfig,
-      ),
+      multicallClient: new MulticallClient(rpcClient, chain.multicallConfig),
       bridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
     })
 
     const blockTimestampIndexer =
-      blockTimestampIndexers && blockTimestampIndexers.get(chain)
+      blockTimestampIndexers && blockTimestampIndexers.get(chain.name)
     assert(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',
     )
 
-    const configurations = toConfigurations(chainConfig, aggLayerAmountEntries)
+    const configurations = toConfigurations(chain, aggLayerAmountEntries)
 
     const aggLayerIndexer = new AggLayerIndexer({
       logger,
       parents: [blockTimestampIndexer],
       indexerService,
       configurations,
-      chain,
+      chain: chain.name,
       aggLayerService,
       serializeConfiguration,
       syncOptimizer,
@@ -160,16 +152,14 @@ function createIndexers(
 }
 
 function toConfigurations(
-  chainConfig: ChainTvlConfig,
+  chain: ChainTvlConfig,
   aggLayerAmountEntries: AggLayerAmountConfig[],
 ) {
-  assert(chainConfig.config)
-  const chainMinTimestamp = chainConfig.config.minBlockTimestamp
   const aggLayerAmountConfigurations = aggLayerAmountEntries.map((a) => ({
     id: createAmountId(a),
     properties: a,
-    minHeight: a.sinceTimestamp.lt(chainMinTimestamp)
-      ? chainMinTimestamp.toNumber()
+    minHeight: a.sinceTimestamp.lt(chain.minBlockTimestamp)
+      ? chain.minBlockTimestamp.toNumber()
       : a.sinceTimestamp.toNumber(),
     maxHeight: a.untilTimestamp?.toNumber() ?? null,
   }))

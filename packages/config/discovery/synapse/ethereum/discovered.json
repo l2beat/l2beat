@@ -52,8 +52,7 @@
         "name": "nUSD",
         "owner": "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8",
         "symbol": "nUSD"
-      },
-      "derivedName": "LPToken"
+      }
     },
     {
       "name": "SynapseBridge",
@@ -154,8 +153,7 @@
         "paused": false,
         "startBlockNumber": 0,
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "SynapseBridge"
+      }
     },
     {
       "name": "TimelockController",
@@ -205,8 +203,7 @@
           "0xdAC17F958D2ee523a2206206994597C13D831ec7"
         ],
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "L1BridgeZap"
+      }
     },
     {
       "name": "Bridge Multisig",

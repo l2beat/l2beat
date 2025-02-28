@@ -13,7 +13,7 @@ export const sxnetwork: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
   gasTokens: { tracked: ['SX'] },
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Betting'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -39,7 +39,7 @@ export const sxnetwork: Layer2 = orbitStackL2({
     },
   },
   isNodeAvailable: 'UnderReview',
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['SX'],

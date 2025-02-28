@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xe4001b65a027f70f385f73d4cad6689fa8860313
+
+# Diff at Thu, 27 Feb 2025 11:47:23 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 287770865
+- current block number: 287770865
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287770865 (main branch discovery), not current.
+
+```diff
+    contract CustomGateway (0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      name:
+-        "L1CustomGateway"
++        "CustomGateway"
+      displayName:
+-        "CustomGateway"
+    }
+```
+
+```diff
+    contract ERC20Gateway (0xB155C77a440DA7c282993a89FeA609598293017A) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      name:
+-        "L1ERC20Gateway"
++        "ERC20Gateway"
+      displayName:
+-        "ERC20Gateway"
+    }
+```
+
+```diff
+    contract GatewayRouter (0xe507b9EF563DB6CcFDcE270160C50b2005BeED20) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      name:
+-        "L1GatewayRouter"
++        "GatewayRouter"
+      displayName:
+-        "GatewayRouter"
+    }
+```
+
 Generated with discovered.json: 0xb719c87e94ceabe57b9944ac5a66f36cc4ec0ddc
 
 # Diff at Fri, 21 Feb 2025 14:12:25 GMT:
