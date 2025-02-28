@@ -1,5 +1,5 @@
-import type { ProxyDetails } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import type { ProxyDetails } from '../types'
 
 import type { IProvider } from '../../provider/IProvider'
 import { getModules } from '../../utils/getSafeModules'

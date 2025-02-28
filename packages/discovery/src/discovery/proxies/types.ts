@@ -1,4 +1,4 @@
-import type { ContractValue } from './Discovery'
+import type { ContractValue } from '@l2beat/discovery-types'
 
 export interface ProxyDetails {
   type: string

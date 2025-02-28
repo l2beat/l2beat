@@ -1,7 +1,8 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 export async function getEternalStorageProxy(
   provider: IProvider,

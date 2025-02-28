@@ -1,4 +1,4 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import {
   assert,
   Bytes,
@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, type providers, utils } from 'ethers'
+import type { ProxyDetails } from '../types'
 
 import { type Semver, parseSemver } from '../../../utils/semver'
 import type { IProvider } from '../../provider/IProvider'

@@ -1,4 +1,4 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import type { ManualProxyType } from '../config/RawDiscoveryConfig'
@@ -24,6 +24,7 @@ import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
+import type { ProxyDetails } from './types'
 
 type Detector = (
   provider: IProvider,
