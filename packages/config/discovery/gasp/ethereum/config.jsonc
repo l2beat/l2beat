@@ -8,6 +8,11 @@
       "0x79d968d9017B96f202aD4673A2c1BBbdc905A4ca" // Rolldown (Bridge?)
     ],
     "names": {},
-    "overrides": {}
+    "overrides": {
+      "0x79d968d9017B96f202aD4673A2c1BBbdc905A4ca":{
+        "ignoreMethods": ["deposits", "cancelResolutions", "getUpdateForL2", "findL2Batch", "find_l2_batch", "roots"],
+        "ignoreInWatchMode": [""]
+      }
+    }
   }
   
