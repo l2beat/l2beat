@@ -14,8 +14,9 @@ export type BridgesProjectEntry = Awaited<
 >
 
 export async function getBridgesProjectEntry(
-  project: Project<'tvlConfig', 'chainConfig'>,
+  project: Project<'tvlConfig' | 'bridgeInfo' | 'display', 'chainConfig'>,
 ) {
+  /** @deprecated */
   const legacy = bridges.find((x) => x.id === project.id)
   assert(legacy)
   const [projectsChangeReport, tvsProjectStats] = await Promise.all([
@@ -24,13 +25,12 @@ export async function getBridgesProjectEntry(
   ])
 
   const isProjectVerified = isVerified(legacy)
-  const changes = projectsChangeReport.getChanges(legacy.id)
+  const changes = projectsChangeReport.getChanges(project.id)
   const associatedTokens = legacy.config.associatedTokens ?? []
 
   return {
-    type: legacy.type,
-    name: legacy.display.name,
-    slug: legacy.display.slug,
+    name: project.name,
+    slug: project.slug,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!legacy.isUnderReview,
       ...changes,
@@ -38,7 +38,7 @@ export async function getBridgesProjectEntry(
     isArchived: !!legacy.isArchived,
     isUpcoming: !!legacy.isUpcoming,
     header: {
-      description: legacy.display.description,
+      description: project.display.description,
       warning: legacy.display.warning,
       links: getProjectLinks(legacy.display.links),
       tvs: tvsProjectStats
@@ -51,7 +51,7 @@ export async function getBridgesProjectEntry(
                     associatedRatio:
                       tvsProjectStats.tokenBreakdown.associated /
                       tvsProjectStats.tokenBreakdown.total,
-                    name: legacy.display.name,
+                    name: project.name,
                     associatedTokens,
                   }),
               ]),
@@ -61,7 +61,7 @@ export async function getBridgesProjectEntry(
           }
         : undefined,
       destination: getDestination(legacy.technology.destination),
-      category: legacy.display.category,
+      category: project.bridgeInfo.category,
       validatedBy: legacy.riskView?.validatedBy,
     },
     projectDetails: await getBridgeProjectDetails(

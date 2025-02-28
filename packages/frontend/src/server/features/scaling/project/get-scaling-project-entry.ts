@@ -1,6 +1,6 @@
 import type { Layer2, Layer3, Project } from '@l2beat/config'
 import { isVerified, layer2s, layer3s } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -10,7 +10,7 @@ import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { getCountdowns } from '../utils/get-countdowns'
-import { isProjectOther_legacy } from '../utils/is-project-other'
+import { isProjectOther } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
@@ -25,6 +25,7 @@ export type ScalingProjectEntry = Awaited<
 export async function getScalingProjectEntry(
   project: Project<'display' | 'scalingInfo' | 'tvlConfig', 'chainConfig'>,
 ) {
+  /** @deprecated */
   const legacy =
     layer2s.find((x) => x.id === project.id) ??
     layer3s.find((x) => x.id === project.id)
@@ -36,23 +37,23 @@ export async function getScalingProjectEntry(
       getActivityProjectStats(project.id),
       getTvsProjectStats(project),
     ])
-  const associatedTokens = legacy.config.associatedTokens ?? []
 
   const header = {
-    description: legacy.display.description,
+    description: project.display.description,
     warning: legacy.display.headerWarning,
     redWarning: legacy.display.redWarning,
-    category: isProjectOther_legacy(legacy) ? 'Other' : legacy.display.category,
-    purposes: legacy.display.purposes,
+    category: isProjectOther(project.scalingInfo)
+      ? 'Other'
+      : project.scalingInfo.type,
+    purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     rosetteValues: getScalingRosetteValues(legacy.riskView),
-    links: getProjectLinks(legacy.display.links),
+    links: getProjectLinks(project.display.links),
     hostChain:
-      legacy.type === 'layer3'
-        ? (layer2s.find((l) => l.id === legacy.hostChain)?.display.name ??
-          legacy.hostChain)
+      project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
+        ? project.scalingInfo.hostChain.name
         : undefined,
-    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(legacy.id.toString())
+    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id)
       ? {
           breakdown: tvsProjectStats?.tvsBreakdown,
           warning: legacy.display.tvlWarning,
@@ -65,23 +66,23 @@ export async function getScalingProjectEntry(
                   associatedRatio:
                     tvsProjectStats.tokenBreakdown.associated /
                     tvsProjectStats.tokenBreakdown.total,
-                  name: legacy.display.name,
-                  associatedTokens,
+                  name: project.name,
+                  associatedTokens: project.tvlConfig.associatedTokens,
                 }),
             ]),
-            associatedTokens,
+            associatedTokens: project.tvlConfig.associatedTokens,
           },
         }
       : undefined,
-    badges: legacy.badges,
+    badges: project.display.badges,
   }
 
   const changes = projectsChangeReport.getChanges(legacy.id)
   const common = {
-    type: legacy.type,
-    capability: legacy.capability,
-    name: legacy.display.name,
-    slug: legacy.display.slug,
+    type: project.scalingInfo.layer,
+    capability: project.scalingInfo.capability,
+    name: project.name,
+    slug: project.slug,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!legacy.isUnderReview,
       ...changes,
@@ -89,7 +90,7 @@ export async function getScalingProjectEntry(
     isArchived: !!legacy.isArchived,
     isUpcoming: !!legacy.isUpcoming,
     header,
-    reasonsForBeingOther: legacy.reasonsForBeingOther,
+    reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     countdowns: getCountdowns(legacy),
   }
   const daSolution = await getDaSolution(legacy)
@@ -108,8 +109,8 @@ export async function getScalingProjectEntry(
 
     return {
       ...common,
-      type: legacy.type,
-      stageConfig: isProjectOther_legacy(legacy)
+      type: project.scalingInfo.layer,
+      stageConfig: isProjectOther(project.scalingInfo)
         ? {
             stage: 'NotApplicable' as const,
           }
@@ -144,7 +145,7 @@ export async function getScalingProjectEntry(
 
   return {
     ...common,
-    type: legacy.type,
+    type: project.scalingInfo.layer,
     stageConfig: {
       stage: 'NotApplicable' as const,
     },
