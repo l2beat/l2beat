@@ -14,7 +14,6 @@ export const syndicateframe: Layer3 = opStackL3({
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  usesBlobs: true,
   display: {
     name: 'Syndicate Frame Chain',
     shortName: 'Frame Chain',
