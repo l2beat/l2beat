@@ -1,12 +1,13 @@
 import type { ClingoFact, ClingoValue } from './factTypes'
 
 export class KnowledgeBase {
-  private readonly idToNameMap: Record<string, string>
+  readonly idToNameMap: Record<string, string> = {}
+  readonly addressToIdMap: Record<string, string> = {}
   constructor(
     public readonly projectName: string,
-    private readonly facts: ClingoFact[],
+    public readonly facts: ClingoFact[],
   ) {
-    this.idToNameMap = this.buildIdToNameMap()
+    this.buildMaps()
   }
 
   getFacts(id: string, params: (string | number | undefined)[]): ClingoFact[] {
@@ -50,16 +51,33 @@ export class KnowledgeBase {
     )
   }
 
-  buildIdToNameMap(): Record<string, string> {
+  private buildMaps() {
     const contractFacts = this.getFacts('contract', [])
     const eoaFacts = this.getFacts('eoa', [])
-    const idToNameMap: Record<string, string> = {}
     ;[...contractFacts, ...eoaFacts].forEach((fact) => {
       const id = fact.params[0] as string
+      const chain = fact.params[1] as string
+      const address = fact.params[2] as string
       const name = fact.params[3] === '' ? fact.params[2] : fact.params[3]
-      idToNameMap[id] = name as string
+      this.idToNameMap[id] = name as string
+      const addressToIdKey = `${chain}:${address.toLowerCase()}`
+      if (addressToIdKey in this.addressToIdMap) {
+        throw new Error(`Duplicate address found ${addressToIdKey}`)
+      }
+      this.addressToIdMap[addressToIdKey] = id
     })
-    return idToNameMap
+  }
+
+  getIdOrUndefined(chain: string, address: string): string | undefined {
+    return this.addressToIdMap[`${chain}:${address.toLowerCase()}`]
+  }
+
+  getId(chain: string, address: string): string {
+    const id = this.getIdOrUndefined(chain, address)
+    if (id === undefined) {
+      throw new Error(`No id found for ${chain}:${address}`)
+    }
+    return id
   }
 }
 

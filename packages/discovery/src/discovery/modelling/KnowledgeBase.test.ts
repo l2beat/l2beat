@@ -20,13 +20,12 @@ describe(KnowledgeBase.name, () => {
     ])
   })
 
-  it(KnowledgeBase.prototype.buildIdToNameMap.name, () => {
+  it('properly builds internal mappings', () => {
     const knowledgeBase = new KnowledgeBase(
       'test',
       ClingoFactFile.parse(factsFile).facts,
     )
-    const result = knowledgeBase.buildIdToNameMap()
-    expect(result).toEqual({
+    expect(knowledgeBase.idToNameMap).toEqual({
       l2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee:
         'L2ERC20Gateway',
       constitutionHash_arbitrum_0x1d62ffeb72e4c360ccbbacf7c965153b00260417:
@@ -34,11 +33,43 @@ describe(KnowledgeBase.name, () => {
       eoa_ethereum_0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: 'Special EOA',
       eoa_ethereum_0xfe2bf40f2a9183774bf8e871d634a4e50255158b:
         '0xfe2bf40f2a9183774bf8e871d634a4e50255158b',
-      alternativeL2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee:
-        'L2ERC20Gateway',
       l2SurplusFee_arbitrum_0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d:
         'L2SurplusFee',
     })
+    expect(knowledgeBase.addressToIdMap).toEqual({
+      'arbitrum:0x1d62ffeb72e4c360ccbbacf7c965153b00260417':
+        'constitutionHash_arbitrum_0x1d62ffeb72e4c360ccbbacf7c965153b00260417',
+      'arbitrum:0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d':
+        'l2SurplusFee_arbitrum_0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d',
+      'ethereum:0x09e9222e96e7b4ae2a407b98d48e330053351eee':
+        'l2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee',
+      'ethereum:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee':
+        'eoa_ethereum_0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+      'ethereum:0xfe2bf40f2a9183774bf8e871d634a4e50255158b':
+        'eoa_ethereum_0xfe2bf40f2a9183774bf8e871d634a4e50255158b',
+    })
+  })
+
+  it('fails when duplicate addresses are found', () => {
+    const factsWithDup = {
+      facts: [
+        ...factsFile.facts,
+        {
+          atom: 'contract',
+          params: [
+            'alternativeL2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee',
+            'ethereum',
+            '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
+            'L2ERC20Gateway',
+          ],
+        },
+      ],
+    }
+    expect(
+      () => new KnowledgeBase('test', ClingoFactFile.parse(factsWithDup).facts),
+    ).toThrow(
+      'Duplicate address found ethereum:0x09e9222e96e7b4ae2a407b98d48e330053351eee',
+    )
   })
 
   describe(KnowledgeBase.prototype.getFactOrUndefined.name, () => {
@@ -68,27 +99,35 @@ describe(KnowledgeBase.name, () => {
     })
 
     it('throws when multiple facts are found', () => {
+      const factsFile = {
+        facts: [
+          {
+            atom: 'fact',
+            params: ['personA', 'can', 'eat', 'apple'],
+          },
+          {
+            atom: 'fact',
+            params: ['personB', 'can', 'eat', 'apple'],
+          },
+          {
+            atom: 'fact',
+            params: ['personC', 'can', 'eat', 'fruit'],
+          },
+        ],
+      }
       const knowledgeBase = new KnowledgeBase(
         'test',
         ClingoFactFile.parse(factsFile).facts,
       )
       expect(() =>
-        knowledgeBase.getFactOrUndefined('contract', [
-          undefined,
-          'ethereum',
-          '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
-        ]),
+        knowledgeBase.getFactOrUndefined('fact', [undefined, 'can', 'eat']),
       ).toThrow(
-        'Found multiple facts with "contract" id and params: [null,"ethereum","0x09e9222e96e7b4ae2a407b98d48e330053351eee"]',
+        'Found multiple facts with "fact" id and params: [null,"can","eat"]',
       )
       expect(() =>
-        knowledgeBase.getFact('contract', [
-          undefined,
-          'ethereum',
-          '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
-        ]),
+        knowledgeBase.getFact('fact', [undefined, 'can', 'eat']),
       ).toThrow(
-        'Found multiple facts with "contract" id and params: [null,"ethereum","0x09e9222e96e7b4ae2a407b98d48e330053351eee"]',
+        'Found multiple facts with "fact" id and params: [null,"can","eat"]',
       )
     })
   })
@@ -117,33 +156,86 @@ describe(KnowledgeBase.name, () => {
       'Contract L2ERC20Gateway, eoa Special EOA, unknown a_b_c',
     )
   })
+
+  describe(KnowledgeBase.prototype.getIdOrUndefined.name, () => {
+    it('returns undefined when no id is found', () => {
+      const knowledgeBase = new KnowledgeBase(
+        'test',
+        ClingoFactFile.parse(factsFile).facts,
+      )
+      expect(
+        knowledgeBase.getIdOrUndefined(
+          'ethereum',
+          '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        ),
+      ).toEqual(undefined)
+    })
+
+    it('returns id when found', () => {
+      const knowledgeBase = new KnowledgeBase(
+        'test',
+        ClingoFactFile.parse(factsFile).facts,
+      )
+      expect(
+        knowledgeBase.getId(
+          'ethereum',
+          '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
+        ),
+      ).toEqual(
+        'l2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee',
+      )
+    })
+
+    it('throws when no id is found', () => {
+      const knowledgeBase = new KnowledgeBase(
+        'test',
+        ClingoFactFile.parse(factsFile).facts,
+      )
+      expect(() =>
+        knowledgeBase.getId(
+          'ethereum',
+          '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        ),
+      ).toThrow(
+        'No id found for ethereum:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      )
+    })
+  })
 })
 
 describe(groupFacts.name, () => {
   it('correctly groups facts', () => {
+    const factsFile = {
+      facts: [
+        {
+          atom: 'fact',
+          params: ['personA', 'can', 'eat', 'apple'],
+        },
+        {
+          atom: 'fact',
+          params: ['personB', 'can', 'eat', 'apple'],
+        },
+        {
+          atom: 'fact',
+          params: ['personC', 'can', 'eat', 'fruit'],
+        },
+      ],
+    }
     const knowledgeBase = new KnowledgeBase(
       'test',
       ClingoFactFile.parse(factsFile).facts,
     )
-    const ethereumContractFacts = knowledgeBase.getFacts('contract', [
-      undefined,
-      'ethereum',
+    const ethereumContractFacts = knowledgeBase.getFacts('fact', [
       undefined,
       undefined,
+      undefined,
+      'apple',
     ])
     const result = groupFacts(ethereumContractFacts, 0)
     expect(result).toEqual([
       {
-        atom: 'contract',
-        params: [
-          [
-            'l2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee',
-            'alternativeL2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee',
-          ],
-          'ethereum',
-          '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
-          'L2ERC20Gateway',
-        ],
+        atom: 'fact',
+        params: [['personA', 'personB'], 'can', 'eat', 'apple'],
       },
     ])
   })
@@ -153,17 +245,6 @@ const contract_0x09e9222e96e7b4ae2a407b98d48e330053351eee = {
   atom: 'contract',
   params: [
     'l2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee',
-    'ethereum',
-    '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
-    'L2ERC20Gateway',
-  ],
-}
-
-// this is just to test grouping:
-const contract_alt_0x09e9222e96e7b4ae2a407b98d48e330053351eee = {
-  atom: 'contract',
-  params: [
-    'alternativeL2ERC20Gateway_ethereum_0x09e9222e96e7b4ae2a407b98d48e330053351eee',
     'ethereum',
     '0x09e9222e96e7b4ae2a407b98d48e330053351eee',
     'L2ERC20Gateway',
@@ -213,7 +294,6 @@ const eoa_0xfe2bf40f2a9183774bf8e871d634a4e50255158b = {
 const factsFile = {
   facts: [
     contract_0x09e9222e96e7b4ae2a407b98d48e330053351eee,
-    contract_alt_0x09e9222e96e7b4ae2a407b98d48e330053351eee,
     contract_0x1d62ffeb72e4c360ccbbacf7c965153b00260417,
     contract_0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d,
     eoa_0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
