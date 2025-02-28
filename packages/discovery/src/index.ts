@@ -77,3 +77,4 @@ export type {
   ResolvedPermissionPath,
 } from './discovery/output/types'
 export type { ContractValue } from './discovery/utils/types'
+export { get$Implementations } from './discovery/utils/extractors'

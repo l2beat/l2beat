@@ -4,7 +4,7 @@ import {
   type DiscoveryOutput,
   getChainShortName,
 } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery'
 import type { ContractConfig } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
