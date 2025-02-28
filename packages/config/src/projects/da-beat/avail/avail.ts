@@ -38,6 +38,7 @@ export const avail: BaseProject = {
         'https://www.linkedin.com/company/availproject/',
       ],
     },
+    badges: [],
   },
   daLayer: {
     type: 'Public Blockchain',

@@ -1,9 +1,9 @@
-import { layer2s, layer3s } from '@l2beat/config'
 import type { ValueRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 
 export async function getDaProjectsTvs(projectIds: ProjectId[]) {
   if (env.MOCK) {
@@ -77,8 +77,9 @@ export function pickTvsForProjects(
   }
 }
 
-function getMockDaProjectsTvsData(): DaProjectsTvs {
-  return [...layer2s, ...layer3s].map((project) => ({
+async function getMockDaProjectsTvsData(): Promise<DaProjectsTvs> {
+  const projects = await ps.getProjects({ where: ['isScaling'] })
+  return projects.map((project) => ({
     projectId: project.id,
     tvs: 100000,
     tvs7d: 90000,

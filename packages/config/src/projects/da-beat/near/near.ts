@@ -36,6 +36,7 @@ export const near: BaseProject = {
         'https://discord.com/invite/zfhfRpaM4m',
       ],
     },
+    badges: [],
   },
   daLayer: {
     type: 'Public Blockchain',

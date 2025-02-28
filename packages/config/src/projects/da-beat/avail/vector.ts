@@ -27,6 +27,7 @@ export const vector: BaseProject = {
       documentation: ['https://docs.succinct.xyz/'],
       repositories: ['https://github.com/succinctlabs/sp1-vector'],
     },
+    badges: [],
   },
   daBridge: {
     name: 'Vector',
