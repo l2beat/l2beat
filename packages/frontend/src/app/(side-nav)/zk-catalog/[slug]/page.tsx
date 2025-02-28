@@ -72,7 +72,7 @@ export default async function Page(props: Props) {
   const projectDetails = getZkCatalogProjectDetails(project, verifiers)
 
   return (
-    <main>
+    <main className="header-height-project">
       <MainPageHeader>
         <Breadcrumbs
           items={[

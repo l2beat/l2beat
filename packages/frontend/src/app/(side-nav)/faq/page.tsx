@@ -32,7 +32,7 @@ export default async function Page() {
     <>
       <MainPageHeader>FAQ</MainPageHeader>
       <Header />
-      <main className="mt-0 flex gap-8 border-t border-divider md:mt-6 md:border-t-0">
+      <main className="header-height-faq mt-0 flex gap-8 border-t border-divider md:mt-6 md:border-t-0">
         <PrimaryCard>
           {faqItemsWithId.map((item) => {
             const answer = isArray(item.answer)
