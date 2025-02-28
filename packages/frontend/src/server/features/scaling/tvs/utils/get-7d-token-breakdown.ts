@@ -26,8 +26,8 @@ export async function get7dTokenBreakdownData({
       type === 'all'
         ? true
         : type === 'layer2'
-          ? project.type === 'layer2' || project.type === 'layer3'
-          : project.type === 'bridge',
+          ? !!project.scalingInfo
+          : !!project.isBridge,
     chains,
   )
 

@@ -9,7 +9,7 @@ import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { getCountdowns } from '../utils/get-countdowns'
-import { isProjectOther } from '../utils/is-project-other'
+import { isProjectOther_legacy } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
@@ -60,7 +60,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     return {
       ...common,
       type: project.type,
-      stageConfig: isProjectOther(project)
+      stageConfig: isProjectOther_legacy(project)
         ? {
             stage: 'NotApplicable' as const,
           }
@@ -117,7 +117,9 @@ async function getHeader(project: ScalingProject) {
     description: project.display.description,
     warning: project.display.headerWarning,
     redWarning: project.display.redWarning,
-    category: isProjectOther(project) ? 'Other' : project.display.category,
+    category: isProjectOther_legacy(project)
+      ? 'Other'
+      : project.display.category,
     purposes: project.display.purposes,
     activity: activityProjectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),

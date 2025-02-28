@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { isProjectOther2 } from '../../utils/is-project-other'
+import { isProjectOther } from '../../utils/is-project-other'
 
 export const ActivityProjectFilter = z.discriminatedUnion('type', [
   z.object({
@@ -21,20 +21,20 @@ export function createActivityProjectsFilter(
       return () => true
     case 'rollups':
       return (project) =>
-        !isProjectOther2(project, previewRecategorisation) &&
+        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
         !(previewRecategorisation && project.statuses.isUnderReview) && // If previewRecategorisation is true, we exclude projects that are under review
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
-        !isProjectOther2(project, previewRecategorisation) &&
+        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
         !(previewRecategorisation && project.statuses.isUnderReview) &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
-        isProjectOther2(project, previewRecategorisation) &&
+        isProjectOther(project.scalingInfo, previewRecategorisation) &&
         !(previewRecategorisation && project.statuses.isUnderReview)
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)

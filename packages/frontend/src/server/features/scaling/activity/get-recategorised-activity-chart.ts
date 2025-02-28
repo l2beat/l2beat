@@ -5,7 +5,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
-import { isProjectOther2 } from '../utils/is-project-other'
+import { isProjectOther } from '../utils/is-project-other'
 import { aggregateActivityRecords } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
@@ -47,7 +47,7 @@ export const getCachedRecategorisedActivityChartData = cache(
         (p) =>
           (p.scalingInfo.type === 'ZK Rollup' ||
             p.scalingInfo.type === 'Optimistic Rollup') &&
-          !isProjectOther2(p, previewRecategorisation),
+          !isProjectOther(p.scalingInfo, previewRecategorisation),
       )
       .map((p) => p.id)
     const validiumsAndOptimiums = projects
@@ -55,11 +55,11 @@ export const getCachedRecategorisedActivityChartData = cache(
         (p) =>
           (p.scalingInfo.type === 'Validium' ||
             p.scalingInfo.type === 'Optimium') &&
-          !isProjectOther2(p, previewRecategorisation),
+          !isProjectOther(p.scalingInfo, previewRecategorisation),
       )
       .map((p) => p.id)
     const others = projects
-      .filter((p) => isProjectOther2(p, previewRecategorisation))
+      .filter((p) => isProjectOther(p.scalingInfo, previewRecategorisation))
       .map((p) => p.id)
 
     const adjustedRange = getFullySyncedActivityRange(range)
