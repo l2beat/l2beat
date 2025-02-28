@@ -58,7 +58,7 @@ describe(OpStackDAHandler.name, () => {
       expect(isUsingEigenDA).toEqual(false)
     })
 
-    it('should throw if byte-check passes but we encounter malformed input', async () => {
+    it('should not throw if byte-check passes but we encounter malformed input', async () => {
       const invalidTransactions = [
         {
           hash: Hash256.random(),
@@ -74,7 +74,7 @@ describe(OpStackDAHandler.name, () => {
 
       expect(
         checkForEigenDA(baseProviderMock, invalidTransactions),
-      ).toBeRejected()
+      ).not.toBeRejected()
     })
 
     it('should return true if commitments have been confirmed', async () => {
