@@ -16,7 +16,7 @@ export function HashSectionHighlighter() {
         element.setAttribute('data-hash-highlighted', 'true')
         setTimeout(() => {
           element.removeAttribute('data-hash-highlighted')
-        }, 3000)
+        }, 5000)
       }
     }
   }

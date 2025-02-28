@@ -279,11 +279,13 @@
     @apply rounded-full bg-zinc-500;
   }
 
-  [data-hash-highlighted]:not(.primary-card) {
-    @apply bg-brand/15 !important;
+  tr[data-hash-highlighted] > td,
+  tr[data-hash-highlighted] > td ~ td {
+    mask-image: none !important;
+    @apply border-brand border-b bg-[#E6CAF0] !important;
   }
 
   .primary-card[data-hash-highlighted] {
-    @apply border-brand border-2 shadow-[0px_4px_12px_10px] shadow-[#FF5FFB40] !important;
+    @apply relative before:absolute before:inset-0 before:border-brand before:border-2 before:shadow-[0px_4px_12px_10px] before:shadow-[#FF5FFB40] before:rounded-lg !important;
   }
 }

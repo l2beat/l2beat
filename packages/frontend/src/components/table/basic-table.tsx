@@ -209,10 +209,12 @@ export function BasicTableRow<T extends CommonProjectEntry>({
               <TableCell
                 href={href}
                 align={meta?.align}
+                tdClassName={
+                  row.original.href && cell.column.getIsPinned()
+                    ? getRowTypeClassNamesWithoutOpacity(rowType)
+                    : undefined
+                }
                 className={cn(
-                  row.original.href &&
-                    cell.column.getIsPinned() &&
-                    getRowTypeClassNamesWithoutOpacity(rowType),
                   groupParams?.isFirstInGroup && 'pl-6',
                   groupParams?.isLastInGroup && '!pr-6',
                   cell.column.getCanSort() && meta?.align === undefined
