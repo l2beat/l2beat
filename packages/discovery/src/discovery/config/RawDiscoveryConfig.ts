@@ -1,7 +1,6 @@
 import {
   ContractFieldSeverity,
   ContractValueType,
-  ManualProxyType,
 } from '@l2beat/discovery-types'
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
@@ -91,6 +90,20 @@ export const DiscoveryCategory = z.object({
   name: z.string(),
   priority: z.number(),
 })
+
+export type ManualProxyType = z.infer<typeof ManualProxyType>
+export const ManualProxyType = z.enum([
+  'new Arbitrum proxy',
+  'call implementation proxy',
+  'zkSync Lite proxy',
+  'zkSpace proxy',
+  'Eternal Storage proxy',
+  'Polygon Extension proxy',
+  'Optics Beacon proxy',
+  'Axelar proxy',
+  'LightLink proxy',
+  'immutable',
+])
 
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({

@@ -1,10 +1,7 @@
-import type {
-  ContractValue,
-  ManualProxyType,
-  ProxyDetails,
-} from '@l2beat/discovery-types'
+import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
+import type { ManualProxyType } from '../config/RawDiscoveryConfig'
 import type { IProvider } from '../provider/IProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectAxelarProxy as getAxelarProxy } from './auto/AxelarProxy'
