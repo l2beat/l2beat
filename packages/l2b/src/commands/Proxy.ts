@@ -1,5 +1,5 @@
 import { ProxyDetector } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery'
 import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'

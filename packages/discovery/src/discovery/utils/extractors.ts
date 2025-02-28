@@ -1,6 +1,5 @@
-import type { ContractValue } from './Discovery'
-import type { EthereumAddress } from './EthereumAddress'
-import type { Hash256 } from './Hash256'
+import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import type { ContractValue } from './types'
 
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,

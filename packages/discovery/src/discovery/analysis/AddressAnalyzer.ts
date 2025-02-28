@@ -1,7 +1,5 @@
-import { get$PastUpgrades } from '@l2beat/discovery-types'
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
   DiscoveryCategory,
@@ -17,6 +15,11 @@ import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
+import {
+  get$Beacons,
+  get$Implementations,
+  get$PastUpgrades,
+} from '../utils/extractors'
 import type { ContractValue } from '../utils/types'
 import type { TemplateService } from './TemplateService'
 import { resolveCategory } from './category'

@@ -10,11 +10,6 @@ import type {
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
 import {
-  get$Admins,
-  get$Implementations,
-  toAddressArray,
-} from '@l2beat/discovery-types'
-import {
   assert,
   EthereumAddress,
   type TokenBridgedUsing,
@@ -36,6 +31,7 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
+import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]

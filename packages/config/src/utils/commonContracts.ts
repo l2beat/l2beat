@@ -3,9 +3,9 @@ import {
   type ContractValue,
   type DiscoveryOutput,
 } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery-types'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
+import { get$Implementations } from '../discovery/extractors'
 import { bridges } from '../projects/bridges'
 import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'

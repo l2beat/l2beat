@@ -1,6 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
-import { get$Admins, get$Implementations } from '@l2beat/discovery-types'
 import { groupBy, uniqBy } from 'lodash'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
@@ -13,6 +12,7 @@ import type {
 } from '../config/RawDiscoveryConfig'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
+import { get$Admins, get$Implementations } from '../utils/extractors'
 import type { ContractValue } from '../utils/types'
 import type { AnalyzedContract } from './AddressAnalyzer'
 

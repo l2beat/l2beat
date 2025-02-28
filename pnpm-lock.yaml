@@ -74,9 +74,6 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
-      '@l2beat/discovery-types':
-        specifier: workspace:*
-        version: link:../discovery-types
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
@@ -254,9 +251,6 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
-      '@l2beat/discovery-types':
-        specifier: workspace:*
-        version: link:../discovery-types
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
@@ -312,9 +306,6 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
-      '@l2beat/discovery-types':
-        specifier: workspace:*
-        version: link:../discovery-types
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
@@ -358,9 +349,6 @@ importers:
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
-      '@l2beat/discovery-types':
-        specifier: workspace:*
-        version: link:../discovery-types
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
@@ -441,16 +429,6 @@ importers:
         specifier: ^5.2.0
         version: 5.4.0
 
-  packages/discovery-types:
-    dependencies:
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
-    devDependencies:
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-
   packages/eslint-config:
     devDependencies:
       '@eslint/compat':
@@ -522,9 +500,6 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
-      '@l2beat/discovery-types':
-        specifier: workspace:*
-        version: link:../discovery-types
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
@@ -727,9 +702,6 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
-      '@l2beat/discovery-types':
-        specifier: workspace:*
-        version: link:../discovery-types
       '@l2beat/protocolbeat':
         specifier: workspace:*
         version: link:../protocolbeat
