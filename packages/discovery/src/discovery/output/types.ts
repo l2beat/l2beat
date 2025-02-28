@@ -2,6 +2,7 @@ import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type {
   ContractFieldSeverity,
   ContractValueType,
+  Permission,
 } from '../config/RawDiscoveryConfig'
 import type { ContractValue } from '../utils/types'
 
@@ -28,23 +29,6 @@ export interface FieldMeta {
   type?: ContractValueType[] | ContractValueType
 }
 
-export type PermissionType =
-  | 'guard'
-  | 'challenge'
-  | 'propose'
-  | 'sequence'
-  | 'validate'
-  | 'operateLinea'
-  | 'fastconfirm'
-  | 'interact'
-  | 'upgrade'
-  | 'act'
-  | 'validateZkStack'
-  | 'validateBridge'
-  | 'validateBridge2'
-  | 'relay'
-  | 'aggregatePolygon'
-
 export interface ResolvedPermissionPath {
   address: EthereumAddress
   delay?: number
@@ -52,7 +36,7 @@ export interface ResolvedPermissionPath {
 }
 
 export interface ResolvedPermissionDetails {
-  permission: PermissionType
+  permission: Permission
   delay?: number
   description?: string
   condition?: string

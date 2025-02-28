@@ -5,7 +5,7 @@ import type {
   ContractValue,
   DiscoveryOutput,
   EoaParameters,
-  PermissionType,
+  Permission,
   ReceivedPermission,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
@@ -724,7 +724,7 @@ export class ProjectDiscovery {
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
     const ultimatePermissionToPrefix: {
-      [key in PermissionType]: string | undefined
+      [key in Permission]: string | undefined
     } = {
       interact: 'Is allowed to interact with',
       upgrade: 'Can upgrade the implementation of',
@@ -743,6 +743,7 @@ export class ProjectDiscovery {
       aggregatePolygon: 'A trusted Aggregator',
       operateStarknet: 'An Operator',
       governStarknet: 'A Governor',
+      member: 'Is a member of',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -762,7 +763,7 @@ export class ProjectDiscovery {
         },
       ),
     ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as PermissionType
+      const permission = key.split('►')[0] as Permission
       const via = key.split('►')[1] ?? ''
       const description = key.split('►')[2] ?? ''
       const condition = key.split('►')[3] ?? ''
@@ -772,7 +773,7 @@ export class ProjectDiscovery {
         return ''
       }
 
-      const permissionsRequiringTarget: PermissionType[] = [
+      const permissionsRequiringTarget: Permission[] = [
         'interact',
         'upgrade',
         'act',
@@ -785,7 +786,7 @@ export class ProjectDiscovery {
         : ''
 
       return `${[
-        ultimatePermissionToPrefix[permission as PermissionType],
+        ultimatePermissionToPrefix[permission as Permission],
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
@@ -802,7 +803,7 @@ export class ProjectDiscovery {
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
     const directPermissionToPrefix: {
-      [key in PermissionType]: string | undefined
+      [key in Permission]: string | undefined
     } = {
       interact: 'Can be used to interact with',
       upgrade: 'Can be used to upgrade implementation of',
@@ -821,6 +822,7 @@ export class ProjectDiscovery {
       aggregatePolygon: 'Can act as a trusted Aggregator',
       operateStarknet: 'Can act as an Operator',
       governStarknet: 'Can act as a Governor',
+      member: 'Is a member of',
     }
 
     return Object.entries(
@@ -835,11 +837,11 @@ export class ProjectDiscovery {
           ].join('►'),
       ),
     ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as PermissionType
+      const permission = key.split('►')[0] as Permission
       const description = key.split('►')[1] ?? ''
       const condition = key.split('►')[2] ?? ''
       const delay = key.split('►')[3] ?? ''
-      const permissionsRequiringTarget: PermissionType[] = [
+      const permissionsRequiringTarget: Permission[] = [
         'interact',
         'upgrade',
         'act',

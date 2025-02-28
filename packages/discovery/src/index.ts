@@ -10,6 +10,7 @@ export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export {
+  Permission,
   RawDiscoveryConfig,
   BasePermissionEntries,
   RolePermissionEntries,
@@ -72,7 +73,6 @@ export type {
   DiscoveryOutput,
   ContractParameters,
   EoaParameters,
-  PermissionType,
   ReceivedPermission,
   ResolvedPermissionPath,
 } from './discovery/output/types'
