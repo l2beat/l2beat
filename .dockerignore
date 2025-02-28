@@ -9,7 +9,7 @@ node_modules
 # IDEs
 .vscode
 .idea
-.*.swp
+.*.sw[op]
 
 # Docker
 .dockerignore
