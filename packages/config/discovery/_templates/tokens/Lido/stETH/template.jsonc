@@ -13,6 +13,7 @@
     "getDepositableEther",
     "getStakeLimitFullInfo",
     "getTotalPooledEther",
-    "getTotalShares"
+    "getTotalShares",
+    "getCurrentStakeLimit"
   ]
 }
