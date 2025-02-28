@@ -1,4 +1,3 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import {
   assert,
   Bytes,
@@ -6,6 +5,7 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../utils/types'
 import type { ProxyDetails } from '../types'
 
 import { type providers, utils } from 'ethers'

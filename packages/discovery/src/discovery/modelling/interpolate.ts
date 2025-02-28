@@ -1,8 +1,5 @@
-import type {
-  ContractParameters,
-  ContractValue,
-  EoaParameters,
-} from '@l2beat/discovery-types'
+import type { ContractParameters, EoaParameters } from '../output/types'
+import type { ContractValue } from '../utils/types'
 
 export function interpolateModelTemplate(
   content: string,

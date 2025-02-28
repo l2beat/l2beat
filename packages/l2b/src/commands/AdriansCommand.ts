@@ -1,9 +1,6 @@
 import path from 'node:path'
 import { ConfigReader } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-} from '@l2beat/discovery-types'
+import type { ContractParameters, DiscoveryOutput } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
 import { readConfig } from '../config/readConfig'

@@ -1,15 +1,15 @@
-import type {
-  IssuedPermission,
-  PermissionType,
-  ReceivedPermission,
-  ResolvedPermissionPath,
-} from '@l2beat/discovery-types'
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import type {
   Permission,
   PermissionConfiguration,
 } from '../config/RawDiscoveryConfig'
+import type {
+  IssuedPermission,
+  PermissionType,
+  ReceivedPermission,
+  ResolvedPermissionPath,
+} from '../output/types'
 import type { ResolvedPermission } from './resolvePermissions'
 
 export function transformToIssued(

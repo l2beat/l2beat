@@ -2,13 +2,11 @@ import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import {
-  type ContractValue,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery-types'
 import { uniqBy } from 'lodash'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
+import type { ContractValue } from '../../utils/types'
 import type { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 

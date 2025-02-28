@@ -1,8 +1,8 @@
 import { hashJson } from '@l2beat/shared'
 import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { join } from 'lodash'
+import type { DiscoveryOutput } from '../output/types'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
 import {

@@ -1,5 +1,4 @@
 import path from 'path'
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import type { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import type {
@@ -18,6 +17,7 @@ import { diffDiscovery } from './output/diffDiscovery'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
+import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 

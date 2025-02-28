@@ -1,10 +1,10 @@
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import type {
   ContractParameters,
   DiscoveryOutput,
   ReceivedPermission,
-} from '@l2beat/discovery-types'
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+} from '../output/types'
 import { buildAddressToNameMap } from './build'
 import {
   buildRelationsModels,

@@ -1,6 +1,6 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { formatSeconds } from '@l2beat/shared-pure'
+import type { ContractValue } from '../utils/types'
 import type { ArgType } from './BaseTypeCaster'
 
 export const TimeSince = {

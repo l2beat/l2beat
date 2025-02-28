@@ -1,6 +1,6 @@
 import path from 'path'
 import { ConfigReader } from '@l2beat/discovery'
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 
 const chainMapping: Record<string, string> = {

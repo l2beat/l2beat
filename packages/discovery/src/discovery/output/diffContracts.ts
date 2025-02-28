@@ -1,10 +1,10 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
 import { diff } from 'deep-diff'
 import type {
   ContractFieldSeverity,
   ContractValueType,
 } from '../config/RawDiscoveryConfig'
 import { normalizeDiffPath } from '../utils/normalizeDiffPath'
+import type { ContractParameters } from './types'
 
 export interface FieldDiff {
   key: string

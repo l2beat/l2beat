@@ -1,8 +1,4 @@
-import {
-  type ContractValue,
-  type FieldMeta,
-  get$PastUpgrades,
-} from '@l2beat/discovery-types'
+import { get$PastUpgrades } from '@l2beat/discovery-types'
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
@@ -14,12 +10,14 @@ import type {
 } from '../config/RawDiscoveryConfig'
 import type { HandlerResult } from '../handlers/Handler'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
+import type { FieldMeta } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
 import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
+import type { ContractValue } from '../utils/types'
 import type { TemplateService } from './TemplateService'
 import { resolveCategory } from './category'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
