@@ -9,10 +9,7 @@ import {
   Hash256,
   type json,
 } from '@l2beat/shared-pure'
-import {
-  flatteningHash,
-  hashFirstSource,
-} from '../../flatten/utils'
+import { flatteningHash, hashFirstSource } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
