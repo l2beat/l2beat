@@ -2,13 +2,13 @@
 // https://eips.ethereum.org/EIPS/eip-2535#a-note-on-implementing-interfaces
 // every contract implementing this standard needs to have facetAddresses() view function
 
-import type { ProxyDetails } from '@l2beat/discovery-types'
 import {
   assert,
   type EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type { ProxyDetails } from '../types'
 
 import { utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
