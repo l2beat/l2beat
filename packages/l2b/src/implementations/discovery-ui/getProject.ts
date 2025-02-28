@@ -26,14 +26,34 @@ import type {
 
 export function getProject(configReader: ConfigReader, project: string) {
   const chains = configReader.readAllChainsForProject(project)
-  const data = chains.map((chain) => ({
-    chain,
-    config: configReader.readConfig(project, chain),
-    discovery: configReader.readDiscovery(project, chain),
-  }))
+  const data = []
+  for (const chain of chains) {
+    const config = configReader.readConfig(project, chain)
+    const discovery = configReader.readDiscovery(project, chain)
+    const meta = getMeta(discovery)
+    data.push({
+      chain,
+      project,
+      config,
+      discovery,
+      meta,
+    })
+    for (const sharedModule of discovery.sharedModules ?? []) {
+      const sharedConfig = configReader.readConfig(sharedModule, chain)
+      const sharedDiscovery = configReader.readDiscovery(sharedModule, chain)
+      const sharedMeta = getMeta(sharedDiscovery)
+      data.push({
+        chain: chain,
+        project: sharedModule,
+        config: sharedConfig,
+        discovery: sharedDiscovery,
+        meta: sharedMeta,
+      })
+    }
+  }
 
   const response: ApiProjectResponse = { chains: [] }
-  for (const { chain, config, discovery } of data) {
+  for (const { chain, project, config, discovery } of data) {
     const meta = getMeta(discovery)
     const contracts = discovery.contracts
       .map((contract) => {
@@ -59,6 +79,7 @@ export function getProject(configReader: ConfigReader, project: string) {
 
     const chainInfo = {
       name: chain,
+      project,
       initialContracts: contracts.filter((x) =>
         initialAddresses.includes(x.address),
       ),
