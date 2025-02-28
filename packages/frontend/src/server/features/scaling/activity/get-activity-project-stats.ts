@@ -4,7 +4,7 @@ import { getDb } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayUops } from './utils/get-last-day'
 import { getUopsWeeklyChange } from './utils/get-weekly-change'
-import { sumTpsCount, sumUopsCount } from './utils/sum-activity-count'
+import { sumUopsCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {
   if (env.MOCK) {
@@ -25,11 +25,9 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
     return
   }
   const uopsCount = sumUopsCount(counts)
-  const tpsCount = sumTpsCount(counts)
 
   return {
     uopsCount,
-    tpsCount,
     lastDayUops: getLastDayUops(counts),
     uopsWeeklyChange: getUopsWeeklyChange(counts),
   }
@@ -39,7 +37,6 @@ function getMockActivityProjectStatsData(): ActivityProjectStats {
   return {
     lastDayUops: 15,
     uopsCount: 1500,
-    tpsCount: 1200,
     uopsWeeklyChange: 0.1,
   }
 }

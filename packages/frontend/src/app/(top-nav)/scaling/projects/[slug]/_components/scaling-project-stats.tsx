@@ -23,7 +23,6 @@ interface Props {
 
 export function ScalingProjectStats({ project, className }: Props) {
   const isAppchain = project.capability === 'appchain'
-  console.log(project.stageConfig)
 
   return (
     <div
@@ -64,14 +63,8 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <ProjectStat
-        title="30D tx count"
-        value={
-          project.header.activity ? (
-            formatNumber(project.header.activity.tpsCount)
-          ) : (
-            <NoDataBadge />
-          )
-        }
+        title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
+        value={project.header.gasTokens.join(', ')}
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
       {project.stageConfig.stage !== 'NotApplicable' ? (
