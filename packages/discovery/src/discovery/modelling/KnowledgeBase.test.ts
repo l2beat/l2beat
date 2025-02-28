@@ -1,8 +1,5 @@
-import {
-  KnowledgeBase,
-  groupFacts,
-} from '@l2beat/discovery/src/discovery/modelling/KnowledgeBase'
 import { expect } from 'earl'
+import { KnowledgeBase, groupFacts } from './KnowledgeBase'
 import { ClingoFactFile } from './factTypes'
 
 describe(KnowledgeBase.name, () => {
