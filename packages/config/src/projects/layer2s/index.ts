@@ -51,6 +51,7 @@ import { facet } from './facet'
 import { fhenix } from './fhenix'
 import { fluence } from './fluence'
 import { fluent } from './fluent'
+import { foam } from './foam'
 import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
@@ -264,6 +265,7 @@ export const layer2s: Layer2[] = [
   fhenix,
   fluence,
   fluent,
+  foam,
   form,
   frame,
   fraxtal,
