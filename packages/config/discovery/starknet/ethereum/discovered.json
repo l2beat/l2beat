@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21944906,
-  "configHash": "0x50788e58309ca1be9d5bfe22c70e0347eafcd5e8c9165b0ef7f5503c4b51129e",
+  "configHash": "0x0d228da04064cb2a04243fbd610152fe739b48d5c66bb4e78a98c3b5f3d5b160",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -336,6 +336,13 @@
           "via": []
         }
       ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually)."
+        }
+      ],
       "sinceTimestamp": 1707308579,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -622,6 +629,7 @@
         },
         "bridgedToken": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
@@ -656,6 +664,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -667,7 +679,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "FXSBridge",
@@ -752,6 +775,7 @@
         },
         "bridgedToken": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
@@ -788,6 +812,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -799,7 +827,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "TheLordsToken",
@@ -976,6 +1015,7 @@
         },
         "bridgedToken": "0x0000000000000000000000000000000000455448",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
@@ -1010,6 +1050,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -1021,7 +1065,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetEthBridge"
+      "derivedName": "StarknetEthBridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "USDTBridge",
@@ -1135,6 +1190,7 @@
         },
         "bridgedToken": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
@@ -1169,6 +1225,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -1180,7 +1240,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "wstETHBridge",
@@ -1274,6 +1345,7 @@
         },
         "bridgedToken": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
@@ -1308,6 +1380,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -1319,7 +1395,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "Starknet",
@@ -1568,6 +1655,7 @@
         },
         "bridgedToken": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
@@ -1604,6 +1692,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -1615,7 +1707,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "rETHBridge",
@@ -1706,6 +1809,7 @@
         },
         "bridgedToken": "0xae78736Cd615f374D3085123A210448E74Fc6393",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
@@ -1741,6 +1845,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -1752,7 +1860,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "sfrxETHBridge",
@@ -1837,6 +1956,7 @@
         },
         "bridgedToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
@@ -1873,6 +1993,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -1884,7 +2008,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "FRAXBridge",
@@ -1969,6 +2104,7 @@
         },
         "bridgedToken": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
@@ -2005,6 +2141,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -2016,7 +2156,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "LUSDBridge",
@@ -2101,6 +2252,7 @@
         },
         "bridgedToken": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
@@ -2136,6 +2288,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -2147,7 +2303,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "MultiBridge",
@@ -2158,7 +2325,7 @@
         "0xd3e96d9fb623969bd9cc3e5fed6779ce42c5de753b49fc73da783863d4043a2f"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "StarkGate Multibridge canonical bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2176,6 +2343,12 @@
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "description": "manage critical access control roles related to upgrades (GOVERNANCE_ADMIN, APP_ROLE_ADMIN).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually).",
           "via": []
         },
         {
@@ -2223,7 +2396,6 @@
             "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
           }
         },
-        "bridgedToken": "0x0000000000000000000000000000000000000000",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
@@ -2239,8 +2411,44 @@
         "manager": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance_EKUBO": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalTokenBalance": {
+          "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9": {
+            "value": 1,
+            "token": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+          },
+          "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": {
+            "value": 1,
+            "token": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
+          },
+          "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": {
+            "value": 1,
+            "token": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91"
+          },
+          "0x57e114B691Db790C35207b2e685D4A43181e6061": {
+            "value": 1,
+            "token": "0x57e114B691Db790C35207b2e685D4A43181e6061"
+          },
+          "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8": {
+            "value": 1,
+            "token": "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
+          },
+          "0x808507121B80c02388fAd14726482e061B8da827": {
+            "value": 1,
+            "token": "0x808507121B80c02388fAd14726482e061B8da827"
+          },
+          "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {
+            "value": 1,
+            "token": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+          },
+          "0x6985884C4392D348587B19cb9eAAf157F13271cd": {
+            "value": 1,
+            "token": "0x6985884C4392D348587B19cb9eAAf157F13271cd"
+          },
+          "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": {
+            "value": 1,
+            "token": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110"
+          }
+        },
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
         "secAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
@@ -2259,11 +2467,11 @@
           "severity": "HIGH",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
-        "maxTotalBalance": {
-          "description": "The maximum total balance that can be locked in the bridge."
-        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
+        },
+        "maxTotalTokenBalance": {
+          "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
           "severity": "HIGH",
@@ -2387,6 +2595,7 @@
         },
         "bridgedToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 259200,
@@ -2421,6 +2630,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -2432,7 +2645,18 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     },
     {
       "name": "StarknetSCMinorityMultisig",
@@ -2561,6 +2785,7 @@
         },
         "bridgedToken": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "depositStatus": "active",
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
@@ -2597,6 +2822,10 @@
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
         },
+        "depositStatus": {
+          "severity": "HIGH",
+          "description": "Token status managed by the Manager. Only affects deposits."
+        },
         "withdrawLimitPct": {
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
@@ -2608,11 +2837,86 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetERC20Bridge"
+      "derivedName": "StarknetERC20Bridge",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "unknown",
+            "1": "pending",
+            "2": "active",
+            "3": "deactivated"
+          }
+        }
+      ]
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "deactivate bridging for deposits into the escrow."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "description": "deactivate bridging for deposits into the escrow."
+        }
+      ]
+    },
     { "address": "0x030ceEE5D4CBc304287234720B11E00f47695755" },
     { "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2" },
     { "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac" },
@@ -3742,8 +4046,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "starknet/Starknet": "0x493ed1d3bc009faef5b83fbd84cc539d05bef06228d2508d14f4344a492a7f2a",
-    "starknet/StarknetERC20Bridge": "0x110c7c847d0eb372c175d4ddb4f0465b60912cf3aefcc63918535629b10cd655",
-    "starknet/StarknetEthBridge": "0x1eaf3f9a3eb080a0d7a2c58f2d7488a1d159c03a88824dd5e1eb7b55edf2625f",
-    "starknet/StarknetMultiBridge": "0xba354c960cd9bb6635b2c63a74b5157804bc37ab06dcbf04cf10d69ecb1d5f53"
+    "starknet/StarknetERC20Bridge": "0x481196dae30f695d8be7a4b2c69fa0d274524d8b21a418cef2e744406dfdc53c",
+    "starknet/StarknetEthBridge": "0x535f23279895cece5fbd17d307865e1513119d40616525c3a1e703cf3fce193f",
+    "starknet/StarknetMultiBridge": "0x625f05cc2e9b80981f71848e10f7f92aa8a5f20e4e7f6def51bf5ec1dfb017ae"
   }
 }

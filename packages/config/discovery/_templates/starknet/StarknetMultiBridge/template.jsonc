@@ -1,25 +1,11 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to {{withdrawLimitPct}} of the locked funds per 24 hours.", // The withdrawal limit is {{withdrawalLimitStatus}}.
-  "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
-  "types": {
-    // "WithdrawalActivationString": {
-    //   "typeCaster": "Mapping",
-    //   "arg": {
-    //     "": "not active",
-    //     "0x0000000000000000000000000000000000455448": "active"
-    //   }
-    // },
-    "TokenStatus": {
-      "typeCaster": "Mapping",
-      "arg": {
-        "0": "unknown",
-        "1": "pending",
-        "2": "active",
-        "3": "deactivated"
-      }
-    }
-  },
+  "description": "StarkGate Multibridge escrow. Withdrawals can be throttled to {{withdrawLimitPct}} of the locked funds per 24 hours for each token individually.",
+  "ignoreRelatives": [
+    "l2TokenContract",
+    "bridgedToken",
+    "maxTotalTokenBalance"
+  ],
   "fields": {
     "$admin": {
       "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
@@ -48,24 +34,6 @@
       }
       // "returnType": "(WithdrawalActivationString)" // BUG
     },
-    "maxTotalBalance": {
-      "description": "The maximum total balance that can be locked in the bridge.",
-      "handler": {
-        "type": "call",
-        "method": "function getMaxTotalBalance(address token) view returns (uint256)",
-        "args": ["{{bridgedToken}}"]
-      }
-    },
-    "depositStatus": {
-      "description": "Token status managed by the Manager. Only affects deposits.",
-      "severity": "HIGH",
-      "handler": {
-        "type": "call",
-        "method": "function getStatus(address token) view returns (uint8)",
-        "args": ["{{bridgedToken}}"]
-      },
-      "returnType": "(TokenStatus)"
-    },
     "withdrawLimitPct": {
       "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.",
       "handler": {
@@ -73,6 +41,18 @@
         "tag": "WITHDRAWL_LIMIT_WITHDRAW_LIMIT_PCT_SLOT_TAG",
         "returnType": "number"
       }
+    },
+    "maxTotalTokenBalance": {
+      "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified.",
+      "handler": {
+        "type": "event",
+        "select": ["value", "token"],
+        "groupBy": "token",
+        "set": {
+          "event": "SetMaxTotalBalance"
+        }
+      }
+      // "returnType": "(WithdrawalActivationString)" // BUG
     },
     "manager": {
       "handler": {
@@ -84,16 +64,9 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "deactivate bridging for deposits into the escrow."
+            "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually)."
           }
         ]
-      }
-    },
-    "bridgedToken": {
-      "handler": {
-        "type": "starkWareNamedStorage",
-        "tag": "STARKNET_ERC20_TOKEN_BRIDGE_TOKEN_ADDRESS",
-        "returnType": "address"
       }
     },
     "l2TokenContract": {

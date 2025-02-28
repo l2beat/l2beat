@@ -2,15 +2,24 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to {{withdrawLimitPct}} of the locked funds per 24 hours.", // The withdrawal limit is {{withdrawalLimitStatus}}.
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
-  // "types": {
-  //   "WithdrawalActivationString": {
-  //     "typeCaster": "Mapping",
-  //     "arg": {
-  //       "": "not active",
-  //       "0x0000000000000000000000000000000000455448": "active"
-  //     }
-  //   }
-  // },
+  "types": {
+    // "WithdrawalActivationString": {
+    //   "typeCaster": "Mapping",
+    //   "arg": {
+    //     "": "not active",
+    //     "0x0000000000000000000000000000000000455448": "active"
+    //   }
+    // },
+    "TokenStatus": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "unknown",
+        "1": "pending",
+        "2": "active",
+        "3": "deactivated"
+      }
+    }
+  },
   "fields": {
     "$admin": {
       "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
@@ -47,6 +56,16 @@
         "args": ["{{bridgedToken}}"]
       }
     },
+    "depositStatus": {
+      "description": "Token status managed by the Manager. Only affects deposits.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function getStatus(address token) view returns (uint8)",
+        "args": ["{{bridgedToken}}"]
+      },
+      "returnType": "(TokenStatus)"
+    },
     "withdrawLimitPct": {
       "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.",
       "handler": {
@@ -60,6 +79,14 @@
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
         "returnType": "address"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "deactivate bridging for deposits into the escrow."
+          }
+        ]
       }
     },
     "bridgedToken": {
