@@ -121,9 +121,9 @@ export async function checkForEigenDA(
   sequencerTxs: Transaction[],
 ) {
   // Byte-check step - filter out non-Eigen-like transactions
-  const eigenLikeTxs =
+  const eigenCommitments =
     sequencerTxs.length > 0 &&
-    sequencerTxs.filter((tx) => {
+    sequencerTxs.flatMap((tx) => {
       const thirdByte = tx.input.slice(6, 8)
 
       const prefixMatch = tx.input.startsWith(
@@ -132,17 +132,30 @@ export async function checkForEigenDA(
       const thirdByteMatch =
         thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
 
-      return prefixMatch && thirdByteMatch
+      const hasByteMatch = prefixMatch && thirdByteMatch
+
+      if (!hasByteMatch) {
+        return []
+      }
+
+      const decodedCommitment = tryRlpDecode(tx.input)
+
+      if (!decodedCommitment) {
+        console.log('No decoded commitment', tx.hash, tx.input)
+        return []
+      }
+
+      return { decodedCommitment }
     })
 
   // If we have no Eigen-like transactions, we can return false immediately
-  if (!eigenLikeTxs || eigenLikeTxs.length === 0) {
+  if (!eigenCommitments || eigenCommitments.length === 0) {
     return false
   }
 
   // Decode step - decode the commitment from the transaction input
-  const outgoingBatchHeaderHashes = eigenLikeTxs.map((tx) =>
-    decodeCommitmentRLP(tx.input),
+  const outgoingBatchHeaderHashes = eigenCommitments.map(
+    ({ decodedCommitment }) => extractBlobBatchHeaderHash(decodedCommitment),
   )
 
   // Get step - get the confirmed batch header hashes from ethereum
@@ -155,7 +168,7 @@ export async function checkForEigenDA(
   ).length
 
   // require 100% success rate
-  return successfulVerificationsCount === eigenLikeTxs.length
+  return successfulVerificationsCount === sequencerTxs.length
 }
 
 async function getConfirmedBatchHeaderHashes(
@@ -199,16 +212,9 @@ async function getEthereumBlock(provider: IProvider) {
   return correspondingEthereumBlock
 }
 
-function decodeCommitmentRLP(inputData: string): string {
-  // strip three commitment type bytes + 0x
-  const eigenCommitment = inputData.slice(4 * 2)
-  // Sometimes it's prefixed with 00, sometimes it's not.
-  const noTypeCommitment = eigenCommitment.startsWith('00')
-    ? eigenCommitment.slice(2)
-    : eigenCommitment
-
-  const rlp = RLP.decode('0x' + noTypeCommitment)
-
+function extractBlobBatchHeaderHash(
+  decoded: EigenDABlobVerificationProof,
+): string {
   /**
    * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
    * @commit 733bcbe
@@ -220,7 +226,7 @@ function decodeCommitmentRLP(inputData: string): string {
   // see: disperser.BlobVerificationProof.batch_metadata.batch_header_hash
   const RLP_BLOB_BATCH_HEADER_HASH_IDX = 4
 
-  const blobVerificationProof = rlp[RLP_BLOB_VERIFICATION_HEADER_IDX]
+  const blobVerificationProof = decoded[RLP_BLOB_VERIFICATION_HEADER_IDX]
   const blobBatchHeaderHash =
     blobVerificationProof[RLP_BLOB_BATCH_METADATA_IDX][
       RLP_BLOB_BATCH_HEADER_HASH_IDX
@@ -228,3 +234,66 @@ function decodeCommitmentRLP(inputData: string): string {
 
   return blobBatchHeaderHash.toLowerCase()
 }
+
+function tryRlpDecode(inputData: string): EigenDABlobVerificationProof | null {
+  try {
+    // strip three commitment type bytes + 0x
+    const eigenCommitment = inputData.slice(4 * 2)
+    // Sometimes it's prefixed with 00, sometimes it's not.
+    const noTypeCommitment = eigenCommitment.startsWith('00')
+      ? eigenCommitment.slice(2)
+      : eigenCommitment
+
+    const rlp = RLP.decode('0x' + noTypeCommitment)
+
+    return EigenDABlobVerificationProofSchema.parse(rlp)
+  } catch (e) {
+    console.log('Error decoding commitment', inputData, e)
+    return null
+  }
+}
+
+/**
+ * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
+ * @commit 733bcbe
+ */
+type EigenDABlobVerificationProof = z.infer<
+  typeof EigenDABlobVerificationProofSchema
+>
+const EigenDABlobVerificationProofSchema = z.tuple([
+  z.tuple([
+    z.tuple([
+      z.string(), // hash1
+      z.string(), // hash2
+    ]),
+    z.string(), // version
+    z.array(
+      z.tuple([
+        z.string(), // byte1
+        z.string(), // byte2
+        z.string(), // byte3
+        z.string(), // byte4
+      ]),
+    ),
+  ]),
+  z.tuple([
+    z.string(), // size
+    z.string(), // count
+    z.tuple([
+      z.tuple([
+        z.string(), // hash
+        z.string(), // version
+        z.string(), // size
+        z.string(), // timestamp
+      ]),
+      z
+        .string()
+        .length(64 + 2), // batchHeaderHash
+      z.string(), // referenceBlockNumber
+      z.string(), // timestamp
+      z.string(), // batchRoot
+    ]),
+    z.string(), // signature
+    z.string(), // version
+  ]),
+])
