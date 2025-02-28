@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x0f3a7ad4b9e88baa08e9eac3add521bd714e4cc6
+
+# Diff at Fri, 28 Feb 2025 10:42:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a673c79f7be232b805781e844ed3929c5c5bb288 block: 21844076
+- current block number: 21944318
+
+## Description
+
+BlockedMessageLib verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21844076 (main branch discovery), not current.
+
+```diff
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        ""
++        "BlockedMessageLib"
+      unverified:
+-        true
+      values.messageLibType:
++        2
+      values.version:
++        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      sourceHashes:
++        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+    }
+```
+
 Generated with discovered.json: 0x7fe6dce5337a111a3dab30fc6b0ccdcf543047e5
 
 # Diff at Thu, 27 Feb 2025 11:46:53 GMT:

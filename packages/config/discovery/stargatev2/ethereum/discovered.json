@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 21844076,
+  "blockNumber": 21944318,
   "configHash": "0xe258f6c5dc45a630fb6859ed9623346b9382302cdc8302786e57c01bee1e3989",
   "contracts": [
     {
@@ -96,11 +96,21 @@
       }
     },
     {
-      "name": "",
+      "name": "BlockedMessageLib",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-      "unverified": true,
+      "sourceHashes": [
+        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
+      ],
       "sinceTimestamp": 1706307671,
-      "values": { "$immutable": true }
+      "values": {
+        "$immutable": true,
+        "messageLibType": 2,
+        "version": {
+          "major": "18446744073709551615",
+          "minor": 255,
+          "endpointVersion": 2
+        }
+      }
     },
     {
       "name": "StargatePool",
@@ -134,14 +144,14 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "21786536762099363",
-        "poolBalance": "635437677000000000000",
+        "plannerFee": "21997405696127320",
+        "poolBalance": "426160233000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 721407,
-        "tvl": "6000066726000000000000"
+        "treasuryFee": 567967,
+        "tvl": "1972061093000000000000"
       }
     },
     {
@@ -200,7 +210,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 899,
+        "nonce": 903,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -325,14 +335,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "557425349121081193",
-        "poolBalance": "151886633543000000000000",
+        "plannerFee": "638378761521553390",
+        "poolBalance": "139668323840000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 7163161,
-        "tvl": "13657119267000000000000"
+        "treasuryFee": 8042886,
+        "tvl": "12146873278000000000000"
       }
     },
     {
@@ -390,14 +400,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "352711289750109836",
-        "poolBalance": 17759964083815,
+        "plannerFee": "390727764889193638",
+        "poolBalance": 7969577441477,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 127757259516,
-        "tvl": 11129287130921
+        "treasuryFee": 136202431133,
+        "tvl": 7438226970021
       }
     },
     {
@@ -511,14 +521,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "338100845832313192",
-        "poolBalance": 249917498833189,
+        "plannerFee": "391355738591013591",
+        "poolBalance": 326944387563508,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 75071840097,
-        "tvl": 16476043998226
+        "treasuryFee": 85741580648,
+        "tvl": 13925128414944
       }
     },
     {
@@ -614,7 +624,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 230,
+        "nonce": 233,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -820,6 +830,13 @@
       "function transferOwnership(address newOwner)",
       "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
       "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
+    ],
+    "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
+      "error LZ_NotImplemented()",
+      "function isSupportedEid(uint32) pure returns (bool)",
+      "function messageLibType() pure returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
     "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",

@@ -865,7 +865,8 @@
         "getDepositableEther",
         "getStakeLimitFullInfo",
         "getTotalPooledEther",
-        "getTotalShares"
+        "getTotalShares",
+        "getCurrentStakeLimit"
       ],
       "sinceTimestamp": 1608242396,
       "values": {
@@ -4180,7 +4181,7 @@
     "tokens/Lido/OpStackTokenRatePusher": "0x4e0dd81872da6ced3d2c80336b2cbcf266a9ae4c700c93635277fa916b45abb4",
     "tokens/Lido/OracleReportSanityChecker": "0xabdc58516438222479327170665454c3893c31894db0a63323aca1d1ba078027",
     "tokens/Lido/StakingRouter": "0x29587d12b1e102ee8c7e0de613c6017cae8eead251533692dc09c93274b2c4d9",
-    "tokens/Lido/stETH": "0x91e2ab8b5db7d3efd518fb3c63c75c070c7df1c64af1fb4a08c316a1c0011a73",
+    "tokens/Lido/stETH": "0x94e8bfe3ec09dffbdd4877f68ffecd3fd403d6a41b7f27e9f739c1fdece63aa8",
     "tokens/Lido/ValidatorsExitBusOracle": "0x32d2cee1f96616c3886fd690e3c275dc13079300459d59422508ecdd6963ccb3",
     "tokens/Lido/Voting": "0x430cde9032a8680c4252fdaa05bbfa08abb7a046e28797a1b1c7842345a18d2e",
     "tokens/Lido/WithdrawalQueueERC721": "0x1e29855fc4cb345f57d6f567f76145ebb673225a5ffacbed80ed1d484b1b6e3b",
