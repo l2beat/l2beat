@@ -871,7 +871,7 @@ export class ProjectDiscovery {
       contractOrEoa.address,
     )
     const transitivePermissionFacts = this.knowledgeBase.getFacts(
-      'transitivePermission',
+      'filteredTransitivePermission',
       [id],
     )
     const grouped = groupFacts(transitivePermissionFacts, 2)

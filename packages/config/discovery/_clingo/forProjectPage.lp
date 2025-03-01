@@ -22,6 +22,9 @@ permission(Receiver, "act", Msig) :-
   msig(Msig, Threshold),
   Threshold == 1.
 
+
+% 1. Building permissions with "Via" cons list and details like descriptions and delays
+
 transitivePermission(Receiver, Permission, Giver, Delay, Description, nil) :-
   permission(Receiver, Permission, Giver),
   defaultedPermissionDelay(Receiver, Permission, Giver, Delay),
@@ -33,8 +36,19 @@ transitivePermission(Receiver, Permission, Giver, OriginalDelay, OriginalDescrip
   defaultedPermissionDelay(Receiver, "act", Via, Delay),
   Permission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
+% 2. Filtering permission to only those we want to display
+
+% a) Don't show permission which gives "act" to someone else
+filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, Via) :-
+  transitivePermission(Receiver, Permission, Giver, Delay, Description, Via),
+  not permission(_, "act", Receiver).
+
+% b) ...unless it's a direct permission (to say "can be used to")
+filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, nil) :-
+  transitivePermission(Receiver, Permission, Giver, Delay, Description, nil).
+
 #show address/3.
 #show addressName/2.
 #show addressType/2.
 #show addressDescription/2.
-#show transitivePermission/6.
+#show filteredTransitivePermission/6.
