@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x11a726a7600e192431fa583c17195ed1e5c95835
+Generated with discovered.json: 0x2667e0cae75e76b856739b341ebe63b869255678
 
-# Diff at Sat, 01 Mar 2025 11:30:56 GMT:
+# Diff at Sat, 01 Mar 2025 11:44:42 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21900569
@@ -8,9 +8,7 @@ Generated with discovered.json: 0x11a726a7600e192431fa583c17195ed1e5c95835
 
 ## Description
 
-Starknet introduces an 8d timelock and adds their 2/6 MS as upgrade admin (governor) for the starknet contract.
-
-Config related: discodrive.
+config related: renamed some starknet contracts.
 
 ## Watched changes
 

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5f60a0e0db73ff9d775f600b189fc3d11183a24e
+Generated with discovered.json: 0xa84d934cf1c8e32e772a9256c107c7b88ece99f3
 
-# Diff at Sat, 01 Mar 2025 11:30:48 GMT:
+# Diff at Sat, 01 Mar 2025 11:47:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21766214
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5f60a0e0db73ff9d775f600b189fc3d11183a24e
 
 ## Description
 
-Config related: discodrive.
+config related: renamed some starknet contracts.
 
 ## Config/verification related changes
 
@@ -621,11 +621,8 @@ discovery. Values are for block 21766214 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GpsStatementVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) {
+    contract SHARPVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) {
     +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
-      name:
--        "SHARPVerifier"
-+        "GpsStatementVerifier"
       template:
 -        "shared-sharp-verifier/Verifier"
 +        "shared-sharp-verifier/SHARPVerifier"

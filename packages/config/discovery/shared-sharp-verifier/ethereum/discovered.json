@@ -1804,7 +1804,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "GpsStatementVerifier",
+      "name": "SHARPVerifier",
       "address": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
       "template": "shared-sharp-verifier/SHARPVerifier",
       "sourceHashes": [
@@ -1841,6 +1841,7 @@
         "referenceFactRegistry": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
         "referralExpirationTime": 1729971851
       },
+      "derivedName": "GpsStatementVerifier",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -3660,7 +3661,7 @@
     "shared-sharp-verifier/Level2SHARPVerifier": "0x589119f5a0ba0dddcb5e02d929ac171de166687e5e11f742d1d5b169d1eef1ec",
     "shared-sharp-verifier/Level3SHARPVerifier": "0x5621d3c9634d08062ecf36c5029406cb57bff1c604484554019afef960271852",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x9d20c368762ce440ae399894b7a294136feccea1ff9eb6939dc2887cca6835d9",
-    "shared-sharp-verifier/SHARPVerifier": "0x26dd4e008af9a297cb230da83fff985cfe41f9ca848ec6700d178bdeb173fe02",
+    "shared-sharp-verifier/SHARPVerifier": "0x18c9ad67177accce5b6324d0e9d13fd2dffd6981671dd827ac275d739f5e31b9",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xca41b5fe7499e8e0abd7d0bcbb7e80170c3920e6123c572b2fe49864fbf3949f"
   }
 }

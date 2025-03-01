@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21629810,
-  "configHash": "0xecfa9691f0e43e8deaae80a98605778762fc9123f95f658e14c729856a3a9031",
+  "configHash": "0xd95090b093a840a0d8418775b3692b72d474997d7638af1651ec51341fc054e8",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -150,6 +150,7 @@
         "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
           "permission": "governStarknet",
@@ -255,7 +256,8 @@
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Starknet"
+      "derivedName": "Starknet",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "eoas": [
@@ -547,6 +549,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starknet/Starknet": "0x493ed1d3bc009faef5b83fbd84cc539d05bef06228d2508d14f4344a492a7f2a"
+    "starknet/Starknet": "0xfcc62b23a16236c1ee486fd53c0c32cb8af5357b0252e1dbebca5c2aadd4078d"
   }
 }

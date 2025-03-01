@@ -28,7 +28,6 @@
     "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "USDTBridge",
     "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": "ETHBridge",
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet",
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DaiGateway",
     "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": "wstETHBridge",
     "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "rETHBridge",
@@ -50,7 +49,7 @@
     "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "StarknetSecurityCouncil"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "shared-sharp-verifier"
+    "shared": "shared-sharp-verifier"
   },
   "overrides": {
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {

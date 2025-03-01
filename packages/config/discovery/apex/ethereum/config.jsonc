@@ -14,7 +14,6 @@
     "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6": "PerpetualGovernanceMultisig",
     "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": "CommitteeUSDC",
     "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953": "FinalizableGpsFactAdapterUSDC",
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b": "StarkExchangeUSDT",
     "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800": "CommitteeUSDT",
     "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22": "FinalizableGpsFactAdapterUSDT",
@@ -27,7 +26,7 @@
     "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "shared-sharp-verifier"
+    "weeeeeeeeeeeeeeeeeeeeeee": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchangeUSDC": {

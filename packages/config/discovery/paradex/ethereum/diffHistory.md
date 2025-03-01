@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd4f51d5714c7b68b2b37ee28cf2894d6d9fed34f
+Generated with discovered.json: 0xc670a1a67dcd6ffe9a9104fe08083965523aca17
 
-# Diff at Fri, 28 Feb 2025 16:06:19 GMT:
+# Diff at Sat, 01 Mar 2025 11:44:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21629810
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd4f51d5714c7b68b2b37ee28cf2894d6d9fed34f
 
 ## Description
 
-config related: starknet discodrive.
+config related: renamed some starknet contracts.
 
 ## Config/verification related changes
 
@@ -29,7 +29,7 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
 
 ```diff
     contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
-    +++ description: None
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
       issuedPermissions.4:
 +        {"permission":"upgrade","to":"0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","via":[]}
       issuedPermissions.3:
@@ -51,6 +51,10 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
 +        {"severity":"HIGH","description":"Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."}
       template:
 +        "starknet/Starknet"
+      description:
++        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
