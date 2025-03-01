@@ -1,14 +1,71 @@
-Generated with discovered.json: 0x2cd1918a679931332513b1c12d490e09433a9d1c
+Generated with discovered.json: 0x0dcc0d22814188b8e3b2d8320f72795f638ba1c0
 
-# Diff at Fri, 28 Feb 2025 15:58:37 GMT:
+# Diff at Sat, 01 Mar 2025 09:44:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21900569
-- current block number: 21944906
+- current block number: 21950973
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Starknet introduces an 8d timelock and adds their 2/6 MS as upgrade admin (governor) for the starknet contract.
+
+Config related: discodrive.
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "operateStarknet"
+      issuedPermissions.3.to:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      issuedPermissions.2.to:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
+      issuedPermissions.1.permission:
+-        "operateStarknet"
++        "governStarknet"
+      issuedPermissions.1.to:
+-        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
++        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
+      issuedPermissions.1.via.0:
++        {"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}
+      values.$admin:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","0xCA112018fEB729458b628AadC8f996f9deCbCa0c"]
+      values.governors.1:
++        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c)
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+```
+
+## Source code changes
+
+```diff
+.../starknet/ethereum/.flat/DelayedExecutor.sol    | 271 ++++++
+ .../.flat/StarknetAdminMultisig/GnosisSafe.sol     | 953 +++++++++++++++++++++
+ .../StarknetAdminMultisig/GnosisSafeProxy.p.sol    |  35 +
+ 3 files changed, 1259 insertions(+)
+```
 
 ## Config/verification related changes
 
@@ -213,6 +270,28 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 ```
 
 ```diff
+    contract LORDSBridge (0x023A2aAc5d0fa69E3243994672822BA43E34E5C9) {
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+      template:
++        "starknet/LordsL1Bridge"
+      description:
++        "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2."
+    }
+```
+
+```diff
+    contract DAIBridge (0x0437465dfb5B79726e35F08559B0cBea55bb585C) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      values.wards:
++        ["0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58","0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB","0xc238E3D63DfD677Fa0FA9985576f0945C581A266"]
+      template:
++        "maker/L1Escrow"
+      description:
++        "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    }
+```
+
+```diff
     contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
     +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
       issuedPermissions.2:
@@ -392,6 +471,24 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TheLordsToken (0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0)
+    +++ description: None
+```
+
+```diff
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d) {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      values.wards:
++        ["0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB","0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"]
+      template:
++        "starknet/L1Escrow"
+      description:
++        "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate."
     }
 ```
 

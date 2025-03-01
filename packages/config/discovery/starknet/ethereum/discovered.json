@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21944906,
-  "configHash": "0xb8545532a135d287d4dbc3d1c815d2ecbd18ef4acbc068cb92ccf26f3b7b5634",
+  "blockNumber": 21950973,
+  "configHash": "0x2263656c96b164a9950e984a3ca7a1abedfe6c8857b4ed545162c080fd0a3493",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -309,9 +309,11 @@
     {
       "name": "LORDSBridge",
       "address": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+      "template": "starknet/LordsL1Bridge",
       "sourceHashes": [
         "0x2f705f817a66ebdf99961fe9f40d30fe99be28e3a316d15a490048e7cb149b67"
       ],
+      "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
       "sinceTimestamp": 1687524587,
       "values": {
         "$immutable": true,
@@ -324,11 +326,20 @@
     {
       "name": "DAIBridge",
       "address": "0x0437465dfb5B79726e35F08559B0cBea55bb585C",
+      "template": "maker/L1Escrow",
       "sourceHashes": [
         "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
       ],
+      "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1652101038,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "wards": [
+          "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58",
+          "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+          "0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
+        ]
+      },
       "derivedName": "L1Escrow"
     },
     {
@@ -871,25 +882,6 @@
       ]
     },
     {
-      "name": "TheLordsToken",
-      "address": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
-      "sourceHashes": [
-        "0xd22c33bc5166fe7e453c9664a212eef8bc1ea65785e04e7fa2e5981f6a782970"
-      ],
-      "sinceTimestamp": 1639089737,
-      "values": {
-        "$immutable": true,
-        "cap": "500000000000000000000000000",
-        "decimals": 18,
-        "name": "Lords",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "symbol": "LORDS",
-        "totalSupply": "500000000000000000000000000",
-        "totalSupplyAt": []
-      }
-    },
-    {
       "name": "StarkgateSecurityAgentMultisig",
       "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
       "template": "GnosisSafe",
@@ -919,11 +911,74 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "StarknetAdminMultisig",
+      "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "via": [
+            {
+              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "via": [
+            {
+              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+          "delay": 691200
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1672587635,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc",
+          "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5",
+          "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+          "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+          "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+          "0x59232aC80E6d403b6381393e52f4665ECA328558"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfbf46e0cae4a0b01c142fd1c393d4058f5af0efa75d9b1a23dee605fdb7aaf81",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 22,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "L1DaiGateway",
       "address": "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
+      "template": "starknet/L1Escrow",
       "sourceHashes": [
         "0xea3ba1600e1949cef23ec7d1ebcf724de2bb6be9602c2339dd29582e6c00c9f5"
       ],
+      "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
       "sinceTimestamp": 1666446647,
       "values": {
         "$immutable": true,
@@ -934,7 +989,11 @@
         "l2Dai": "385291772725090318157700937045086145273563247402457518748197066808155336371",
         "l2DaiBridge": "3326542335218638260710262166293903627998802370811525948909206799059756478048",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "starkNet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        "starkNet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+        "wards": [
+          "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+          "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
+        ]
       },
       "derivedName": "L1DAIBridge"
     },
@@ -1454,6 +1513,16 @@
           "via": []
         },
         {
+          "permission": "governStarknet",
+          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+          "via": [
+            {
+              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
+        },
+        {
           "permission": "operateStarknet",
           "to": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
           "via": []
@@ -1467,6 +1536,16 @@
           "permission": "upgrade",
           "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+          "via": [
+            {
+              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+              "delay": 691200
+            }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -1477,7 +1556,10 @@
       ],
       "sinceTimestamp": 1636978914,
       "values": {
-        "$admin": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+        "$admin": [
+          "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+          "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+        ],
         "$immutable": false,
         "$implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
         "$pastUpgrades": [
@@ -1533,13 +1615,16 @@
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
         "governedFinalized": 0,
-        "governors": ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"],
+        "governors": [
+          "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+          "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+        ],
         "identify": "StarkWare_Starknet_2024_9",
         "implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1668431,
+        "l1ToL2MessageNonce": 1668464,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1560,9 +1645,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "778272442692017822703868152075145550507524262500244274449339683164983569026",
-        "stateBlockNumber": 1188964,
-        "stateRoot": "1504878571137867116129081062537238218421896129609675678037638256302031157406",
+        "stateBlockHash": "3114693726177521592823635390154005489662935623746031373657885392544479524549",
+        "stateBlockNumber": 1191663,
+        "stateRoot": "800993835320153699946516180707246918903315217205156899923920611109021326375",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1576,6 +1661,33 @@
           "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
           "type": "CODE_CHANGE"
         }
+      }
+    },
+    {
+      "name": "DelayedExecutor",
+      "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+      "template": "starknet/DelayedExecutor",
+      "sourceHashes": [
+        "0x6a59350278d90840dff5cb37a714e105c3003955a6c304046fb1222f61374eed"
+      ],
+      "description": "A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        }
+      ],
+      "sinceTimestamp": 1739989031,
+      "values": {
+        "$immutable": true,
+        "executionDelay": 691200,
+        "executionDelayFmt": "8d",
+        "executionExpiration": 4838400,
+        "owner": "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
       }
     },
     {
@@ -2951,6 +3063,7 @@
     { "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2" },
     { "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac" },
     { "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD" },
+    { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
     {
       "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
       "receivedPermissions": [
@@ -2977,7 +3090,10 @@
     { "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0" },
     { "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560" },
     { "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E" },
+    { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
     { "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874" },
+    { "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5" },
+    { "address": "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc" },
     { "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7" },
     { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
     { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
@@ -3415,39 +3531,6 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0": [
-      "constructor(uint256 _cap)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Snapshot(uint256 id)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Unpaused(address account)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function balanceOfAt(address account, uint256 snapshotId) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function cap() view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function name() view returns (string)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function renounceOwnership()",
-      "function snapshot()",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function totalSupplyAt(uint256 snapshotId) view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()"
-    ],
     "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": [
       "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
       "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
@@ -3530,6 +3613,9 @@
       "function withdraw(address token, uint256 amount)"
     ],
     "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": [
+      "constructor(address _singleton)"
+    ],
+    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": [
       "constructor(address _singleton)"
     ],
     "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95": [
@@ -3748,6 +3834,32 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xCA112018fEB729458b628AadC8f996f9deCbCa0c": [
+      "constructor(address _owner, uint256 delay, uint256 expiration)",
+      "event MultiPayableTransactionRegistered(address[] targets, uint256[] eth_values, bytes[] datas, bytes32 txSetHash, uint256 enableTime)",
+      "event MultiTransactionRegistered(address[] targets, bytes[] datas, bytes32 txSetHash, uint256 enableTime)",
+      "event OwnershipAccepted(address indexed newOwner)",
+      "event OwnershipNominated(address indexed currentOwner, address indexed newOwner)",
+      "event OwnershipNominationCleared()",
+      "event PayableTransactionRegistered(address target, uint256 eth_value, bytes data, bytes32 txSetHash, uint256 enableTime)",
+      "event TransactionRegistered(address target, bytes data, bytes32 txSetHash, uint256 enableTime)",
+      "event TxExecuted(address indexed caller, address indexed target, uint256 eth_value, bytes data)",
+      "function acceptOwnership()",
+      "function execMultiPayableTransaction(address[] targets, uint256[] eth_values, bytes[] datas) payable",
+      "function execMultiTransaction(address[] targets, bytes[] datas)",
+      "function execPayableTransaction(address target, uint256 eth_value, bytes data) payable",
+      "function execTransaction(address target, bytes data)",
+      "function executionDelay() view returns (uint256)",
+      "function executionExpiration() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function registerMultiPayableTransaction(address[] targets, uint256[] eth_values, bytes[] datas) returns (bytes32)",
+      "function registerMultiTransaction(address[] targets, bytes[] datas) returns (bytes32)",
+      "function registerPayableTransaction(address target, uint256 eth_value, bytes data) returns (bytes32)",
+      "function registerTransaction(address target, bytes data) returns (bytes32)",
+      "function removeTxSet(bytes32 txSetHash)",
+      "function transferOwnership(address newOwner)",
+      "function txSetAllowedTime(bytes32) view returns (uint256)"
     ],
     "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": [
       "constructor(uint256 upgradeActivationDelay)",
@@ -4075,6 +4187,10 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "maker/L1Escrow": "0xfe5c1f545e5d63ef9898c0aba6ba0dc3534f41b038497adb713efd766b66191f",
+    "starknet/DelayedExecutor": "0x6e268f50bfa971283ba49d90de349d2ed61ca0f23255031c48629f9a74dc6607",
+    "starknet/L1Escrow": "0x4283ea0ce3e63ef7b4a58f71beda23bab32d25a388c561df9fee5f8d6f1f1d46",
+    "starknet/LordsL1Bridge": "0x4e40d4056b98ecac6969857b303f67a666d400b420709c05ef7c621b6644a645",
     "starknet/StarkgateManager": "0x170461a309ff84227aee6a47eb960cb4b24b52e49790776a0bdc0002cb7dd643",
     "starknet/StarkgateRegistry": "0xd53ee72950118426daf7b54282c2d524e773ee16c4643b9975ef75beac81acf8",
     "starknet/Starknet": "0x493ed1d3bc009faef5b83fbd84cc539d05bef06228d2508d14f4344a492a7f2a",
