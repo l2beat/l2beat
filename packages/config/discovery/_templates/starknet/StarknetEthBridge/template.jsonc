@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to {{withdrawLimitPct}} of the locked funds per 24 hours.", // The withdrawal limit is {{withdrawalLimitStatus}}.
+  "category": "bridge-canonical",
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
   "types": {
     // "WithdrawalActivationString": {

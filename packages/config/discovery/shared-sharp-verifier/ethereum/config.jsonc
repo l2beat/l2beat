@@ -6,12 +6,8 @@
   "initialAddresses": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
   "names": {
     "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierAdminMultisig",
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
-    "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": "SHARPVerifier", // always change this to the latest verifier to recognize it easily, the deprecated ones will be discovered automatically
-    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": "OldSHARPVerifier",
-    "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4": "OldMemoryPageFactRegistry",
 
-    // naming to separate old (Level2) from new
+    // 'LEVEL 2' naming to separate old (Level2) from current: see `SHARPVerifier.isValid()`, which falls back to the old verifier in case internalIsValid(fact) == false (and even the lvl 2 fallback verifier falls back...)
     "0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB": "Level2CpuConstraintPoly0",
     "0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975": "Level2PoseidonPoseidonPartialRoundKey0Column0",
     "0x1E8E41141347E01f33d84718b7f4cEFB433D5a94": "Level2PoseidonPoseidonFullRoundKey1Column0",
@@ -57,25 +53,139 @@
     "0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd": "Level2PedersenHashPointsYColumn"
   },
   "overrides": {
-    "SHARPVerifierProxy": {
-      "fields": {
-        "callProxyImplementation": {
-          "target": {
-            "template": "shared-sharp-verifier/Verifier"
-          }
-        }
-      }
+    "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460": {
+      // manual override due to conflict
+      "extends": "shared-sharp-verifier/MemoryPageFactRegistry"
     },
-    "OldSHARPVerifier": {
-      "fields": {
-        "memoryPageFactRegistry": {
-          "handler": {
-            "type": "storage",
-            "slot": 2,
-            "returnType": "address"
-          }
-        }
-      }
+    // beware: spam below (to hide spam)
+    "Level2CpuConstraintPoly0": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonPartialRoundKey0Column0": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonFullRoundKey1Column0": {
+      "category": "spam"
+    },
+    "Level2CpuConstraintPoly1": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonPartialRoundKey1Column0": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier0": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonFullRoundKey2Column0": {
+      "category": "spam"
+    },
+    "Level2CpuConstraintPoly2": {
+      "category": "spam"
+    },
+    "Level2CpuOods0": {
+      "category": "spam"
+    },
+    "Level2PedersenHashPointsXColumn": {
+      "category": "spam"
+    },
+    "Level2MemoryPageFactRegistry": {
+      "category": "spam"
+    },
+    "Level2CpuConstraintPoly3": {
+      "category": "spam"
+    },
+    "Level2CpuOods1": {
+      "category": "spam"
+    },
+    "Level2CpuOods2": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier1": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier2": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonPartialRoundKey1Column1": {
+      "category": "spam"
+    },
+    "Level2MerkleStatementContract": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier3": {
+      "category": "spam"
+    },
+    "Level2CpuOods3": {
+      "category": "spam"
+    },
+    "Level2CpuOods4": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonPartialRoundKey0Column1": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonFullRoundKey0Column0": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier4": {
+      "category": "spam"
+    },
+    "Level2CpuOods5": {
+      "category": "spam"
+    },
+    "Level2EcdsaPointsYColumn": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier5": {
+      "category": "spam"
+    },
+    "Level2CairoBootloaderProgram": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonFullRoundKey2Column1": {
+      "category": "spam"
+    },
+    "Level2CpuConstraintPoly4": {
+      "category": "spam"
+    },
+    "Level2CpuOods6": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier6": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonFullRoundKey1Column1": {
+      "category": "spam"
+    },
+    "Level2EcdsaPointsXColumn": {
+      "category": "spam"
+    },
+    "Level2CpuOods7": {
+      "category": "spam"
+    },
+    "Level2CpuConstraintPoly5": {
+      "category": "spam"
+    },
+    "Level2CpuFrilessVerifier7": {
+      "category": "spam"
+    },
+    "Level2SHARPVerifier": {
+      "category": "spam"
+    },
+    "Level2CpuConstraintPoly6": {
+      "category": "spam"
+    },
+    "Level2FriStatementContract": {
+      "category": "spam"
+    },
+    "Level2CpuConstraintPoly7": {
+      "category": "spam"
+    },
+    "Level2PoseidonPoseidonFullRoundKey0Column1": {
+      "category": "spam"
+    },
+    "Level2PedersenHashPointsYColumn": {
+      "category": "spam"
     }
   }
 }

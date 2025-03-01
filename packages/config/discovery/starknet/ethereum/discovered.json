@@ -321,7 +321,8 @@
         "l2Bridge": "3518527153270494256475755541726550738597926965391766941271488561627919771187",
         "starknet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
       },
-      "derivedName": "LordsL1Bridge"
+      "derivedName": "LordsL1Bridge",
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "DAIBridge",
@@ -459,7 +460,8 @@
         "tokenAdminAC": {
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "StarkgateRegistry",
@@ -508,7 +510,8 @@
           "severity": "HIGH",
           "description": "Same as the `GOVERNANCE_ADMIN` access control role."
         }
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "StarknetSecurityCouncil",
@@ -731,7 +734,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "FXSBridge",
@@ -879,7 +883,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "StarkgateSecurityAgentMultisig",
@@ -974,10 +979,11 @@
     {
       "name": "L1DaiGateway",
       "address": "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
-      "template": "starknet/L1Escrow",
+      "template": "starknet/L1EscrowDAI",
       "sourceHashes": [
         "0xea3ba1600e1949cef23ec7d1ebcf724de2bb6be9602c2339dd29582e6c00c9f5"
       ],
+      "displayName": "L1EscrowDAI",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
       "sinceTimestamp": 1666446647,
       "values": {
@@ -995,7 +1001,8 @@
           "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
-      "derivedName": "L1DAIBridge"
+      "derivedName": "L1DAIBridge",
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ETHBridge",
@@ -1165,7 +1172,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "USDTBridge",
@@ -1340,7 +1348,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "wstETHBridge",
@@ -1495,7 +1504,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Starknet",
@@ -1506,6 +1516,7 @@
         "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
           "permission": "governStarknet",
@@ -1661,7 +1672,8 @@
           "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
           "type": "CODE_CHANGE"
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DelayedExecutor",
@@ -1688,7 +1700,8 @@
         "executionDelayFmt": "8d",
         "executionExpiration": 4838400,
         "owner": "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "STRKBridge",
@@ -1860,7 +1873,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "rETHBridge",
@@ -2013,7 +2027,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "sfrxETHBridge",
@@ -2161,7 +2176,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "FRAXBridge",
@@ -2309,7 +2325,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "LUSDBridge",
@@ -2456,7 +2473,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "MultiBridge",
@@ -2623,7 +2641,8 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
-      "derivedName": "StarknetTokenBridge"
+      "derivedName": "StarknetTokenBridge",
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "USDCBridge",
@@ -2798,7 +2817,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "StarknetSCMinorityMultisig",
@@ -2990,7 +3010,8 @@
             "3": "deactivated"
           }
         }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     }
   ],
   "eoas": [
@@ -4188,14 +4209,14 @@
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "maker/L1Escrow": "0xfe5c1f545e5d63ef9898c0aba6ba0dc3534f41b038497adb713efd766b66191f",
-    "starknet/DelayedExecutor": "0x6e268f50bfa971283ba49d90de349d2ed61ca0f23255031c48629f9a74dc6607",
-    "starknet/L1Escrow": "0x4283ea0ce3e63ef7b4a58f71beda23bab32d25a388c561df9fee5f8d6f1f1d46",
-    "starknet/LordsL1Bridge": "0x4e40d4056b98ecac6969857b303f67a666d400b420709c05ef7c621b6644a645",
-    "starknet/StarkgateManager": "0x170461a309ff84227aee6a47eb960cb4b24b52e49790776a0bdc0002cb7dd643",
-    "starknet/StarkgateRegistry": "0xd53ee72950118426daf7b54282c2d524e773ee16c4643b9975ef75beac81acf8",
-    "starknet/Starknet": "0x493ed1d3bc009faef5b83fbd84cc539d05bef06228d2508d14f4344a492a7f2a",
-    "starknet/StarknetERC20Bridge": "0xd0c10fbb1e240fb243e5e1ee2a9225d7e1442c91eb9d7ad8a018b695a489adff",
-    "starknet/StarknetEthBridge": "0xbc764117c5294455ed25dc511f46d9e02810fb226827c9c2323d3237172b04d3",
-    "starknet/StarknetMultiBridge": "0xc20086fc6bbecbb406d4c5f853b9b672b11448ded9a7c802b9af7daa23b3c496"
+    "starknet/DelayedExecutor": "0xe84654e941de1cc1ff6072e9b6fb6e510ed5ac211a5a67cad254a3fe3e740b03",
+    "starknet/L1EscrowDAI": "0x6e4e0a4d90eb5f74198b3d1bf0b319b30310349b960d8f8e15738bd2f70cd7fd",
+    "starknet/LordsL1Bridge": "0xfc89ced3e21bae61dfc4abffb8fec98b920463aa7b2605f895caf626b4f54c18",
+    "starknet/StarkgateManager": "0x142fbc50dc46b2a83859dbc826f45b36ed7ff0cb60ee0943c737bebb3529eab0",
+    "starknet/StarkgateRegistry": "0xf6b631b33f87ac8bc18b92867d1ed0a4dde321bc0a494038aef4d5be34d31330",
+    "starknet/Starknet": "0xfcc62b23a16236c1ee486fd53c0c32cb8af5357b0252e1dbebca5c2aadd4078d",
+    "starknet/StarknetERC20Bridge": "0xd626bafc8aa5fd825097b020fcd9023967ae29183ecd46c3552cf27dcae84457",
+    "starknet/StarknetEthBridge": "0x23dcb6c6b8905581b1f92b3390c2c9fd033fed4e6ced63d94af7bf004608353d",
+    "starknet/StarknetMultiBridge": "0x6174b77981b50038228a4b0933fdbaf8eed1db645d2b605192639f23d4d08d68"
   }
 }

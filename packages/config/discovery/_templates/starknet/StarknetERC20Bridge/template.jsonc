@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to {{withdrawLimitPct}} of the locked funds per 24 hours.", // The withdrawal limit is {{withdrawalLimitStatus}}.
+  "category": "bridge-external",
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
   "types": {
     // "WithdrawalActivationString": {

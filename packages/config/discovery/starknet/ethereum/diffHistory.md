@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0dcc0d22814188b8e3b2d8320f72795f638ba1c0
+Generated with discovered.json: 0x11a726a7600e192431fa583c17195ed1e5c95835
 
-# Diff at Sat, 01 Mar 2025 09:44:51 GMT:
+# Diff at Sat, 01 Mar 2025 11:30:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21900569
@@ -16,7 +16,7 @@ Config related: discodrive.
 
 ```diff
     contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
-    +++ description: None
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
       issuedPermissions.5:
 +        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
       issuedPermissions.4:
@@ -276,6 +276,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        "starknet/LordsL1Bridge"
       description:
 +        "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -344,6 +346,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        [{"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"enroll new tokens or deactivate deposits into the escrow (for each token individually)."}]
       fieldMeta:
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."},"tokenAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -358,6 +362,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate."
       fieldMeta:
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."}}
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -420,6 +426,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -471,6 +479,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -486,9 +496,13 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
       values.wards:
 +        ["0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB","0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"]
       template:
-+        "starknet/L1Escrow"
++        "starknet/L1EscrowDAI"
+      displayName:
++        "L1EscrowDAI"
       description:
 +        "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -532,6 +546,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -583,6 +599,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -634,12 +652,14 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
 ```diff
     contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
-    +++ description: None
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
       issuedPermissions.3:
 +        {"permission":"upgrade","to":"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","via":[]}
       issuedPermissions.2:
@@ -651,6 +671,10 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        "governStarknet"
       template:
 +        "starknet/Starknet"
+      description:
++        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles."
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -702,6 +726,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -753,6 +779,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -804,6 +832,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -855,6 +885,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -909,6 +941,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -959,6 +993,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        "StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually."
       fieldMeta:
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"maxTotalTokenBalance":{"description":"The maximum total escrow balance per token (can limit deposits) is listed here if modified."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -1010,6 +1046,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -1069,6 +1107,8 @@ discovery. Values are for block 21900569 (main branch discovery), not current.
 +        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 

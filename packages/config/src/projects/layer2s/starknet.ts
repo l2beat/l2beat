@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   ProjectId,

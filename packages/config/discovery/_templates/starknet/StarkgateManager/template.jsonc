@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
+  "category": "bridge-external",
   "fields": {
     "$admin": {
       "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
