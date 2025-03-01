@@ -37,6 +37,7 @@ import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
 import { mxc } from './mxc'
+import { nums } from './nums'
 import { onchain } from './onchain'
 import { orb3 } from './orb3'
 import { oursong } from './oursong'
@@ -112,6 +113,7 @@ export const layer3s: Layer3[] = [
   muster,
   mvchain,
   mxc,
+  nums,
   unite,
   l3x,
   lumiterra,
