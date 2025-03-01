@@ -66,7 +66,6 @@ const permissionFacts = {
 describe(renderGroupedTransitivePermissionFact.name, () => {
   it('should render transitivePermission fact', () => {
     const knowledgeBase = new KnowledgeBase(
-      'test',
       ClingoFactFile.parse(permissionFacts).facts,
     )
     const facts = knowledgeBase.getFacts('transitivePermission', [

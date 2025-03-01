@@ -33,6 +33,8 @@ transitivePermission(Receiver, Permission, Giver, OriginalDelay, OriginalDescrip
   defaultedPermissionDelay(Receiver, "act", Via, Delay),
   Permission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
-#show eoa/4.
-#show contract/4.
+#show address/3.
+#show addressName/2.
+#show addressType/2.
+#show addressDescription/2.
 #show transitivePermission/6.

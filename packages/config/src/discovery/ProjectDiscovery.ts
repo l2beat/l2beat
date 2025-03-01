@@ -3,6 +3,7 @@ import { join } from 'path'
 import {
   ConfigReader,
   KnowledgeBase,
+  ModelIdRegistry,
   RolePermissionEntries,
   groupFacts,
   parseExportedFacts,
@@ -54,6 +55,7 @@ export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
   private knowledgeBase: KnowledgeBase | undefined
+  private modelIdRegistry: ModelIdRegistry | undefined
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
@@ -63,7 +65,7 @@ export class ProjectDiscovery {
     } = {},
   ) {
     if (!options.ignoreClingoFacts) {
-      this.knowledgeBase = this.createKnowledgeBase(configReader, projectName)
+      this.createKnowledgeBaseAndModelIdRegistry(configReader, projectName)
     }
     const discovery = configReader.readDiscovery(projectName, chain)
     this.discoveries = [
@@ -74,15 +76,18 @@ export class ProjectDiscovery {
     ]
   }
 
-  private createKnowledgeBase(
+  private createKnowledgeBaseAndModelIdRegistry(
     configReader: ConfigReader,
     projectName: string,
-  ): KnowledgeBase | undefined {
+  ): void {
     const projectPath = configReader.getProjectPath(projectName)
     const projectPageFactsPath = join(projectPath, 'projectPageFacts.json')
     if (existsSync(projectPageFactsPath)) {
       const factsFile = readFileSync(projectPageFactsPath, 'utf8')
-      return new KnowledgeBase(projectName, parseExportedFacts(factsFile).facts)
+      this.knowledgeBase = new KnowledgeBase(
+        parseExportedFacts(factsFile).facts,
+      )
+      this.modelIdRegistry = new ModelIdRegistry(this.knowledgeBase)
     }
   }
 
@@ -859,12 +864,11 @@ export class ProjectDiscovery {
   describePermissionsFromFacts(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
-    if (this.knowledgeBase === undefined) {
-      throw new Error('Knowledge base not found')
-    }
-    const id = this.knowledgeBase.getId(
+    assert(this.knowledgeBase)
+    assert(this.modelIdRegistry)
+    const id = this.modelIdRegistry.getModelId(
       this.chain,
-      contractOrEoa.address.toLowerCase(),
+      contractOrEoa.address,
     )
     const transitivePermissionFacts = this.knowledgeBase.getFacts(
       'transitivePermission',
@@ -876,7 +880,7 @@ export class ProjectDiscovery {
       const rendered = renderGroupedTransitivePermissionFact(
         fact as GroupedTransitivePermissionFact,
       )
-      result.push(this.knowledgeBase.replaceIdsWithNames(rendered))
+      result.push(this.modelIdRegistry.replaceIdsWithNames(rendered))
     }
     return result
   }
