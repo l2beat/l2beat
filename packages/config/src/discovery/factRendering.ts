@@ -55,6 +55,7 @@ export interface GroupedTransitivePermissionFact {
     string[],
     number,
     string | undefined,
+    number,
     TransitivePermissionVia[],
     'isFinal' | 'nonFinal',
   ]
@@ -80,8 +81,9 @@ export function renderGroupedTransitivePermissionFact(
   const permission = fact.params[1] as PermissionType
   const delay = Number(fact.params[3])
   const description = fact.params[4]
-  const viaList = fact.params[5]
-  const isFinal = fact.params[6]
+  const _totalDelay = fact.params[5]
+  const viaList = fact.params[6]
+  const isFinal = fact.params[7]
 
   const permissionToPrefixMapping =
     isFinal === 'isFinal'

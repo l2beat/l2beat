@@ -16,6 +16,7 @@ const permissionFacts = {
         'l1CustomGateway_ethereum_0xcee284f754e854890e311e3280b767f80797180d',
         3600,
         'update the implementation',
+        262800,
         [
           {
             atom: 'tuple',

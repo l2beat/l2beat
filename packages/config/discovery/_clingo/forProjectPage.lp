@@ -24,33 +24,34 @@ permission(Receiver, "act", Msig) :-
 
 % 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
-transitivePermission(Receiver, Permission, Giver, Delay, Description, nil) :-
+transitivePermission(Receiver, Permission, Giver, Delay, Description, Delay, nil) :-
   permission(Receiver, Permission, Giver),
   defaultedPermissionDelay(Receiver, Permission, Giver, Delay),
   defaultedPermissionDescription(Receiver, Permission, Giver, Description).
 
-transitivePermission(Receiver, Permission, Giver, OriginalDelay, OriginalDescription, (cons(tuple(Via, "act", Delay), IndirectVia))) :-
-  transitivePermission(Via, Permission, Giver, OriginalDelay, OriginalDescription, IndirectVia),
+transitivePermission(Receiver, Permission, Giver, OriginalDelay, OriginalDescription, TotalDelay, (cons(tuple(Via, "act", Delay), IndirectVia))) :-
+  transitivePermission(Via, Permission, Giver, OriginalDelay, OriginalDescription, PreviousTotalDelay, IndirectVia),
   permission(Receiver, "act", Via),
   defaultedPermissionDelay(Receiver, "act", Via, Delay),
+  TotalDelay = PreviousTotalDelay + Delay,
   Permission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
 % 2. Filtering permission to only those we want to display
 
 % a) Show only final permissions (which don't give "act" to someone else)
-filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, Via, isFinal) :-
-  transitivePermission(Receiver, Permission, Giver, Delay, Description, Via),
+filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via, isFinal) :-
+  transitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via),
   not permission(_, "act", Receiver).
 
 % b) ...unless it's a direct permission (to say "can be used to")
-filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, Via, nonFinal) :-
-  transitivePermission(Receiver, Permission, Giver, Delay, Description, Via),
+filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via, nonFinal) :-
+  transitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via),
   Via == nil,
   permission(_, "act", Receiver).
 
 % 3. In Permissions section, show only addresses that have some final permission
 showInPermissionsSection(Address) :-
-  filteredTransitivePermission(Address, Permission, _, _, _, _, isFinal).
+  filteredTransitivePermission(Address, Permission, _, _, _, _, _, isFinal).
 
 % ...and always show multisigs
 showInPermissionsSection(Address) :-
@@ -68,6 +69,6 @@ showEoaInPermissionsSection(Address) :-
 #show addressName/2.
 #show addressType/2.
 #show addressDescription/2.
-#show filteredTransitivePermission/7.
+#show filteredTransitivePermission/8.
 #show showContractInPermissionsSection/1.
 #show showEoaInPermissionsSection/1.

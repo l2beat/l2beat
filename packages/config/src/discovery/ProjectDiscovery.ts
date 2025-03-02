@@ -977,8 +977,11 @@ export class ProjectDiscovery {
   }
 
   getDiscoveredPermissions(): ProjectPermissions {
-    const relevantContracts = this.getPermissionedContracts()
-    // const relevantContracts = this.getPermissionedContractsFromKnowledgeBase()
+    const relevantContracts =
+      this.knowledgeBase === undefined
+        ? this.getPermissionedContracts()
+        : this.getPermissionedContractsFromKnowledgeBase()
+
     const eoas = this.discoveries
       .flatMap((discovery) => discovery.eoas)
       .filter((e) => (e.category?.priority ?? 0) >= 0)
@@ -1009,6 +1012,7 @@ export class ProjectDiscovery {
     }
 
     for (const eoa of eoas) {
+      // TODO: check permissions from KnowledgeBase
       if (eoa.receivedPermissions === undefined) {
         continue
       }
@@ -1126,6 +1130,37 @@ export class ProjectDiscovery {
     return result
   }
 
+  getUpgradableBy(contract: ContractParameters) {
+    const upgradersWithDelay: Record<string, number> = Object.fromEntries(
+      contract.issuedPermissions
+        ?.filter((p) => p.permission === 'upgrade')
+        .map((p) => {
+          const entry = this.getEntryByAddress(p.to)
+          const address =
+            entry?.name ??
+            (this.isEOA(p.to) ? this.getEOAName(p.to) : p.to.toString())
+          const delay =
+            (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
+          return [address, delay]
+        }) ?? [],
+    )
+
+    const upgraders = Object.keys(upgradersWithDelay)
+    const upgradableBy =
+      upgraders.length === 0
+        ? {}
+        : {
+            upgradableBy: upgraders.map((actor) => ({
+              name: actor,
+              delay:
+                upgradersWithDelay[actor] === 0
+                  ? 'no'
+                  : formatSeconds(upgradersWithDelay[actor]),
+            })),
+          }
+    return upgradableBy
+  }
+
   getDiscoveredContracts(): ProjectContract[] {
     const contracts = this.discoveries
       .flatMap((discovery) => discovery.contracts)
@@ -1137,44 +1172,19 @@ export class ProjectDiscovery {
     const gnosisModules = contracts.flatMap((contract) =>
       toAddressArray(contract.values?.GnosisSafe_modules),
     )
+    const contractsWithPermissions =
+      this.knowledgeBase === undefined
+        ? this.getPermissionedContracts()
+        : this.getPermissionedContractsFromKnowledgeBase()
     const result = contracts
       .filter((contract) => !gnosisModules.includes(contract.address))
-      .filter((contract) => contract.receivedPermissions === undefined)
-      .filter((contract) => !isMultisigLike(contract))
+      .filter((contract) => !contractsWithPermissions.includes(contract))
       .map((contract) => {
-        const upgradersWithDelay: Record<string, number> = Object.fromEntries(
-          contract.issuedPermissions
-            ?.filter((p) => p.permission === 'upgrade')
-            .map((p) => {
-              const entry = this.getEntryByAddress(p.to)
-              const address =
-                entry?.name ??
-                (this.isEOA(p.to) ? this.getEOAName(p.to) : p.to.toString())
-              const delay =
-                (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
-              return [address, delay]
-            }) ?? [],
-        )
-
-        const upgraders = Object.keys(upgradersWithDelay)
-        const upgradableBy =
-          upgraders.length === 0
-            ? {}
-            : {
-                upgradableBy: upgraders.map((actor) => ({
-                  name: actor,
-                  delay:
-                    upgradersWithDelay[actor] === 0
-                      ? 'no'
-                      : formatSeconds(upgradersWithDelay[actor]),
-                })),
-              }
-
         return this.getContractDetails(contract.address.toString(), {
           description: formatAsBulletPoints(
             this.describeContractOrEoa(contract, true),
           ),
-          ...upgradableBy,
+          ...this.getUpgradableBy(contract),
           discoveryDrivenData: true,
         })
       })
