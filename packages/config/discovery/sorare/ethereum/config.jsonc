@@ -6,11 +6,10 @@
   "initialAddresses": ["0xF5C9F957705bea56a7e806943f98F7777B995826"],
   "names": {
     "0xF5C9F957705bea56a7e806943f98F7777B995826": "StarkExchange",
-    "0x879cD57975d596004863D30c59d579ef78BBbe32": "Committee",
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy"
+    "0x879cD57975d596004863D30c59d579ef78BBbe32": "Committee"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "shared-sharp-verifier"
+    "shared": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {

@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xbb1928a72ad4ebae57abb75bb2356f46d658a1ff
+
+# Diff at Sat, 01 Mar 2025 09:54:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21829671
+- current block number: 21829671
+
+## Description
+
+config related: added starknet discodrive templates incl escrows.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829671 (main branch discovery), not current.
+
+```diff
+    contract L1DAIEscrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
+      values.wards:
++        ["0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB","0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"]
+      template:
++        "maker/L1Escrow"
+    }
+```
+
 Generated with discovered.json: 0xc0c590f9293b4d447bbb55c50e1eda8895d12852
 
 # Diff at Thu, 27 Feb 2025 12:01:46 GMT:

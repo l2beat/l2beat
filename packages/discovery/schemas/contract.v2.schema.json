@@ -110,7 +110,9 @@
             "interact",
             "upgrade",
             "act",
-            "aggregatePolygon"
+            "aggregatePolygon",
+            "operateStarknet",
+            "governStarknet"
           ]
         },
         "delay": {

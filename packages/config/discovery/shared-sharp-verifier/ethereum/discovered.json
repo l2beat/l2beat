@@ -1,59 +1,64 @@
 {
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
-  "blockNumber": 21766214,
-  "configHash": "0xe623a04d6c8c443e3862186015447f956b1ec78424bea3f348bf6ab26fde728f",
+  "blockNumber": 21951256,
+  "configHash": "0xd3754cfdb19ebcc3f50fc6a8ba706eb622d725f1f6244a2e672a68b060735841",
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",
       "address": "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonPartialRoundKey1Column",
       "address": "0x032e5cDb729Ce94638ACA9e82A22688109B43046",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "sinceTimestamp": 1721829143,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PedersenHashPointsXColumn",
       "address": "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly0",
       "address": "0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67"
       ],
       "sinceTimestamp": 1706309663,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x05C98569CA566a2035b87dE7d1b623C950798035",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67"
       ],
       "sinceTimestamp": 1721840015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -86,27 +91,30 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
       ],
       "sinceTimestamp": 1721828723,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonPartialRoundKey1Column",
       "address": "0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "sinceTimestamp": 1721840015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -139,61 +147,67 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PedersenHashPointsYColumn",
       "address": "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonPartialRoundKey0Column0",
       "address": "0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "sinceTimestamp": 1706309651,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey0Column"
+      "derivedName": "PoseidonPoseidonPartialRoundKey0Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonFullRoundKey1Column0",
       "address": "0x1E8E41141347E01f33d84718b7f4cEFB433D5a94",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "sinceTimestamp": 1706309663,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey1Column"
+      "derivedName": "PoseidonPoseidonFullRoundKey1Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly1",
       "address": "0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5014b4dd4ac75d575b7511cda643b511a4f57eaffccb5aad8fe12fd2a412be65"
       ],
       "sinceTimestamp": 1706141015,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonPartialRoundKey1Column0",
       "address": "0x20F10963eBCA608f8B24a5AEE275861B20ec868E",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "sinceTimestamp": 1706309663,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey1Column"
+      "derivedName": "PoseidonPoseidonPartialRoundKey1Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SHARPVerifierAdminMultisig",
@@ -204,6 +218,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -262,12 +277,13 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier0",
       "address": "0x28E3aD4201ba416B23d9950503dB28a9232BE32a",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0xf51c19545fc3804626755b86bd142a8c98efcbfacbd2499b1ae9ecda7a163540"
       ],
@@ -299,81 +315,89 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonFullRoundKey2Column0",
       "address": "0x2b159027d7F0E23D5C15b0517e33DdA838C46045",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "sinceTimestamp": 1706309663,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey2Column"
+      "derivedName": "PoseidonPoseidonFullRoundKey2Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly2",
       "address": "0x307982EB84858A04d32b5e0b72D152be5A3eEcEA",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba"
       ],
       "sinceTimestamp": 1706141015,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "FriStatementContract",
       "address": "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xdb6522c746b47c8025bdd3942737207a45de03416b891219d4ad3328e3cbcb07"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true, "hasRegisteredFact": true }
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MerkleStatementContract",
       "address": "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x353a1ed6ef3ef47ed725cf0832c357c4e71680318751a7bbd706d607d8acb7aa"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true, "hasRegisteredFact": true }
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x351666E9EeA6E012f08695ccd1923f37519563f1",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xc6b85b7926407ac9352754cb496033d4bf5689bc99395d4b8b15d2d79b245209"
       ],
       "sinceTimestamp": 1721828723,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuOods0",
       "address": "0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
       ],
       "sinceTimestamp": 1706309651,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PedersenHashPointsXColumn",
       "address": "0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
       ],
       "sinceTimestamp": 1706140847,
       "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsXColumn"
+      "derivedName": "PedersenHashPointsXColumn",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -406,18 +430,20 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2MemoryPageFactRegistry",
       "address": "0x40864568f679c10aC9e72211500096a5130770fA",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x388a630368c27b0a52e63f2233c93b88a5fc3100ba178780176dceba351487fa"
       ],
       "sinceTimestamp": 1706140835,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "MemoryPageFactRegistry"
+      "derivedName": "MemoryPageFactRegistry",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -453,27 +479,31 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly3",
       "address": "0x450909cC615036Ca4772dDDd8a69988B031811c9",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0"
       ],
       "sinceTimestamp": 1706140835,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "SHARPVerifierProxy",
+      "name": "SHARPVerifierCallProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "template": "shared-sharp-verifier/SHARPVerifierCallProxy",
       "sourceHashes": [
         "0x1cfb47b7d41edbe1b49e9d32ab6b39caae53d74feac405b948cc774b2d8db7a5",
         "0x1993eaf381afc46f98a6d57b20658554efa839ecfb519a698bf45042d7ff5b27"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -539,98 +569,111 @@
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_callImplementation": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
         "StarkWareProxy_upgradeDelay": 0,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "upgradeActivationDelayFmt": "0s"
       },
-      "derivedName": "CallProxy"
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "derivedName": "CallProxy",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Level2CpuOods1",
       "address": "0x473E7B002f9A3109fd0FcdA4597935E4E610f367",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
       ],
       "sinceTimestamp": 1706141015,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0x4742f8723CAE9C17Cb1D54708898904fB43621c9",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
       ],
       "sinceTimestamp": 1721829155,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonFullRoundKey2Column",
       "address": "0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "sinceTimestamp": 1721840015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
       ],
       "sinceTimestamp": 1721840015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuOods2",
       "address": "0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
       ],
       "sinceTimestamp": 1706141459,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonPartialRoundKey0Column",
       "address": "0x53daC4aB94955f35657463252a7b25F343A14451",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "sinceTimestamp": 1721840015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5014b4dd4ac75d575b7511cda643b511a4f57eaffccb5aad8fe12fd2a412be65"
       ],
       "sinceTimestamp": 1721828723,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CairoBootloaderProgram",
       "address": "0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515",
+      "template": "shared-sharp-verifier/CairoBootloaderProgram",
       "sourceHashes": [
         "0xf4a899549b88ecceef625c257853e823973744ca16b4e995c327f29be092cc3c"
       ],
+      "description": "Bootloader program for the SHARPVerifier.",
       "sinceTimestamp": 1721828687,
       "values": {
         "$immutable": true,
@@ -1430,12 +1473,13 @@
           "3618502788666131213697322783095070105623107215331596699973092056135872020248",
           "2345108766317314046"
         ]
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier1",
       "address": "0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0x455c07ce6901510356c3380308551257434cb25c1460e324772f60468e46682a"
       ],
@@ -1464,12 +1508,13 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier2",
       "address": "0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0xb1d6c8068e8976bde7fbfd4294f8808b6d28efd5d87ca84820a7e3e890446761"
       ],
@@ -1498,7 +1543,8 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -1531,44 +1577,48 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonPartialRoundKey1Column1",
       "address": "0x62960C874379653D7BBe3644Ac653736Da2eda12",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "sinceTimestamp": 1706309651,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey1Column"
+      "derivedName": "PoseidonPoseidonPartialRoundKey1Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2MerkleStatementContract",
       "address": "0x634DCf4f1421Fc4D95A968A559a450ad0245804c",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x353a1ed6ef3ef47ed725cf0832c357c4e71680318751a7bbd706d607d8acb7aa"
       ],
       "sinceTimestamp": 1706140859,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "MerkleStatementContract"
+      "derivedName": "MerkleStatementContract",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
       ],
       "sinceTimestamp": 1721828699,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier3",
       "address": "0x66F2345D003511a1A60D87E3984Bb8d12C21A970",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0x0a08e622000c261c38a85bb0054bb2b50ae684e6edf79f0986e931d10fc5c277"
       ],
@@ -1597,83 +1647,87 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuOods3",
       "address": "0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
       ],
       "sinceTimestamp": 1706309663,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "OldSHARPVerifier",
+      "name": "Level3SHARPVerifier",
       "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "template": "shared-sharp-verifier/DeprecatedVerifier",
+      "template": "shared-sharp-verifier/Level3SHARPVerifier",
       "sourceHashes": [
         "0x4a3316e3eb418f807ad2271f24b4764f4069731c7be4041cf2574e66ee2b20cc"
       ],
+      "description": "Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback",
       "sinceTimestamp": 1674001487,
       "values": {
         "$immutable": true,
-        "bootloaderProgramContractAddress": "0x0000000000000000000000000000000000000008",
-        "cpuFrilessVerifiers": [],
         "getBootloaderConfig": [
           "2962621603719000361370283216422448934312521782617806945663080079725495842070",
           "3178097804922730583543126053422762895998573737925004508949311089390705597156"
         ],
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2022_7",
-        "memoryPageFactRegistry": "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4",
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "GpsStatementVerifier"
+      "derivedName": "GpsStatementVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuOods4",
       "address": "0x704DFf65eD9b3d121d469b7A790A9927C853607F",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
       ],
       "sinceTimestamp": 1706140859,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonPartialRoundKey0Column1",
       "address": "0x75D887d2437eF87EA17B93143716BECD7BBbCa0a",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "sinceTimestamp": 1706309663,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonPartialRoundKey0Column"
+      "derivedName": "PoseidonPoseidonPartialRoundKey0Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonFullRoundKey0Column0",
       "address": "0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "sinceTimestamp": 1706309663,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey0Column"
+      "derivedName": "PoseidonPoseidonFullRoundKey0Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier4",
       "address": "0x8055948c530dbBc19cc350d53473EEe3a1e3d22B",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0xdc9bb80d233601bb801b1e447c903b9c5a929f3630f4e158f75b9931e44beb9f"
       ],
@@ -1700,57 +1754,63 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0"
       ],
       "sinceTimestamp": 1721828723,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuOods5",
       "address": "0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
       ],
       "sinceTimestamp": 1706140859,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonFullRoundKey1Column",
       "address": "0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "sinceTimestamp": 1721829131,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2EcdsaPointsYColumn",
       "address": "0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
       ],
       "sinceTimestamp": 1706140859,
       "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsYColumn"
+      "derivedName": "EcdsaPointsYColumn",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SHARPVerifier",
       "address": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
-      "template": "shared-sharp-verifier/Verifier",
+      "template": "shared-sharp-verifier/SHARPVerifier",
       "sourceHashes": [
         "0x851b82890362af9467218d27c5666552421bca8023529b83632b6ebc4cc6bc8f"
       ],
+      "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
       "sinceTimestamp": 1722195851,
       "values": {
         "$immutable": true,
@@ -1781,32 +1841,35 @@
         "referenceFactRegistry": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
         "referralExpirationTime": 1729971851
       },
-      "derivedName": "GpsStatementVerifier"
+      "derivedName": "GpsStatementVerifier",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb"
       ],
       "sinceTimestamp": 1721829107,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0xA9db7bDfbc3664C8954f490e4d94B8607a080f23",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier5",
       "address": "0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0x130226ac91c1d6deb82b863eea95c84640b9c20c1e292b26cb88fc6db73c0b15"
       ],
@@ -1840,7 +1903,8 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -1871,34 +1935,39 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
       ],
       "sinceTimestamp": 1721828735,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba"
       ],
       "sinceTimestamp": 1721828699,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CairoBootloaderProgram",
       "address": "0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40",
+      "template": "shared-sharp-verifier/CairoBootloaderProgram",
       "sourceHashes": [
         "0xbeae5546b3ade5af5df9bfc3c26b178639a7c992a8d59b98a3fbb46dfe0c3a2c"
       ],
+      "description": "Bootloader program for the SHARPVerifier.",
       "sinceTimestamp": 1706140835,
       "values": {
         "$immutable": true,
@@ -2633,55 +2702,60 @@
           "2345108766317314046"
         ]
       },
-      "derivedName": "CairoBootloaderProgram"
+      "derivedName": "CairoBootloaderProgram",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonFullRoundKey2Column1",
       "address": "0xB5A5759Dd063899F213eB9699906B445f855660D",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "sinceTimestamp": 1706309651,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey2Column"
+      "derivedName": "PoseidonPoseidonFullRoundKey2Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly4",
       "address": "0xB62Dc40175812208f509B69506315A48C92fb15A",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62"
       ],
       "sinceTimestamp": 1706140859,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuOods6",
       "address": "0xB640935b164024EF1BC0b9e176432c440a5cd4dc",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
       ],
       "sinceTimestamp": 1706141519,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonPartialRoundKey0Column",
       "address": "0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "sinceTimestamp": 1721829143,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier6",
       "address": "0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0xb44fea2230221135a15c6fbca5ca2f96e5962e3c7e3ec951f0971b590d8962a5"
       ],
@@ -2710,76 +2784,83 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PoseidonPoseidonFullRoundKey1Column1",
       "address": "0xC2969a099F22430e20bcE237F469ac6F3101Ac5f",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "sinceTimestamp": 1706309651,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey1Column"
+      "derivedName": "PoseidonPoseidonFullRoundKey1Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62"
       ],
       "sinceTimestamp": 1721828699,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonFullRoundKey0Column",
       "address": "0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "sinceTimestamp": 1721829107,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2EcdsaPointsXColumn",
       "address": "0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
       ],
       "sinceTimestamp": 1706140847,
       "values": { "$immutable": true },
-      "derivedName": "EcdsaPointsXColumn"
+      "derivedName": "EcdsaPointsXColumn",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuOods7",
       "address": "0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
       ],
       "sinceTimestamp": 1706309447,
       "values": { "$immutable": true },
-      "derivedName": "CpuOods"
+      "derivedName": "CpuOods",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly5",
       "address": "0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xc6b85b7926407ac9352754cb496033d4bf5689bc99395d4b8b15d2d79b245209"
       ],
       "sinceTimestamp": 1706141519,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuFrilessVerifier7",
       "address": "0xD0fC19710c389ef4a7244656cB08db08eA9D88b4",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier",
       "sourceHashes": [
         "0x85234db76e94b2ff3ad7e2f2a1b16709e261ffc53900bb726e05cf1ee79811aa"
       ],
@@ -2808,15 +2889,17 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
-      "derivedName": "CpuFrilessVerifier"
+      "derivedName": "CpuFrilessVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2SHARPVerifier",
       "address": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
-      "template": "shared-sharp-verifier/DeprecatedVerifier",
+      "template": "shared-sharp-verifier/Level2SHARPVerifier",
       "sourceHashes": [
         "0xbe473240e6de093ae7120378ade4c19b5ab4bbe69143651df5cc3fe66c33c3eb"
       ],
+      "description": "Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback",
       "sinceTimestamp": 1706309663,
       "values": {
         "$immutable": true,
@@ -2846,59 +2929,65 @@
         "referenceFactRegistry": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
         "referralExpirationTime": 1714344863
       },
-      "derivedName": "GpsStatementVerifier"
+      "derivedName": "GpsStatementVerifier",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
       ],
       "sinceTimestamp": 1721828723,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuOods",
       "address": "0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
       ],
       "sinceTimestamp": 1721828699,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly6",
       "address": "0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb"
       ],
       "sinceTimestamp": 1706309651,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonFullRoundKey2Column",
       "address": "0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "sinceTimestamp": 1721829131,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2FriStatementContract",
       "address": "0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xdb6522c746b47c8025bdd3942737207a45de03416b891219d4ad3328e3cbcb07"
       ],
       "sinceTimestamp": 1706140859,
       "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "FriStatementContract"
+      "derivedName": "FriStatementContract",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
@@ -2936,94 +3025,91 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "EcdsaPointsYColumn",
       "address": "0xE3929Ea107238Ce59d64A3cE497f12b57846B716",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
       ],
       "sinceTimestamp": 1721828687,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2CpuConstraintPoly7",
       "address": "0xE5313feE344376D22A42C9F0919e7F0d43920CAc",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0"
       ],
       "sinceTimestamp": 1706141639,
       "values": { "$immutable": true },
-      "derivedName": "CpuConstraintPoly"
+      "derivedName": "CpuConstraintPoly",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MemoryPageFactRegistry",
       "address": "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/MemoryPageFactRegistry",
       "sourceHashes": [
         "0x122eb6d5583cc680f59abc49750d9d6c0a65ca937e292b2ce67e18e8a8cdb114"
       ],
+      "description": "Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.",
       "sinceTimestamp": 1721828687,
       "values": { "$immutable": true, "hasRegisteredFact": true }
     },
     {
       "name": "Level2PoseidonPoseidonFullRoundKey0Column1",
       "address": "0xe7B835eA7e348B25aF2480272C4cA28429573293",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "sinceTimestamp": 1706309651,
       "values": { "$immutable": true },
-      "derivedName": "PoseidonPoseidonFullRoundKey0Column"
+      "derivedName": "PoseidonPoseidonFullRoundKey0Column",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonFullRoundKey0Column",
       "address": "0xedFfEA8296945aA91FC035Aefc8c33D737dBc573",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "sinceTimestamp": 1721840015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PoseidonPoseidonFullRoundKey1Column",
       "address": "0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "sinceTimestamp": 1721840015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Level2PedersenHashPointsYColumn",
       "address": "0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd",
-      "template": "shared-sharp-verifier/ignoreCompute",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
       "sourceHashes": [
         "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
       ],
       "sinceTimestamp": 1706140847,
       "values": { "$immutable": true },
-      "derivedName": "PedersenHashPointsYColumn"
-    },
-    {
-      "name": "OldMemoryPageFactRegistry",
-      "address": "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4",
-      "sourceHashes": [
-        "0xb58bf9ec993cfca7aa0c9a3df23c2bbab281d357b8088ea5769d57a6a38352a6"
-      ],
-      "sinceTimestamp": 1673984795,
-      "values": { "$immutable": true, "hasRegisteredFact": true },
-      "derivedName": "MemoryPageFactRegistry"
+      "derivedName": "PedersenHashPointsYColumn",
+      "category": { "name": "Spam", "priority": -1 }
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000008" },
     { "address": "0x0405107a60391Eb51821be373ff978115Ee58488" },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x955B978F3ee7818dA71fA25c676062E6BC462Fec" },
@@ -3564,21 +3650,18 @@
     ],
     "0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd": [
       "function compute(uint256 x) pure returns (uint256 result)"
-    ],
-    "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4": [
-      "event LogMemoryPageFactContinuous(bytes32 factHash, uint256 memoryHash, uint256 prod)",
-      "event LogMemoryPageFactRegular(bytes32 factHash, uint256 memoryHash, uint256 prod)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function registerContinuousMemoryPage(uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime) returns (bytes32 factHash, uint256 memoryHash, uint256 prod)",
-      "function registerRegularMemoryPage(uint256[] memoryPairs, uint256 z, uint256 alpha, uint256 prime) returns (bytes32 factHash, uint256 memoryHash, uint256 prod)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-sharp-verifier/CpuFrilessVerifier": "0xc78982a560702ecff84300b1791406038fd208ecb3ce756843af3f61d19b93eb",
-    "shared-sharp-verifier/DeprecatedVerifier": "0x15b4df28e1f4457dc2b82938402d4bf6502fbbc50d36b03c6f8accdddab54720",
-    "shared-sharp-verifier/ignoreCompute": "0x6e6f1a52c26afad27d861a87eec501b5faaa0cec0b19f7d07d7a21377a58116d",
-    "shared-sharp-verifier/Verifier": "0x15b4df28e1f4457dc2b82938402d4bf6502fbbc50d36b03c6f8accdddab54720"
+    "shared-sharp-verifier/CairoBootloaderProgram": "0xe1ac1234f16fd1598f20d38a9433e8627cf917b39d28b52ac7647868464f9480",
+    "shared-sharp-verifier/CpuFrilessVerifier": "0xc8624f6f33db895b137eba47cbdb099fc810f11a06eebc23dfd177b5dbab9aed",
+    "shared-sharp-verifier/ignoreComputeSpam": "0xecb94252fa2be4a8b16408d03a6b85c6aefdefdd0e666e6b28daf712c0fee784",
+    "shared-sharp-verifier/Level2CpuFrilessVerifier": "0xc8624f6f33db895b137eba47cbdb099fc810f11a06eebc23dfd177b5dbab9aed",
+    "shared-sharp-verifier/Level2SHARPVerifier": "0x589119f5a0ba0dddcb5e02d929ac171de166687e5e11f742d1d5b169d1eef1ec",
+    "shared-sharp-verifier/Level3SHARPVerifier": "0x5621d3c9634d08062ecf36c5029406cb57bff1c604484554019afef960271852",
+    "shared-sharp-verifier/MemoryPageFactRegistry": "0x9d20c368762ce440ae399894b7a294136feccea1ff9eb6939dc2887cca6835d9",
+    "shared-sharp-verifier/SHARPVerifier": "0x18c9ad67177accce5b6324d0e9d13fd2dffd6981671dd827ac275d739f5e31b9",
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xca41b5fe7499e8e0abd7d0bcbb7e80170c3920e6123c572b2fe49864fbf3949f"
   }
 }

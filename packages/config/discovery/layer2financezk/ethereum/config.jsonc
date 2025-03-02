@@ -20,12 +20,11 @@
     "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" // SHARP Verifier Governor
   ],
   "names": {
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x5b000954F70B0410685193B0afd3074B744B5C97": "StrategyCompound",
     "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9": "Committee"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "shared-sharp-verifier"
+    "shared": "shared-sharp-verifier"
   },
   "overrides": {
     "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": {
