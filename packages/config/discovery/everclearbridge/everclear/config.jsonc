@@ -22,7 +22,7 @@
           }
         },
         "activeRoles": {
-            "description": "role 1: ADMIN, role 2: ASSET_MANAGER",
+          "description": "role 1: ADMIN, role 2: ASSET_MANAGER",
           "handler": {
             "type": "event",
             "select": ["_account"],
@@ -39,8 +39,8 @@
       }
     },
     // manager
-    "0xe0F010e465f15dcD42098dF9b99F1038c11B3056":{
-        "ignoreMethods": ["getCurrentEpoch"]
+    "0xe0F010e465f15dcD42098dF9b99F1038c11B3056": {
+      "ignoreMethods": ["getCurrentEpoch"]
     }
   }
 }

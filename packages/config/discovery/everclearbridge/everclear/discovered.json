@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "everclear",
   "blockNumber": 847838,
-  "configHash": "0xdef0893d9870d2e51f7da5041365ebc71c166af94dfbdf29e8837f35b43fcdef",
+  "configHash": "0x1ae5fac8bf7c258e7feb349efc623f7f208f08e60ecde5f6889e700531ac9bc3",
   "contracts": [
     {
       "name": "EverclearHub",

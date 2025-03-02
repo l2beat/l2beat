@@ -6,16 +6,6 @@ import type { Bridge } from '../../types'
 
 const discovery = new ProjectDiscovery('everclearbridge')
 
-const mainnetSpokedelayBlocks = discovery.getContractValue<number>(
-  'MainnetSpokeConnector',
-  'delayBlocks',
-)
-
-const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
-  'MainnetSpokeConnector',
-  'disputeBlocks',
-)
-
 export const everclearbridge: Bridge = {
   type: 'bridge',
   id: ProjectId('everclearbridge'),
