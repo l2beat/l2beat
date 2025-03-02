@@ -1,16 +1,43 @@
-Generated with discovered.json: 0x2667e0cae75e76b856739b341ebe63b869255678
+Generated with discovered.json: 0x05f01ea37b32f34836d262d9ef5ecd353cd8216d
 
-# Diff at Sat, 01 Mar 2025 11:44:42 GMT:
+# Diff at Sun, 02 Mar 2025 14:18:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21900569
-- current block number: 21950973
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 21900569
+- current block number: 21959652
 
 ## Description
 
-config related: renamed some starknet contracts.
+Starknet introduces an 8d timelock and adds their 2/6 MS as upgrade admin (governor) for the starknet contract.
+
+Multibridge, StarkgateRegistry upgrade: minor change, `getL2Bridge()` added.
+
+Config related: discodrive + renamed some starknet contracts.
 
 ## Watched changes
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      sourceHashes.1:
+-        "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b"
++        "0x90444355cfe353ba90f2050035caf7c6ae157bfb6e54bf74a4117580f568bf95"
+      values.$implementation:
+-        "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"
++        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
+      values.$pastUpgrades.1:
++        ["2025-03-02T12:30:11.000Z","0x86ccb24833adb42f79ff55fcce4e69508e467df41c653a1b2578b5f2788f3c0c",["0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.identify:
+-        "StarkWare_StarkgateRegistry_2.0_1"
++        "StarkWare_StarkgateRegistry_2.0_6"
+      values.implementation:
+-        "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"
++        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
+    }
+```
 
 ```diff
     contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
@@ -45,6 +72,31 @@ config related: renamed some starknet contracts.
 ```
 
 ```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      sourceHashes.1:
+-        "0xd3e96d9fb623969bd9cc3e5fed6779ce42c5de753b49fc73da783863d4043a2f"
++        "0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211"
+      values.$implementation:
+-        "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"
++        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
+      values.$pastUpgrades.1:
++        ["2025-03-02T12:30:11.000Z","0x86ccb24833adb42f79ff55fcce4e69508e467df41c653a1b2578b5f2788f3c0c",["0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.identify:
+-        "StarkWare_StarknetTokenBridge_2.0_4"
++        "StarkWare_StarknetTokenBridge_2.0_6"
+      values.implementation:
+-        "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"
++        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
+      values.getL2Bridge:
++        "2753558522583921927398465007099029577135491466235436788531469409255283003990"
+    }
+```
+
+```diff
 +   Status: CREATED
     contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
     +++ description: None
@@ -60,9 +112,11 @@ config related: renamed some starknet contracts.
 
 ```diff
 .../starknet/ethereum/.flat/DelayedExecutor.sol    | 271 ++++++
+ .../MultiBridge/StarknetTokenBridge.sol            |  11 +-
+ .../StarkgateRegistry/StarkgateRegistry.sol        |  12 +-
  .../.flat/StarknetAdminMultisig/GnosisSafe.sol     | 953 +++++++++++++++++++++
  .../StarknetAdminMultisig/GnosisSafeProxy.p.sol    |  35 +
- 3 files changed, 1259 insertions(+)
+ 5 files changed, 1280 insertions(+), 2 deletions(-)
 ```
 
 ## Config/verification related changes
