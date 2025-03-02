@@ -61,14 +61,14 @@ describe(buildRelationsModels.name, () => {
           receivedPermissions: [
             {
               permission: 'upgrade',
-              from: EthereumAddress.from('0xaaa1'),
+              from: EthereumAddress.from('0xccc2'),
               description: 'Description of Permission 1',
             },
           ],
           directlyReceivedPermissions: [
             {
               permission: 'act',
-              from: EthereumAddress.from('0xaaa2'),
+              from: EthereumAddress.from('0xeee1'),
               description: 'Description of Permission 2',
               delay: 3600,
             },
@@ -116,88 +116,109 @@ describe(buildRelationsModels.name, () => {
     )
     expect(relationsModel).toEqual({
       'relations.lp': [
-        `
-contract(
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "ethereum",
-  "0x000000000000000000000000000000000000ccc1",
-  "ContractA").`,
-        `
-contractDescription(
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "Description of ContractA").`,
-        `
-permission(
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "act",
-  0x000000000000000000000000000000000000aAA2).`,
-        `
-permissionDescription(
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "act",
-  0x000000000000000000000000000000000000aAA2,
-  "Description of Permission 2").`,
-        `
-permissionDelay(
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "act",
-  0x000000000000000000000000000000000000aAA2,
-  3600).`,
-        `
-permission(
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "upgrade",
-  0x000000000000000000000000000000000000AaA1).`,
-        `
-permissionDescription(
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "upgrade",
-  0x000000000000000000000000000000000000AaA1,
-  "Description of Permission 1").`,
-        `
-contract(
-  contractB_ethereum_0x000000000000000000000000000000000000ccc2,
-  "ethereum",
-  "0x000000000000000000000000000000000000ccc2",
-  "ContractB").`,
-        `
-contractDescription(
-  contractB_ethereum_0x000000000000000000000000000000000000ccc2,
-  "Description of ContractB").`,
-        `
-eoa(
-  eoaA_ethereum_0x000000000000000000000000000000000000eee1,
-  "ethereum",
-  "0x000000000000000000000000000000000000eee1",
-  "EoaA").`,
-        `
-permission(
-  eoaA_ethereum_0x000000000000000000000000000000000000eee1,
-  "interact",
-  contractB_ethereum_0x000000000000000000000000000000000000ccc2).`,
-        `
-permissionDescription(
-  eoaA_ethereum_0x000000000000000000000000000000000000eee1,
-  "interact",
-  contractB_ethereum_0x000000000000000000000000000000000000ccc2,
-  "Description of Permission 4").`,
-        `
-permissionDelay(
-  eoaA_ethereum_0x000000000000000000000000000000000000eee1,
-  "interact",
-  contractB_ethereum_0x000000000000000000000000000000000000ccc2,
-  1000).`,
-        `
-permission(
-  eoaA_ethereum_0x000000000000000000000000000000000000eee1,
-  "act",
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1).`,
-        `
-permissionDescription(
-  eoaA_ethereum_0x000000000000000000000000000000000000eee1,
-  "act",
-  contractA_ethereum_0x000000000000000000000000000000000000ccc1,
-  "Description of Permission 3").`,
+        '\n' +
+          'address(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "ethereum",\n' +
+          '  "0x000000000000000000000000000000000000ccc1").',
+        '\n' +
+          'addressName(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "ContractA").',
+        '\n' +
+          'addressType(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  contract).',
+        '\n' +
+          'addressDescription(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "Description of ContractA").',
+        '\n' +
+          'permission(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "act",\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1).',
+        '\n' +
+          'permissionDescription(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "act",\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "Description of Permission 2").',
+        '\n' +
+          'permissionDelay(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "act",\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  3600).',
+        '\n' +
+          'permission(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "upgrade",\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2).',
+        '\n' +
+          'permissionDescription(\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "upgrade",\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2,\n' +
+          '  "Description of Permission 1").',
+        '\n' +
+          'address(\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2,\n' +
+          '  "ethereum",\n' +
+          '  "0x000000000000000000000000000000000000ccc2").',
+        '\n' +
+          'addressName(\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2,\n' +
+          '  "ContractB").',
+        '\n' +
+          'addressType(\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2,\n' +
+          '  contract).',
+        '\n' +
+          'addressDescription(\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2,\n' +
+          '  "Description of ContractB").',
+        '\n' +
+          'address(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "ethereum",\n' +
+          '  "0x000000000000000000000000000000000000eee1").',
+        '\n' +
+          'addressName(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "EoaA").',
+        '\n' +
+          'addressType(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  eoa).',
+        '\n' +
+          'permission(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "interact",\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2).',
+        '\n' +
+          'permissionDescription(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "interact",\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2,\n' +
+          '  "Description of Permission 4").',
+        '\n' +
+          'permissionDelay(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "interact",\n' +
+          '  contractB_ethereum_0x000000000000000000000000000000000000ccc2,\n' +
+          '  1000).',
+        '\n' +
+          'permission(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "act",\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1).',
+        '\n' +
+          'permissionDescription(\n' +
+          '  eoaA_ethereum_0x000000000000000000000000000000000000eee1,\n' +
+          '  "act",\n' +
+          '  contractA_ethereum_0x000000000000000000000000000000000000ccc1,\n' +
+          '  "Description of Permission 3").',
       ],
     })
   })

@@ -1,5 +1,13 @@
+import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
-import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  KnowledgeBase,
+  ModelIdRegistry,
+  RolePermissionEntries,
+  groupFacts,
+  parseExportedFacts,
+} from '@l2beat/discovery'
 import {
   type ContractParameters,
   type ContractValue,
@@ -34,15 +42,31 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
+import {
+  DirectPermissionToPrefix,
+  type GroupedTransitivePermissionFact,
+  UltimatePermissionToPrefix,
+  formatPermissionDelay,
+  renderGroupedTransitivePermissionFact,
+  trimTrailingDots,
+} from './factRendering'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
+  private knowledgeBase: KnowledgeBase | undefined
+  private modelIdRegistry: ModelIdRegistry | undefined
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
     configReader = new ConfigReader(join(process.cwd(), '../config')),
+    options: {
+      ignoreClingoFacts?: boolean
+    } = {},
   ) {
+    if (!options.ignoreClingoFacts) {
+      this.createKnowledgeBaseAndModelIdRegistry(configReader, projectName)
+    }
     const discovery = configReader.readDiscovery(projectName, chain)
     this.discoveries = [
       discovery,
@@ -50,6 +74,21 @@ export class ProjectDiscovery {
         configReader.readDiscovery(module, chain),
       ),
     ]
+  }
+
+  private createKnowledgeBaseAndModelIdRegistry(
+    configReader: ConfigReader,
+    projectName: string,
+  ): void {
+    const projectPath = configReader.getProjectPath(projectName)
+    const projectPageFactsPath = join(projectPath, 'projectPageFacts.json')
+    if (existsSync(projectPageFactsPath)) {
+      const factsFile = readFileSync(projectPageFactsPath, 'utf8')
+      this.knowledgeBase = new KnowledgeBase(
+        parseExportedFacts(factsFile).facts,
+      )
+      this.modelIdRegistry = new ModelIdRegistry(this.knowledgeBase)
+    }
   }
 
   getEOAName(address: EthereumAddress): string {
@@ -725,26 +764,6 @@ export class ProjectDiscovery {
   describeUltimatelyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
-    const ultimatePermissionToPrefix: {
-      [key in PermissionType]: string | undefined
-    } = {
-      interact: 'Is allowed to interact with',
-      upgrade: 'Can upgrade the implementation of',
-      act: undefined,
-      guard: 'A Guardian',
-      challenge: 'A Challenger',
-      propose: 'A Proposer',
-      sequence: 'A Sequencer',
-      validate: 'A Validator',
-      operateLinea: 'An Operator',
-      fastconfirm: 'A FastConfirmer',
-      validateZkStack: 'A Validator',
-      relay: 'A Relayer',
-      validateBridge: 'A Validator',
-      validateBridge2: 'A Validator',
-      aggregatePolygon: 'A trusted Aggregator',
-    }
-
     const formatVia = (via: ResolvedPermissionPath[]) =>
       `- acting via ${via.map((p) => this.formatViaPath(p)).join(', ')}`
 
@@ -767,7 +786,7 @@ export class ProjectDiscovery {
       const description = key.split('►')[2] ?? ''
       const condition = key.split('►')[3] ?? ''
       const delay = key.split('►')[4] ?? ''
-      const prefix = ultimatePermissionToPrefix[permission]
+      const prefix = UltimatePermissionToPrefix[permission]
       if (prefix === undefined) {
         return ''
       }
@@ -785,7 +804,7 @@ export class ProjectDiscovery {
         : ''
 
       return `${[
-        ultimatePermissionToPrefix[permission as PermissionType],
+        UltimatePermissionToPrefix[permission as PermissionType],
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
@@ -801,26 +820,6 @@ export class ProjectDiscovery {
   describeDirectlyReceivedPermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
-    const directPermissionToPrefix: {
-      [key in PermissionType]: string | undefined
-    } = {
-      interact: 'Can be used to interact with',
-      upgrade: 'Can be used to upgrade implementation of',
-      act: 'Can act on behalf of',
-      guard: 'Can act as a Guardian',
-      challenge: 'Can act as a Challenger',
-      propose: 'Can act as a Proposer',
-      sequence: 'Can act as a Sequencer',
-      validate: 'Can act as a Validator',
-      operateLinea: 'Can act as an Operator',
-      fastconfirm: 'Can act as a FastConfirmer',
-      validateZkStack: 'Can act as a Validator',
-      relay: 'Can act as a Relayer',
-      validateBridge: 'Can act as a Validator',
-      validateBridge2: 'Can act as a Validator',
-      aggregatePolygon: 'Can act as a trusted Aggregator',
-    }
-
     return Object.entries(
       groupBy(
         contractOrEoa.directlyReceivedPermissions ?? [],
@@ -850,7 +849,7 @@ export class ProjectDiscovery {
         : ''
 
       return `${[
-        directPermissionToPrefix[permission],
+        DirectPermissionToPrefix[permission],
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
@@ -862,17 +861,48 @@ export class ProjectDiscovery {
     })
   }
 
+  describePermissionsFromFacts(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string[] {
+    assert(this.knowledgeBase)
+    assert(this.modelIdRegistry)
+    const id = this.modelIdRegistry.getModelId(
+      this.chain,
+      contractOrEoa.address,
+    )
+    const transitivePermissionFacts = this.knowledgeBase.getFacts(
+      'filteredTransitivePermission',
+      [id],
+    )
+    const grouped = groupFacts(transitivePermissionFacts, 2)
+    const result: string[] = []
+    for (const fact of grouped) {
+      const rendered = renderGroupedTransitivePermissionFact(
+        fact as GroupedTransitivePermissionFact,
+      )
+      result.push(this.modelIdRegistry.replaceIdsWithNames(rendered))
+    }
+    return result
+  }
+
   describeContractOrEoa(
     contractOrEoa: ContractParameters | EoaParameters,
     includeDirectPermissions: boolean = true,
   ): string[] {
+    const permissions =
+      this.knowledgeBase === undefined
+        ? [
+            ...(includeDirectPermissions
+              ? this.describeDirectlyReceivedPermissions(contractOrEoa)
+              : []),
+            ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
+          ]
+        : this.describePermissionsFromFacts(contractOrEoa)
+
     return [
       contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
-      ...(includeDirectPermissions
-        ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-        : []),
-      ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
+      ...permissions,
     ].filter(notUndefined)
   }
 
@@ -902,12 +932,31 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(): ProjectPermissions {
+  getPermissionedContractsFromKnowledgeBase(): ContractParameters[] {
+    assert(this.knowledgeBase)
+    assert(this.modelIdRegistry)
+    const getContractByAddress = this.getContractByAddress.bind(this)
+    const getAddressData = this.modelIdRegistry.getAddressData.bind(
+      this.modelIdRegistry,
+    )
+    return this.knowledgeBase
+      .getFacts('showContractInPermissionsSection')
+      .map((fact) => getAddressData(fact.params[0] as string))
+      .filter((data) => data.chain)
+      .map((data) => getContractByAddress(data.address))
+      .filter(isNonNullable)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+  }
+
+  getPermissionedContracts(): ContractParameters[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
 
-    const relevantContracts = [
+    return [
       ...contracts.filter(
         (contract) => contract.receivedPermissions !== undefined,
       ),
@@ -925,6 +974,13 @@ export class ProjectDiscovery {
       .sort((a, b) => {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
       })
+  }
+
+  getDiscoveredPermissions(): ProjectPermissions {
+    const relevantContracts =
+      this.knowledgeBase === undefined
+        ? this.getPermissionedContracts()
+        : this.getPermissionedContractsFromKnowledgeBase()
 
     const eoas = this.discoveries
       .flatMap((discovery) => discovery.eoas)
@@ -956,6 +1012,7 @@ export class ProjectDiscovery {
     }
 
     for (const eoa of eoas) {
+      // TODO: check permissions from KnowledgeBase
       if (eoa.receivedPermissions === undefined) {
         continue
       }
@@ -1073,6 +1130,37 @@ export class ProjectDiscovery {
     return result
   }
 
+  getUpgradableBy(contract: ContractParameters) {
+    const upgradersWithDelay: Record<string, number> = Object.fromEntries(
+      contract.issuedPermissions
+        ?.filter((p) => p.permission === 'upgrade')
+        .map((p) => {
+          const entry = this.getEntryByAddress(p.to)
+          const address =
+            entry?.name ??
+            (this.isEOA(p.to) ? this.getEOAName(p.to) : p.to.toString())
+          const delay =
+            (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
+          return [address, delay]
+        }) ?? [],
+    )
+
+    const upgraders = Object.keys(upgradersWithDelay)
+    const upgradableBy =
+      upgraders.length === 0
+        ? {}
+        : {
+            upgradableBy: upgraders.map((actor) => ({
+              name: actor,
+              delay:
+                upgradersWithDelay[actor] === 0
+                  ? 'no'
+                  : formatSeconds(upgradersWithDelay[actor]),
+            })),
+          }
+    return upgradableBy
+  }
+
   getDiscoveredContracts(): ProjectContract[] {
     const contracts = this.discoveries
       .flatMap((discovery) => discovery.contracts)
@@ -1084,44 +1172,19 @@ export class ProjectDiscovery {
     const gnosisModules = contracts.flatMap((contract) =>
       toAddressArray(contract.values?.GnosisSafe_modules),
     )
+    const contractsWithPermissions =
+      this.knowledgeBase === undefined
+        ? this.getPermissionedContracts()
+        : this.getPermissionedContractsFromKnowledgeBase()
     const result = contracts
       .filter((contract) => !gnosisModules.includes(contract.address))
-      .filter((contract) => contract.receivedPermissions === undefined)
-      .filter((contract) => !isMultisigLike(contract))
+      .filter((contract) => !contractsWithPermissions.includes(contract))
       .map((contract) => {
-        const upgradersWithDelay: Record<string, number> = Object.fromEntries(
-          contract.issuedPermissions
-            ?.filter((p) => p.permission === 'upgrade')
-            .map((p) => {
-              const entry = this.getEntryByAddress(p.to)
-              const address =
-                entry?.name ??
-                (this.isEOA(p.to) ? this.getEOAName(p.to) : p.to.toString())
-              const delay =
-                (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
-              return [address, delay]
-            }) ?? [],
-        )
-
-        const upgraders = Object.keys(upgradersWithDelay)
-        const upgradableBy =
-          upgraders.length === 0
-            ? {}
-            : {
-                upgradableBy: upgraders.map((actor) => ({
-                  name: actor,
-                  delay:
-                    upgradersWithDelay[actor] === 0
-                      ? 'no'
-                      : formatSeconds(upgradersWithDelay[actor]),
-                })),
-              }
-
         return this.getContractDetails(contract.address.toString(), {
           description: formatAsBulletPoints(
             this.describeContractOrEoa(contract, true),
           ),
-          ...upgradableBy,
+          ...this.getUpgradableBy(contract),
           discoveryDrivenData: true,
         })
       })
@@ -1237,20 +1300,12 @@ export function formatAsBulletPoints(description: string[]): string {
     : description.join(' ')
 }
 
-export function trimTrailingDots(s: string): string {
-  return s.replace(/\.*$/, '')
-}
-
 function formatPermissionDescription(description: string): string {
   return description !== '' ? `- ${trimTrailingDots(description)}` : ''
 }
 
 function formatPermissionCondition(condition: string): string {
   return condition !== '' ? `if ${trimTrailingDots(condition)}` : ''
-}
-
-function formatPermissionDelay(delay: number): string {
-  return ` with ${formatSeconds(delay)} delay`
 }
 
 function isMultisigLike(contract: ContractParameters | undefined): boolean {
