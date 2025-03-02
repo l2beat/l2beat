@@ -22,8 +22,7 @@ permission(Receiver, "act", Msig) :-
   msig(Msig, Threshold),
   Threshold == 1.
 
-
-% 1. Building permissions with "Via" cons list and details like descriptions and delays
+% 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
 transitivePermission(Receiver, Permission, Giver, Delay, Description, nil) :-
   permission(Receiver, Permission, Giver),
@@ -38,17 +37,37 @@ transitivePermission(Receiver, Permission, Giver, OriginalDelay, OriginalDescrip
 
 % 2. Filtering permission to only those we want to display
 
-% a) Don't show permission which gives "act" to someone else
-filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, Via) :-
+% a) Show only final permissions (which don't give "act" to someone else)
+filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, Via, isFinal) :-
   transitivePermission(Receiver, Permission, Giver, Delay, Description, Via),
   not permission(_, "act", Receiver).
 
 % b) ...unless it's a direct permission (to say "can be used to")
-filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, nil) :-
-  transitivePermission(Receiver, Permission, Giver, Delay, Description, nil).
+filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, Via, nonFinal) :-
+  transitivePermission(Receiver, Permission, Giver, Delay, Description, Via),
+  Via == nil,
+  permission(_, "act", Receiver).
+
+% 3. In Permissions section, show only addresses that have some final permission
+showInPermissionsSection(Address) :-
+  filteredTransitivePermission(Address, Permission, _, _, _, _, isFinal).
+
+% ...and always show multisigs
+showInPermissionsSection(Address) :-
+  msig(Address, _).
+
+showContractInPermissionsSection(Address) :-
+  showInPermissionsSection(Address),
+  addressType(Address, contract).
+
+showEoaInPermissionsSection(Address) :-
+  showInPermissionsSection(Address),
+  addressType(Address, eoa).
 
 #show address/3.
 #show addressName/2.
 #show addressType/2.
 #show addressDescription/2.
-#show filteredTransitivePermission/6.
+#show filteredTransitivePermission/7.
+#show showContractInPermissionsSection/1.
+#show showEoaInPermissionsSection/1.

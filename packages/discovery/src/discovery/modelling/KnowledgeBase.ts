@@ -3,7 +3,10 @@ import type { ClingoFact, ClingoValue } from './factTypes'
 export class KnowledgeBase {
   constructor(public readonly facts: ClingoFact[]) {}
 
-  getFacts(id: string, params: (string | number | undefined)[]): ClingoFact[] {
+  getFacts(
+    id: string,
+    params: (string | number | undefined)[] = [],
+  ): ClingoFact[] {
     return this.facts.filter(
       (fact) =>
         fact.atom === id &&

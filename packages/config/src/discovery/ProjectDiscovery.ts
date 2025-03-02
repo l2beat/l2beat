@@ -932,12 +932,31 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(): ProjectPermissions {
+  getPermissionedContractsFromKnowledgeBase(): ContractParameters[] {
+    assert(this.knowledgeBase)
+    assert(this.modelIdRegistry)
+    const getContractByAddress = this.getContractByAddress.bind(this)
+    const getAddressData = this.modelIdRegistry.getAddressData.bind(
+      this.modelIdRegistry,
+    )
+    return this.knowledgeBase
+      .getFacts('showContractInPermissionsSection')
+      .map((fact) => getAddressData(fact.params[0] as string))
+      .filter((data) => data.chain)
+      .map((data) => getContractByAddress(data.address))
+      .filter(isNonNullable)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+  }
+
+  getPermissionedContracts(): ContractParameters[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
 
-    const relevantContracts = [
+    return [
       ...contracts.filter(
         (contract) => contract.receivedPermissions !== undefined,
       ),
@@ -955,7 +974,11 @@ export class ProjectDiscovery {
       .sort((a, b) => {
         return this.getPermissionPriority(b) - this.getPermissionPriority(a)
       })
+  }
 
+  getDiscoveredPermissions(): ProjectPermissions {
+    const relevantContracts = this.getPermissionedContracts()
+    // const relevantContracts = this.getPermissionedContractsFromKnowledgeBase()
     const eoas = this.discoveries
       .flatMap((discovery) => discovery.eoas)
       .filter((e) => (e.category?.priority ?? 0) >= 0)

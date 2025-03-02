@@ -58,6 +58,7 @@ const permissionFacts = {
             ],
           },
         ],
+        'isFinal',
       ],
     },
   ],

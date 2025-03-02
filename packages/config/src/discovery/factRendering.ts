@@ -6,7 +6,7 @@ export const UltimatePermissionToPrefix: {
 } = {
   interact: 'Is allowed to interact with',
   upgrade: 'Can upgrade the implementation of',
-  act: undefined,
+  act: 'Can be used to act on behalf of',
   guard: 'A Guardian',
   challenge: 'A Challenger',
   propose: 'A Proposer',
@@ -56,6 +56,7 @@ export interface GroupedTransitivePermissionFact {
     number,
     string | undefined,
     TransitivePermissionVia[],
+    'isFinal' | 'nonFinal',
   ]
 }
 
@@ -80,9 +81,12 @@ export function renderGroupedTransitivePermissionFact(
   const delay = Number(fact.params[3])
   const description = fact.params[4]
   const viaList = fact.params[5]
+  const isFinal = fact.params[6]
 
   const permissionToPrefixMapping =
-    viaList === null ? DirectPermissionToPrefix : UltimatePermissionToPrefix
+    isFinal === 'isFinal'
+      ? UltimatePermissionToPrefix
+      : DirectPermissionToPrefix
 
   result.push(
     permissionToPrefixMapping[permission] ??
