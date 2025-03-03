@@ -1,12 +1,18 @@
-import { CelestiaClient } from './client'
-import { decodeCommitment } from './decode-commitment'
-import { extractNamespaces } from './extract-namespaces'
+import { Logger } from '@l2beat/backend-tools'
+import { CelestiaApiClient, HttpClient, celestiaTools } from '@l2beat/shared'
 
 export async function findCelestiaNamespace(url: string, commitment: string) {
-  const client = new CelestiaClient(url)
+  const client = new CelestiaApiClient({
+    url,
+    http: new HttpClient(),
+    logger: Logger.SILENT,
+    sourceName: 'celestia-api',
+    callsPerMinute: 60,
+    retryStrategy: 'SCRIPT',
+  })
 
   const { blockHeight, blobCommitment, byteDerivationVersion } =
-    decodeCommitment(commitment)
+    celestiaTools.decodeCommitment(commitment)
 
   console.log(`
   Decoded commitment:
@@ -17,7 +23,9 @@ export async function findCelestiaNamespace(url: string, commitment: string) {
 
   const txs = await client.getDecodedTransactions(blockHeight)
 
-  const possibleNamespaces = extractNamespaces(txs)
+  const possibleNamespaces = celestiaTools.extractNamespacesFromLogs(
+    txs.map((tx) => tx.log),
+  )
 
   console.log(`
   Possible namespaces:

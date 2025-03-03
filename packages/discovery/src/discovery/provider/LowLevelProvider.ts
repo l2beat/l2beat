@@ -1,4 +1,8 @@
-import type { BlobClient, BlobsInBlock } from '@l2beat/shared'
+import type {
+  BlobClient,
+  BlobsInBlock,
+  CelestiaApiClient,
+} from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -29,6 +33,7 @@ export class LowLevelProvider {
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
     private readonly etherscanClient: IEtherscanClient,
+    private readonly celestiaApiClient: CelestiaApiClient,
     private readonly blobClient?: BlobClient,
   ) {}
 
@@ -38,6 +43,7 @@ export class LowLevelProvider {
       eventProvider: this.eventProvider,
       etherscanClient: this.etherscanClient,
       blobClient: this.blobClient,
+      celestiaApiClient: this.celestiaApiClient,
     }
   }
 

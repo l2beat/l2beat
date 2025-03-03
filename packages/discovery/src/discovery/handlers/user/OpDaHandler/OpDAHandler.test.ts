@@ -1,9 +1,10 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { providers } from 'ethers'
-import type { Transaction } from '../../../utils/IEtherscanClient'
-import type { IProvider } from '../../provider/IProvider'
-import { OpStackDAHandler, checkForEigenDA } from './OpDAHandler'
+import type { Transaction } from '../../../../utils/IEtherscanClient'
+import type { IProvider } from '../../../provider/IProvider'
+import { OpStackDAHandler } from './OpDAHandler'
+import { checkForEigenDA } from './eigen-verification'
 
 const aevoSequencerTransactions: Transaction[] = [
   {

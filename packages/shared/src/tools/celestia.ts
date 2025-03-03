@@ -1,9 +1,43 @@
 import { z } from 'zod'
-import type { CelestiaTransactionResult } from './client'
 
-export function extractNamespaces(txs: CelestiaTransactionResult[]) {
-  const extractedNamespaces = txs.flatMap((tx) =>
-    extractNamespacesFromLog(tx.log),
+export const celestiaTools = {
+  decodeCommitment,
+  extractNamespacesFromLogs,
+  isOpStackCelestiaCommitment,
+}
+
+function isOpStackCelestiaCommitment(commitment: string) {
+  const bytes = commitment.startsWith('0x') ? commitment.slice(2) : commitment
+
+  const hasLengthMatch = bytes.length === 41 * 2
+  const hasPrefixMatch = bytes.startsWith('ce')
+
+  return hasLengthMatch && hasPrefixMatch
+}
+
+/**
+ * @see https://github.com/celestiaorg/optimism/blob/9931de7ebf78564062383d5d680458e750a0cb52/op-celestia/da.go#L10
+ */
+function decodeCommitment(commitment: string) {
+  const byteDerivationVersion = commitment.slice(2, 4)
+  const heightHex = commitment.slice(4, 20)
+  const heightBuffer = Buffer.from(heightHex, 'hex')
+  const blockHeightDecimal = heightBuffer.readUInt32LE(0)
+
+  const blobCommitment = Buffer.from(commitment.slice(20), 'hex').toString(
+    'base64',
+  )
+
+  return {
+    byteDerivationVersion,
+    blockHeight: blockHeightDecimal,
+    blobCommitment,
+  }
+}
+
+function extractNamespacesFromLogs(logs: string[]) {
+  const extractedNamespaces = logs.flatMap((log) =>
+    extractNamespacesFromLog(log),
   )
 
   // Might contain many submissions to the same namespace
