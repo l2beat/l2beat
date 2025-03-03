@@ -37,12 +37,12 @@ export function TvsBreakdownSummaryBox(props: Props) {
         big
       />
       <StatsItem
-        title="Natively Minted"
-        tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Natively Minted Tokens"
-        smallMobileTitle="Native"
-        value={props.native.value}
-        change={props.native.change}
+        title="Canonically Bridged"
+        tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
+        mobileTitle="Canonically Bridged Value"
+        smallMobileTitle="Canonical"
+        value={props.canonical.value}
+        change={props.canonical.change}
       />
       <StatsItem
         title="Externally Bridged"
@@ -53,12 +53,12 @@ export function TvsBreakdownSummaryBox(props: Props) {
         change={props.external.change}
       />
       <StatsItem
-        title="Canonically Bridged"
-        tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Canonically Bridged Value"
-        smallMobileTitle="Canonical"
-        value={props.canonical.value}
-        change={props.canonical.change}
+        title="Natively Minted"
+        tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
+        mobileTitle="Natively Minted Tokens"
+        smallMobileTitle="Native"
+        value={props.native.value}
+        change={props.native.change}
       />
     </div>
   )
