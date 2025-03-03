@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xe84cdf49ef0732ade76819b3266417bf9d6849c3
+
+# Diff at Mon, 03 Mar 2025 14:49:10 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a117a08c317c3c2e14d56e4b8b9ae49766ecb31d block: 21943925
+- current block number: 21943925
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21943925 (main branch discovery), not current.
+
+```diff
+    contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        "BlockedMessageLib"
++        ""
+      sourceHashes:
+-        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+      values.messageLibType:
+-        2
+      values.version:
+-        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      unverified:
++        true
+    }
+```
+
 Generated with discovered.json: 0x8655f685e513a1f4afef472be4a47ec129a1c889
 
 # Diff at Fri, 28 Feb 2025 09:24:14 GMT:

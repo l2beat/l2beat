@@ -96,21 +96,11 @@
       }
     },
     {
-      "name": "BlockedMessageLib",
+      "name": "",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-      "sourceHashes": [
-        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
-      ],
+      "unverified": true,
       "sinceTimestamp": 1706307671,
-      "values": {
-        "$immutable": true,
-        "messageLibType": 2,
-        "version": {
-          "major": "18446744073709551615",
-          "minor": 255,
-          "endpointVersion": 2
-        }
-      }
+      "values": { "$immutable": true }
     },
     {
       "name": "StargatePool",
@@ -830,13 +820,6 @@
       "function transferOwnership(address newOwner)",
       "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
       "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
-    ],
-    "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
-      "error LZ_NotImplemented()",
-      "function isSupportedEid(uint32) pure returns (bool)",
-      "function messageLibType() pure returns (uint8)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
     "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
