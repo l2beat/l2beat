@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x41fbeddb0beeaaa5231b6983d4e63632ac9f9313
+
+# Diff at Mon, 03 Mar 2025 08:56:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 21635772
+- current block number: 21965148
+
+## Description
+
+Bridge paused, all ETH moved into a multisig. Probably connected to them [moving their infra to the op stack fork](https://x.com/LightLinkChain/status/1895145558777491655).
+
+Put project under review and added warning.
+
+## Watched changes
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      values.getTransactionCount:
+-        20
++        22
+    }
+```
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      values.isPaused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xbbcde6f4cf20ea4afecee0a70bd58d5420735883
 
 # Diff at Mon, 20 Jan 2025 11:09:41 GMT:
