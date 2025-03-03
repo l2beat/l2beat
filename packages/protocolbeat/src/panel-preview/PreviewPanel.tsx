@@ -7,6 +7,7 @@ import type {
   AddressFieldValue,
   ApiPreviewContract,
   ApiPreviewPermissions,
+  UpgradeabilityActor,
 } from '../api/types'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/store'
@@ -164,6 +165,7 @@ function ContractsPreview(props: {
               addresses={contract.addresses}
               description={contract.description}
               isHighlighted={isSelected}
+              upgradableBy={contract.upgradableBy}
             />
           )
         })}
@@ -177,6 +179,7 @@ function PreviewItem(props: {
   multisigParticipants?: AddressFieldValue[]
   description: string
   isHighlighted: boolean
+  upgradableBy?: UpgradeabilityActor[]
 }) {
   return (
     <div
@@ -210,6 +213,17 @@ function PreviewItem(props: {
           {a}
         </div>
       ))}
+      {props.upgradableBy && (
+        <div className="ml-2 italic">
+          <b>Can be upgraded by:</b>{' '}
+          {props.upgradableBy.map((actor, idx) => (
+            <span key={idx}>
+              {idx > 0 && ', '}
+              {actor.name} with {actor.delay} delay
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

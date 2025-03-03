@@ -338,7 +338,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "16d 21h",
+        "timeSinceLastL2beatInteraction": "18d 19h",
         "version": "1.0.0"
       }
     },
@@ -589,12 +589,19 @@
     {
       "name": "L1DAIEscrow",
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "template": "maker/L1Escrow",
       "sourceHashes": [
         "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
       ],
       "description": "Stores DAI deposited from the attached L1DAITokenBridge.",
       "sinceTimestamp": 1625675683,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "wards": [
+          "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+          "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
+        ]
+      },
       "derivedName": "L1Escrow"
     },
     {
@@ -2577,6 +2584,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xbf09136c280484ee64edb52bd001d64ccf893d29dfa459662549b59a778a6e18",
     "gnosisSafeModules/LivenessModule": "0xaf5f707166f662310012e2d9d33d92bef536591231e024ae86fe1fb1d74633f8",
     "lido/L1LidoTokensBridge": "0xc7f9240c649749b30d835a342d6042229aff7f93596fa88893a387fe33428af3",
+    "maker/L1Escrow": "0xfe5c1f545e5d63ef9898c0aba6ba0dc3534f41b038497adb713efd766b66191f",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/AnchorStateRegistry": "0x5edafcbd7ee4adf7acb235602afad395d234f30cb9b817bdcf13429ac1c3c77a",
     "opstack/DelayedWETH": "0xc8b5f9d249266af7ce4c098dfb30dd9861a2a456fc8f813f5fa87ccc04ecbf7f",

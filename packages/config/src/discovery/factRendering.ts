@@ -1,8 +1,8 @@
-import type { PermissionType } from '@l2beat/discovery-types'
+import type { Permission } from '@l2beat/discovery'
 import { formatSeconds } from '@l2beat/shared-pure'
 
 export const UltimatePermissionToPrefix: {
-  [key in PermissionType]: string | undefined
+  [key in Permission]: string | undefined
 } = {
   interact: 'Is allowed to interact with',
   upgrade: 'Can upgrade the implementation of',
@@ -19,10 +19,13 @@ export const UltimatePermissionToPrefix: {
   validateBridge: 'A Validator',
   validateBridge2: 'A Validator',
   aggregatePolygon: 'A trusted Aggregator',
+  operateStarknet: 'An Operator',
+  governStarknet: 'A Governor',
+  member: 'Is a member of',
 }
 
 export const DirectPermissionToPrefix: {
-  [key in PermissionType]: string | undefined
+  [key in Permission]: string | undefined
 } = {
   interact: 'Can be used to interact with',
   upgrade: 'Can be used to upgrade implementation of',
@@ -39,9 +42,12 @@ export const DirectPermissionToPrefix: {
   validateBridge: 'Can act as a Validator',
   validateBridge2: 'Can act as a Validator',
   aggregatePolygon: 'Can act as a trusted Aggregator',
+  operateStarknet: 'Can act as an Operator',
+  governStarknet: 'Can act as a Governor',
+  member: 'Is a member of',
 }
 
-export const PermissionsRequiringTarget: PermissionType[] = [
+export const PermissionsRequiringTarget: Permission[] = [
   'interact',
   'upgrade',
   'act',
@@ -78,7 +84,7 @@ export function renderGroupedTransitivePermissionFact(
   fact: GroupedTransitivePermissionFact,
 ): string {
   const result: string[] = []
-  const permission = fact.params[1] as PermissionType
+  const permission = fact.params[1] as Permission
   const delay = Number(fact.params[3])
   const description = fact.params[4]
   const _totalDelay = fact.params[5]

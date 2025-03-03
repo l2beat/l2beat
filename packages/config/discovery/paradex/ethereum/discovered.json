@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21629810,
-  "configHash": "0xecfa9691f0e43e8deaae80a98605778762fc9123f95f658e14c729856a3a9031",
+  "configHash": "0xd95090b093a840a0d8418775b3692b72d474997d7638af1651ec51341fc054e8",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -15,6 +15,10 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        },
         {
           "permission": "upgrade",
           "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
@@ -140,12 +144,29 @@
     {
       "name": "Paradex",
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+      "template": "starknet/Starknet",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
         "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
       ],
       "proxyType": "StarkWare proxy",
+      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
+        {
+          "permission": "governStarknet",
+          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+          "via": []
+        },
+        {
+          "permission": "governStarknet",
+          "to": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
@@ -208,6 +229,13 @@
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
         "programHash": "853638403225561750106379562222782223909906501242604214771127703946595519856",
+        "programHashHistory": [
+          "3258367057337572248818716706664617507069572185152472699066582725377748079373",
+          "54878256403880350656938046611252303365750679698042371543935159963667935317",
+          "2479841346739966073527450029179698923866252973805981504232089731754042431018",
+          "109586309220455887239200613090920758778188956576212125550190099009305121410",
+          "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+        ],
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
@@ -218,13 +246,18 @@
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
         "programHash": {
           "severity": "HIGH",
           "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
           "type": "CODE_CHANGE"
         }
       },
-      "derivedName": "Starknet"
+      "derivedName": "Starknet",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "eoas": [
@@ -242,7 +275,15 @@
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
     { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
-    { "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670" },
+    {
+      "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670",
+      "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        }
+      ]
+    },
     {
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "receivedPermissions": [
@@ -253,7 +294,15 @@
       ]
     },
     { "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6" },
-    { "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2" }
+    {
+      "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        }
+      ]
+    }
   ],
   "abis": {
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": [
@@ -499,6 +548,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "starknet/Starknet": "0xfcc62b23a16236c1ee486fd53c0c32cb8af5357b0252e1dbebca5c2aadd4078d"
   }
 }

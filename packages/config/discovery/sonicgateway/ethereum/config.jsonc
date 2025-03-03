@@ -139,7 +139,7 @@
     "UpdateManager": {
       "description": "Entry point for state (oracle) updates.",
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["lastBlockNum"],
+      "ignoreInWatchMode": ["lastBlockNum", "fastLaneInUse"],
       "fields": {
         "accessControl": {
           "handler": {

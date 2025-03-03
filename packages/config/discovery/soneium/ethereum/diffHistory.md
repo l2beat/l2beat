@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xec7b7ee2424726b1bf2e98aeec4b7115ba3eb38f
+
+# Diff at Mon, 03 Mar 2025 09:03:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 21931801
+- current block number: 21965340
+
+## Description
+
+SystemConfig upgrade to known version:
+- libraries added (Constants, LibString, GasPayingToken)
+- minor changes
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
++        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+      values.$implementation:
+-        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
++        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.3:
++        ["2025-02-28T14:55:35.000Z","0x9c6af2cb2b4fcde9e351662342f15b60f004108b575dddd05d0caa4f50220966",["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.2:
++        ["2025-02-28T14:55:35.000Z","0x9c6af2cb2b4fcde9e351662342f15b60f004108b575dddd05d0caa4f50220966",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        2
++        4
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      values.basefeeScalar:
++        9736
+      values.blobbasefeeScalar:
++        1540079
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 1458 +++++++++++++++++++-
+ 1 file changed, 1436 insertions(+), 22 deletions(-)
+```
+
 Generated with discovered.json: 0x9ca12edc2675c06e9f0afbc12a0279d05150a132
 
 # Diff at Thu, 27 Feb 2025 12:01:47 GMT:

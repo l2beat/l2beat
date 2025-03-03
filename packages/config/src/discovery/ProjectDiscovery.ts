@@ -8,18 +8,15 @@ import {
   groupFacts,
   parseExportedFacts,
 } from '@l2beat/discovery'
-import {
-  type ContractParameters,
-  type ContractValue,
-  type DiscoveryOutput,
-  type EoaParameters,
-  type PermissionType,
-  type ReceivedPermission,
-  type ResolvedPermissionPath,
-  get$Admins,
-  get$Implementations,
-  toAddressArray,
-} from '@l2beat/discovery-types'
+import type {
+  ContractParameters,
+  ContractValue,
+  DiscoveryOutput,
+  EoaParameters,
+  Permission,
+  ReceivedPermission,
+  ResolvedPermissionPath,
+} from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -50,6 +47,7 @@ import {
   renderGroupedTransitivePermissionFact,
   trimTrailingDots,
 } from './factRendering'
+import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -781,7 +779,7 @@ export class ProjectDiscovery {
         },
       ),
     ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as PermissionType
+      const permission = key.split('►')[0] as Permission
       const via = key.split('►')[1] ?? ''
       const description = key.split('►')[2] ?? ''
       const condition = key.split('►')[3] ?? ''
@@ -791,7 +789,7 @@ export class ProjectDiscovery {
         return ''
       }
 
-      const permissionsRequiringTarget: PermissionType[] = [
+      const permissionsRequiringTarget: Permission[] = [
         'interact',
         'upgrade',
         'act',
@@ -804,7 +802,7 @@ export class ProjectDiscovery {
         : ''
 
       return `${[
-        UltimatePermissionToPrefix[permission as PermissionType],
+        UltimatePermissionToPrefix[permission as Permission],
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
@@ -832,11 +830,11 @@ export class ProjectDiscovery {
           ].join('►'),
       ),
     ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as PermissionType
+      const permission = key.split('►')[0] as Permission
       const description = key.split('►')[1] ?? ''
       const condition = key.split('►')[2] ?? ''
       const delay = key.split('►')[3] ?? ''
-      const permissionsRequiringTarget: PermissionType[] = [
+      const permissionsRequiringTarget: Permission[] = [
         'interact',
         'upgrade',
         'act',
@@ -1291,6 +1289,16 @@ const roleDescriptions: {
     name: 'Trusted Aggregator (Proposer)',
     description:
       'Permissioned to post new state roots and global exit roots accompanied by ZK proofs.', // and accounting proofs for CDK sovereign (others) chains
+  },
+  operateStarknet: {
+    name: 'Operator',
+    description:
+      'Permissioned to regularly update and prove the state of the L2 on L1.',
+  },
+  governStarknet: {
+    name: 'Governor',
+    description:
+      'Permissioned to appoint Operators and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
   },
 }
 

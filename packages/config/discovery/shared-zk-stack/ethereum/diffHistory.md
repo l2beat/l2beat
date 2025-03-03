@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xd6e875cc8e83e0d38c0bba2253c8bb8ef4021044
+
+# Diff at Fri, 28 Feb 2025 10:27:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a673c79f7be232b805781e844ed3929c5c5bb288 block: 21802976
+- current block number: 21944239
+
+## Description
+
+Two new chains created: lumoz and zkcandy. The former is live.
+
+Current ZK stack chains (BH.getAllHyperchains array): 
+1) ZKsync Era 324 RU 0x32400084C286CF3E17e7B677ea9583e60a000324 ETH 🚀✅
+2) CronosZkEvm 388 Validium 0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc zkCRO 🚀✅
+3) Sophon 50104 Validium 0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3 SOPH 🚀
+4) ZeroNetwork 543210 RU 0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9 ETH 🚀✅
+5) [Abstract](docs.abs.xyz) 2741 RU 0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9 ETH 🚀
+6) [GRVT](https://grvt.gitbook.io/grvt/introduction/architecture-overview) 325 Validium 0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E GBT (GRVTBaseToken) 🚀
+7) [Treasure Chain](https://docs.treasure.lol/chain) 61166 Validium 0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879 MAGIC 🚀✅
+8) Unknown 1345 Validium 0x89f90748A9a36C30A324481133fa198f4E16A824 ozETH
+9) [lumoz](https://docs.lumoz.org/introduction/lumoz-chain) 9637 RU 0xC8C4cB5AF7c723c7EfD360898B47920679f92C92 MOZ 🚀
+10) [zkcandy](https://zkcandy.io/) 320 RU 0xF2704433d11842d15aa76BBF0E00407267a99C92
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.9:
++        {"chainId":320,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"}
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.8:
++        {"chainId":9637,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      values.getAllHyperchainChainIDs.9:
++        320
+      values.getAllHyperchainChainIDs.8:
++        9637
+      values.getAllHyperchains.9:
++        "0xF2704433d11842d15aa76BBF0E00407267a99C92"
+      values.getAllHyperchains.8:
++        "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
+    }
+```
+
 Generated with discovered.json: 0x8240be23b7c2deb2da1c1ec6b7dcf4a49cf73f04
 
 # Diff at Wed, 26 Feb 2025 10:33:08 GMT:

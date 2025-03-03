@@ -1,10 +1,10 @@
 import type {
   ContractParameters,
-  ContractValue,
   DiscoveryOutput,
   EoaParameters,
   ReceivedPermission,
-} from '@l2beat/discovery-types'
+} from '../output/types'
+import type { ContractValue } from '../output/types'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,
