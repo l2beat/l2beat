@@ -8,8 +8,8 @@ export function TableRowHighlighter() {
     if (!isClient) return
     const params = new URLSearchParams(window.location.search)
     const highlight = params.get('highlight')
-    document.querySelectorAll('[data-hash-highlighted]').forEach((el) => {
-      el.removeAttribute('data-hash-highlighted')
+    document.querySelectorAll('[data-highlighted]').forEach((el) => {
+      el.removeAttribute('data-highlighted')
     })
 
     if (highlight) {
@@ -17,9 +17,9 @@ export function TableRowHighlighter() {
 
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        element.setAttribute('data-hash-highlighted', 'true')
+        element.setAttribute('data-highlighted', 'true')
         setTimeout(() => {
-          element.removeAttribute('data-hash-highlighted')
+          element.removeAttribute('data-highlighted')
         }, 5000)
       }
     }

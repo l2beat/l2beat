@@ -215,10 +215,8 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                       ? 'pl-10'
                       : 'pl-4'
                     : undefined,
-
                   cell.column.getIsPinned() &&
                     getRowClassNamesWithoutOpacity(rowType),
-
                   meta?.cellClassName,
                 )}
                 style={getCommonPinningStyles(cell.column)}

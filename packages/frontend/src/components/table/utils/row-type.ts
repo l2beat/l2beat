@@ -47,6 +47,6 @@ export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
     case 'under-review':
       return 'bg-[#faf5e6] dark:bg-[#2F2A1D]'
     default:
-      return 'bg-surface-primary'
+      return 'bg-surface-primary group-data-[highlighted]/row:bg-[#EFDEF5]'
   }
 }

@@ -58,7 +58,12 @@ const TableRow = ({
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
-    className={cn('group/row border-b border-b-divider', className)}
+    // eslint-disable-next-line tailwindcss/no-custom-classname
+    className={cn(
+      'group/row border-b border-b-divider',
+      'data-[highlighted]:!mask-none data-[highlighted]:border-b data-[highlighted]:bg-brand/15',
+      className,
+    )}
     {...props}
   />
 )

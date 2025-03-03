@@ -6,16 +6,16 @@ export function ProjectSectionHighlighter() {
   const handleHashChange = () => {
     const hash = window.location.hash
     if (hash) {
-      document.querySelectorAll('[data-hash-highlighted]').forEach((el) => {
-        el.removeAttribute('data-hash-highlighted')
+      document.querySelectorAll('[data-highlighted]').forEach((el) => {
+        el.removeAttribute('data-highlighted')
       })
 
       const element = document.querySelector(hash)
 
       if (element) {
-        element.setAttribute('data-hash-highlighted', 'true')
+        element.setAttribute('data-highlighted', 'true')
         setTimeout(() => {
-          element.removeAttribute('data-hash-highlighted')
+          element.removeAttribute('data-highlighted')
         }, 5000)
       }
     }

@@ -170,8 +170,8 @@
 }
 
 @layer utilities {
-  .transition-duration-50 {
-    transition-duration: 50ms !important;
+  .mask-none {
+    mask-image: none;
   }
 
   .scrollbar-gutter-stable {
@@ -271,15 +271,5 @@
 
   .dark .custom-scrollbar ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-zinc-500;
-  }
-
-  tr[data-hash-highlighted] > td,
-  tr[data-hash-highlighted] > td ~ td {
-    mask-image: none !important;
-    @apply border-brand border-b bg-[#E6CAF0] !important;
-  }
-
-  .primary-card[data-hash-highlighted] {
-    @apply relative before:absolute before:inset-0 before:border-brand before:border-2 before:shadow-[0px_4px_12px_10px] before:shadow-[#FF5FFB40] before:rounded-lg !important;
   }
 }
