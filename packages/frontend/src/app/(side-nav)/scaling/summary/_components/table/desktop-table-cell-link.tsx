@@ -1,14 +1,10 @@
-'use client'
-import { useIsMobile } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 
 export function DesktopTableCellLink({
   href,
   children,
 }: { href: string | undefined; children: React.ReactNode }) {
-  const isMobile = useIsMobile()
-
-  if (!isMobile && href) {
+  if (href) {
     return (
       <a
         className={cn(

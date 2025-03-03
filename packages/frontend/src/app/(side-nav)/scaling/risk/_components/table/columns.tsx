@@ -10,7 +10,10 @@ import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scali
 const columnHelper = createColumnHelper<ScalingRiskEntry>()
 
 export const scalingRiskColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.accessor((e) => adjustTableValue(e.risks.stateValidation), {
     header: 'State\nValidation',
     meta: {

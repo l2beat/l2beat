@@ -14,7 +14,10 @@ import type { ScalingDaEntry } from '~/server/features/scaling/data-availability
 const columnHelper = createColumnHelper<ScalingDaEntry>()
 
 export const columns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.accessor('category', {
     header: 'Type',
     meta: {

@@ -19,7 +19,10 @@ import type { ScalingLivenessTableEntry } from './to-table-entry'
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
 export const columns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.group({
     id: 'data',
     header: () => <IntervalsHeader average={true} />,

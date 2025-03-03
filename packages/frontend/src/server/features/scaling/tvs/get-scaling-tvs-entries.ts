@@ -50,7 +50,6 @@ function getScalingTvsEntry(
 ): ScalingTvsEntry | undefined {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvs: {
       data,
       associatedTokens: project.tvlInfo.associatedTokens,

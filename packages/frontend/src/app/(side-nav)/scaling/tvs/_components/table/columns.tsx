@@ -9,7 +9,10 @@ import { ValueSecuredCell } from './value-secured-cell'
 const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
 export const scalingTvsColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.group({
     id: 'data',
     header: undefined,

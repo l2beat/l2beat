@@ -3,16 +3,13 @@ import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-
 export function toTableRows({
   projects,
   excludeAssociatedTokens,
-  isMobile,
 }: {
   projects: ScalingSummaryEntry[]
   excludeAssociatedTokens?: boolean
-  isMobile?: boolean
 }) {
   return projects.map((project) => {
     return {
       ...project,
-      href: !isMobile ? undefined : project.href,
       tvs: {
         ...project.tvs,
         warnings: excludeAssociatedTokens

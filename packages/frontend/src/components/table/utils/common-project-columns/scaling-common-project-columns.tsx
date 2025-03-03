@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import type { ColumnHelper } from '@tanstack/react-table'
 import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
@@ -7,6 +8,7 @@ import { getCommonProjectColumns } from './common-project-columns'
 
 export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
   columnHelper: ColumnHelper<T>,
+  getHref: (row: T) => string,
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
@@ -14,21 +16,18 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => {
-        const nameCell = (
+        const projectName = (
           <ProjectNameCell project={ctx.row.original} withInfoTooltip />
         )
 
-        if (opts?.summary) {
-          return (
-            <DesktopTableCellLink
-              href={`/scaling/projects/${ctx.row.original.slug}`}
-            >
-              {nameCell}
-            </DesktopTableCellLink>
-          )
+        if (ctx.row.original.id === ProjectId.ETHEREUM) {
+          return projectName
         }
-
-        return nameCell
+        return (
+          <DesktopTableCellLink href={getHref(ctx.row.original)}>
+            <ProjectNameCell project={ctx.row.original} withInfoTooltip />
+          </DesktopTableCellLink>
+        )
       },
       meta: opts?.activity
         ? {

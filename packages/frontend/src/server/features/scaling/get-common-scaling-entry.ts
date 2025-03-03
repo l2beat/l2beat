@@ -48,7 +48,6 @@ export function getCommonScalingEntry({
         ? undefined
         : `L3 on ${project.scalingInfo.hostChain.shortName ?? project.scalingInfo.hostChain.name}`,
     shortName: project.shortName,
-    href: `/scaling/projects/${project.slug}`,
     statuses: {
       yellowWarning: project.statuses.yellowWarning,
       redWarning: project.statuses.redWarning,

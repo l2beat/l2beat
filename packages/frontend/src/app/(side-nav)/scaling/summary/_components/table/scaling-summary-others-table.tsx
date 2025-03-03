@@ -18,16 +18,14 @@ interface Props {
 export function ScalingSummaryOthersTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
-  const isMobile = useIsMobile()
 
   const tableEntries = useMemo(
     () =>
       toTableRows({
         projects: entries,
         excludeAssociatedTokens,
-        isMobile,
       }),
-    [entries, excludeAssociatedTokens, isMobile],
+    [entries, excludeAssociatedTokens],
   )
 
   const table = useTable({

@@ -38,17 +38,6 @@ export function getRowClassNames(rowType: RowType) {
   }
 }
 
-export function getRowHoverClassNames(rowType: RowType) {
-  switch (rowType) {
-    case 'unverified':
-      return 'hover:bg-[#FDDDDD] dark:hover:bg-[#3F1112] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#3F1112]'
-    case 'under-review':
-      return 'hover:!bg-[#FBEFC9] dark:hover:!bg-[#453B1A] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#453B1A]'
-    default:
-      return 'hover:bg-[#EEEEEE] dark:hover:bg-[#2E2F35] group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2E2F35]'
-  }
-}
-
 export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
     case 'ethereum':

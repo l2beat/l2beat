@@ -26,7 +26,10 @@ import { DesktopTableCellLink } from './desktop-table-cell-link'
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingSummaryColumns = [
-  ...getScalingCommonProjectColumns(columnHelper, { summary: true }),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => (

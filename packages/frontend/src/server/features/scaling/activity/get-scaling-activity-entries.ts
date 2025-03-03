@@ -78,7 +78,6 @@ function getScalingProjectActivityEntry(
     : undefined
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
-    href: `/scaling/projects/${project.slug}#activity`,
     data: data
       ? {
           tps: data.tps,
@@ -102,7 +101,6 @@ function getEthereumEntry(
     name: 'Ethereum',
     shortName: undefined,
     slug: 'ethereum',
-    href: undefined,
     tab,
     // Ethereum is always at the top so it is always stageOrder 3
     stageOrder: 3,

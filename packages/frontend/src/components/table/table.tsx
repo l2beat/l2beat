@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { cn } from '~/utils/cn'
-import { LinkWithOnHoverPrefetch } from '../link/link-with-on-hover-prefetch'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -98,43 +97,22 @@ TableHead.displayName = 'TableHead'
 const TableCell = ({
   className,
   children,
-  href,
   align,
-  tdClassName,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
-  href?: string
   align?: 'right' | 'center'
-  tdClassName?: string
 }) => (
   <td
     className={cn(
       'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
-      !href && [
-        'pr-3 first:pl-2 last:pr-4 md:pr-4',
-        align === 'center' && 'text-center',
-        align === 'right' && 'text-right',
-        className,
-      ],
-      tdClassName,
+      'pr-3 first:pl-2 last:pr-4 md:pr-4',
+      align === 'center' && 'text-center',
+      align === 'right' && 'text-right',
+      className,
     )}
     {...props}
   >
-    {href ? (
-      <LinkWithOnHoverPrefetch
-        href={href}
-        className={cn(
-          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-4 md:pr-4',
-          align === 'center' && 'justify-center',
-          align === 'right' && 'justify-end',
-          className,
-        )}
-      >
-        {children}
-      </LinkWithOnHoverPrefetch>
-    ) : (
-      children
-    )}
+    {children}
   </td>
 )
 TableCell.displayName = 'TableCell'

@@ -30,7 +30,10 @@ const sortFinality =
 const columnHelper = createColumnHelper<ScalingFinalityEntry>()
 
 export const scalingFinalityColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (

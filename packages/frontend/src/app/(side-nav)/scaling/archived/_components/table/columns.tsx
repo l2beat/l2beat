@@ -11,7 +11,10 @@ import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-val
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
 export const scalingArchivedColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => {

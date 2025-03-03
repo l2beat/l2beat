@@ -12,7 +12,10 @@ import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
 export const bridgesSummaryActiveColumns = [
-  ...getBridgesCommonProjectColumns(columnHelper),
+  ...getBridgesCommonProjectColumns(
+    columnHelper,
+    (row) => `/bridges/projects/${row.slug}`,
+  ),
   columnHelper.accessor((e) => adjustTableValue(e.validatedBy), {
     header: 'Validated by',
     meta: {

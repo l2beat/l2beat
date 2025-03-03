@@ -38,7 +38,10 @@ const columnHelper = createColumnHelper<ScalingCostsTableEntry>()
 
 export function getScalingCostsColumns(metric: CostsMetric) {
   return [
-    ...getScalingCommonProjectColumns(columnHelper),
+    ...getScalingCommonProjectColumns(
+      columnHelper,
+      (row) => `/scaling/projects/${row.slug}#onchain-costs`,
+    ),
     columnHelper.group({
       id: 'total-cost-group',
       header: undefined,

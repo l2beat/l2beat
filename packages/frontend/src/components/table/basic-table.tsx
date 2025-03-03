@@ -25,7 +25,6 @@ import { getCommonPinningStyles } from './utils/common-pinning-styles'
 import {
   getRowClassNames,
   getRowClassNamesWithoutOpacity,
-  getRowHoverClassNames,
   getRowType,
 } from './utils/row-type'
 
@@ -185,7 +184,6 @@ export function BasicTableRow<T extends CommonProjectEntry>({
       <TableRow
         className={cn(
           getRowClassNames(rowType),
-          row.original.href && getRowHoverClassNames(rowType),
           row.getIsExpanded() &&
             props.renderSubComponent?.({ row }) &&
             '!border-none',
@@ -196,7 +194,6 @@ export function BasicTableRow<T extends CommonProjectEntry>({
         {row.getVisibleCells().map((cell) => {
           const { meta } = cell.column.columnDef
           const groupParams = getBasicTableGroupParams(cell.column)
-          const href = getBasicTableHref(row.original.href, meta?.hash)
 
           if (meta?.hideIfNull && cell.renderValue() === null) {
             return null
@@ -209,15 +206,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
               <TableCell
-                href={href}
                 align={meta?.align}
-                tdClassName={cn(
-                  cell.column.getIsPinned() &&
-                    getRowClassNamesWithoutOpacity(rowType),
-                  row.original.href &&
-                    cell.column.getIsPinned() &&
-                    getRowHoverClassNames(rowType),
-                )}
                 className={cn(
                   groupParams?.isFirstInGroup && 'pl-6',
                   groupParams?.isLastInGroup && '!pr-6',
@@ -226,6 +215,10 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                       ? 'pl-10'
                       : 'pl-4'
                     : undefined,
+
+                  cell.column.getIsPinned() &&
+                    getRowClassNamesWithoutOpacity(rowType),
+
                   meta?.cellClassName,
                 )}
                 style={getCommonPinningStyles(cell.column)}
@@ -233,9 +226,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
-              {groupParams?.isLastInGroup && (
-                <BasicTableColumnFiller as="td" href={href} />
-              )}
+              {groupParams?.isLastInGroup && <BasicTableColumnFiller as="td" />}
             </React.Fragment>
           )
         })}
@@ -292,25 +283,11 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   )
 }
 
-type ColumnFillerProps =
-  | {
-      as: 'th' | 'colgroup'
-    }
-  | {
-      as: 'td'
-      href: string | undefined
-    }
-
-function BasicTableColumnFiller(props: ColumnFillerProps) {
-  if (props.as === 'td') {
-    return (
-      <td>
-        <a href={props.href} className="flex h-full w-4 items-center" />
-      </td>
-    )
-  }
-
-  const Comp = props.as
+function BasicTableColumnFiller({
+  as: Comp,
+}: {
+  as: 'th' | 'colgroup' | 'td'
+}) {
   return <Comp className="w-4" />
 }
 
