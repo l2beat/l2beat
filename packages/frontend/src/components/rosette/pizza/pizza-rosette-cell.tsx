@@ -1,3 +1,4 @@
+import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
 import {
   Tooltip,
   TooltipContent,
@@ -7,12 +8,13 @@ import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteTooltip } from './pizza-rosette-tooltip'
 
-export interface PizzaRosetteCellProps {
+interface Props {
+  href: string | undefined
   values: RosetteValue[]
   isUnderReview?: boolean
 }
 
-export function PizzaRosetteCell(props: PizzaRosetteCellProps) {
+export function PizzaRosetteCell(props: Props) {
   const isUnderReview =
     !!props.isUnderReview ||
     props.values.some((value) => value.sentiment === 'UnderReview')
@@ -20,12 +22,14 @@ export function PizzaRosetteCell(props: PizzaRosetteCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex size-full items-center justify-center">
-        <PizzaRosetteIcon
-          values={props.values}
-          className="size-6 md:size-8"
-          isUnderReview={isUnderReview}
-          background={false}
-        />
+        <DesktopTableCellLink href={props.href}>
+          <PizzaRosetteIcon
+            values={props.values}
+            className="size-6 md:size-8"
+            isUnderReview={isUnderReview}
+            background={false}
+          />
+        </DesktopTableCellLink>
       </TooltipTrigger>
       <TooltipContent fitContent>
         <PizzaRosetteTooltip

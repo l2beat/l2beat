@@ -23,9 +23,10 @@ import {
 import { TableEmptyState } from './table-empty-state'
 import { getCommonPinningStyles } from './utils/common-pinning-styles'
 import {
+  getRowClassNames,
+  getRowClassNamesWithoutOpacity,
+  getRowHoverClassNames,
   getRowType,
-  getRowTypeClassNames,
-  getRowTypeClassNamesWithoutOpacity,
 } from './utils/row-type'
 
 export interface BasicTableProps<T extends CommonProjectEntry> {
@@ -81,7 +82,7 @@ export function BasicTable<T extends CommonProjectEntry>(
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
                         header.column.getIsPinned() &&
-                          getRowTypeClassNamesWithoutOpacity(null),
+                          getRowClassNamesWithoutOpacity(null),
                       )}
                       style={getCommonPinningStyles(header.column)}
                     >
@@ -119,7 +120,7 @@ export function BasicTable<T extends CommonProjectEntry>(
                         'rounded-tr-lg',
                     ],
                     header.column.getIsPinned() &&
-                      getRowTypeClassNamesWithoutOpacity(null),
+                      getRowClassNamesWithoutOpacity(null),
                     header.column.columnDef.meta?.headClassName,
                   )}
                   align={header.column.columnDef.meta?.align}
@@ -183,7 +184,8 @@ export function BasicTableRow<T extends CommonProjectEntry>({
     <>
       <TableRow
         className={cn(
-          row.original.href && getRowTypeClassNames(rowType),
+          getRowClassNames(rowType),
+          row.original.href && getRowHoverClassNames(rowType),
           row.getIsExpanded() &&
             props.renderSubComponent?.({ row }) &&
             '!border-none',
@@ -209,11 +211,13 @@ export function BasicTableRow<T extends CommonProjectEntry>({
               <TableCell
                 href={href}
                 align={meta?.align}
-                tdClassName={
-                  row.original.href && cell.column.getIsPinned()
-                    ? getRowTypeClassNamesWithoutOpacity(rowType)
-                    : undefined
-                }
+                tdClassName={cn(
+                  cell.column.getIsPinned() &&
+                    getRowClassNamesWithoutOpacity(rowType),
+                  row.original.href &&
+                    cell.column.getIsPinned() &&
+                    getRowHoverClassNames(rowType),
+                )}
                 className={cn(
                   groupParams?.isFirstInGroup && 'pl-6',
                   groupParams?.isLastInGroup && '!pr-6',
@@ -279,8 +283,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
           className={cn(
             'h-4',
             !header.isPlaceholder && 'rounded-b-lg',
-            header.column.getIsPinned() &&
-              getRowTypeClassNamesWithoutOpacity(null),
+            header.column.getIsPinned() && getRowClassNamesWithoutOpacity(null),
           )}
           style={getCommonPinningStyles(header.column)}
         />

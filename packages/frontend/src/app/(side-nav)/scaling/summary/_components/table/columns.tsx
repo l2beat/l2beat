@@ -21,7 +21,7 @@ import { getScalingCommonProjectColumns } from '~/components/table/utils/common-
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import type { ScalingSummaryTableRow } from '../../_utils/to-table-rows'
-import { TableCellLink } from './table-cell-link'
+import { DesktopTableCellLink } from './desktop-table-cell-link'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -30,12 +30,11 @@ export const scalingSummaryColumns = [
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => (
-      <TableCellLink href={`/scaling/risk/#${ctx.row.original.slug}`}>
-        <PizzaRosetteCell
-          values={ctx.row.original.risks}
-          isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
-        />
-      </TableCellLink>
+      <PizzaRosetteCell
+        href={`/scaling/risk/#${ctx.row.original.slug}`}
+        values={ctx.row.original.risks}
+        isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
+      />
     ),
     meta: {
       align: 'center',
@@ -72,14 +71,11 @@ export const scalingSummaryColumns = [
     {
       id: 'stage',
       cell: (ctx) => (
-        <TableCellLink
+        <StageCell
           href={`/scaling/projects/${ctx.row.original.slug}#stage`}
-        >
-          <StageCell
-            stageConfig={ctx.row.original.stage}
-            isAppchain={ctx.row.original.capability === 'appchain'}
-          />
-        </TableCellLink>
+          stageConfig={ctx.row.original.stage}
+          isAppchain={ctx.row.original.capability === 'appchain'}
+        />
       ),
       sortingFn: sortStages,
       sortUndefined: 'last',
@@ -96,14 +92,13 @@ export const scalingSummaryColumns = [
         const value = ctx.row.original.tvs
 
         return (
-          <TableCellLink href={`/scaling/tvs#${ctx.row.original.slug}`}>
-            <TotalCell
-              associatedTokenSymbols={value.associatedTokens}
-              tvsWarnings={value.warnings}
-              breakdown={value.breakdown}
-              change={value.change}
-            />
-          </TableCellLink>
+          <TotalCell
+            href={`/scaling/tvs#${ctx.row.original.slug}`}
+            associatedTokenSymbols={value.associatedTokens}
+            tvsWarnings={value.warnings}
+            breakdown={value.breakdown}
+            change={value.change}
+          />
         )
       },
       sortUndefined: 'last',
@@ -123,13 +118,15 @@ export const scalingSummaryColumns = [
       }
 
       return (
-        <TableCellLink href={`/scaling/activity/#${ctx.row.original.slug}`}>
+        <DesktopTableCellLink
+          href={`/scaling/activity/#${ctx.row.original.slug}`}
+        >
           <SyncStatusWrapper isSynced={data.isSynced}>
             <ValueWithPercentageChange change={data?.change}>
               {formatActivityCount(ctx.getValue())}
             </ValueWithPercentageChange>
           </SyncStatusWrapper>
-        </TableCellLink>
+        </DesktopTableCellLink>
       )
     },
     sortUndefined: 'last',

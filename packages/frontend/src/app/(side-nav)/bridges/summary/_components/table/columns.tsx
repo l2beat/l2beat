@@ -43,6 +43,7 @@ export const bridgesSummaryActiveColumns = [
       const value = ctx.row.original.tvs
       return (
         <TotalCell
+          href={undefined}
           associatedTokenSymbols={value.associatedTokens}
           tvsWarnings={value.warnings}
           breakdown={value.breakdown}
