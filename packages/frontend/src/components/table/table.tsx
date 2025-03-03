@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { cn } from '~/utils/cn'
+import { TableRowHighlighter } from '../highlighters/table-row-highlighter'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -16,6 +17,7 @@ const Table = ({
           {...props}
         />
       </div>
+      <TableRowHighlighter />
     </div>
   )
 }

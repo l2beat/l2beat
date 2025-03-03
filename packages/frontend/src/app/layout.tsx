@@ -11,7 +11,6 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { HashSectionHighlighter } from '~/components/hash-section-highlighter'
 import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 
 export const metadata: Metadata = getDefaultMetadata()
@@ -57,7 +56,6 @@ export default async function RootLayout({
                 >
                   <SearchBarContextProvider projects={searchBarProjects}>
                     <RecategorisationPreviewContextProvider>
-                      <HashSectionHighlighter />
                       {children}
                     </RecategorisationPreviewContextProvider>
                   </SearchBarContextProvider>

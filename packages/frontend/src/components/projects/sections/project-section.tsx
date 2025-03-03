@@ -1,6 +1,7 @@
 'use client'
 import type { ReactNode } from 'react'
 
+import { ProjectSectionHighlighter } from '~/components/highlighters/project-section-highlighter'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import type { ProjectSectionId } from './types'
@@ -47,6 +48,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       ) : (
         props.children
       )}
+      <ProjectSectionHighlighter />
     </Component>
   )
 }

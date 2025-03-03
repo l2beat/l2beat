@@ -38,9 +38,9 @@ export async function getScalingActivityEntries() {
       ),
     )
     .concat([
-      getEthereumEntry(ethereumData, 'Rollups'),
-      getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-      getEthereumEntry(ethereumData, 'Others'),
+      getEthereumEntry(ethereumData, 'rollups'),
+      getEthereumEntry(ethereumData, 'validiumsAndOptimiums'),
+      getEthereumEntry(ethereumData, 'others'),
     ])
     .sort(compareActivityEntry)
 

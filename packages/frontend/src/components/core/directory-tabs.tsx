@@ -1,6 +1,7 @@
 'use client'
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
+import { usePathname } from 'next/navigation'
 import * as React from 'react'
 import { useTracking } from '~/hooks/use-custom-event'
 import { cn } from '~/utils/cn'
@@ -16,13 +17,31 @@ const DirectoryTabs = ({
   onValueChange,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) => {
+  const [selectedTab, setSelectedTab] = React.useState(defaultValue)
+  const pathname = usePathname()
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const tab = params.get('tab')
+    if (tab) {
+      setSelectedTab(tab)
+    }
+  }, [])
+
+  const setParams = (tab: string) => {
+    const params = new URLSearchParams(window.location.search)
+    params.set('tab', tab)
+    window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
+  }
+
   const { track } = useTracking()
   return (
     <TabsPrimitive.Root
       ref={ref}
-      defaultValue={defaultValue}
+      value={selectedTab}
       onValueChange={(value) => {
+        setParams(value)
         onValueChange?.(value)
+        setSelectedTab(value)
         track('directoryTabsChanged', {
           props: {
             value,

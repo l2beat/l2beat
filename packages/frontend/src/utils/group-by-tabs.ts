@@ -10,10 +10,10 @@ export function groupByTabs<T extends CommonScalingEntry>(
   projects: T[],
 ): TabbedScalingEntries<T> {
   return {
-    rollups: projects.filter((p) => p.tab === 'Rollups'),
+    rollups: projects.filter((p) => p.tab === 'rollups'),
     validiumsAndOptimiums: projects.filter(
-      (p) => p.tab === 'ValidiumsAndOptimiums',
+      (p) => p.tab === 'validiumsAndOptimiums',
     ),
-    others: projects.filter((p) => p.tab === 'Others'),
+    others: projects.filter((p) => p.tab === 'others'),
   }
 }

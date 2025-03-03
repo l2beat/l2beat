@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 
-export function HashSectionHighlighter() {
+export function ProjectSectionHighlighter() {
   const handleHashChange = () => {
     const hash = window.location.hash
     if (hash) {

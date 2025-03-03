@@ -1,8 +1,9 @@
 'use client'
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
+import { useRouter } from 'next/navigation'
 import * as React from 'react'
-import { useSearchParamState } from '~/hooks/use-search-param-state'
+import { useEffect } from 'react'
 import { cn } from '~/utils/cn'
 
 /**
@@ -12,21 +13,35 @@ import { cn } from '~/utils/cn'
 const Tabs = ({
   ref,
   defaultValue: passedDefaultValue,
-  storeInSearchParams = true,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root> & {
-  storeInSearchParams?: boolean
-}) => {
-  const state = useSearchParamState('tab', passedDefaultValue, {
-    shallow: true,
-  })
-  const [value, setValue] = storeInSearchParams ? state : [passedDefaultValue]
+}: React.ComponentProps<typeof TabsPrimitive.Root> & {}) => {
+  const [selectedTab, setSelectedTab] = React.useState(passedDefaultValue)
+  const router = useRouter()
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const tab = params.get('tab')
+    if (tab) {
+      setSelectedTab(tab)
+    }
+  }, [])
+
+  const handleTabChange = (tab: string) => {
+    console.log('handleTabChange', tab)
+    setSelectedTab(tab)
+    const params = new URLSearchParams(window.location.search)
+    params.set('tab', tab)
+    router.replace(`?${params.toString()}`)
+  }
 
   return (
     <TabsPrimitive.Root
       ref={ref}
-      defaultValue={value}
-      onValueChange={setValue}
+      value={selectedTab}
+      onValueChange={(tab) => {
+        console.log('onValueChange', tab)
+        handleTabChange(tab)
+        setSelectedTab(tab)
+      }}
       {...props}
     />
   )

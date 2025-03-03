@@ -22,7 +22,7 @@ export interface FilterableScalingEntry {
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableScalingEntry {
-  tab: ActivityChartType
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
 }
@@ -63,10 +63,10 @@ export function getCommonScalingEntry({
       },
     },
     tab: project.scalingInfo.isOther
-      ? 'Others'
+      ? 'others'
       : isRollup
-        ? 'Rollups'
-        : 'ValidiumsAndOptimiums',
+        ? 'rollups'
+        : 'validiumsAndOptimiums',
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: {
       isRollup,

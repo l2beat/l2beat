@@ -96,7 +96,7 @@ export const scalingSummaryColumns = [
 
         return (
           <TotalCell
-            href={`/scaling/tvs#${ctx.row.original.slug}`}
+            href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
             associatedTokenSymbols={value.associatedTokens}
             tvsWarnings={value.warnings}
             breakdown={value.breakdown}
