@@ -32,6 +32,7 @@ export interface ApiPreviewContract {
   addresses: AddressFieldValue[]
   name: string
   description: string
+  upgradableBy: UpgradeabilityActor[] | undefined
 }
 
 export interface ApiProjectChain {
@@ -146,4 +147,9 @@ export interface ApiAbiEntry {
 
 export interface ApiCodeResponse {
   sources: { name: string; code: string }[]
+}
+
+export interface UpgradeabilityActor {
+  name: string
+  delay: string
 }
