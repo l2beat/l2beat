@@ -33,7 +33,7 @@ export async function getElasticChainTokens(
   // TODO: latest block number
   const responses = await multicallClient.multicall(encoded, 20390762)
 
-  return responses
+  const l2Tokens = responses
     .map((response, index) => {
       const token = tokens[index]
       if (
@@ -48,7 +48,6 @@ export async function getElasticChainTokens(
         'l2TokenAddress',
         response.data.toString(),
       )
-
       assert(chain.sinceTimestamp)
 
       return {
@@ -74,4 +73,26 @@ export async function getElasticChainTokens(
       }
     })
     .filter(notUndefined)
+
+  assert(chain.sinceTimestamp)
+
+  const etherOnL2 = {
+    id: TokenId.create(project.id, 'native'),
+    ticker: 'ethereum',
+    symbol: 'ETH',
+    name: 'Ethereum',
+    sinceTimestamp: chain.sinceTimestamp,
+    category: 'ether' as const,
+    source: 'canonical' as const,
+    amount: {
+      type: 'totalSupply' as const,
+      address: escrow.l2EtherAddress,
+      chain: project.id,
+      // Assumption: decimals on destination network are the same
+      decimals: 18,
+    },
+    isAssociated: false,
+  }
+
+  return [etherOnL2, ...l2Tokens]
 }
