@@ -104,6 +104,26 @@ interface EtherscanApiResponse {
   }>
 }
 
+// Add interface for Coingecko API response
+interface CoingeckoApiResponse {
+  platforms: {
+    [key: string]: string
+  }
+}
+
+// Add interface for token supply information
+interface TokenSupplyInfo {
+  l1Supply: string
+  l2Supply: string
+  escrowBalance: string
+  type:
+    | 'Canonical Token'
+    | 'Non-canonical Token'
+    | 'External Token'
+    | 'Native Token'
+  reason?: string
+}
+
 export const TokenScreening = command({
   name: 'token-screening',
   description: 'Finds L2 token classification for L1 tokens',
@@ -128,28 +148,127 @@ export const TokenScreening = command({
     for (const tokenAddress of args.tokenAddresses) {
       console.log(`\nL1 Token: ${tokenAddress}`)
       for (const chain of chains) {
+        // get L2 token address from escrow
         const l2Address = await getL2TokenAddress(
           tokenAddress.toString(),
           chain,
           escrows,
         )
         console.log(
-          `${chain.charAt(0).toUpperCase() + chain.slice(1)}: ${l2Address || 'Not Found'}`,
+          l2Address
+            ? `${chain.charAt(0).toUpperCase() + chain.slice(1)} (canonical): ${l2Address}`
+            : '',
         )
 
+        // start classification screening
+        let supplyInfo: TokenSupplyInfo = {
+          l1Supply: '0',
+          l2Supply: '0',
+          escrowBalance: '0',
+          type: 'Non-canonical Token',
+          reason: 'No contract at L2 canonical address',
+        }
         if (l2Address) {
-          const supplyInfo = await getTokenSupplyInfo(
+          supplyInfo = await getTokenSupplyInfo(
             tokenAddress.toString(),
             l2Address,
             chain,
             escrows,
           )
-          console.log(supplyInfo)
           if (supplyInfo) {
-            console.log(`  L1 Supply: ${supplyInfo.l1Supply}`)
-            console.log(`  L2 Supply: ${supplyInfo.l2Supply}`)
-            console.log(`  Escrow Balance: ${supplyInfo.escrowBalance}`)
-            console.log(`  Type: ${supplyInfo.type}`)
+            const l2Supply = Number(supplyInfo.l2Supply)
+            const escrowBalance = Number(supplyInfo.escrowBalance)
+            let canonical = '0%'
+            let nonCanonical = '100%'
+
+            if (l2Supply > 0) {
+              const canonicalPct = Math.min(
+                100,
+                (l2Supply / escrowBalance) * 100,
+              )
+              const nonCanonicalPct = Math.max(0, 100 - canonicalPct)
+              canonical = `${canonicalPct.toFixed(2)}%`
+              nonCanonical = `${nonCanonicalPct.toFixed(2)}%`
+            }
+
+            // if non-canonical summary is printed later after classication attempt
+            if (supplyInfo.type === 'Canonical Token') {
+              console.table({
+                'L1 Supply': Number(supplyInfo.l1Supply).toFixed(2),
+                'L2 Supply': Number(supplyInfo.l2Supply).toFixed(2),
+                'Escrow Balance': Number(supplyInfo.escrowBalance).toFixed(2),
+                Type: supplyInfo.type,
+                Canonical: canonical,
+                'In Transit': nonCanonical,
+              })
+            }
+          }
+        }
+
+        if (!l2Address || supplyInfo.type === 'Non-canonical Token') {
+          // get L2 token address from coingecko
+          const l2AddressFromCoingecko: string | null =
+            await getL2TokenAddressFromCoingecko(tokenAddress, chain)
+          if (!l2AddressFromCoingecko) {
+            console.error(
+              `No L2 token address found for ${tokenAddress} on ${chain}`,
+            )
+            continue
+          } else {
+            console.log(
+              `${chain.charAt(0).toUpperCase() + chain.slice(1)} (coingecko): ${l2AddressFromCoingecko}`,
+            )
+          }
+          const canonicalL2Supply = supplyInfo.l2Supply
+          const newSupplyInfo = await getTokenSupplyInfo(
+            tokenAddress,
+            l2AddressFromCoingecko,
+            chain,
+            escrows,
+          )
+          if (newSupplyInfo) {
+            supplyInfo.l1Supply = newSupplyInfo.l1Supply
+            supplyInfo.l2Supply = newSupplyInfo.l2Supply
+            let canonicalPct = 0
+            let weirdPct = 0
+            if (Number(newSupplyInfo.l2Supply) > 0) {
+              if (newSupplyInfo.type === 'Canonical Token') {
+                canonicalPct = Number(
+                  Math.min(
+                    100,
+                    (Number(newSupplyInfo.l2Supply) /
+                      Number(newSupplyInfo.escrowBalance)) *
+                      100,
+                  ).toFixed(2),
+                )
+              } else {
+                canonicalPct = Number(
+                  Math.min(
+                    100,
+                    (Number(canonicalL2Supply) /
+                      Number(newSupplyInfo.l2Supply)) *
+                      100,
+                  ).toFixed(2),
+                )
+                supplyInfo.reason = supplyInfo.reason
+                  ? `${supplyInfo.reason}`
+                  : 'L2 supply significantly greater than escrow balance'
+              }
+              weirdPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
+            }
+            console.table({
+              'L1 Supply': Number(supplyInfo.l1Supply).toFixed(2),
+              'L2 Supply': Number(supplyInfo.l2Supply).toFixed(2),
+              'Escrow Balance': Number(supplyInfo.escrowBalance).toFixed(2),
+              Type: supplyInfo.type,
+              Canonical: `${canonicalPct}%`,
+              [supplyInfo.type === 'Canonical Token'
+                ? 'In Transit'
+                : 'Non-canonical']: `${weirdPct}%`,
+              ...(supplyInfo.type === 'Non-canonical Token'
+                ? { Reason: supplyInfo.reason }
+                : {}),
+            })
           }
         }
       }
@@ -243,31 +362,102 @@ async function getL2TokenAddress(
   }
 }
 
+async function getL2TokenAddressFromCoingecko(
+  tokenAddress: string,
+  chain: string,
+): Promise<string | null> {
+  const chainMapping: { [key: string]: string } = {
+    optimism: 'optimistic-ethereum',
+    arbitrum: 'arbitrum-one',
+    base: 'base',
+  }
+
+  try {
+    const response = await fetch(
+      `https://pro-api.coingecko.com/api/v3/coins/ethereum/contract/${tokenAddress}`,
+      {
+        headers: {
+          accept: 'application/json',
+          'x-cg-pro-api-key': process.env.COINGECKO_API_KEY || '',
+        },
+      },
+    )
+
+    if (!response.ok) return null
+
+    const data = (await response.json()) as CoingeckoApiResponse
+    const platforms = data.platforms || {}
+    const mappedChain = chainMapping[chain]
+
+    return mappedChain ? platforms[mappedChain] || null : null
+  } catch (error) {
+    console.error(`Error fetching token address from Coingecko: ${error}`)
+    return null
+  }
+}
+
 async function getTokenSupplyInfo(
   l1Address: string,
   l2Address: string,
   network: string,
   escrows: { [key: string]: string[] },
-) {
+): Promise<TokenSupplyInfo> {
   try {
     const l1Provider = new providers.JsonRpcProvider(
       utils.getRpcUrl('ethereum'),
     )
     const l2Provider = new providers.JsonRpcProvider(utils.getRpcUrl(network))
-
     const tokenInterface = new ethersUtils.Interface([
       'function totalSupply() view returns (uint256)',
       'function balanceOf(address) view returns (uint256)',
       'function decimals() view returns (uint8)',
     ])
 
-    const l2Token = new Contract(l2Address, tokenInterface, l2Provider)
-    const l2Supply = await l2Token.totalSupply()
-    const l1Token = new Contract(l1Address, tokenInterface, l1Provider)
-    const l1Supply = await l1Token.totalSupply()
-    const decimals = await l1Token.decimals()
-    const escrowAddress = escrows[network]?.[0]
-    const escrowBalance = await l1Token.balanceOf(escrowAddress)
+    let l2Supply = ethersUtils.parseUnits('0', 18)
+    let l1Supply = ethersUtils.parseUnits('0', 18)
+    let decimals = 18
+    let escrowBalance = ethersUtils.parseUnits('0', 18)
+
+    try {
+      const l1Token = new Contract(l1Address, tokenInterface, l1Provider)
+      l1Supply = await l1Token.totalSupply()
+      decimals = await l1Token.decimals()
+      const escrowAddress = escrows[network]?.[0]
+      escrowBalance = await l1Token.balanceOf(escrowAddress)
+    } catch {
+      return {
+        l1Supply: '0',
+        l2Supply: '0',
+        escrowBalance: '0',
+        type: 'Non-canonical Token',
+        reason: 'L1 Contract Not ERC20 (totalSupply)',
+      }
+    }
+
+    // Check if there's code at the L2 address
+    const l2Code = await l2Provider.getCode(l2Address)
+    if (l2Code === '0x') {
+      return {
+        l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
+        l2Supply: '0',
+        escrowBalance: ethersUtils.formatUnits(escrowBalance, decimals),
+        type: 'Non-canonical Token',
+        reason: 'No contract at L2 canonical address',
+      }
+    }
+
+    try {
+      const l2Token = new Contract(l2Address, tokenInterface, l2Provider)
+      l2Supply = await l2Token.totalSupply()
+    } catch {
+      return {
+        l1Supply: '0',
+        l2Supply: '0',
+        escrowBalance: '0',
+        type: 'Non-canonical Token',
+        reason: 'L2 contract not ERC20 (totalSupply)',
+      }
+    }
 
     const adjustedL2Supply = ethersUtils.formatUnits(l2Supply, decimals)
     const adjustedEscrowBalance = ethersUtils.formatUnits(
@@ -275,18 +465,38 @@ async function getTokenSupplyInfo(
       decimals,
     )
 
+    // Check if L2 supply is significantly more than escrow balance
+    const l2SupplyNum = Number(adjustedL2Supply)
+    const escrowBalanceNum = Number(adjustedEscrowBalance)
+
+    if (l2SupplyNum > escrowBalanceNum * 2) {
+      // x2 threshold
+      return {
+        l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
+        l2Supply: adjustedL2Supply,
+        escrowBalance: adjustedEscrowBalance,
+        type: 'Non-canonical Token',
+        reason: 'L2 supply significantly greater than escrow balance',
+      }
+    }
+
+    // sanity check for balance
+    const tokenType =
+      Number(adjustedL2Supply) > 1 ? 'Canonical Token' : 'Non-canonical Token'
+
     return {
       l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
       l2Supply: adjustedL2Supply,
       escrowBalance: adjustedEscrowBalance,
-      type:
-        Number(adjustedL2Supply) > 1 &&
-        Number(adjustedL2Supply) <= Number(adjustedEscrowBalance)
-          ? 'Canonical Token'
-          : 'Weird Token',
+      type: tokenType,
     }
   } catch {
-    return null
+    return {
+      l1Supply: '0',
+      l2Supply: '0',
+      escrowBalance: '0',
+      type: 'Non-canonical Token',
+    }
   }
 }
 
