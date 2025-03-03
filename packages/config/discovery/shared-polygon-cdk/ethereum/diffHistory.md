@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xbb8fd8041aced16a9017c546a34e7b9c5d03190d
+
+# Diff at Mon, 03 Mar 2025 08:57:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 21802929
+- current block number: 21965308
+
+## Description
+
+New chain deployed, looks like a testnet or child chain of previously deployed 623 pen-chain (see below).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.15:
++        [false]
+      values.rollupCount:
+-        15
++        16
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.15:
++        ["0xb1714954bBc0162A36FB44934F3216aCE81C40d7",3344,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
+    }
+```
+
 Generated with discovered.json: 0x10917e985ceae936d9e950fcf60ef01adaa8cb97
 
 # Diff at Thu, 27 Feb 2025 11:46:35 GMT:

@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x71a846e87d73fd70a834ebac0584c601b05a41bd
+
+# Diff at Mon, 03 Mar 2025 09:15:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 287772645
+- current block number: 311763335
+
+## Description
+
+Minor upgrade of SequencerInbox and Inbox contracts to new versions with minimal diff to known versions.
+
+## Watched changes
+
+```diff
+    contract Inbox (0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
++        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
+      values.$implementation:
+-        "0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
++        "0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
+      values.$pastUpgrades.1:
++        ["2025-03-03T05:22:43.000Z","0xbae64b5a7223e9cf01a270c58a776e2fed92644fe0bb85855be7a805d40008b2",["0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract SequencerInbox (0xfb27e42E964F3364630F76D62EB295ae792BD4FA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"
++        "0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+      values.$pastUpgrades.2:
++        ["2025-03-03T05:22:43.000Z","0xbae64b5a7223e9cf01a270c58a776e2fed92644fe0bb85855be7a805d40008b2",["0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@287772645 => .flat}/Inbox/Inbox.sol     | 52 +++++++++++++++++-----
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++---
+ 2 files changed, 59 insertions(+), 17 deletions(-)
+```
+
 Generated with discovered.json: 0xefe3f9bd28bef2209986d82e75019d6fe9589d2e
 
 # Diff at Fri, 21 Feb 2025 14:12:32 GMT:
