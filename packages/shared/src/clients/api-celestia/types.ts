@@ -29,8 +29,9 @@ export const GetBlobResponseSchema = z.union([
 export type GetBlobResponse = z.infer<typeof GetBlobResponseSchema>
 
 export const CelestiaTransactionResultSchema = z.object({
-  code: z.number(),
-  data: z.string(),
+  // not needed - data might be big
+  // code: z.number(),
+  // data: z.string().nullable(),
   log: z.string(),
 })
 

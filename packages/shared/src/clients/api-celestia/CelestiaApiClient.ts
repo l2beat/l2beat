@@ -1,6 +1,6 @@
 import type { json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import { type GetBlobResponse, GetBlockResultsResponseSchema } from './types'
+import { GetBlobResponseSchema, GetBlockResultsResponseSchema } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -44,7 +44,7 @@ export class CelestiaApiClient extends ClientCore {
       },
     })
 
-    const json = response as GetBlobResponse
+    const json = GetBlobResponseSchema.parse(response)
 
     if ('error' in json) {
       return null
