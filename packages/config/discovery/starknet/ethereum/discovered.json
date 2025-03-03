@@ -24,7 +24,12 @@
         {
           "permission": "interact",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
+        },
+        {
+          "permission": "interact",
+          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.."
         },
         {
           "permission": "interact",
@@ -39,7 +44,7 @@
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -54,7 +59,7 @@
         {
           "permission": "interact",
           "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -84,7 +89,7 @@
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -99,7 +104,7 @@
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -114,7 +119,7 @@
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -129,7 +134,7 @@
         {
           "permission": "interact",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -144,7 +149,7 @@
         {
           "permission": "interact",
           "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -159,7 +164,7 @@
         {
           "permission": "interact",
           "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -174,7 +179,7 @@
         {
           "permission": "interact",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -189,7 +194,7 @@
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -204,7 +209,7 @@
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -219,7 +224,7 @@
         {
           "permission": "interact",
           "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "upgrade",
@@ -363,7 +368,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -455,7 +460,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         },
         "tokenAdminAC": {
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
@@ -474,6 +479,12 @@
       "proxyType": "StarkWare proxy",
       "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles and the role that can upgrade the implementation..",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -501,6 +512,7 @@
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getEnableWindowDuration": 1209600,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarkgateRegistry_2.0_6",
         "implementation": "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC",
         "isFrozen": false,
@@ -514,6 +526,9 @@
         "$admin": {
           "severity": "HIGH",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+        },
+        "govAdminAC": {
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
       "category": { "name": "External Bridges", "priority": 1 }
@@ -593,7 +608,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -726,7 +741,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -769,7 +784,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -875,7 +890,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -1207,7 +1222,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1340,7 +1355,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -1383,7 +1398,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1496,7 +1511,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -1736,7 +1751,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1866,7 +1881,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -1909,7 +1924,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2020,7 +2035,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2063,7 +2078,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2169,7 +2184,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2212,7 +2227,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2318,7 +2333,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2361,7 +2376,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2466,7 +2481,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2509,7 +2524,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2634,7 +2649,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -2651,7 +2666,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
       "derivedName": "StarknetTokenBridge",
@@ -2683,7 +2698,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2816,7 +2831,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2903,7 +2918,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -3009,7 +3024,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -4227,11 +4242,11 @@
     "starknet/DelayedExecutor": "0xe84654e941de1cc1ff6072e9b6fb6e510ed5ac211a5a67cad254a3fe3e740b03",
     "starknet/L1EscrowDAI": "0x6e4e0a4d90eb5f74198b3d1bf0b319b30310349b960d8f8e15738bd2f70cd7fd",
     "starknet/LordsL1Bridge": "0xfc89ced3e21bae61dfc4abffb8fec98b920463aa7b2605f895caf626b4f54c18",
-    "starknet/StarkgateManager": "0x159d3e88fb13be73db88834f15b0a1d7356a271ca2f2a7d3ea8071d1c9ab3bcf",
-    "starknet/StarkgateRegistry": "0x682de11636ee5d126a5dbd4dedce35ccb108548d0f855c3350a50de5a3c424ad",
+    "starknet/StarkgateManager": "0xf6401586405cca1328e5b0b0816c24e362fa7e7f090de0377ae01fa930047aac",
+    "starknet/StarkgateRegistry": "0x613178017ba4f030754f316d800cc74f2cb1cd6c26d274dffa2feed755341fc7",
     "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601",
-    "starknet/StarknetERC20Bridge": "0xa3ed7227564e659ca733fe8f5306d5651e80f1b2df1feedb1ee3b66bb47a13ce",
+    "starknet/StarknetERC20Bridge": "0xfa85d0cc0fd96ef7f39f056ff07097598ec4914782915b0bf0dc234a7df41dfb",
     "starknet/StarknetEthBridge": "0x0c2438a4f3b2e9ef164f4527bf284070d0c69f435472dc967782d31d9c24e8a6",
-    "starknet/StarknetMultiBridge": "0x6174b77981b50038228a4b0933fdbaf8eed1db645d2b605192639f23d4d08d68"
+    "starknet/StarknetMultiBridge": "0x4712d4a1da956acb467a1955ab6193dfca6fe43ef5a23c422771731684563501"
   }
 }

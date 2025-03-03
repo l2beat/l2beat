@@ -9,7 +9,7 @@
   ],
   "fields": {
     "$admin": {
-      "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
+      "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).",
       "severity": "HIGH",
       "target": {
         "permissions": [
@@ -109,7 +109,7 @@
       }
     },
     "govAdminAC": {
-      "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin.",
+      "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation.",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -121,7 +121,7 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "manage critical access control roles related to upgrades."
+            "description": "manage critical access control roles and the role that can upgrade the implementation."
           }
         ]
       }
