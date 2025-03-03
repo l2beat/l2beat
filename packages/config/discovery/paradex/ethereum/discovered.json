@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 21629810,
+  "blockNumber": 21967090,
   "configHash": "0x2e50155378e348ef967ef388e56902dd02031d7249940a5dd2d0502290d87a17",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -225,7 +225,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 2850,
+        "l1ToL2MessageNonce": 4362,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -240,9 +240,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1234786585059138136266739805485319663050641345874558543423182687265855885799",
-        "stateBlockNumber": 221761,
-        "stateRoot": "294089572735320914036448831512111664052901650846194482743241860028342749635",
+        "stateBlockHash": "1158900201688665447509077742632357961671068068239118341449594603933160527481",
+        "stateBlockNumber": 427000,
+        "stateRoot": "2996769509371364125286472628761271158777217826904532021052113335603431714727",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
