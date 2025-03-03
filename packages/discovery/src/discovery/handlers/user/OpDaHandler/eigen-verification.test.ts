@@ -3,7 +3,6 @@ import { expect, mockObject } from 'earl'
 import type { providers } from 'ethers'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
 import type { IProvider } from '../../../provider/IProvider'
-import { OpStackDAHandler } from './OpDAHandler'
 import { checkForEigenDA } from './eigen-verification'
 
 const aevoSequencerTransactions: Transaction[] = [
@@ -36,71 +35,69 @@ const confirmedBatchHeaderHashes = [
   },
 ]
 
-describe(OpStackDAHandler.name, () => {
-  describe('checkForEigenDA', () => {
-    it('should return false if byte-check failes for all sequencer transactions', async () => {
-      const invalidTransactions = [
-        {
-          hash: Hash256.random(),
-          to: EthereumAddress.random(),
-          input: '0x',
-        },
-      ]
+describe(checkForEigenDA.name, () => {
+  it('should return false if byte-check failes for all sequencer transactions', async () => {
+    const invalidTransactions = [
+      {
+        hash: Hash256.random(),
+        to: EthereumAddress.random(),
+        input: '0x',
+      },
+    ]
 
-      const baseProviderMock = mockObject<IProvider>({
-        chain: 'ethereum',
-        blockNumber: 1,
-      })
-
-      const isUsingEigenDA = await checkForEigenDA(
-        baseProviderMock,
-        invalidTransactions,
-      )
-      expect(isUsingEigenDA).toEqual(false)
+    const baseProviderMock = mockObject<IProvider>({
+      chain: 'ethereum',
+      blockNumber: 1,
     })
 
-    it('should not throw if byte-check passes but we encounter malformed input', async () => {
-      const invalidTransactions = [
-        {
-          hash: Hash256.random(),
-          to: EthereumAddress.random(),
-          input: '0x010100', // missing commitment
-        },
-      ]
+    const isUsingEigenDA = await checkForEigenDA(
+      baseProviderMock,
+      invalidTransactions,
+    )
+    expect(isUsingEigenDA).toEqual(false)
+  })
 
-      const baseProviderMock = mockObject<IProvider>({
-        chain: 'ethereum',
-        blockNumber: 1,
-      })
+  it('should not throw if byte-check passes but we encounter malformed input', async () => {
+    const invalidTransactions = [
+      {
+        hash: Hash256.random(),
+        to: EthereumAddress.random(),
+        input: '0x010100', // missing commitment
+      },
+    ]
 
-      expect(
-        checkForEigenDA(baseProviderMock, invalidTransactions),
-      ).not.toBeRejected()
+    const baseProviderMock = mockObject<IProvider>({
+      chain: 'ethereum',
+      blockNumber: 1,
     })
 
-    it('should return true if commitments have been confirmed', async () => {
-      const baseProviderMock = mockObject<IProvider>({
-        chain: 'ethereum',
-        blockNumber: 1,
-        getEvents: async () =>
-          confirmedBatchHeaderHashes.map((cbhh) => ({
-            log: {} as providers.Log,
-            event: {
-              batchHeaderHash: cbhh.blobBatchMetadata,
-            },
-          })),
-      })
+    expect(
+      checkForEigenDA(baseProviderMock, invalidTransactions),
+    ).not.toBeRejected()
+  })
 
-      const switchableProvider = mockObject<IProvider>({
-        ...baseProviderMock,
-        switchChain: () => baseProviderMock,
-      })
-
-      const isUsingEigenDA = await checkForEigenDA(
-        switchableProvider,
-        aevoSequencerTransactions,
-      )
-      expect(isUsingEigenDA).toEqual(true)
+  it('should return true if commitments have been confirmed', async () => {
+    const baseProviderMock = mockObject<IProvider>({
+      chain: 'ethereum',
+      blockNumber: 1,
+      getEvents: async () =>
+        confirmedBatchHeaderHashes.map((cbhh) => ({
+          log: {} as providers.Log,
+          event: {
+            batchHeaderHash: cbhh.blobBatchMetadata,
+          },
+        })),
     })
+
+    const switchableProvider = mockObject<IProvider>({
+      ...baseProviderMock,
+      switchChain: () => baseProviderMock,
+    })
+
+    const isUsingEigenDA = await checkForEigenDA(
+      switchableProvider,
+      aevoSequencerTransactions,
+    )
+    expect(isUsingEigenDA).toEqual(true)
   })
 })

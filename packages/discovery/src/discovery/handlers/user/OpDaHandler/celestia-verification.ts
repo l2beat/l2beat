@@ -6,9 +6,14 @@ export async function checkForCelestia(
   provider: IProvider,
   sequencerTxs: Transaction[],
 ) {
-  const decodedCommitments = sequencerTxs
-    .filter((tx) => celestiaTools.isOpStackCelestiaCommitment(tx.input))
-    .map((tx) => celestiaTools.decodeCommitment(tx.input))
+  const celestiaCommitments = sequencerTxs.filter((tx) =>
+    celestiaTools.isOpStackCelestiaCommitment(tx.input),
+  )
+
+  // fallbacks are ignored here
+  const decodedCommitments = celestiaCommitments.map((tx) =>
+    celestiaTools.decodeCommitment(tx.input),
+  )
 
   if (decodedCommitments.length === 0) {
     return false
@@ -29,7 +34,7 @@ export async function checkForCelestia(
     throw new Error(`Multiple Celestia namespaces have been detected.`)
   }
 
-  const requiredCount = sequencerTxs.length
+  const requiredCount = celestiaCommitments.length
 
   const verifiedCount = namespaces.filter(
     (namespace) => namespace !== undefined,
@@ -39,7 +44,7 @@ export async function checkForCelestia(
   return verifiedCount === requiredCount
 }
 
-async function getNamespaceFromCommitment(
+export async function getNamespaceFromCommitment(
   provider: IProvider,
   height: number,
   commitment: string,
