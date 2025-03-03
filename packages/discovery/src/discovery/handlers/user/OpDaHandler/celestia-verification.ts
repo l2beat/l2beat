@@ -22,7 +22,7 @@ export async function checkForCelestia(
       commitment.blockHeight,
       commitment.blobCommitment,
     )
-    console.log(`Namespace: ${namespace}`)
+
     if (namespace) {
       verifiedCount++
     }
