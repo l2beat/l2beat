@@ -9,25 +9,21 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { isVerified, layer2s, layer3s } from '@l2beat/config'
-import { ProjectId, assert } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { ProjectLink } from '~/components/projects/links/types'
-import { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { RosetteValue } from '~/components/rosette/types'
+import type { ProjectLink } from '~/components/projects/links/types'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
-import {
-  UnderReviewStatus,
-  getUnderReviewStatus,
-} from '~/utils/project/under-review'
+import type { UnderReviewStatus } from '~/utils/project/under-review'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
-import {
-  ProjectCountdownsWithContext,
-  getCountdowns,
-} from '../utils/get-countdowns'
+import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
+import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
@@ -98,6 +94,9 @@ export async function getScalingProjectEntry(
     | 'scalingInfo'
     | 'scalingRisks'
     | 'scalingStage'
+    | 'scalingTechnology'
+    | 'contracts'
+    | 'permissions'
     | 'tvlInfo'
     | 'tvlConfig',
     'chainConfig' | 'isUpcoming' | 'isArchived'
@@ -154,7 +153,7 @@ export async function getScalingProjectEntry(
     badges: project.display.badges,
   }
 
-  const changes = projectsChangeReport.getChanges(legacy.id)
+  const changes = projectsChangeReport.getChanges(project.id)
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
@@ -189,8 +188,8 @@ export async function getScalingProjectEntry(
 
   if (legacy.type === 'layer2') {
     sections = await getL2ProjectDetails({
-      project: legacy,
-      isVerified: !project.statuses.isUnverified,
+      legacy: legacy,
+      project,
       projectsChangeReport,
       rosetteValues: common.rosette.self,
       daSolution,
@@ -200,9 +199,9 @@ export async function getScalingProjectEntry(
     const isHostChainVerified =
       hostChain === undefined ? false : isVerified(hostChain)
     sections = await getL3ProjectDetails({
-      project: legacy,
+      legacy: legacy,
+      project,
       hostChain,
-      isVerified: !project.statuses.isUnverified,
       daSolution,
       isHostChainVerified,
       projectsChangeReport,

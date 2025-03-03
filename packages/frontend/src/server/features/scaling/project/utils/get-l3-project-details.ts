@@ -1,4 +1,4 @@
-import type { Layer2, Layer3 } from '@l2beat/config'
+import type { Layer2, Layer3, Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import type { RosetteValue } from '~/components/rosette/types'
@@ -22,8 +22,8 @@ import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
-  project: Layer3
-  isVerified: boolean
+  legacy: Layer3
+  project: Project<'statuses'>
   isHostChainVerified: boolean
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
@@ -34,9 +34,9 @@ interface Params {
 }
 
 export async function getL3ProjectDetails({
+  legacy,
   project,
   hostChain,
-  isVerified,
   daSolution,
   rosetteValues,
   isHostChainVerified,
@@ -44,28 +44,28 @@ export async function getL3ProjectDetails({
   hostChainRosetteValues,
   projectsChangeReport,
 }: Params) {
-  const permissionsSection = project.permissions
+  const permissionsSection = legacy.permissions
     ? getPermissionsSection({
-        id: project.id,
-        type: project.type,
-        hostChain: project.hostChain,
-        isUnderReview: !!project.isUnderReview,
-        permissions: project.permissions,
+        id: legacy.id,
+        type: legacy.type,
+        hostChain: legacy.hostChain,
+        isUnderReview: !!legacy.isUnderReview,
+        permissions: legacy.permissions,
         daSolution,
       })
     : undefined
 
   const contractsSection = getContractsSection(
     {
-      id: project.id,
-      type: project.type,
-      hostChain: project.hostChain,
-      isVerified,
-      slug: project.display.slug,
-      contracts: project.contracts,
-      isUnderReview: project.isUnderReview,
-      escrows: project.config.escrows,
-      architectureImage: project.display.architectureImage,
+      id: legacy.id,
+      type: legacy.type,
+      hostChain: legacy.hostChain,
+      isVerified: !project.statuses.isUnverified,
+      slug: legacy.display.slug,
+      contracts: legacy.contracts,
+      isUnderReview: legacy.isUnderReview,
+      escrows: legacy.config.escrows,
+      architectureImage: legacy.display.architectureImage,
       daSolution,
     },
     projectsChangeReport,
@@ -74,40 +74,43 @@ export async function getL3ProjectDetails({
   const hostChainRisksSummary = hostChain
     ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
     : hostChain
-  const riskSummary = getScalingRiskSummarySection(project, isVerified)
-  const technologySection = await getScalingTechnologySection(project)
-  const operatorSection = getOperatorSection(project)
-  const withdrawalsSection = getWithdrawalsSection(project)
-  const otherConsiderationsSection = getOtherConsiderationsSection(project)
-  const dataAvailabilitySection = getDataAvailabilitySection(project)
-  const sequencingSection = getSequencingSection(project)
+  const riskSummary = getScalingRiskSummarySection(
+    legacy,
+    !project.statuses.isUnverified,
+  )
+  const technologySection = await getScalingTechnologySection(legacy)
+  const operatorSection = getOperatorSection(legacy)
+  const withdrawalsSection = getWithdrawalsSection(legacy)
+  const otherConsiderationsSection = getOtherConsiderationsSection(legacy)
+  const dataAvailabilitySection = getDataAvailabilitySection(legacy)
+  const sequencingSection = getSequencingSection(legacy)
 
   await Promise.all([
     api.tvs.chart.prefetch({
       range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
+      filter: { type: 'projects', projectIds: [legacy.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart.prefetch({
       range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
+      filter: { type: 'projects', projectIds: [legacy.id] },
     }),
   ])
   const [tvsChartData, activityChartData, tokens] = await Promise.all([
     api.tvs.chart({
       range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
+      filter: { type: 'projects', projectIds: [legacy.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart({
       range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
+      filter: { type: 'projects', projectIds: [legacy.id] },
     }),
-    getTokensForProject(project),
+    getTokensForProject(legacy),
   ])
 
   const sortedMilestones =
-    project.milestones?.sort(
+    legacy.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
 
@@ -125,14 +128,14 @@ export async function getL3ProjectDetails({
         }
       : undefined
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (!legacy.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
         id: 'tvs',
         stacked: true,
         title: 'Value Secured',
-        projectId: project.id,
+        projectId: legacy.id,
         milestones: sortedMilestones,
         tokens,
       },
@@ -145,19 +148,15 @@ export async function getL3ProjectDetails({
       props: {
         id: 'activity',
         title: 'Activity',
-        projectId: project.id,
-        milestones: project.milestones ?? [],
-        category: project.display.category,
-        projectName: project.display.name,
+        projectId: legacy.id,
+        milestones: legacy.milestones ?? [],
+        category: legacy.display.category,
+        projectName: legacy.display.name,
       },
     })
   }
 
-  if (
-    !project.isUpcoming &&
-    project.milestones &&
-    project.milestones.length > 0
-  ) {
+  if (!legacy.isUpcoming && legacy.milestones && legacy.milestones.length > 0) {
     items.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
@@ -168,14 +167,14 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (project.display.detailedDescription) {
+  if (legacy.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Detailed description',
-        description: project.display.description,
-        detailedDescription: project.display.detailedDescription,
+        description: legacy.display.description,
+        detailedDescription: legacy.display.detailedDescription,
       },
     })
   }
@@ -188,12 +187,12 @@ export async function getL3ProjectDetails({
         id: 'risk-summary',
         title: 'Risk summary',
         hostChainWarning: hostChainWarningWithRiskCount,
-        isUnderReview: project.isUnderReview,
+        isUnderReview: legacy.isUnderReview,
       },
     })
   }
 
-  if (project.isUpcoming) {
+  if (legacy.isUpcoming) {
     items.push({
       type: 'UpcomingDisclaimer',
       excludeFromNavigation: true,
@@ -212,16 +211,16 @@ export async function getL3ProjectDetails({
           risks: toRosetteTuple(hostChainRosetteValues),
         },
         l3: {
-          name: project.display.name,
+          name: legacy.display.name,
           risks: toRosetteTuple(rosetteValues),
         },
         combined: combinedRosetteValues
           ? toRosetteTuple(combinedRosetteValues)
           : undefined,
-        warning: project.display.warning,
-        redWarning: project.display.redWarning,
-        isVerified,
-        isUnderReview: project.isUnderReview,
+        warning: legacy.display.warning,
+        redWarning: legacy.display.redWarning,
+        isVerified: !project.statuses.isUnverified,
+        isUnderReview: legacy.isUnderReview,
       },
     })
   } else {
@@ -232,29 +231,29 @@ export async function getL3ProjectDetails({
         title: 'Risk analysis',
         rosetteType: 'pizza',
         rosetteValues,
-        warning: project.display.warning,
-        redWarning: project.display.redWarning,
-        isVerified,
-        isUnderReview: project.isUnderReview,
+        warning: legacy.display.warning,
+        redWarning: legacy.display.redWarning,
+        isVerified: !project.statuses.isUnverified,
+        isUnderReview: legacy.isUnderReview,
       },
     })
   }
 
-  if (project.stage && project.stage.stage !== 'NotApplicable') {
+  if (legacy.stage && legacy.stage.stage !== 'NotApplicable') {
     items.push({
       type: 'StageSection',
       props: {
         id: 'stage',
         title: 'Rollup stage',
-        stageConfig: project.stage,
-        name: project.display.name,
-        icon: `/icons/${project.display.slug}.png`,
-        type: project.display.category,
-        isUnderReview: project.isUnderReview,
-        isAppchain: project.capability === 'appchain',
+        stageConfig: legacy.stage,
+        name: legacy.display.name,
+        icon: `/icons/${legacy.display.slug}.png`,
+        type: legacy.display.category,
+        isUnderReview: legacy.isUnderReview,
+        isAppchain: legacy.capability === 'appchain',
         additionalConsiderations:
-          project.stage.stage !== 'UnderReview'
-            ? project.stage.additionalConsiderations
+          legacy.stage.stage !== 'UnderReview'
+            ? legacy.stage.additionalConsiderations
             : undefined,
       },
     })
@@ -279,33 +278,33 @@ export async function getL3ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.customDa?.description,
-        isUnderReview: project.isUnderReview,
+        description: legacy.customDa?.description,
+        isUnderReview: legacy.isUnderReview,
       },
     })
   }
 
-  if (project.stateDerivation) {
+  if (legacy.stateDerivation) {
     items.push({
       type: 'StateDerivationSection',
       props: {
         id: 'state-derivation',
         title: 'State derivation',
-        isUnderReview: project.isUnderReview,
-        ...project.stateDerivation,
+        isUnderReview: legacy.isUnderReview,
+        ...legacy.stateDerivation,
       },
     })
   }
 
-  if (project.stateValidation) {
+  if (legacy.stateValidation) {
     items.push({
       type: 'StateValidationSection',
       props: {
         id: 'state-validation',
         title: 'State validation',
-        stateValidation: project.stateValidation,
-        diagram: getDiagramParams('state-validation', project.display.slug),
-        isUnderReview: project.isUnderReview,
+        stateValidation: legacy.stateValidation,
+        diagram: getDiagramParams('state-validation', legacy.display.slug),
+        isUnderReview: legacy.isUnderReview,
       },
     })
   }
@@ -357,7 +356,7 @@ export async function getL3ProjectDetails({
   }
 
   if (permissionsSection) {
-    const permissionedEntities = project.customDa?.dac?.knownMembers
+    const permissionedEntities = legacy.customDa?.dac?.knownMembers
 
     items.push({
       type: 'PermissionsSection',

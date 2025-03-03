@@ -12,17 +12,6 @@ interface Props {
 }
 
 export function ScalingProjectRosette({ project }: Props) {
-  if (project.type === 'layer2') {
-    return (
-      <BigPizzaRosette
-        className="mt-auto max-lg:hidden"
-        values={project.rosette.self}
-        isUnderReview={project.underReviewStatus === 'config'}
-        isUpcoming={project.isUpcoming}
-      />
-    )
-  }
-
   const projectRisks = toRosetteTuple(project.rosette.self)
   const hostChainRisks = project.rosette.host
     ? toRosetteTuple(project.rosette.host)
@@ -34,6 +23,17 @@ export function ScalingProjectRosette({ project }: Props) {
   const [rosetteType, setRosetteType] = useState<RosetteType>(
     stackedChainRisks ? 'combined' : 'individual',
   )
+
+  if (project.type === 'layer2') {
+    return (
+      <BigPizzaRosette
+        className="mt-auto max-lg:hidden"
+        values={project.rosette.self}
+        isUnderReview={project.underReviewStatus === 'config'}
+        isUpcoming={project.isUpcoming}
+      />
+    )
+  }
 
   const Wrapper = ({
     children,

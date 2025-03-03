@@ -107,6 +107,7 @@ function layer2Or3ToProject(
       stacked: p.type === 'layer3' ? p.stackedRiskView : undefined,
     },
     scalingDa: p.dataAvailability,
+    scalingTechnology: p.technology,
     customDa: p.customDa,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],

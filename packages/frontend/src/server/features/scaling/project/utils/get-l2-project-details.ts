@@ -1,4 +1,4 @@
-import type { Layer2 } from '@l2beat/config'
+import type { Layer2, Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -22,102 +22,105 @@ import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
-  project: Layer2
-  isVerified: boolean
+  legacy: Layer2
+  project: Project<'statuses'>
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
   daSolution?: DaSolution
 }
 
 export async function getL2ProjectDetails({
+  legacy,
   project,
-  isVerified,
   projectsChangeReport,
   rosetteValues,
   daSolution,
 }: Params) {
-  const permissionsSection = project.permissions
+  const permissionsSection = legacy.permissions
     ? getPermissionsSection({
-        id: project.id,
-        type: project.type,
-        isUnderReview: !!project.isUnderReview,
-        permissions: project.permissions,
+        id: legacy.id,
+        type: legacy.type,
+        isUnderReview: !!legacy.isUnderReview,
+        permissions: legacy.permissions,
         daSolution,
       })
     : undefined
 
   const contractsSection = getContractsSection(
     {
-      id: project.id,
-      type: project.type,
-      isVerified,
-      slug: project.display.slug,
-      contracts: project.contracts,
-      isUnderReview: project.isUnderReview,
-      escrows: project.config.escrows,
-      architectureImage: project.display.architectureImage,
+      id: legacy.id,
+      type: legacy.type,
+      isVerified: !project.statuses.isUnverified,
+      slug: legacy.display.slug,
+      contracts: legacy.contracts,
+      isUnderReview: legacy.isUnderReview,
+      escrows: legacy.config.escrows,
+      architectureImage: legacy.display.architectureImage,
       daSolution,
     },
     projectsChangeReport,
   )
 
-  const riskSummary = getScalingRiskSummarySection(project, isVerified)
-  const technologySection = await getScalingTechnologySection(project)
-  const operatorSection = getOperatorSection(project)
-  const withdrawalsSection = getWithdrawalsSection(project)
-  const otherConsiderationsSection = getOtherConsiderationsSection(project)
-  const dataAvailabilitySection = getDataAvailabilitySection(project)
-  const sequencingSection = getSequencingSection(project)
-  const trackedTransactions = getTrackedTransactions(project)
+  const riskSummary = getScalingRiskSummarySection(
+    legacy,
+    !project.statuses.isUnverified,
+  )
+  const technologySection = await getScalingTechnologySection(legacy)
+  const operatorSection = getOperatorSection(legacy)
+  const withdrawalsSection = getWithdrawalsSection(legacy)
+  const otherConsiderationsSection = getOtherConsiderationsSection(legacy)
+  const dataAvailabilitySection = getDataAvailabilitySection(legacy)
+  const sequencingSection = getSequencingSection(legacy)
+  const trackedTransactions = getTrackedTransactions(legacy)
 
   await Promise.all([
     api.tvs.chart.prefetch({
       range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
+      filter: { type: 'projects', projectIds: [legacy.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart.prefetch({
       range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
+      filter: { type: 'projects', projectIds: [legacy.id] },
     }),
     api.costs.chartWithDataPosted.prefetch({
       range: '1y',
-      projectId: project.id,
+      projectId: legacy.id,
     }),
   ])
   const [tvsChartData, activityChartData, costsChartData, tokens] =
     await Promise.all([
       api.tvs.chart({
         range: '1y',
-        filter: { type: 'projects', projectIds: [project.id] },
+        filter: { type: 'projects', projectIds: [legacy.id] },
         excludeAssociatedTokens: false,
       }),
       api.activity.chart({
         range: '1y',
-        filter: { type: 'projects', projectIds: [project.id] },
+        filter: { type: 'projects', projectIds: [legacy.id] },
       }),
       api.costs.chartWithDataPosted({
         range: '1y',
-        projectId: project.id,
+        projectId: legacy.id,
       }),
-      getTokensForProject(project),
+      getTokensForProject(legacy),
     ])
 
   const sortedMilestones =
-    project.milestones?.sort(
+    legacy.milestones?.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     ) ?? []
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (!legacy.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
         id: 'tvs',
         stacked: true,
         title: 'Value Secured',
-        projectId: project.id,
+        projectId: legacy.id,
         milestones: sortedMilestones,
         tokens,
       },
@@ -130,32 +133,28 @@ export async function getL2ProjectDetails({
       props: {
         id: 'activity',
         title: 'Activity',
-        projectId: project.id,
+        projectId: legacy.id,
         milestones: sortedMilestones,
-        category: project.display.category,
-        projectName: project.display.name,
+        category: legacy.display.category,
+        projectName: legacy.display.name,
       },
     })
   }
 
-  if (!project.isUpcoming && costsChartData.length > 0) {
+  if (!legacy.isUpcoming && costsChartData.length > 0) {
     items.push({
       type: 'CostsSection',
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
-        projectId: project.id,
+        projectId: legacy.id,
         milestones: sortedMilestones,
         trackedTransactions,
       },
     })
   }
 
-  if (
-    !project.isUpcoming &&
-    project.milestones &&
-    project.milestones.length > 0
-  ) {
+  if (!legacy.isUpcoming && legacy.milestones && legacy.milestones.length > 0) {
     items.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
@@ -166,14 +165,14 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (project.display.detailedDescription) {
+  if (legacy.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Detailed description',
-        description: project.display.description,
-        detailedDescription: project.display.detailedDescription,
+        description: legacy.display.description,
+        detailedDescription: legacy.display.detailedDescription,
       },
     })
   }
@@ -184,13 +183,13 @@ export async function getL2ProjectDetails({
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
-        isUnderReview: project.isUnderReview,
+        isUnderReview: legacy.isUnderReview,
         ...riskSummary,
       },
     })
   }
 
-  if (project.isUpcoming) {
+  if (legacy.isUpcoming) {
     items.push({
       type: 'UpcomingDisclaimer',
       excludeFromNavigation: true,
@@ -205,28 +204,28 @@ export async function getL2ProjectDetails({
       title: 'Risk analysis',
       rosetteType: 'pizza',
       rosetteValues,
-      warning: project.display.warning,
-      redWarning: project.display.redWarning,
-      isVerified,
-      isUnderReview: project.isUnderReview,
+      warning: legacy.display.warning,
+      redWarning: legacy.display.redWarning,
+      isVerified: !project.statuses.isUnverified,
+      isUnderReview: legacy.isUnderReview,
     },
   })
 
-  if (project.stage.stage !== 'NotApplicable') {
+  if (legacy.stage.stage !== 'NotApplicable') {
     items.push({
       type: 'StageSection',
       props: {
         id: 'stage',
         title: 'Rollup stage',
-        stageConfig: project.stage,
-        name: project.display.name,
-        icon: `/icons/${project.display.slug}.png`,
-        type: project.display.category,
-        isUnderReview: project.isUnderReview,
-        isAppchain: project.capability === 'appchain',
+        stageConfig: legacy.stage,
+        name: legacy.display.name,
+        icon: `/icons/${legacy.display.slug}.png`,
+        type: legacy.display.category,
+        isUnderReview: legacy.isUnderReview,
+        isAppchain: legacy.capability === 'appchain',
         additionalConsiderations:
-          project.stage.stage !== 'UnderReview'
-            ? project.stage.additionalConsiderations
+          legacy.stage.stage !== 'UnderReview'
+            ? legacy.stage.additionalConsiderations
             : undefined,
       },
     })
@@ -250,37 +249,37 @@ export async function getL2ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.customDa?.description,
+        description: legacy.customDa?.description,
       },
     })
   }
 
-  if (project.stateDerivation) {
+  if (legacy.stateDerivation) {
     items.push({
       type: 'StateDerivationSection',
       props: {
         id: 'state-derivation',
         title: 'State derivation',
         isUnderReview:
-          !!project.isUnderReview || !!project.stateDerivation.isUnderReview,
-        ...project.stateDerivation,
+          !!legacy.isUnderReview || !!legacy.stateDerivation.isUnderReview,
+        ...legacy.stateDerivation,
       },
     })
   }
 
-  if (project.stateValidation) {
+  if (legacy.stateValidation) {
     items.push({
       type: 'StateValidationSection',
       props: {
         id: 'state-validation',
         title: 'State validation',
-        stateValidation: project.stateValidation,
+        stateValidation: legacy.stateValidation,
         diagram: getDiagramParams(
           'state-validation',
-          project.display.stateValidationImage ?? project.display.slug,
+          legacy.display.stateValidationImage ?? legacy.display.slug,
         ),
         isUnderReview:
-          !!project.isUnderReview || !!project.stateValidation.isUnderReview,
+          !!legacy.isUnderReview || !!legacy.stateValidation.isUnderReview,
       },
     })
   }
@@ -328,26 +327,26 @@ export async function getL2ProjectDetails({
       },
     })
   }
-  if (project.upgradesAndGovernance) {
+  if (legacy.upgradesAndGovernance) {
     items.push({
       type: 'MarkdownSection',
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.upgradesAndGovernance,
+        content: legacy.upgradesAndGovernance,
         diagram: {
           type: 'upgrades-and-governance',
           slug:
-            project.display.upgradesAndGovernanceImage ?? project.display.slug,
+            legacy.display.upgradesAndGovernanceImage ?? legacy.display.slug,
         },
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-        isUnderReview: project.isUnderReview,
+        isUnderReview: legacy.isUnderReview,
       },
     })
   }
 
   if (permissionsSection) {
-    const permissionedEntities = project.customDa?.dac?.knownMembers
+    const permissionedEntities = legacy.customDa?.dac?.knownMembers
 
     items.push({
       type: 'PermissionsSection',
