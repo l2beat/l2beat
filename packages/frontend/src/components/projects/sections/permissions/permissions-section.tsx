@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash'
-import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
+import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-da-solution'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'

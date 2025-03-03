@@ -15,7 +15,7 @@ export type DaSolution = Common & {
 
 export type DaSolutionWith<T> = Common & T
 
-export async function getDaSolution(
+export async function getScalingDaSolution(
   project: Project<'scalingInfo', 'scalingDa'>,
 ): Promise<DaSolution | undefined> {
   const layerId = project.scalingDa?.layer.projectId

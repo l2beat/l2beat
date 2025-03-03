@@ -1,7 +1,7 @@
 'use client'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
-import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
+import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-da-solution'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'

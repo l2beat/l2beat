@@ -24,7 +24,7 @@ import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-war
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
-import { getDaSolution } from './get-scaling-project-da-solution'
+import { getScalingDaSolution } from './get-scaling-da-solution'
 import { getScalingProjectDetails } from './get-scaling-project-details'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
@@ -170,7 +170,7 @@ export async function getScalingProjectEntry(
       ? project.scalingStage
       : { stage: 'NotApplicable' as const },
   }
-  const daSolution = await getDaSolution(project)
+  const daSolution = await getScalingDaSolution(project)
 
   const hostChain =
     project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM

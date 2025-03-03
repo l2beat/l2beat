@@ -18,7 +18,7 @@ import { getSequencingSection } from '~/utils/project/technology/get-sequencing-
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
-import type { DaSolution } from './get-scaling-project-da-solution'
+import type { DaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 
 interface Params {
