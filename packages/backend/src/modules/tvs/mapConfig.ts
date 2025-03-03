@@ -7,6 +7,8 @@ import {
 } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import type { MulticallClient } from '../../peripherals/multicall/MulticallClient'
+import { getAggLayerEntries } from './providers/aggLayer'
 import { tokenToTicker } from './providers/tickers'
 import {
   type AmountConfig,
@@ -22,17 +24,33 @@ import {
   type ValueFormula,
 } from './types'
 
-export function mapConfig(
+export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
-): TvsConfig {
+  multicallClient?: MulticallClient,
+): Promise<TvsConfig> {
   const tokens: Token[] = []
 
-  // map escrows to tokens
   for (const escrow of project.tvlConfig.escrows) {
-    // TODO - implement support for shared escrows
     if (escrow.sharedEscrow) {
-      continue
+      if (multicallClient === undefined) {
+        console.warn(`No Multicall passed, sharedEscrow support is not enabled`)
+        continue
+      }
+
+      if (escrow.sharedEscrow.type === 'AggLayer') {
+        console.log(`Querying for shared escrow L2 tokens addresses`)
+        const aggLayerL2Tokens = await getAggLayerEntries(
+          project,
+          chain,
+          // @ts-ignore only non-native tokens
+          escrow.tokens.filter((t) => t.address),
+          multicallClient,
+        )
+
+        // TODO: add support for L1 assets
+        tokens.push(...aggLayerL2Tokens)
+      }
     }
 
     for (const legacyToken of escrow.tokens) {
