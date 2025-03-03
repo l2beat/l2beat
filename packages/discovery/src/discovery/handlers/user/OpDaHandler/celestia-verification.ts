@@ -10,24 +10,31 @@ export async function checkForCelestia(
     .filter((tx) => celestiaTools.isOpStackCelestiaCommitment(tx.input))
     .map((tx) => celestiaTools.decodeCommitment(tx.input))
 
-  const requiredCount = sequencerTxs.length
+  const namespaces = await Promise.all(
+    decodedCommitments.map((commitment) =>
+      getNamespaceFromCommitment(
+        provider,
+        commitment.blockHeight,
+        commitment.blobCommitment,
+      ),
+    ),
+  )
 
-  let verifiedCount = 0
-
-  for (const commitment of decodedCommitments) {
-    // This is in-direct verification;
-    // this means that if we found a namespace, sequencer is sending OpStack Celestia commitments
-    const namespace = await getNamespaceFromCommitment(
-      provider,
-      commitment.blockHeight,
-      commitment.blobCommitment,
+  // check if we have single namespace
+  const uniqueNamespaces = new Set(namespaces)
+  if (uniqueNamespaces.size !== 1) {
+    throw new Error(
+      'Multiple Celestia namespaces have been detected. Expected one.',
     )
-
-    if (namespace) {
-      verifiedCount++
-    }
   }
 
+  const requiredCount = sequencerTxs.length
+
+  const verifiedCount = namespaces.filter(
+    (namespace) => namespace !== undefined,
+  ).length
+
+  // check is in-direct, we simply check if we managed to align commitments with the same namespace
   return verifiedCount === requiredCount
 }
 
