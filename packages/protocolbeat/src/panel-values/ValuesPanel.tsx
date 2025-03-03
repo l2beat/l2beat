@@ -33,7 +33,7 @@ export function ValuesPanel() {
     return <div>Error</div>
   }
 
-  const selected = findSelected(response.data.chains, selectedAddress)
+  const selected = findSelected(response.data.entries, selectedAddress)
 
   return (
     <div className="h-full w-full overflow-x-auto">

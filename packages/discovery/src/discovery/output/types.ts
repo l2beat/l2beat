@@ -1,18 +1,16 @@
-import { z } from 'zod'
-import type { EthereumAddress } from './EthereumAddress'
-import type { Hash256 } from './Hash256'
+import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import type {
+  ContractFieldSeverity,
+  ContractValueType,
+  Permission,
+} from '../config/RawDiscoveryConfig'
 
-export type ContractValueType = z.infer<typeof ContractValueType>
-export const ContractValueType = z.enum([
-  'CODE_CHANGE',
-  'L2',
-  'EXTERNAL',
-  'RISK_PARAMETER',
-  'PERMISSION',
-])
-
-export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
+export type ContractValue =
+  | string
+  | number
+  | boolean
+  | ContractValue[]
+  | { [key: string]: ContractValue | undefined }
 
 export interface DiscoveryOutput {
   name: string
@@ -37,25 +35,6 @@ export interface FieldMeta {
   type?: ContractValueType[] | ContractValueType
 }
 
-export type PermissionType =
-  | 'guard'
-  | 'challenge'
-  | 'propose'
-  | 'sequence'
-  | 'validate'
-  | 'operateLinea'
-  | 'fastconfirm'
-  | 'interact'
-  | 'upgrade'
-  | 'act'
-  | 'validateZkStack'
-  | 'validateBridge'
-  | 'validateBridge2'
-  | 'relay'
-  | 'aggregatePolygon'
-  | 'operateStarknet'
-  | 'governStarknet'
-
 export interface ResolvedPermissionPath {
   address: EthereumAddress
   delay?: number
@@ -63,7 +42,7 @@ export interface ResolvedPermissionPath {
 }
 
 export interface ResolvedPermissionDetails {
-  permission: PermissionType
+  permission: Permission
   delay?: number
   description?: string
   condition?: string
@@ -120,10 +99,3 @@ export type ContractParameters = {
   usedTypes?: DiscoveryCustomType[]
   fieldMeta?: Record<string, FieldMeta>
 } & Meta
-
-export type ContractValue =
-  | string
-  | number
-  | boolean
-  | ContractValue[]
-  | { [key: string]: ContractValue | undefined }

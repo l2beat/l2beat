@@ -48,9 +48,7 @@
     "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "StarknetSCMinorityMultisig",
     "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "StarknetSecurityCouncil"
   },
-  "sharedModules": {
-    "shared": "shared-sharp-verifier"
-  },
+  "sharedModules": ["shared-sharp-verifier"],
   "overrides": {
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       // lido dao agent

@@ -8,7 +8,7 @@ export interface ApiProjectEntry {
 }
 
 export interface ApiProjectResponse {
-  chains: ApiProjectChain[]
+  entries: ApiProjectChain[]
 }
 
 export interface ApiPreviewResponse {
@@ -32,10 +32,12 @@ export interface ApiPreviewContract {
   addresses: AddressFieldValue[]
   name: string
   description: string
+  upgradableBy: UpgradeabilityActor[] | undefined
 }
 
 export interface ApiProjectChain {
-  name: string
+  project: string
+  chain: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]
@@ -146,4 +148,9 @@ export interface ApiAbiEntry {
 
 export interface ApiCodeResponse {
   sources: { name: string; code: string }[]
+}
+
+export interface UpgradeabilityActor {
+  name: string
+  delay: string
 }

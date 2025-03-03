@@ -24,7 +24,7 @@ export function ProjectPage() {
   const select = usePanelStore((state) => state.select)
   useEffect(() => {
     if (response.data) {
-      const first = response.data.chains[0]?.initialContracts[0]?.address
+      const first = response.data.entries[0]?.initialContracts[0]?.address
       select(first)
     }
   }, [response.data, select])

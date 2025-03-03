@@ -1,7 +1,6 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-
-import { ScriptLogger } from './tokens/utils/ScriptLogger'
+import { ScriptLogger } from '../src/tokens/utils/ScriptLogger'
 
 async function main() {
   const logger = new ScriptLogger({})

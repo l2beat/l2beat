@@ -8,9 +8,7 @@
     "0xB62BcD40A24985f560b5a9745d478791d8F1945C": "StarkExchange",
     "0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669": "Committee"
   },
-  "sharedModules": {
-    "shared": "shared-sharp-verifier"
-  },
+  "sharedModules": ["shared-sharp-verifier"],
   "overrides": {
     "StarkExchange": {
       "ignoreMethods": [

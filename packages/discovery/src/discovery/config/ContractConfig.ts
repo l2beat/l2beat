@@ -1,7 +1,10 @@
-import type { DiscoveryCustomType } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { type DiscoveryCategory, DiscoveryContract } from './RawDiscoveryConfig'
+import {
+  type DiscoveryCategory,
+  DiscoveryContract,
+  type DiscoveryCustomType,
+} from './RawDiscoveryConfig'
 
 export type ContractOverrides = DiscoveryContract & {
   name?: string
