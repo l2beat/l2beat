@@ -5,9 +5,9 @@ export async function findCelestiaNamespace(url: string, commitment: string) {
   const client = new CelestiaApiClient({
     url,
     http: new HttpClient(),
-    logger: Logger.SILENT,
+    logger: Logger.INFO,
     sourceName: 'celestia-api',
-    callsPerMinute: 60,
+    callsPerMinute: 300,
     retryStrategy: 'SCRIPT',
   })
 
