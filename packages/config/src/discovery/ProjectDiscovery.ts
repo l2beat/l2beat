@@ -743,6 +743,8 @@ export class ProjectDiscovery {
       validateBridge: 'A Validator',
       validateBridge2: 'A Validator',
       aggregatePolygon: 'A trusted Aggregator',
+      operateStarknet: 'An Operator',
+      governStarknet: 'A Governor',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -819,6 +821,8 @@ export class ProjectDiscovery {
       validateBridge: 'Can act as a Validator',
       validateBridge2: 'Can act as a Validator',
       aggregatePolygon: 'Can act as a trusted Aggregator',
+      operateStarknet: 'Can act as an Operator',
+      governStarknet: 'Can act as a Governor',
     }
 
     return Object.entries(
@@ -1228,6 +1232,16 @@ const roleDescriptions: {
     name: 'Trusted Aggregator (Proposer)',
     description:
       'Permissioned to post new state roots and global exit roots accompanied by ZK proofs.', // and accounting proofs for CDK sovereign (others) chains
+  },
+  operateStarknet: {
+    name: 'Operator',
+    description:
+      'Permissioned to regularly update and prove the state of the L2 on L1.',
+  },
+  governStarknet: {
+    name: 'Governor',
+    description:
+      'Permissioned to appoint Operators and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
   },
 }
 

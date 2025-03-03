@@ -1,5 +1,8 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SHARPVerifier",
+  "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+  "category": "shared",
   "fields": {
     "bootloaderProgramContractAddress": {
       "handler": {
@@ -23,11 +26,6 @@
       },
       "target": {
         "template": "shared-sharp-verifier/CpuFrilessVerifier"
-      }
-    },
-    "referenceFactRegistry": {
-      "target": {
-        "template": "shared-sharp-verifier/DeprecatedVerifier"
       }
     }
   }
