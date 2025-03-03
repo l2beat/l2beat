@@ -97,7 +97,7 @@ export default async function Page(props: Props) {
         </div>
       )}
       {summaryComponent}
-      <ContentWrapper mobileFull className="header-height-project">
+      <ContentWrapper mobileFull>
         {isNavigationEmpty ? (
           <ProjectDetails items={entry.sections} />
         ) : (

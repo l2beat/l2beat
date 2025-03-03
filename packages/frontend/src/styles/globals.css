@@ -131,7 +131,7 @@
 
 @layer base {
   :root {
-    --header-height: 4.75rem;
+    --header-height: 2.5rem;
   }
   :root:has(.header-height-glossary) {
     --header-height: 7rem;
@@ -139,22 +139,16 @@
   :root:has(.header-height-faq) {
     --header-height: 1.5rem;
   }
-  :root:has(.header-height-project) {
-    --header-height: 2.5rem;
-  }
 
   @media (min-width: 750px) {
     :root {
-      --header-height: 7rem !important;
+      --header-height: 2rem !important;
     }
     :root:has(.header-height-glossary) {
       --header-height: 9rem !important;
     }
     :root:has(.header-height-faq) {
       --header-height: 1.5rem !important;
-    }
-    :root:has(.header-height-project) {
-      --header-height: 2rem !important;
     }
   }
 
