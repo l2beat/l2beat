@@ -448,7 +448,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "accessControl": {
           "severity": "HIGH",
@@ -513,7 +513,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         }
       },
       "category": { "name": "External Bridges", "priority": 1 }
@@ -705,7 +705,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -854,7 +854,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -1319,7 +1319,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -1475,7 +1475,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -1845,7 +1845,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -1999,7 +1999,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -2148,7 +2148,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -2297,7 +2297,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -2445,7 +2445,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -2795,7 +2795,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -2988,7 +2988,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -4227,10 +4227,10 @@
     "starknet/DelayedExecutor": "0xe84654e941de1cc1ff6072e9b6fb6e510ed5ac211a5a67cad254a3fe3e740b03",
     "starknet/L1EscrowDAI": "0x6e4e0a4d90eb5f74198b3d1bf0b319b30310349b960d8f8e15738bd2f70cd7fd",
     "starknet/LordsL1Bridge": "0xfc89ced3e21bae61dfc4abffb8fec98b920463aa7b2605f895caf626b4f54c18",
-    "starknet/StarkgateManager": "0x142fbc50dc46b2a83859dbc826f45b36ed7ff0cb60ee0943c737bebb3529eab0",
-    "starknet/StarkgateRegistry": "0xf6b631b33f87ac8bc18b92867d1ed0a4dde321bc0a494038aef4d5be34d31330",
+    "starknet/StarkgateManager": "0x159d3e88fb13be73db88834f15b0a1d7356a271ca2f2a7d3ea8071d1c9ab3bcf",
+    "starknet/StarkgateRegistry": "0x682de11636ee5d126a5dbd4dedce35ccb108548d0f855c3350a50de5a3c424ad",
     "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601",
-    "starknet/StarknetERC20Bridge": "0xe1acc246fb38afbfa582342c1f70d99113cf129c13234fc329ba167bb5906d57",
+    "starknet/StarknetERC20Bridge": "0xa3ed7227564e659ca733fe8f5306d5651e80f1b2df1feedb1ee3b66bb47a13ce",
     "starknet/StarknetEthBridge": "0x0c2438a4f3b2e9ef164f4527bf284070d0c69f435472dc967782d31d9c24e8a6",
     "starknet/StarknetMultiBridge": "0x6174b77981b50038228a4b0933fdbaf8eed1db645d2b605192639f23d4d08d68"
   }

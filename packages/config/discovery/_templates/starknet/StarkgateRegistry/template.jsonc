@@ -4,7 +4,7 @@
   "category": "bridge-external",
   "fields": {
     "$admin": {
-      "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
+      "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).",
       "severity": "HIGH",
       "target": {
         "permissions": [

@@ -23,7 +23,7 @@
   },
   "fields": {
     "$admin": {
-      "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).",
+      "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.",
       "severity": "HIGH",
       "target": {
         "permissions": [

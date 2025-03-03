@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xeafc78b1d9e21281017fb6d99640c5a9cb1878a2
+Generated with discovered.json: 0xca501914df38daba398765e194bacc961401326e
 
-# Diff at Mon, 03 Mar 2025 11:19:31 GMT:
+# Diff at Mon, 03 Mar 2025 14:24:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@12bf0d8be18a4982f2ce75c811bc0ba91ba3fc68 block: 21959652
@@ -68,6 +68,24 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 ```
 
 ```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+    }
+```
+
+```diff
     contract StarknetSecurityCouncil (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
     +++ description: None
       severity:
@@ -83,7 +101,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -98,7 +116,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -128,7 +146,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -143,7 +161,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -176,7 +194,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -191,7 +209,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -206,7 +224,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -221,7 +239,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -236,7 +254,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -251,7 +269,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
@@ -266,7 +284,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
-+        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
