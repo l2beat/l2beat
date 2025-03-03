@@ -931,6 +931,7 @@ export class ProjectDiscovery {
   }
 
   getPermissionedContractsFromKnowledgeBase(): ContractParameters[] {
+    // TODO: support conditional permissions
     assert(this.knowledgeBase)
     assert(this.modelIdRegistry)
     const getContractByAddress = this.getContractByAddress.bind(this)
@@ -938,7 +939,7 @@ export class ProjectDiscovery {
       this.modelIdRegistry,
     )
     return this.knowledgeBase
-      .getFacts('showContractInPermissionsSection')
+      .getFacts('showContractInPermissionsSection') // TODO: simply use permission facts
       .map((fact) => getAddressData(fact.params[0] as string))
       .filter((data) => data.chain)
       .map((data) => getContractByAddress(data.address))
@@ -975,7 +976,7 @@ export class ProjectDiscovery {
   }
 
   getDiscoveredPermissions(): ProjectPermissions {
-    const relevantContracts =
+    const permissionedContracts =
       this.knowledgeBase === undefined
         ? this.getPermissionedContracts()
         : this.getPermissionedContractsFromKnowledgeBase()
@@ -988,7 +989,7 @@ export class ProjectDiscovery {
       })
 
     const allActors: ProjectPermission[] = []
-    for (const contract of relevantContracts) {
+    for (const contract of permissionedContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
         allActors.push(
@@ -1030,7 +1031,10 @@ export class ProjectDiscovery {
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
+    const roles = this.describeRolePermissions([
+      ...permissionedContracts,
+      ...eoas,
+    ])
 
     // NOTE(radomski): There are two groups of "permissions" we show. Roles and
     // actors.
