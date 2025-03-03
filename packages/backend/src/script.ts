@@ -16,13 +16,13 @@ import {
 } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
+import { getKintoConfig } from './modules/tvs/projects/kinto'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
 import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
 import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
-import { getKintoConfig } from './modules/tvs/projects/kinto'
 
 main()
   .catch((e: unknown) => {
