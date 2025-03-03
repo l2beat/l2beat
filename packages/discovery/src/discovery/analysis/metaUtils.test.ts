@@ -4,8 +4,8 @@ import type {
   DiscoveryContractField,
   PermissionConfiguration,
 } from '../config/RawDiscoveryConfig'
+import type { ContractValue } from '../output/types'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
-import type { ContractValue } from '../utils/types'
 import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
   type ContractMeta,

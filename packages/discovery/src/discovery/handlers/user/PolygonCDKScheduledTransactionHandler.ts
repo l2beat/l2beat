@@ -2,10 +2,10 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import { get$Implementations } from '../../utils/extractors'
-import type { ContractValue } from '../../utils/types'
 import type { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 

@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
-import type { ContractValue } from '../../utils/types'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 import type { ProxyDetails } from '../types'
 

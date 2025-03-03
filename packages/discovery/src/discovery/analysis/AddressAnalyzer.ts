@@ -9,6 +9,7 @@ import type {
 import type { HandlerResult } from '../handlers/Handler'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { FieldMeta } from '../output/types'
+import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
 import type {
@@ -20,7 +21,6 @@ import {
   get$Implementations,
   get$PastUpgrades,
 } from '../utils/extractors'
-import type { ContractValue } from '../utils/types'
 import type { TemplateService } from './TemplateService'
 import { resolveCategory } from './category'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'

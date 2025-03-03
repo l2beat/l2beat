@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import type { ContractValue } from '../../utils/types'
+import type { ContractValue } from '../../output/types'
 
 export function valueToAddress(
   value: EthereumAddress | ContractValue,

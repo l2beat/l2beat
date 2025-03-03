@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import type { ContractValue } from '../../utils/types'
+import type { ContractValue } from '../../output/types'
 
 export function toContractValue(value: unknown): ContractValue {
   if (Array.isArray(value)) {

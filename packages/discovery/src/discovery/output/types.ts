@@ -4,7 +4,13 @@ import type {
   ContractValueType,
   Permission,
 } from '../config/RawDiscoveryConfig'
-import type { ContractValue } from '../utils/types'
+
+export type ContractValue =
+  | string
+  | number
+  | boolean
+  | ContractValue[]
+  | { [key: string]: ContractValue | undefined }
 
 export interface DiscoveryOutput {
   name: string

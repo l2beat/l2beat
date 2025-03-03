@@ -12,8 +12,8 @@ import type {
 } from '../config/RawDiscoveryConfig'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
+import type { ContractValue } from '../output/types'
 import { get$Admins, get$Implementations } from '../utils/extractors'
-import type { ContractValue } from '../utils/types'
 import type { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }

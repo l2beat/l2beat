@@ -10,7 +10,7 @@ Implementation address is resolved by calling the libAddressManager.getAddress(i
 It does not have an owner
 
 */
-import type { ContractValue } from '../../utils/types'
+import type { ContractValue } from '../../output/types'
 import type { ProxyDetails } from '../types'
 
 import type { Indexed, LogDescription } from 'ethers/lib/utils'

@@ -1,5 +1,5 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import type { ContractValue } from '../../utils/types'
+import type { ContractValue } from '../../output/types'
 import type { ProxyDetails } from '../types'
 
 import type { IProvider } from '../../provider/IProvider'

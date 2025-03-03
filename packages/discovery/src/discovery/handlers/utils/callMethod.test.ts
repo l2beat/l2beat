@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
-import type { ContractValue } from '../../utils/types'
+import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
 import { callMethod } from './callMethod'

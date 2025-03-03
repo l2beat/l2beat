@@ -1,5 +1,5 @@
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import type { ContractValue } from './types'
+import type { ContractValue } from '../output/types'
 
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,

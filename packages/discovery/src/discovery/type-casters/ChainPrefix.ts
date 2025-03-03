@@ -1,7 +1,7 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { toContractValue } from '../handlers/utils/toContractValue'
-import type { ContractValue } from '../utils/types'
+import type { ContractValue } from '../output/types'
 import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 
 const Validator = z.object({

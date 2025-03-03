@@ -4,7 +4,7 @@ import type {
   EoaParameters,
   ReceivedPermission,
 } from '../output/types'
-import type { ContractValue } from '../utils/types'
+import type { ContractValue } from '../output/types'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,

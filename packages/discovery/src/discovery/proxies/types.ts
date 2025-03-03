@@ -1,4 +1,4 @@
-import type { ContractValue } from '../utils/types'
+import type { ContractValue } from '../output/types'
 
 export interface ProxyDetails {
   type: string

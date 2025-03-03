@@ -1,5 +1,5 @@
 import type { ContractParameters, EoaParameters } from '../output/types'
-import type { ContractValue } from '../utils/types'
+import type { ContractValue } from '../output/types'
 
 export function interpolateModelTemplate(
   content: string,
