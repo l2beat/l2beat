@@ -80,6 +80,7 @@ interface DaThroughputEntryData {
 }
 
 export interface DaThroughputEntry extends CommonProjectEntry {
+  href: string | undefined
   isPublic: boolean
   data: DaThroughputEntryData
   scalingOnlyData: DaThroughputEntryData

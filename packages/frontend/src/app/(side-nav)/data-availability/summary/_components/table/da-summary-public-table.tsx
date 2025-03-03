@@ -1,6 +1,7 @@
 'use client'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
@@ -35,7 +36,7 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
       <>
         {remainingBridges.map((bridge) => (
           <TableRow
-            key={bridge.href}
+            key={bridge.slug}
             className={getRowTypeClassNames({ isEthereum: false })}
           >
             <BridgeCells bridge={bridge} />
@@ -66,29 +67,21 @@ function BridgeCells({
   bridge,
 }: {
   bridge: DaBridgeSummaryEntry
-  excludeBridge?: boolean
 }) {
   return (
     <>
-      <TableCell
-        href={bridge.href}
-        className="text-sm font-medium group-first:pl-0"
-      >
-        <div className="pl-4">{bridge.name}</div>
+      <TableCell className="text-sm font-medium group-first:pl-0">
+        <DesktopTableCellLink href={bridge.href} className="ml-4">
+          {bridge.name}
+        </DesktopTableCellLink>
       </TableCell>
-      <TableCell
-        href={bridge.href}
-        className="flex items-center justify-center pl-4"
-      >
+      <TableCell className="flex items-center justify-center pl-4">
         <GrissiniCell
           values={bridge.risks.values}
           hasNoBridge={bridge.risks.isNoBridge}
         />
       </TableCell>
-      <TableCell
-        className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]"
-        href={bridge.href}
-      >
+      <TableCell className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]">
         {formatDollarValueNumber(bridge.tvs.latest)}
       </TableCell>
       <TableCell className="text-sm font-medium">

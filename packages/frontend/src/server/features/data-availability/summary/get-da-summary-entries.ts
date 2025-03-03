@@ -55,6 +55,7 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
 }
 
 export interface DaSummaryEntry extends CommonProjectEntry {
+  href: string | undefined
   isPublic: boolean
   economicSecurity: number | undefined
   risks: RosetteValue[]
@@ -68,6 +69,7 @@ export interface DaSummaryEntry extends CommonProjectEntry {
 }
 
 export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
+  href: string | undefined
   tvs: {
     latest: number
     sevenDaysAgo: number

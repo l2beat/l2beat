@@ -36,6 +36,7 @@ export async function getDaRiskEntries() {
 }
 
 export interface DaRiskEntry extends CommonProjectEntry {
+  href: string | undefined
   isPublic: boolean
   tvs: number
   risks: DaLayerRisks
@@ -43,6 +44,7 @@ export interface DaRiskEntry extends CommonProjectEntry {
 }
 
 export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
+  href: string | undefined
   risks: DaBridgeRisks
   tvs: number
 }

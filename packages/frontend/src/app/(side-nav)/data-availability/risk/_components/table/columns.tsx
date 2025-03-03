@@ -1,6 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 
+import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
@@ -12,7 +13,11 @@ export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
 const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
-  cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+  cell: (ctx) => (
+    <DesktopTableCellLink href={ctx.row.original.href}>
+      <ProjectNameCell project={ctx.row.original} />
+    </DesktopTableCellLink>
+  ),
   meta: {
     tooltip:
       'The data availability layer where the data (transaction data or state diffs) is posted.',

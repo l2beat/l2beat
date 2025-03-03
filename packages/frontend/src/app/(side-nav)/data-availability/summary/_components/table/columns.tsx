@@ -1,5 +1,6 @@
 import type { Row } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
+import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
@@ -16,7 +17,11 @@ export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
 const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
-  cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+  cell: (ctx) => (
+    <DesktopTableCellLink href={ctx.row.original.href}>
+      <ProjectNameCell project={ctx.row.original} />
+    </DesktopTableCellLink>
+  ),
   meta: {
     tooltip:
       'The data availability layer where the data (transaction data or state diffs) is posted.',
