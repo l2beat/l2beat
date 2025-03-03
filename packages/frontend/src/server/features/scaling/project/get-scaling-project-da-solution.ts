@@ -1,6 +1,9 @@
-import { type ProjectContract, type ProjectPermissions } from '@l2beat/config'
+import {
+  Project,
+  type ProjectContract,
+  type ProjectPermissions,
+} from '@l2beat/config'
 import { ps } from '~/server/projects'
-import type { ScalingProject } from './get-scaling-project-entry'
 
 type Common = {
   layerName: string
@@ -16,10 +19,10 @@ export type DaSolution = Common & {
 export type DaSolutionWith<T> = Common & T
 
 export async function getDaSolution(
-  project: ScalingProject,
+  project: Project<'scalingInfo', 'scalingDa'>,
 ): Promise<DaSolution | undefined> {
-  const layerId = project.dataAvailability?.layer.projectId
-  const bridgeId = project.dataAvailability?.bridge.projectId
+  const layerId = project.scalingDa?.layer.projectId
+  const bridgeId = project.scalingDa?.bridge.projectId
 
   const [daLayer, daBridge] = await Promise.all([
     layerId && ps.getProject({ id: layerId }),
@@ -27,8 +30,7 @@ export async function getDaSolution(
       ps.getProject({ id: bridgeId, optional: ['permissions', 'contracts'] }),
   ])
 
-  const hostChainSelector =
-    project.type === 'layer2' ? 'ethereum' : project.hostChain
+  const hostChainSelector = project.scalingInfo.hostChain.id
 
   if (!daLayer || !daBridge || !hostChainSelector) {
     return

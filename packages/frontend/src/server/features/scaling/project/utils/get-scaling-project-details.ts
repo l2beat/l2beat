@@ -1,5 +1,6 @@
-import type { Layer2, Project } from '@l2beat/config'
+import type { Layer2, Layer3, Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
@@ -22,24 +23,33 @@ import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
-  legacy: Layer2
+  legacy: Layer2 | Layer3
   project: Project<'statuses'>
   projectsChangeReport: ProjectsChangeReport
-  rosetteValues: RosetteValue[]
+  rosette: {
+    self: RosetteValue[]
+    host?: RosetteValue[]
+    combined?: RosetteValue[]
+  }
   daSolution?: DaSolution
+  hostChain?: Layer2
+  isHostChainVerified: boolean
 }
 
-export async function getL2ProjectDetails({
+export async function getScalingProjectDetails({
   legacy,
   project,
   projectsChangeReport,
-  rosetteValues,
+  rosette,
   daSolution,
+  hostChain,
+  isHostChainVerified,
 }: Params) {
   const permissionsSection = legacy.permissions
     ? getPermissionsSection({
         id: legacy.id,
         type: legacy.type,
+        hostChain: hostChain?.id,
         isUnderReview: !!legacy.isUnderReview,
         permissions: legacy.permissions,
         daSolution,
@@ -50,6 +60,7 @@ export async function getL2ProjectDetails({
     {
       id: legacy.id,
       type: legacy.type,
+      hostChain: hostChain?.id,
       isVerified: !project.statuses.isUnverified,
       slug: legacy.display.slug,
       contracts: legacy.contracts,
@@ -61,6 +72,9 @@ export async function getL2ProjectDetails({
     projectsChangeReport,
   )
 
+  const hostChainRisksSummary = hostChain
+    ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
+    : hostChain
   const riskSummary = getScalingRiskSummarySection(
     legacy,
     !project.statuses.isUnverified,
@@ -71,7 +85,8 @@ export async function getL2ProjectDetails({
   const otherConsiderationsSection = getOtherConsiderationsSection(legacy)
   const dataAvailabilitySection = getDataAvailabilitySection(legacy)
   const sequencingSection = getSequencingSection(legacy)
-  const trackedTransactions = getTrackedTransactions(legacy)
+  const trackedTransactions =
+    legacy.type === 'layer2' ? getTrackedTransactions(legacy) : undefined
 
   await Promise.all([
     api.tvs.chart.prefetch({
@@ -83,10 +98,12 @@ export async function getL2ProjectDetails({
       range: '1y',
       filter: { type: 'projects', projectIds: [legacy.id] },
     }),
-    api.costs.chartWithDataPosted.prefetch({
-      range: '1y',
-      projectId: legacy.id,
-    }),
+    legacy.type === 'layer2'
+      ? api.costs.chartWithDataPosted.prefetch({
+          range: '1y',
+          projectId: legacy.id,
+        })
+      : undefined,
   ])
   const [tvsChartData, activityChartData, costsChartData, tokens] =
     await Promise.all([
@@ -99,10 +116,12 @@ export async function getL2ProjectDetails({
         range: '1y',
         filter: { type: 'projects', projectIds: [legacy.id] },
       }),
-      api.costs.chartWithDataPosted({
-        range: '1y',
-        projectId: legacy.id,
-      }),
+      legacy.type === 'layer2'
+        ? api.costs.chartWithDataPosted({
+            range: '1y',
+            projectId: legacy.id,
+          })
+        : undefined,
       getTokensForProject(legacy),
     ])
 
@@ -112,6 +131,18 @@ export async function getL2ProjectDetails({
     ) ?? []
 
   const items: ProjectDetailsSection[] = []
+
+  const hostChainWarning = hostChain
+    ? { hostChain: hostChain.display }
+    : undefined
+  const hostChainWarningWithRiskCount =
+    hostChain && hostChainRisksSummary
+      ? {
+          hostChain: hostChain.display,
+          riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
+            .length,
+        }
+      : undefined
 
   if (!legacy.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     items.push({
@@ -141,7 +172,12 @@ export async function getL2ProjectDetails({
     })
   }
 
-  if (!legacy.isUpcoming && costsChartData.length > 0) {
+  if (
+    !legacy.isUpcoming &&
+    trackedTransactions &&
+    costsChartData &&
+    costsChartData.length > 0
+  ) {
     items.push({
       type: 'CostsSection',
       props: {
@@ -181,10 +217,11 @@ export async function getL2ProjectDetails({
     items.push({
       type: 'RiskSummarySection',
       props: {
+        ...riskSummary,
         id: 'risk-summary',
         title: 'Risk summary',
+        hostChainWarning: hostChainWarningWithRiskCount,
         isUnderReview: legacy.isUnderReview,
-        ...riskSummary,
       },
     })
   }
@@ -197,19 +234,44 @@ export async function getL2ProjectDetails({
     return items
   }
 
-  items.push({
-    type: 'RiskAnalysisSection',
-    props: {
-      id: 'risk-analysis',
-      title: 'Risk analysis',
-      rosetteType: 'pizza',
-      rosetteValues,
-      warning: legacy.display.warning,
-      redWarning: legacy.display.redWarning,
-      isVerified: !project.statuses.isUnverified,
-      isUnderReview: legacy.isUnderReview,
-    },
-  })
+  if (hostChain && rosette.host) {
+    items.push({
+      type: 'L3RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        l2: {
+          name: hostChain.display.name,
+          risks: toRosetteTuple(rosette.host),
+        },
+        l3: {
+          name: legacy.display.name,
+          risks: toRosetteTuple(rosette.self),
+        },
+        combined: rosette.combined
+          ? toRosetteTuple(rosette.combined)
+          : undefined,
+        warning: legacy.display.warning,
+        redWarning: legacy.display.redWarning,
+        isVerified: !project.statuses.isUnverified,
+        isUnderReview: legacy.isUnderReview,
+      },
+    })
+  } else {
+    items.push({
+      type: 'RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        rosetteType: 'pizza',
+        rosetteValues: rosette.self,
+        warning: legacy.display.warning,
+        redWarning: legacy.display.redWarning,
+        isVerified: !project.statuses.isUnverified,
+        isUnderReview: legacy.isUnderReview,
+      },
+    })
+  }
 
   if (legacy.stage.stage !== 'NotApplicable') {
     items.push({
@@ -238,6 +300,7 @@ export async function getL2ProjectDetails({
         id: 'technology',
         title: 'Technology',
         ...technologySection,
+        hostChainWarning,
       },
     })
   }
@@ -250,6 +313,7 @@ export async function getL2ProjectDetails({
         title: 'Data availability',
         items: dataAvailabilitySection,
         description: legacy.customDa?.description,
+        isUnderReview: legacy.isUnderReview,
       },
     })
   }
@@ -291,6 +355,7 @@ export async function getL2ProjectDetails({
         id: 'operator',
         title: 'Operator',
         ...operatorSection,
+        hostChainWarning,
       },
     })
   }
@@ -313,6 +378,7 @@ export async function getL2ProjectDetails({
         id: 'withdrawals',
         title: 'Withdrawals',
         ...withdrawalsSection,
+        hostChainWarning,
       },
     })
   }
@@ -327,7 +393,7 @@ export async function getL2ProjectDetails({
       },
     })
   }
-  if (legacy.upgradesAndGovernance) {
+  if (legacy.type === 'layer2' && legacy.upgradesAndGovernance) {
     items.push({
       type: 'MarkdownSection',
       props: {

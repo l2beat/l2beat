@@ -66,6 +66,7 @@ export default async function Page(props: Props) {
       'scalingInfo',
       'scalingRisks',
       'scalingStage',
+      'scalingDa',
       'scalingTechnology',
       'contracts',
       'permissions',

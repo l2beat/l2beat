@@ -26,8 +26,7 @@ import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
-import { getL2ProjectDetails } from './utils/get-l2-project-details'
-import { getL3ProjectDetails } from './utils/get-l3-project-details'
+import { getScalingProjectDetails } from './utils/get-scaling-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
 
 export type ScalingProject = Layer2 | Layer3
@@ -94,6 +93,7 @@ export async function getScalingProjectEntry(
     | 'scalingInfo'
     | 'scalingRisks'
     | 'scalingStage'
+    | 'scalingDa'
     | 'scalingTechnology'
     | 'contracts'
     | 'permissions'
@@ -182,34 +182,23 @@ export async function getScalingProjectEntry(
       ? project.scalingStage
       : { stage: 'NotApplicable' as const },
   }
-  const daSolution = await getDaSolution(legacy)
+  const daSolution = await getDaSolution(project)
 
-  let sections: ProjectDetailsSection[]
-
-  if (legacy.type === 'layer2') {
-    sections = await getL2ProjectDetails({
-      legacy: legacy,
-      project,
-      projectsChangeReport,
-      rosetteValues: common.rosette.self,
-      daSolution,
-    })
-  } else {
-    const hostChain = layer2s.find((layer2) => layer2.id === legacy.hostChain)
-    const isHostChainVerified =
-      hostChain === undefined ? false : isVerified(hostChain)
-    sections = await getL3ProjectDetails({
-      legacy: legacy,
-      project,
-      hostChain,
-      daSolution,
-      isHostChainVerified,
-      projectsChangeReport,
-      rosetteValues: common.rosette.self,
-      combinedRosetteValues: common.rosette.stacked,
-      hostChainRosetteValues: common.rosette.host,
-    })
-  }
+  const hostChain =
+    project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
+      ? layer2s.find((layer2) => layer2.id === project.scalingInfo.hostChain.id)
+      : undefined
+  const isHostChainVerified =
+    hostChain !== undefined ? isVerified(hostChain) : true
+  const sections = await getScalingProjectDetails({
+    legacy: legacy,
+    project,
+    hostChain,
+    daSolution,
+    isHostChainVerified,
+    projectsChangeReport,
+    rosette: common.rosette,
+  })
 
   return { ...common, sections }
 }
