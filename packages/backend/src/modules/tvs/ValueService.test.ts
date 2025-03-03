@@ -15,7 +15,7 @@ import {
 describe(ValueService.name, () => {
   describe(ValueService.prototype.calculate.name, () => {
     it('should calculate TVS - simple scenario', async () => {
-      const ticker = 'ABCD'
+      const priceId = 'price-ABCD'
 
       const amountFormula = {
         type: 'totalSupply',
@@ -31,7 +31,7 @@ describe(ValueService.name, () => {
         tokens: [
           mockObject<Token>({
             id: TokenId('tokeId'),
-            ticker,
+            priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForTotal: undefined,
@@ -47,7 +47,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(10000)
           .resolvesToOnce(10000),
         getPrice: mockFn()
-          .given(ticker, mockTimestamp)
+          .given(priceId, mockTimestamp)
           .resolvesToOnce(200)
           .resolvesToOnce(200),
       })
@@ -122,7 +122,7 @@ describe(ValueService.name, () => {
           // WBTC with amount formula as totalSupply on L2
           mockObject<Token>({
             id: TokenId('WBTC'),
-            ticker: 'WBTC',
+            priceId: 'price-WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
             valueForTotal: undefined,
@@ -132,7 +132,7 @@ describe(ValueService.name, () => {
           // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
           mockObject<Token>({
             id: TokenId('solvBTC'),
-            ticker: 'solvBTC',
+            priceId: 'price-solvBTC',
             amount: solvBTCAmountFormula,
             valueForProject: {
               type: 'calculation',
@@ -141,12 +141,12 @@ describe(ValueService.name, () => {
                 {
                   type: 'value',
                   amount: solvBTCAmountFormula,
-                  ticker: 'solvBTC',
+                  priceId: 'price-solvBTC',
                 },
                 {
                   type: 'value',
                   amount: wBTCBalanceOfEscrowFormula,
-                  ticker: 'WBTC',
+                  priceId: 'price-WBTC',
                 },
               ],
             },
@@ -155,9 +155,9 @@ describe(ValueService.name, () => {
         ],
       })
 
-      const wBTCPriceConfigId = 'WBTC'
+      const wBTCPriceConfigId = 'price-WBTC'
 
-      const solvBTCPriceConfigId = 'solvBTC'
+      const solvBTCPriceConfigId = 'price-solvBTC'
 
       const mockTimestamp = UnixTime.now()
 
