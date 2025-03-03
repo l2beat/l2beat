@@ -10,6 +10,10 @@ export async function checkForCelestia(
     .filter((tx) => celestiaTools.isOpStackCelestiaCommitment(tx.input))
     .map((tx) => celestiaTools.decodeCommitment(tx.input))
 
+  if (decodedCommitments.length === 0) {
+    return false
+  }
+
   const namespaces = await Promise.all(
     decodedCommitments.map((commitment) =>
       getNamespaceFromCommitment(
@@ -21,11 +25,8 @@ export async function checkForCelestia(
   )
 
   // check if we have single namespace
-  const uniqueNamespaces = new Set(namespaces)
-  if (uniqueNamespaces.size !== 1) {
-    throw new Error(
-      'Multiple Celestia namespaces have been detected. Expected one.',
-    )
+  if (new Set(namespaces).size !== 1) {
+    throw new Error(`Multiple Celestia namespaces have been detected.`)
   }
 
   const requiredCount = sequencerTxs.length
