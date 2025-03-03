@@ -8,7 +8,7 @@ export interface ApiProjectEntry {
 }
 
 export interface ApiProjectResponse {
-  chains: ApiProjectChain[]
+  entries: ApiProjectChain[]
 }
 
 export interface ApiPreviewResponse {
@@ -35,7 +35,8 @@ export interface ApiPreviewContract {
 }
 
 export interface ApiProjectChain {
-  name: string
+  project: string
+  chain: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]

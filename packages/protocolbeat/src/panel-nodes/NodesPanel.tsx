@@ -50,7 +50,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
       return
     }
     const nodes: Node[] = []
-    for (const chain of data.chains) {
+    for (const chain of data.entries) {
       for (const contract of [
         ...chain.initialContracts,
         ...chain.discoveredContracts,
