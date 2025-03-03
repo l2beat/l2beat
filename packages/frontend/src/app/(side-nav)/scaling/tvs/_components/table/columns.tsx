@@ -70,17 +70,22 @@ export const scalingTvsColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-
-      return (
-        <TableLink
-          href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`}
-        >
-          <ValueSecuredCell
-            value={data.breakdown.canonical}
-            change={data.change.canonical}
-          />
-        </TableLink>
+      const children = (
+        <ValueSecuredCell
+          value={data.breakdown.canonical}
+          change={data.change.canonical}
+        />
       )
+      if (data.breakdown.canonical > 0) {
+        return (
+          <TableLink
+            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`}
+          >
+            {children}
+          </TableLink>
+        )
+      }
+      return children
     },
     sortUndefined: 'last',
     meta: {
@@ -98,17 +103,22 @@ export const scalingTvsColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-
-      return (
-        <TableLink
-          href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`}
-        >
-          <ValueSecuredCell
-            value={data.breakdown.external}
-            change={data.change.external}
-          />
-        </TableLink>
+      const children = (
+        <ValueSecuredCell
+          value={data.breakdown.external}
+          change={data.change.external}
+        />
       )
+      if (data.breakdown.external > 0) {
+        return (
+          <TableLink
+            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`}
+          >
+            {children}
+          </TableLink>
+        )
+      }
+      return children
     },
     sortUndefined: 'last',
     meta: {
@@ -126,17 +136,22 @@ export const scalingTvsColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-
-      return (
-        <TableLink
-          href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`}
-        >
-          <ValueSecuredCell
-            value={data.breakdown.native}
-            change={data.change.native}
-          />
-        </TableLink>
+      const children = (
+        <ValueSecuredCell
+          value={data.breakdown.native}
+          change={data.change.native}
+        />
       )
+      if (data.breakdown.native > 0) {
+        return (
+          <TableLink
+            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`}
+          >
+            {children}
+          </TableLink>
+        )
+      }
+      return children
     },
     sortUndefined: 'last',
     meta: {
