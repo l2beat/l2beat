@@ -16,7 +16,7 @@ import {
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
-import { DesktopTableCellLink } from './desktop-table-cell-link'
+import { TableLink } from './table-link'
 
 export interface TotalCellProps {
   breakdown:
@@ -77,7 +77,7 @@ export function TotalCell(props: TotalCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <DesktopTableCellLink href={props.href}>
+        <TableLink href={props.href}>
           <div className="flex flex-col items-end">
             <div className="flex items-center">
               {icon}
@@ -93,7 +93,7 @@ export function TotalCell(props: TotalCellProps) {
               className="h-[3px] w-[180px]"
             />
           </div>
-        </DesktopTableCellLink>
+        </TableLink>
       </TooltipTrigger>
       <TooltipContent>
         <TokenBreakdownTooltipContent

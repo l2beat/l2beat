@@ -21,7 +21,7 @@ import { getScalingCommonProjectColumns } from '~/components/table/utils/common-
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import type { ScalingSummaryTableRow } from '../../_utils/to-table-rows'
-import { DesktopTableCellLink } from './desktop-table-cell-link'
+import { TableLink } from './table-link'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -121,15 +121,13 @@ export const scalingSummaryColumns = [
       }
 
       return (
-        <DesktopTableCellLink
-          href={`/scaling/activity/#${ctx.row.original.slug}`}
-        >
+        <TableLink href={`/scaling/activity/#${ctx.row.original.slug}`}>
           <SyncStatusWrapper isSynced={data.isSynced}>
             <ValueWithPercentageChange change={data?.change}>
               {formatActivityCount(ctx.getValue())}
             </ValueWithPercentageChange>
           </SyncStatusWrapper>
-        </DesktopTableCellLink>
+        </TableLink>
       )
     },
     sortUndefined: 'last',

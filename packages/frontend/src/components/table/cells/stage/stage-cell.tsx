@@ -1,6 +1,6 @@
 import type { StageConfig } from '@l2beat/config'
 
-import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import {
   StageBadge,
   getStageTextClassname,
@@ -30,7 +30,7 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger disabledOnMobile>
-        <DesktopTableCellLink href={href}>
+        <TableLink href={href}>
           <div className="flex gap-1 max-md:pb-[5px] max-md:pt-2">
             <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
             {hasNotice && (
@@ -47,7 +47,7 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
                 <StopwatchIcon className="mt-[3px]" />
               )}
           </div>
-        </DesktopTableCellLink>
+        </TableLink>
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />

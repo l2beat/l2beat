@@ -1,7 +1,7 @@
 'use client'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
@@ -71,9 +71,9 @@ function BridgeCells({
   return (
     <>
       <TableCell className="text-sm font-medium group-first:pl-0">
-        <DesktopTableCellLink href={bridge.href} className="ml-4">
+        <TableLink href={bridge.href} className="ml-4">
           {bridge.name}
-        </DesktopTableCellLink>
+        </TableLink>
       </TableCell>
       <TableCell className="flex items-center justify-center pl-4">
         <GrissiniCell

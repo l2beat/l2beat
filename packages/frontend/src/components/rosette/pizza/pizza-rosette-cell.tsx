@@ -1,4 +1,4 @@
-import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import {
   Tooltip,
   TooltipContent,
@@ -22,14 +22,14 @@ export function PizzaRosetteCell(props: Props) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex size-full items-center justify-center">
-        <DesktopTableCellLink href={props.href}>
+        <TableLink href={props.href}>
           <PizzaRosetteIcon
             values={props.values}
             className="size-6 md:size-8"
             isUnderReview={isUnderReview}
             background={false}
           />
-        </DesktopTableCellLink>
+        </TableLink>
       </TooltipTrigger>
       <TooltipContent fitContent>
         <PizzaRosetteTooltip

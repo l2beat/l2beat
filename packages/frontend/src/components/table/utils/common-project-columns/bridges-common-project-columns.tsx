@@ -1,5 +1,5 @@
 import type { ColumnHelper } from '@tanstack/react-table'
-import { DesktopTableCellLink } from '~/app/(side-nav)/scaling/summary/_components/table/desktop-table-cell-link'
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { ProjectNameCell } from '../../cells/project-name-cell'
 import type { CommonProjectColumnsOptions } from './common-project-columns'
@@ -15,9 +15,9 @@ export function getBridgesCommonProjectColumns<T extends CommonProjectEntry>(
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => (
-        <DesktopTableCellLink href={getHref(ctx.row.original)}>
+        <TableLink href={getHref(ctx.row.original)}>
           <ProjectNameCell project={ctx.row.original} />
-        </DesktopTableCellLink>
+        </TableLink>
       ),
     }),
   ]
