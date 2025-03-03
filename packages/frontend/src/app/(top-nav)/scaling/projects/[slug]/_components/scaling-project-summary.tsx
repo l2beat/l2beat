@@ -21,10 +21,7 @@ interface Props {
 
 export function ScalingProjectSummary({ project }: Props) {
   return (
-    <FullPageHeader
-      className="pb-0 pt-8 md:pb-8 md:pt-12"
-      contentWrapperClassName="md:px-6"
-    >
+    <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12" type="project">
       <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
