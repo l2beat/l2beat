@@ -34,7 +34,7 @@ export const scalingSummaryColumns = [
     header: 'Risks',
     cell: (ctx) => (
       <PizzaRosetteCell
-        href={`/scaling/risk/#${ctx.row.original.slug}`}
+        href={`/scaling/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
         values={ctx.row.original.risks}
         isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
       />
@@ -121,7 +121,9 @@ export const scalingSummaryColumns = [
       }
 
       return (
-        <TableLink href={`/scaling/activity/#${ctx.row.original.slug}`}>
+        <TableLink
+          href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+        >
           <SyncStatusWrapper isSynced={data.isSynced}>
             <ValueWithPercentageChange change={data?.change}>
               {formatActivityCount(ctx.getValue())}
