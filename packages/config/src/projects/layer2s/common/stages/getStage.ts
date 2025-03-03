@@ -18,7 +18,7 @@ export const getStage = (
   const rollupNode = isSatisfied(
     blueprintChecklist.stage0.rollupNodeSourceAvailable,
   )
-  if (rollupNode === true && !opts?.rollupNodeLink) {
+  if (rollupNode && !opts?.rollupNodeLink) {
     throw new Error('Rollup node link is required')
   }
 
