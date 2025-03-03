@@ -7,6 +7,7 @@ import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scal
 import { formatNumber } from '~/utils/number-format/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
+import { TableLink } from '../../../summary/_components/table/table-link'
 import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
 import type { CostsMetric } from '../costs-metric-context'
 import { CostsTotalCell } from '../costs-total-cell'
@@ -186,7 +187,13 @@ export function getScalingCostsColumns(metric: CostsMetric) {
         if (data.type === 'available') {
           const value = data.uopsCount
           if (value === undefined) return <NoDataBadge />
-          return formatNumber(value)
+          return (
+            <TableLink
+              href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            >
+              {formatNumber(value)}
+            </TableLink>
+          )
         }
 
         switch (data.reason) {
