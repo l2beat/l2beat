@@ -65,10 +65,11 @@ export default async function Page(props: Props) {
       'statuses',
       'scalingInfo',
       'scalingRisks',
+      'scalingStage',
       'tvlInfo',
       'tvlConfig',
     ],
-    optional: ['chainConfig'],
+    optional: ['chainConfig', 'isUpcoming', 'isArchived'],
   })
   if (!project) {
     notFound()
@@ -76,7 +77,7 @@ export default async function Page(props: Props) {
 
   const projectEntry = await getScalingProjectEntry(project)
   const navigationSections = projectDetailsToNavigationSections(
-    projectEntry.projectDetails,
+    projectEntry.sections,
   )
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -91,7 +92,7 @@ export default async function Page(props: Props) {
       <ScalingProjectSummary project={projectEntry} />
       <ContentWrapper mobileFull>
         {isNavigationEmpty ? (
-          <ProjectDetails items={projectEntry.projectDetails} />
+          <ProjectDetails items={projectEntry.sections} />
         ) : (
           <div className="gap-x-12 md:flex">
             <div className="mt-10 hidden w-[242px] shrink-0 md:block">
@@ -126,7 +127,7 @@ export default async function Page(props: Props) {
                   />
                 )}
               <HighlightableLinkContextProvider>
-                <ProjectDetails items={projectEntry.projectDetails} />
+                <ProjectDetails items={projectEntry.sections} />
               </HighlightableLinkContextProvider>
             </div>
           </div>

@@ -4,36 +4,35 @@ import type {
   Layer3,
   Project,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
   ScalingProjectCategory,
   StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
 import { isVerified, layer2s, layer3s } from '@l2beat/config'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, assert } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
+import { ProjectLink } from '~/components/projects/links/types'
+import { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import {
-  getUnderReviewStatus,
   UnderReviewStatus,
+  getUnderReviewStatus,
 } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import {
-  getCountdowns,
   ProjectCountdownsWithContext,
+  getCountdowns,
 } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
-import { ProjectLink } from '~/components/projects/links/types'
-import { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { RosetteValue } from '~/components/rosette/types'
 
 export type ScalingProject = Layer2 | Layer3
 
@@ -43,6 +42,7 @@ export interface ScalingProjectEntry {
   slug: string
   isArchived: boolean
   isUpcoming: boolean
+  isAppchain: boolean
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
@@ -78,15 +78,16 @@ export interface ScalingProjectEntry {
       lastDayUops: number
       uopsWeeklyChange: number
     }
-    rosetteValues: RosetteValue[]
   }
-  capability: ScalingProjectCapability
-  baseLayerRosetteValues?: RosetteValue[]
-  stackedRosetteValues?: RosetteValue[]
-  projectDetails: ProjectDetailsSection[]
+  rosette: {
+    self: RosetteValue[]
+    host?: RosetteValue[]
+    stacked?: RosetteValue[]
+  }
+  sections: ProjectDetailsSection[]
   countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  hostChainName?: string
+  hostChainName: string
   stageConfig: StageConfig
 }
 
@@ -96,9 +97,10 @@ export async function getScalingProjectEntry(
     | 'statuses'
     | 'scalingInfo'
     | 'scalingRisks'
+    | 'scalingStage'
     | 'tvlInfo'
     | 'tvlConfig',
-    'chainConfig'
+    'chainConfig' | 'isUpcoming' | 'isArchived'
   >,
 ): Promise<ScalingProjectEntry> {
   /** @deprecated */
@@ -123,9 +125,6 @@ export async function getScalingProjectEntry(
       : project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
-    rosetteValues: getScalingRosetteValues(
-      project.scalingRisks.stacked ?? project.scalingRisks.self,
-    ),
     links: getProjectLinks(project.display.links),
     hostChain:
       project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
@@ -158,78 +157,60 @@ export async function getScalingProjectEntry(
   const changes = projectsChangeReport.getChanges(legacy.id)
   const common = {
     type: project.scalingInfo.layer,
-    capability: project.scalingInfo.capability,
     name: project.name,
     slug: project.slug,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.statuses.isUnderReview,
       ...changes,
     }),
-    isArchived: !!legacy.isArchived,
-    isUpcoming: !!legacy.isUpcoming,
+    isArchived: !!project.isArchived,
+    isUpcoming: !!project.isUpcoming,
+    isAppchain: project.scalingInfo.capability === 'appchain',
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     countdowns: getCountdowns(legacy),
+    rosette: {
+      self: getScalingRosetteValues(project.scalingRisks.self),
+      host: project.scalingRisks.host
+        ? getScalingRosetteValues(project.scalingRisks.host)
+        : undefined,
+      stacked: project.scalingRisks.stacked
+        ? getScalingRosetteValues(project.scalingRisks.stacked)
+        : undefined,
+    },
+    hostChainName: project.scalingInfo.hostChain.name,
+    stageConfig: isProjectOther(project.scalingInfo)
+      ? project.scalingStage
+      : { stage: 'NotApplicable' as const },
   }
   const daSolution = await getDaSolution(legacy)
 
-  const rosetteValues = getScalingRosetteValues(legacy.riskView)
-  const isProjectVerified = isVerified(legacy)
+  let sections: ProjectDetailsSection[]
 
   if (legacy.type === 'layer2') {
-    const projectDetails = await getL2ProjectDetails({
+    sections = await getL2ProjectDetails({
       project: legacy,
-      isVerified: isProjectVerified,
+      isVerified: !project.statuses.isUnverified,
       projectsChangeReport,
-      rosetteValues: header.rosetteValues,
+      rosetteValues: common.rosette.self,
       daSolution,
     })
-
-    return {
-      ...common,
-      type: project.scalingInfo.layer,
-      stageConfig: isProjectOther(project.scalingInfo)
-        ? {
-            stage: 'NotApplicable' as const,
-          }
-        : legacy.stage,
-      projectDetails,
-      header,
-    }
+  } else {
+    const hostChain = layer2s.find((layer2) => layer2.id === legacy.hostChain)
+    const isHostChainVerified =
+      hostChain === undefined ? false : isVerified(hostChain)
+    sections = await getL3ProjectDetails({
+      project: legacy,
+      hostChain,
+      isVerified: !project.statuses.isUnverified,
+      daSolution,
+      isHostChainVerified,
+      projectsChangeReport,
+      rosetteValues: common.rosette.self,
+      combinedRosetteValues: common.rosette.stacked,
+      hostChainRosetteValues: common.rosette.host,
+    })
   }
 
-  // L3
-  const hostChain = layer2s.find((layer2) => layer2.id === legacy.hostChain)
-  const baseLayerRosetteValues = hostChain
-    ? getScalingRosetteValues(hostChain.riskView)
-    : undefined
-  const stackedRosetteValues = legacy.stackedRiskView
-    ? getScalingRosetteValues(legacy.stackedRiskView)
-    : undefined
-  const isHostChainVerified =
-    hostChain === undefined ? false : isVerified(hostChain)
-
-  const projectDetails = await getL3ProjectDetails({
-    project: legacy,
-    hostChain,
-    isVerified: isProjectVerified,
-    daSolution,
-    rosetteValues,
-    isHostChainVerified,
-    projectsChangeReport,
-    combinedRosetteValues: stackedRosetteValues,
-    hostChainRosetteValues: baseLayerRosetteValues,
-  })
-
-  return {
-    ...common,
-    type: project.scalingInfo.layer,
-    stageConfig: {
-      stage: 'NotApplicable' as const,
-    },
-    baseLayerRosetteValues,
-    stackedRosetteValues,
-    hostChainName: hostChain?.display.name,
-    projectDetails,
-  }
+  return { ...common, sections }
 }

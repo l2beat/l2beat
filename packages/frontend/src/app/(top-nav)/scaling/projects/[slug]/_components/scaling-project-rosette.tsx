@@ -16,25 +16,19 @@ export function ScalingProjectRosette({ project }: Props) {
     return (
       <BigPizzaRosette
         className="mt-auto max-lg:hidden"
-        values={project.header.rosetteValues}
+        values={project.rosette.self}
         isUnderReview={project.underReviewStatus === 'config'}
         isUpcoming={project.isUpcoming}
       />
     )
   }
 
-  return <L3ScalingProjectRosette project={project} />
-}
-
-function L3ScalingProjectRosette({
-  project,
-}: { project: ScalingProjectEntry }) {
-  const projectRisks = toRosetteTuple(project.header.rosetteValues)
-  const hostChainRisks = project.baseLayerRosetteValues
-    ? toRosetteTuple(project.baseLayerRosetteValues)
+  const projectRisks = toRosetteTuple(project.rosette.self)
+  const hostChainRisks = project.rosette.host
+    ? toRosetteTuple(project.rosette.host)
     : undefined
-  const stackedChainRisks = project.stackedRosetteValues
-    ? toRosetteTuple(project.stackedRosetteValues)
+  const stackedChainRisks = project.rosette.stacked
+    ? toRosetteTuple(project.rosette.stacked)
     : undefined
 
   const [rosetteType, setRosetteType] = useState<RosetteType>(
@@ -69,7 +63,7 @@ function L3ScalingProjectRosette({
       <Wrapper>
         {/* Under review/upcoming thus no risks so we let the basic rosette fallback to question mark */}
         <BigPizzaRosette
-          values={project.header.rosetteValues}
+          values={project.rosette.self}
           isUnderReview={project.underReviewStatus === 'config'}
           isUpcoming={project.isUpcoming}
         />
