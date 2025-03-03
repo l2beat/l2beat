@@ -28,7 +28,7 @@ export function ScalingProjectRosette({ project }: Props) {
 
 function L3ScalingProjectRosette({
   project,
-}: { project: ScalingProjectEntry & { type: 'layer3' } }) {
+}: { project: ScalingProjectEntry }) {
   const projectRisks = toRosetteTuple(project.header.rosetteValues)
   const hostChainRisks = project.baseLayerRosetteValues
     ? toRosetteTuple(project.baseLayerRosetteValues)
