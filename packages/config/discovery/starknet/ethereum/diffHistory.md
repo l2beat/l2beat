@@ -1,3 +1,278 @@
+Generated with discovered.json: 0xeafc78b1d9e21281017fb6d99640c5a9cb1878a2
+
+# Diff at Mon, 03 Mar 2025 11:19:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@12bf0d8be18a4982f2ce75c811bc0ba91ba3fc68 block: 21959652
+- current block number: 21966014
+
+## Description
+
+Config related: Starknet (upgrade) governance is complicated (templates updated):
+
+Starknet contract:
+* proxy version 3 -> our proxy handler fetches the 'governors' via deployer address and events and saves them to `$admin`
+* the governors can upgrade the proxy implementation, register operators, finalize state and so on
+
+Bridge contracts (ETH and ERC20):
+* proxy version 3 -> our proxy handler fetches the 'governors' via deployer address and events and saves them to `$admin`
+* the governors can upgrade the proxy implementation
+* there is a separate GOVERNANCE_ADMIN in access control (see implementation) who can do access control stuff but ALSO override the governors that can upgrade the proxy
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21959652 (main branch discovery), not current.
+
+```diff
+    contract StarkgateBridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.40.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.37.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.31.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.28.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.25.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.22.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.19.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.16.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.13.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.10.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.7.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.4.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+    }
+```
+
+```diff
+    contract StarknetSecurityCouncil (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.governors:
+-        ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","0xCA112018fEB729458b628AadC8f996f9deCbCa0c"]
+      fieldMeta.$admin:
++        {"severity":"HIGH","description":"Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."}
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+    }
+```
+
 Generated with discovered.json: 0x05f01ea37b32f34836d262d9ef5ecd353cd8216d
 
 # Diff at Sun, 02 Mar 2025 14:18:27 GMT:

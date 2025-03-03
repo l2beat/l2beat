@@ -14,6 +14,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -159,7 +160,7 @@
         },
         {
           "permission": "governStarknet",
-          "to": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670",
+          "to": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
           "via": []
         },
         {
@@ -246,6 +247,10 @@
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."
+        },
         "isFinalized": {
           "severity": "HIGH",
           "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
@@ -265,7 +270,12 @@
     { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
     {
       "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        },
         {
           "permission": "upgrade",
           "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
@@ -275,15 +285,7 @@
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
     { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
-    {
-      "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670",
-      "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
-        }
-      ]
-    },
+    { "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670" },
     {
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "receivedPermissions": [
@@ -549,6 +551,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starknet/Starknet": "0xfcc62b23a16236c1ee486fd53c0c32cb8af5357b0252e1dbebca5c2aadd4078d"
+    "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601"
   }
 }
