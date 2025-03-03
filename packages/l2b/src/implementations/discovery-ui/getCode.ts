@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import type { ConfigReader } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery'
 import { getChainFullName } from '@l2beat/discovery/dist/config/config.discovery'
 import type { ApiCodeResponse } from './types'
 

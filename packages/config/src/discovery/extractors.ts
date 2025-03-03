@@ -1,23 +1,15 @@
-import type { ContractValue } from './Discovery'
-import type { EthereumAddress } from './EthereumAddress'
-import type { Hash256 } from './Hash256'
+import type { ContractValue } from '@l2beat/discovery'
+import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
+// TODO(radomski): This is duplicated from discovery/extractors.ts. Pulling
+// functions from discovery would make config dependent on discovery. We want
+// to break the dependency between config and discovery and since only
+// ProjectDiscovery basically uses these functions we're going to duplicate
+// this since in the future ProjectDiscovery might be removed.
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,
 ): EthereumAddress[] {
   return toAddressArray(values?.$implementation)
-}
-
-export function get$Beacons(
-  values: Record<string, ContractValue | undefined> | undefined,
-): EthereumAddress[] {
-  return toAddressArray(values?.$beacon)
-}
-
-export function get$PastUpgrades(
-  values: Record<string, ContractValue | undefined> | undefined,
-): [string, Hash256, EthereumAddress[]][] {
-  return toAddressRecord(values?.$pastUpgrades)
 }
 
 export function get$Admins(

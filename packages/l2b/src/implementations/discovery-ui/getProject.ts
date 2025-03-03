@@ -1,10 +1,10 @@
-import { type ConfigReader, getChainShortName } from '@l2beat/discovery'
 import {
+  type ConfigReader,
   type ContractParameters,
   type DiscoveryOutput,
-  get$Implementations,
-} from '@l2beat/discovery-types'
-import type { ContractConfig } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
+  getChainShortName,
+} from '@l2beat/discovery'
+import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
