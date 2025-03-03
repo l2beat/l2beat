@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x8694374d7a5c0c1a380bf0b8c08fce66d3b1f1ca
+Generated with discovered.json: 0x9902a58287878d9666e3ebe1468a11fdf656ca5d
 
-# Diff at Mon, 03 Mar 2025 14:49:50 GMT:
+# Diff at Mon, 03 Mar 2025 15:49:58 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@a117a08c317c3c2e14d56e4b8b9ae49766ecb31d block: 21637087
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21637087
 - current block number: 21637087
 
 ## Description
@@ -22,7 +22,7 @@ discovery. Values are for block 21637087 (main branch discovery), not current.
       values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
 -        true
       values.opStackDA.isUsingCelestia:
-+        false
++        true
     }
 ```
 

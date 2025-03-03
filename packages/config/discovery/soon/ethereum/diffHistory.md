@@ -1,9 +1,9 @@
 Generated with discovered.json: 0x7f748551403837a77a73818dc5cc31db3d8d2d1b
 
-# Diff at Mon, 03 Mar 2025 14:51:48 GMT:
+# Diff at Mon, 03 Mar 2025 15:50:33 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@a117a08c317c3c2e14d56e4b8b9ae49766ecb31d block: 21931798
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21931798
 - current block number: 21931798
 
 ## Description
