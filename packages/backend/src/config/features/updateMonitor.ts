@@ -48,6 +48,10 @@ export function getChainDiscoveryConfig(
       'ETHEREUM_BEACON_API_URL_FOR_DISCOVERY',
       'ETHEREUM_BEACON_API_URL',
     ]),
+    celestiaApiUrl: env.string([
+      'CELESTIA_API_URL_FOR_DISCOVERY',
+      'CELESTIA_API_URL',
+    ]),
     multicall: getMulticall3Config(
       multicallV3.sinceBlock,
       multicallV3.address,
