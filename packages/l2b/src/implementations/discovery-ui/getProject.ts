@@ -1,6 +1,7 @@
 import {
   type ConfigReader,
   type ContractParameters,
+  type DiscoveryConfig,
   type DiscoveryOutput,
   getChainShortName,
 } from '@l2beat/discovery'
@@ -24,15 +25,42 @@ import type {
   FieldValue,
 } from './types'
 
-export function getProject(configReader: ConfigReader, project: string) {
-  const chains = configReader.readAllChainsForProject(project)
-  const data = chains.map((chain) => ({
-    chain,
-    config: configReader.readConfig(project, chain),
-    discovery: configReader.readDiscovery(project, chain),
-  }))
+interface ProjectData {
+  chain: string
+  config: DiscoveryConfig
+  discovery: DiscoveryOutput
+}
 
-  const response: ApiProjectResponse = { chains: [] }
+function readProject(
+  chain: string,
+  project: string,
+  configReader: ConfigReader,
+): ProjectData[] {
+  const discovery = configReader.readDiscovery(project, chain)
+  const sharedModules = discovery.sharedModules ?? []
+
+  return [
+    {
+      chain,
+      config: configReader.readConfig(project, chain),
+      discovery,
+    },
+    ...sharedModules.flatMap((sharedModule) =>
+      readProject(chain, sharedModule, configReader),
+    ),
+  ]
+}
+
+export function getProject(
+  configReader: ConfigReader,
+  project: string,
+): ApiProjectResponse {
+  const chains = configReader.readAllChainsForProject(project)
+  const data = chains.flatMap((chain) =>
+    readProject(chain, project, configReader),
+  )
+
+  const response: ApiProjectResponse = { entries: [] }
   for (const { chain, config, discovery } of data) {
     const meta = getMeta(discovery)
     const contracts = discovery.contracts
@@ -58,7 +86,8 @@ export function getProject(configReader: ConfigReader, project: string) {
     )
 
     const chainInfo = {
-      name: chain,
+      project: config.name,
+      chain: chain,
       initialContracts: contracts.filter((x) =>
         initialAddresses.includes(x.address),
       ),
@@ -77,10 +106,10 @@ export function getProject(configReader: ConfigReader, project: string) {
           }),
         )
         .sort(orderAddressEntries),
-    }
-    response.chains.push(chainInfo)
+    } satisfies ApiProjectChain
+    response.entries.push(chainInfo)
   }
-  populateReferencedBy(response.chains)
+  populateReferencedBy(response.entries)
   return response
 }
 
