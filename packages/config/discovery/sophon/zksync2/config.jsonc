@@ -11,9 +11,6 @@
   "chain": "zksync2",
   "name": "sophon",
   "import": ["../../globalConfig.jsonc"],
-  "sharedModules": {
-    "doesThisKeyDoAnything": "shared-zk-stack"
-  },
-
+  "sharedModules": ["shared-zk-stack"],
   "initialAddresses": []
 }

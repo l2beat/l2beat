@@ -9,9 +9,7 @@
     "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3": "ZeroNetworkZkEvmAdmin",
     "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9": "ZeroNetworkChainAdminMultisig"
   },
-  "sharedModules": {
-    "BridgeHub": "shared-zk-stack"
-  },
+  "sharedModules": ["shared-zk-stack"],
   "overrides": {
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       // local override over the template to fetch the validators from the shared contract

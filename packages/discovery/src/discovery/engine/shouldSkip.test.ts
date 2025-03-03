@@ -54,9 +54,7 @@ describe(shouldSkip.name, () => {
         names: {
           [address.toString()]: 'Foo',
         },
-        sharedModules: {
-          Foo: 'SharedFoo',
-        },
+        sharedModules: ['SharedFoo'],
       },
       configReader,
     )

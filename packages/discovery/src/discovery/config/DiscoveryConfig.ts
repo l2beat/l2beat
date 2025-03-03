@@ -29,7 +29,7 @@ export class DiscoveryConfig {
       join(process.cwd(), '../config'),
     ),
   ) {
-    this.sharedModuleDiscovery = Object.values(config.sharedModules ?? {}).map(
+    this.sharedModuleDiscovery = (config.sharedModules ?? []).map(
       (projectName) => {
         return configReader.readDiscovery(projectName, config.chain)
       },
@@ -81,9 +81,7 @@ export class DiscoveryConfig {
   }
 
   get sharedModules(): string[] {
-    return this.config.sharedModules
-      ? Object.values(this.config.sharedModules)
-      : []
+    return this.config.sharedModules ?? []
   }
 
   get hash(): Hash256 {
