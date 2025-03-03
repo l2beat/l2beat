@@ -103,6 +103,7 @@ function getContractsPreview(
         addresses: [toAddressFieldValue(c.address, chain, metaPerChain)],
         name: c.name,
         description: c.description ?? '',
+        upgradableBy: c.upgradableBy,
       }
     }),
   }))

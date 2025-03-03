@@ -9,9 +9,7 @@
     "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871": "TreasureZkEvmAdmin",
     "0x282370D1e925ee897CB29Cb3beC13aAe0743067C": "TreasureChainAdminMultisig"
   },
-  "sharedModules": {
-    "bleppo": "shared-zk-stack"
-  },
+  "sharedModules": ["shared-zk-stack"],
   "overrides": {
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       // local override over the template to fetch the validators from the shared contract

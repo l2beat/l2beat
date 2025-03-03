@@ -1,14 +1,17 @@
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
-import { type ChainConfig, ProjectService } from '../../src'
-import type { GeneratedToken } from '../../src/tokens/types'
+import { type ChainConfig, ProjectService } from '..'
+import type { GeneratedToken } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
 
+const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
+const OUTPUT_FILE_PATH = './src/tokens/generated.json'
+
 describe('tokens script', () => {
   const logger = ScriptLogger.SILENT
-  const tokensFile = readTokensFile(logger)
-  const generatedFile = readGeneratedFile(logger)
+  const tokensFile = readTokensFile(SOURCE_FILE_PATH, logger)
+  const generatedFile = readGeneratedFile(OUTPUT_FILE_PATH, logger)
 
   let chains: ChainConfig[] = []
   before(async () => {

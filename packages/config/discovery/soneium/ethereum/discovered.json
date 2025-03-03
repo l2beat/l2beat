@@ -2,7 +2,7 @@
   "name": "soneium",
   "chain": "ethereum",
   "blockNumber": 21965340,
-  "configHash": "0xa47b22048aae3d301002d60c3e51e3def4a1304c5c74ff823f8e452c90c746bd",
+  "configHash": "0x493965aafbfbcf50557565e6e926c6787a58d32fe50649c59e5e7168c0af3cf3",
   "contracts": [
     {
       "name": "LivenessModule",

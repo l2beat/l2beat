@@ -10,9 +10,7 @@
     "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91": "IMXProxyGovernanceMultisig1",
     "0xD2C37fC6fD89563187f3679304975655e448D192": "IMXProxyGovernanceMultisig2"
   },
-  "sharedModules": {
-    "sekubawashere": "shared-sharp-verifier"
-  },
+  "sharedModules": ["shared-sharp-verifier"],
   "overrides": {
     "StarkExchange": {
       "ignoreMethods": [
