@@ -164,7 +164,8 @@ async function main() {
             })
           }
 
-          const rawAddress = tokenFromLog.split(':')[1]
+          const [chain, rawAddress] = tokenFromLog.split(':') 
+          assert(rawAddress, `Invalid token format: ${tokenFromLog}`)
 
           try {
             const [balance, decimals] = await Promise.all([
