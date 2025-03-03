@@ -21,15 +21,36 @@ const utils = {
     contractAddress: string,
     apiKey: string,
   ): string | null {
-    const envKey = `${chainName.toUpperCase()}_ETHERSCAN_API_URL`
-    const baseUrl = process.env[envKey]
+    const baseUrls: { [key: string]: string } = {
+      ethereum: 'https://api.etherscan.io',
+      arbitrum: 'https://api.arbiscan.io',
+      base: 'https://api.basescan.org',
+      fraxtal: 'https://api.fraxtal.io',
+      optimism: 'https://api-optimistic.etherscan.io',
+    }
 
+    const baseUrl = baseUrls[chainName.toLowerCase()]
     if (!baseUrl) {
-      console.error(`No Etherscan API URL found for ${chainName}`)
+      console.error(`No Etherscan API support for ${chainName}`)
       return null
     }
 
     return `${baseUrl}/api?module=contract&action=getsourcecode&address=${contractAddress}&apikey=${apiKey}`
+  },
+
+  // Add rate limiter
+  lastCallTime: 0,
+  async rateLimitedFetch(url: string) {
+    const now = Date.now()
+    const timeSinceLastCall = now - this.lastCallTime
+    const minDelay = 1000 
+    
+    if (timeSinceLastCall < minDelay) {
+      await new Promise(resolve => setTimeout(resolve, minDelay - timeSinceLastCall))
+    }
+    
+    this.lastCallTime = Date.now()
+    return fetch(url)
   },
 
   async getContractABIAndName(contractAddress: string, chainName: string) {
@@ -42,7 +63,7 @@ const utils = {
       if (!url) {
         throw new Error('Invalid chain name')
       }
-      const response = await fetch(url)
+      const response = await this.rateLimitedFetch(url) // Use rate-limited fetch
       const rawData: unknown = await response.json()
 
       function isEtherscanApiResponse(
@@ -62,7 +83,8 @@ const utils = {
       }
 
       if (!isEtherscanApiResponse(rawData)) {
-        throw new Error('Invalid API response format')
+        console.log("Invalid API response format")
+        return null
       }
 
       const data = rawData
@@ -101,6 +123,7 @@ interface EtherscanApiResponse {
   result: Array<{
     ABI: string
     ContractName?: string
+    Implementation?: string
   }>
 }
 
@@ -191,6 +214,12 @@ export const TokenScreening = command({
               nonCanonical = `${nonCanonicalPct.toFixed(2)}%`
             }
 
+            const minters = await getL2Minters(l2Address, chain);
+            if (minters.length > 1) {
+                supplyInfo.type = 'Non-canonical Token';
+                supplyInfo.reason = 'Multiple minters';
+            }
+
             // if non-canonical summary is printed later after classication attempt
             if (supplyInfo.type === 'Canonical Token') {
               console.table({
@@ -256,6 +285,26 @@ export const TokenScreening = command({
               }
               weirdPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
             }
+
+            const l2Minters = await getL2Minters(l2AddressFromCoingecko, chain);
+            let mintersType = await checkMintersType(l2Minters.map(m => ({
+              address: m.address,
+              name: m.name ?? 'Unknown'
+            })));
+            if (mintersType.type === 'Bridge Token') {
+              supplyInfo.type = 'External Token';
+              supplyInfo.reason = mintersType.bridge + ' (' + (mintersType.matchingContracts ?? []).join(', ') + ')';
+            } else if (mintersType.type === 'Unknown') {
+                const bridgeName = matchBridgeName(l2Minters.map(m => ({
+                  address: m.address,
+                  name: m.name ?? 'Unknown'
+                })));
+                if (bridgeName.type === 'External Token') {
+                    supplyInfo.type = 'External Token';
+                    supplyInfo.reason = bridgeName.bridge;
+                }
+            }
+
             console.table({
               'L1 Supply': Number(supplyInfo.l1Supply).toFixed(2),
               'L2 Supply': Number(supplyInfo.l2Supply).toFixed(2),
@@ -265,7 +314,7 @@ export const TokenScreening = command({
               [supplyInfo.type === 'Canonical Token'
                 ? 'In Transit'
                 : 'Non-canonical']: `${weirdPct}%`,
-              ...(supplyInfo.type === 'Non-canonical Token'
+              ...(supplyInfo.type != 'Canonical Token' 
                 ? { Reason: supplyInfo.reason }
                 : {}),
             })
@@ -500,4 +549,162 @@ async function getTokenSupplyInfo(
   }
 }
 
-export { utils }
+async function getZeroAddressTransfers(tokenAddress: string, rpcUrl: string) {
+  try {
+    const provider = new providers.JsonRpcProvider(rpcUrl);
+    const tokenInterface = new ethersUtils.Interface([
+      'event Transfer(address indexed from, address indexed to, uint256 value)'
+    ]);
+    const contract = new Contract(tokenAddress, tokenInterface, provider);
+    
+    // Get current block number and calculate range
+    const currentBlock = await provider.getBlockNumber();
+    const fromBlock = Math.max(0, currentBlock - 10000);
+    
+    // Get transfers from zero address (minting events)
+    const filter = contract.filters.Transfer(
+      '0x0000000000000000000000000000000000000000',
+      null
+    );
+    const events = await contract.queryFilter(filter, fromBlock, currentBlock);
+    
+    // Process events with additional details
+    const transfers = await Promise.all(events.map(async event => {
+      const tx = await provider.getTransaction(event.transactionHash);
+      const block = await provider.getBlock(event.blockNumber);
+      return {
+        blockNumber: event.blockNumber,
+        timestamp: block?.timestamp || null,
+        transactionHash: event.transactionHash,
+        minter: tx?.to || null,
+        recipient: event.args?.to,
+        amount: event.args?.value.toString()
+      };
+    }));
+    
+    return transfers;
+  } catch (error) {
+    console.error("Error getting zero address transfers:", error);
+    return [];
+  }
+}
+
+async function getL2Minters(l2Address: string, network: string) {
+  try {
+    // Get RPC URL for the network
+    const providerUrl = utils.getRpcUrl(network);
+    
+    // Get transfers from zero address
+    const zeroTransfers = await getZeroAddressTransfers(l2Address, providerUrl);
+    // Extract unique minter addresses (from transaction.to)
+    const minters = [...new Set(zeroTransfers.map(transfer => transfer.minter))];
+    
+    // Get contract names for each minter
+    const mintersWithNames = await Promise.all(minters.map(async (minter) => {
+      let contractInfo = await utils.getContractABIAndName(minter!, network);
+      if (contractInfo) {
+        const implementation = contractInfo.Implementation;
+        if (implementation !== undefined && implementation !== null && implementation !== "") {
+          contractInfo = await utils.getContractABIAndName(implementation, network);
+        }
+      }
+      return {
+        address: minter,
+        name: contractInfo ? contractInfo.ContractName : 'Unknown'
+      };
+    }));
+    
+    return mintersWithNames;
+  } catch (error) {
+    // console.error("Error getting L2 minters:", error);
+    return [];
+  }
+}
+
+async function checkMintersType(l2Minters: Array<{ address: string | null, name: string }>) {
+    try {
+        // Define bridge names
+        const bridgeNames = [
+            'across-v3', 'layerzerov2oft', 'hyperlane', "connext", 
+            "socket", "transporter", "lzOmnichain", "fraxferry",
+            'beamerbridgev2', 'cBridge', 'debridge', 'davos',
+            'gravity', 'harmony', 'chainport', 'hop', 'hyphen',
+            'multichain', 'near',
+            'nomad', 'omni', 'opticsV1', 'opticsV2', 'orbit', 'orbiter',
+            'polynetwork', 'pNetwork', 'pulseChain', 'ronin', 'satellite',
+            'skaleIMA', 'sollet', 'sonicgateway', 'stargate',
+            'stargatev2', 'sygma', 'synapse', 'portal',
+            'wormholeV1', 'xdai', 'symbiosis'
+        ];
+
+        // Extract minter addresses, filtering out null values
+        const minterAddresses = l2Minters
+            .map(m => m.address?.toLowerCase())
+            .filter((addr): addr is string => addr !== null && addr !== undefined);
+
+        // Check each bridge's discovered.json
+        for (const bridgeName of bridgeNames) {
+            try {
+                const discoveredPath = `../../../config/discovery/${bridgeName}/ethereum/discovered.json`;
+                const discovered = require(discoveredPath);
+                
+                // Extract contract addresses from discovered.json
+                const bridgeContracts = discovered.contracts?.map((c: { address: string }) => c.address.toLowerCase()) || [];
+                
+                const matchingContracts = minterAddresses.filter(minter => 
+                    bridgeContracts.includes(minter)
+                );
+
+                if (matchingContracts.length > 0) {
+                    return {
+                        type: 'Bridge Token',
+                        bridge: bridgeName,
+                        matchingContracts: matchingContracts
+                    };
+                }
+            } catch (error) {
+                // Silently continue if bridge config not found
+                continue;
+            }
+        }
+
+        // If no bridge matches found
+        return {
+            type: 'Unknown',
+            reason: 'No matching bridge contracts found'
+        };
+    } catch (error) {
+        console.error("Error in checkMintersType:", error);
+        return {
+            type: 'Unknown',
+            reason: 'Error checking minter types'
+        };
+    }
+}
+
+function matchBridgeName(l2Minters: Array<{ address: string | null, name: string }>) {
+  // Map bridge keywords to their official bridge names
+  const bridgeKeywordMap: { [key: string]: string } = {
+    'circle': 'CCTP (Circle) minter',
+    'mailbox': 'Hyperlane (Mailbox) minter'
+  };
+
+  // Check if any minter name contains bridge-related keywords
+  for (const minter of l2Minters) {
+    const lowerName = minter.name.toLowerCase();
+    for (const [keyword, bridgeName] of Object.entries(bridgeKeywordMap)) {
+      if (lowerName.includes(keyword)) {
+        return {
+          type: 'External Token',
+          bridge: bridgeName
+        };
+      }
+    }
+  }
+
+  return {
+    type: 'Unknown',
+    reason: 'No bridge pattern found in contract names'
+  };
+}
+
