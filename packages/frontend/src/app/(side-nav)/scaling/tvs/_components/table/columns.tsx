@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
+import { TableLink } from '../../../summary/_components/table/table-link'
 import type { ScalingTvsTableRow } from '../../_utils/to-table-rows'
 import { TotalValueSecuredCell } from './total-value-secured-cell'
 import { ValueSecuredCell } from './value-secured-cell'
@@ -41,6 +42,7 @@ export const scalingTvsColumns = [
             }
             return (
               <TotalValueSecuredCell
+                href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown`}
                 tvsWarnings={ctx.row.original.tvs.warnings}
                 breakdown={{
                   canonical: data.breakdown.canonical,
@@ -70,10 +72,14 @@ export const scalingTvsColumns = [
       }
 
       return (
-        <ValueSecuredCell
-          value={data.breakdown.canonical}
-          change={data.change.canonical}
-        />
+        <TableLink
+          href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`}
+        >
+          <ValueSecuredCell
+            value={data.breakdown.canonical}
+            change={data.change.canonical}
+          />
+        </TableLink>
       )
     },
     sortUndefined: 'last',
@@ -94,10 +100,14 @@ export const scalingTvsColumns = [
       }
 
       return (
-        <ValueSecuredCell
-          value={data.breakdown.external}
-          change={data.change.external}
-        />
+        <TableLink
+          href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`}
+        >
+          <ValueSecuredCell
+            value={data.breakdown.external}
+            change={data.change.external}
+          />
+        </TableLink>
       )
     },
     sortUndefined: 'last',
@@ -118,10 +128,14 @@ export const scalingTvsColumns = [
       }
 
       return (
-        <ValueSecuredCell
-          value={data.breakdown.native}
-          change={data.change.native}
-        />
+        <TableLink
+          href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`}
+        >
+          <ValueSecuredCell
+            value={data.breakdown.native}
+            change={data.change.native}
+          />
+        </TableLink>
       )
     },
     sortUndefined: 'last',

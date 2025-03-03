@@ -76,17 +76,17 @@ export default async function Page(props: Props) {
       />
       <div className="md:mt-6 md:space-y-6">
         {native.length > 0 && (
-          <PrimaryCard>
+          <PrimaryCard id="native">
             <NativelyMintedTable tokens={native} />
           </PrimaryCard>
         )}
         {external.length > 0 && (
-          <PrimaryCard>
+          <PrimaryCard id="external">
             <ExternallyBridgedTable tokens={external} />
           </PrimaryCard>
         )}
         {canonical.length > 0 && (
-          <PrimaryCard>
+          <PrimaryCard id="canonical">
             <CanonicallyBridgedTable tokens={canonical} />
           </PrimaryCard>
         )}
