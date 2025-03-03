@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
-import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import type { RosetteType } from './rosette-selector'
@@ -12,16 +11,8 @@ interface Props {
 }
 
 export function ScalingProjectRosette({ project }: Props) {
-  const projectRisks = toRosetteTuple(project.rosette.self)
-  const hostChainRisks = project.rosette.host
-    ? toRosetteTuple(project.rosette.host)
-    : undefined
-  const stackedChainRisks = project.rosette.stacked
-    ? toRosetteTuple(project.rosette.stacked)
-    : undefined
-
   const [rosetteType, setRosetteType] = useState<RosetteType>(
-    stackedChainRisks ? 'combined' : 'individual',
+    project.rosette.stacked ? 'combined' : 'individual',
   )
 
   if (project.type === 'layer2') {
@@ -49,7 +40,7 @@ export function ScalingProjectRosette({ project }: Props) {
           isDisabled={
             project.underReviewStatus === 'config' ||
             project.isUpcoming ||
-            !hostChainRisks
+            !project.rosette.host
           }
         />
       )}
@@ -72,31 +63,31 @@ export function ScalingProjectRosette({ project }: Props) {
   }
 
   // L3 - no host chain (Multiple), should not happen
-  if (!hostChainRisks || !project.hostChainName) {
+  if (!project.rosette.host || !project.hostChainName) {
     return (
       <Wrapper hideSelector>
-        <BigPizzaRosette values={projectRisks} />
+        <BigPizzaRosette values={project.rosette.self} />
       </Wrapper>
     )
   }
 
   // L3 - has stacked risks
-  if (stackedChainRisks) {
+  if (project.rosette.stacked) {
     return (
       <Wrapper>
         {rosetteType === 'individual' ? (
           <BigIndividualRosette
             l2={{
               name: project.hostChainName,
-              risks: hostChainRisks,
+              risks: project.rosette.host,
             }}
             l3={{
               name: project.name,
-              risks: projectRisks,
+              risks: project.rosette.self,
             }}
           />
         ) : (
-          <BigPizzaRosette values={stackedChainRisks} />
+          <BigPizzaRosette values={project.rosette.stacked} />
         )}
       </Wrapper>
     )
@@ -109,16 +100,16 @@ export function ScalingProjectRosette({ project }: Props) {
         <BigIndividualRosette
           l2={{
             name: project.hostChainName,
-            risks: hostChainRisks,
+            risks: project.rosette.host,
           }}
           l3={{
             name: project.name,
-            risks: projectRisks,
+            risks: project.rosette.self,
           }}
         />
       ) : (
         // Force under review for combined - values doesn't matter
-        <BigPizzaRosette values={hostChainRisks} isUnderReview />
+        <BigPizzaRosette values={project.rosette.host} isUnderReview />
       )}
     </Wrapper>
   )

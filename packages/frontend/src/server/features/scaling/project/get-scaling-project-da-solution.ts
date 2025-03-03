@@ -1,8 +1,5 @@
-import {
-  Project,
-  type ProjectContract,
-  type ProjectPermissions,
-} from '@l2beat/config'
+import type { Project } from '@l2beat/config'
+import { type ProjectContract, type ProjectPermissions } from '@l2beat/config'
 import { ps } from '~/server/projects'
 
 type Common = {

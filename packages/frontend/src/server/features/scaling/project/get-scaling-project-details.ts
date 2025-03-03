@@ -1,7 +1,5 @@
 import type { Layer2, Layer3, Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
-import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
@@ -21,16 +19,13 @@ import { getScalingTechnologySection } from '~/utils/project/technology/get-tech
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from './get-scaling-project-da-solution'
+import type { ScalingRosette } from './get-scaling-rosette-values'
 
 interface Params {
   legacy: Layer2 | Layer3
   project: Project<'statuses'>
   projectsChangeReport: ProjectsChangeReport
-  rosette: {
-    self: RosetteValue[]
-    host?: RosetteValue[]
-    combined?: RosetteValue[]
-  }
+  rosette: ScalingRosette
   daSolution?: DaSolution
   hostChain?: Layer2
   isHostChainVerified: boolean
@@ -242,15 +237,13 @@ export async function getScalingProjectDetails({
         title: 'Risk analysis',
         l2: {
           name: hostChain.display.name,
-          risks: toRosetteTuple(rosette.host),
+          risks: rosette.host,
         },
         l3: {
           name: legacy.display.name,
-          risks: toRosetteTuple(rosette.self),
+          risks: rosette.self,
         },
-        combined: rosette.combined
-          ? toRosetteTuple(rosette.combined)
-          : undefined,
+        combined: rosette.stacked,
         warning: legacy.display.warning,
         redWarning: legacy.display.redWarning,
         isVerified: !project.statuses.isUnverified,

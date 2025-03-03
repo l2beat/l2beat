@@ -13,7 +13,6 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
@@ -27,7 +26,8 @@ import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
 import { getScalingProjectDetails } from './get-scaling-project-details'
-import { getScalingRosetteValues } from './get-scaling-rosette-values'
+import type { ScalingRosette } from './get-scaling-rosette-values'
+import { getScalingRosette } from './get-scaling-rosette-values'
 
 export type ScalingProject = Layer2 | Layer3
 
@@ -74,11 +74,7 @@ export interface ScalingProjectEntry {
       uopsWeeklyChange: number
     }
   }
-  rosette: {
-    self: RosetteValue[]
-    host?: RosetteValue[]
-    stacked?: RosetteValue[]
-  }
+  rosette: ScalingRosette
   sections: ProjectDetailsSection[]
   countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -168,15 +164,7 @@ export async function getScalingProjectEntry(
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     countdowns: getCountdowns(legacy),
-    rosette: {
-      self: getScalingRosetteValues(project.scalingRisks.self),
-      host: project.scalingRisks.host
-        ? getScalingRosetteValues(project.scalingRisks.host)
-        : undefined,
-      stacked: project.scalingRisks.stacked
-        ? getScalingRosetteValues(project.scalingRisks.stacked)
-        : undefined,
-    },
+    rosette: getScalingRosette(project),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig: isProjectOther(project.scalingInfo)
       ? project.scalingStage
