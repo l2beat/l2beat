@@ -9,12 +9,12 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import {
   ConfigReader,
   type DiscoveryDiff,
+  type DiscoveryOutput,
   diffDiscovery,
   discover,
   discoveryDiffToMarkdown,
   getChainConfig,
 } from '@l2beat/discovery'
-import type { DiscoveryOutput } from '@l2beat/discovery'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 

@@ -1,6 +1,5 @@
 import path from 'path'
-import { ConfigReader } from '@l2beat/discovery'
-import type { DiscoveryOutput } from '@l2beat/discovery'
+import { ConfigReader, type DiscoveryOutput } from '@l2beat/discovery'
 
 export function getOnDiskData() {
   const configReader = new ConfigReader(path.join(process.cwd(), '../config'))

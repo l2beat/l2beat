@@ -1,10 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type ConfigReader,
+  type ContractParameters,
   DiscoveryConfig,
   type DiscoveryDiff,
+  type DiscoveryOutput,
 } from '@l2beat/discovery'
-import type { ContractParameters, DiscoveryOutput } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,

@@ -1,6 +1,9 @@
 import type { ChainConfig } from '@l2beat/config'
-import type { ContractValue, FieldDiff } from '@l2beat/discovery'
-import { diffDiscovery } from '@l2beat/discovery'
+import {
+  type ContractValue,
+  type FieldDiff,
+  diffDiscovery,
+} from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'

@@ -54,6 +54,8 @@ export {
   buildSimilarityHashmap,
   estimateSimilarity,
 } from './flatten/utils'
+export type { ContractConfig } from './discovery/config/ContractConfig'
+export type { ExplorerConfig } from './utils/IEtherscanClient'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { AllProviders } from './discovery/provider/AllProviders'
