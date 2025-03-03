@@ -108,8 +108,8 @@ const TableCell = ({
     className={cn(
       'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
       'pr-3 first:pl-2 last:pr-4 md:pr-4',
-      align === 'center' && 'text-center',
-      align === 'right' && 'text-right',
+      align === 'center' && 'text-center *:mx-auto',
+      align === 'right' && 'text-right *:ml-auto',
       className,
     )}
     {...props}
