@@ -30,7 +30,7 @@ describe(ValueService.name, () => {
         projectId: ProjectId('project'),
         tokens: [
           mockObject<Token>({
-            id: TokenId('tokeId'),
+            id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
@@ -62,9 +62,9 @@ describe(ValueService.name, () => {
             mockTimestamp.toNumber(),
             [
               {
+                tokenConfig: tvsConfig.tokens[0],
                 amount: 10000,
                 projectId: ProjectId('project'),
-                tokenId: 'tokeId',
                 value: 2000000,
                 valueForProject: 2000000,
                 valueForTotal: 2000000,
@@ -196,17 +196,17 @@ describe(ValueService.name, () => {
             mockTimestamp.toNumber(),
             [
               {
-                amount: 10000,
+                tokenConfig: tvsConfig.tokens[0],
                 projectId: ProjectId('bob'),
-                tokenId: 'WBTC',
+                amount: 10000,
                 value: 2000000,
                 valueForProject: 2000000,
                 valueForTotal: 2000000,
               },
               {
-                amount: 8000,
+                tokenConfig: tvsConfig.tokens[1],
                 projectId: ProjectId('bob'),
-                tokenId: 'solvBTC',
+                amount: 8000,
                 value: 1600000,
                 valueForProject: 600000,
                 valueForTotal: 600000,
