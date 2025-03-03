@@ -1,3 +1,4 @@
+import type { CelestiaApiClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
@@ -10,6 +11,7 @@ const TIMEOUT = 'TIMEOUT'
 
 describe(LowLevelProvider.name, () => {
   const ETHERSCAN_PROVIDER = mockObject<IEtherscanClient>()
+  const CELESTIA_API_CLIENT = mockObject<CelestiaApiClient>()
   let time: InstalledClock
   let originalConsole: {
     log: typeof console.log
@@ -53,6 +55,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      CELESTIA_API_CLIENT,
     )
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
@@ -72,6 +75,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      CELESTIA_API_CLIENT,
     )
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
@@ -91,6 +95,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      CELESTIA_API_CLIENT,
     )
 
     await expect(
@@ -115,6 +120,7 @@ describe(LowLevelProvider.name, () => {
         ethersProvider,
         ethersProvider,
         ETHERSCAN_PROVIDER,
+        CELESTIA_API_CLIENT,
       )
 
       await expect(
@@ -146,6 +152,7 @@ describe(LowLevelProvider.name, () => {
       ethersProvider,
       ethersProvider,
       ETHERSCAN_PROVIDER,
+      CELESTIA_API_CLIENT,
     )
 
     await expect(
@@ -215,6 +222,7 @@ describe(LowLevelProvider.name, () => {
         ethersProvider,
         ethersProvider,
         ETHERSCAN_PROVIDER,
+        CELESTIA_API_CLIENT,
       )
       const result = await provider.call(EthereumAddress.random(), bytes, 10)
       expect(result).toEqual(bytes)
