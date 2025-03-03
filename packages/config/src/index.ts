@@ -28,6 +28,7 @@ export {
   safeGetTokenByAssetId,
   tokenList,
 } from './tokens/tokens'
+export { getTokenData } from './tokens/getTokenData'
 export type * from './types'
 export { getCommonContractsIn } from './utils/commonContracts'
 export { isVerified } from './verification/isVerified'
