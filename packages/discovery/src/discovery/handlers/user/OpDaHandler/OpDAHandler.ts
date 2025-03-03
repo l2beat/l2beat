@@ -8,6 +8,7 @@ import {
   resolveReference,
 } from '../../reference'
 import { valueToAddress } from '../../utils/valueToAddress'
+import { checkForBlobs } from './blobs-check'
 import { checkForCelestia } from './celestia-verification'
 import { checkForEigenDA } from './eigen-verification'
 
@@ -18,11 +19,6 @@ export const OpStackDAHandlerDefinition = z.strictObject({
   type: z.literal('opStackDA'),
   sequencerAddress: z.string(),
 })
-
-/**
- * https://eips.ethereum.org/EIPS/eip-4844#parameters
- */
-const BLOB_TX_TYPE = 3
 
 /**
  * This is a OP Stack specific handler that is used to check if
@@ -66,20 +62,8 @@ export class OpStackDAHandler implements Handler {
         ),
     )
 
-    const hasTxs = lastTxs.length > 0
-
-    const rpcTxs = await Promise.all(
-      lastTxs.map((tx) => provider.getTransaction(tx.hash)),
-    )
-    const missingIndex = rpcTxs.findIndex((x) => x === undefined)
-    if (missingIndex !== -1) {
-      throw new Error(`Transaction ${lastTxs[missingIndex]?.hash} is missing`)
-    }
-    const isSequencerSendingBlobTx =
-      hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
-
+    const isSequencerSendingBlobTx = await checkForBlobs(provider, lastTxs)
     const isUsingEigenDA = await checkForEigenDA(provider, lastTxs)
-
     const isUsingCelestia = await checkForCelestia(provider, lastTxs)
 
     return {
