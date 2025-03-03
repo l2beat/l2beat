@@ -39,6 +39,7 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
+import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 import {
   DirectPermissionToPrefix,
   type GroupedTransitivePermissionFact,
@@ -47,7 +48,6 @@ import {
   renderGroupedTransitivePermissionFact,
   trimTrailingDots,
 } from './factRendering'
-import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -1128,6 +1128,34 @@ export class ProjectDiscovery {
     return result
   }
 
+  getUpgradableByUsingKnowledgeBase(contract: ContractParameters) {
+    assert(this.knowledgeBase)
+    assert(this.modelIdRegistry)
+    const getAddressData = this.modelIdRegistry.getAddressData.bind(
+      this.modelIdRegistry,
+    )
+    const id = this.modelIdRegistry.getModelId(this.chain, contract.address)
+    const facts = this.knowledgeBase.getFacts('filteredTransitivePermission', [
+      undefined,
+      'upgrade',
+      id,
+    ])
+    if (facts.length === 0) {
+      return {}
+    }
+    const upgradersWithDelay = facts.map((fact) => {
+      const name = getAddressData(fact.params[0] as string).name as string
+      const totalDelay = fact.params[5] as number
+      return {
+        name,
+        delay: totalDelay === 0 ? 'no' : formatSeconds(totalDelay),
+      }
+    })
+    return {
+      upgradableBy: upgradersWithDelay,
+    }
+  }
+
   getUpgradableBy(contract: ContractParameters) {
     const upgradersWithDelay: Record<string, number> = Object.fromEntries(
       contract.issuedPermissions
@@ -1178,11 +1206,15 @@ export class ProjectDiscovery {
       .filter((contract) => !gnosisModules.includes(contract.address))
       .filter((contract) => !contractsWithPermissions.includes(contract))
       .map((contract) => {
+        const upgradableBy =
+          this.knowledgeBase !== undefined
+            ? this.getUpgradableByUsingKnowledgeBase(contract)
+            : this.getUpgradableBy(contract)
         return this.getContractDetails(contract.address.toString(), {
           description: formatAsBulletPoints(
             this.describeContractOrEoa(contract, true),
           ),
-          ...this.getUpgradableBy(contract),
+          ...upgradableBy,
           discoveryDrivenData: true,
         })
       })
