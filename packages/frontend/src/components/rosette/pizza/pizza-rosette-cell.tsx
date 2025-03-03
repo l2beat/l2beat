@@ -9,7 +9,7 @@ import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteTooltip } from './pizza-rosette-tooltip'
 
 interface Props {
-  href: string | undefined
+  href?: string
   values: RosetteValue[]
   isUnderReview?: boolean
 }

@@ -18,7 +18,7 @@ import { StageTooltip } from './stage-tooltip'
 export interface StageCellProps {
   stageConfig: StageConfig
   isAppchain: boolean
-  href: string
+  href?: string
 }
 
 export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
