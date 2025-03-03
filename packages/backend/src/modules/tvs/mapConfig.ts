@@ -8,7 +8,8 @@ import {
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import type { MulticallClient } from '../../peripherals/multicall/MulticallClient'
-import { getAggLayerEntries } from './providers/aggLayer'
+import { getAggLayerTokens } from './providers/aggLayer'
+import { getElasticChainTokens } from './providers/elasticChain'
 import { tokenToTicker } from './providers/tickers'
 import {
   type AmountConfig,
@@ -40,7 +41,7 @@ export async function mapConfig(
 
       if (escrow.sharedEscrow.type === 'AggLayer') {
         console.log(`Querying for shared escrow L2 tokens addresses`)
-        const aggLayerL2Tokens = await getAggLayerEntries(
+        const aggLayerL2Tokens = await getAggLayerTokens(
           project,
           chain,
           // @ts-ignore only non-native tokens
@@ -49,7 +50,25 @@ export async function mapConfig(
         )
 
         // TODO: add support for L1 assets
+        // add support for native token
         tokens.push(...aggLayerL2Tokens)
+      }
+
+      if (escrow.sharedEscrow.type === 'ElasticChain') {
+        console.log(`Querying for shared escrow L2 tokens addresses`)
+        const elasticChainTokens = await getElasticChainTokens(
+          escrow.sharedEscrow,
+          project,
+          chain,
+          // @ts-ignore only non-native tokens
+          escrow.tokens.filter((t) => t.address),
+          multicallClient,
+        )
+
+        console.log(elasticChainTokens)
+        // TODO: add support for L1 assets
+        // add support for native token
+        tokens.push(...elasticChainTokens)
       }
     }
 

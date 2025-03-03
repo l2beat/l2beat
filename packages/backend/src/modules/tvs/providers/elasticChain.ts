@@ -1,5 +1,4 @@
-import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
-import type { ChainConfig, Project } from '@l2beat/config'
+import type { ChainConfig, ElasticChainEscrow, Project } from '@l2beat/config'
 import {
   assert,
   Bytes,
@@ -14,23 +13,20 @@ import { type Token, TokenId } from '../types'
 import { tokenToTicker } from './tickers'
 
 export const bridgeInterface = new utils.Interface([
-  'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
+  'function l2TokenAddress(address _l1Token) view returns (address)',
 ])
-const ORIGIN_NETWORK = 0
 
-export async function getAggLayerTokens(
+export async function getElasticChainTokens(
+  escrow: ElasticChainEscrow,
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
   tokens: (LegacyToken & { address: EthereumAddress })[],
   multicallClient: MulticallClient,
 ): Promise<Token[]> {
   const encoded: MulticallRequest[] = tokens.map((token) => ({
-    address: AGGLAYER_L2BRIDGE_ADDRESS,
+    address: escrow.l2BridgeAddress,
     data: Bytes.fromHex(
-      bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
-        ORIGIN_NETWORK,
-        token.address,
-      ]),
+      bridgeInterface.encodeFunctionData('l2TokenAddress', [token.address]),
     ),
   }))
 
@@ -49,7 +45,7 @@ export async function getAggLayerTokens(
       }
 
       const [address] = bridgeInterface.decodeFunctionResult(
-        'getTokenWrappedAddress',
+        'l2TokenAddress',
         response.data.toString(),
       )
 
