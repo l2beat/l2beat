@@ -26,8 +26,8 @@ import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
-import { getScalingProjectDetails } from './utils/get-scaling-project-details'
-import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
+import { getScalingProjectDetails } from './get-scaling-project-details'
+import { getScalingRosetteValues } from './get-scaling-rosette-values'
 
 export type ScalingProject = Layer2 | Layer3
 

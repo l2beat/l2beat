@@ -19,8 +19,8 @@ import { getOtherConsiderationsSection } from '~/utils/project/technology/get-ot
 import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
-import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
-import type { DaSolution } from '../get-scaling-project-da-solution'
+import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
+import type { DaSolution } from './get-scaling-project-da-solution'
 
 interface Params {
   legacy: Layer2 | Layer3
