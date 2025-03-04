@@ -15,7 +15,6 @@ import {
   CustomSystemInfo,
   PublicSystemInfo,
 } from '../_components/da-category-info'
-import { groupBySystem } from '../_utils/group-by-system'
 import { DaSummaryBoxes } from './_components/da-summary-boxes'
 import { DaSummaryCustomTable } from './_components/table/da-summary-custom-table'
 import { DaSummaryPublicTable } from './_components/table/da-summary-public-table'
@@ -27,18 +26,15 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const [entries, throughputSummaryData] = await Promise.all([
-    getDaSummaryEntries(),
-    getDaThroughputSummary(),
-  ])
-  const { publicSystems, customSystems } = groupBySystem(entries)
+  const [{ publicSystems, customSystems }, throughputSummaryData] =
+    await Promise.all([getDaSummaryEntries(), getDaThroughputSummary()])
 
   return (
     <div>
       <MainPageHeader>Summary</MainPageHeader>
       {featureFlags.daThroughput && (
         <DaSummaryBoxes
-          entries={entries}
+          entries={publicSystems}
           throughputSummaryData={throughputSummaryData}
         />
       )}
