@@ -512,7 +512,7 @@ function orbitStackCommon(
       gasTokens: uniq([
         ...(templateVars.chainConfig?.gasTokens ?? []),
         ...(templateVars.untrackedGasTokens ?? []),
-      ]),
+      ]) ?? ['ETH'],
     },
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,

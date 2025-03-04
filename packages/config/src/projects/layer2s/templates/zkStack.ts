@@ -310,11 +310,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     chainConfig: {
       ...(templateVars.chainConfig as ChainConfig),
-      gasTokens: [
-        ...(templateVars.chainConfig?.gasTokens ?? []),
-        ...(templateVars.gasTokens?.tracked ?? []),
-        ...(templateVars.gasTokens?.untracked ?? []),
-      ],
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

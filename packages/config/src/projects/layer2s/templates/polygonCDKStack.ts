@@ -305,7 +305,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               stateUpdate: 'disabled',
             },
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: {
+      ...(templateVars.chainConfig as ChainConfig),
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
