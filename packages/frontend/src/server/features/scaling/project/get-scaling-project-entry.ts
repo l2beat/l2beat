@@ -111,7 +111,8 @@ export async function getScalingProjectEntry(
     | 'contracts'
     | 'permissions'
     | 'tvlInfo'
-    | 'tvlConfig',
+    | 'tvlConfig'
+    | 'trackedTxsConfig',
     // optional
     | 'scalingDa'
     | 'customDa'
@@ -298,8 +299,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const trackedTransactions =
-    legacy.type === 'layer2' ? getTrackedTransactions(legacy) : undefined
+  const trackedTransactions = getTrackedTransactions(project)
   if (
     !project.isUpcoming &&
     trackedTransactions &&

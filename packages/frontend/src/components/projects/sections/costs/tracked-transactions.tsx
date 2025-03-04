@@ -133,9 +133,9 @@ function TransactionDetails({
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <p className="text-xs font-medium capitalize">
-              {transaction.formula}
+              {transaction.params.formula}
             </p>
-            {transaction.formula === 'sharedBridge' && (
+            {transaction.params.formula === 'sharedBridge' && (
               <Tooltip>
                 <TooltipTrigger className="inline size-4">
                   <InfoIcon />
@@ -143,7 +143,7 @@ function TransactionDetails({
                 <TooltipContent>
                   Tracked function calls are those ones with chain ID in
                   calldata equal to project&apos;s chain ID (
-                  {transaction.chainId})
+                  {transaction.params.chainId})
                 </TooltipContent>
               </Tooltip>
             )}
@@ -161,13 +161,13 @@ function TransactionDetails({
           ) : null}
         </div>
         <p className="text-2xs text-secondary max-md:mt-0.5 md:text-xs">
-          {formatTimestamp(transaction.sinceTimestamp, {
+          {formatTimestamp(transaction.sinceTimestamp.toNumber(), {
             mode: 'datetime',
             longMonthName: false,
           })}{' '}
           -{' '}
           {transaction.untilTimestamp
-            ? formatTimestamp(transaction.untilTimestamp, {
+            ? formatTimestamp(transaction.untilTimestamp.toNumber(), {
                 mode: 'datetime',
                 longMonthName: false,
               })
@@ -176,47 +176,47 @@ function TransactionDetails({
       </div>
 
       <div className="border-l-2 border-divider pl-3">
-        {transaction.formula === 'functionCall' && (
+        {transaction.params.formula === 'functionCall' && (
           <>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Address: </span>
-              <EtherscanLink address={transaction.address} />
+              <EtherscanLink address={transaction.params.address} />
             </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Selector: </span>
-              <span>{transaction.selector}</span>
+              <span>{transaction.params.selector}</span>
             </div>
             <div className="rounded bg-surface-secondary p-2 text-xs">
-              <code className="break-all">{transaction.functionSignature}</code>
+              <code className="break-all">{transaction.params.signature}</code>
             </div>
           </>
         )}
 
-        {transaction.formula === 'transfer' && (
+        {transaction.params.formula === 'transfer' && (
           <>
             <div className="mb-1 text-sm">
               <span className="text-secondary">From: </span>
-              <EtherscanLink address={transaction.from} />
+              <EtherscanLink address={transaction.params.from} />
             </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">To: </span>
-              <EtherscanLink address={transaction.to} />
+              <EtherscanLink address={transaction.params.to} />
             </div>
           </>
         )}
 
-        {transaction.formula === 'sharpSubmission' && (
+        {transaction.params.formula === 'sharpSubmission' && (
           <div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Address: </span>
-              <EtherscanLink address={transaction.address} />
+              <EtherscanLink address={transaction.params.address} />
             </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Selector: </span>
-              <span>{transaction.selector}</span>
+              <span>{transaction.params.selector}</span>
             </div>
             <div className="mb-1 text-sm text-secondary">Program Hashes:</div>
-            {transaction.programHashes.map((hash, index) => (
+            {transaction.params.programHashes.map((hash, index) => (
               <div
                 key={index}
                 className="rounded bg-surface-secondary p-2 text-xs"
@@ -227,27 +227,27 @@ function TransactionDetails({
           </div>
         )}
 
-        {transaction.formula === 'sharedBridge' && (
+        {transaction.params.formula === 'sharedBridge' && (
           <>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Address: </span>
-              <EtherscanLink address={transaction.address} />
+              <EtherscanLink address={transaction.params.address} />
             </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Selector: </span>
-              <span>{transaction.selector}</span>
+              <span>{transaction.params.selector}</span>
             </div>
             <div className="rounded bg-surface-secondary p-2 text-xs">
-              <code className="break-all">{transaction.functionSignature}</code>
+              <code className="break-all">{transaction.params.signature}</code>
             </div>
           </>
         )}
 
-        {transaction.multiplier && (
+        {transaction.costMultiplier && (
           <div className="mt-1 flex items-center gap-0.5 text-sm">
             <div>
               <span className="text-secondary">Multiplier: </span>
-              <span>{transaction.multiplier}</span>
+              <span>{transaction.costMultiplier}</span>
             </div>
             <Tooltip>
               <TooltipTrigger>

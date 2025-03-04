@@ -71,6 +71,7 @@ export default async function Page(props: Props) {
       'permissions',
       'tvlInfo',
       'tvlConfig',
+      'trackedTxsConfig',
     ],
     optional: [
       'chainConfig',

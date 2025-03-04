@@ -253,6 +253,7 @@ function toBackendTrackedTxsConfig(
               formula: 'functionCall',
               address: config.query.address,
               selector: config.query.selector,
+              signature: config.query.functionSignature,
             },
           }
         }
