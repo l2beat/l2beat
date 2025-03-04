@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { cn } from '~/utils/cn'
 
