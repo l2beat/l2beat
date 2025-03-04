@@ -194,8 +194,8 @@ export async function getScalingProjectEntry(
     rosette: getScalingRosette(project),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig: isProjectOther(project.scalingInfo)
-      ? project.scalingStage
-      : { stage: 'NotApplicable' as const },
+      ? { stage: 'NotApplicable' as const }
+      : project.scalingStage,
   }
   const daSolution = await getScalingDaSolution(project)
 
