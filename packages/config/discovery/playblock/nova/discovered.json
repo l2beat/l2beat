@@ -37,6 +37,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
         "$implementation": [
@@ -182,6 +183,7 @@
         }
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
         "$implementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1",
@@ -232,6 +234,7 @@
         }
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
         "$implementation": "0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb",
@@ -257,6 +260,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148392,
+      "sinceBlock": 75267048,
       "values": { "$immutable": true }
     },
     {
@@ -294,6 +298,7 @@
         }
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": { "$immutable": true },
       "derivedName": ""
     },
@@ -306,6 +311,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148409,
+      "sinceBlock": 75267056,
       "values": { "$immutable": true }
     },
     {
@@ -326,6 +332,7 @@
         }
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
         "$implementation": "0x8F77B0d1e891C87F2987Afb476d74e2a71341b0d",
@@ -364,6 +371,7 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1707828599,
+      "sinceBlock": 47798413,
       "values": { "$immutable": true }
     },
     {
@@ -375,6 +383,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148416,
+      "sinceBlock": 75267060,
       "values": { "$immutable": true }
     },
     {
@@ -386,6 +395,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148424,
+      "sinceBlock": 75267067,
       "values": {
         "$immutable": true,
         "prover0": "0x19bD7120cD19D6BE6D21f987544e404e47608c16",
@@ -412,6 +422,7 @@
         }
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
@@ -460,6 +471,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
@@ -509,6 +521,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
         "$implementation": "0xFc9474Db7E2Be79429d456F52741cA18FB7b05c5",
@@ -562,6 +575,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148400,
+      "sinceBlock": 75267052,
       "values": { "$immutable": true }
     },
     {
@@ -582,6 +596,7 @@
         }
       ],
       "sinceTimestamp": 1709904018,
+      "sinceBlock": 55663578,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",

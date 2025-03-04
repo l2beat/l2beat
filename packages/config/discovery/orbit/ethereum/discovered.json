@@ -17,6 +17,7 @@
         }
       ],
       "sinceTimestamp": 1708655927,
+      "sinceBlock": 19287370,
       "values": {
         "$admin": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
         "$implementation": "0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af",
@@ -83,6 +84,7 @@
       ],
       "ignoreInWatchMode": ["depositCount", "transactionCount"],
       "sinceTimestamp": 1603950507,
+      "sinceBlock": 11149847,
       "values": {
         "$implementation": "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454",
         "bridgingFee": 0,
@@ -145,6 +147,7 @@
         }
       ],
       "sinceTimestamp": 1649902126,
+      "sinceBlock": 14580778,
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -168,6 +171,7 @@
         }
       ],
       "sinceTimestamp": 1649903842,
+      "sinceBlock": 14580894,
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -191,6 +195,7 @@
         }
       ],
       "sinceTimestamp": 1649902155,
+      "sinceBlock": 14580782,
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -212,6 +217,7 @@
         }
       ],
       "sinceTimestamp": 1708655543,
+      "sinceBlock": 19287339,
       "values": { "$immutable": true }
     },
     {
@@ -227,6 +233,7 @@
         }
       ],
       "sinceTimestamp": 1649905062,
+      "sinceBlock": 14580990,
       "values": {
         "$admin": "0xFb504CD4eD46024B83c4337044995CF112205f18",
         "$implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -263,6 +270,7 @@
         }
       ],
       "sinceTimestamp": 1649901966,
+      "sinceBlock": 14580766,
       "values": {
         "$immutable": true,
         "owner": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"

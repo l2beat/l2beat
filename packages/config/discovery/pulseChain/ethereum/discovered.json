@@ -21,6 +21,7 @@
       ],
       "ignoreInWatchMode": ["getCurrentDay"],
       "sinceTimestamp": 1684141499,
+      "sinceBlock": 17264177,
       "values": {
         "$admin": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
         "$implementation": "0xB7DF1E00ae030e966E635ede273625240546B873",
@@ -62,6 +63,7 @@
         }
       ],
       "sinceTimestamp": 1684140779,
+      "sinceBlock": 17264119,
       "values": {
         "$admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "$implementation": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
@@ -106,6 +108,7 @@
         "0x55a672aa33e48959212349f94f7522a8a142bc17931854f79636d4564226b7b3"
       ],
       "sinceTimestamp": 1684141547,
+      "sinceBlock": 17264181,
       "values": {
         "$immutable": true,
         "bridge": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
@@ -119,6 +122,7 @@
         "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
       ],
       "sinceTimestamp": 1684141535,
+      "sinceBlock": 17264180,
       "values": {
         "$immutable": true,
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
@@ -133,6 +137,7 @@
         "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
       ],
       "sinceTimestamp": 1684141523,
+      "sinceBlock": 17264179,
       "values": {
         "$immutable": true,
         "bridgeContract": "0x0000000000000000000000000000000000000000",
@@ -165,6 +170,7 @@
         }
       ],
       "sinceTimestamp": 1684140863,
+      "sinceBlock": 17264125,
       "values": {
         "$admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "$implementation": "0xe98699957d3504aCD57ffF861E4b77b57eB02467",

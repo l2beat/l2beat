@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
@@ -56,6 +57,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
+      "sinceBlock": 19968607,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -79,6 +81,7 @@
       ],
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1724975099,
+      "sinceBlock": 20637601,
       "values": {
         "$immutable": true,
         "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
@@ -99,6 +102,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -116,6 +120,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1737366215,
+      "sinceBlock": 21664885,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0xf034dE8BD85A434d9Dc68F03382B589f86791425",
@@ -190,6 +195,7 @@
       ],
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
@@ -277,6 +283,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
+      "sinceBlock": 16780617,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -311,6 +318,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732698767,
+      "sinceBlock": 21278117,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -350,6 +358,7 @@
       ],
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
@@ -396,6 +405,7 @@
         }
       ],
       "sinceTimestamp": 1685377355,
+      "sinceBlock": 17365800,
       "values": {
         "$immutable": true,
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -422,6 +432,7 @@
         }
       ],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -524,6 +535,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420875,
+      "sinceBlock": 19185554,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -559,6 +571,7 @@
         }
       ],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0x2749920B02CF0911264EdE2BD455860b46d042ea",
@@ -605,6 +618,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375",
@@ -725,6 +739,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
+      "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -766,6 +781,7 @@
       ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
@@ -857,6 +873,7 @@
         }
       ],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$immutable": true,
         "addressManager": "0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70",
@@ -910,6 +927,7 @@
         }
       ],
       "sinceTimestamp": 1705954799,
+      "sinceBlock": 19064589,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -958,6 +976,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
@@ -1010,6 +1029,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
+      "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -1042,6 +1062,7 @@
       ],
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1724975087,
+      "sinceBlock": 20637600,
       "values": {
         "$immutable": true,
         "challengePeriod": 86400,
@@ -1067,6 +1088,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
@@ -1116,6 +1138,7 @@
         }
       ],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$immutable": true,
         "owner": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"
@@ -1139,6 +1162,7 @@
         }
       ],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -1173,6 +1197,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
+      "sinceBlock": 19185517,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1212,6 +1237,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1735038311,
+      "sinceBlock": 21471915,
       "values": {
         "$admin": "0xE7c9a9DddAb8a384c38D721DE64E4222Fe76DF75",
         "$implementation": "0xcfF35e3C0B8D197A6Ce10802cd649FBb9957dA07",
@@ -1258,6 +1284,7 @@
         }
       ],
       "sinceTimestamp": 1724111315,
+      "sinceBlock": 20566057,
       "values": {
         "$immutable": true,
         "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -1283,6 +1310,7 @@
         }
       ],
       "sinceTimestamp": 1624400033,
+      "sinceBlock": 12686687,
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
@@ -1308,6 +1336,7 @@
         }
       ],
       "sinceTimestamp": 1733134751,
+      "sinceBlock": 21314185,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",

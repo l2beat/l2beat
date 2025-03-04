@@ -13,6 +13,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148899,
+      "sinceBlock": 20569170,
       "values": { "$immutable": true }
     },
     {
@@ -38,6 +39,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1730458499,
+      "sinceBlock": 21092332,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -61,6 +63,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148875,
+      "sinceBlock": 20569168,
       "values": { "$immutable": true }
     },
     {
@@ -72,6 +75,7 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
+      "sinceBlock": 18736154,
       "values": { "$immutable": true }
     },
     {
@@ -83,6 +87,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148863,
+      "sinceBlock": 20569167,
       "values": { "$immutable": true }
     },
     {
@@ -106,6 +111,7 @@
         }
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x02E05A9245C5853f895daDcc3A8216C953C8736B",
@@ -161,6 +167,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
@@ -209,6 +216,7 @@
         }
       ],
       "sinceTimestamp": 1710845159,
+      "sinceBlock": 19468287,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0",
@@ -238,6 +246,7 @@
       ],
       "description": "Performs swaps via Curve or UniswapV3 to serve instant withdrawals from the reETH RealVault.",
       "sinceTimestamp": 1715706239,
+      "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
         "MIN_TWAP_DURATION": 3600,
@@ -270,6 +279,7 @@
         }
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
@@ -338,6 +348,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A",
@@ -415,6 +426,7 @@
         "getTotalInvestedValue"
       ],
       "sinceTimestamp": 1715706239,
+      "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
@@ -439,6 +451,7 @@
       ],
       "ignoreInWatchMode": ["getTokenPrice"],
       "sinceTimestamp": 1710542279,
+      "sinceBlock": 19443364,
       "values": {
         "$immutable": true,
         "getTokenPrice": "1024273726657649746",
@@ -458,6 +471,7 @@
         "getStETHWithdrawalStatus"
       ],
       "sinceTimestamp": 1715706239,
+      "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
         "getInvestedValue": "273429077664250434784",
@@ -496,6 +510,7 @@
         }
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x19431dc37098877486532250FB3158140717C00C",
@@ -530,6 +545,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148911,
+      "sinceBlock": 20569171,
       "values": {
         "$immutable": true,
         "prover0": "0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5",
@@ -584,6 +600,7 @@
         }
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$immutable": true,
         "owner": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
@@ -691,6 +708,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1711489163,
+      "sinceBlock": 19521321,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -733,6 +751,7 @@
         }
       ],
       "sinceTimestamp": 1715552075,
+      "sinceBlock": 19856851,
       "values": {
         "$admin": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "$implementation": "0x977cA9732E618D32552BA16a52f258cEFadf970a",
@@ -757,6 +776,7 @@
       ],
       "ignoreInWatchMode": ["tokenPrice", "totalSupply"],
       "sinceTimestamp": 1710542279,
+      "sinceBlock": 19443364,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -840,6 +860,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
         "$implementation": [
@@ -970,6 +991,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148887,
+      "sinceBlock": 20569169,
       "values": { "$immutable": true }
     },
     {
@@ -994,6 +1016,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1715303135,
+      "sinceBlock": 19836249,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1050,6 +1073,7 @@
         }
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
@@ -1103,6 +1127,7 @@
         }
       ],
       "sinceTimestamp": 1710580715,
+      "sinceBlock": 19446518,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
@@ -1133,6 +1158,7 @@
       "description": "This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.",
       "ignoreInWatchMode": ["getBalance"],
       "sinceTimestamp": 1715706239,
+      "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
         "getBalance": "1987746935573135154",
@@ -1168,6 +1194,7 @@
         "rebaseTime"
       ],
       "sinceTimestamp": 1715706239,
+      "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
@@ -1209,6 +1236,7 @@
         }
       ],
       "sinceTimestamp": 1710845159,
+      "sinceBlock": 19468287,
       "values": {
         "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
         "$implementation": "0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848",

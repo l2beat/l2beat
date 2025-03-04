@@ -1,3 +1,221 @@
+Generated with discovered.json: 0xe1780c76231014a5b07309d390d3cc87654699ef
+
+# Diff at Tue, 04 Mar 2025 10:39:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21766618
+- current block number: 21766618
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766618 (main branch discovery), not current.
+
+```diff
+    contract StakingManager (0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227) {
+    +++ description: Manages strategies to be used with funds forwarded from the EdgelessDeposit contract.
+      sinceBlock:
++        19486054
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x1F58949AB4C6A65C4055f45fdF9297C5F216CD95) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        21228198
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x251E34E4644D06b319AD39c602b857E47cCa13C3) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        21228197
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: This contract implements view only utilities for validators.
+      sinceBlock:
++        18736154
+    }
+```
+
+```diff
+    contract OrbitProxyAdmin (0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006) {
+    +++ description: None
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract EdgelessMultisig (0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4) {
+    +++ description: None
+      sinceBlock:
++        19543369
+    }
+```
+
+```diff
+    contract Outbox (0x5e8749760c5051fF80b73319cCf4d05ef9959563) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x6119D59799E83329847de25Dc787A0D9ab4c0323) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        21228195
+    }
+```
+
+```diff
+    contract ERC20Gateway (0x6a1B2ea25c3099CAFcbd4E60a3Ae251E52B69e78) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      sinceBlock:
++        19486759
+    }
+```
+
+```diff
+    contract Bridge (0x6B595398152999bBc759D5D8ed8169793F915488) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract EdgelessDeposit (0x7E0bc314535f430122caFEF18eAbd508d62934bf) {
+    +++ description: Receives deposits and issues ewETH tokens. Funds are forwarded to the StakingManger contract.
+      sinceBlock:
++        19486056
+    }
+```
+
+```diff
+    contract RollupProxy (0x890025891508a463A636f81D2f532a97210240de) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract ChallengeManager (0x893057442A952E3254CA53d007AD6BBB502f557e) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract CustomGateway (0x99790790B030CF116efed1c7577e2262072EfCc9) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      sinceBlock:
++        19486759
+    }
+```
+
+```diff
+    contract StrategiesProxyAdmin (0xa5f13fbc57f14Bf322C900Cae0F67b4819364281) {
+    +++ description: None
+      sinceBlock:
++        19486051
+    }
+```
+
+```diff
+    contract OneStepProver0 (0xaac292Cb9a205A140003775529181787fdbc4DC6) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        21228194
+    }
+```
+
+```diff
+    contract GatewayRouter (0xb47D14b4282DF795E036e9Ea43E54C31FCB0eCAC) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      sinceBlock:
++        19486759
+    }
+```
+
+```diff
+    contract RenzoStrategy (0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9) {
+    +++ description: Deposits funds into the Renzo protocol.
+      sinceBlock:
++        19723689
+    }
+```
+
+```diff
+    contract EthStrategy (0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b) {
+    +++ description: Deposits funds into the Lido protocol.
+      sinceBlock:
++        19486059
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xc213d433802ea473e23623476b26FB12e9B4eFe6) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract WrappedToken (0xcD0aa40948c662dEDd9F157085fd6369A255F2f7) {
+    +++ description: None
+      sinceBlock:
++        19486056
+    }
+```
+
+```diff
+    contract OneStepProverMath (0xE6068c35d4FB1899b9419cE3e7B66D318C652847) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        21228196
+    }
+```
+
+```diff
+    contract Inbox (0xf51551afD112a50Fc5EDa0454111078fE6E6096E) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xFa213CdA43f879FfaF17170B6E3b3AbE9900cAB1) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sinceBlock:
++        19486756
+    }
+```
+
+```diff
+    contract SequencerInbox (0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sinceBlock:
++        19486756
+    }
+```
+
 Generated with discovered.json: 0xe8de6b916237d4b5199015ef19e7df0591b2bf16
 
 # Diff at Thu, 27 Feb 2025 11:45:36 GMT:

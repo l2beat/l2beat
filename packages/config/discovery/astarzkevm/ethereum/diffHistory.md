@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xc90d0988880b458ae2229cb225f6a09e9953466f
+
+# Diff at Tue, 04 Mar 2025 10:38:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      sinceBlock:
++        19505052
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d) {
+    +++ description: None
+      sinceBlock:
++        19284768
+    }
+```
+
+```diff
+    contract Validium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.
+      sinceBlock:
++        19285389
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC) {
+    +++ description: None
+      sinceBlock:
++        19269852
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).
+      sinceBlock:
++        19284769
+    }
+```
+
+```diff
+    contract AstarMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      sinceBlock:
++        19269922
+    }
+```
+
 Generated with discovered.json: 0xd6d3ad9130003a1fb440cca2ee18dd0d34eae8d7
 
 # Diff at Thu, 27 Feb 2025 11:45:23 GMT:

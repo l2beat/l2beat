@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x9bd8784e9dd852021cc156e27ed42e1027870000
+
+# Diff at Tue, 04 Mar 2025 10:42:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 19948557
+- current block number: 19948557
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19948557 (main branch discovery), not current.
+
+```diff
+    contract  (0x2D61DCDD36F10b22176E0433B86F74567d529aAa) {
+    +++ description: None
+      sinceBlock:
++        5878
+    }
+```
+
+```diff
+    contract  (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      sinceBlock:
++        5880
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      sinceBlock:
++        5875
+    }
+```
+
+```diff
+    contract  (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      sinceBlock:
++        5879
+    }
+```
+
+```diff
+    contract  (0x6F475642a6e85809B1c36Fa62763669b1b48DD5B) {
+    +++ description: None
+      sinceBlock:
++        5886
+    }
+```
+
+```diff
+    contract LayerZeroMultisig_pzkevm (0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827) {
+    +++ description: None
+      sinceBlock:
++        11336913
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sinceBlock:
++        6150
+    }
+```
+
+```diff
+    contract Endpoint (0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4) {
+    +++ description: None
+      sinceBlock:
++        5873
+    }
+```
+
+```diff
+    contract  (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      sinceBlock:
++        5885
+    }
+```
+
+```diff
+    contract  (0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb) {
+    +++ description: None
+      sinceBlock:
++        6153
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0xFe7C30860D01e28371D40434806F4A8fcDD3A098) {
+    +++ description: None
+      sinceBlock:
++        5882
+    }
+```
+
 Generated with discovered.json: 0xcc556d28c52d1f2f5ceecfbedd716445ee421c78
 
 # Diff at Fri, 14 Feb 2025 10:21:43 GMT:

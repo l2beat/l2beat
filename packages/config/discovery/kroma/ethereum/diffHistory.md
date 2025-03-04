@@ -1,3 +1,213 @@
+Generated with discovered.json: 0x8dea360bfd0fc4e17ec64d5ce6d2177a31d84108
+
+# Diff at Tue, 04 Mar 2025 10:39:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21845178
+- current block number: 21845178
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21845178 (main branch discovery), not current.
+
+```diff
+    contract ZKProofVerifier (0x005DDC466C804c79adB079c120347dDE48132105) {
+    +++ description: None
+      sinceBlock:
++        21692210
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time).
+      sinceBlock:
++        18067271
+    }
+```
+
+```diff
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+      sinceBlock:
++        18067277
+    }
+```
+
+```diff
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      sinceBlock:
++        21010651
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        18067269
+    }
+```
+
+```diff
+    contract ZKMerkleTrie (0x339208824010425cBE73201ceD4372308ACD610B) {
+    +++ description: Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.
+      sinceBlock:
++        18018290
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sinceBlock:
++        18067268
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sinceBlock:
++        20233410
+    }
+```
+
+```diff
+    contract KromaSecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+      sinceBlock:
++        18067275
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        18067272
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        18018264
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      sinceBlock:
++        18018255
+    }
+```
+
+```diff
+    contract ZkVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block.
+      sinceBlock:
++        18018266
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the 0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.
+      sinceBlock:
++        18067274
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      sinceBlock:
++        18583133
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        18067273
+    }
+```
+
+```diff
+    contract AssetManager (0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3) {
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+      sinceBlock:
++        21010650
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+      sinceBlock:
++        18067278
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sinceBlock:
++        20573748
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      sinceBlock:
++        21031662
+    }
+```
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      sinceBlock:
++        18067276
+    }
+```
+
+```diff
+    contract KromaRewardVaultMultisig (0xe57E217d8ed498992452791622711B866403E950) {
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+      sinceBlock:
++        20423009
+    }
+```
+
+```diff
+    contract Poseidon2 (0xFd234971881a7c72965175fA8E438c97B2Dcd273) {
+    +++ description: Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.
+      sinceBlock:
++        18018289
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.
+      sinceBlock:
++        18067270
+    }
+```
+
 Generated with discovered.json: 0xe15e14bdcec30d7ffc6b10c12fcc7511556fd7dc
 
 # Diff at Thu, 27 Feb 2025 11:45:52 GMT:
