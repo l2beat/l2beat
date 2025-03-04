@@ -1,8 +1,8 @@
 import type { ColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
+import Link from 'next/link'
 import { EM_DASH } from '~/consts/characters'
 import { IndexCell } from '../../cells/index-cell'
-import Link from 'next/link'
 
 export interface CommonProjectColumnsEntry {
   slug: string
