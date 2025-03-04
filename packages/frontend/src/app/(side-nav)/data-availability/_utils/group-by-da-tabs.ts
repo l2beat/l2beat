@@ -9,9 +9,12 @@ export type TabbedDaEntries<T extends CommonDaEntry> = {
 export function groupByDaTabs<T extends CommonDaEntry>(
   projects: T[],
 ): TabbedDaEntries<T> {
-  const [publicSystems, custom] = partition(projects, (p) => p.tab === 'public')
+  const [publicSystems, customSystems] = partition(
+    projects,
+    (p) => p.tab === 'public',
+  )
   return {
-    publicSystems: publicSystems,
-    customSystems: custom,
+    publicSystems,
+    customSystems,
   }
 }
