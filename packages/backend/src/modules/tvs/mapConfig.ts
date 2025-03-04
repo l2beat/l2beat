@@ -11,7 +11,6 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { getAggLayerTokens } from './providers/aggLayer'
 import { getElasticChainTokens } from './providers/elasticChain'
-import { tokenToTicker } from './providers/tickers'
 import {
   type AmountConfig,
   type AmountFormula,
