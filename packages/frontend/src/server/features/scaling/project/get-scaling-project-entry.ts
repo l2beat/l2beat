@@ -1,6 +1,6 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
 import { isVerified, layer2s } from '@l2beat/config'
-import { compact, isEmpty } from 'lodash'
+import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -153,9 +153,6 @@ async function getHeader(project: ScalingProject) {
         }
       : undefined,
     badges: project.badges,
-    gasTokens:
-      !project.config.gasTokens || isEmpty(project.config.gasTokens)
-        ? ['ETH']
-        : project.config.gasTokens,
+    gasTokens: project.chainConfig?.gasTokens,
   }
 }

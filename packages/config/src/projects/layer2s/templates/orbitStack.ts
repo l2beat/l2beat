@@ -451,6 +451,11 @@ function orbitStackCommon(
     (t) => !templateVars.untrackedGasTokens?.includes(t),
   )
 
+  const allGasTokens = uniq([
+    ...(templateVars.chainConfig?.gasTokens ?? []),
+    ...(templateVars.untrackedGasTokens ?? []),
+  ])
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
@@ -509,10 +514,7 @@ function orbitStackCommon(
     },
     chainConfig: {
       ...(templateVars.chainConfig as ChainConfig),
-      gasTokens: uniq([
-        ...(templateVars.chainConfig?.gasTokens ?? []),
-        ...(templateVars.untrackedGasTokens ?? []),
-      ]) ?? ['ETH'],
+      gasTokens: allGasTokens.length > 0 ? allGasTokens : ['ETH'],
     },
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,

@@ -1,4 +1,5 @@
 import { pluralize } from '@l2beat/shared-pure'
+import { isEmpty } from 'lodash'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -62,10 +63,12 @@ export function ScalingProjectStats({ project, className }: Props) {
           )
         }
       />
-      <ProjectStat
-        title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
-        value={project.header.gasTokens.join(', ')}
-      />
+      {project.header.gasTokens && !isEmpty(project.header.gasTokens) && (
+        <ProjectStat
+          title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
+          value={project.header.gasTokens.join(', ')}
+        />
+      )}
       <HorizontalSeparator className="col-span-full max-md:hidden" />
       {project.stageConfig.stage !== 'NotApplicable' ? (
         <ProjectStat
