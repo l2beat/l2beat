@@ -10,7 +10,7 @@ export const penchain: Layer2 = upcomingL2({
     name: 'Pen chain',
     slug: 'penchain',
     description:
-      'Pen Chain is a zkEVM blockchain powered by zkstack and secured by Ethereum. It is dedicated to mainstream adoption of Web3 gaming, DeFi, and SocialFi.',
+      'Pen Chain is a zkEVM blockchain powered by ZK stack and secured by Ethereum. It is dedicated to mainstream adoption of Web3 gaming, DeFi, and SocialFi.',
     purposes: ['Gaming'],
     category: 'ZK Rollup',
     stack: 'ZK Stack',
