@@ -4,9 +4,11 @@ import type {
   Project,
   ProjectTvlEscrow,
 } from '@l2beat/config'
+import type { RpcClient } from '@l2beat/shared'
 import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { createToken } from '../mapConfig'
 import { type Token, TokenId } from '../types'
@@ -20,9 +22,20 @@ export async function getElasticChainTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
   escrow: ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
-  multicallClient: MulticallClient,
+  rpcClient: RpcClient,
 ): Promise<Token[]> {
-  const l2Tokens = escrow.tokens.filter((t) => t.address !== undefined)
+  const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
+    toMulticallConfigEntry(m),
+  )
+  const multicallClient = new MulticallClient(rpcClient, multicallConfig)
+
+  const l2Tokens = escrow.tokens.filter(
+    (t) =>
+      t.address !== undefined &&
+      !escrow.sharedEscrow.tokensToAssignFromL1?.includes(t.symbol),
+  )
+
+  console.log('LENGTH', l2Tokens.length)
 
   const encoded: MulticallRequest[] = l2Tokens.map((token) => ({
     address: escrow.sharedEscrow.l2BridgeAddress,
@@ -31,8 +44,8 @@ export async function getElasticChainTokens(
     ),
   }))
 
-  // TODO: latest block number
-  const responses = await multicallClient.multicall(encoded, 1296670)
+  const block = await rpcClient.getLatestBlockNumber()
+  const responses = await multicallClient.multicall(encoded, block)
 
   const l2TokensTvsConfigs = responses
     .map((response, index) => {
@@ -104,5 +117,7 @@ export async function getElasticChainTokens(
     }
   }
 
-  return [etherOnL2, ...l2TokensTvsConfigs, ...tokensToAssignFromL1]
+  console.log(tokensToAssignFromL1)
+
+  return [...l2TokensTvsConfigs, etherOnL2, ...tokensToAssignFromL1]
 }

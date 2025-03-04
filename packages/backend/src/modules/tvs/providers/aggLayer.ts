@@ -8,10 +8,12 @@ import {
 } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { type Token, TokenId } from '../types'
 import { tokenToTicker } from './tickers'
+import type { RpcClient } from '@l2beat/shared'
+import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 
 export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
@@ -22,8 +24,14 @@ export async function getAggLayerTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
   tokens: (LegacyToken & { address: EthereumAddress })[],
-  multicallClient: MulticallClient,
+  rpcClient: RpcClient,
 ): Promise<Token[]> {
+  const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
+    toMulticallConfigEntry(m),
+  )
+
+  const multicallClient = new MulticallClient(rpcClient, multicallConfig)
+
   const encoded: MulticallRequest[] = tokens.map((token) => ({
     address: AGGLAYER_L2BRIDGE_ADDRESS,
     data: Bytes.fromHex(

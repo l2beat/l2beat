@@ -6,9 +6,9 @@ import {
   type ProjectTvlEscrow,
   tokenList,
 } from '@l2beat/config'
+import type { RpcClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
-import type { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import { getAggLayerTokens } from './providers/aggLayer'
 import { getElasticChainTokens } from './providers/elasticChain'
 import { tokenToTicker } from './providers/tickers'
@@ -29,25 +29,25 @@ import {
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
-  multicallClient?: MulticallClient,
+  rpcClient?: RpcClient,
 ): Promise<TvsConfig> {
   const tokens: Token[] = []
 
   for (const escrow of project.tvlConfig.escrows) {
     if (escrow.sharedEscrow) {
-      if (multicallClient === undefined) {
+      if (rpcClient === undefined) {
         console.warn(`No Multicall passed, sharedEscrow support is not enabled`)
         continue
       }
 
       if (escrow.sharedEscrow.type === 'AggLayer') {
-        console.log(`Querying for shared escrow L2 tokens addresses`)
+        console.log(`Querying for AggLayer L2 tokens addresses`)
         const aggLayerL2Tokens = await getAggLayerTokens(
           project,
           chain,
           // @ts-ignore only non-native tokens
           escrow.tokens.filter((t) => t.address),
-          multicallClient,
+          rpcClient,
         )
 
         // TODO: add support for L1 assets
@@ -56,33 +56,30 @@ export async function mapConfig(
       }
 
       if (escrow.sharedEscrow.type === 'ElasticChain') {
-        console.log(`Querying for shared escrow L2 tokens addresses`)
+        console.log(`Querying for ElasticChain L2 tokens addresses`)
 
         const elasticChainTokens = await getElasticChainTokens(
           project,
           chain,
           // TODO: fix types
           escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
-          multicallClient,
+          rpcClient,
         )
 
-        console.log(elasticChainTokens)
-        // TODO: add support for L1 assets
-        // add support for native token
         tokens.push(...elasticChainTokens)
       }
-    }
+    } else {
+      for (const legacyToken of escrow.tokens) {
+        if (!legacyToken.id.endsWith('native')) {
+          assert(
+            legacyToken.address,
+            `Token address is required ${legacyToken.id}`,
+          )
+        }
 
-    for (const legacyToken of escrow.tokens) {
-      if (!legacyToken.id.endsWith('native')) {
-        assert(
-          legacyToken.address,
-          `Token address is required ${legacyToken.id}`,
-        )
+        const token = createToken(legacyToken, project, chain, escrow)
+        tokens.push(token)
       }
-
-      const token = createToken(legacyToken, project, chain, escrow)
-      tokens.push(token)
     }
   }
 
