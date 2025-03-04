@@ -8,7 +8,7 @@ import type {
   StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { isVerified, layer2s, layer3s } from '@l2beat/config'
+import { layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
@@ -18,6 +18,7 @@ import {
   isActivityChartDataEmpty,
   isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
+import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -239,20 +240,26 @@ export async function getScalingProjectEntry(
 
   const hostChain =
     project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
-      ? layer2s.find((layer2) => layer2.id === project.scalingInfo.hostChain.id)
+      ? await ps.getProject({
+          id: project.scalingInfo.hostChain.id,
+          select: ['scalingTechnology', 'statuses'],
+          optional: ['contracts'],
+        })
       : undefined
-  const isHostChainVerified =
-    hostChain !== undefined ? isVerified(hostChain) : true
+  const isHostChainVerified = !hostChain?.statuses.isUnverified
   const hostChainWarning = hostChain
-    ? { hostChain: hostChain.display }
+    ? {
+        hostChainName: hostChain.name,
+        hostChainSlug: hostChain.slug,
+      }
     : undefined
-  const hostChainRisksSummary = hostChain
-    ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
-    : hostChain
+  const hostChainRisksSummary =
+    hostChain && getScalingRiskSummarySection(hostChain, isHostChainVerified)
   const hostChainWarningWithRiskCount =
     hostChain && hostChainRisksSummary
       ? {
-          hostChain: hostChain.display,
+          hostChainName: hostChain.name,
+          hostChainSlug: hostChain.slug,
           riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
             .length,
         }
@@ -334,7 +341,7 @@ export async function getScalingProjectEntry(
   }
 
   const riskSummary = getScalingRiskSummarySection(
-    legacy,
+    project,
     !project.statuses.isUnverified,
   )
   if (riskSummary.riskGroups.length > 0) {
@@ -365,7 +372,7 @@ export async function getScalingProjectEntry(
         id: 'risk-analysis',
         title: 'Risk analysis',
         l2: {
-          name: hostChain.display.name,
+          name: hostChain.name,
           risks: common.rosette.host,
         },
         l3: {
@@ -373,7 +380,7 @@ export async function getScalingProjectEntry(
           risks: common.rosette.self,
         },
         combined: common.rosette.stacked,
-        warning: legacy.display.warning,
+        warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
         isVerified: !project.statuses.isUnverified,
         isUnderReview: project.statuses.isUnderReview,
@@ -387,7 +394,7 @@ export async function getScalingProjectEntry(
         title: 'Risk analysis',
         rosetteType: 'pizza',
         rosetteValues: common.rosette.self,
-        warning: legacy.display.warning,
+        warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
         isVerified: !project.statuses.isUnverified,
         isUnderReview: project.statuses.isUnderReview,

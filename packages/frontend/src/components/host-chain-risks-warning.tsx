@@ -1,13 +1,14 @@
-import type { ScalingProjectDisplay } from '@l2beat/config'
 import { ProjectDetailsRelatedProjectBanner } from './project-details-related-project-banner'
 
 export type HostChainRisksWarningProps = {
-  hostChain: ScalingProjectDisplay
+  hostChainName: string
+  hostChainSlug: string
   riskCount?: number
 }
 
 export function HostChainRisksWarning({
-  hostChain,
+  hostChainName,
+  hostChainSlug,
   riskCount,
 }: HostChainRisksWarningProps) {
   const text = riskCount
@@ -17,7 +18,7 @@ export function HostChainRisksWarning({
   return (
     <ProjectDetailsRelatedProjectBanner
       text={text}
-      project={{ name: hostChain.name, slug: hostChain.slug, type: 'scaling' }}
+      project={{ name: hostChainName, slug: hostChainSlug, type: 'scaling' }}
     />
   )
 }

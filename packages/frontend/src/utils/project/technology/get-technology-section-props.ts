@@ -45,10 +45,7 @@ export function getTechnologySectionProps2(
   const areAllUnderReview = items.every((item) => item.isUnderReview)
 
   return {
-    isUnderReview:
-      project.statuses.isUnderReview ||
-      !!project.scalingTechnology.isUnderReview ||
-      areAllUnderReview,
+    isUnderReview: project.statuses.isUnderReview || areAllUnderReview,
     items,
   }
 }
