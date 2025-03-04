@@ -3,6 +3,21 @@
   "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.",
   "category": "core",
   "fields": {
+    "$admin": {
+      "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.",
+      "severity": "HIGH",
+      "target": {
+        "permissions": [
+          {
+            "type": "upgrade",
+            "delay": "{{getUpgradeActivationDelay}}"
+          },
+          {
+            "type": "governStarknet"
+          }
+        ]
+      }
+    },
     "isFinalized": {
       "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade).",
       "severity": "HIGH"
@@ -40,19 +55,6 @@
         "permissions": [
           {
             "type": "operateStarknet"
-          }
-        ]
-      }
-    },
-    "governors": {
-      "handler": {
-        "type": "starkWareGovernance",
-        "filterBy": "starknetIsGovernor"
-      },
-      "target": {
-        "permissions": [
-          {
-            "type": "governStarknet"
           }
         ]
       }

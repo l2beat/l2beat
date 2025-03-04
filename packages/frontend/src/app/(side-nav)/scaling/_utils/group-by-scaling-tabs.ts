@@ -6,7 +6,7 @@ export type TabbedScalingEntries<T extends CommonScalingEntry> = {
   others: T[]
 }
 
-export function groupByTabs<T extends CommonScalingEntry>(
+export function groupByScalingTabs<T extends CommonScalingEntry>(
   projects: T[],
 ): TabbedScalingEntries<T> {
   return {

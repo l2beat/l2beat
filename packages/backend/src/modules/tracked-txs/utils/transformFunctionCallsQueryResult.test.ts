@@ -32,7 +32,7 @@ const ADDRESS_1 = EthereumAddress.random()
 const SELECTOR_1 = '0x095e4'
 const ADDRESS_2 = EthereumAddress.random()
 const SELECTOR_2 = '0x915d9'
-const SINCE_TIMESTAMP = UnixTime.now()
+const SINCE_TIMESTAMP = UnixTime.now().toNumber()
 
 const timestamp = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
 const block = 1
@@ -398,7 +398,7 @@ function mockFunctionCall({
   subtype: TrackedTxsConfigSubtype
   address: EthereumAddress
   selector: string
-  sinceTimestamp: UnixTime
+  sinceTimestamp: number
   formula: TrackedTxFunctionCallConfig['formula']
 }): Configuration<
   TrackedTxConfigEntry & {
@@ -419,6 +419,7 @@ function mockFunctionCall({
         formula,
         address,
         selector,
+        signature: 'function foo()',
       },
     },
   }
@@ -439,7 +440,7 @@ function mockSharpSubmission({
   subtype: TrackedTxsConfigSubtype
   address: EthereumAddress
   selector: string
-  sinceTimestamp: UnixTime
+  sinceTimestamp: number
   formula: TrackedTxSharpSubmissionConfig['formula']
   programHashes: string[]
 }): Configuration<
@@ -483,7 +484,7 @@ function mockSharedBridgeCall({
   subtype: TrackedTxsConfigSubtype
   address: EthereumAddress
   selector: string
-  sinceTimestamp: UnixTime
+  sinceTimestamp: number
   formula: TrackedTxSharedBridgeConfig['formula']
   chainId: number
   signature: `function ${string}`

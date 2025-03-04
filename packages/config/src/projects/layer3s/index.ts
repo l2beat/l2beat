@@ -37,6 +37,7 @@ import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
 import { mxc } from './mxc'
+import { nums } from './nums'
 import { onchain } from './onchain'
 import { orb3 } from './orb3'
 import { oursong } from './oursong'
@@ -57,6 +58,7 @@ import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
 import { ungaii } from './ungaii'
 import { unite } from './unite'
+import { vessel } from './vessel'
 import { winr } from './winr'
 import { xai } from './xai'
 import { xrone } from './xrone'
@@ -114,7 +116,9 @@ export const layer3s: Layer3[] = [
   muster,
   mvchain,
   mxc,
+  nums,
   unite,
+  vessel,
   l3x,
   lumiterra,
   oursong,

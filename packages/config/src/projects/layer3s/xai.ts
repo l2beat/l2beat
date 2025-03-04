@@ -39,8 +39,8 @@ export const xai: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
-  gasTokens: { tracked: ['XAI'] },
   chainConfig: {
+    gasTokens: ['XAI'],
     name: 'xai',
     chainId: 660279,
     apis: [
