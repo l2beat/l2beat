@@ -157,7 +157,7 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   isArchived?: boolean
-  /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+  /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
   untrackedGasTokens?: string[]
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
