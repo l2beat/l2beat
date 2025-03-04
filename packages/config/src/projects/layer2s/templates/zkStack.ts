@@ -308,8 +308,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: {
-      ...(templateVars.chainConfig as ChainConfig),
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
     dataAvailability: {

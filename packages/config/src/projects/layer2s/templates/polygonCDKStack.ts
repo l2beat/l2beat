@@ -305,8 +305,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               stateUpdate: 'disabled',
             },
     },
-    chainConfig: {
-      ...(templateVars.chainConfig as ChainConfig),
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
     dataAvailability: {

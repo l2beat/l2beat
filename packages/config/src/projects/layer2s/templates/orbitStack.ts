@@ -512,8 +512,8 @@ function orbitStackCommon(
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
     },
-    chainConfig: {
-      ...(templateVars.chainConfig as ChainConfig),
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
       gasTokens: allGasTokens.length > 0 ? allGasTokens : ['ETH'],
     },
     technology: {

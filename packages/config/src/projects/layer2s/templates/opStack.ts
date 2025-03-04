@@ -281,8 +281,8 @@ function opStackCommon(
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
-    chainConfig: {
-      ...(templateVars.chainConfig as ChainConfig),
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
     config: {
