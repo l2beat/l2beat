@@ -94,7 +94,7 @@ export async function getScalingProjectEntry(
     | 'permissions'
     | 'tvlInfo'
     | 'tvlConfig',
-    'scalingDa' | 'chainConfig' | 'isUpcoming' | 'isArchived'
+    'scalingDa' | 'customDa' | 'chainConfig' | 'isUpcoming' | 'isArchived'
   >,
 ): Promise<ScalingProjectEntry> {
   /** @deprecated */

@@ -72,7 +72,13 @@ export default async function Page(props: Props) {
       'tvlInfo',
       'tvlConfig',
     ],
-    optional: ['chainConfig', 'scalingDa', 'isUpcoming', 'isArchived'],
+    optional: [
+      'chainConfig',
+      'scalingDa',
+      'customDa',
+      'isUpcoming',
+      'isArchived',
+    ],
   })
   if (!project) {
     notFound()

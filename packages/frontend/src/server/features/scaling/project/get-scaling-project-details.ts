@@ -23,7 +23,7 @@ import type { ScalingRosette } from './get-scaling-rosette-values'
 
 interface Params {
   legacy: Layer2 | Layer3
-  project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>
+  project: Project<'statuses' | 'scalingTechnology', 'scalingDa' | 'customDa'>
   projectsChangeReport: ProjectsChangeReport
   rosette: ScalingRosette
   daSolution?: DaSolution
@@ -78,7 +78,7 @@ export async function getScalingProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
-  const dataAvailabilitySection = getDataAvailabilitySection(legacy)
+  const dataAvailabilitySection = getDataAvailabilitySection(project)
   const sequencingSection = getSequencingSection(legacy)
   const trackedTransactions =
     legacy.type === 'layer2' ? getTrackedTransactions(legacy) : undefined
