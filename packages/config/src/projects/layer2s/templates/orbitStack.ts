@@ -502,10 +502,10 @@ function orbitStackCommon(
         },
       ),
       daTracking: getDaTracking(templateVars),
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
+      gasTokens: [
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
     },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
@@ -733,8 +733,8 @@ function getDaTracking(
     'batchPosters',
   )
 
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
 
   return usesBlobs
     ? [

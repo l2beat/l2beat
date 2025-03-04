@@ -20,9 +20,9 @@ export class ModelIdRegistry {
   buildMaps() {
     const addressFacts = this.knowledgeBase.getFacts('address', [])
     addressFacts.forEach((fact) => {
-      const modelId = fact.params[0] as string
-      const chain = fact.params[1] as string
-      const address = fact.params[2] as string
+      const modelId = String(fact.params[0])
+      const chain = String(fact.params[1])
+      const address = String(fact.params[2])
       const data: AddressData = {
         modelId,
         address,
@@ -33,8 +33,8 @@ export class ModelIdRegistry {
       this.dataById[modelId] = data
     })
     const updateData = (fact: ClingoFact, field: keyof AddressData) => {
-      const modelId = fact.params[0] as string
-      const value = fact.params[1] as string
+      const modelId = String(fact.params[0])
+      const value = String(fact.params[1])
       const data = this.dataById[modelId]
       if (data === undefined) {
         throw new Error(`No address data found for modelId ${modelId}`)

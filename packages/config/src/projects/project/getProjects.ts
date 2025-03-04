@@ -36,12 +36,15 @@ import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
   return refactored
-    .concat(layer2s.map(layer2Or3ToProject))
-    .concat(layer3s.map(layer2Or3ToProject))
+    .concat(layer2s.map((p) => layer2Or3ToProject(p, [])))
+    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s)))
     .concat(bridges.map(bridgeToProject))
 }
 
-function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
+function layer2Or3ToProject(
+  p: Layer2 | Layer3,
+  layer2s: Layer2[],
+): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -97,10 +100,26 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     scalingStage: p.stage,
     scalingRisks: {
       self: p.riskView,
-      host: undefined,
-      stacked: undefined,
+      host:
+        p.type === 'layer3'
+          ? layer2s.find((x) => x.id === p.hostChain)?.riskView
+          : undefined,
+      stacked: p.type === 'layer3' ? p.stackedRiskView : undefined,
     },
     scalingDa: p.dataAvailability,
+    scalingTechnology: {
+      warning: p.display.warning,
+      detailedDescription: p.display.detailedDescription,
+      architectureImage: p.display.architectureImage,
+      ...p.technology,
+      sequencingImage: p.display.sequencingImage,
+      stateDerivation: p.stateDerivation,
+      stateValidation: p.stateValidation,
+      stateValidationImage: p.display.stateValidationImage,
+      upgradesAndGovernance:
+        p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
+      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
+    },
     customDa: p.customDa,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],

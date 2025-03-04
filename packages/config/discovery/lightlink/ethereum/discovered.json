@@ -20,6 +20,7 @@
         }
       ],
       "sinceTimestamp": 1717522343,
+      "sinceBlock": 20019970,
       "values": {
         "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "$implementation": "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B",
@@ -74,6 +75,7 @@
         }
       ],
       "sinceTimestamp": 1717522307,
+      "sinceBlock": 20019967,
       "values": {
         "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "$implementation": "0x79B3E839333a74137e78b0DaF84FC12512a8c704",
@@ -114,6 +116,7 @@
         }
       ],
       "sinceTimestamp": 1692154319,
+      "sinceBlock": 17924532,
       "values": {
         "$immutable": true,
         "getMemberByIndex": [
@@ -145,6 +148,7 @@
         }
       ],
       "sinceTimestamp": 1692155207,
+      "sinceBlock": 17924604,
       "values": {
         "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "$implementation": "0x468b89D930ca7974196D7195033600B658011756",
@@ -180,6 +184,7 @@
         }
       ],
       "sinceTimestamp": 1692154667,
+      "sinceBlock": 17924561,
       "values": {
         "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "$implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
@@ -222,6 +227,7 @@
         }
       ],
       "sinceTimestamp": 1692155531,
+      "sinceBlock": 17924631,
       "values": {
         "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "$implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
@@ -258,6 +264,7 @@
       ],
       "ignoreInWatchMode": ["chainHead", "getHead"],
       "sinceTimestamp": 1717522271,
+      "sinceBlock": 20019964,
       "values": {
         "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "$implementation": "0xeFE38Bd58ADDf23eFab1FFa16312030384929289",
@@ -320,6 +327,7 @@
         "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
       ],
       "sinceTimestamp": 1717522283,
+      "sinceBlock": 20019965,
       "values": { "$immutable": true }
     }
   ],

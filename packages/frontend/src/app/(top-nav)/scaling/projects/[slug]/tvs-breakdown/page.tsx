@@ -75,9 +75,9 @@ export default async function Page(props: Props) {
         tvsBreakdownTimestamp={dataTimestamp}
       />
       <div className="md:mt-6 md:space-y-6">
-        {native.length > 0 && (
+        {canonical.length > 0 && (
           <PrimaryCard>
-            <NativelyMintedTable tokens={native} />
+            <CanonicallyBridgedTable tokens={canonical} />
           </PrimaryCard>
         )}
         {external.length > 0 && (
@@ -85,9 +85,9 @@ export default async function Page(props: Props) {
             <ExternallyBridgedTable tokens={external} />
           </PrimaryCard>
         )}
-        {canonical.length > 0 && (
+        {native.length > 0 && (
           <PrimaryCard>
-            <CanonicallyBridgedTable tokens={canonical} />
+            <NativelyMintedTable tokens={native} />
           </PrimaryCard>
         )}
       </div>

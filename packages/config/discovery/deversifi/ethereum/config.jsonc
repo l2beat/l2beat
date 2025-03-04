@@ -14,9 +14,7 @@
     "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "GovernanceMultisig",
     "0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a": "DeversiFiTreasuryMultisig"
   },
-  "sharedModules": {
-    "true": "shared-sharp-verifier"
-  },
+  "sharedModules": ["shared-sharp-verifier"],
   "overrides": {
     "StarkExchange": {
       "ignoreMethods": [

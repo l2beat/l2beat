@@ -32,7 +32,7 @@ export function RegularDaProjectSummary({ project }: Props) {
   ]
 
   return (
-    <FullPageHeader className="pb-4 pt-8 md:pb-8 md:pt-12">
+    <FullPageHeader className="pb-4 pt-8 md:pb-8 md:pt-12" type="project">
       <section id="summary" className="w-full">
         <ProjectHeader title={project.name} slug={project.slug} />
         {/* Details row */}

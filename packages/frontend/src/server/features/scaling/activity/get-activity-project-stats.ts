@@ -24,10 +24,10 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
   if (counts.length === 0) {
     return
   }
-  const summed = sumUopsCount(counts)
+  const uopsCount = sumUopsCount(counts)
 
   return {
-    uopsCount: summed,
+    uopsCount,
     lastDayUops: getLastDayUops(counts),
     uopsWeeklyChange: getUopsWeeklyChange(counts),
   }

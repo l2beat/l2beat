@@ -21,3 +21,5 @@ export * from './rpc-polkadot/types'
 
 export * from './rpc-celestia/CelestiaRpcClient'
 export * from './rpc-celestia/types'
+
+export * from './api-celestia/CelestiaApiClient'

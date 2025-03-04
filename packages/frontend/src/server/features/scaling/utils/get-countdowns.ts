@@ -1,6 +1,5 @@
 import type {
-  Layer2,
-  Layer3,
+  Project,
   ReasonForBeingInOther,
   ScalingProjectCategory,
 } from '@l2beat/config'
@@ -17,15 +16,16 @@ export interface ProjectCountdownsWithContext {
 }
 
 export function getCountdowns(
-  project: Layer2 | Layer3,
+  project: Project<'scalingInfo'>,
 ): ProjectCountdownsWithContext {
   return {
     otherMigration:
-      project.reasonsForBeingOther && project.display.category !== 'Other'
+      project.scalingInfo.reasonsForBeingOther &&
+      project.scalingInfo.type !== 'Other'
         ? {
             expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
-            pretendingToBe: project.display.category,
-            reasons: project.reasonsForBeingOther,
+            pretendingToBe: project.scalingInfo.type,
+            reasons: project.scalingInfo.reasonsForBeingOther,
           }
         : undefined,
   }

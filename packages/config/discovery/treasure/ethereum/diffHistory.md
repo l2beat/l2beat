@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x396a22ca2e149da9fe3eeae49ab5aca4509e4be8
+Generated with discovered.json: 0xa8cda07257c2c1f105ef5697c1975993aaa80d63
+
+# Diff at Tue, 04 Mar 2025 10:40:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21786543
+- current block number: 21786543
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786543 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      sinceBlock:
++        21081436
+    }
+```
+
+```diff
+    contract TreasureChainAdminMultisig (0x282370D1e925ee897CB29Cb3beC13aAe0743067C) {
+    +++ description: None
+      sinceBlock:
++        21273741
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sinceBlock:
++        20019826
+    }
+```
+
+```diff
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sinceBlock:
++        21236684
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) {
+    +++ description: None
+      sinceBlock:
++        21182547
+    }
+```
+
+Generated with discovered.json: 0x23b5ef04ac3ef5830ceae9e2a6847196b40fd3e3
 
 # Diff at Wed, 26 Feb 2025 10:33:15 GMT:
 

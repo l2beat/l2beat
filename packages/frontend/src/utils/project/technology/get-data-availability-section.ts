@@ -1,4 +1,4 @@
-import type { Layer2, Layer3 } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -6,7 +6,9 @@ import {
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
-export function getDataAvailabilitySection(project: Layer2 | Layer3) {
+export function getDataAvailabilitySection(
+  project: Project<never, 'customDa'>,
+) {
   if (!project.customDa) {
     return
   }
@@ -39,7 +41,7 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
       title: 'Technology',
       diagram: {
         type: 'da-layer-technology',
-        slug: project.display.slug,
+        slug: project.slug,
       },
       content: project.customDa.technology.description,
       mdClassName:
