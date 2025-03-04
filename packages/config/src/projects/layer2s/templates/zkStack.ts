@@ -288,10 +288,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: [
-        ...(templateVars.gasTokens?.tracked ?? []),
-        ...(templateVars.gasTokens?.untracked ?? []),
-      ],
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -312,7 +308,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: {
+      ...(templateVars.chainConfig as ChainConfig),
+      gasTokens: [
+        ...(templateVars.chainConfig?.gasTokens ?? []),
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
+    },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,

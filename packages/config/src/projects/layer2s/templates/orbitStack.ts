@@ -502,16 +502,19 @@ function orbitStackCommon(
         },
       ),
       daTracking: getDaTracking(templateVars),
-      gasTokens: [
-        ...(templateVars.gasTokens?.tracked ?? []),
-        ...(templateVars.gasTokens?.untracked ?? []),
-      ],
     },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: {
+      ...(templateVars.chainConfig as ChainConfig),
+      gasTokens: [
+        ...(templateVars.chainConfig?.gasTokens ?? []),
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
+    },
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:

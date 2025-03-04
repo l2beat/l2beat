@@ -287,13 +287,16 @@ function opStackCommon(
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
-    chainConfig: templateVars.chainConfig,
-    config: {
-      associatedTokens: templateVars.associatedTokens,
+    chainConfig: {
+      ...(templateVars.chainConfig as ChainConfig),
       gasTokens: [
+        ...(templateVars.chainConfig?.gasTokens ?? []),
         ...(templateVars.gasTokens?.tracked ?? []),
         ...(templateVars.gasTokens?.untracked ?? []),
       ],
+    },
+    config: {
+      associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
         templateVars.activityConfig,
         templateVars.chainConfig,
