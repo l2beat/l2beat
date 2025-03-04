@@ -124,6 +124,7 @@ const CONFIGURATIONS = [
         formula: 'functionCall',
         address: ADDRESS_3,
         selector: '0x9aaab648',
+        signature: 'function foo()',
       },
     },
   } as Configuration<

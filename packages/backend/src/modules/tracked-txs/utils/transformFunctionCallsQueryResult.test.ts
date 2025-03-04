@@ -419,6 +419,7 @@ function mockFunctionCall({
         formula,
         address,
         selector,
+        signature: 'function foo()',
       },
     },
   }
