@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x33e74cbd5597647e803352de93767e24324c0765
+
+# Diff at Tue, 04 Mar 2025 10:39:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21686332
+- current block number: 21686332
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21686332 (main branch discovery), not current.
+
+```diff
+    contract NextHeaderVerifier (0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06) {
+    +++ description: None
+      sinceBlock:
++        20027571
+    }
+```
+
+```diff
+    contract SuccinctFeeVault (0x296666e937b270193B960a7cEC526B351F353166) {
+    +++ description: None
+      sinceBlock:
++        19115866
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sinceBlock:
++        20233410
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      sinceBlock:
++        19115872
+    }
+```
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      sinceBlock:
++        20027685
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+    +++ description: None
+      sinceBlock:
++        20027494
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sinceBlock:
++        20573748
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0) {
+    +++ description: None
+      sinceBlock:
++        16828272
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      sinceBlock:
++        21031662
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      sinceBlock:
++        21547470
+    }
+```
+
+```diff
+    contract HeaderRangeVerifier (0xF33a22dFf8017813b95E5a05c9a97BaFE693001E) {
+    +++ description: None
+      sinceBlock:
++        20027559
+    }
+```
+
 Generated with discovered.json: 0xc1bafb5831ea7f304925c6b267658445062e91b8
 
 # Diff at Tue, 11 Feb 2025 14:13:36 GMT:

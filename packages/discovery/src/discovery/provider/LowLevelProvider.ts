@@ -1,4 +1,8 @@
-import type { BlobClient, BlobsInBlock } from '@l2beat/shared'
+import type {
+  BlobClient,
+  BlobsInBlock,
+  CelestiaApiClient,
+} from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -29,6 +33,7 @@ export class LowLevelProvider {
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
     private readonly etherscanClient: IEtherscanClient,
+    private readonly celestiaApiClient?: CelestiaApiClient,
     private readonly blobClient?: BlobClient,
   ) {}
 
@@ -38,6 +43,7 @@ export class LowLevelProvider {
       eventProvider: this.eventProvider,
       etherscanClient: this.etherscanClient,
       blobClient: this.blobClient,
+      celestiaApiClient: this.celestiaApiClient,
     }
   }
 
@@ -207,6 +213,22 @@ export class LowLevelProvider {
       'BlobClient is not available, configure the .env to include beacon url.',
     )
     return await this.blobClient.getRelevantBlobs(txHash)
+  }
+
+  async getCelestiaBlob(height: number, namespace: string, commitment: string) {
+    assert(
+      this.celestiaApiClient,
+      'CelestiaApiClient is not available, configure the .env to include celestia API url.',
+    )
+    return await this.celestiaApiClient.getBlob(height, namespace, commitment)
+  }
+
+  async getCelestiaBlockResultLogs(height: number) {
+    assert(
+      this.celestiaApiClient,
+      'CelestiaApiClient is not available, configure the .env to include celestia API url.',
+    )
+    return await this.celestiaApiClient.getBlockResultLogs(height)
   }
 
   private async measure<T>(fn: () => Promise<T>, key: number): Promise<T> {

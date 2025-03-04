@@ -1,12 +1,17 @@
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import type { Bridge, Project } from '@l2beat/config'
 import { compact } from 'lodash'
 import { ps } from '~/server/projects'
-import { getTechnologySectionProps } from './get-technology-section-props'
+import {
+  getTechnologySectionProps,
+  getTechnologySectionProps2,
+} from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
-export async function getScalingTechnologySection(project: Layer2 | Layer3) {
-  const layerId = project.dataAvailability?.layer.projectId
-  const bridgeId = project.dataAvailability?.bridge.projectId
+export async function getScalingTechnologySection(
+  project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
+) {
+  const layerId = project.scalingDa?.layer.projectId
+  const bridgeId = project.scalingDa?.bridge.projectId
 
   // TODO: having those slugs in config would be easier
   const [layer, bridge] = await Promise.all([
@@ -15,20 +20,20 @@ export async function getScalingTechnologySection(project: Layer2 | Layer3) {
   ])
 
   const items = compact([
-    project.technology.stateCorrectness &&
+    project.scalingTechnology.stateCorrectness &&
       makeTechnologyChoice(
         'state-correctness',
-        project.technology.stateCorrectness,
+        project.scalingTechnology.stateCorrectness,
       ),
-    project.technology.newCryptography &&
+    project.scalingTechnology.newCryptography &&
       makeTechnologyChoice(
         'new-cryptography',
-        project.technology.newCryptography,
+        project.scalingTechnology.newCryptography,
       ),
-    project.technology.dataAvailability &&
+    project.scalingTechnology.dataAvailability &&
       makeTechnologyChoice(
         'data-availability',
-        project.technology.dataAvailability,
+        project.scalingTechnology.dataAvailability,
         {
           relatedProjectBanner: layer
             ? {
@@ -44,7 +49,7 @@ export async function getScalingTechnologySection(project: Layer2 | Layer3) {
       ),
   ])
 
-  return getTechnologySectionProps(project, items)
+  return getTechnologySectionProps2(project, items)
 }
 
 export function getBridgeTechnologySection(project: Bridge) {

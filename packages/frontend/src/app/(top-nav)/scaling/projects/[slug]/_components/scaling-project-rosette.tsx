@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
-import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import type { RosetteType } from './rosette-selector'
@@ -12,34 +11,20 @@ interface Props {
 }
 
 export function ScalingProjectRosette({ project }: Props) {
+  const [rosetteType, setRosetteType] = useState<RosetteType>(
+    project.rosette.stacked ? 'combined' : 'individual',
+  )
+
   if (project.type === 'layer2') {
     return (
       <BigPizzaRosette
         className="mt-auto max-lg:hidden"
-        values={project.header.rosetteValues}
+        values={project.rosette.self}
         isUnderReview={project.underReviewStatus === 'config'}
         isUpcoming={project.isUpcoming}
       />
     )
   }
-
-  return <L3ScalingProjectRosette project={project} />
-}
-
-function L3ScalingProjectRosette({
-  project,
-}: { project: ScalingProjectEntry & { type: 'layer3' } }) {
-  const projectRisks = toRosetteTuple(project.header.rosetteValues)
-  const hostChainRisks = project.baseLayerRosetteValues
-    ? toRosetteTuple(project.baseLayerRosetteValues)
-    : undefined
-  const stackedChainRisks = project.stackedRosetteValues
-    ? toRosetteTuple(project.stackedRosetteValues)
-    : undefined
-
-  const [rosetteType, setRosetteType] = useState<RosetteType>(
-    stackedChainRisks ? 'combined' : 'individual',
-  )
 
   const Wrapper = ({
     children,
@@ -55,7 +40,7 @@ function L3ScalingProjectRosette({
           isDisabled={
             project.underReviewStatus === 'config' ||
             project.isUpcoming ||
-            !hostChainRisks
+            !project.rosette.host
           }
         />
       )}
@@ -69,7 +54,7 @@ function L3ScalingProjectRosette({
       <Wrapper>
         {/* Under review/upcoming thus no risks so we let the basic rosette fallback to question mark */}
         <BigPizzaRosette
-          values={project.header.rosetteValues}
+          values={project.rosette.self}
           isUnderReview={project.underReviewStatus === 'config'}
           isUpcoming={project.isUpcoming}
         />
@@ -78,31 +63,31 @@ function L3ScalingProjectRosette({
   }
 
   // L3 - no host chain (Multiple), should not happen
-  if (!hostChainRisks || !project.hostChainName) {
+  if (!project.rosette.host || !project.hostChainName) {
     return (
       <Wrapper hideSelector>
-        <BigPizzaRosette values={projectRisks} />
+        <BigPizzaRosette values={project.rosette.self} />
       </Wrapper>
     )
   }
 
   // L3 - has stacked risks
-  if (stackedChainRisks) {
+  if (project.rosette.stacked) {
     return (
       <Wrapper>
         {rosetteType === 'individual' ? (
           <BigIndividualRosette
             l2={{
               name: project.hostChainName,
-              risks: hostChainRisks,
+              risks: project.rosette.host,
             }}
             l3={{
               name: project.name,
-              risks: projectRisks,
+              risks: project.rosette.self,
             }}
           />
         ) : (
-          <BigPizzaRosette values={stackedChainRisks} />
+          <BigPizzaRosette values={project.rosette.stacked} />
         )}
       </Wrapper>
     )
@@ -115,16 +100,16 @@ function L3ScalingProjectRosette({
         <BigIndividualRosette
           l2={{
             name: project.hostChainName,
-            risks: hostChainRisks,
+            risks: project.rosette.host,
           }}
           l3={{
             name: project.name,
-            risks: projectRisks,
+            risks: project.rosette.self,
           }}
         />
       ) : (
         // Force under review for combined - values doesn't matter
-        <BigPizzaRosette values={hostChainRisks} isUnderReview />
+        <BigPizzaRosette values={project.rosette.host} isUnderReview />
       )}
     </Wrapper>
   )

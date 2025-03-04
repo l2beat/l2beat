@@ -70,10 +70,8 @@ export function createTrackedTxsModule(
     configurations: runtimeConfigurations.map((c) => ({
       properties: c,
       minHeight:
-        c.sinceTimestamp.toNumber() < minTimestamp
-          ? minTimestamp
-          : c.sinceTimestamp.toNumber(),
-      maxHeight: c.untilTimestamp?.toNumber() ?? null,
+        c.sinceTimestamp < minTimestamp ? minTimestamp : c.sinceTimestamp,
+      maxHeight: c.untilTimestamp ?? null,
       id: c.id,
     })),
     updaters,

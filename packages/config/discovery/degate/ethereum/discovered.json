@@ -11,6 +11,7 @@
         "0x034de7052cf5e10120ac3d5f4432bd52f50acc4c6d7d51d04aeaeffb45f9b87d"
       ],
       "sinceTimestamp": 1681985879,
+      "sinceBlock": 17087068,
       "values": {
         "$immutable": true,
         "owner": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
@@ -25,6 +26,7 @@
       ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1684401563,
+      "sinceBlock": 17285500,
       "values": {
         "$immutable": true,
         "getOwners": [
@@ -48,6 +50,7 @@
         "0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"
       ],
       "sinceTimestamp": 1681989995,
+      "sinceBlock": 17087402,
       "values": {
         "$immutable": true,
         "blockVerifierAddress": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
@@ -68,6 +71,7 @@
         "0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"
       ],
       "sinceTimestamp": 1681993655,
+      "sinceBlock": 17087703,
       "values": {
         "$immutable": true,
         "blockSubmitters": [
@@ -88,6 +92,7 @@
       ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1614841682,
+      "sinceBlock": 11970338,
       "values": {
         "$immutable": true,
         "getOwners": [
@@ -111,6 +116,7 @@
         "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
       ],
       "sinceTimestamp": 1681991243,
+      "sinceBlock": 17087506,
       "values": {
         "$immutable": true,
         "exchange": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
@@ -133,6 +139,7 @@
         "state"
       ],
       "sinceTimestamp": 1681991219,
+      "sinceBlock": 17087504,
       "values": {
         "$immutable": true,
         "allowOnchainTransferFrom": false,

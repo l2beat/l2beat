@@ -11,6 +11,7 @@
         "0xd782393522c4b13f91b789a821bd38ba6238b49e1488e701aefe6e9402344572"
       ],
       "sinceTimestamp": 1584424719,
+      "sinceBlock": 9687286,
       "values": {
         "$immutable": true,
         "depositVerifiers": [
@@ -28,6 +29,7 @@
         "0x4337d3128a631d1b4f82a9ac02d2a461ef9b0aa7221fee00fd10a49736acbb6e"
       ],
       "sinceTimestamp": 1584424347,
+      "sinceBlock": 9687257,
       "values": {
         "$immutable": true,
         "authority": "0x22405c1782913fb676bc74Ef54a60727B0e1026F",
@@ -51,6 +53,7 @@
         "0x63a556881f43e9c0e34ce5ecc046e510dbaa80fa44c7805dcf06d8644bc509e8"
       ],
       "sinceTimestamp": 1584424507,
+      "sinceBlock": 9687270,
       "values": {
         "$immutable": true,
         "depositVerifiers": [
@@ -69,6 +72,7 @@
         "0xfd5384956dd8b536ce35315bd551abba275ef61d520ece5dadca2c751e09ff0f"
       ],
       "sinceTimestamp": 1584427515,
+      "sinceBlock": 9687476,
       "values": {
         "$immutable": true,
         "BOND_LOWER_BOUND_DIVISOR": 2,
@@ -86,6 +90,7 @@
       "address": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "unverified": true,
       "sinceTimestamp": 1584424482,
+      "sinceBlock": 9687268,
       "values": { "$immutable": true },
       "derivedName": ""
     },
@@ -94,6 +99,7 @@
       "address": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
       "unverified": true,
       "sinceTimestamp": 1584424677,
+      "sinceBlock": 9687281,
       "values": { "$immutable": true },
       "derivedName": ""
     }

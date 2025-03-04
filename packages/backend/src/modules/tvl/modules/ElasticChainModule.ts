@@ -138,7 +138,7 @@ function createIndexers(
         priceConfigs: [...priceConfigs],
         amountConfigs,
         project: ProjectId(project),
-        dataSource: `${chain}_elastic_chain`,
+        dataSource: `${chain.name}_elastic_chain`,
         syncOptimizer,
         parents: [descendantPriceIndexer, elasticChainIndexer],
         indexerService,

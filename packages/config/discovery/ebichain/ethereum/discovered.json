@@ -32,6 +32,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
         "$implementation": "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5",
@@ -93,6 +94,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413171,
+      "sinceBlock": 19432744,
       "values": { "$immutable": true }
     },
     {
@@ -116,6 +118,7 @@
         }
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
         "$implementation": "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
@@ -140,6 +143,7 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
+      "sinceBlock": 18736154,
       "values": { "$immutable": true }
     },
     {
@@ -180,6 +184,7 @@
         }
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$immutable": true,
         "owner": "0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"
@@ -271,6 +276,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
+      "sinceBlock": 16990669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -304,6 +310,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413183,
+      "sinceBlock": 19432745,
       "values": {
         "$immutable": true,
         "prover0": "0x72B166070781a552D7b95a907eF59ca05d3D5a62",
@@ -321,6 +328,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413135,
+      "sinceBlock": 19432741,
       "values": { "$immutable": true }
     },
     {
@@ -349,6 +357,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
         "$implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
@@ -383,6 +392,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413147,
+      "sinceBlock": 19432742,
       "values": { "$immutable": true }
     },
     {
@@ -394,6 +404,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413159,
+      "sinceBlock": 19432743,
       "values": { "$immutable": true }
     },
     {
@@ -433,6 +444,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C",
         "$implementation": [
@@ -575,6 +587,7 @@
         }
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
@@ -628,6 +641,7 @@
         }
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
         "$implementation": "0x1162084C3C6575121146582Db5BE43189e8CEe6b",
@@ -669,6 +683,7 @@
         }
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
@@ -713,6 +728,7 @@
         }
       ],
       "sinceTimestamp": 1713462371,
+      "sinceBlock": 19683918,
       "values": {
         "$admin": "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
         "$implementation": "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43",

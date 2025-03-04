@@ -69,6 +69,7 @@ export const metis: Layer2 = {
   chainConfig: {
     name: 'metis',
     chainId: 1088,
+    gasTokens: ['METIS'],
     explorerUrl: 'https://explorer.metis.io',
     sinceTimestamp: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
     multicallContracts: [

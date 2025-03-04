@@ -1,3 +1,125 @@
+Generated with discovered.json: 0xe3a72993c94c963e313e3861a6fc09c4db5bcac1
+
+# Diff at Tue, 04 Mar 2025 10:42:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 67252326
+- current block number: 67252326
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 67252326 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      sinceBlock:
++        25956331
+    }
+```
+
+```diff
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      sinceBlock:
++        25956313
+    }
+```
+
+```diff
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859) {
+    +++ description: None
+      sinceBlock:
++        32347187
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sinceBlock:
++        32347190
+    }
+```
+
+```diff
+    contract  (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      sinceBlock:
++        32350256
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      sinceBlock:
++        32239033
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x5f3481F45A3926A136D3dEE078e14D5353C13f2D) {
+    +++ description: None
+      sinceBlock:
++        32347277
+    }
+```
+
+```diff
+    contract  (0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f) {
+    +++ description: None
+      sinceBlock:
++        32348358
+    }
+```
+
+```diff
+    contract FPValidator (0x86Bb63148d17d445Ed5398ef26Aa05Bf76dD5b59) {
+    +++ description: None
+      sinceBlock:
++        34400446
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sinceBlock:
++        32314028
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sinceBlock:
++        47313269
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sinceBlock:
++        47313273
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xF1a5F92F5F89e8b539136276f827BF1648375312) {
+    +++ description: None
+      sinceBlock:
++        26282881
+    }
+```
+
 Generated with discovered.json: 0xb58f09db09217f6a5389db34805593d13644f372
 
 # Diff at Tue, 28 Jan 2025 15:16:26 GMT:

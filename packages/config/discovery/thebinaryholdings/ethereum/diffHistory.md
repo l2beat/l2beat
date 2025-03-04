@@ -1,3 +1,137 @@
+Generated with discovered.json: 0x14f71cf438bfd6dcb9c0ea1c685af95a4f2f0f27
+
+# Diff at Tue, 04 Mar 2025 11:26:43 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@be38e12d3ff947ca8de40f3a23a9ba1875a54f5a block: 21429035
+- current block number: 21429035
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429035 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x7aC7e5989EaC278B7BbfeF560871a2026baD472c) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
+-        false
+      values.opStackDA.isUsingCelestia:
++        false
+    }
+```
+
+Generated with discovered.json: 0x17e1eb3970e4d4876ceeb56706abbbb784286481
+
+# Diff at Tue, 04 Mar 2025 10:40:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21429035
+- current block number: 21429035
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429035 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        20175344
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x1b396e4dC6ECB0be33CF01C5a34E1a3a7D03c378) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        20175341
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        20175330
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF) {
+    +++ description: None
+      sinceBlock:
++        20175327
+    }
+```
+
+```diff
+    contract TBHMultisig (0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3) {
+    +++ description: None
+      sinceBlock:
++        20175325
+    }
+```
+
+```diff
+    contract OptimismPortal (0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        20175336
+    }
+```
+
+```diff
+    contract SystemConfig (0x7aC7e5989EaC278B7BbfeF560871a2026baD472c) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sinceBlock:
++        20175337
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x807d21e416434ae92c8E5bcA4d506781aFbBa380) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        20175339
+    }
+```
+
+```diff
+    contract AddressManager (0x8173904703995c6BbA59a42B8bBf8405F978758a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        20175326
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xa641e14B685b5E652865e14A4fBc07e51371D124) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sinceBlock:
++        20175340
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xD1B30378CBF968E5525e8835219A5726A1e71D10) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        20175338
+    }
+```
+
 Generated with discovered.json: 0x15fd530faed1e9e5ac3e6916142f27e7b8e36ecd
 
 # Diff at Wed, 26 Feb 2025 10:33:14 GMT:

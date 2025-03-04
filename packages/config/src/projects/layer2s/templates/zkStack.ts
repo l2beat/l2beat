@@ -97,12 +97,6 @@ export interface ZkStackConfigCommon {
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: {
-    /** Gas tokens that have been added to tokens.jsonc */
-    tracked?: string[]
-    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
-    untracked?: string[]
-  }
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -288,10 +282,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -312,7 +302,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
@@ -602,8 +595,8 @@ function getDaTracking(
     'validatorsVTL',
   )
 
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
   return templateVars.usesBlobs
     ? [

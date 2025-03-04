@@ -14,6 +14,7 @@
       "description": "Ethereum Beacon Chain deposit contract.",
       "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
       "sinceTimestamp": 1602667372,
+      "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
         "get_deposit_count": "0xc6781d0000000000",
@@ -43,6 +44,7 @@
         "getTotalRequestsProcessed"
       ],
       "sinceTimestamp": 1683024035,
+      "sinceBlock": 17172556,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c",
@@ -112,6 +114,7 @@
       ],
       "ignoreInWatchMode": ["votesLength"],
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0xf165148978Fa3cE74d76043f833463c340CFB704",
@@ -146,6 +149,7 @@
         "0xd7305a2d008e26be8f8e72e060e9781b7b5e8b3037fad9d367b5ae5d624d08c1"
       ],
       "sinceTimestamp": 1653382011,
+      "sinceBlock": 14834805,
       "values": {
         "$immutable": true,
         "LIDO": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -159,6 +163,7 @@
         "0x5e36c7f26b71bb611cc2a2b83eb557ff3593363fc3ba1c59ff2a32a5c2565122"
       ],
       "sinceTimestamp": 1728566351,
+      "sinceBlock": 20935463,
       "values": {
         "$immutable": true,
         "CURVE_ID": 1,
@@ -209,6 +214,7 @@
         }
       ],
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37",
@@ -258,6 +264,7 @@
         "getLastCompletedReportDelta"
       ],
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0xa29b819654cE6224A222bb5f586920105E2D7E0E",
@@ -313,6 +320,7 @@
       ],
       "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"],
       "sinceTimestamp": 1728566339,
+      "sinceBlock": 20935462,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758",
@@ -369,6 +377,7 @@
         "getNodeOperatorsCount"
       ],
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135",
@@ -411,6 +420,7 @@
         "0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46"
       ],
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": true,
         "controller": "0xf73a1260d222f447210581DDf212D915c09a3249",
@@ -434,6 +444,7 @@
         "0xd50222dc8dfe7cd169366ab34979e2962975f9b018fa27dc1443d09a8698dc92"
       ],
       "sinceTimestamp": 1728395495,
+      "sinceBlock": 20921274,
       "values": {
         "$immutable": true,
         "ALL_LIMITS_MANAGER_ROLE": "0x5bf88568a012dfc9fe67407ad6775052bddc4ac89902dea1f4373ef5d9f1e35b",
@@ -477,6 +488,7 @@
       ],
       "ignoreInWatchMode": ["tokensPerStEth", "stEthPerToken", "totalSupply"],
       "sinceTimestamp": 1613752640,
+      "sinceBlock": 11888477,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -506,6 +518,7 @@
         "getReportVariants"
       ],
       "sinceTimestamp": 1683024059,
+      "sinceBlock": 17172558,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -601,6 +614,7 @@
       ],
       "ignoreInWatchMode": ["getConsensusReport", "getProcessingState"],
       "sinceTimestamp": 1683023999,
+      "sinceBlock": 17172553,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7",
@@ -670,6 +684,7 @@
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": true,
         "$implementation": "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb",
@@ -711,6 +726,7 @@
         "unfinalizedStETH"
       ],
       "sinceTimestamp": 1683023927,
+      "sinceBlock": 17172547,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0xE42C659Dc09109566720EA8b2De186c2Be7D94D9",
@@ -766,6 +782,7 @@
         "0x15185b2d9f11dcf2ea4d005741fa941922e233e89fc5742793ebfb0ca05897c4"
       ],
       "sinceTimestamp": 1683023915,
+      "sinceBlock": 17172546,
       "values": { "$immutable": true }
     },
     {
@@ -775,6 +792,7 @@
         "0xab441847b55bfdc5cf90792906cf0effcd43d3390a7cc05e690aad5fb349c19b"
       ],
       "sinceTimestamp": 1540644725,
+      "sinceBlock": 6593191,
       "values": { "$immutable": true }
     },
     {
@@ -794,6 +812,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732026023,
+      "sinceBlock": 21222337,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -829,6 +848,7 @@
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0x9f3b9198911054B122fDb865f8A5Ac516201c339",
@@ -869,6 +889,7 @@
         "getCurrentStakeLimit"
       ],
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
@@ -950,6 +971,7 @@
         "getNodeOperatorsCount"
       ],
       "sinceTimestamp": 1701921935,
+      "sinceBlock": 18731922,
       "values": {
         "$immutable": false,
         "$implementation": "0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135",
@@ -995,6 +1017,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707991727,
+      "sinceBlock": 19232636,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1022,6 +1045,7 @@
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425",
@@ -1058,6 +1082,7 @@
         }
       ],
       "sinceTimestamp": 1626093401,
+      "sinceBlock": 12812480,
       "values": {
         "$admin": "0x2e59A20f205bB85a89C53f1936454680651E618e",
         "$implementation": "0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd",
@@ -1084,6 +1109,7 @@
         "0x6f38bad385eb6769def612742a8a4ab65d19921bffe96d1ee9241121e2ae1aba"
       ],
       "sinceTimestamp": 1683022991,
+      "sinceBlock": 17172469,
       "values": {
         "$immutable": true,
         "CONFIG_MANAGER_ROLE": "0xbbfb55d933c2bfa638763473275b1d84c4418e58d26cf9d2cd5758237756d9f0",
@@ -1106,6 +1132,7 @@
         }
       ],
       "sinceTimestamp": 1681295123,
+      "sinceBlock": 17031323,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x3ABc4764f0237923d52056CFba7E9AEBf87113D3",
@@ -1197,6 +1224,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1668610211,
+      "sinceBlock": 15983290,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -1235,6 +1263,7 @@
         }
       ],
       "sinceTimestamp": 1732195643,
+      "sinceBlock": 21236399,
       "values": {
         "$admin": "0x909d0CB383Ecc77e44daE5d0146cF476f611f62b",
         "$immutable": false,
@@ -1279,6 +1308,7 @@
         "getSharesRequestedToBurn"
       ],
       "sinceTimestamp": 1683024071,
+      "sinceBlock": 17172559,
       "values": {
         "$immutable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1300,6 +1330,7 @@
         "0x914444eb1e15eba41dafc9099a1e9e51a554ff786ce9f7b5159cb306f4779477"
       ],
       "sinceTimestamp": 1724328047,
+      "sinceBlock": 20584007,
       "values": {
         "$immutable": true,
         "ACCOUNTING_ORACLE": "0x852deD011285fe67063a08005c71a85690503Cee",
@@ -1328,6 +1359,7 @@
         "getReportVariants"
       ],
       "sinceTimestamp": 1683024023,
+      "sinceBlock": 17172555,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -1427,6 +1459,7 @@
         "pendingSharesToDistribute"
       ],
       "sinceTimestamp": 1728566351,
+      "sinceBlock": 20935463,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0",
@@ -1474,6 +1507,7 @@
         "getNodeOperatorsCount"
       ],
       "sinceTimestamp": 1728566339,
+      "sinceBlock": 20935462,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x8daEa53b17a629918CDFAB785C5c74077c1D895B",
@@ -1528,6 +1562,7 @@
         "0x6f6c2b5fe89e476b4a6700268156a2f5e028a4e7607ae4e93223d77f95fcb7d2"
       ],
       "sinceTimestamp": 1724328035,
+      "sinceBlock": 20584006,
       "values": {
         "$immutable": true,
         "INDEX_NOT_FOUND": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1548,6 +1583,7 @@
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
       "values": {
         "$immutable": false,
         "$implementation": "0xde3A93028F2283cc28756B3674BD657eaFB992f4",
@@ -1598,6 +1634,7 @@
         "getStakingRewardsDistribution"
       ],
       "sinceTimestamp": 1683023963,
+      "sinceBlock": 17172550,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA",
@@ -1800,6 +1837,7 @@
         "0xec602317aa2fc4de0a89b5c910911635f678fb88b51a6a46f12d8b1148d95d71"
       ],
       "sinceTimestamp": 1728395471,
+      "sinceBlock": 20921272,
       "values": {
         "$immutable": true,
         "ATTEST_MESSAGE_PREFIX": "0x420b649044eb23ce1540808ba8ed5d375094551acd77ba36b6ba87b78b7b655b",

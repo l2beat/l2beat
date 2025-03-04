@@ -37,6 +37,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1714730039,
+      "sinceBlock": 19788823,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xc6cF1149d23F2788AC94312E68EB52a74F288ebe",
@@ -62,8 +63,8 @@
         "l2OutputOracle": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -134,6 +135,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1714730027,
+      "sinceBlock": 19788822,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xe8912070277Dd5D9473904b7F4e6C71290F2AE90",
@@ -206,6 +208,7 @@
         }
       ],
       "sinceTimestamp": 1714730063,
+      "sinceBlock": 19788825,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0x5BFC7acc740D2E19c290167052F69947e19475F3",
@@ -248,6 +251,7 @@
         }
       ],
       "sinceTimestamp": 1714729811,
+      "sinceBlock": 19788804,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xd637dc6d7DA9151b5069a4bFB74a12E67a532CC3",
@@ -304,6 +308,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1714730003,
+      "sinceBlock": 19788820,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0x3Ff11Cde41a5f7c791eFfcd6AeEA05dd2df5e21e",
@@ -353,6 +358,7 @@
         }
       ],
       "sinceTimestamp": 1714729739,
+      "sinceBlock": 19788798,
       "values": {
         "$immutable": true,
         "owner": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
@@ -370,6 +376,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1714730087,
+      "sinceBlock": 19788827,
       "values": {
         "$immutable": false,
         "$implementation": "0x0318A37e2662507789a6E17E85A506709F89488b",
@@ -423,6 +430,7 @@
         }
       ],
       "sinceTimestamp": 1714730147,
+      "sinceBlock": 19788831,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xefBDff012170ae592A3d197bf9Ac10eBF313233a",
@@ -541,6 +549,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1711489163,
+      "sinceBlock": 19521321,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -587,6 +596,7 @@
         }
       ],
       "sinceTimestamp": 1714730111,
+      "sinceBlock": 19788829,
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xD00e38514d66bf1B761a8937559c6b2854A5B3ad",
@@ -614,6 +624,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1727719139,
+      "sinceBlock": 20865118,
       "values": {
         "$admin": "0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
         "$implementation": "0x61488ae9dEDCA3f29F5e72bbf23ba975862c20bA",
@@ -689,6 +700,7 @@
         }
       ],
       "sinceTimestamp": 1714729775,
+      "sinceBlock": 19788801,
       "values": {
         "$immutable": true,
         "addressManager": "0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
@@ -713,6 +725,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1714729715,
+      "sinceBlock": 19788796,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

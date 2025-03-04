@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21959652,
+  "blockNumber": 21973410,
   "configHash": "0x1845249c98115aca91c24067db7cc44a8f47c2122daa4182eae8ebf7e513c969",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -24,7 +24,12 @@
         {
           "permission": "interact",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
+        },
+        {
+          "permission": "interact",
+          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.."
         },
         {
           "permission": "interact",
@@ -39,7 +44,7 @@
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -54,7 +59,7 @@
         {
           "permission": "interact",
           "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -69,7 +74,7 @@
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -84,7 +89,7 @@
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -99,7 +104,7 @@
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -114,7 +119,7 @@
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -129,7 +134,7 @@
         {
           "permission": "interact",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -144,7 +149,7 @@
         {
           "permission": "interact",
           "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -159,7 +164,7 @@
         {
           "permission": "interact",
           "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -174,7 +179,7 @@
         {
           "permission": "interact",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -189,7 +194,7 @@
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -204,7 +209,7 @@
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "interact",
@@ -219,7 +224,7 @@
         {
           "permission": "interact",
           "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "manage critical access control roles related to upgrades."
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
         },
         {
           "permission": "upgrade",
@@ -287,6 +292,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692867743,
+      "sinceBlock": 17983541,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -315,6 +321,7 @@
       ],
       "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
       "sinceTimestamp": 1687524587,
+      "sinceBlock": 17542373,
       "values": {
         "$immutable": true,
         "l1Token": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
@@ -333,6 +340,7 @@
       ],
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1652101038,
+      "sinceBlock": 14742550,
       "values": {
         "$immutable": true,
         "wards": [
@@ -363,7 +371,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -380,6 +388,7 @@
         }
       ],
       "sinceTimestamp": 1707308579,
+      "sinceBlock": 19176289,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -448,14 +457,14 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "accessControl": {
           "severity": "HIGH",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         },
         "tokenAdminAC": {
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
@@ -475,12 +484,19 @@
       "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "description": "manage critical access control roles and the role that can upgrade the implementation..",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
         }
       ],
       "sinceTimestamp": 1707322595,
+      "sinceBlock": 19177447,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -501,6 +517,7 @@
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getEnableWindowDuration": 1209600,
         "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "identify": "StarkWare_StarkgateRegistry_2.0_6",
         "implementation": "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC",
         "isFrozen": false,
@@ -513,7 +530,10 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+        },
+        "govAdminAC": {
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
       "category": { "name": "External Bridges", "priority": 1 }
@@ -527,6 +547,7 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -539,6 +560,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1738599599,
+      "sinceBlock": 21767132,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -592,7 +614,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -603,6 +625,7 @@
         }
       ],
       "sinceTimestamp": 1657137600,
+      "sinceBlock": 15090980,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -698,17 +721,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -725,7 +748,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -737,6 +760,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -768,7 +797,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -778,6 +807,7 @@
         }
       ],
       "sinceTimestamp": 1692689267,
+      "sinceBlock": 17968760,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -847,17 +877,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -874,7 +904,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -886,6 +916,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -902,6 +938,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727171111,
+      "sinceBlock": 20819642,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -960,6 +997,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672587635,
+      "sinceBlock": 16312873,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -976,7 +1014,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 22,
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -991,6 +1029,7 @@
       "displayName": "L1EscrowDAI",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
       "sinceTimestamp": 1666446647,
+      "sinceBlock": 15804056,
       "values": {
         "$immutable": true,
         "ceiling": "5000000000000000000000000",
@@ -1035,7 +1074,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1046,6 +1085,7 @@
         }
       ],
       "sinceTimestamp": 1647857148,
+      "sinceBlock": 14429055,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1136,17 +1176,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1163,7 +1203,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         }
       },
       "derivedName": "StarknetEthBridge",
@@ -1175,6 +1215,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1206,7 +1252,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1217,6 +1263,7 @@
         }
       ],
       "sinceTimestamp": 1657137615,
+      "sinceBlock": 15090981,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1312,17 +1359,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1339,7 +1386,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -1351,6 +1398,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1382,7 +1435,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1393,6 +1446,7 @@
         }
       ],
       "sinceTimestamp": 1685452751,
+      "sinceBlock": 17371995,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1468,17 +1522,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1495,7 +1549,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -1507,6 +1561,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1571,6 +1631,7 @@
         "stateRoot"
       ],
       "sinceTimestamp": 1636978914,
+      "sinceBlock": 13620297,
       "values": {
         "$admin": [
           "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
@@ -1631,16 +1692,12 @@
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
         "governedFinalized": 0,
-        "governors": [
-          "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
-          "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
-        ],
         "identify": "StarkWare_Starknet_2024_9",
         "implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1668506,
+        "l1ToL2MessageNonce": 1668587,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1661,13 +1718,17 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1375610153504871085988922261518092038396761756187764816769562802951153399381",
-        "stateBlockNumber": 1193988,
-        "stateRoot": "2974291265339104807339196814212454862748320384199158383534158480455735813221",
+        "stateBlockHash": "3031989006099019698380513206203085971538556076731016760100509680785339394047",
+        "stateBlockNumber": 1198908,
+        "stateRoot": "1760305928601215175893903627914779964528092844137277604569716743143049792999",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."
+        },
         "isFinalized": {
           "severity": "HIGH",
           "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
@@ -1688,6 +1749,7 @@
         "0x6a59350278d90840dff5cb37a714e105c3003955a6c304046fb1222f61374eed"
       ],
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
+      "severity": "HIGH",
       "directlyReceivedPermissions": [
         {
           "permission": "governStarknet",
@@ -1699,6 +1761,7 @@
         }
       ],
       "sinceTimestamp": 1739989031,
+      "sinceBlock": 21882151,
       "values": {
         "$immutable": true,
         "executionDelay": 691200,
@@ -1734,7 +1797,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1745,6 +1808,7 @@
         }
       ],
       "sinceTimestamp": 1704905879,
+      "sinceBlock": 18977888,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1837,17 +1901,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1864,7 +1928,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -1876,6 +1940,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1907,7 +1977,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -1918,6 +1988,7 @@
         }
       ],
       "sinceTimestamp": 1685880791,
+      "sinceBlock": 17407168,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1991,17 +2062,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2018,7 +2089,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2030,6 +2101,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2061,7 +2138,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2071,6 +2148,7 @@
         }
       ],
       "sinceTimestamp": 1692689279,
+      "sinceBlock": 17968761,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2140,17 +2218,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2167,7 +2245,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2179,6 +2257,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2210,7 +2294,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2220,6 +2304,7 @@
         }
       ],
       "sinceTimestamp": 1692689255,
+      "sinceBlock": 17968759,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2289,17 +2374,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2316,7 +2401,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2328,6 +2413,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2359,7 +2450,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2369,6 +2460,7 @@
         }
       ],
       "sinceTimestamp": 1688046071,
+      "sinceBlock": 17585317,
       "values": {
         "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
         "$immutable": false,
@@ -2437,17 +2529,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2464,7 +2556,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2476,6 +2568,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2507,7 +2605,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2523,6 +2621,7 @@
         }
       ],
       "sinceTimestamp": 1707322643,
+      "sinceBlock": 19177451,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2632,7 +2731,7 @@
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
@@ -2649,7 +2748,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
       "derivedName": "StarknetTokenBridge",
@@ -2681,7 +2780,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2692,6 +2791,7 @@
         }
       ],
       "sinceTimestamp": 1657137639,
+      "sinceBlock": 15090984,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2787,17 +2887,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2814,7 +2914,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -2826,6 +2926,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2848,6 +2954,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1738599755,
+      "sinceBlock": 21767145,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -2901,7 +3008,7 @@
         {
           "permission": "interact",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades.",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
           "via": []
         },
         {
@@ -2911,6 +3018,7 @@
         }
       ],
       "sinceTimestamp": 1698061847,
+      "sinceBlock": 18412782,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2980,17 +3088,17 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Same as the `GOVERNANCE_ADMIN` access control role."
+          "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -3007,7 +3115,7 @@
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
-          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
         }
       },
       "derivedName": "StarknetERC20Bridge",
@@ -3019,6 +3127,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -4225,11 +4339,11 @@
     "starknet/DelayedExecutor": "0xe84654e941de1cc1ff6072e9b6fb6e510ed5ac211a5a67cad254a3fe3e740b03",
     "starknet/L1EscrowDAI": "0x6e4e0a4d90eb5f74198b3d1bf0b319b30310349b960d8f8e15738bd2f70cd7fd",
     "starknet/LordsL1Bridge": "0xfc89ced3e21bae61dfc4abffb8fec98b920463aa7b2605f895caf626b4f54c18",
-    "starknet/StarkgateManager": "0x142fbc50dc46b2a83859dbc826f45b36ed7ff0cb60ee0943c737bebb3529eab0",
-    "starknet/StarkgateRegistry": "0xf6b631b33f87ac8bc18b92867d1ed0a4dde321bc0a494038aef4d5be34d31330",
-    "starknet/Starknet": "0xfcc62b23a16236c1ee486fd53c0c32cb8af5357b0252e1dbebca5c2aadd4078d",
-    "starknet/StarknetERC20Bridge": "0xd626bafc8aa5fd825097b020fcd9023967ae29183ecd46c3552cf27dcae84457",
-    "starknet/StarknetEthBridge": "0x23dcb6c6b8905581b1f92b3390c2c9fd033fed4e6ced63d94af7bf004608353d",
-    "starknet/StarknetMultiBridge": "0x6174b77981b50038228a4b0933fdbaf8eed1db645d2b605192639f23d4d08d68"
+    "starknet/StarkgateManager": "0xf6401586405cca1328e5b0b0816c24e362fa7e7f090de0377ae01fa930047aac",
+    "starknet/StarkgateRegistry": "0x613178017ba4f030754f316d800cc74f2cb1cd6c26d274dffa2feed755341fc7",
+    "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601",
+    "starknet/StarknetERC20Bridge": "0x1327c44d622cf611664687f6236f6c1543efb6da64a0643e517f20a2c2749413",
+    "starknet/StarknetEthBridge": "0x8cfb1b54495e4e041ac0fa2c9cbe233e328e26d747fbf29b2bc3e41e01b36614",
+    "starknet/StarknetMultiBridge": "0x4712d4a1da956acb467a1955ab6193dfca6fe43ef5a23c422771731684563501"
   }
 }

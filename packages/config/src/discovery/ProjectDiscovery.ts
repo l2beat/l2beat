@@ -1241,7 +1241,7 @@ const roleDescriptions: {
   governStarknet: {
     name: 'Governor',
     description:
-      'Permissioned to appoint Operators and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
+      'Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
   },
 }
 

@@ -17,6 +17,7 @@
         }
       ],
       "sinceTimestamp": 1661530975,
+      "sinceBlock": 21432305,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
         "$implementation": "0xf77a80851c7f40492eB7a5f1e7d92411ae8962a4",
@@ -62,6 +63,7 @@
         "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
       ],
       "sinceTimestamp": 1661528311,
+      "sinceBlock": 21426807,
       "values": {
         "$immutable": true,
         "feeEnabled": false,
@@ -85,6 +87,7 @@
         }
       ],
       "sinceTimestamp": 1647317660,
+      "sinceBlock": 7920349,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
@@ -98,6 +101,7 @@
       ],
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1647317293,
+      "sinceBlock": 7920157,
       "values": {
         "$immutable": true,
         "BLOCK_VERSION": 65535,
@@ -127,6 +131,7 @@
         "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
       ],
       "sinceTimestamp": 1661528311,
+      "sinceBlock": 21426785,
       "values": {
         "$immutable": true,
         "getProofType": 1,
@@ -153,6 +158,7 @@
         "ulnLookup"
       ],
       "sinceTimestamp": 1661528311,
+      "sinceBlock": 21426799,
       "values": {
         "$immutable": true,
         "chainAddressSizeMap": {
@@ -1605,6 +1611,7 @@
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
       "sinceTimestamp": 1661279392,
+      "sinceBlock": 21083158,
       "values": {
         "$immutable": true,
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
@@ -1617,6 +1624,7 @@
         "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
       ],
       "sinceTimestamp": 1665890344,
+      "sinceBlock": 30331127,
       "values": {
         "$immutable": true,
         "getProofType": 2,
@@ -1640,6 +1648,7 @@
         }
       ],
       "sinceTimestamp": 1661448335,
+      "sinceBlock": 21273027,
       "values": {
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
@@ -1658,6 +1667,7 @@
         }
       ],
       "sinceTimestamp": 1661535615,
+      "sinceBlock": 21439748,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x86591701001B3a5cf901Ed55062c7ECe7B00Cb19",
@@ -1683,6 +1693,7 @@
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
       "sinceTimestamp": 1694217094,
+      "sinceBlock": 129337490,
       "values": {
         "$immutable": true,
         "allowlistSize": 0,
@@ -1703,6 +1714,7 @@
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
       "sinceTimestamp": 1694217099,
+      "sinceBlock": 129337500,
       "values": { "$immutable": true }
     },
     {
@@ -1716,6 +1728,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648074158,
+      "sinceBlock": 8434100,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",

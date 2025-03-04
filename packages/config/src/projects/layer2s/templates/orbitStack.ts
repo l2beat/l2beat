@@ -7,7 +7,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { unionBy } from 'lodash'
+import { isEmpty, unionBy } from 'lodash'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -157,12 +157,8 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   isArchived?: boolean
-  gasTokens?: {
-    /** Gas tokens that have been added to tokens.jsonc - will be listed under the escrow */
-    tracked?: string[]
-    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
-    untracked?: string[]
-  }
+  /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
+  untrackedGasTokens?: string[]
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -451,6 +447,19 @@ function orbitStackCommon(
           ? 'orbit-optimium'
           : 'orbit-rollup'
 
+  const trackedGasTokens = templateVars.chainConfig?.gasTokens?.filter(
+    (t) => !templateVars.untrackedGasTokens?.includes(t),
+  )
+
+  if (templateVars.untrackedGasTokens) {
+    assert(
+      templateVars.untrackedGasTokens?.every((t) =>
+        templateVars.chainConfig?.gasTokens?.includes(t),
+      ),
+      `${templateVars.discovery.projectName}: Every token configured in untrackedGasTokens has to be configured in chainConfig`,
+    )
+  }
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
@@ -482,9 +491,9 @@ function orbitStackCommon(
             templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
               address: templateVars.bridge.address,
-              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
-              description: templateVars.gasTokens
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
+              tokens: trackedGasTokens ?? ['ETH'],
+              description: trackedGasTokens
+                ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
@@ -502,16 +511,17 @@ function orbitStackCommon(
         },
       ),
       daTracking: getDaTracking(templateVars),
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
     },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: !isEmpty(templateVars.chainConfig?.gasTokens)
+        ? templateVars.chainConfig?.gasTokens
+        : ['ETH'],
+    },
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
@@ -733,8 +743,8 @@ function getDaTracking(
     'batchPosters',
   )
 
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
 
   return usesBlobs
     ? [

@@ -155,12 +155,6 @@ interface OpStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
-  gasTokens?: {
-    /** Gas tokens that have been added to tokens.jsonc */
-    tracked?: string[]
-    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
-    untracked?: string[]
-  }
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
@@ -287,13 +281,12 @@ function opStackCommon(
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
       activityConfig: getActivityConfig(
         templateVars.activityConfig,
         templateVars.chainConfig,
@@ -365,7 +358,6 @@ function getDaTracking(
     'sequencerInbox',
   )
 
-  // TODO: update to deployment block number from discovery
   const inboxStartBlock =
     templateVars.discovery.getContractValueOrUndefined<number>(
       'SystemConfig',
@@ -1126,8 +1118,8 @@ function getDAProvider(
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -1295,8 +1287,8 @@ function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
 
   const daProvider =
     templateVars.daProvider ??

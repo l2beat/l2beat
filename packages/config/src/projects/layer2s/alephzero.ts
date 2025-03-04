@@ -32,7 +32,6 @@ export const alephzero: Layer2 = orbitStackL2({
     },
   },
   associatedTokens: ['AZERO'],
-  gasTokens: { tracked: ['AZERO'] },
   chainConfig: {
     name: 'alephzero',
     chainId: 41455,
@@ -43,6 +42,7 @@ export const alephzero: Layer2 = orbitStackL2({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['AZERO'],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

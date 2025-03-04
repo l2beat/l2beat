@@ -22,6 +22,7 @@
         }
       ],
       "sinceTimestamp": 1734346847,
+      "sinceBlock": 21414643,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0x3FAe8259417036C02156DF91BdaF9d8F0ae5551f",
@@ -57,6 +58,7 @@
       ],
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1734346871,
+      "sinceBlock": 21414645,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0x71442A5586bde0f5EfD6588D01c2B2820D9D236D",
@@ -102,6 +104,7 @@
         }
       ],
       "sinceTimestamp": 1734346823,
+      "sinceBlock": 21414641,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0x4634e74d04992BDd5192Cd75897CbD432971aAB6",
@@ -137,6 +140,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1733901371,
+      "sinceBlock": 21377718,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -166,6 +170,7 @@
       ],
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1734347351,
+      "sinceBlock": 21414684,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
@@ -272,6 +277,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1734346811,
+      "sinceBlock": 21414640,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0xbc10fE919504D53953d27989CD5B48B9A7c08Be0",
@@ -307,8 +313,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -418,6 +424,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1734346691,
+      "sinceBlock": 21414630,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -456,6 +463,7 @@
         }
       ],
       "sinceTimestamp": 1734346919,
+      "sinceBlock": 21414649,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0xE5a698154470AF2626b27fEecb684F8fb265F2E0",
@@ -481,6 +489,7 @@
       ],
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1734347075,
+      "sinceBlock": 21414662,
       "values": {
         "$immutable": true,
         "challengePeriod": 86400,
@@ -511,6 +520,7 @@
         }
       ],
       "sinceTimestamp": 1734346691,
+      "sinceBlock": 21414630,
       "values": {
         "$immutable": true,
         "owner": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"
@@ -525,6 +535,7 @@
       ],
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1734347087,
+      "sinceBlock": 21414663,
       "values": {
         "$immutable": true,
         "oracle": "0x5B9bEf4d8C36FB013c70d0A6F455807c6BD5270b",
@@ -587,6 +598,7 @@
         }
       ],
       "sinceTimestamp": 1734346691,
+      "sinceBlock": 21414630,
       "values": {
         "$immutable": true,
         "addressManager": "0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6",
@@ -606,6 +618,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1734346835,
+      "sinceBlock": 21414642,
       "values": {
         "$immutable": false,
         "$implementation": "0x21971eCC803C30A181ee111803253C869083baF1",
@@ -658,6 +671,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1734346895,
+      "sinceBlock": 21414647,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0xB8566D805b8DD2E2EC41542A2dc4Af96855f75d8",
@@ -688,6 +702,7 @@
       ],
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
       "sinceTimestamp": 1734347327,
+      "sinceBlock": 21414682,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
@@ -779,6 +794,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1733901623,
+      "sinceBlock": 21377739,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -817,6 +833,7 @@
         }
       ],
       "sinceTimestamp": 1734346859,
+      "sinceBlock": 21414644,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0xcD8f943e7d506cD92dE582Ac5065dE718E568580",
@@ -857,6 +874,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1734346907,
+      "sinceBlock": 21414648,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0xB8566D805b8DD2E2EC41542A2dc4Af96855f75d8",
@@ -897,6 +915,7 @@
       ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1734346799,
+      "sinceBlock": 21414639,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0x18A7868ECe35A45aC9138108E5b6e021aD1038d1",
@@ -964,6 +983,7 @@
         }
       ],
       "sinceTimestamp": 1734346703,
+      "sinceBlock": 21414631,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
         "$implementation": "0x1d31a15050DBE75c6c060D6da696332a5CB943e1",
