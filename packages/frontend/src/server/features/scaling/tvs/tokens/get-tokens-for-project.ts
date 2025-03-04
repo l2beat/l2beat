@@ -1,12 +1,12 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import {
-  asNumber,
   assert,
   AssetId,
   EthereumAddress,
-  notUndefined,
   UnixTime,
+  asNumber,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import { env } from '~/env'
