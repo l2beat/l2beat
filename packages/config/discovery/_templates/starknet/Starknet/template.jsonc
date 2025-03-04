@@ -19,7 +19,7 @@
       }
     },
     "isFinalized": {
-      "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade).",
+      "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade).",
       "severity": "HIGH"
     },
     "programHashHistory": {
