@@ -220,7 +220,7 @@ export const TokenScreening = command({
             const minters = await getL2Minters(l2Address, chain)
             if (minters.length > 1) {
               supplyInfo.type = 'Non-canonical Token'
-              supplyInfo.reason = 'Multiple minters'
+              supplyInfo.reason = 'No unique (canonical) minter'
             }
 
             // if non-canonical summary is printed later after classication attempt
@@ -231,7 +231,7 @@ export const TokenScreening = command({
                 'Escrow Balance': Number(supplyInfo.escrowBalance).toFixed(2),
                 Type: supplyInfo.type,
                 Canonical: canonical,
-                'In Transit': nonCanonical,
+                'In Transit or Other': nonCanonical,
               })
             }
           }
@@ -267,6 +267,12 @@ export const TokenScreening = command({
             if (newSupplyInfo) {
               supplyInfo.l1Supply = newSupplyInfo.l1Supply
               supplyInfo.l2Supply = newSupplyInfo.l2Supply
+              if (supplyInfo.escrowBalance === '0') {
+                supplyInfo.escrowBalance = newSupplyInfo.escrowBalance
+              }
+              if (!l2Address) {
+                canonicalL2Supply = supplyInfo.escrowBalance
+              }
               if (Number(newSupplyInfo.l2Supply) > 0) {
                 if (newSupplyInfo.type === 'Canonical Token') {
                   canonicalPct = Number(
@@ -294,7 +300,7 @@ export const TokenScreening = command({
               }
             }
           } else {
-             // if L2 address is the same as coingeckos, supplyInfo.l2Supply is l2 total supply
+            // if L2 address is the same as coingeckos, supplyInfo.l2Supply is l2 total supply
             canonicalL2Supply = supplyInfo.escrowBalance // approximate canonical supply (+- in transit)
             canonicalPct = Number(
               Math.min(
