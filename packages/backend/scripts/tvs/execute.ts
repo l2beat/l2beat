@@ -195,7 +195,11 @@ function saveBreakdownFile(
   const bySource = groupBy(tvsForTimestamp, (token) => token.tokenConfig.source)
 
   type SourceType = 'canonical' | 'external' | 'native'
-  const result: Record<string, unknown> = { project: args.project }
+  const result: Record<string, unknown> = {
+    project: args.project,
+    timestamp: timestamp.toDate().toISOString(),
+    tvs: formatCurrency(tvsBreakdown.total, 'usd'),
+  }
 
   // Add each source type if it exists
   for (const source of ['canonical', 'external', 'native'] as SourceType[]) {

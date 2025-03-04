@@ -1203,6 +1203,23 @@
       }
     },
     {
+      "id": "polygonzkevm-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "sinceTimestamp": 1679679015,
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "nativeWithPremint",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "l2BridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "premintedAmount": "200000000000000000000000000"
+      },
+      "isAssociated": false
+    },
+    {
       "id": "polygonzkevm-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

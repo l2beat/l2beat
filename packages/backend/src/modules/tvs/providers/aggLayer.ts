@@ -94,40 +94,52 @@ export async function getAggLayerTokens(
 
   assert(chain.sinceTimestamp)
 
-  const etherOnL2 =
-    escrow.sharedEscrow.nativeAsset === 'etherWrapped'
-      ? {
-          id: TokenId.create(project.id, 'ETH'),
-          priceId: 'ethereum',
-          symbol: 'ETH',
-          name: 'Ethereum',
-          sinceTimestamp: chain.sinceTimestamp,
-          category: 'ether' as const,
-          source: 'canonical' as const,
-          amount: {
-            type: 'totalSupply' as const,
-            address: escrow.sharedEscrow.wethAddress!,
-            chain: project.id,
-            decimals: 18,
-          },
-          isAssociated: false,
-        }
-      : {
-          id: TokenId.create(project.id, 'ETH'),
-          priceId: 'ethereum',
-          symbol: 'ETH',
-          name: 'Ethereum',
-          sinceTimestamp: chain.sinceTimestamp,
-          category: 'ether' as const,
-          source: 'canonical' as const,
-          amount: {
-            type: 'totalSupply' as const,
-            address: escrow.sharedEscrow.wethAddress!,
-            chain: project.id,
-            decimals: 18,
-          },
-          isAssociated: false,
-        }
+  let etherOnL2: Token | undefined
+
+  if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
+    assert(escrow.sharedEscrow.wethAddress)
+
+    etherOnL2 = {
+      id: TokenId.create(project.id, 'ETH'),
+      priceId: 'ethereum',
+      symbol: 'ETH',
+      name: 'Ethereum',
+      sinceTimestamp: chain.sinceTimestamp,
+      category: 'ether' as const,
+      source: 'canonical' as const,
+      amount: {
+        type: 'totalSupply' as const,
+        address: escrow.sharedEscrow.wethAddress,
+        chain: project.id,
+        decimals: 18,
+      },
+      isAssociated: false,
+    }
+  }
+
+  if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
+    assert(escrow.sharedEscrow.premintedAmount)
+
+    etherOnL2 = {
+      id: TokenId.create(project.id, 'ETH'),
+      priceId: 'ethereum',
+      symbol: 'ETH',
+      name: 'Ethereum',
+      sinceTimestamp: chain.sinceTimestamp,
+      category: 'ether' as const,
+      source: 'canonical' as const,
+      amount: {
+        type: 'nativeWithPremint' as const,
+        chain: project.id,
+        decimals: 18,
+        l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
+        premintedAmount: escrow.sharedEscrow.premintedAmount,
+      },
+      isAssociated: false,
+    }
+  }
+
+  assert(etherOnL2)
 
   const tokensToAssignFromL1: Token[] = []
 

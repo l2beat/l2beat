@@ -23,6 +23,7 @@ export type AmountFormula =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
   | CirculatingSupplyAmountFormula
+  | NativeAssetWithPremintAmountFormula
 
 export interface BalanceOfEscrowAmountFormula {
   type: 'balanceOfEscrow'
@@ -51,6 +52,16 @@ export interface CirculatingSupplyAmountFormula {
   priceId: string
 }
 
+export interface NativeAssetWithPremintAmountFormula {
+  type: 'nativeWithPremint'
+  // token chain
+  chain: string
+  // decimals
+  decimals: number
+  l2BridgeAddress: EthereumAddress
+  premintedAmount: string
+}
+
 export interface AmountConfigBase {
   id: string
 }
@@ -64,10 +75,14 @@ export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
 export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
   AmountConfigBase
 
+export type NativeWithPremintAmountConfig =
+  NativeAssetWithPremintAmountFormula & AmountConfigBase
+
 export type AmountConfig =
   | BalanceOfEscrowAmountConfig
   | TotalSupplyAmountConfig
   | CirculatingSupplyAmountConfig
+  | NativeWithPremintAmountConfig
 
 // token deployed to single chain
 export interface Token {
