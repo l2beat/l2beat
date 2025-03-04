@@ -34,6 +34,7 @@ export function DaRiskTable({
       <>
         {remainingBridges.map((bridge) => (
           <TableRow
+            data-slug={`${row.original.slug}`}
             key={bridge.slug}
             className={getRowTypeClassNames({
               isEthereum: false,
@@ -80,7 +81,7 @@ function BridgeCells({
       {excludeBridge ? (
         <TableCell />
       ) : (
-        <TableCell className="text-sm font-medium group-first:pl-0">
+        <TableCell className="text-sm font-medium first:pl-0">
           <TableLink href={bridge.href} className="ml-4">
             {bridge.name}
           </TableLink>

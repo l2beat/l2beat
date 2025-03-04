@@ -71,7 +71,7 @@ function BridgeCells({
 }) {
   return (
     <>
-      <TableCell className="text-sm font-medium group-first:pl-0">
+      <TableCell className="text-sm font-medium first:pl-0">
         <TableLink href={bridge.href} className="ml-4">
           {bridge.name}
         </TableLink>
