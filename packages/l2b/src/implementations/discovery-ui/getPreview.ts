@@ -1,6 +1,7 @@
 import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
 import { ProjectDiscovery } from '@l2beat/config/build/src/discovery/ProjectDiscovery'
 import type { ConfigReader } from '@l2beat/discovery'
+import { getProjectDiscoveries } from './getDiscoveries'
 import { type ContractsMeta, getMeta } from './getMeta'
 import { toAddress } from './toAddress'
 import type {
@@ -36,8 +37,8 @@ export function getPreview(
 
   const metaPerChain: { [chain: string]: ContractsMeta } = {}
   projectChains.forEach((chain) => {
-    const discovery = configReader.readDiscovery(projectId, chain)
-    metaPerChain[chain] = getMeta(discovery)
+    const discoveries = getProjectDiscoveries(configReader, projectId, chain)
+    metaPerChain[chain] = getMeta(discoveries)
     const processor = new ProjectDiscovery(projectId, chain)
     permissionsPerChain.push({
       chain,
