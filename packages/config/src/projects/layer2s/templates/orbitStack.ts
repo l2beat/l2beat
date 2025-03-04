@@ -735,7 +735,7 @@ function getDaTracking(
 
   const inboxDeploymentBlockNumber =
     templateVars.discovery.getContractValueOrUndefined<number>(
-      'SequenceInbox',
+      'SequencerInbox',
       'sinceBlock',
     ) ?? 0
 
