@@ -14,31 +14,6 @@ export async function getBridgeProjectDetails(
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
 ) {
-  const permissionsSection = bridge.permissions
-    ? getPermissionsSection({
-        type: 'bridge',
-        id: bridge.id,
-        isUnderReview: !!bridge.isUnderReview,
-        permissions: bridge.permissions,
-      })
-    : undefined
-  const contractsSection = bridge.contracts
-    ? getContractsSection(
-        {
-          type: 'bridge',
-          id: bridge.id,
-          isVerified,
-          slug: bridge.display.slug,
-          contracts: bridge.contracts,
-          isUnderReview: bridge.isUnderReview,
-          escrows: bridge.config.escrows,
-        },
-        projectsChangeReport,
-      )
-    : undefined
-  const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)
-  const technologySection = getBridgeTechnologySection(bridge)
-
   await api.tvs.chart.prefetch({
     range: '1y',
     filter: { type: 'projects', projectIds: [bridge.id] },
@@ -50,13 +25,13 @@ export async function getBridgeProjectDetails(
       filter: { type: 'projects', projectIds: [bridge.id] },
       excludeAssociatedTokens: false,
     }),
-    getTokensForProject(bridge),
+    getTokensForProject(bridge.id),
   ])
 
-  const items: ProjectDetailsSection[] = []
+  const sections: ProjectDetailsSection[] = []
 
   if (!bridge.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
-    items.push({
+    sections.push({
       type: 'ChartSection',
       props: {
         id: 'tvs',
@@ -73,7 +48,7 @@ export async function getBridgeProjectDetails(
     const sortedMilestones = bridge.milestones.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     )
-    items.push({
+    sections.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
         milestones: sortedMilestones,
@@ -84,7 +59,7 @@ export async function getBridgeProjectDetails(
   }
 
   if (bridge.display.detailedDescription) {
-    items.push({
+    sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
@@ -95,8 +70,9 @@ export async function getBridgeProjectDetails(
     })
   }
 
+  const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)
   if (riskSummary.riskGroups.length > 0) {
-    items.push({
+    sections.push({
       type: 'RiskSummarySection',
       props: {
         id: 'risk-analysis',
@@ -107,8 +83,9 @@ export async function getBridgeProjectDetails(
     })
   }
 
+  const technologySection = getBridgeTechnologySection(bridge)
   if (technologySection) {
-    items.push({
+    sections.push({
       type: 'TechnologySection',
       props: {
         ...technologySection,
@@ -118,8 +95,14 @@ export async function getBridgeProjectDetails(
     })
   }
 
+  const permissionsSection = getPermissionsSection({
+    type: 'bridge',
+    id: bridge.id,
+    isUnderReview: !!bridge.isUnderReview,
+    permissions: bridge.permissions,
+  })
   if (permissionsSection) {
-    items.push({
+    sections.push({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
@@ -129,8 +112,21 @@ export async function getBridgeProjectDetails(
     })
   }
 
+  const contractsSection = getContractsSection(
+    {
+      type: 'bridge',
+      id: bridge.id,
+      isVerified,
+      slug: bridge.display.slug,
+      contracts: bridge.contracts,
+      isUnderReview: bridge.isUnderReview,
+      escrows: bridge.config.escrows,
+      hostChainName: 'Ethereum',
+    },
+    projectsChangeReport,
+  )
   if (contractsSection)
-    items.push({
+    sections.push({
       type: 'ContractsSection',
       props: {
         id: 'contracts',
@@ -139,5 +135,5 @@ export async function getBridgeProjectDetails(
       },
     })
 
-  return items
+  return sections
 }
