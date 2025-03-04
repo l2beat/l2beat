@@ -31,7 +31,7 @@ const cmd = command({
 
     logger.info(
       'Generating TVS config ' +
-      (args.project ? `for project '${args.project}'` : ''),
+        (args.project ? `for project '${args.project}'` : ''),
     )
 
     // get token data

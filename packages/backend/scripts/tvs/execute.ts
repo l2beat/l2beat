@@ -1,5 +1,4 @@
-import { writeFileSync } from 'fs'
-import path from 'path'
+import * as fs from 'fs'
 import {
   type Env,
   LogFormatterPretty,
@@ -9,31 +8,51 @@ import {
 } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {} from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { getKintoConfig } from './modules/tvs/projects/kinto'
-import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { command, positional, run, string } from 'cmd-ts'
+import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
+import type {
+  Token,
+  TokenValue,
+  TvsBreakdown,
+  TvsConfig,
+} from '../../src/modules/tvs/types'
 
-main()
-  .catch((e: unknown) => {
-    console.error(e)
-  })
-  .finally(() => process.exit(0))
-
-async function main() {
-  const env = getEnv()
-  const logger = initLogger(env)
-
-  const ps = new ProjectService()
-  const localExecutor = new LocalExecutor(ps, env, logger)
-
-  const config = await getKintoConfig()
-
-  const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
-  const tvs = await localExecutor.run(config, [timestamp], false)
-
-  outputTVS(tvs, timestamp, logger)
+const args = {
+  project: positional({
+    type: string,
+    displayName: 'projectId',
+    description: 'Project for which tvs will be executed',
+  }),
 }
+
+const cmd = command({
+  name: 'generate-tvs-config',
+  args,
+  handler: async (args) => {
+    const env = getEnv()
+    const logger = initLogger(env)
+
+    const ps = new ProjectService()
+    const localExecutor = new LocalExecutor(ps, env, logger)
+
+    const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+
+    const tokens = readConfig(args.project, logger)
+    const config = {
+      projectId: ProjectId(args.project),
+      tokens,
+    } as TvsConfig
+
+    const tvs = await localExecutor.run(config, [timestamp], false)
+
+    outputTVS(tvs, timestamp, logger)
+
+    process.exit(0)
+  },
+})
+
+run(cmd, process.argv.slice(2))
 
 function outputTVS(
   tvs: Map<number, TokenValue[]>,
@@ -125,27 +144,6 @@ function outputTVS(
       2,
     ),
   )
-
-  // dump individualTokens to file
-  writeFileSync(
-    path.join(__dirname, 'token-breakdown.json'),
-    JSON.stringify(
-      tokenBreakdown,
-      (k, v) => {
-        if (['value', 'valueForProject', 'valueForTotal'].includes(k)) {
-          return `$${(v as number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-        }
-        return v
-      },
-      2,
-    ),
-  )
-
-  // dump filtered config to file
-  writeFileSync(
-    path.join(__dirname, 'token-config.json'),
-    JSON.stringify(filteredConfig, null, 2),
-  )
 }
 
 function initLogger(env: Env) {
@@ -170,4 +168,12 @@ function toDollarString(value: number) {
   } else {
     return `$${value.toFixed(2)}`
   }
+}
+
+function readConfig(project: string, logger: Logger) {
+  const filePath = `./src/modules/tvs/config/${project}.json`
+  logger.info(`reading config from file: ${filePath}`)
+
+  const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+  return json.tokens as Token[]
 }
