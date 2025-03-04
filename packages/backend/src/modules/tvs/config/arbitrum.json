@@ -1,8 +1,6 @@
 {
   "$schema": "schema/tvs-config-schema.json",
-  "projectId": {
-    "description": "Project for which tvs will be executed"
-  },
+  "projectId": "arbitrum",
   "tokens": [
     {
       "id": "arbitrum-ETH",

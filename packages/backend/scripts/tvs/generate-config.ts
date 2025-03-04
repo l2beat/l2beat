@@ -96,7 +96,7 @@ function writeToFile(project: string, nonZeroTokens: Token[], logger: Logger) {
   logger.info(`Writing results to file: ${filePath}`)
   const wrapper = {
     $schema: 'schema/tvs-config-schema.json',
-    projectId: args.project,
+    projectId: ProjectId(project),
     tokens: nonZeroTokens,
   }
 
