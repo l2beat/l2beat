@@ -9,7 +9,7 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { layer2s, layer3s } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
