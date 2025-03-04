@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x4740532d3994a7ff115343dd2c501c4761cd7585
+
+# Diff at Tue, 04 Mar 2025 10:40:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21766747
+- current block number: 21766747
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766747 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      sinceBlock:
++        21522690
+    }
+```
+
+```diff
+    contract Verifier (0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      sinceBlock:
++        20984421
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      sinceBlock:
++        21537112
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b) {
+    +++ description: None
+      sinceBlock:
++        21537111
+    }
+```
+
 Generated with discovered.json: 0xc1aeae51448e7ac640898f12e80515704e86b0c2
 
 # Diff at Thu, 27 Feb 2025 11:47:00 GMT:

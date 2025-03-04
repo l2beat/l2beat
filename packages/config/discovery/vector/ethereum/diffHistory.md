@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xf945e4f485380da571d697bb09ea19035c2432ee
+
+# Diff at Tue, 04 Mar 2025 10:40:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21635855
+- current block number: 21635855
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635855 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      sinceBlock:
++        20235805
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sinceBlock:
++        20233410
+    }
+```
+
+```diff
+    contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      sinceBlock:
++        19806461
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sinceBlock:
++        20573748
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      sinceBlock:
++        21031662
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      sinceBlock:
++        21547470
+    }
+```
+
 Generated with discovered.json: 0x9d489ebdf0e1980b4299bc1541af8509618dbdb2
 
 # Diff at Tue, 11 Feb 2025 14:13:40 GMT:

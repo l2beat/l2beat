@@ -16,6 +16,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1723462727,
+      "sinceBlock": 20512287,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -35,6 +36,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"],
       "sinceTimestamp": 1578581061,
+      "sinceBlock": 9247089,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -62,6 +64,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1736551439,
+      "sinceBlock": 21597341,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -87,6 +90,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1732204763,
+      "sinceBlock": 21237154,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -115,6 +119,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1722504155,
+      "sinceBlock": 20432774,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -138,6 +143,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1651747441,
+      "sinceBlock": 14716798,
       "values": {
         "$immutable": true,
         "l1StandardBridge": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
@@ -153,6 +159,7 @@
         "0x926aa3c074cb5463671ec24c946524d9e03d3aa56a9847ca738b17b747c0e076"
       ],
       "sinceTimestamp": 1651752742,
+      "sinceBlock": 14717196,
       "values": {
         "$immutable": true,
         "owner": "0xB524735356985D2f267FA010D681f061DfF03715"
@@ -165,6 +172,7 @@
         "0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb"
       ],
       "sinceTimestamp": 1578580941,
+      "sinceBlock": 9247083,
       "values": {
         "$immutable": true,
         "isOwner": false,
@@ -178,6 +186,7 @@
         "0xe3c561b96bc217e32abfe2230f61c22a385dde4d3fcc87ecda9703b78fc89e75"
       ],
       "sinceTimestamp": 1651578198,
+      "sinceBlock": 14704448,
       "values": {
         "$immutable": true,
         "destination": "0x6Bb9910c5529Cb3b32c4f0e13E8bC38F903b2534",
@@ -197,6 +206,7 @@
       ],
       "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "sinceTimestamp": 1677231527,
+      "sinceBlock": 16697363,
       "values": {
         "$immutable": true,
         "bond": "5000000000000000000000",
@@ -219,6 +229,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1651577227,
+      "sinceBlock": 14704381,
       "values": { "$immutable": true }
     },
     {
@@ -238,6 +249,7 @@
       ],
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "sinceTimestamp": 1682355155,
+      "sinceBlock": 17117454,
       "values": {
         "$admin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "$implementation": "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a",
@@ -322,6 +334,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1730926523,
+      "sinceBlock": 21131132,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -349,6 +362,7 @@
       ],
       "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "sinceTimestamp": 1677230459,
+      "sinceBlock": 16697276,
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
@@ -368,6 +382,7 @@
         "0x54ab5e1f981929fca37e28c313db9ab35343de3df6907dbaeb29dda3840aadcd"
       ],
       "sinceTimestamp": 1651576251,
+      "sinceBlock": 14704307,
       "values": { "$immutable": true }
     },
     {
@@ -382,6 +397,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1734635711,
+      "sinceBlock": 21438590,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -407,6 +423,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1710046163,
+      "sinceBlock": 19402413,
       "values": {
         "$immutable": true,
         "L1_MESSAGE_SERVICE": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -426,6 +443,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1597806870,
+      "sinceBlock": 10688070,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -457,6 +475,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1719509639,
+      "sinceBlock": 20184545,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -482,6 +501,7 @@
         }
       ],
       "sinceTimestamp": 1683067175,
+      "sinceBlock": 17176107,
       "values": {
         "$immutable": false,
         "avatar": "0xB524735356985D2f267FA010D681f061DfF03715",
@@ -515,6 +535,7 @@
       ],
       "ignoreInWatchMode": ["getCurrentTime"],
       "sinceTimestamp": 1677231923,
+      "sinceBlock": 16697394,
       "values": {
         "$immutable": true,
         "emergencyProposals": [],
@@ -539,6 +560,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1728901991,
+      "sinceBlock": 20963234,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -564,6 +586,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716255695,
+      "sinceBlock": 19915066,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -588,6 +611,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1636157803,
+      "sinceBlock": 13559776,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -620,6 +644,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1721124335,
+      "sinceBlock": 20318360,
       "values": {
         "$immutable": true,
         "L1_GATEWAY_ROUTER": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
@@ -636,6 +661,7 @@
         "0x626fc280735c432e9187554bc59d556389dc73435f1b570e64f424d257f68d09"
       ],
       "sinceTimestamp": 1618347170,
+      "sinceBlock": 12234012,
       "values": { "$immutable": true }
     },
     {
@@ -652,6 +678,7 @@
       ],
       "ignoreInWatchMode": ["rootBundleProposal"],
       "sinceTimestamp": 1653167916,
+      "sinceBlock": 14819537,
       "values": {
         "$immutable": true,
         "Adapters": {
@@ -732,6 +759,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716255947,
+      "sinceBlock": 19915087,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -755,6 +783,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716255311,
+      "sinceBlock": 19915034,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -782,6 +811,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1691158667,
+      "sinceBlock": 17842162,
       "values": {
         "$immutable": true,
         "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
@@ -801,6 +831,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1692831647,
+      "sinceBlock": 17980554,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -819,6 +850,7 @@
         "0xbe561564083bf80216ae0f5510f70415cf97a624ef4bad88fb98a43dc4231dd6"
       ],
       "sinceTimestamp": 1635958318,
+      "sinceBlock": 13545034,
       "values": {
         "$immutable": true,
         "ancillaryBytesLimit": 8192,
@@ -840,6 +872,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716243911,
+      "sinceBlock": 19914094,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -863,6 +896,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1719955511,
+      "sinceBlock": 20221494,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -888,6 +922,7 @@
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1738675907,
+      "sinceBlock": 21773451,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -906,6 +941,7 @@
         "0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"
       ],
       "sinceTimestamp": 1676487275,
+      "sinceBlock": 16636058,
       "values": {
         "$immutable": true,
         "burnedBondPercentage": "500000000000000000",

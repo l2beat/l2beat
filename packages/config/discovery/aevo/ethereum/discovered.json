@@ -16,6 +16,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1679193095,
+      "sinceBlock": 16858814,
       "values": {
         "$immutable": false,
         "$implementation": "0x8CfF5bDb1B428B979E3D87087dA8549A28065DDB",
@@ -101,6 +102,7 @@
         }
       ],
       "sinceTimestamp": 1679193047,
+      "sinceBlock": 16858810,
       "values": {
         "$immutable": true,
         "addressManager": "0x7a616b25E7c96fc4d652966d7DDAbB51dE28eCc1",
@@ -127,6 +129,7 @@
         }
       ],
       "sinceTimestamp": 1679193071,
+      "sinceBlock": 16858812,
       "values": {
         "$admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
         "$implementation": "0x20F1380A78492227A9B2366242335D684aF22507",
@@ -199,6 +202,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
+      "sinceBlock": 16990669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -247,6 +251,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1679193119,
+      "sinceBlock": 16858815,
       "values": {
         "$admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
         "$implementation": "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3",
@@ -299,6 +304,7 @@
         }
       ],
       "sinceTimestamp": 1679193059,
+      "sinceBlock": 16858811,
       "values": {
         "$immutable": true,
         "owner": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"
@@ -338,6 +344,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1679193083,
+      "sinceBlock": 16858813,
       "values": {
         "$admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
         "$implementation": "0x0af92E6944900abA4B9BAC1417bA13ED6F45c27f",
@@ -418,6 +425,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1679193155,
+      "sinceBlock": 16858818,
       "values": {
         "$admin": "0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
         "$implementation": "0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E",

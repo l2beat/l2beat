@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x33ddfaa9cf0a6a6033190b2b65bd0933731b1688
+
+# Diff at Tue, 04 Mar 2025 10:40:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21086404
+- current block number: 21086404
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21086404 (main branch discovery), not current.
+
+```diff
+    contract ZKFairAdmin (0x0110B1B231aA3b96a94c900eb3056297526AB725) {
+    +++ description: None
+      sinceBlock:
++        18807160
+    }
+```
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      sinceBlock:
++        18810967
+    }
+```
+
+```diff
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17) {
+    +++ description: None
+      sinceBlock:
++        18810970
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      sinceBlock:
++        18810965
+    }
+```
+
+```diff
+    contract FflonkVerifier (0x769E285d2120472c3400A09684B82A842012F46d) {
+    +++ description: None
+      sinceBlock:
++        18810958
+    }
+```
+
+```diff
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    +++ description: None
+      sinceBlock:
++        18807134
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      sinceBlock:
++        18810964
+    }
+```
+
+```diff
+    contract Bridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      sinceBlock:
++        18810961
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      sinceBlock:
++        18810959
+    }
+```
+
+```diff
+    contract BridgeAdminMultiSig (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
+    +++ description: None
+      sinceBlock:
++        18807102
+    }
+```
+
 Generated with discovered.json: 0x9516cf40a3f0a20b08d4ad32e14e36d00b337a53
 
 # Diff at Mon, 20 Jan 2025 11:10:24 GMT:

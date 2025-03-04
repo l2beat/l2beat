@@ -365,7 +365,6 @@ function getDaTracking(
     'sequencerInbox',
   )
 
-  // TODO: update to deployment block number from discovery
   const inboxStartBlock =
     templateVars.discovery.getContractValueOrUndefined<number>(
       'SystemConfig',

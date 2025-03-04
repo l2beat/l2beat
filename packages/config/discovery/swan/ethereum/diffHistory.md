@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x7522966cea16bbe28c15a9b6db8664240dbe6ba4
+
+# Diff at Tue, 04 Mar 2025 10:40:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20413034
+- current block number: 20413034
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x15567C4FfD9109795dFf1D9A5233D10aef0738D2) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        20112969
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x1c22740A0B4511E11D76434A424487862b593901) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        20112966
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        20112971
+    }
+```
+
+```diff
+    contract SystemConfig (0x504D56cf68f791B45E3A2e895B0e1562f3431328) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sinceBlock:
++        20112967
+    }
+```
+
+```diff
+    contract AddressManager (0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        20112955
+    }
+```
+
+```diff
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c) {
+    +++ description: None
+      sinceBlock:
++        20112954
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xadE916De67511E5C24af4174Be67143d0dA94959) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        20112959
+    }
+```
+
+```diff
+    contract OptimismPortal (0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        20112965
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) {
+    +++ description: None
+      sinceBlock:
++        20112956
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xE9614162C6128ABD7790C65D711CfC43ea842153) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sinceBlock:
++        20112970
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xed7525946A09056C6AaE29941b8323017382050e) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        20112968
+    }
+```
+
 Generated with discovered.json: 0x3b0c2d278c90c98fd2fdb0a143736bcc3c2dc315
 
 # Diff at Wed, 26 Feb 2025 10:33:13 GMT:

@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1679653103,
+      "sinceBlock": 16896716,
       "values": {
         "$immutable": true,
         "owner": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
@@ -129,6 +130,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678956815,
+      "sinceBlock": 16839348,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -173,6 +175,7 @@
       ],
       "ignoreInWatchMode": ["getRoot"],
       "sinceTimestamp": 1679653127,
+      "sinceBlock": 16896718,
       "values": {
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
         "$implementation": "0x0FeB850B183C57534b56b7d56520133C8f9BDB65",
@@ -227,6 +230,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678429487,
+      "sinceBlock": 16795950,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -327,6 +331,7 @@
         "totalVerifiedBatches"
       ],
       "sinceTimestamp": 1679653163,
+      "sinceBlock": 16896721,
       "values": {
         "_HALT_AGGREGATION_TIMEOUT": "1 week",
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
@@ -743,6 +748,7 @@
       ],
       "ignoreInWatchMode": ["getRoot", "depositCount"],
       "sinceTimestamp": 1679653151,
+      "sinceBlock": 16896720,
       "values": {
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
         "$implementation": "0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
@@ -790,6 +796,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722533147,
+      "sinceBlock": 20435175,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -864,6 +871,7 @@
         }
       ],
       "sinceTimestamp": 1679653187,
+      "sinceBlock": 16896723,
       "values": {
         "$immutable": true,
         "accessControl": {

@@ -1,3 +1,269 @@
+Generated with discovered.json: 0x755415bfee07fdf2bed54d2e61e44f5e524db12f
+
+# Diff at Tue, 04 Mar 2025 10:39:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21829671
+- current block number: 21829671
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829671 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      sinceBlock:
++        19989094
+    }
+```
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      sinceBlock:
++        19968607
+    }
+```
+
+```diff
+    contract L1DAITokenBridge (0x10E6593CDda8c58a1d0f14C5164B376352a55f2F) {
+    +++ description: Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.
+      sinceBlock:
++        12781431
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      sinceBlock:
++        19884569
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sinceBlock:
++        21379267
+    }
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sinceBlock:
++        17365804
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      sinceBlock:
++        19989094
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        12686757
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x27B81db41F586016694632193b99E45b1a27B8f8) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sinceBlock:
++        21379274
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0x323dFC63c9B83CB83f40325AaB74b245937cbdF0) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sinceBlock:
++        21379271
+    }
+```
+
+```diff
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      sinceBlock:
++        16780617
+    }
+```
+
+```diff
+    contract L1DAIEscrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
+      sinceBlock:
++        12781427
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      sinceBlock:
++        17365800
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      sinceBlock:
++        19185554
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        15677422
+    }
+```
+
+```diff
+    contract SynthetixBridgeEscrow (0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) {
+    +++ description: Custom escrow for SNX bridged via canonical messaging.
+      sinceBlock:
++        12409015
+    }
+```
+
+```diff
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sinceBlock:
++        21379266
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sinceBlock:
++        17365803
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      sinceBlock:
++        15281202
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sinceBlock:
++        19185544
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0x91a661891248d8C4916FB4a1508492a5e2CBcb87) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sinceBlock:
++        21379270
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        19064589
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        12686786
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sinceBlock:
++        11670007
+    }
+```
+
+```diff
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sinceBlock:
++        20637600
+    }
+```
+
+```diff
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa) {
+    +++ description: Collecting sequencer, base- and L1 fees from L2.
+      sinceBlock:
++        16341988
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sinceBlock:
++        17365802
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      sinceBlock:
++        19185517
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      sinceBlock:
++        20566057
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        12686687
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sinceBlock:
++        19884569
+    }
+```
+
 Generated with discovered.json: 0xbb1928a72ad4ebae57abb75bb2356f46d658a1ff
 
 # Diff at Sat, 01 Mar 2025 09:54:33 GMT:

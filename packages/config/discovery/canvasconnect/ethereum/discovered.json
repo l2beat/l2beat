@@ -12,6 +12,7 @@
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "sinceTimestamp": 1657453372,
+      "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -49,6 +50,7 @@
         "getValidiumVaultRoot"
       ],
       "sinceTimestamp": 1674388691,
+      "sinceBlock": 16462191,
       "values": {
         "$admin": "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
         "$immutable": false,
@@ -138,6 +140,7 @@
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
       "sinceTimestamp": 1657453372,
+      "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": false,
@@ -151,6 +154,7 @@
         "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"
       ],
       "sinceTimestamp": 1674737735,
+      "sinceBlock": 16491125,
       "values": {
         "$immutable": true,
         "constructorArgs": [

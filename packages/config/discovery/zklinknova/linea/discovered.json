@@ -21,6 +21,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692606393,
+      "sinceBlock": 244397,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -51,6 +52,7 @@
         "0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"
       ],
       "sinceTimestamp": 1709977822,
+      "sinceBlock": 2779975,
       "values": {
         "$immutable": true,
         "constructorArgs": {
@@ -92,6 +94,7 @@
         "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1709218085,
+      "sinceBlock": 2590041,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -314,6 +317,7 @@
         }
       ],
       "sinceTimestamp": 1709218113,
+      "sinceBlock": 2590048,
       "values": {
         "$admin": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "$implementation": "0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A",
@@ -352,6 +356,7 @@
         }
       ],
       "sinceTimestamp": 1709279545,
+      "sinceBlock": 2605406,
       "values": {
         "$admin": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "$implementation": "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518",
@@ -381,6 +386,7 @@
         "0x456c64183a7130a9bf99039d4d381b4b827b7efe87e684f81c20871836d975cb"
       ],
       "sinceTimestamp": 1709217961,
+      "sinceBlock": 2590010,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f"
@@ -399,6 +405,7 @@
         }
       ],
       "sinceTimestamp": 1709218009,
+      "sinceBlock": 2590022,
       "values": {
         "$immutable": true,
         "minDelay": 0,

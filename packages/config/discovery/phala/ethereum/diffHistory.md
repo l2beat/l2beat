@@ -1,3 +1,157 @@
+Generated with discovered.json: 0xe85e846e3109d7abae7477a753d1524655396c2a
+
+# Diff at Tue, 04 Mar 2025 10:39:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21872538
+- current block number: 21872538
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872538 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        21418005
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E) {
+    +++ description: None
+      sinceBlock:
++        21418004
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sinceBlock:
++        20233410
+    }
+```
+
+```diff
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      sinceBlock:
++        16780617
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      sinceBlock:
++        16990669
+    }
+```
+
+```diff
+    contract AddressManager (0x51D5C516c818dcf63E67B28cB2516166D8578c06) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        21418004
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        21418005
+    }
+```
+
+```diff
+    contract OptimismPortal (0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        21418005
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sinceBlock:
++        11670007
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa010dE167788ed7d95c770AC478997D3207236AF) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        21418007
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      sinceBlock:
++        21418007
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sinceBlock:
++        20573748
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      sinceBlock:
++        21031662
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      sinceBlock:
++        21547470
+    }
+```
+
+```diff
+    contract SystemConfig (0xeBf5859b7646ca9cf8A981613569bF28394F2571) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sinceBlock:
++        21418005
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        21418004
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sinceBlock:
++        21418006
+    }
+```
+
 Generated with discovered.json: 0x41b5b2ed137cbd0492bce7a22a0b50dc36401171
 
 # Diff at Wed, 26 Feb 2025 10:32:58 GMT:
