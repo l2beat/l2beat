@@ -1,6 +1,7 @@
 import { createHash } from 'crypto'
 import {
   type ChainConfig,
+  type ElasticChainEscrow,
   type Project,
   type ProjectTvlEscrow,
   tokenList,
@@ -56,12 +57,12 @@ export async function mapConfig(
 
       if (escrow.sharedEscrow.type === 'ElasticChain') {
         console.log(`Querying for shared escrow L2 tokens addresses`)
+
         const elasticChainTokens = await getElasticChainTokens(
-          escrow.sharedEscrow,
           project,
           chain,
-          // @ts-ignore only non-native tokens
-          escrow.tokens.filter((t) => t.address),
+          // TODO: fix types
+          escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
           multicallClient,
         )
 
@@ -100,7 +101,7 @@ export async function mapConfig(
   }
 }
 
-function createToken(
+export function createToken(
   legacyToken: LegacyToken,
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,

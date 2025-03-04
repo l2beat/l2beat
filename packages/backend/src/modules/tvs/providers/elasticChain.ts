@@ -1,14 +1,14 @@
-import type { ChainConfig, ElasticChainEscrow, Project } from '@l2beat/config'
-import {
-  assert,
-  Bytes,
-  type EthereumAddress,
-  notUndefined,
-} from '@l2beat/shared-pure'
-import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import type {
+  ChainConfig,
+  ElasticChainEscrow,
+  Project,
+  ProjectTvlEscrow,
+} from '@l2beat/config'
+import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
+import { createToken } from '../mapConfig'
 import { type Token, TokenId } from '../types'
 import { tokenToTicker } from './tickers'
 
@@ -17,25 +17,26 @@ export const bridgeInterface = new utils.Interface([
 ])
 
 export async function getElasticChainTokens(
-  escrow: ElasticChainEscrow,
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
-  tokens: (LegacyToken & { address: EthereumAddress })[],
+  escrow: ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
   multicallClient: MulticallClient,
 ): Promise<Token[]> {
-  const encoded: MulticallRequest[] = tokens.map((token) => ({
-    address: escrow.l2BridgeAddress,
+  const l2Tokens = escrow.tokens.filter((t) => t.address !== undefined)
+
+  const encoded: MulticallRequest[] = l2Tokens.map((token) => ({
+    address: escrow.sharedEscrow.l2BridgeAddress,
     data: Bytes.fromHex(
       bridgeInterface.encodeFunctionData('l2TokenAddress', [token.address]),
     ),
   }))
 
   // TODO: latest block number
-  const responses = await multicallClient.multicall(encoded, 20390762)
+  const responses = await multicallClient.multicall(encoded, 1296670)
 
-  const l2Tokens = responses
+  const l2TokensTvsConfigs = responses
     .map((response, index) => {
-      const token = tokens[index]
+      const token = l2Tokens[index]
       if (
         response.data.toString() === '0x' ||
         response.data.toString() ===
@@ -86,13 +87,22 @@ export async function getElasticChainTokens(
     source: 'canonical' as const,
     amount: {
       type: 'totalSupply' as const,
-      address: escrow.l2EtherAddress,
+      address: escrow.sharedEscrow.l2EtherAddress,
       chain: project.id,
-      // Assumption: decimals on destination network are the same
       decimals: 18,
     },
     isAssociated: false,
   }
 
-  return [etherOnL2, ...l2Tokens]
+  const tokensToAssignFromL1: Token[] = []
+
+  if (escrow.sharedEscrow.tokensToAssignFromL1) {
+    for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
+      const token = escrow.tokens.find((t) => t.symbol === l1Token)
+      assert(token, `${l1Token} not found`)
+      tokensToAssignFromL1.push(createToken(token, project, chain, escrow))
+    }
+  }
+
+  return [etherOnL2, ...l2TokensTvsConfigs, ...tokensToAssignFromL1]
 }
