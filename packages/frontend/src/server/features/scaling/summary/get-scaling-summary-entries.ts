@@ -11,9 +11,9 @@ import type {
 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { ActivityLatestUopsData } from '../activity/get-activity-latest-tps'
@@ -51,7 +51,7 @@ export async function getScalingSummaryEntries() {
     )
     .sort(compareStageAndTvs)
 
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingSummaryEntry extends CommonScalingEntry {
