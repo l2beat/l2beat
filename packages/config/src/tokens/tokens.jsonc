@@ -5941,6 +5941,37 @@
   ],
   "soneium": [
     {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "coingeckoId": "stakestone-ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pufETH",
+      "address": "0x6c460b2c6D6719562D5dA43E5152B375e79B9A8B",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "vASTR",
       "address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
       "source": "external",
