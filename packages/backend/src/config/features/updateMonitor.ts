@@ -48,7 +48,7 @@ export function getChainDiscoveryConfig(
       'ETHEREUM_BEACON_API_URL_FOR_DISCOVERY',
       'ETHEREUM_BEACON_API_URL',
     ]),
-    celestiaApiUrl: env.string([
+    celestiaApiUrl: env.optionalString([
       'CELESTIA_API_URL_FOR_DISCOVERY',
       'CELESTIA_API_URL',
     ]),

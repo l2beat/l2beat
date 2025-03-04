@@ -554,6 +554,41 @@ export class BatchingAndCachingProvider {
     entry.write(JSON.stringify(blobs))
     return blobs
   }
+
+  async getCelestiaBlob(height: number, namespace: string, commitment: string) {
+    const entry = await this.cache.entry(
+      'getCelestiaBlob',
+      [height, namespace, commitment],
+      undefined,
+    )
+    const cached = entry.read()
+    if (cached !== undefined) {
+      return parseCacheEntry(cached)
+    }
+
+    const blob = await this.provider.getCelestiaBlob(
+      height,
+      namespace,
+      commitment,
+    )
+    entry.write(JSON.stringify(blob))
+    return blob
+  }
+
+  async getCelestiaBlockResultLogs(height: number) {
+    const entry = await this.cache.entry(
+      'getCelestiaBlockResultLogs',
+      [height],
+      undefined,
+    )
+    const cached = entry.read()
+    if (cached !== undefined) {
+      return parseCacheEntry(cached)
+    }
+    const logs = await this.provider.getCelestiaBlockResultLogs(height)
+    entry.write(JSON.stringify(logs))
+    return logs
+  }
 }
 
 export function orderLogs(a: providers.Log, b: providers.Log) {

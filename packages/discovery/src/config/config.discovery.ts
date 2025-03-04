@@ -52,7 +52,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `${ENV_NAME}_BEACON_API_URL_FOR_DISCOVERY`,
       `${ENV_NAME}_BEACON_API_URL`,
     ]),
-    celestiaApiUrl: env.string([
+    celestiaApiUrl: env.optionalString([
       `CELESTIA_API_URL_FOR_DISCOVERY`,
       `CELESTIA_API_URL`,
     ]),

@@ -47,6 +47,7 @@ export class AllProviders {
 
       const etherscanClient = getExplorerClient(http, config.explorer)
       let blobClient: BlobClient | undefined
+      let celestiaApiClient: CelestiaApiClient | undefined
 
       const ethereumRpc = new RpcClient({
         url: config.rpcUrl,
@@ -69,14 +70,16 @@ export class AllProviders {
         })
       }
 
-      const celestiaApiClient = new CelestiaApiClient({
-        url: config.celestiaApiUrl,
-        http,
-        logger: Logger.SILENT,
-        sourceName: 'celestia-api',
-        callsPerMinute: 60,
-        retryStrategy: 'SCRIPT',
-      })
+      if (config.celestiaApiUrl) {
+        celestiaApiClient = new CelestiaApiClient({
+          url: config.celestiaApiUrl,
+          http,
+          logger: Logger.SILENT,
+          sourceName: 'celestia-api',
+          callsPerMinute: 300,
+          retryStrategy: 'SCRIPT',
+        })
+      }
 
       this.config.set(config.name, {
         config,

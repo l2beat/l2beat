@@ -49,24 +49,12 @@ export async function getNamespaceFromCommitment(
   height: number,
   commitment: string,
 ) {
-  const txs = await provider.raw(
-    `celestia-txs-${height}`,
-    ({ celestiaApiClient }) => {
-      return celestiaApiClient.getDecodedTransactions(height)
-    },
-  )
+  const logs = await provider.getCelestiaBlockResultLogs(height)
 
-  const possibleNamespaces = celestiaTools.extractNamespacesFromLogs(
-    txs.map((tx) => tx.log),
-  )
+  const possibleNamespaces = celestiaTools.extractNamespacesFromLogs(logs)
 
   for (const namespace of possibleNamespaces) {
-    const blob = await provider.raw(
-      `celestia-blob-${namespace}-${commitment}`,
-      ({ celestiaApiClient }) => {
-        return celestiaApiClient.getBlob(height, namespace, commitment)
-      },
-    )
+    const blob = await provider.getCelestiaBlob(height, namespace, commitment)
 
     if (blob) {
       return namespace

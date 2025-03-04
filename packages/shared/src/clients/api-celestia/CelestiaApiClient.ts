@@ -16,7 +16,7 @@ export class CelestiaApiClient extends ClientCore {
     super($)
   }
 
-  async getDecodedTransactions(height: number) {
+  async getBlockResultLogs(height: number) {
     const response = await this.fetch(
       `${this.$.url}/block_results?height=${height}`,
       {},
@@ -24,7 +24,7 @@ export class CelestiaApiClient extends ClientCore {
 
     const json = GetBlockResultsResponseSchema.parse(response)
 
-    return json.result.txs_results
+    return json.result.txs_results.map((tx) => tx.log)
   }
 
   async getBlob(height: number, namespace: string, commitment: string) {
@@ -47,7 +47,7 @@ export class CelestiaApiClient extends ClientCore {
     const json = GetBlobResponseSchema.parse(response)
 
     if ('error' in json) {
-      return null
+      return
     }
 
     return json.result.data

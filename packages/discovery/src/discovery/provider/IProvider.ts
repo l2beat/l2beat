@@ -25,7 +25,7 @@ export interface RawProviders {
   baseProvider: providers.JsonRpcProvider
   eventProvider: providers.JsonRpcProvider
   etherscanClient: IEtherscanClient
-  celestiaApiClient: CelestiaApiClient
+  celestiaApiClient?: CelestiaApiClient
   blobClient?: BlobClient
 }
 
@@ -92,4 +92,11 @@ export interface IProvider {
   ): Promise<ContractDeployment | undefined>
 
   getBlobs(txHash: string): Promise<BlobsInBlock>
+
+  getCelestiaBlob(
+    height: number,
+    namespace: string,
+    commitment: string,
+  ): Promise<string | undefined>
+  getCelestiaBlockResultLogs(height: number): Promise<string[]>
 }
