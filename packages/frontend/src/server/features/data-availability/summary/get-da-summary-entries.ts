@@ -5,8 +5,8 @@ import type {
   UsedInProject,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import type { TabbedDaEntries } from '~/app/(side-nav)/data-availability/_utils/group-by-system'
-import { groupByDaTabs } from '~/app/(side-nav)/data-availability/_utils/group-by-system'
+import type { TabbedDaEntries } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
+import { groupByDaTabs } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,

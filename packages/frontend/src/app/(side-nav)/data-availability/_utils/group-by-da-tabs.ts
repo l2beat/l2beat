@@ -15,10 +15,3 @@ export function groupByDaTabs<T extends CommonDaEntry>(
     customSystems: custom,
   }
 }
-
-export function groupByTab<T extends { isPublic: boolean }>(entries: T[]) {
-  return {
-    publicSystems: entries.filter((x) => x.isPublic),
-    customSystems: entries.filter((x) => !x.isPublic),
-  }
-}
