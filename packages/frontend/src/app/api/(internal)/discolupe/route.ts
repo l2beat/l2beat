@@ -1,5 +1,3 @@
-import { type Project, layer2s, layer3s } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import { NextResponse } from 'next/server'
 import { getCostsProjects } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { getFinalityProjects } from '~/server/features/scaling/finality/get-scaling-finality-entries'
@@ -36,62 +34,39 @@ async function getResponse() {
   return {
     success: true,
     data: {
-      projects: projects.map((p) =>
-        toResponseProject(
-          p,
-          costs,
-          liveness,
-          finality,
-          tvs.projects[p.id.toString()]?.breakdown.total ?? 0,
-        ),
-      ),
+      projects: projects.map((project) => ({
+        id: project.id.toString(),
+        tvs: tvs.projects[project.id.toString()]?.breakdown.total ?? 0,
+        display: {
+          name: project.name,
+          slug: project.slug,
+          stack: project.scalingInfo.stack,
+          category: project.scalingInfo.type,
+        },
+        type: project.scalingInfo.layer === 'layer2' ? 'L2' : 'L3',
+        arePermissionsDiscoveryDriven:
+          project.discoveryInfo?.permissionsDiscoDriven ?? false,
+        areContractsDiscoveryDriven:
+          project.discoveryInfo?.contractsDiscoDriven ?? false,
+        isArchived: !!project.isArchived,
+        isUpcoming: !!project.isUpcoming,
+        isUnderReview: project.statuses.isUnderReview,
+
+        costsConfigured: costs.includes(project.id.toString()),
+        livenessConfigured: liveness.includes(project.id.toString()),
+        finalityConfigured: finality.includes(project.id.toString()),
+        milestonesConfigured: (project.milestones ?? []).length > 0,
+        operatorConfigured: getOperatorSection(project) !== undefined,
+        withdrawalsConfigured: getWithdrawalsSection(project) !== undefined,
+        otherConsiderationsConfigured:
+          getOtherConsiderationsSection(project) !== undefined,
+        stateDerivationConfigured:
+          project.scalingTechnology.stateDerivation !== undefined,
+        stateValidationConfigured:
+          project.scalingTechnology.stateValidation !== undefined,
+        upgradesAndGovernanceConfigured:
+          project.scalingTechnology.upgradesAndGovernance !== undefined,
+      })),
     },
-  } as const
-}
-
-function toResponseProject(
-  project: Project<
-    'statuses' | 'scalingInfo' | 'scalingTechnology',
-    'discoveryInfo' | 'milestones' | 'isArchived' | 'isUpcoming'
-  >,
-  costs: string[],
-  liveness: string[],
-  finality: string[],
-  tvs: number,
-) {
-  const operatorSection = getOperatorSection(project)
-  const withdrawalsSection = getWithdrawalsSection(project)
-  const otherConsiderationsSection = getOtherConsiderationsSection(project)
-
-  /** @deprecated */
-  const legacy =
-    layer2s.find((p) => p.id === project.id) ??
-    layer3s.find((p) => p.id === project.id)
-  assert(legacy !== undefined)
-
-  return {
-    id: project.id.toString(),
-    tvs,
-    display: legacy.display,
-    type: project.scalingInfo.layer === 'layer2' ? 'L2' : 'L3',
-    arePermissionsDiscoveryDriven:
-      project.discoveryInfo?.permissionsDiscoDriven ?? false,
-    areContractsDiscoveryDriven:
-      project.discoveryInfo?.contractsDiscoDriven ?? false,
-    isArchived: !!project.isArchived,
-    isUpcoming: !!project.isUpcoming,
-    isUnderReview: project.statuses.isUnderReview,
-
-    costsConfigured: costs.includes(project.id.toString()),
-    livenessConfigured: liveness.includes(project.id.toString()),
-    finalityConfigured: finality.includes(project.id.toString()),
-    milestonesConfigured: (project.milestones ?? []).length > 0,
-    operatorConfigured: operatorSection !== undefined,
-    withdrawalsConfigured: withdrawalsSection !== undefined,
-    otherConsiderationsConfigured: otherConsiderationsSection !== undefined,
-    stateDerivationConfigured: legacy.stateDerivation !== undefined,
-    stateValidationConfigured: legacy.stateValidation !== undefined,
-    upgradesAndGovernanceConfigured:
-      legacy.type === 'layer2' && legacy.upgradesAndGovernance !== undefined,
   }
 }
