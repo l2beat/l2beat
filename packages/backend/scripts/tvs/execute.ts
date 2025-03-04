@@ -10,6 +10,7 @@ import { ProjectService } from '@l2beat/config'
 import {} from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
+import { groupBy } from 'cmd-ts/dist/cjs/utils'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import type {
   Token,
@@ -17,6 +18,8 @@ import type {
   TvsBreakdown,
   TvsConfig,
 } from '../../src/modules/tvs/types'
+import { formatCurrency } from './format-currency'
+import { formatNumberWithCommas } from './format-number'
 
 const args = {
   project: positional({
@@ -46,19 +49,22 @@ const cmd = command({
 
     const tvs = await localExecutor.run(config, [timestamp], false)
 
-    fs.writeFileSync(
-      './src/modules/tvs/breakdown.json',
+    const tvsBreakdown = calculateBreakdown(tvs, timestamp)
+
+    logger.info(
       JSON.stringify(
-        {
-          project: args.project,
-          values: tvs.get(timestamp.toNumber()),
+        tvsBreakdown,
+        (_, v) => {
+          if (typeof v === 'number') {
+            return toDollarString(v)
+          }
+          return v
         },
-        null,
         2,
-      ) + '\n',
+      ),
     )
 
-    outputTVS(tvs, timestamp, logger)
+    saveBreakdownFile(tvs, tvsBreakdown, timestamp, args)
 
     process.exit(0)
   },
@@ -66,10 +72,9 @@ const cmd = command({
 
 run(cmd, process.argv.slice(2))
 
-function outputTVS(
+function calculateBreakdown(
   tvs: Map<number, TokenValue[]>,
   timestamp: UnixTime,
-  logger: Logger,
 ) {
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')
@@ -143,19 +148,7 @@ function outputTVS(
     }
   }
 
-  // output TVS breakdown
-  logger.info(
-    JSON.stringify(
-      tvsBreakdown,
-      (_, v) => {
-        if (typeof v === 'number') {
-          return toDollarString(v)
-        }
-        return v
-      },
-      2,
-    ),
-  )
+  return tvsBreakdown
 }
 
 function initLogger(env: Env) {
@@ -188,4 +181,40 @@ function readConfig(project: string, logger: Logger) {
 
   const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
   return json.tokens as Token[]
+}
+
+function saveBreakdownFile(
+  tvs: Map<number, TokenValue[]>,
+  tvsBreakdown: TvsBreakdown,
+  timestamp: UnixTime,
+  args: { project: string },
+) {
+  const tvsForTimestamp = tvs.get(timestamp.toNumber())
+  assert(tvsForTimestamp)
+
+  const bySource = groupBy(tvsForTimestamp, (token) => token.tokenConfig.source)
+
+  type SourceType = 'canonical' | 'external' | 'native'
+  const result: Record<string, unknown> = { project: args.project }
+
+  // Add each source type if it exists
+  for (const source of ['canonical', 'external', 'native'] as SourceType[]) {
+    if (bySource[source]) {
+      result[source] = {
+        value: formatCurrency(tvsBreakdown.source[source], 'usd'),
+        tokens: bySource[source]
+          .sort((a: TokenValue, b: TokenValue) => b.value - a.value)
+          .map((t) => ({
+            symbol: t.tokenConfig.symbol,
+            value: formatNumberWithCommas(t.value),
+            amount: formatNumberWithCommas(t.amount),
+          })),
+      }
+    }
+  }
+
+  fs.writeFileSync(
+    './src/modules/tvs/breakdown.json',
+    JSON.stringify(result, null, 2) + '\n',
+  )
 }

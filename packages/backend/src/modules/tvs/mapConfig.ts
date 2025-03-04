@@ -1,5 +1,6 @@
 import { createHash } from 'crypto'
 import {
+  type AggLayerEscrow,
   type ChainConfig,
   type ElasticChainEscrow,
   type Project,
@@ -44,8 +45,8 @@ export async function mapConfig(
         const aggLayerL2Tokens = await getAggLayerTokens(
           project,
           chain,
-          // @ts-ignore only non-native tokens
-          escrow.tokens.filter((t) => t.address),
+          // TODO: fix types
+          escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
           rpcClient,
         )
 
