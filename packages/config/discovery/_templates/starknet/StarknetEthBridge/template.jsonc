@@ -4,13 +4,18 @@
   "category": "bridge-canonical",
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
   "types": {
-    // "WithdrawalActivationString": {
-    //   "typeCaster": "Mapping",
-    //   "arg": {
-    //     "": "not active",
-    //     "0x0000000000000000000000000000000000455448": "active"
-    //   }
-    // },
+    "UintMaxMeansInactive": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
+      }
+    },
+    "IsUintMax": {
+      "typeCaster": "GreaterThan",
+      "arg": {
+        "value": "115792089237316195423570985008687907853269984665640564039457584007913129639934"
+      }
+    },
     "TokenStatus": {
       "typeCaster": "Mapping",
       "arg": {
@@ -35,19 +40,14 @@
       }
     },
     "withdrawalLimitStatus": {
-      "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.",
+      "description": "inactive: withdrawals are not limited, any number: withdrawals are limited.",
       "severity": "HIGH",
       "handler": {
-        "type": "event",
-        "select": "token",
-        "add": {
-          "event": "WithdrawalLimitEnabled"
-        },
-        "remove": {
-          "event": "WithdrawalLimitDisabled"
-        }
-      }
-      // "returnType": "(WithdrawalActivationString)" // BUG
+        "type": "call",
+        "method": "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+        "args": ["{{bridgedToken}}"]
+      },
+      "returnType": "(IsUintMax)" // BUG
     },
     "maxTotalBalance": {
       "description": "The maximum total balance that can be locked in the bridge.",

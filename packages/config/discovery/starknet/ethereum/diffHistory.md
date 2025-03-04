@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb00253bc13afb47c5fd2a0bddca92869159843ca
+Generated with discovered.json: 0x5f0ea68aa96cee2a0878ed6db5e533ef409091ec
 
-# Diff at Mon, 03 Mar 2025 14:56:39 GMT:
+# Diff at Tue, 04 Mar 2025 11:04:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@12bf0d8be18a4982f2ce75c811bc0ba91ba3fc68 block: 21959652
-- current block number: 21967092
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21959652
+- current block number: 21972997
 
 ## Description
 
@@ -338,12 +338,23 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+      usedTypes.1:
++        {"typeCaster":"GreaterThan","arg":{"value":"115792089237316195423570985008687907853269984665640564039457584007913129639934"}}
+      errors:
++        {"withdrawalLimitStatus":"Processing error occurred."}
     }
 ```
 
@@ -515,7 +526,7 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x05f01ea37b32f34836d262d9ef5ecd353cd8216d
+Generated with discovered.json: 0x80cf1d5ff9d85ba8fc41bdcae133cd7983a5a200
 
 # Diff at Sun, 02 Mar 2025 14:18:27 GMT:
 

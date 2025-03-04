@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21967092,
+  "blockNumber": 21972997,
   "configHash": "0x1845249c98115aca91c24067db7cc44a8f47c2122daa4182eae8ebf7e513c969",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -1152,9 +1152,9 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
         "withdrawLimitPct": 5
       },
+      "errors": { "withdrawalLimitStatus": "Processing error occurred." },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
@@ -1162,7 +1162,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1191,6 +1191,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "GreaterThan",
+          "arg": {
+            "value": "115792089237316195423570985008687907853269984665640564039457584007913129639934"
           }
         }
       ],
@@ -1652,7 +1658,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1668543,
+        "l1ToL2MessageNonce": 1668586,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1673,9 +1679,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1928978474106296305546813304257506284777430067553254219300791504679169084638",
-        "stateBlockNumber": 1196427,
-        "stateRoot": "798518907494302807382476977269287369977361725118881096780863997915891857048",
+        "stateBlockHash": "3031989006099019698380513206203085971538556076731016760100509680785339394047",
+        "stateBlockNumber": 1198908,
+        "stateRoot": "1760305928601215175893903627914779964528092844137277604569716743143049792999",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -4246,7 +4252,7 @@
     "starknet/StarkgateRegistry": "0x613178017ba4f030754f316d800cc74f2cb1cd6c26d274dffa2feed755341fc7",
     "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601",
     "starknet/StarknetERC20Bridge": "0xfa85d0cc0fd96ef7f39f056ff07097598ec4914782915b0bf0dc234a7df41dfb",
-    "starknet/StarknetEthBridge": "0x0c2438a4f3b2e9ef164f4527bf284070d0c69f435472dc967782d31d9c24e8a6",
+    "starknet/StarknetEthBridge": "0x735d66190ff67e4f724198402fff07459997d0937f54f518f10489f2a765ee63",
     "starknet/StarknetMultiBridge": "0x4712d4a1da956acb467a1955ab6193dfca6fe43ef5a23c422771731684563501"
   }
 }
