@@ -31,8 +31,8 @@ export const playblock: Layer3 = orbitStackL3({
       socialMedia: ['https://twitter.com/Playnancetech'],
     },
   },
-  gasTokens: { untracked: ['PBG'] },
   // associatedTokens: ['PBG'],
+  untrackedGasTokens: ['PBG'],
   chainConfig: {
     name: 'playblock',
     chainId: 1829,

@@ -7,7 +7,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { unionBy } from 'lodash'
+import { unionBy, uniq } from 'lodash'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -157,12 +157,8 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   isArchived?: boolean
-  gasTokens?: {
-    /** Gas tokens that have been added to tokens.jsonc - will be listed under the escrow */
-    tracked?: string[]
-    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
-    untracked?: string[]
-  }
+  /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+  untrackedGasTokens?: string[]
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -451,6 +447,10 @@ function orbitStackCommon(
           ? 'orbit-optimium'
           : 'orbit-rollup'
 
+  const trackedGasTokens = templateVars.chainConfig?.gasTokens?.filter(
+    (t) => !templateVars.untrackedGasTokens?.includes(t),
+  )
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
@@ -482,9 +482,9 @@ function orbitStackCommon(
             templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
               address: templateVars.bridge.address,
-              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
-              description: templateVars.gasTokens
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
+              tokens: trackedGasTokens ?? ['ETH'],
+              description: trackedGasTokens
+                ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
@@ -509,11 +509,10 @@ function orbitStackCommon(
     },
     chainConfig: {
       ...(templateVars.chainConfig as ChainConfig),
-      gasTokens: [
+      gasTokens: uniq([
         ...(templateVars.chainConfig?.gasTokens ?? []),
-        ...(templateVars.gasTokens?.tracked ?? []),
-        ...(templateVars.gasTokens?.untracked ?? []),
-      ],
+        ...(templateVars.untrackedGasTokens ?? []),
+      ]),
     },
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,

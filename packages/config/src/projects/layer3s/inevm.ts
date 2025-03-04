@@ -47,7 +47,7 @@ export const inevm: Layer3 = orbitStackL3({
       tokens: '*',
     }),
   ],
-  gasTokens: { untracked: ['INJ'] },
+  untrackedGasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   chainConfig: {
     name: 'inevm',

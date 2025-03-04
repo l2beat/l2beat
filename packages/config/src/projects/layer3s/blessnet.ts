@@ -54,8 +54,8 @@ export const blessnet: Layer3 = orbitStackL3({
   //   }),
   // ],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  gasTokens: { untracked: ['BLESS'] },
   // associatedTokens: ['BLESS'],
+  untrackedGasTokens: ['BLESS'],
   chainConfig: {
     name: 'blessnet',
     chainId: 45513,
