@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { cn } from '~/utils/cn'
 
 export function TableLink({
@@ -11,7 +13,7 @@ export function TableLink({
 }) {
   if (href) {
     return (
-      <a
+      <LinkWithOnHoverPrefetch
         className={cn(
           'relative block w-max',
           'before:absolute before:-inset-x-3 before:-inset-y-2 before:rounded max-md:before:content-none',
@@ -21,7 +23,7 @@ export function TableLink({
         href={href}
       >
         {children}
-      </a>
+      </LinkWithOnHoverPrefetch>
     )
   }
   return children
