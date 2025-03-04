@@ -122,7 +122,7 @@ function NameWithProjectInfoTooltip({
 
   return (
     <Tooltip>
-      <TooltipTrigger className="relative z-[2]">{projectName}</TooltipTrigger>
+      <TooltipTrigger>{projectName}</TooltipTrigger>
       <TooltipContent className="flex max-w-[348px] flex-col gap-2 px-[14px]">
         <span className="text-lg font-bold">What is {projectName}?</span>
         <p className="text-wrap text-[13px]">{project.description}</p>

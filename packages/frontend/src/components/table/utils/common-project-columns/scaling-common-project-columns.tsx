@@ -24,9 +24,7 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
           return projectName
         }
         return (
-          <TableLink href={getHref(ctx.row.original)}>
-            <ProjectNameCell project={ctx.row.original} withInfoTooltip />
-          </TableLink>
+          <TableLink href={getHref(ctx.row.original)}>{projectName}</TableLink>
         )
       },
       meta: opts?.activity
