@@ -1168,6 +1168,7 @@ export interface ProjectTvlEscrow {
 export interface ProjectScalingTechnology {
   warning?: string
   detailedDescription?: string
+  architectureImage?: string
   stateCorrectness?: ProjectTechnologyChoice
   newCryptography?: ProjectTechnologyChoice
   dataAvailability?: ProjectTechnologyChoice

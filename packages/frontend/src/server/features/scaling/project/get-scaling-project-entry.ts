@@ -233,7 +233,7 @@ export async function getScalingProjectEntry(
             projectId: project.id,
           })
         : undefined,
-      getTokensForProject(legacy),
+      getTokensForProject(project.id),
     ])
 
   const sections: ProjectDetailsSection[] = []
@@ -580,13 +580,13 @@ export async function getScalingProjectEntry(
     {
       id: project.id,
       type: project.scalingInfo.layer,
-      hostChain: hostChain?.id,
+      hostChainName: project.scalingInfo.hostChain.name,
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: project.statuses.isUnderReview,
       escrows: legacy.config.escrows,
-      architectureImage: legacy.display.architectureImage,
+      architectureImage: project.scalingTechnology.architectureImage,
       daSolution,
     },
     projectsChangeReport,

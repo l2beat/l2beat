@@ -116,7 +116,7 @@ function getDaSolution(
     ? {
         layerName: projectParams.daSolution.layerName,
         bridgeName: projectParams.daSolution.bridgeName,
-        hostChain: slugToDisplayName(projectParams.daSolution.hostChain),
+        hostChainName: projectParams.daSolution.hostChainName,
         permissions: {
           roles:
             projectParams.daSolution.permissions?.roles?.flatMap((permission) =>

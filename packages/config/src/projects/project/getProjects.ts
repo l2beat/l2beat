@@ -110,6 +110,7 @@ function layer2Or3ToProject(
     scalingTechnology: {
       warning: p.display.warning,
       detailedDescription: p.display.detailedDescription,
+      architectureImage: p.display.architectureImage,
       ...p.technology,
       sequencingImage: p.display.sequencingImage,
       stateDerivation: p.stateDerivation,

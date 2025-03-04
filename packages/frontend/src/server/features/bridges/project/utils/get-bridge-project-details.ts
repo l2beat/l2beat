@@ -25,7 +25,7 @@ export async function getBridgeProjectDetails(
       filter: { type: 'projects', projectIds: [bridge.id] },
       excludeAssociatedTokens: false,
     }),
-    getTokensForProject(bridge),
+    getTokensForProject(bridge.id),
   ])
 
   const sections: ProjectDetailsSection[] = []
@@ -121,6 +121,7 @@ export async function getBridgeProjectDetails(
       contracts: bridge.contracts,
       isUnderReview: bridge.isUnderReview,
       escrows: bridge.config.escrows,
+      hostChainName: 'Ethereum',
     },
     projectsChangeReport,
   )

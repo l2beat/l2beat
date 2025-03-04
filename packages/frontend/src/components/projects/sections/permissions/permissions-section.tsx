@@ -77,7 +77,7 @@ export function PermissionsSection({
           <h3 className="mt-4 font-bold">
             The project uses {daSolution.layerName} with the{' '}
             {daSolution.bridgeName} DA Bridge that consist of the following
-            permissions on the {daSolution.hostChain}:
+            permissions on the {daSolution.hostChainName}:
           </h3>
         )}
       {daSolution?.permissions.roles?.map((permission) => (

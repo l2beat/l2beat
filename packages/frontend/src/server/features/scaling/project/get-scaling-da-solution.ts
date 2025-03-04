@@ -5,7 +5,7 @@ import { ps } from '~/server/projects'
 type Common = {
   layerName: string
   bridgeName: string
-  hostChain: string
+  hostChainName: string
 }
 
 export type DaSolution = Common & {
@@ -39,7 +39,7 @@ export async function getScalingDaSolution(
   return {
     layerName: daLayer.name,
     bridgeName: daBridge.name,
-    hostChain: hostChainSelector,
+    hostChainName: project.scalingInfo.hostChain.name,
     permissions: daBridgePermissions,
     contracts: daBridgeContracts,
   }

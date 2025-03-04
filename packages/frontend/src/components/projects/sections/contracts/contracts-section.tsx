@@ -112,7 +112,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <h3 className="font-bold">
             The project uses {props.daSolution.layerName} with the{' '}
             {props.daSolution.bridgeName} DA Bridge that consist of the
-            following contracts on the {props.daSolution.hostChain}:
+            following contracts on the {props.daSolution.hostChainName}:
           </h3>
           <div className="my-4">
             {props.daSolution.contracts.map((contract) => (

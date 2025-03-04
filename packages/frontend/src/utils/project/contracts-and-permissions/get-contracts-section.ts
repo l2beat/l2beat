@@ -4,10 +4,8 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import { layer2s } from '@l2beat/config'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
-import { concat } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
@@ -29,7 +27,7 @@ type ProjectParams = {
   contracts?: ProjectContracts
   daSolution?: DaSolution
   escrows: ProjectEscrow[] | undefined
-  hostChain?: string
+  hostChainName: string
 }
 
 type ContractsSection = Omit<
@@ -78,7 +76,7 @@ export function getContractsSection(
       ? {
           layerName: projectParams.daSolution?.layerName,
           bridgeName: projectParams.daSolution?.bridgeName,
-          hostChain: slugToDisplayName(projectParams.daSolution?.hostChain),
+          hostChainName: projectParams.hostChainName,
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
             return makeTechnologyContract(
               contract,
@@ -107,17 +105,9 @@ export function getContractsSection(
       }) ?? []
 
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
-  const getL3HostChain = (hostChain: string) => {
-    return layer2s.find((l2) => l2.id === hostChain)?.display.name ?? 'Unknown'
-  }
-
-  const chainName =
-    projectParams.type === 'layer3' && projectParams.hostChain
-      ? getL3HostChain(projectParams.hostChain)
-      : 'Ethereum'
 
   return {
-    chainName,
+    chainName: projectParams.hostChainName,
     contracts,
     escrows,
     risks,
@@ -254,7 +244,7 @@ function makeTechnologyContract(
     admins,
     description,
     usedInProjects,
-    references: concat(item.references ?? [], additionalReferences),
+    references: (item.references ?? []).concat(additionalReferences),
     chain,
     implementationChanged,
     highSeverityFieldChanged,
