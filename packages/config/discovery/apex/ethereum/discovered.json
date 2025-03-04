@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21872281,
-  "configHash": "0xc74afed4a0ce5f0ad29c25c310da3dc2a8e80cb9730329c8b082ffdd75ce6b80",
+  "configHash": "0x4fc4216a694b505e661a580adc6875128547201f5528e54a6e2e7e0dc3693106",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -12,6 +12,7 @@
         "0xcf1a7058461495ed508bbdc19356705fd4208d5522d226052109f79f3b1c07a3"
       ],
       "sinceTimestamp": 1636107489,
+      "sinceBlock": 13556016,
       "values": {
         "$immutable": true,
         "DOMAIN_SEPARATOR": "0x39821575e26f6b451072044840d9a68b6718f7a7770887d2b17a3b48f7147ca3",
@@ -26,6 +27,7 @@
         "0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5"
       ],
       "sinceTimestamp": 1671630143,
+      "sinceBlock": 16233442,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -52,6 +54,7 @@
         "0x641d1fce90ca144fc5ced3c8ee055f6876620610fc3afa756a5dc174f53963d3"
       ],
       "sinceTimestamp": 1698822623,
+      "sinceBlock": 18475677,
       "values": {
         "$immutable": true,
         "AGGREGATION_ROUTER_V4_ADDRESS": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
@@ -74,6 +77,7 @@
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
       "sinceTimestamp": 1697631587,
+      "sinceBlock": 18377195,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -95,6 +99,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1608623778,
+      "sinceBlock": 11502031,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -120,6 +125,7 @@
         "0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a"
       ],
       "sinceTimestamp": 1697631587,
+      "sinceBlock": 18377195,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -174,6 +180,7 @@
         "getValidiumVaultRoot"
       ],
       "sinceTimestamp": 1660252039,
+      "sinceBlock": 15322967,
       "values": {
         "$admin": [
           "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
@@ -295,6 +302,7 @@
         "0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"
       ],
       "sinceTimestamp": 1660252035,
+      "sinceBlock": 15322966,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": false,
@@ -308,6 +316,7 @@
         "0xca65c90eab3222ece5205fccdae3a20a07419751133d38894a85db4802060a14"
       ],
       "sinceTimestamp": 1613903192,
+      "sinceBlock": 11899719,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": true,
@@ -331,6 +340,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672216439,
+      "sinceBlock": 16282082,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -379,6 +389,7 @@
         "getValidiumVaultRoot"
       ],
       "sinceTimestamp": 1697631539,
+      "sinceBlock": 18377191,
       "values": {
         "$admin": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
         "$immutable": false,
@@ -465,6 +476,7 @@
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
       "sinceTimestamp": 1661254231,
+      "sinceBlock": 15396280,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -482,6 +494,7 @@
         "0x331aa6df8abe04615c862e5d29cee5ef8b680ab3d244de1399ca760503ebe945"
       ],
       "sinceTimestamp": 1661502844,
+      "sinceBlock": 15414333,
       "values": {
         "$immutable": true,
         "AGGREGATION_ROUTER_V4_ADDRESS": "0x1111111254fb6c44bAC0beD2854e76F90643097d",

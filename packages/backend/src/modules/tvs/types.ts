@@ -16,7 +16,7 @@ export interface CalculationFormula {
 export type ValueFormula = {
   type: 'value'
   amount: AmountFormula
-  ticker: string
+  priceId: string
 }
 
 export type AmountFormula =
@@ -48,7 +48,7 @@ export interface TotalSupplyAmountFormula {
 
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
-  ticker: string
+  priceId: string
 }
 
 export interface AmountConfigBase {
@@ -73,8 +73,8 @@ export type AmountConfig =
 export interface Token {
   // unique identifier
   id: TokenId
-  // arbitrary set by us, there are symbol duplicates e.g. GAME
-  ticker: string
+  // by default it is set to coingeckoId
+  priceId: string
   symbol: string
   name: string
   amount: AmountFormula
@@ -115,11 +115,11 @@ export type TvsConfig = {
 }
 
 export type PriceConfig = {
-  ticker: string
+  priceId: string
 }
 
 export interface TokenValue {
-  tokenId: string
+  tokenConfig: Token
   projectId: ProjectId
   amount: number
   value: number
@@ -149,12 +149,6 @@ export function TokenId(value: string) {
   return value as unknown as TokenId
 }
 
-TokenId.create = function (
-  chain: string,
-  address: EthereumAddress | 'native',
-  escrowAddress?: EthereumAddress,
-) {
-  return TokenId(
-    `${chain}-${(address).toString()}${escrowAddress ? `-${escrowAddress}` : ''}`,
-  )
+TokenId.create = function (chain: string, symbol: string) {
+  return TokenId(`${chain}-${symbol}`)
 }

@@ -288,10 +288,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
+      gasTokens: [
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -602,8 +602,8 @@ function getDaTracking(
     'validatorsVTL',
   )
 
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
   return templateVars.usesBlobs
     ? [

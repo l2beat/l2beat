@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xfba7816750ee2b807ead7e16ff9a2f276d928abb
+
+# Diff at Tue, 04 Mar 2025 10:39:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 16154924
+- current block number: 16154924
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16154924 (main branch discovery), not current.
+
+```diff
+    contract Erc20Vault (0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B) {
+    +++ description: None
+      sinceBlock:
++        9687286
+    }
+```
+
+```diff
+    contract PlasmaFramework (0x0D4C1222f5e839a911e2053860e45F18921D72ac) {
+    +++ description: None
+      sinceBlock:
++        9687257
+    }
+```
+
+```diff
+    contract EthVault (0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0) {
+    +++ description: None
+      sinceBlock:
++        9687270
+    }
+```
+
+```diff
+    contract PaymentExitGame (0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3) {
+    +++ description: None
+      sinceBlock:
++        9687476
+    }
+```
+
+```diff
+    contract ETHDepositVerifier (0x649f37203c365DE759c8fc8CA35beBF5448F70Be) {
+    +++ description: None
+      sinceBlock:
++        9687268
+    }
+```
+
+```diff
+    contract ERC20DepositVerifier (0xD876aeb3a443FBC03B7349AAc115E9054563CD82) {
+    +++ description: None
+      sinceBlock:
++        9687281
+    }
+```
+
 Generated with discovered.json: 0x22c4d8b727e2092da7ce1b8640f331872e8be9a5
 
 # Diff at Mon, 14 Oct 2024 10:53:27 GMT:

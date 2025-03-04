@@ -2,7 +2,7 @@
   "name": "brine",
   "chain": "ethereum",
   "blockNumber": 19825361,
-  "configHash": "0x04b115aa8251d8fc7b4cdc1a70cc921581f190091701428d206308d7bb9f2d9a",
+  "configHash": "0x9daa545de2fdfce7471ce1f8db1ed69f92cb7b3589e24e37105c4895d3350c82",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -33,6 +33,7 @@
         "getValidiumVaultRoot"
       ],
       "sinceTimestamp": 1657453320,
+      "sinceBlock": 15114701,
       "values": {
         "$admin": "0x303775491494a08b07365938787274F742a81F63",
         "$immutable": false,
@@ -123,6 +124,7 @@
         "0xb7173602faa329abf6af13a2dca4512d58504df7a9a3beace2a8a0470b416b02"
       ],
       "sinceTimestamp": 1657550175,
+      "sinceBlock": 15121893,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -148,6 +150,7 @@
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "sinceTimestamp": 1657453372,
+      "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -163,6 +166,7 @@
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
       "sinceTimestamp": 1657453372,
+      "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": false,

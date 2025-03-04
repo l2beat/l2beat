@@ -7,7 +7,6 @@ import {
 } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
-import { tokenToTicker } from './providers/tickers'
 import {
   type AmountConfig,
   type AmountFormula,
@@ -79,11 +78,7 @@ function createToken(
     case 'zero':
       assert(escrow, 'Escrow is required for zero supply tokens')
 
-      id = TokenId.create(
-        escrow.chain,
-        legacyToken.address ?? 'native',
-        escrow.address,
-      )
+      id = TokenId.create(chain.name, legacyToken.symbol)
 
       amountFormula = {
         type: 'balanceOfEscrow',
@@ -100,7 +95,7 @@ function createToken(
     case 'totalSupply':
       assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
 
-      id = TokenId.create(chain.name, legacyToken.address ?? 'native')
+      id = TokenId.create(chain.name, legacyToken.symbol)
 
       amountFormula = {
         type: 'totalSupply',
@@ -118,11 +113,11 @@ function createToken(
     case 'circulatingSupply':
       assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
 
-      id = TokenId.create(chain.name, legacyToken.address ?? 'native')
+      id = TokenId.create(chain.name, legacyToken.symbol)
 
       amountFormula = {
         type: 'circulatingSupply',
-        ticker: tokenToTicker(legacyToken),
+        priceId: legacyToken.coingeckoId,
       } as CirculatingSupplyAmountFormula
 
       sinceTimestamp = UnixTime.max(
@@ -139,7 +134,7 @@ function createToken(
   return {
     id,
     // This is a temporary solution
-    ticker: tokenToTicker(legacyToken),
+    priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
     name: legacyToken.name,
     amount: amountFormula,
@@ -166,16 +161,16 @@ export function extractPricesAndAmounts(config: TvsConfig): {
 
     const price = createPriceConfig({
       amount: token.amount,
-      ticker: token.ticker,
+      priceId: token.priceId,
     } as ValueFormula)
-    prices.set(price.ticker, price)
+    prices.set(price.priceId, price)
 
     if (token.valueForProject) {
       const { formulaAmounts, formulaPrices } = processFormula(
         token.valueForProject,
       )
       formulaAmounts.forEach((a) => amounts.set(a.id, a))
-      formulaPrices.forEach((p) => prices.set(p.ticker, p))
+      formulaPrices.forEach((p) => prices.set(p.priceId, p))
     }
 
     if (token.valueForTotal) {
@@ -183,7 +178,7 @@ export function extractPricesAndAmounts(config: TvsConfig): {
         token.valueForTotal,
       )
       formulaAmounts.forEach((a) => amounts.set(a.id, a))
-      formulaPrices.forEach((p) => prices.set(p.ticker, p))
+      formulaPrices.forEach((p) => prices.set(p.priceId, p))
     }
   }
 
@@ -218,7 +213,7 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
       }
     case 'circulatingSupply':
       return {
-        id: hash([formula.type, formula.ticker]),
+        id: hash([formula.type, formula.priceId]),
         ...formula,
       }
   }
@@ -226,7 +221,7 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
 
 export function createPriceConfig(formula: ValueFormula): PriceConfig {
   return {
-    ticker: formula.ticker,
+    priceId: formula.priceId,
   }
 }
 

@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x455e8d64878d2f96baf8f43eb7618af11862afcc
+Generated with discovered.json: 0x599b61b58f032a76f4ae4185794096a03c8719e4
+
+# Diff at Tue, 04 Mar 2025 10:40:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21766584
+- current block number: 21766584
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766584 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      sinceBlock:
++        21081436
+    }
+```
+
+```diff
+    contract ZeroNetworkChainAdminMultisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      sinceBlock:
++        20966635
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sinceBlock:
++        20019826
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      sinceBlock:
++        20978324
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sinceBlock:
++        20993644
+    }
+```
+
+Generated with discovered.json: 0x280700c3602bd5fde3249d171c28aef8fa02e95c
 
 # Diff at Wed, 26 Feb 2025 10:33:17 GMT:
 

@@ -17,6 +17,7 @@
         "state_lastValsetNonce"
       ],
       "sinceTimestamp": 1639416372,
+      "sinceBlock": 13798211,
       "values": {
         "$immutable": true,
         "state_gravityId": "0x677261766974792d6272696467652d6d61696e6e657400000000000000000000",

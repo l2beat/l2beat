@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
@@ -56,6 +57,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
+      "sinceBlock": 19968607,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -79,6 +81,7 @@
       ],
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1734024587,
+      "sinceBlock": 21387927,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc",
@@ -174,6 +177,7 @@
       ],
       "ignoreInWatchMode": ["gameCount"],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
@@ -219,6 +223,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
@@ -249,6 +254,7 @@
       ],
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1724975099,
+      "sinceBlock": 20637601,
       "values": {
         "$immutable": true,
         "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
@@ -269,6 +275,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -294,6 +301,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1734024575,
+      "sinceBlock": 21387926,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
@@ -326,6 +334,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
+      "sinceBlock": 16780617,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -362,6 +371,7 @@
         }
       ],
       "sinceTimestamp": 1685377355,
+      "sinceBlock": 17365800,
       "values": {
         "$immutable": true,
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -456,6 +466,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420875,
+      "sinceBlock": 19185554,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -492,6 +503,7 @@
       ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
@@ -565,6 +577,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0xF56D96B2535B932656d3c04Ebf51baBff241D886",
@@ -649,6 +662,7 @@
         }
       ],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -682,6 +696,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
@@ -723,6 +738,7 @@
       ],
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
       "sinceTimestamp": 1734024575,
+      "sinceBlock": 21387926,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc",
@@ -830,6 +846,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
+      "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -871,6 +888,7 @@
         }
       ],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
@@ -933,6 +951,7 @@
         }
       ],
       "sinceTimestamp": 1705954799,
+      "sinceBlock": 19064589,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -979,6 +998,7 @@
         }
       ],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$immutable": true,
         "owner": "0xd56045E68956FCe2576E680c95a4750cf8241f79"
@@ -1015,6 +1035,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
+      "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -1047,6 +1068,7 @@
       ],
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1724975087,
+      "sinceBlock": 20637600,
       "values": {
         "$immutable": true,
         "challengePeriod": 86400,
@@ -1078,6 +1100,7 @@
         }
       ],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -1112,6 +1135,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1711489163,
+      "sinceBlock": 19521321,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1155,6 +1179,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
+      "sinceBlock": 19185517,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1198,6 +1223,7 @@
         }
       ],
       "sinceTimestamp": 1724111315,
+      "sinceBlock": 20566057,
       "values": {
         "$immutable": true,
         "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -1258,6 +1284,7 @@
         }
       ],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$immutable": true,
         "addressManager": "0x9b7C9BbD6d540A8A4dEDd935819fC4408Ba71153",
@@ -1282,6 +1309,7 @@
         }
       ],
       "sinceTimestamp": 1624400033,
+      "sinceBlock": 12686687,
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
@@ -1306,6 +1334,7 @@
         }
       ],
       "sinceTimestamp": 1733498411,
+      "sinceBlock": 21344310,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "$implementation": "0x7A78aa7D5dec2F8B368ca13f00Df2fA4E5De3C3F",

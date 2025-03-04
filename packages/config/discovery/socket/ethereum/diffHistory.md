@@ -1,3 +1,557 @@
+Generated with discovered.json: 0x423267bf055c3d07ac6a95958673206d581b7baf
+
+# Diff at Tue, 04 Mar 2025 10:39:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21579626
+- current block number: 21579626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579626 (main branch discovery), not current.
+
+```diff
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94) {
+    +++ description: None
+      sinceBlock:
++        19905691
+    }
+```
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
+      sinceBlock:
++        18583724
+    }
+```
+
+```diff
+    contract sdeUSD Vault Reya (0x0A5A19376064fED2A0A9f3120B2426c957BC289D) {
+    +++ description: None
+      sinceBlock:
++        20986446
+    }
+```
+
+```diff
+    contract deUSD Vault Reya (0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E) {
+    +++ description: None
+      sinceBlock:
++        20986451
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
+      sinceBlock:
++        18584376
+    }
+```
+
+```diff
+    contract MKR Vault Kinto (0x0fC783f611A888A2cAbC3dA482Add3215334dCc2) {
+    +++ description: None
+      sinceBlock:
++        20329021
+    }
+```
+
+```diff
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a) {
+    +++ description: None
+      sinceBlock:
++        18583488
+    }
+```
+
+```diff
+    contract DAI Vault Kinto (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5) {
+    +++ description: None
+      sinceBlock:
++        19891645
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
+      sinceBlock:
++        18584378
+    }
+```
+
+```diff
+    contract USDT Vault Zora (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB) {
+    +++ description: None
+      sinceBlock:
++        20734248
+    }
+```
+
+```diff
+    contract USDT Vault Kinto (0x1D18263107a138C7fb0De65b4a78d193ff9664c1) {
+    +++ description: None
+      sinceBlock:
++        21108579
+    }
+```
+
+```diff
+    contract WBTC Vault Reya (0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6) {
+    +++ description: None
+      sinceBlock:
++        19733498
+    }
+```
+
+```diff
+    contract LyraMultisig (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+    +++ description: None
+      sinceBlock:
++        11918385
+    }
+```
+
+```diff
+    contract eBTC Vault Derive (0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5) {
+    +++ description: None
+      sinceBlock:
++        20837834
+    }
+```
+
+```diff
+    contract PAXG Vault Kinto (0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2) {
+    +++ description: None
+      sinceBlock:
++        20329110
+    }
+```
+
+```diff
+    contract USDe Vault Derive (0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A) {
+    +++ description: None
+      sinceBlock:
++        20568476
+    }
+```
+
+```diff
+    contract KINTO Vault Kinto (0x2f87464d5F5356dB350dcb302FE28040986783a7) {
+    +++ description: None
+      sinceBlock:
++        20162145
+    }
+```
+
+```diff
+    contract ENA Vault Kinto (0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd) {
+    +++ description: None
+      sinceBlock:
++        19905737
+    }
+```
+
+```diff
+    contract rsETH Vault Derive (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      sinceBlock:
++        20036749
+    }
+```
+
+```diff
+    contract WBTC Vault Derive (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    +++ description: None
+      sinceBlock:
++        18991397
+    }
+```
+
+```diff
+    contract sUSDe Vault Kinto (0x43b718Aa5e678b08615CA984cbe25f690B085b32) {
+    +++ description: None
+      sinceBlock:
++        19905815
+    }
+```
+
+```diff
+    contract rswETH Vault Derive (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4) {
+    +++ description: None
+      sinceBlock:
++        19881920
+    }
+```
+
+```diff
+    contract KLAUS Vault Zora (0x528DBFcf6e2cbC62B05d7a74711AA7C44FF43cA2) {
+    +++ description: None
+      sinceBlock:
++        21108607
+    }
+```
+
+```diff
+    contract USDC Vault Zora (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8) {
+    +++ description: None
+      sinceBlock:
++        20734237
+    }
+```
+
+```diff
+    contract sDAI Vault Kinto (0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85) {
+    +++ description: None
+      sinceBlock:
++        19905811
+    }
+```
+
+```diff
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27) {
+    +++ description: None
+      sinceBlock:
++        18583487
+    }
+```
+
+```diff
+    contract USDT Vault Derive (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa) {
+    +++ description: None
+      sinceBlock:
++        19032542
+    }
+```
+
+```diff
+    contract cbBTC Vault Derive (0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50) {
+    +++ description: None
+      sinceBlock:
++        20837808
+    }
+```
+
+```diff
+    contract sUSDe Vault Reya (0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3) {
+    +++ description: None
+      sinceBlock:
++        20620391
+    }
+```
+
+```diff
+    contract sDAI Vault Derive (0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142) {
+    +++ description: None
+      sinceBlock:
++        20568467
+    }
+```
+
+```diff
+    contract sDAI Vault Polynomial (0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc) {
+    +++ description: None
+      sinceBlock:
++        20326243
+    }
+```
+
+```diff
+    contract WETH Vault Reya (0x64dF894688c5052BeAdC35371cF69151Ebc5D658) {
+    +++ description: None
+      sinceBlock:
++        19920603
+    }
+```
+
+```diff
+    contract USDC Vault Derive (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    +++ description: None
+      sinceBlock:
++        18591914
+    }
+```
+
+```diff
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d) {
+    +++ description: None
+      sinceBlock:
++        19905710
+    }
+```
+
+```diff
+    contract LBTC Vault Derive (0x76624ff43D610F64177Bb9c194A2503642e9B803) {
+    +++ description: None
+      sinceBlock:
++        20644303
+    }
+```
+
+```diff
+    contract SNX Vault Derive (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592) {
+    +++ description: None
+      sinceBlock:
++        19257597
+    }
+```
+
+```diff
+    contract DAI Vault Derive (0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91) {
+    +++ description: None
+      sinceBlock:
++        20568457
+    }
+```
+
+```diff
+    contract weETH Vault Derive (0x8180EcCC825b692ef65FF099a0A387743788bf78) {
+    +++ description: None
+      sinceBlock:
++        19881204
+    }
+```
+
+```diff
+    contract cbBTC Vault Kinto (0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9) {
+    +++ description: None
+      sinceBlock:
++        21108816
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      sinceBlock:
++        18583489
+    }
+```
+
+```diff
+    contract ETHFI Vault Kinto (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5) {
+    +++ description: None
+      sinceBlock:
++        19911811
+    }
+```
+
+```diff
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C) {
+    +++ description: None
+      sinceBlock:
++        20362743
+    }
+```
+
+```diff
+    contract SOL Vault Kinto (0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8) {
+    +++ description: None
+      sinceBlock:
++        20721977
+    }
+```
+
+```diff
+    contract LINK Vault Kinto (0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013) {
+    +++ description: None
+      sinceBlock:
++        21108695
+    }
+```
+
+```diff
+    contract LOOKS Vault Blast (0xa83B4006c16DAeAb2718294696c0122519195137) {
+    +++ description: None
+      sinceBlock:
++        20038317
+    }
+```
+
+```diff
+    contract USDe Vault Reya (0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35) {
+    +++ description: None
+      sinceBlock:
++        20435172
+    }
+```
+
+```diff
+    contract wstETH Vault Kinto (0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc) {
+    +++ description: None
+      sinceBlock:
++        19904529
+    }
+```
+
+```diff
+    contract sUSDe Vault Polynomial (0xC6cfb996A7CFEB89813A68CD13942CD75553032b) {
+    +++ description: None
+      sinceBlock:
++        20339816
+    }
+```
+
+```diff
+    contract LooksRareMultisig (0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13) {
+    +++ description: None
+      sinceBlock:
++        13976268
+    }
+```
+
+```diff
+    contract XAUt Vault Kinto (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF) {
+    +++ description: None
+      sinceBlock:
++        20329119
+    }
+```
+
+```diff
+    contract SPX Vault Kinto (0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8) {
+    +++ description: None
+      sinceBlock:
++        21066552
+    }
+```
+
+```diff
+    contract WETH Vault Derive (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    +++ description: None
+      sinceBlock:
++        18991429
+    }
+```
+
+```diff
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD) {
+    +++ description: None
+      sinceBlock:
++        18583721
+    }
+```
+
+```diff
+    contract eUSD Vault Kinto (0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48) {
+    +++ description: None
+      sinceBlock:
++        20902195
+    }
+```
+
+```diff
+    contract EIGEN Vault Kinto (0xdb161cdc9c11892922F7121a409b196f3b00e640) {
+    +++ description: None
+      sinceBlock:
++        19905803
+    }
+```
+
+```diff
+    contract USDC Vault Polynomial (0xDE1617Ddb7C8A250A409D986930001985cfad76F) {
+    +++ description: None
+      sinceBlock:
++        20331066
+    }
+```
+
+```diff
+    contract USDe Vault Kinto (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e) {
+    +++ description: None
+      sinceBlock:
++        19905761
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
+      sinceBlock:
++        18583726
+    }
+```
+
+```diff
+    contract USD0++ Vault Polynomial (0xDf9Fa2b420689384E8DD55a706262DC0ED37020F) {
+    +++ description: None
+      sinceBlock:
++        20970833
+    }
+```
+
+```diff
+    contract USDC Vault Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      sinceBlock:
++        19590078
+    }
+```
+
+```diff
+    contract sUSDe Vault Derive (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf) {
+    +++ description: None
+      sinceBlock:
++        20211402
+    }
+```
+
+```diff
+    contract weETH Vault Kinto (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397) {
+    +++ description: None
+      sinceBlock:
++        19905823
+    }
+```
+
+```diff
+    contract wstETH Vault Derive (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3) {
+    +++ description: None
+      sinceBlock:
++        19358636
+    }
+```
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      sinceBlock:
++        18583720
+    }
+```
+
+```diff
+    contract  (0xeeF6520437A6545b4F325F6675C4CD49812d457b) {
+    +++ description: None
+      sinceBlock:
++        21544458
+    }
+```
+
+```diff
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      sinceBlock:
++        16818229
+    }
+```
+
+```diff
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98) {
+    +++ description: None
+      sinceBlock:
++        18583486
+    }
+```
+
 Generated with discovered.json: 0xa8168612e1459760abc88e2794588397494f5e2a
 
 # Diff at Mon, 20 Jan 2025 09:25:24 GMT:

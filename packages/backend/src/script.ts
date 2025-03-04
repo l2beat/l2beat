@@ -16,18 +16,13 @@ import {
 } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { bobConfig } from './modules/tvs/projects/bob'
+import { getKintoConfig } from './modules/tvs/projects/kinto'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
 import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
-import type {
-  Token,
-  TokenValue,
-  TvsBreakdown,
-  TvsConfig,
-} from './modules/tvs/types'
+import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
 
 main()
   .catch((e: unknown) => {
@@ -40,18 +35,17 @@ async function main() {
   const logger = initLogger(env)
   const localExecutor = initLocalExecutor(env, logger)
 
-  const config = bobConfig
+  const config = await getKintoConfig()
 
   const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
   const tvs = await localExecutor.run(config, [timestamp], false)
 
-  outputTVS(tvs, timestamp, config, logger)
+  outputTVS(tvs, timestamp, logger)
 }
 
 function outputTVS(
   tvs: Map<number, TokenValue[]>,
   timestamp: UnixTime,
-  config: TvsConfig,
   logger: Logger,
 ) {
   const tokens = tvs.get(timestamp.toNumber())
@@ -71,8 +65,8 @@ function outputTVS(
     },
   }
 
-  const tokenBreakdown: (TokenValue & {
-    ticker: string
+  const tokenBreakdown: (Omit<TokenValue, 'tokenConfig'> & {
+    priceId: string
     source: string
     category: string
   })[] = []
@@ -80,23 +74,24 @@ function outputTVS(
   const filteredConfig: Token[] = []
 
   for (const token of tokens) {
-    const tokenConfig = config.tokens.find((t) => t.id === token.tokenId)
-    assert(tokenConfig, `Token config not found ${token.tokenId}`)
-
     tvsBreakdown.total += token.valueForProject
 
     if (token.amount !== 0) {
-      filteredConfig.push(tokenConfig)
+      filteredConfig.push(token.tokenConfig)
 
       tokenBreakdown.push({
-        ...token,
-        ticker: tokenConfig.ticker,
-        source: tokenConfig.source,
-        category: tokenConfig.category,
+        projectId: token.projectId,
+        amount: token.amount,
+        value: token.value,
+        valueForProject: token.valueForProject,
+        valueForTotal: token.valueForTotal,
+        priceId: token.tokenConfig.priceId,
+        source: token.tokenConfig.source,
+        category: token.tokenConfig.category,
       })
     }
 
-    switch (tokenConfig.source) {
+    switch (token.tokenConfig.source) {
       case 'canonical':
         tvsBreakdown.source.canonical += token.valueForProject
         break
@@ -107,10 +102,10 @@ function outputTVS(
         tvsBreakdown.source.native += token.valueForProject
         break
       default:
-        throw new Error(`Unknown source ${tokenConfig.source}`)
+        throw new Error(`Unknown source ${token.tokenConfig.source}`)
     }
 
-    switch (tokenConfig.category) {
+    switch (token.tokenConfig.category) {
       case 'ether':
         tvsBreakdown.category.ether += token.valueForProject
         break
@@ -121,7 +116,7 @@ function outputTVS(
         tvsBreakdown.category.other += token.valueForProject
         break
       default:
-        throw new Error(`Unknown source ${tokenConfig.source}`)
+        throw new Error(`Unknown source ${token.tokenConfig.source}`)
     }
   }
 

@@ -11,6 +11,7 @@
         "0x3857982ba9867dfe0d878491a8f43962a5ae20721e924738425e3e6902cf9097"
       ],
       "sinceTimestamp": 1716837503,
+      "sinceBlock": 19963243,
       "values": {
         "$immutable": true,
         "admin": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
@@ -31,6 +32,7 @@
         }
       ],
       "sinceTimestamp": 1706308043,
+      "sinceBlock": 19093746,
       "values": {
         "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
         "$implementation": "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805",
@@ -63,6 +65,7 @@
       ],
       "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
       "sinceTimestamp": 1706307671,
+      "sinceBlock": 19093715,
       "values": {
         "$immutable": true,
         "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
@@ -102,6 +105,7 @@
         "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
       ],
       "sinceTimestamp": 1706307671,
+      "sinceBlock": 19093715,
       "values": {
         "$immutable": true,
         "messageLibType": 2,
@@ -126,6 +130,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837323,
+      "sinceBlock": 19963228,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -161,6 +166,7 @@
         "0xc36d2c5087e47e6fad11a1bea54e8da1eba1b67863c32a5961968d43a77b2f0b"
       ],
       "sinceTimestamp": 1716837491,
+      "sinceBlock": 19963242,
       "values": {
         "$immutable": true,
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
@@ -175,6 +181,7 @@
         "0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"
       ],
       "sinceTimestamp": 1706307779,
+      "sinceBlock": 19093724,
       "values": {
         "$immutable": true,
         "lzTokenEnabled": false,
@@ -194,6 +201,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1647498793,
+      "sinceBlock": 14402408,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -222,6 +230,7 @@
         "0xb151141227bb08ead5b1a7d464402bf23feaf60625a773cb8ced48745eb66fe6"
       ],
       "sinceTimestamp": 1716837383,
+      "sinceBlock": 19963233,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -270,6 +279,7 @@
       ],
       "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes",
       "sinceTimestamp": 1716837371,
+      "sinceBlock": 19963232,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -292,6 +302,7 @@
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
       ],
       "sinceTimestamp": 1730488859,
+      "sinceBlock": 21094853,
       "values": {
         "$immutable": true,
         "getTreasuryAndNativeFeeCap": [
@@ -317,6 +328,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837299,
+      "sinceBlock": 19963227,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -352,6 +364,7 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "sinceTimestamp": 1716344279,
+      "sinceBlock": 19922400,
       "values": {
         "$immutable": true,
         "allowlistSize": 0,
@@ -380,6 +393,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837359,
+      "sinceBlock": 19963231,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -421,6 +435,7 @@
         }
       ],
       "sinceTimestamp": 1687808651,
+      "sinceBlock": 17565746,
       "values": { "$immutable": true }
     },
     {
@@ -436,6 +451,7 @@
         }
       ],
       "sinceTimestamp": 1706307875,
+      "sinceBlock": 19093732,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
@@ -448,6 +464,7 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "sinceTimestamp": 1706489567,
+      "sinceBlock": 19108732,
       "values": {
         "$immutable": true,
         "allowlistSize": 0,
@@ -470,6 +487,7 @@
       ],
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307839,
+      "sinceBlock": 19093729,
       "values": {
         "$immutable": true,
         "getExecutorConfig": [
@@ -501,6 +519,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837347,
+      "sinceBlock": 19963230,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -539,6 +558,7 @@
       ],
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307863,
+      "sinceBlock": 19093731,
       "values": {
         "$immutable": true,
         "getUlnConfig": [
@@ -575,6 +595,7 @@
         }
       ],
       "sinceTimestamp": 1687808675,
+      "sinceBlock": 17565748,
       "values": {
         "$admin": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
         "$implementation": "0x319AE539b5BA554b09A46791cdb88b10E4d8F627",
@@ -609,6 +630,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648243585,
+      "sinceBlock": 14457816,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -643,6 +665,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837335,
+      "sinceBlock": 19963229,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -676,6 +699,7 @@
       "address": "0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006",
       "unverified": true,
       "sinceTimestamp": 1716344279,
+      "sinceBlock": 19922400,
       "values": { "$immutable": true }
     }
   ],

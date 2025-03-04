@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x3bcfcd5b376f3583c2f25dbb98ddb3619c4d0353
+
+# Diff at Tue, 04 Mar 2025 10:38:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21723681
+- current block number: 21723681
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723681 (main branch discovery), not current.
+
+```diff
+    contract GasOracle (0x0BdF6139F2841A7856Ca154D851182C52F5b96e0) {
+    +++ description: None
+      sinceBlock:
++        17343106
+    }
+```
+
+```diff
+    contract AllbridgeMessenger (0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA) {
+    +++ description: None
+      sinceBlock:
++        17343121
+    }
+```
+
+```diff
+    contract OldAllbridgeMessenger (0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50) {
+    +++ description: None
+      sinceBlock:
++        15493337
+    }
+```
+
+```diff
+    contract LPBridge (0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e) {
+    +++ description: None
+      sinceBlock:
++        17343135
+    }
+```
+
+```diff
+    contract Pool (0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D) {
+    +++ description: None
+      sinceBlock:
++        18120096
+    }
+```
+
+```diff
+    contract WormholeMessenger (0x7f02294f065A605C8D21D9812b8d1De7E5E1da74) {
+    +++ description: None
+      sinceBlock:
++        17343128
+    }
+```
+
+```diff
+    contract Validator (0x93746538D4519C809827205Bd1C2c7a0E15bd74b) {
+    +++ description: None
+      sinceBlock:
++        13597354
+    }
+```
+
+```diff
+    contract OldLPBridge (0xA314330482f325D38A83B492EF6B006224a3bea9) {
+    +++ description: None
+      sinceBlock:
++        15493360
+    }
+```
+
+```diff
+    contract Pool (0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d) {
+    +++ description: None
+      sinceBlock:
++        17343152
+    }
+```
+
+```diff
+    contract FeeOracle (0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6) {
+    +++ description: None
+      sinceBlock:
++        13594973
+    }
+```
+
+```diff
+    contract TokenBridge (0xBBbD1BbB4f9b936C3604906D7592A644071dE884) {
+    +++ description: None
+      sinceBlock:
++        13595007
+    }
+```
+
+```diff
+    contract CctpBridge (0xC51397b75B783E31469bFaADE79913F3f82210d6) {
+    +++ description: None
+      sinceBlock:
++        19512388
+    }
+```
+
+```diff
+    contract OldWormholeMessenger (0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F) {
+    +++ description: None
+      sinceBlock:
++        15521726
+    }
+```
+
 Generated with discovered.json: 0x0816229f2f445302a175f3ff7e6bb6d496fd240a
 
 # Diff at Tue, 28 Jan 2025 14:41:08 GMT:

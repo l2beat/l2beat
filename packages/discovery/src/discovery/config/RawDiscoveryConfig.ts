@@ -152,7 +152,7 @@ export const CommonDiscoveryConfig = z.object({
       z.string(),
     ),
   ),
-  sharedModules: z.optional(z.record(z.string(), z.string())),
+  sharedModules: z.optional(z.array(z.string())),
 })
 
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>

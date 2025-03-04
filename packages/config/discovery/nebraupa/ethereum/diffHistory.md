@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xd6222a34f6a6575f123526e0879ba4b2a0ff7913
+
+# Diff at Tue, 04 Mar 2025 10:39:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20826378
+- current block number: 20826378
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826378 (main branch discovery), not current.
+
+```diff
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E) {
+    +++ description: None
+      sinceBlock:
++        20528085
+    }
+```
+
+```diff
+    contract NebraOwner (0xb463603469Bf31f189E3F6625baf8378880Df14e) {
+    +++ description: None
+      sinceBlock:
++        20464874
+    }
+```
+
+```diff
+    contract  (0xE990F8e3505391d2b42C80683d403A8371Ee88B9) {
+    +++ description: None
+      sinceBlock:
++        20528013
+    }
+```
+
 Generated with discovered.json: 0x59c3168cd672d5eb31ec6181136610bc0b24e27b
 
 # Diff at Mon, 20 Jan 2025 11:09:47 GMT:

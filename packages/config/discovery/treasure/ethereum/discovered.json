@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 21786543,
-  "configHash": "0x5935bf447edfdae31a789c927f90a1a863d6649b05c16308b6a74ba941233907",
+  "configHash": "0x129afaea57e1d80f2c64ffed539b5674657af445094299baf9ca1f551cdafb28",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -14,6 +14,7 @@
       ],
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
+      "sinceBlock": 21081436,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
@@ -45,6 +46,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732645991,
+      "sinceBlock": 21273741,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -94,6 +96,7 @@
         }
       ],
       "sinceTimestamp": 1717520615,
+      "sinceBlock": 20019826,
       "values": {
         "$immutable": true,
         "executionDelay": 10800,
@@ -151,6 +154,7 @@
         "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1732199087,
+      "sinceBlock": 21236684,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -355,6 +359,7 @@
         }
       ],
       "sinceTimestamp": 1731546443,
+      "sinceBlock": 21182547,
       "values": {
         "$immutable": true,
         "owner": "0x282370D1e925ee897CB29Cb3beC13aAe0743067C",

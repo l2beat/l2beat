@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xd97f83dcf2a6fb84cc53a550ca2453fb5b6f04fb
+Generated with discovered.json: 0xa7a2e5ead420cc9508ed660551c5b43827fc83e3
+
+# Diff at Tue, 04 Mar 2025 10:39:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      sinceBlock:
++        19505052
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      sinceBlock:
++        20125601
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      sinceBlock:
++        20125600
+    }
+```
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      sinceBlock:
++        19960801
+    }
+```
+
+Generated with discovered.json: 0x98f1ced001a0241dd3f7d57041d34d159a3b18ee
 
 # Diff at Thu, 27 Feb 2025 11:45:44 GMT:
 
