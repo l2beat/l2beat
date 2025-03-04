@@ -306,8 +306,8 @@ export const TokenScreening = command({
             )
             if (newSupplyInfo) {
               if (
-                supplyInfo.type == 'Non-standard Token' &&
-                newSupplyInfo.type == 'Canonical Token'
+                supplyInfo.type === 'Non-standard Token' &&
+                newSupplyInfo.type === 'Canonical Token'
               ) {
                 supplyInfo.type = 'Non-standard Token'
                 supplyInfo.reason = 'Canonical address not found in escrow'
@@ -410,9 +410,13 @@ export const TokenScreening = command({
           }
 
           // Only add Native and External percentages if at least one is non-zero
-          if ((supplyInfo.breakdown?.nativePct || 0) > 0 || (supplyInfo.breakdown?.externalPct || 0) > 0) {
+          if (
+            (supplyInfo.breakdown?.nativePct || 0) > 0 ||
+            (supplyInfo.breakdown?.externalPct || 0) > 0
+          ) {
             tableData['of which Native'] = `${supplyInfo.breakdown?.nativePct}%`
-            tableData['of which External'] = `${supplyInfo.breakdown?.externalPct}%`
+            tableData['of which External'] =
+              `${supplyInfo.breakdown?.externalPct}%`
           }
 
           console.table(tableData)
