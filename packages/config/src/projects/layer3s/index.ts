@@ -58,6 +58,7 @@ import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
 import { ungaii } from './ungaii'
 import { unite } from './unite'
+import { vessel } from './vessel'
 import { winr } from './winr'
 import { xai } from './xai'
 import { xrone } from './xrone'
@@ -117,6 +118,7 @@ export const layer3s: Layer3[] = [
   mxc,
   nums,
   unite,
+  vessel,
   l3x,
   lumiterra,
   oursong,
