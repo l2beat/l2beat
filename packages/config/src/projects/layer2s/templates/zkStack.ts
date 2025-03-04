@@ -603,10 +603,7 @@ function getDaTracking(
   )
 
   const inboxDeploymentBlockNumber =
-    templateVars.discovery.getContractValueOrUndefined<number>(
-      'ValidatorTimelock',
-      'sinceBlock',
-    ) ?? 0
+    templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
   return templateVars.usesBlobs
     ? [
