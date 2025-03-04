@@ -41,8 +41,8 @@ export async function getAggLayerTokens(
     ),
   }))
 
-  // TODO: latest block number
-  const responses = await multicallClient.multicall(encoded, 20390762)
+  const block = await rpcClient.getLatestBlockNumber()
+  const responses = await multicallClient.multicall(encoded, block)
 
   return responses
     .map((response, index) => {
