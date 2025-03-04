@@ -36,7 +36,7 @@ import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
   return refactored
-    .concat(layer2s.map((p) => layer2Or3ToProject(p, layer2s)))
+    .concat(layer2s.map((p) => layer2Or3ToProject(p, [])))
     .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s)))
     .concat(bridges.map(bridgeToProject))
 }
