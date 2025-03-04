@@ -15,7 +15,7 @@ export const penchain: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     stack: 'ZK Stack',
     links: {
-      websites: ['http://pentagon.games/pen-chain'],
+      websites: ['https://pentagon.games/pen-chain'],
       documentation: [],
       explorers: ['https://explorer-testnet.pentagon.games/'],
       socialMedia: [
