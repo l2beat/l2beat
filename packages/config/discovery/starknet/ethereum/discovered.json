@@ -292,6 +292,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692867743,
+      "sinceBlock": 17983541,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -320,6 +321,7 @@
       ],
       "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
       "sinceTimestamp": 1687524587,
+      "sinceBlock": 17542373,
       "values": {
         "$immutable": true,
         "l1Token": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
@@ -338,6 +340,7 @@
       ],
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1652101038,
+      "sinceBlock": 14742550,
       "values": {
         "$immutable": true,
         "wards": [
@@ -385,6 +388,7 @@
         }
       ],
       "sinceTimestamp": 1707308579,
+      "sinceBlock": 19176289,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -492,6 +496,7 @@
         }
       ],
       "sinceTimestamp": 1707322595,
+      "sinceBlock": 19177447,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -555,6 +560,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1738599599,
+      "sinceBlock": 21767132,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -619,6 +625,7 @@
         }
       ],
       "sinceTimestamp": 1657137600,
+      "sinceBlock": 15090980,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -800,6 +807,7 @@
         }
       ],
       "sinceTimestamp": 1692689267,
+      "sinceBlock": 17968760,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -930,6 +938,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727171111,
+      "sinceBlock": 20819642,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -988,6 +997,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672587635,
+      "sinceBlock": 16312873,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1019,6 +1029,7 @@
       "displayName": "L1EscrowDAI",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
       "sinceTimestamp": 1666446647,
+      "sinceBlock": 15804056,
       "values": {
         "$immutable": true,
         "ceiling": "5000000000000000000000000",
@@ -1074,6 +1085,7 @@
         }
       ],
       "sinceTimestamp": 1647857148,
+      "sinceBlock": 14429055,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1251,6 +1263,7 @@
         }
       ],
       "sinceTimestamp": 1657137615,
+      "sinceBlock": 15090981,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1433,6 +1446,7 @@
         }
       ],
       "sinceTimestamp": 1685452751,
+      "sinceBlock": 17371995,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1617,6 +1631,7 @@
         "stateRoot"
       ],
       "sinceTimestamp": 1636978914,
+      "sinceBlock": 13620297,
       "values": {
         "$admin": [
           "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
@@ -1746,6 +1761,7 @@
         }
       ],
       "sinceTimestamp": 1739989031,
+      "sinceBlock": 21882151,
       "values": {
         "$immutable": true,
         "executionDelay": 691200,
@@ -1792,6 +1808,7 @@
         }
       ],
       "sinceTimestamp": 1704905879,
+      "sinceBlock": 18977888,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -1971,6 +1988,7 @@
         }
       ],
       "sinceTimestamp": 1685880791,
+      "sinceBlock": 17407168,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2130,6 +2148,7 @@
         }
       ],
       "sinceTimestamp": 1692689279,
+      "sinceBlock": 17968761,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2285,6 +2304,7 @@
         }
       ],
       "sinceTimestamp": 1692689255,
+      "sinceBlock": 17968759,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2440,6 +2460,7 @@
         }
       ],
       "sinceTimestamp": 1688046071,
+      "sinceBlock": 17585317,
       "values": {
         "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
         "$immutable": false,
@@ -2600,6 +2621,7 @@
         }
       ],
       "sinceTimestamp": 1707322643,
+      "sinceBlock": 19177451,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2769,6 +2791,7 @@
         }
       ],
       "sinceTimestamp": 1657137639,
+      "sinceBlock": 15090984,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
@@ -2931,6 +2954,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1738599755,
+      "sinceBlock": 21767145,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -2994,6 +3018,7 @@
         }
       ],
       "sinceTimestamp": 1698061847,
+      "sinceBlock": 18412782,
       "values": {
         "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,

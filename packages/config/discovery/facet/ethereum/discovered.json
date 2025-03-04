@@ -30,6 +30,7 @@
         }
       ],
       "sinceTimestamp": 1734701579,
+      "sinceBlock": 21444055,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x68c56f4D88846A4Cdce966d92D92a0636baf40FE",
@@ -72,6 +73,7 @@
         }
       ],
       "sinceTimestamp": 1733855411,
+      "sinceBlock": 21373904,
       "values": {
         "$immutable": true,
         "owner": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
@@ -92,6 +94,7 @@
         }
       ],
       "sinceTimestamp": 1733593847,
+      "sinceBlock": 21352215,
       "values": {
         "$immutable": true,
         "facetProxyAddress": "0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25"
@@ -121,6 +124,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1733855495,
+      "sinceBlock": 21373911,
       "values": {
         "$admin": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
         "$implementation": "0x059249eBf6e7F1B6c7E7bFb9079f6BCd8581635E",
@@ -166,6 +170,7 @@
         }
       ],
       "sinceTimestamp": 1733855519,
+      "sinceBlock": 21373913,
       "values": {
         "$admin": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
         "$implementation": "0x77764Bdf2B52C4B2635A73927945541B65DF74E9",
@@ -198,6 +203,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733855531,
+      "sinceBlock": 21373914,
       "values": {
         "$immutable": false,
         "$implementation": "0xa711dC056C2Db08ee2Ba89be3ED504f48Bf4dbfA",
@@ -300,6 +306,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1701094787,
+      "sinceBlock": 18663532,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -346,6 +353,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1733855507,
+      "sinceBlock": 21373912,
       "values": {
         "$admin": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
         "$implementation": "0x484EEcfCa1E83eA73Aa569F1cA1eBaf9316F5da3",
@@ -421,6 +429,7 @@
       ],
       "description": "Helper of the Safe Module that allows to send Facet transactions.",
       "sinceTimestamp": 1733593775,
+      "sinceBlock": 21352209,
       "values": { "$immutable": true }
     },
     {
@@ -457,6 +466,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1733855543,
+      "sinceBlock": 21373915,
       "values": {
         "$admin": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
         "$implementation": "0xEcc75A86c91D857C6Cb8ea991F88eaE40819C6AC",
@@ -512,6 +522,7 @@
         }
       ],
       "sinceTimestamp": 1697832707,
+      "sinceBlock": 18393837,
       "values": {
         "$immutable": true,
         "ethscriptionsProxyAddress": "0xeEd444Fc821b866b002f30f502C53e88E15d5095"
@@ -553,6 +564,7 @@
         }
       ],
       "sinceTimestamp": 1733855423,
+      "sinceBlock": 21373905,
       "values": {
         "$immutable": true,
         "addressManager": "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
@@ -583,6 +595,7 @@
         }
       ],
       "sinceTimestamp": 1733855459,
+      "sinceBlock": 21373908,
       "values": {
         "$admin": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
         "$implementation": "0x12df0dfDb02cf4FB18d13eA133Ad9C0F9284f267",
@@ -611,6 +624,7 @@
       ],
       "description": "Helper of the Safe Module that allows to send Ethscriptions transactions.",
       "sinceTimestamp": 1697832623,
+      "sinceBlock": 18393830,
       "values": { "$immutable": true }
     }
   ],

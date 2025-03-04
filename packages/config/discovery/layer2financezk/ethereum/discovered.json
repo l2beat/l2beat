@@ -12,6 +12,7 @@
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
       "sinceTimestamp": 1626352379,
+      "sinceBlock": 12831566,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": true,
@@ -25,6 +26,7 @@
         "0xd4db48e0b7efb71ded88f8c4a839b0175d98cfd365e8beaf4630e60dfb8ea404"
       ],
       "sinceTimestamp": 1648452775,
+      "sinceBlock": 14473373,
       "values": {
         "$immutable": true,
         "broker": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
@@ -41,6 +43,7 @@
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "sinceTimestamp": 1640107463,
+      "sinceBlock": 13849860,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -71,6 +74,7 @@
         }
       ],
       "sinceTimestamp": 1645130774,
+      "sinceBlock": 14225869,
       "values": {
         "$admin": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
         "$immutable": false,
@@ -161,6 +165,7 @@
         "0xface33f588d07cf7b8c64c6200efc11c45d45332a47c27e8c49859d6bc5c8001"
       ],
       "sinceTimestamp": 1583280535,
+      "sinceBlock": 9601359,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -178,6 +183,7 @@
         "0xd9040d82f39aa8ff258f35b318bdf0fc513f4d8844c61c34f6c8ce81eee40b55"
       ],
       "sinceTimestamp": 1648452641,
+      "sinceBlock": 14473363,
       "values": {
         "$immutable": true,
         "EXP_TIME": 2000000,
@@ -193,6 +199,7 @@
       "address": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
       "unverified": true,
       "sinceTimestamp": 1650870230,
+      "sinceBlock": 14652355,
       "values": { "$immutable": true },
       "derivedName": ""
     }

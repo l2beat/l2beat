@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd4bfb2178d7a6aef2da40d8b8796eed87b9096e1
+Generated with discovered.json: 0x4d638d9de7f7ed9ac4c06ed26a47d0578ebed99e
 
-# Diff at Mon, 03 Mar 2025 14:56:04 GMT:
+# Diff at Tue, 04 Mar 2025 10:39:36 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@12bf0d8be18a4982f2ce75c811bc0ba91ba3fc68 block: 21629810
-- current block number: 21967090
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21629810
+- current block number: 21629810
 
 ## Description
 
-config related: discodrive starknet.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -19,23 +19,28 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
 ```diff
     contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
     +++ description: None
-      severity:
-+        "HIGH"
+      sinceBlock:
++        18927365
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      sinceBlock:
++        17939980
     }
 ```
 
 ```diff
     contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
     +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
-      issuedPermissions.1.to:
--        "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670"
-+        "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
-      fieldMeta.$admin:
-+        {"severity":"HIGH","description":"Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."}
+      sinceBlock:
++        17733931
     }
 ```
 
-Generated with discovered.json: 0xc670a1a67dcd6ffe9a9104fe08083965523aca17
+Generated with discovered.json: 0xbb762d1a259a23cacb05fde683e76c251e76ffab
 
 # Diff at Sat, 01 Mar 2025 11:44:40 GMT:
 

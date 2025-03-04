@@ -11,6 +11,7 @@
         "0x3434f13a03ea3f4494cedceb0a2fe1054473c529ae3c067ba96d7102c3225852"
       ],
       "sinceTimestamp": 1639581534,
+      "sinceBlock": 13810512,
       "values": {
         "$immutable": true,
         "delayPeriod": 1800,
@@ -36,6 +37,7 @@
         }
       ],
       "sinceTimestamp": 1649432556,
+      "sinceBlock": 14546010,
       "values": {
         "$admin": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
         "$implementation": "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8",
@@ -77,6 +79,7 @@
         }
       ],
       "sinceTimestamp": 1649432377,
+      "sinceBlock": 14545993,
       "values": {
         "$immutable": true,
         "owner": "0x0000000000000000000000000000000000000000"
@@ -89,6 +92,7 @@
         "0xa8ad65c174f2e76f58ba6abc073545979d712d31810b818fa4ff50bfa9cffc09"
       ],
       "sinceTimestamp": 1650529338,
+      "sinceBlock": 14627208,
       "values": {
         "$immutable": true,
         "delayPeriod": 1800,
@@ -106,6 +110,7 @@
       ],
       "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"],
       "sinceTimestamp": 1638346811,
+      "sinceBlock": 13719989,
       "values": {
         "$immutable": true,
         "addseq": 5385,
@@ -142,6 +147,7 @@
         "0x208be8f798080de1d60fcd5cba233b86c43f382ace673f95ad32b633d98be2dd"
       ],
       "sinceTimestamp": 1676671175,
+      "sinceBlock": 16651238,
       "values": {
         "$immutable": true,
         "getVoters": [
@@ -166,6 +172,7 @@
         "0x66b162a0fe8e04147d94a9ec40e3cf9a69114ed6e3fca427cc303eeb2d223fb9"
       ],
       "sinceTimestamp": 1651661389,
+      "sinceBlock": 14710499,
       "values": {
         "$immutable": true,
         "delayPeriod": 1800,
@@ -191,6 +198,7 @@
         }
       ],
       "sinceTimestamp": 1690520231,
+      "sinceBlock": 17789313,
       "values": {
         "$immutable": true,
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
@@ -204,6 +212,7 @@
         "0xa8c0aeb1e8c7671f05a401b4d5b518a38e96dc6378d59e3f2b13ea55ea9f7f9f"
       ],
       "sinceTimestamp": 1666193927,
+      "sinceBlock": 15783099,
       "values": {
         "$immutable": true,
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
@@ -216,6 +225,7 @@
         "0xf4773d39e3c19f28a41b1b526474a51db5a28bb3fa5ea530f6af164e5263f209"
       ],
       "sinceTimestamp": 1639553135,
+      "sinceBlock": 13808358,
       "values": {
         "$immutable": true,
         "delayPeriod": 1800,
@@ -255,6 +265,7 @@
         }
       ],
       "sinceTimestamp": 1691384579,
+      "sinceBlock": 17860848,
       "values": {
         "$admin": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
         "$implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
@@ -328,6 +339,7 @@
       ],
       "ignoreInWatchMode": ["nextProposalId"],
       "sinceTimestamp": 1656926298,
+      "sinceBlock": 15075143,
       "values": {
         "$immutable": true,
         "getVoters": [

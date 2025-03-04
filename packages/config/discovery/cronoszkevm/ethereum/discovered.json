@@ -14,6 +14,7 @@
       ],
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
+      "sinceBlock": 21081436,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
@@ -45,6 +46,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1723609295,
+      "sinceBlock": 20524449,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -91,6 +93,7 @@
         }
       ],
       "sinceTimestamp": 1717520615,
+      "sinceBlock": 20019826,
       "values": {
         "$immutable": true,
         "executionDelay": 10800,
@@ -121,6 +124,7 @@
         }
       ],
       "sinceTimestamp": 1726967543,
+      "sinceBlock": 20802749,
       "values": {
         "$immutable": true,
         "acAdmins": [
@@ -231,6 +235,7 @@
         "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1722357035,
+      "sinceBlock": 20420571,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -445,6 +450,7 @@
         }
       ],
       "sinceTimestamp": 1722304883,
+      "sinceBlock": 20416268,
       "values": {
         "$immutable": true,
         "owner": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
@@ -481,6 +487,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722375731,
+      "sinceBlock": 20422122,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

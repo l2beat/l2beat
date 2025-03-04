@@ -22,8 +22,6 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
-  const isAppchain = project.capability === 'appchain'
-
   return (
     <div
       className={cn(
@@ -74,7 +72,7 @@ export function ScalingProjectStats({ project, className }: Props) {
             <a href="#stage">
               <StageCell
                 stageConfig={project.stageConfig}
-                isAppchain={isAppchain}
+                isAppchain={project.isAppchain}
               />
             </a>
           }
