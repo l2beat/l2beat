@@ -48,9 +48,9 @@ export const g7: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['G7'],
   },
   associatedTokens: ['G7'],
-  gasTokens: { tracked: ['G7'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: L1OrbitERC20Gateway.address,

@@ -72,9 +72,7 @@ export const corn: Layer2 = orbitStackL2({
         "This vault escrows the cbBTC backing BTCN, Corn's gastoken. Users can directly bridge via LayerZero when minting BTCN in this contract.",
     }),
   ],
-  gasTokens: {
-    untracked: ['BTCN'],
-  },
+  untrackedGasTokens: ['BTCN'],
   // associatedTokens: ['BTCN'],
   discovery,
   bridge: discovery.getContract('Bridge'),
@@ -85,6 +83,7 @@ export const corn: Layer2 = orbitStackL2({
     chainId: 21000000,
     explorerUrl: 'https://maizenet-explorer.usecorn.com',
     sinceTimestamp: new UnixTime(1732012151),
+    gasTokens: ['BTCN'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

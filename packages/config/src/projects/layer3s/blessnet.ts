@@ -54,8 +54,8 @@ export const blessnet: Layer3 = orbitStackL3({
   //   }),
   // ],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  gasTokens: { untracked: ['BLESS'] },
   // associatedTokens: ['BLESS'],
+  untrackedGasTokens: ['BLESS'],
   chainConfig: {
     name: 'blessnet',
     chainId: 45513,
@@ -66,6 +66,7 @@ export const blessnet: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['BLESS'],
   },
   discovery,
   bridge: discovery.getContract('Bridge'),

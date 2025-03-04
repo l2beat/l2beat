@@ -38,7 +38,6 @@ export const molten: Layer3 = orbitStackL3({
       ],
     },
   },
-  gasTokens: { tracked: ['MOLTEN'] },
   associatedTokens: ['MOLTEN'],
   chainConfig: {
     name: 'molten',
@@ -50,6 +49,7 @@ export const molten: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['MOLTEN'],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
