@@ -68,7 +68,7 @@
     "CirculatingSupplyAmountFormula": {
       "additionalProperties": false,
       "properties": {
-        "ticker": {
+        "priceId": {
           "type": "string"
         },
         "type": {
@@ -76,7 +76,7 @@
           "type": "string"
         }
       },
-      "required": ["type", "ticker"],
+      "required": ["type", "priceId"],
       "type": "object"
     },
     "Operator": {
@@ -112,8 +112,8 @@
         "symbol": {
           "type": "string"
         },
-        "ticker": {
-          "type": "string"
+        "priceId": {
+          "priceId": "string"
         },
         "untilTimestamp": {
           "type": "number"
@@ -141,7 +141,7 @@
       },
       "required": [
         "id",
-        "ticker",
+        "priceId",
         "symbol",
         "name",
         "amount",
@@ -197,7 +197,7 @@
         "amount": {
           "$ref": "#/definitions/AmountFormula"
         },
-        "ticker": {
+        "priceId": {
           "type": "string"
         },
         "type": {
@@ -205,7 +205,7 @@
           "type": "string"
         }
       },
-      "required": ["type", "amount", "ticker"],
+      "required": ["type", "amount", "priceId"],
       "type": "object"
     }
   }
