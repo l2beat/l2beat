@@ -2,7 +2,6 @@ import {
   EthereumAddress,
   type ProjectId,
   type TrackedTxsConfigSubtype,
-  type UnixTime,
 } from '@l2beat/shared-pure'
 import type { TrackedTxId } from './createTrackedTxConfigId'
 
@@ -18,8 +17,8 @@ export type TrackedTxConfigEntry =
 interface TrackedTxConfigBase {
   id: TrackedTxId
   projectId: ProjectId
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  sinceTimestamp: number
+  untilTimestamp?: number
   params:
     | TrackedTxFunctionCallConfig
     | TrackedTxTransferConfig

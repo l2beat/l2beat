@@ -71,7 +71,6 @@ export default async function Page(props: Props) {
       'permissions',
       'tvlInfo',
       'tvlConfig',
-      'trackedTxsConfig',
     ],
     optional: [
       'chainConfig',
@@ -80,6 +79,7 @@ export default async function Page(props: Props) {
       'isUpcoming',
       'isArchived',
       'milestones',
+      'trackedTxsConfig',
     ],
   })
   if (!project) {

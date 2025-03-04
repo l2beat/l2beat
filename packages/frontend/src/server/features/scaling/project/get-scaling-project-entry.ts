@@ -111,8 +111,7 @@ export async function getScalingProjectEntry(
     | 'contracts'
     | 'permissions'
     | 'tvlInfo'
-    | 'tvlConfig'
-    | 'trackedTxsConfig',
+    | 'tvlConfig',
     // optional
     | 'scalingDa'
     | 'customDa'
@@ -120,6 +119,7 @@ export async function getScalingProjectEntry(
     | 'isUpcoming'
     | 'isArchived'
     | 'milestones'
+    | 'trackedTxsConfig'
   >,
 ): Promise<ScalingProjectEntry> {
   /** @deprecated */

@@ -62,8 +62,8 @@ function mock(
 ): Omit<TrackedTxConfigEntry, 'id'> {
   return {
     projectId: ProjectId('project-id'),
-    sinceTimestamp: UnixTime.ZERO,
-    untilTimestamp: UnixTime.ZERO,
+    sinceTimestamp: 0,
+    untilTimestamp: 0,
     subtype: 'stateUpdates',
     type: 'l2costs',
     params: {

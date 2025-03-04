@@ -19,16 +19,16 @@ export function getTrackedTransactions(
     return undefined
   }
 
-  const now = UnixTime.now()
+  const now = UnixTime.now().toNumber()
   const txs = project.trackedTxsConfig
     .filter((x): x is TrackedTxCostsConfig => x.type === 'l2costs')
     .map(
       (x): TrackedTransaction => ({
         ...x,
-        isHistorical: !!x.untilTimestamp?.lt(now),
+        isHistorical: !!x.untilTimestamp && x.untilTimestamp < now,
       }),
     )
-    .sort((a, b) => a.sinceTimestamp.toNumber() - b.sinceTimestamp.toNumber())
+    .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
 
   return {
     batchSubmissions: txs.filter((x) => x.subtype === 'batchSubmissions'),

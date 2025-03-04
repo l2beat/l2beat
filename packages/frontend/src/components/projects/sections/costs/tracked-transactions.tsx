@@ -161,13 +161,13 @@ function TransactionDetails({
           ) : null}
         </div>
         <p className="text-2xs text-secondary max-md:mt-0.5 md:text-xs">
-          {formatTimestamp(transaction.sinceTimestamp.toNumber(), {
+          {formatTimestamp(transaction.sinceTimestamp, {
             mode: 'datetime',
             longMonthName: false,
           })}{' '}
           -{' '}
           {transaction.untilTimestamp
-            ? formatTimestamp(transaction.untilTimestamp.toNumber(), {
+            ? formatTimestamp(transaction.untilTimestamp, {
                 mode: 'datetime',
                 longMonthName: false,
               })
