@@ -18,6 +18,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837020,
+      "sinceBlock": 6044867,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -55,6 +56,7 @@
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
       "sinceTimestamp": 1716837029,
+      "sinceBlock": 6044870,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -104,6 +106,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837011,
+      "sinceBlock": 6044864,
       "values": {
         "$immutable": true,
         "approvalRequired": true,

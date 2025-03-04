@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3f5969771496b93141c17858ba13e0862ece5740
+Generated with discovered.json: 0x687c1db49561c838dbea1691a639e367c670584e
 
-# Diff at Mon, 03 Mar 2025 15:50:57 GMT:
+# Diff at Tue, 04 Mar 2025 10:40:15 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21829908
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21829908
 - current block number: 21829908
 
 ## Description
@@ -17,12 +17,106 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21829908 (main branch discovery), not current.
 
 ```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        20219921
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        20219927
+    }
+```
+
+```diff
+    contract ZircuitGuardianMultiSig (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      sinceBlock:
++        20219691
+    }
+```
+
+```diff
     contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
--        false
-      values.opStackDA.isUsingCelestia:
-+        false
+      sinceBlock:
++        20219924
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        20219925
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      sinceBlock:
++        20219915
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+      sinceBlock:
++        20219930
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      sinceBlock:
++        20219917
+    }
+```
+
+```diff
+    contract L1ERC20TokenBridge (0x912C7271a6A3622dfb8B218eb46a6122aB046C79) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      sinceBlock:
++        20771597
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        20219923
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        20219929
+    }
+```
+
+```diff
+    contract ZircuitAdminMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      sinceBlock:
++        20219688
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sinceBlock:
++        20219928
     }
 ```
 

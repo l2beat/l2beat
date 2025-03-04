@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6648003d3ebef0eca176e06b5bc6b4c89810262f
+Generated with discovered.json: 0xf7b3b4a6a592ca5226321bee2f2ec5505cbee68b
 
-# Diff at Mon, 03 Mar 2025 15:49:42 GMT:
+# Diff at Tue, 04 Mar 2025 10:39:26 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21637079
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21637079
 - current block number: 21637079
 
 ## Description
@@ -17,12 +17,66 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21637079 (main branch discovery), not current.
 
 ```diff
+    contract L1StandardBridge (0x2b3F201543adF73160bA42E1a5b7750024F30420) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        19861572
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      sinceBlock:
++        16990669
+    }
+```
+
+```diff
+    contract OptimismPortal (0x59625d1FE0Eeb8114a4d13c863978F39b3471781) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        19861572
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        19861572
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      sinceBlock:
++        19861572
+    }
+```
+
+```diff
     contract SystemConfig (0xC975862927797812371A9Fb631f83F8f5e2240D5) {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
--        false
-      values.opStackDA.isUsingCelestia:
-+        false
+      sinceBlock:
++        19861572
+    }
+```
+
+```diff
+    contract AddressManager (0xEa4165C5CDCA155779803A113d8391b741bA5228) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        19861572
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        19861572
     }
 ```
 

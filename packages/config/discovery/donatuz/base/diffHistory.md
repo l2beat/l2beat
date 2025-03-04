@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb71a48bba146310a74ec68ee8fafac1062117f78
+Generated with discovered.json: 0x9a5798cbfc966046ac64a5561f3631196556b049
 
-# Diff at Mon, 03 Mar 2025 15:51:29 GMT:
+# Diff at Tue, 04 Mar 2025 10:40:33 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 25215421
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 25215421
 - current block number: 25215421
 
 ## Description
@@ -17,12 +17,66 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 25215421 (main branch discovery), not current.
 
 ```diff
+    contract L1CrossDomainMessenger (0x4A2b7478B9646c06C3517E6f06e1232684143C00) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        16265097
+    }
+```
+
+```diff
+    contract AddressManager (0x5416B7421c42B9218B29f688C47a46020c23cF0d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        16265096
+    }
+```
+
+```diff
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      sinceBlock:
++        10917529
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15) {
+    +++ description: None
+      sinceBlock:
++        16265097
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x88dBaaeCDa265241a1BABe4A0ce69ad4957da8a2) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        16265097
+    }
+```
+
+```diff
     contract SystemConfig (0xa096dD38362bd2cE3C696474329989960722A7Fd) {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
--        false
-      values.opStackDA.isUsingCelestia:
-+        false
+      sinceBlock:
++        16265097
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb765Df9d2925a82678F4B7bc60eF5294c1604514) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        16265097
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        16265097
     }
 ```
 

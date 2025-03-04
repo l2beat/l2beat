@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xe934e30766a0308e8459f8dbb4dee7d026a44c99
+
+# Diff at Tue, 04 Mar 2025 10:38:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21387141
+- current block number: 21387141
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387141 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+      sinceBlock:
++        12330310
+    }
+```
+
+```diff
+    contract TurboVerifier (0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8) {
+    +++ description: Turbo Plonk ZK verifier.
+      sinceBlock:
++        19232962
+    }
+```
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      sinceBlock:
++        11967192
+    }
+```
+
+```diff
+    contract AztecMultisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      sinceBlock:
++        11647532
+    }
+```
+
 Generated with discovered.json: 0xa596b8b1f9778665ead749d49385250d8bb12730
 
 # Diff at Mon, 20 Jan 2025 09:24:31 GMT:

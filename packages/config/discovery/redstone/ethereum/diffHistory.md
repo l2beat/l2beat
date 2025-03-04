@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x37ce5f6a78071bb16cfa986a1d7547b5ddaf763d
+Generated with discovered.json: 0xaf17c73463d7201b509ae8a1b91c5d351815f047
 
-# Diff at Mon, 03 Mar 2025 15:50:01 GMT:
+# Diff at Tue, 04 Mar 2025 10:39:41 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21235431
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21235431
 - current block number: 21235431
 
 ## Description
@@ -17,12 +17,98 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21235431 (main branch discovery), not current.
 
 ```diff
+    contract SuperchainConfig (0x4b5b41c240173191425F5928bc6bdd0d439331BB) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        19578320
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x4FFB98dBC3086bA85d5E626a6EbC3D0d08533fF4) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        19578335
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x592C1299e0F8331D81A28C0FC7352Da24eDB444a) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        19578332
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x5f962474834Cf1981Df6232e4b6431d3d10cb71D) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sinceBlock:
++        19578333
+    }
+```
+
+```diff
+    contract RedstoneMultisig (0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89) {
+    +++ description: None
+      sinceBlock:
++        19578315
+    }
+```
+
+```diff
     contract SystemConfig (0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D) {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
--        false
-      values.opStackDA.isUsingCelestia:
-+        false
+      sinceBlock:
++        19578330
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x97A2dA87d3439b172e6DD027220e01c9Cb565B80) {
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+      sinceBlock:
++        19578326
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xa426A052f657AEEefc298b3B5c35a470e4739d69) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        19578337
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        19578331
+    }
+```
+
+```diff
+    contract OptimismPortal (0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        19578329
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCC53b447aFe07926423aB96D5496b1af30485ED2) {
+    +++ description: None
+      sinceBlock:
++        19578317
+    }
+```
+
+```diff
+    contract AddressManager (0xFe27f187A9E46104a932189dDF229871E06B22F8) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        19578316
     }
 ```
 

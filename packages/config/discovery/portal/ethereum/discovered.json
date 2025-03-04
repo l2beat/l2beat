@@ -11,6 +11,7 @@
         "0xbc51a6f7503c2dccc97bd5b0fe777fa354d9c7f8a017bffcdb16119f293f0619"
       ],
       "sinceTimestamp": 1663610147,
+      "sinceBlock": 15569178,
       "values": {
         "$immutable": true,
         "chainId": 0,
@@ -41,6 +42,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1686938183,
+      "sinceBlock": 17494020,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x90995DBd1aae85872451b50A569dE947D34ac4ee",
@@ -74,6 +76,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1631535967,
+      "sinceBlock": 13217349,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e",
@@ -152,6 +155,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1632219043,
+      "sinceBlock": 13268501,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C",
@@ -211,6 +215,7 @@
         }
       ],
       "sinceTimestamp": 1686937559,
+      "sinceBlock": 17493968,
       "values": {
         "$admin": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
         "$implementation": "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2",
@@ -251,6 +256,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1628093444,
+      "sinceBlock": 12959638,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
@@ -320,6 +326,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1682018903,
+      "sinceBlock": 17089754,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x37f26277B1927c6bEDbD94e5C21C337A706af31c",
@@ -357,6 +364,7 @@
         "0xbd754d5f19a23f887be96d26d6641438fa86acafaf29bb3828188cef3fd571e6"
       ],
       "sinceTimestamp": 1632218833,
+      "sinceBlock": 13268489,
       "values": {
         "$immutable": true,
         "chainId": 0,

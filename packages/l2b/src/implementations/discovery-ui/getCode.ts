@@ -3,6 +3,7 @@ import { join } from 'path'
 import type { ConfigReader } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery'
 import { getChainFullName } from '@l2beat/discovery/dist/config/config.discovery'
+import { getProjectDiscoveries } from './getDiscoveries'
 import type { ApiCodeResponse } from './types'
 
 export function getCode(
@@ -28,11 +29,7 @@ export function getCodePaths(
 ): { name: string; path: string }[] {
   const [chainShortName, simpleAddress] = address.split(':')
   const chain = getChainFullName(chainShortName)
-  const baseDiscovery = configReader.readDiscovery(project, chain)
-  const discoveries = [baseDiscovery]
-  for (const sharedModule of baseDiscovery.sharedModules ?? []) {
-    discoveries.push(configReader.readDiscovery(sharedModule, chain))
-  }
+  const discoveries = getProjectDiscoveries(configReader, project, chain)
 
   for (const discovery of discoveries) {
     const contract = discovery.contracts.find(

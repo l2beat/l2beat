@@ -21,6 +21,7 @@
         }
       ],
       "sinceTimestamp": 1668406715,
+      "sinceBlock": 15966435,
       "values": {
         "$immutable": true,
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
@@ -40,6 +41,7 @@
         }
       ],
       "sinceTimestamp": 1643968066,
+      "sinceBlock": 14138782,
       "values": {
         "$immutable": true,
         "owner": "0x0ee552336134B6f8F0a72927b6124f8A81865928"
@@ -57,6 +59,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1668412331,
+      "sinceBlock": 15966902,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -94,6 +97,7 @@
       ],
       "ignoreInWatchMode": ["newMPCEffectiveTime", "mpc", "newMPC", "oldMPC"],
       "sinceTimestamp": 1668406727,
+      "sinceBlock": 15966436,
       "values": {
         "$admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
         "$implementation": "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365",
@@ -130,6 +134,7 @@
       ],
       "ignoreInWatchMode": ["requestCount"],
       "sinceTimestamp": 1668406751,
+      "sinceBlock": 15966438,
       "values": {
         "$admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
         "$implementation": "0x755a967298c96d50216C6ED8D68869747B4f6878",
@@ -193,6 +198,7 @@
         }
       ],
       "sinceTimestamp": 1643968081,
+      "sinceBlock": 14138783,
       "values": {
         "$admin": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
         "$implementation": "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662",
@@ -234,6 +240,7 @@
         "0xfdf630e9703ba4569d93c7c67f39804b269eb0215618561b27da33c2dce9fc86"
       ],
       "sinceTimestamp": 1702970243,
+      "sinceBlock": 18818464,
       "values": {
         "$immutable": true,
         "metaRouterGateway": "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"
@@ -246,6 +253,7 @@
         "0xf78ec1ebb9770d063d83b96f47dbc97738175104c0ca567882812245a5939087"
       ],
       "sinceTimestamp": 1702970243,
+      "sinceBlock": 18818464,
       "values": {
         "$immutable": true,
         "metaRouter": "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"

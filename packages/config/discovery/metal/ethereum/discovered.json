@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
@@ -60,6 +61,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
+      "sinceBlock": 19968607,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -86,6 +88,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1711563671,
+      "sinceBlock": 19527353,
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
@@ -151,6 +154,7 @@
         }
       ],
       "sinceTimestamp": 1711563695,
+      "sinceBlock": 19527355,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -191,6 +195,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -237,6 +242,7 @@
         }
       ],
       "sinceTimestamp": 1711563575,
+      "sinceBlock": 19527345,
       "values": {
         "$immutable": true,
         "addressManager": "0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37",
@@ -278,6 +284,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1711563635,
+      "sinceBlock": 19527350,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "$implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
@@ -375,6 +382,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1711563611,
+      "sinceBlock": 19527348,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "$implementation": "0x2D778797049FE9259d947D1ED8e5442226dFB589",
@@ -425,6 +433,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
+      "sinceBlock": 16780617,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -464,6 +473,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
+      "sinceBlock": 16990669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -506,6 +516,7 @@
         }
       ],
       "sinceTimestamp": 1711563707,
+      "sinceBlock": 19527356,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -557,6 +568,7 @@
         }
       ],
       "sinceTimestamp": 1685377355,
+      "sinceBlock": 17365800,
       "values": {
         "$immutable": true,
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -636,6 +648,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420875,
+      "sinceBlock": 19185554,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -672,6 +685,7 @@
         }
       ],
       "sinceTimestamp": 1711563659,
+      "sinceBlock": 19527352,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
@@ -718,6 +732,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1711563647,
+      "sinceBlock": 19527351,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "$implementation": "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375",
@@ -855,6 +870,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
+      "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -923,6 +939,7 @@
         }
       ],
       "sinceTimestamp": 1705954799,
+      "sinceBlock": 19064589,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -994,6 +1011,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
+      "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -1040,6 +1058,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
+      "sinceBlock": 19185517,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1083,6 +1102,7 @@
         }
       ],
       "sinceTimestamp": 1724111315,
+      "sinceBlock": 20566057,
       "values": {
         "$immutable": true,
         "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -1108,6 +1128,7 @@
         }
       ],
       "sinceTimestamp": 1711563563,
+      "sinceBlock": 19527344,
       "values": {
         "$immutable": true,
         "owner": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
@@ -1130,6 +1151,7 @@
         }
       ],
       "sinceTimestamp": 1624400033,
+      "sinceBlock": 12686687,
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"

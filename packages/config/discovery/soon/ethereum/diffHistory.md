@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7f748551403837a77a73818dc5cc31db3d8d2d1b
+Generated with discovered.json: 0x61f1666ae7bb704c907ae0a6dcd33dad9ee9034c
 
-# Diff at Mon, 03 Mar 2025 15:50:33 GMT:
+# Diff at Tue, 04 Mar 2025 10:40:00 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21931798
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21931798
 - current block number: 21931798
 
 ## Description
@@ -17,12 +17,82 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21931798 (main branch discovery), not current.
 
 ```diff
+    contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        21541474
+    }
+```
+
+```diff
     contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
--        false
-      values.opStackDA.isUsingCelestia:
-+        false
+      sinceBlock:
++        21541468
+    }
+```
+
+```diff
+    contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      sinceBlock:
++        21541467
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        21541472
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d) {
+    +++ description: None
+      sinceBlock:
++        21541457
+    }
+```
+
+```diff
+    contract AddressManager (0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        21541456
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xbB138cE37870443d5b2B02a36619D3478738E0f6) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        21541470
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xD02631b334FfDCD5674217e57fe524c44B341DD4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        21541461
+    }
+```
+
+```diff
+    contract SoonMultisig (0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) {
+    +++ description: None
+      sinceBlock:
++        21541455
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      sinceBlock:
++        21541469
     }
 ```
 

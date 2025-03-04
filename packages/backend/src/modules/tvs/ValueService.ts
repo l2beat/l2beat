@@ -26,7 +26,7 @@ export class ValueService {
         const value = await this.executeValueFormula(
           {
             amount: token.amount,
-            ticker: token.ticker,
+            priceId: token.priceId,
           } as ValueFormula,
           timestamp,
         )
@@ -40,7 +40,7 @@ export class ValueService {
           : (valueForProject ?? value)
 
         values.push({
-          tokenId: token.id,
+          tokenConfig: token,
           projectId: config.projectId,
           amount,
           value,
@@ -70,8 +70,8 @@ export class ValueService {
     timestamp: UnixTime,
   ): Promise<number> {
     const priceConfig = createPriceConfig(formula)
-    const price = await this.storage.getPrice(priceConfig.ticker, timestamp)
-    assert(price !== undefined, `Price not found for ${priceConfig.ticker}`)
+    const price = await this.storage.getPrice(priceConfig.priceId, timestamp)
+    assert(price !== undefined, `Price not found for ${priceConfig.priceId}`)
 
     const amount = await this.executeAmountFormula(formula.amount, timestamp)
     const value = amount * price

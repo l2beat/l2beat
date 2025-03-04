@@ -38,6 +38,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1694224883,
+      "sinceBlock": 18095727,
       "values": {
         "$admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
         "$implementation": "0x1E5e634981564fc645dcbC6546aE618d7870B30a",
@@ -90,6 +91,7 @@
         }
       ],
       "sinceTimestamp": 1694224835,
+      "sinceBlock": 18095723,
       "values": {
         "$immutable": true,
         "owner": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
@@ -114,6 +116,7 @@
         }
       ],
       "sinceTimestamp": 1694224907,
+      "sinceBlock": 18095729,
       "values": {
         "$admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
         "$implementation": "0x62b257A1b1fC81c4e6E5Dc5b47F1E6184341Cd58",
@@ -173,6 +176,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1695706187,
+      "sinceBlock": 18217879,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -207,6 +211,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1694224919,
+      "sinceBlock": 18095730,
       "values": {
         "$immutable": false,
         "$implementation": "0x9cDDc6F65eD67Ef19743fFDFD53501457ce8B51f",
@@ -270,6 +275,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1694224895,
+      "sinceBlock": 18095728,
       "values": {
         "$admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
         "$implementation": "0xeF01a6aE995791FfFcA3d70bDA7B91E5Fa1aD0aE",
@@ -338,6 +344,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1694224871,
+      "sinceBlock": 18095726,
       "values": {
         "$admin": "0xa2DCa85BB892De55D8B262d1806114733106e8D1",
         "$implementation": "0x445c62F4948f3B08a6bB1DbC51Ef985b3Eb199F1",
@@ -395,6 +402,7 @@
         }
       ],
       "sinceTimestamp": 1694224847,
+      "sinceBlock": 18095724,
       "values": {
         "$immutable": true,
         "addressManager": "0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05",

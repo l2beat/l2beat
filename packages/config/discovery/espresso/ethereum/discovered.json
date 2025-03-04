@@ -26,6 +26,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727935367,
+      "sinceBlock": 20883069,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -78,6 +79,7 @@
         "finalizedState"
       ],
       "sinceTimestamp": 1730830835,
+      "sinceBlock": 21123201,
       "values": {
         "$admin": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
         "$implementation": "0x2E81FD03725158903FD32E41b0357C47941BB2c3",
