@@ -119,6 +119,7 @@ export async function getScalingProjectEntry(
     | 'isUpcoming'
     | 'isArchived'
     | 'milestones'
+    | 'trackedTxsConfig'
   >,
 ): Promise<ScalingProjectEntry> {
   /** @deprecated */
@@ -298,8 +299,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const trackedTransactions =
-    legacy.type === 'layer2' ? getTrackedTransactions(legacy) : undefined
+  const trackedTransactions = getTrackedTransactions(project)
   if (
     !project.isUpcoming &&
     trackedTransactions &&

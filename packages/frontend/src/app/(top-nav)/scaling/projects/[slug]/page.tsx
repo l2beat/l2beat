@@ -79,6 +79,7 @@ export default async function Page(props: Props) {
       'isUpcoming',
       'isArchived',
       'milestones',
+      'trackedTxsConfig',
     ],
   })
   if (!project) {
