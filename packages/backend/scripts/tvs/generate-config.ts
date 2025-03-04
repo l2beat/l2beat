@@ -61,7 +61,7 @@ const cmd = command({
     assert(nonZeroTokens, 'No data for timestamp')
 
     // write to file
-    writeToFile(nonZeroTokens, logger)
+    writeToFile(args.project, nonZeroTokens, logger)
     process.exit(0)
   },
 })
@@ -91,8 +91,8 @@ function initLogger(env: Env) {
   return logger
 }
 
-function writeToFile(nonZeroTokens: Token[], logger: Logger) {
-  const filePath = `./src/modules/tvs/config/${args.project}.json`
+function writeToFile(project: string, nonZeroTokens: Token[], logger: Logger) {
+  const filePath = `./src/modules/tvs/config/${project}.json`
   logger.info(`Writing results to file: ${filePath}`)
   const wrapper = {
     $schema: 'schema/tvs-config-schema.json',
