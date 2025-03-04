@@ -12,7 +12,7 @@ export const nums: Layer3 = upcomingL3({
     shortName: 'nums',
     slug: 'nums',
     description:
-      'Nums is a sequential game built off of Starknet\'s technology and is the first layer-3 to settle on the network.',
+      "Nums is a sequential game built off of Starknet's technology and is the first layer-3 to settle on the network.",
     purposes: ['Gaming'],
     stack: 'SN Stack',
     category: 'ZK Rollup',
