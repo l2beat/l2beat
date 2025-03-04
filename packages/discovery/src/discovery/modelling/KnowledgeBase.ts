@@ -1,15 +1,12 @@
 import type { ClingoFact, ClingoValue } from './factTypes'
 
 export class KnowledgeBase {
-  private readonly idToNameMap: Record<string, string>
-  constructor(
-    public readonly projectName: string,
-    private readonly facts: ClingoFact[],
-  ) {
-    this.idToNameMap = this.buildIdToNameMap()
-  }
+  constructor(public readonly facts: ClingoFact[]) {}
 
-  getFacts(id: string, params: (string | number | undefined)[]): ClingoFact[] {
+  getFacts(
+    id: string,
+    params: (string | number | undefined)[] = [],
+  ): ClingoFact[] {
     return this.facts.filter(
       (fact) =>
         fact.atom === id &&
@@ -20,23 +17,27 @@ export class KnowledgeBase {
     )
   }
 
-  replaceIdsWithNames(s: string): string {
-    return s.replace(
-      /@@([a-zA-Z0-9_]+)/g,
-      (_, id) => this.idToNameMap[id] ?? id,
-    )
+  getFactOrUndefined(
+    id: string,
+    params: (string | number | undefined)[],
+  ): ClingoFact | undefined {
+    const facts = this.getFacts(id, params)
+    if (facts.length > 1) {
+      throw new Error(
+        `Found multiple facts with "${id}" id and params: ${JSON.stringify(params)}`,
+      )
+    }
+    return facts[0]
   }
 
-  buildIdToNameMap(): Record<string, string> {
-    const contractFacts = this.getFacts('contract', [])
-    const eoaFacts = this.getFacts('eoa', [])
-    const idToNameMap: Record<string, string> = {}
-    ;[...contractFacts, ...eoaFacts].forEach((fact) => {
-      const id = fact.params[0] as string
-      const name = fact.params[3] === '' ? fact.params[2] : fact.params[3]
-      idToNameMap[id] = name as string
-    })
-    return idToNameMap
+  getFact(id: string, params: (string | number | undefined)[]): ClingoFact {
+    const fact = this.getFactOrUndefined(id, params)
+    if (fact === undefined) {
+      throw new Error(
+        `No fact found with id "${id}" and params: ${JSON.stringify(params)}`,
+      )
+    }
+    return fact
   }
 }
 

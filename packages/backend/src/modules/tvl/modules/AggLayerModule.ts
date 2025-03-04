@@ -135,7 +135,7 @@ function createIndexers(
         priceConfigs: [...priceConfigs],
         amountConfigs,
         project: ProjectId(project),
-        dataSource: `${chain}_agglayer`,
+        dataSource: `${chain.name}_agglayer`,
         syncOptimizer,
         parents: [descendantPriceIndexer, aggLayerIndexer],
         indexerService,

@@ -21,6 +21,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
@@ -49,6 +50,7 @@
       ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
@@ -89,6 +91,7 @@
       ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
@@ -125,6 +128,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
@@ -157,6 +161,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
@@ -196,6 +201,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
@@ -224,6 +230,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013",
@@ -250,6 +257,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
@@ -289,6 +297,7 @@
         "blobBaseFee"
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
@@ -334,6 +343,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
@@ -361,6 +371,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
@@ -455,6 +466,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
@@ -484,6 +496,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
@@ -522,6 +535,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
@@ -560,6 +574,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020",
@@ -586,6 +601,7 @@
         }
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",
@@ -606,6 +622,7 @@
         "0x1f2b6fc2c60f9146209fc5eb2dacd47f042450f4348d6656802b5b561c6325ea"
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$immutable": true,
         "L1_FEE_RECIPIENT": "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003",
@@ -620,6 +637,7 @@
         "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$immutable": true,
         "feeDisbursementInterval": 86400,
@@ -637,6 +655,7 @@
         "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": {
         "$immutable": true,
         "feeDisbursementInterval": 86400,
@@ -654,6 +673,7 @@
         "0x3ce35b9a968810e9a9f15e947ea37fd6403fb3feb01252004814d90926556ea1"
       ],
       "sinceTimestamp": 1730748360,
+      "sinceBlock": 0,
       "values": { "$immutable": true }
     }
   ],

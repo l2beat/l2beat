@@ -1,4 +1,4 @@
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import type { Bridge, Layer2, Layer3, Project } from '@l2beat/config'
 import type {
   TechnologyChoice,
   TechnologySectionProps,
@@ -25,6 +25,27 @@ export function getTechnologySectionProps(
       !!project.isUnderReview ||
       !!project.technology.isUnderReview ||
       areAllUnderReview,
+    items,
+  }
+}
+
+export function getTechnologySectionProps2(
+  project: Project<'statuses' | 'scalingTechnology'>,
+  items: TechnologyChoice[],
+):
+  | Omit<
+      TechnologySectionProps,
+      keyof Omit<ProjectSectionProps, 'isUnderReview'>
+    >
+  | undefined {
+  if (items.length === 0) {
+    return undefined
+  }
+
+  const areAllUnderReview = items.every((item) => item.isUnderReview)
+
+  return {
+    isUnderReview: project.statuses.isUnderReview || areAllUnderReview,
     items,
   }
 }

@@ -12,6 +12,7 @@
       ],
       "description": "Yield Provider for DAI investing DAI into the MakerDAO DSR.",
       "sinceTimestamp": 1708813619,
+      "sinceBlock": 19300419,
       "values": {
         "$immutable": true,
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -47,6 +48,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1708812875,
+      "sinceBlock": 19300357,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391",
@@ -133,6 +135,7 @@
         }
       ],
       "sinceTimestamp": 1708812851,
+      "sinceBlock": 19300355,
       "values": {
         "$immutable": true,
         "addressManager": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
@@ -157,6 +160,7 @@
         }
       ],
       "sinceTimestamp": 1708812923,
+      "sinceBlock": 19300361,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0x7A2075519Dd9598b62075FD397aF0Dd34b14619a",
@@ -182,6 +186,7 @@
       ],
       "description": "Yield Provider for ETH investing ETH into stETH.",
       "sinceTimestamp": 1708813595,
+      "sinceBlock": 19300417,
       "values": {
         "$immutable": true,
         "id": "0xa9a273106b6a6346a0d4fadf546958a10e831e1594b2598065098554b0f8b5d6",
@@ -279,6 +284,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708813211,
+      "sinceBlock": 19300385,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -329,6 +335,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1708812899,
+      "sinceBlock": 19300359,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0xA150f19B681a06E1a0B7E03934299a9bf9238cb7",
@@ -354,8 +361,8 @@
         "l2OutputOracle": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -400,6 +407,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1708812983,
+      "sinceBlock": 19300366,
       "values": {
         "$immutable": false,
         "$implementation": "0x84efcFCE2dEe08072d5D57BF232D379b6E92A836",
@@ -461,6 +469,7 @@
         "totalUSDShares"
       ],
       "sinceTimestamp": 1700359187,
+      "sinceBlock": 18602739,
       "values": {
         "$admin": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
         "$implementation": "0x0bD88b59D580549285f0A207Db5F06bf24a8e561",
@@ -518,6 +527,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1700012495,
+      "sinceBlock": 18574084,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -557,6 +567,7 @@
         }
       ],
       "sinceTimestamp": 1708812911,
+      "sinceBlock": 19300360,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0xD2C23A5A280AFF9182b953579f62EDdDF1c7ff22",
@@ -589,6 +600,7 @@
         }
       ],
       "sinceTimestamp": 1708813007,
+      "sinceBlock": 19300368,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0xBF21bc9AFaF817145B3886caDAF0860A2A0D782F",
@@ -639,6 +651,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1708812887,
+      "sinceBlock": 19300358,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0x1C90963D451316E3DBFdD5A30354EE56C29016EB",
@@ -707,6 +720,7 @@
       ],
       "ignoreInWatchMode": ["getLockedBalance"],
       "sinceTimestamp": 1708812935,
+      "sinceBlock": 19300362,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0xf2F6148327B3020610FCa26E094D9A5cc4689525",
@@ -752,6 +766,7 @@
       ],
       "ignoreInWatchMode": ["getLockedBalance"],
       "sinceTimestamp": 1708812947,
+      "sinceBlock": 19300363,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0xeCDdf748A60E23609c07af6CA3856744B139B911",
@@ -797,6 +812,7 @@
         }
       ],
       "sinceTimestamp": 1708813019,
+      "sinceBlock": 19300369,
       "values": {
         "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$implementation": "0x3B01aDF2f199144233A536b08244d63e5eb691B8",
@@ -833,6 +849,7 @@
         }
       ],
       "sinceTimestamp": 1708812839,
+      "sinceBlock": 19300354,
       "values": {
         "$immutable": true,
         "owner": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"

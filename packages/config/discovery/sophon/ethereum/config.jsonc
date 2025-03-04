@@ -12,9 +12,7 @@
     "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "SophonZkEvmAdmin",
     "0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig"
   },
-  "sharedModules": {
-    "BridgeHub": "shared-zk-stack"
-  },
+  "sharedModules": ["shared-zk-stack"],
   "overrides": {
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       // local override over the template to fetch the validators from the shared contract

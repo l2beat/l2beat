@@ -1,3 +1,133 @@
+Generated with discovered.json: 0x9b0fb31b7ff4d9de395ddf4f28614f11b4c7eabd
+
+# Diff at Tue, 04 Mar 2025 10:42:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 81620827
+- current block number: 81620827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81620827 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      sinceBlock:
++        12
+    }
+```
+
+```diff
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      sinceBlock:
++        3162027
+    }
+```
+
+```diff
+    contract StandardArbERC20 (0x53923A0d1f4805463584c91b2E55d6c600A94E91) {
+    +++ description: None
+      sinceBlock:
++        19
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      sinceBlock:
++        32
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sinceBlock:
++        3154416
+    }
+```
+
+```diff
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      sinceBlock:
++        3162026
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      sinceBlock:
++        10
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      sinceBlock:
++        16
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      sinceBlock:
++        18117569
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      sinceBlock:
++        14
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639) {
+    +++ description: None
+      sinceBlock:
++        20
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3) {
+    +++ description: None
+      sinceBlock:
++        21
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      sinceBlock:
++        3154409
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      sinceBlock:
++        3154421
+    }
+```
+
 Generated with discovered.json: 0x61ae0dca49959bc3ed003c376e3a0bca2107774f
 
 # Diff at Fri, 21 Feb 2025 12:11:59 GMT:

@@ -1,4 +1,46 @@
-Generated with discovered.json: 0xc670a1a67dcd6ffe9a9104fe08083965523aca17
+Generated with discovered.json: 0x4d638d9de7f7ed9ac4c06ed26a47d0578ebed99e
+
+# Diff at Tue, 04 Mar 2025 10:39:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21629810
+- current block number: 21629810
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629810 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      sinceBlock:
++        18927365
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      sinceBlock:
++        17939980
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sinceBlock:
++        17733931
+    }
+```
+
+Generated with discovered.json: 0xbb762d1a259a23cacb05fde683e76c251e76ffab
 
 # Diff at Sat, 01 Mar 2025 11:44:40 GMT:
 

@@ -54,6 +54,7 @@
         }
       ],
       "sinceTimestamp": 1734690491,
+      "sinceBlock": 21443134,
       "values": {
         "$immutable": true,
         "getQuorum": 533,
@@ -97,6 +98,7 @@
         }
       ],
       "sinceTimestamp": 1734690695,
+      "sinceBlock": 21443151,
       "values": {
         "$immutable": true,
         "deposit": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
@@ -130,6 +132,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1734794243,
+      "sinceBlock": 21451725,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -156,6 +159,7 @@
       ],
       "description": "Verifier contract for merkle proofs.",
       "sinceTimestamp": 1734690407,
+      "sinceBlock": 21443127,
       "values": { "$immutable": true }
     },
     {
@@ -200,6 +204,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1733407067,
+      "sinceBlock": 21336741,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -248,6 +253,7 @@
         }
       ],
       "sinceTimestamp": 1734690647,
+      "sinceBlock": 21443147,
       "values": {
         "$admin": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
         "$implementation": "0x4cbd824685F1E21B119F230B54d65C5a7D2a5330",
@@ -338,6 +344,7 @@
       ],
       "ignoreInWatchMode": ["lastBlockNum", "fastLaneInUse"],
       "sinceTimestamp": 1734690815,
+      "sinceBlock": 21443161,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
@@ -424,6 +431,7 @@
       ],
       "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "sinceTimestamp": 1734690443,
+      "sinceBlock": 21443130,
       "values": {
         "$immutable": true,
         "chainId": 146,
@@ -463,6 +471,7 @@
         }
       ],
       "sinceTimestamp": 1734690539,
+      "sinceBlock": 21443138,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943",

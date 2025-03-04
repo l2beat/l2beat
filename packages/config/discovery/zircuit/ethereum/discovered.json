@@ -28,6 +28,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1719936491,
+      "sinceBlock": 20219921,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20",
@@ -89,6 +90,7 @@
       ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1719936563,
+      "sinceBlock": 20219927,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
@@ -145,6 +147,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1719933695,
+      "sinceBlock": 20219691,
       "values": {
         "$immutable": false,
         "$implementation": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
@@ -195,6 +198,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1719936527,
+      "sinceBlock": 20219924,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de",
@@ -222,8 +226,8 @@
         "l2OutputOracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -277,6 +281,7 @@
         }
       ],
       "sinceTimestamp": 1719936539,
+      "sinceBlock": 20219925,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b",
@@ -366,6 +371,7 @@
         }
       ],
       "sinceTimestamp": 1719936419,
+      "sinceBlock": 20219915,
       "values": {
         "$immutable": true,
         "owner": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
@@ -388,6 +394,7 @@
         }
       ],
       "sinceTimestamp": 1719936599,
+      "sinceBlock": 20219930,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e",
@@ -451,6 +458,7 @@
         }
       ],
       "sinceTimestamp": 1719936443,
+      "sinceBlock": 20219917,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA47314C96ab9572af656788e15143B459F99AE0f",
@@ -504,6 +512,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
       "sinceTimestamp": 1726591415,
+      "sinceBlock": 20771597,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x6bc726C993103197C41d787dd72eCd4D2e1614E8",
@@ -566,6 +575,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1719936515,
+      "sinceBlock": 20219923,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B",
@@ -632,6 +642,7 @@
         }
       ],
       "sinceTimestamp": 1719936587,
+      "sinceBlock": 20219929,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x3B21dC86c412aC34fF4c679497b274509D73cDcC",
@@ -728,6 +739,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1719933659,
+      "sinceBlock": 20219688,
       "values": {
         "$immutable": false,
         "$implementation": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
@@ -769,6 +781,7 @@
         }
       ],
       "sinceTimestamp": 1719936575,
+      "sinceBlock": 20219928,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xf885DA6A3B4c93905b02f36f9a13680922A554b0",

@@ -25,6 +25,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710253012,
+      "sinceBlock": 60705516,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -64,6 +65,7 @@
         }
       ],
       "sinceTimestamp": 1709296907,
+      "sinceBlock": 58697615,
       "values": {
         "$admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
         "$implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
@@ -110,6 +112,7 @@
         "totalValidatorForwardFee"
       ],
       "sinceTimestamp": 1709279309,
+      "sinceBlock": 58659816,
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
@@ -180,6 +183,7 @@
         }
       ],
       "sinceTimestamp": 1709279398,
+      "sinceBlock": 58659973,
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
@@ -222,6 +226,7 @@
         }
       ],
       "sinceTimestamp": 1709296907,
+      "sinceBlock": 58697615,
       "values": {
         "$immutable": true,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",

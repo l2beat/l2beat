@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1725516815,
+      "sinceBlock": 20682521,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -60,6 +61,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727798099,
+      "sinceBlock": 20871672,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -85,6 +87,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1725464663,
+      "sinceBlock": 20678194,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab",
@@ -151,6 +154,7 @@
         "currentPeriodAmount"
       ],
       "sinceTimestamp": 1724767871,
+      "sinceBlock": 20620434,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x2C4df10a82CF077122eD99573acA6daCd76F2E67",
@@ -233,6 +237,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1724767847,
+      "sinceBlock": 20620432,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x725B2b1a15D818E1f25c68be77816802e6036559",
