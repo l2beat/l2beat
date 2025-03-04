@@ -107,7 +107,16 @@ function layer2Or3ToProject(
       stacked: p.type === 'layer3' ? p.stackedRiskView : undefined,
     },
     scalingDa: p.dataAvailability,
-    scalingTechnology: p.technology,
+    scalingTechnology: {
+      ...p.technology,
+      sequencingImage: p.display.sequencingImage,
+      stateDerivation: p.stateDerivation,
+      stateValidation: p.stateValidation,
+      stateValidationImage: p.display.stateValidationImage,
+      upgradesAndGovernance:
+        p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
+      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
+    },
     customDa: p.customDa,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
