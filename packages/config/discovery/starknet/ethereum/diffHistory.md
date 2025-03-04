@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5f0ea68aa96cee2a0878ed6db5e533ef409091ec
+Generated with discovered.json: 0x676102506ebe10c28ee2a617750f46aff913d907
 
-# Diff at Tue, 04 Mar 2025 11:04:46 GMT:
+# Diff at Tue, 04 Mar 2025 12:02:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21959652
@@ -308,12 +308,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -323,12 +333,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -338,23 +358,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
-+++ description: inactive: withdrawals are not limited, any number: withdrawals are limited.
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
 +++ severity: HIGH
       values.withdrawalLimitStatus:
 -        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
       fieldMeta.withdrawalLimitStatus.description:
 -        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
-+        "inactive: withdrawals are not limited, any number: withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
       usedTypes.1:
-+        {"typeCaster":"GreaterThan","arg":{"value":"115792089237316195423570985008687907853269984665640564039457584007913129639934"}}
-      errors:
-+        {"withdrawalLimitStatus":"Processing error occurred."}
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -364,12 +383,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -379,12 +408,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -412,12 +451,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -427,12 +476,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -442,12 +501,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -457,12 +526,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -472,12 +551,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -502,12 +591,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 
@@ -517,12 +616,22 @@ discovery. Values are for block 21959652 (main branch discovery), not current.
       issuedPermissions.2.description:
 -        "manage critical access control roles related to upgrades."
 +        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
       fieldMeta.$admin.description:
 -        "Same as the `GOVERNANCE_ADMIN` access control role."
 +        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
       fieldMeta.govAdminAC.description:
 -        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
 +        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
     }
 ```
 

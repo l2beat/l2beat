@@ -714,7 +714,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -724,7 +724,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -753,6 +753,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -863,7 +869,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -873,7 +879,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -902,6 +908,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1152,9 +1164,9 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
-      "errors": { "withdrawalLimitStatus": "Processing error occurred." },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
@@ -1162,7 +1174,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1194,9 +1206,9 @@
           }
         },
         {
-          "typeCaster": "GreaterThan",
+          "typeCaster": "Mapping",
           "arg": {
-            "value": "115792089237316195423570985008687907853269984665640564039457584007913129639934"
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1334,7 +1346,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -1344,7 +1356,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1373,6 +1385,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1490,7 +1508,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -1500,7 +1518,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1529,6 +1547,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -1860,7 +1884,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -1870,7 +1894,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -1899,6 +1923,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2014,7 +2044,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -2024,7 +2054,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2053,6 +2083,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2163,7 +2199,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -2173,7 +2209,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2202,6 +2238,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2312,7 +2354,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -2322,7 +2364,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2351,6 +2393,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2460,7 +2508,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -2470,7 +2518,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2499,6 +2547,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -2810,7 +2864,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 259200,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -2820,7 +2874,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -2849,6 +2903,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -3003,7 +3063,7 @@
         "secAgentAC": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "withdrawalLimitStatus": [],
+        "withdrawalLimitStatus": "inactive",
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
@@ -3013,7 +3073,7 @@
         },
         "withdrawalLimitStatus": {
           "severity": "HIGH",
-          "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+          "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
           "description": "The maximum total balance that can be locked in the bridge."
@@ -3042,6 +3102,12 @@
             "1": "pending",
             "2": "active",
             "3": "deactivated"
+          }
+        },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
           }
         }
       ],
@@ -4251,8 +4317,8 @@
     "starknet/StarkgateManager": "0xf6401586405cca1328e5b0b0816c24e362fa7e7f090de0377ae01fa930047aac",
     "starknet/StarkgateRegistry": "0x613178017ba4f030754f316d800cc74f2cb1cd6c26d274dffa2feed755341fc7",
     "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601",
-    "starknet/StarknetERC20Bridge": "0xfa85d0cc0fd96ef7f39f056ff07097598ec4914782915b0bf0dc234a7df41dfb",
-    "starknet/StarknetEthBridge": "0x735d66190ff67e4f724198402fff07459997d0937f54f518f10489f2a765ee63",
+    "starknet/StarknetERC20Bridge": "0x1327c44d622cf611664687f6236f6c1543efb6da64a0643e517f20a2c2749413",
+    "starknet/StarknetEthBridge": "0x8cfb1b54495e4e041ac0fa2c9cbe233e328e26d747fbf29b2bc3e41e01b36614",
     "starknet/StarknetMultiBridge": "0x4712d4a1da956acb467a1955ab6193dfca6fe43ef5a23c422771731684563501"
   }
 }

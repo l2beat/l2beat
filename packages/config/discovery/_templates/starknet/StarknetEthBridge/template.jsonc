@@ -10,12 +10,6 @@
         "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
       }
     },
-    "IsUintMax": {
-      "typeCaster": "GreaterThan",
-      "arg": {
-        "value": "115792089237316195423570985008687907853269984665640564039457584007913129639934"
-      }
-    },
     "TokenStatus": {
       "typeCaster": "Mapping",
       "arg": {
@@ -40,14 +34,14 @@
       }
     },
     "withdrawalLimitStatus": {
-      "description": "inactive: withdrawals are not limited, any number: withdrawals are limited.",
+      "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.",
       "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function getRemainingIntradayAllowance(address token) view returns (uint256)",
         "args": ["{{bridgedToken}}"]
       },
-      "returnType": "(IsUintMax)" // BUG
+      "returnType": "(UintMaxMeansInactive)"
     },
     "maxTotalBalance": {
       "description": "The maximum total balance that can be locked in the bridge.",
