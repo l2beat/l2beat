@@ -219,6 +219,6 @@ function saveBreakdownFile(
 
   fs.writeFileSync(
     './src/modules/tvs/breakdown.json',
-    JSON.stringify(result, null, 2) + '\n',
+    JSON.stringify(result, null, 2),
   )
 }
