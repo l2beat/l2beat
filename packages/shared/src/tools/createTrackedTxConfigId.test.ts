@@ -70,6 +70,7 @@ function mock(
       formula: 'functionCall',
       address: EthereumAddress.ZERO,
       selector: 'selector',
+      signature: 'function foo()',
     },
     ...v,
   }
