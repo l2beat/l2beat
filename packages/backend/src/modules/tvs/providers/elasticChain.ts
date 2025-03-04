@@ -12,7 +12,6 @@ import { toMulticallConfigEntry } from '../../../peripherals/multicall/Multicall
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { createToken } from '../mapConfig'
 import { type Token, TokenId } from '../types'
-import { tokenToTicker } from './tickers'
 
 export const bridgeInterface = new utils.Interface([
   'function l2TokenAddress(address _l1Token) view returns (address)',
@@ -34,8 +33,6 @@ export async function getElasticChainTokens(
       t.address !== undefined &&
       !escrow.sharedEscrow.tokensToAssignFromL1?.includes(t.symbol),
   )
-
-  console.log('LENGTH', l2Tokens.length)
 
   const encoded: MulticallRequest[] = l2Tokens.map((token) => ({
     address: escrow.sharedEscrow.l2BridgeAddress,
@@ -65,9 +62,8 @@ export async function getElasticChainTokens(
       assert(chain.sinceTimestamp)
 
       return {
-        id: TokenId.create(project.id, address),
-        // This is a temporary solution
-        ticker: tokenToTicker(token),
+        id: TokenId.create(project.id, token.symbol),
+        priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
         // TODO: get token deployment timestamp on chain
@@ -91,8 +87,8 @@ export async function getElasticChainTokens(
   assert(chain.sinceTimestamp)
 
   const etherOnL2 = {
-    id: TokenId.create(project.id, 'native'),
-    ticker: 'ETH',
+    id: TokenId.create(project.id, 'ETH'),
+    priceId: 'coingecko',
     symbol: 'ETH',
     name: 'Ethereum',
     sinceTimestamp: chain.sinceTimestamp,
@@ -116,8 +112,6 @@ export async function getElasticChainTokens(
       tokensToAssignFromL1.push(createToken(token, project, chain, escrow))
     }
   }
-
-  console.log(tokensToAssignFromL1)
 
   return [...l2TokensTvsConfigs, etherOnL2, ...tokensToAssignFromL1]
 }

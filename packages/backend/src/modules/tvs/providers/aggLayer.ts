@@ -1,5 +1,6 @@
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
 import type { ChainConfig, Project } from '@l2beat/config'
+import type { RpcClient } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -9,11 +10,9 @@ import {
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { type Token, TokenId } from '../types'
-import { tokenToTicker } from './tickers'
-import type { RpcClient } from '@l2beat/shared'
-import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 
 export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
@@ -64,9 +63,8 @@ export async function getAggLayerTokens(
       assert(chain.sinceTimestamp)
 
       return {
-        id: TokenId.create(project.id, address),
-        // This is a temporary solution
-        ticker: tokenToTicker(token),
+        id: TokenId.create(project.id, token.symbol),
+        priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
         // TODO: get token deployment timestamp on chain
