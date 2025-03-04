@@ -167,15 +167,7 @@
       "unverified": true,
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
-      "values": {
-        "$immutable": true,
-        "messageLibType": 2,
-        "version": {
-          "major": "18446744073709551615",
-          "minor": 255,
-          "endpointVersion": 2
-        }
-      }
+      "values": { "$immutable": true }
     },
     {
       "name": "DineroOFTLockbox",
