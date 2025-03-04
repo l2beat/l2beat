@@ -14,20 +14,30 @@ import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingDaEntries() {
-  const [tvs, projectsChangeReport, projects] = await Promise.all([
-    getProjectsLatestTvsUsd(),
-    getProjectsChangeReport(),
-    ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'isArchived'],
-    }),
-  ])
+  const [tvs, projectsChangeReport, projects, daLayers, daBridges] =
+    await Promise.all([
+      getProjectsLatestTvsUsd(),
+      getProjectsChangeReport(),
+      ps.getProjects({
+        select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
+        optional: ['customDa'],
+        where: ['isScaling'],
+        whereNot: ['isUpcoming', 'isArchived'],
+      }),
+      ps.getProjects({
+        select: ['daLayer'],
+      }),
+      ps.getProjects({
+        select: ['daBridge'],
+      }),
+    ])
 
   const entries = projects
     .map((project) =>
       getScalingDaEntry(
         project,
+        daLayers,
+        daBridges,
         projectsChangeReport.getChanges(project.id),
         tvs[project.id],
       ),
@@ -43,10 +53,16 @@ export interface ScalingDaEntry extends CommonScalingEntry {
   dataAvailability: ProjectDataAvailability
   stack: ScalingProjectStack | undefined
   tvsOrder: number
+  daHref: string | undefined
 }
 
 function getScalingDaEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingDa' | 'display'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
+    'customDa'
+  >,
+  daLayers: Project<'daLayer'>[],
+  daBridges: Project<'daBridge'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
 ): ScalingDaEntry {
@@ -54,7 +70,38 @@ function getScalingDaEntry(
     ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
+    daHref: getDaHref(project, daLayers, daBridges),
     stack: project.scalingInfo.stack,
     tvsOrder: tvs ?? -1,
   }
+}
+
+function getDaHref(
+  project: Project<
+    'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
+    'customDa'
+  >,
+  daLayers: Project<'daLayer'>[],
+  daBridges: Project<'daBridge'>[],
+) {
+  if (project.customDa) {
+    return `/scaling/projects/${project.slug}#da-layer`
+  }
+
+  const daLayer = daLayers.find(
+    (l) => l.id === project.scalingDa.layer.projectId,
+  )
+  const daBridge = daBridges.find(
+    (b) => b.id === project.scalingDa.bridge.projectId,
+  )
+
+  if (!daLayer) {
+    return undefined
+  }
+
+  if (!daBridge) {
+    return `/data-availability/projects/${daLayer.slug}/no-bridge`
+  }
+
+  return `/data-availability/projects/${daLayer.slug}/${daBridge.slug}`
 }
