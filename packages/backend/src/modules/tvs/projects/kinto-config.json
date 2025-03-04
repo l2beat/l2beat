@@ -3,8 +3,8 @@
   "projectId": "kinto",
   "tokens": [
     {
-      "id": "ethereum-native-0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-      "ticker": "ETH",
+      "id": "kinto-ETH",
+      "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
       "amount": {
@@ -20,8 +20,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-native-0x0f1b7bd7762662B23486320AA91F30312184f70C",
-      "ticker": "ETH",
+      "id": "kinto-ETH",
+      "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
       "amount": {
@@ -37,8 +37,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x83F20F44975D03b1b09e64809B757c47f942BEeA-0x0f1b7bd7762662B23486320AA91F30312184f70C",
-      "ticker": "sDAI",
+      "id": "kinto-sDAI",
+      "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
       "amount": {
@@ -54,8 +54,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x514910771AF9Ca656af840dff83E8264EcF986CA-0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013",
-      "ticker": "LINK",
+      "id": "kinto-LINK",
+      "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
       "amount": {
@@ -71,8 +71,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xf97f4df75117a78c1A5a0DBb814Af92458539FB4-0xC9a9f47Ae41Fa4287837751AF7325e87a1dE9326",
-      "ticker": "LINK",
+      "id": "kinto-LINK",
+      "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
       "amount": {
@@ -88,8 +88,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0-0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
-      "ticker": "wstETH",
+      "id": "kinto-wstETH",
+      "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
@@ -105,8 +105,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48-0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
-      "ticker": "USDC",
+      "id": "kinto-USDC",
+      "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
@@ -122,8 +122,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6B175474E89094C44Da98b954EedeAC495271d0F-0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
-      "ticker": "DAI",
+      "id": "kinto-DAI",
+      "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
@@ -139,8 +139,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x57e114B691Db790C35207b2e685D4A43181e6061-0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
-      "ticker": "ENA",
+      "id": "kinto-ENA",
+      "priceId": "ethena",
       "symbol": "ENA",
       "name": "ENA",
       "amount": {
@@ -156,8 +156,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4c9EDD5852cd905f086C759E8383e09bff1E68B3-0xdf34E61B6e7B9e348713d528fEB019d504d38c1e",
-      "ticker": "USDe",
+      "id": "kinto-USDe",
+      "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
       "amount": {
@@ -173,8 +173,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83-0xdb161cdc9c11892922F7121a409b196f3b00e640",
-      "ticker": "EIGEN",
+      "id": "kinto-EIGEN",
+      "priceId": "eigenlayer",
       "symbol": "EIGEN",
       "name": "Eigen",
       "amount": {
@@ -190,8 +190,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x83F20F44975D03b1b09e64809B757c47f942BEeA-0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85",
-      "ticker": "sDAI",
+      "id": "kinto-sDAI",
+      "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
       "amount": {
@@ -207,8 +207,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x9D39A5DE30e57443BfF2A8307A4256c8797A3497-0x43b718Aa5e678b08615CA984cbe25f690B085b32",
-      "ticker": "sUSDe",
+      "id": "kinto-sUSDe",
+      "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
@@ -224,8 +224,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee-0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
-      "ticker": "weETH",
+      "id": "kinto-weETH",
+      "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
@@ -241,8 +241,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB-0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
-      "ticker": "ETHFI",
+      "id": "kinto-ETHFI",
+      "priceId": "ether-fi",
       "symbol": "ETHFI",
       "name": "ether.fi governance token",
       "amount": {
@@ -258,8 +258,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x45804880De22913dAFE09f4980848ECE6EcbAf78-0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2",
-      "ticker": "PAXG",
+      "id": "kinto-PAXG",
+      "priceId": "pax-gold",
       "symbol": "PAXG",
       "name": "Paxos Gold",
       "amount": {
@@ -275,8 +275,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x68749665FF8D2d112Fa859AA293F07A622782F38-0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
-      "ticker": "XAUt",
+      "id": "kinto-XAUt",
+      "priceId": "tether-gold",
       "symbol": "XAUt",
       "name": "Tether Gold",
       "amount": {
@@ -292,8 +292,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2-0x0fC783f611A888A2cAbC3dA482Add3215334dCc2",
-      "ticker": "MKR",
+      "id": "kinto-MKR",
+      "priceId": "maker",
       "symbol": "MKR",
       "name": "Maker",
       "amount": {
@@ -309,8 +309,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xD31a59c85aE9D8edEFeC411D448f90841571b89c-0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8",
-      "ticker": "SOL",
+      "id": "kinto-SOL",
+      "priceId": "sol-wormhole",
       "symbol": "SOL",
       "name": "Wrapped SOL",
       "amount": {
@@ -326,8 +326,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C-0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8",
-      "ticker": "SPX",
+      "id": "kinto-SPX",
+      "priceId": "spx6900",
       "symbol": "SPX",
       "name": "SPX6900",
       "amount": {
@@ -343,8 +343,8 @@
       "isAssociated": false
     },
     {
-      "id": "base-0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452-0xE194f2B41A5dc6Be311aD7811eF391a0ac84687d",
-      "ticker": "wstETH",
+      "id": "kinto-wstETH",
+      "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
@@ -360,8 +360,8 @@
       "isAssociated": false
     },
     {
-      "id": "base-0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb-0x9354E3822CE6BF77B2761f8922972BB767D771d8",
-      "ticker": "DAI",
+      "id": "kinto-DAI",
+      "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
@@ -377,8 +377,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x5979D7b546E38E414F7E9822514be443A4800529-0x6F855dE562CC9d019757f5F68a15Cd392FF52962",
-      "ticker": "wstETH",
+      "id": "kinto-wstETH",
+      "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
@@ -394,8 +394,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1-0x36E2DBe085eE4d028fD60f70670f662365d0E978",
-      "ticker": "DAI",
+      "id": "kinto-DAI",
+      "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
@@ -411,8 +411,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe-0x8bD30d8c5d5cBb5e41Af7B9A4bD654b34772e890",
-      "ticker": "weETH",
+      "id": "kinto-weETH",
+      "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
@@ -428,8 +428,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812-0x500c8337782a9f82C5376Ea71b66A749cE42b507",
-      "ticker": "wUSDM",
+      "id": "kinto-wUSDM",
+      "priceId": "mountain-protocol-usdm",
       "symbol": "wUSDM",
       "name": "Wrapped Mountain Protocol USD",
       "amount": {
@@ -445,8 +445,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0-0x25a1baC7314Ff40Ee8CD549251924D066D7d5bC6",
-      "ticker": "SolvBTC",
+      "id": "kinto-SolvBTC",
+      "priceId": "solv-btc",
       "symbol": "SolvBTC",
       "name": "Solv BTC",
       "amount": {
@@ -462,8 +462,8 @@
       "isAssociated": false
     },
     {
-      "id": "kinto-0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
-      "ticker": "WETH",
+      "id": "kinto-WETH",
+      "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
       "amount": {
@@ -478,7 +478,7 @@
         "arguments": [
           {
             "type": "value",
-            "ticker": "WETH",
+            "priceId": "weth",
             "amount": {
               "type": "totalSupply",
               "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
@@ -488,7 +488,7 @@
           },
           {
             "type": "value",
-            "ticker": "ETH",
+            "priceId": "ethereum",
             "amount": {
               "type": "balanceOfEscrow",
               "address": "native",
@@ -499,7 +499,7 @@
           }
         ]
       },
-      "sinceTimestamp": 1716142367,
+      "sinceTimestamp": 1716142397,
       "category": "ether",
       "source": "external",
       "isAssociated": false

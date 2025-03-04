@@ -3,8 +3,8 @@
   "projectId": "arbitrum",
   "tokens": [
     {
-      "id": "ethereum-native-0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-      "ticker": "ETH",
+      "id": "arbitrum-ETH",
+      "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
       "amount": {
@@ -20,8 +20,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4DC26fC5854e7648a064a4ABD590bBE71724C277-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "ANIME",
+      "id": "arbitrum-ANIME",
+      "priceId": "anime",
       "symbol": "ANIME",
       "name": "Animecoin",
       "amount": {
@@ -37,8 +37,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xEABB8996eA1662cAd2f7fB715127852cd3262Ae9-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "CNFI",
+      "id": "arbitrum-CNFI",
+      "priceId": "connect-financial",
       "symbol": "CNFI",
       "name": "Connect Financial",
       "amount": {
@@ -54,8 +54,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0ff5A8451A839f5F0BB3562689D9A44089738D11-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "rDPX",
+      "id": "arbitrum-rDPX",
+      "priceId": "dopex-rebate-token",
       "symbol": "rDPX",
       "name": "Dopex Rebate Token",
       "amount": {
@@ -71,8 +71,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x72A9B1c9B191781bB15F1b98f443a1d916557c92-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "FFM",
+      "id": "arbitrum-FFM",
+      "priceId": "florence-finance-medici",
       "symbol": "FFM",
       "name": "Florence Finance Medici",
       "amount": {
@@ -88,8 +88,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x58b6A8A3302369DAEc383334672404Ee733aB239-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "LPT",
+      "id": "arbitrum-LPT",
+      "priceId": "livepeer",
       "symbol": "LPT",
       "name": "Livepeer Token",
       "amount": {
@@ -105,8 +105,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x57B946008913B82E4dF85f501cbAeD910e58D26C-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "POND",
+      "id": "arbitrum-POND",
+      "priceId": "marlin",
       "symbol": "POND",
       "name": "Marlin POND",
       "amount": {
@@ -122,8 +122,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "MCB",
+      "id": "arbitrum-MCB",
+      "priceId": "mcdex",
       "symbol": "MCB",
       "name": "MUX Protocol",
       "amount": {
@@ -139,25 +139,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xdAC17F958D2ee523a2206206994597C13D831ec7-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "USDT",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "chain": "ethereum",
-        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1623867835,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "ethereum-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "USDC",
+      "id": "arbitrum-USDC",
+      "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
@@ -173,8 +156,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3-0xcEe284F754E854890e311e3280b767F80797180d",
-      "ticker": "YBR",
+      "id": "arbitrum-YBR",
+      "priceId": "yieldbricks",
       "symbol": "YBR",
       "name": "YieldBricks",
       "amount": {
@@ -190,8 +173,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xBBc2AE13b23d715c30720F079fcd9B4a74093505-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ERN",
+      "id": "arbitrum-ERN",
+      "priceId": "ethernity-chain",
       "symbol": "ERN",
       "name": "@EthernityChain $ERN Token",
       "amount": {
@@ -207,8 +190,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xE41d2489571d322189246DaFA5ebDe1F4699F498-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ZRX",
+      "id": "arbitrum-ZRX",
+      "priceId": "0x",
       "symbol": "ZRX",
       "name": "0x Protocol Token",
       "amount": {
@@ -224,8 +207,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x111111111117dC0aa78b770fA6A738034120C302-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "1INCH",
+      "id": "arbitrum-1INCH",
+      "priceId": "1inch",
       "symbol": "1INCH",
       "name": "1INCH Token",
       "amount": {
@@ -241,8 +224,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "AAVE",
+      "id": "arbitrum-AAVE",
+      "priceId": "aave",
       "symbol": "AAVE",
       "name": "Aave Token",
       "amount": {
@@ -258,8 +241,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ACX",
+      "id": "arbitrum-ACX",
+      "priceId": "across-protocol",
       "symbol": "ACX",
       "name": "Across Protocol Token",
       "amount": {
@@ -275,8 +258,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xB528edBef013aff855ac3c50b381f253aF13b997-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "AEVO",
+      "id": "arbitrum-AEVO",
+      "priceId": "aevo-exchange",
       "symbol": "AEVO",
       "name": "Aevo",
       "amount": {
@@ -292,8 +275,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "alUSD",
+      "id": "arbitrum-alUSD",
+      "priceId": "alchemix-usd",
       "symbol": "alUSD",
       "name": "Alchemix USD",
       "amount": {
@@ -309,8 +292,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x27702a26126e0B3702af63Ee09aC4d1A084EF628-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ALEPH",
+      "id": "arbitrum-ALEPH",
+      "priceId": "aleph",
       "symbol": "ALEPH",
       "name": "aleph.im v2",
       "amount": {
@@ -326,8 +309,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ANKR",
+      "id": "arbitrum-ANKR",
+      "priceId": "ankr",
       "symbol": "ANKR",
       "name": "Ankr Network",
       "amount": {
@@ -343,8 +326,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xE95A203B1a91a908F9B9CE46459d101078c2c3cb-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ankrETH",
+      "id": "arbitrum-ankrETH",
+      "priceId": "ankreth",
       "symbol": "ankrETH",
       "name": "Ankr Staked ETH",
       "amount": {
@@ -360,8 +343,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4d224452801ACEd8B2F0aebE155379bb5D594381-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "APE",
+      "id": "arbitrum-APE",
+      "priceId": "apecoin",
       "symbol": "APE",
       "name": "ApeCoin",
       "amount": {
@@ -377,8 +360,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x52A8845DF664D76C69d2EEa607CD793565aF42B8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "APEX",
+      "id": "arbitrum-APEX",
+      "priceId": "apex-token-2",
       "symbol": "APEX",
       "name": "ApeX Token",
       "amount": {
@@ -394,8 +377,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0b38210ea11411557c13457D4dA7dC6ea731B88a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "API3",
+      "id": "arbitrum-API3",
+      "priceId": "api3",
       "symbol": "API3",
       "name": "API3",
       "amount": {
@@ -411,8 +394,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4104b135DBC9609Fc1A9490E61369036497660c8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "APW",
+      "id": "arbitrum-APW",
+      "priceId": "apwine",
       "symbol": "APW",
       "name": "APWine Token",
       "amount": {
@@ -428,8 +411,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "AIUS",
+      "id": "arbitrum-AIUS",
+      "priceId": "arbius",
       "symbol": "AIUS",
       "name": "Arbius",
       "amount": {
@@ -445,8 +428,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xC82E3dB60A52CF7529253b4eC688f631aad9e7c2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ARC",
+      "id": "arbitrum-ARC",
+      "priceId": "arc",
       "symbol": "ARC",
       "name": "ARC",
       "amount": {
@@ -462,8 +445,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6B0b3a982b4634aC68dD83a4DBF02311cE324181-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ALI",
+      "id": "arbitrum-ALI",
+      "priceId": "alethea-artificial-liquid-intelligence-token",
       "symbol": "ALI",
       "name": "Artificial Liquid Intelligence Token",
       "amount": {
@@ -479,8 +462,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA2120b9e674d3fC3875f415A7DF52e382F141225-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ATA",
+      "id": "arbitrum-ATA",
+      "priceId": "automata",
       "symbol": "ATA",
       "name": "Automata",
       "amount": {
@@ -496,8 +479,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0001A500A6B18995B03f44bb040A5fFc28E45CB0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "OLAS",
+      "id": "arbitrum-OLAS",
+      "priceId": "autonolas",
       "symbol": "OLAS",
       "name": "Autonolas",
       "amount": {
@@ -513,8 +496,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x467719aD09025FcC6cF6F8311755809d45a5E5f3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "AXL",
+      "id": "arbitrum-AXL",
+      "priceId": "axelar",
       "symbol": "AXL",
       "name": "Axelar",
       "amount": {
@@ -530,8 +513,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xDd66781D0E9a08D4FBb5eC7BAc80B691BE27F21D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "AXGT",
+      "id": "arbitrum-AXGT",
+      "priceId": "axondao-governance-token",
       "symbol": "AXGT",
       "name": "AxonDAO Governance Token",
       "amount": {
@@ -547,8 +530,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x3472A5A71965499acd81997a54BBA8D852C6E53d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BADGER",
+      "id": "arbitrum-BADGER",
+      "priceId": "badger-dao",
       "symbol": "BADGER",
       "name": "Badger",
       "amount": {
@@ -564,8 +547,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xba100000625a3754423978a60c9317c58a424e3D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BAL",
+      "id": "arbitrum-BAL",
+      "priceId": "balancer",
       "symbol": "BAL",
       "name": "Balancer",
       "amount": {
@@ -581,8 +564,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BNT",
+      "id": "arbitrum-BNT",
+      "priceId": "bancor",
       "symbol": "BNT",
       "name": "Bancor Network Token",
       "amount": {
@@ -598,8 +581,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0D8775F648430679A709E98d2b0Cb6250d2887EF-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BAT",
+      "id": "arbitrum-BAT",
+      "priceId": "basic-attention-token",
       "symbol": "BAT",
       "name": "Basic Attention Token",
       "amount": {
@@ -615,8 +598,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xF17e65822b568B3903685a7c9F496CF7656Cc6C2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BICO",
+      "id": "arbitrum-BICO",
+      "priceId": "biconomy",
       "symbol": "BICO",
       "name": "Biconomy Token",
       "amount": {
@@ -632,8 +615,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BIT",
+      "id": "arbitrum-BIT",
+      "priceId": "bitdao",
       "symbol": "BIT",
       "name": "BitDAO",
       "amount": {
@@ -649,8 +632,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x5283D291DBCF85356A21bA090E6db59121208b44-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BLUR",
+      "id": "arbitrum-BLUR",
+      "priceId": "blur",
       "symbol": "BLUR",
       "name": "Blur",
       "amount": {
@@ -666,8 +649,25 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4Fabb145d64652a948d72533023f6E7A623C7C53-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "BUSD",
+      "id": "arbitrum-BONE",
+      "priceId": "bone-shibaswap",
+      "symbol": "BONE",
+      "name": "BONE SHIBASWAP",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-BUSD",
+      "priceId": "binance-usd",
       "symbol": "BUSD",
       "name": "BUSD",
       "amount": {
@@ -683,8 +683,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "CTSI",
+      "id": "arbitrum-CTSI",
+      "priceId": "cartesi",
       "symbol": "CTSI",
       "name": "Cartesi Token",
       "amount": {
@@ -700,8 +700,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4F9254C83EB525f9FCf346490bbb3ed28a81C667-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "CELR",
+      "id": "arbitrum-CELR",
+      "priceId": "celer-network",
       "symbol": "CELR",
       "name": "CelerToken",
       "amount": {
@@ -717,8 +717,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA2cd3D43c775978A96BdBf12d733D5A1ED94fb18-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "XCN",
+      "id": "arbitrum-XCN",
+      "priceId": "chain-2",
       "symbol": "XCN",
       "name": "Chain",
       "amount": {
@@ -734,8 +734,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xb712d62fE84258292d1961B5150a19bC4Ab49026-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "XCHNG",
+      "id": "arbitrum-XCHNG",
+      "priceId": "chainge-finance",
       "symbol": "XCHNG",
       "name": "Chainge",
       "amount": {
@@ -751,8 +751,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x514910771AF9Ca656af840dff83E8264EcF986CA-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LINK",
+      "id": "arbitrum-LINK",
+      "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
       "amount": {
@@ -768,8 +768,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x41e5560054824eA6B0732E656E3Ad64E20e94E45-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "CVC",
+      "id": "arbitrum-CVC",
+      "priceId": "civic",
       "symbol": "CVC",
       "name": "Civic",
       "amount": {
@@ -785,8 +785,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xBe9895146f7AF43049ca1c1AE358B0541Ea49704-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "cbETH",
+      "id": "arbitrum-cbETH",
+      "priceId": "coinbase-wrapped-staked-eth",
       "symbol": "cbETH",
       "name": "Coinbase Wrapped Staked ETH",
       "amount": {
@@ -802,8 +802,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xc00e94Cb662C3520282E6f5717214004A7f26888-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "COMP",
+      "id": "arbitrum-COMP",
+      "priceId": "compound-governance-token",
       "symbol": "COMP",
       "name": "Compound",
       "amount": {
@@ -819,8 +819,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xFE67A4450907459c3e1FFf623aA927dD4e28c67a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "NEXT",
+      "id": "arbitrum-NEXT",
+      "priceId": "connext",
       "symbol": "NEXT",
       "name": "Connext",
       "amount": {
@@ -836,8 +836,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PEOPLE",
+      "id": "arbitrum-PEOPLE",
+      "priceId": "constitutiondao",
       "symbol": "PEOPLE",
       "name": "ConstitutionDAO",
       "amount": {
@@ -853,8 +853,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "cvxCRV",
+      "id": "arbitrum-cvxCRV",
+      "priceId": "convex-crv",
       "symbol": "cvxCRV",
       "name": "Convex CRV",
       "amount": {
@@ -870,8 +870,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "CVX",
+      "id": "arbitrum-CVX",
+      "priceId": "convex-finance",
       "symbol": "CVX",
       "name": "Convex Token",
       "amount": {
@@ -887,8 +887,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xDDB3422497E61e13543BeA06989C0789117555c5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "COTI",
+      "id": "arbitrum-COTI",
+      "priceId": "coti",
       "symbol": "COTI",
       "name": "COTI Token",
       "amount": {
@@ -904,8 +904,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "COW",
+      "id": "arbitrum-COW",
+      "priceId": "cow-protocol",
       "symbol": "COW",
       "name": "CoW Protocol Token",
       "amount": {
@@ -921,8 +921,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "CRO",
+      "id": "arbitrum-CRO",
+      "priceId": "crypto-com-chain",
       "symbol": "CRO",
       "name": "CRO",
       "amount": {
@@ -938,8 +938,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x321C2fE4446C7c963dc41Dd58879AF648838f98D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "CTX",
+      "id": "arbitrum-CTX",
+      "priceId": "cryptex-finance",
       "symbol": "CTX",
       "name": "Cryptex",
       "amount": {
@@ -955,8 +955,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xD533a949740bb3306d119CC777fa900bA034cd52-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "CRV",
+      "id": "arbitrum-CRV",
+      "priceId": "curve-dao-token",
       "symbol": "CRV",
       "name": "Curve DAO Token",
       "amount": {
@@ -972,8 +972,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "crvUSD",
+      "id": "arbitrum-crvUSD",
+      "priceId": "crvusd",
       "symbol": "crvUSD",
       "name": "Curve.Fi USD Stablecoin",
       "amount": {
@@ -989,8 +989,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0f51bb10119727a7e5eA3538074fb341F56B09Ad-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DAO",
+      "id": "arbitrum-DAO",
+      "priceId": "dao-maker",
       "symbol": "DAO",
       "name": "DAO Maker",
       "amount": {
@@ -1006,8 +1006,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0F5D2fB29fb7d3CFeE444a200298f468908cC942-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MANA",
+      "id": "arbitrum-MANA",
+      "priceId": "decentraland",
       "symbol": "MANA",
       "name": "Decentraland MANA",
       "amount": {
@@ -1023,8 +1023,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "USDD",
+      "id": "arbitrum-USDD",
+      "priceId": "usdd",
       "symbol": "USDD",
       "name": "Decentralized USD",
       "amount": {
@@ -1040,8 +1040,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DPI",
+      "id": "arbitrum-DPI",
+      "priceId": "defipulse-index",
       "symbol": "DPI",
       "name": "DefiPulse Index",
       "amount": {
@@ -1057,25 +1057,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xDDdddd4301A082e62E84e43F474f044423921918-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DVF",
-      "symbol": "DVF",
-      "name": "DeversiFi Token",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xDDdddd4301A082e62E84e43F474f044423921918",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1623784100,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "ethereum-0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DEXTF",
+      "id": "arbitrum-DEXTF",
+      "priceId": "dextf",
       "symbol": "DEXTF",
       "name": "DEXTF Token",
       "amount": {
@@ -1091,8 +1074,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x888888435FDe8e7d4c54cAb67f206e4199454c60-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DFX",
+      "id": "arbitrum-DFX",
+      "priceId": "dfx-finance",
       "symbol": "DFX",
       "name": "DFX Token",
       "amount": {
@@ -1108,8 +1091,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DHT",
+      "id": "arbitrum-DHT",
+      "priceId": "dhedge-dao",
       "symbol": "DHT",
       "name": "dHedge DAO Token",
       "amount": {
@@ -1125,8 +1108,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DIVI",
+      "id": "arbitrum-DIVI",
+      "priceId": "divi",
       "symbol": "DIVI",
       "name": "Divi",
       "amount": {
@@ -1142,8 +1125,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DODO",
+      "id": "arbitrum-DODO",
+      "priceId": "dodo",
       "symbol": "DODO",
       "name": "DODO bird",
       "amount": {
@@ -1159,8 +1142,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ELON",
+      "id": "arbitrum-ELON",
+      "priceId": "dogelon-mars",
       "symbol": "ELON",
       "name": "Dogelon",
       "amount": {
@@ -1176,8 +1159,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x865377367054516e17014CcdED1e7d814EDC9ce4-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DOLA",
+      "id": "arbitrum-DOLA",
+      "priceId": "dola-usd",
       "symbol": "DOLA",
       "name": "Dola USD Stablecoin",
       "amount": {
@@ -1193,8 +1176,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DPX",
+      "id": "arbitrum-DPX",
+      "priceId": "dopex",
       "symbol": "DPX",
       "name": "Dopex Governance Token",
       "amount": {
@@ -1210,8 +1193,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x92D6C1e31e14520e676a687F0a93788B716BEff5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DYDX",
+      "id": "arbitrum-DYDX",
+      "priceId": "dydx",
       "symbol": "DYDX",
       "name": "dYdX",
       "amount": {
@@ -1227,8 +1210,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6468e79A80C0eaB0F9A2B574c8d5bC374Af59414-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "eXRD",
+      "id": "arbitrum-eXRD",
+      "priceId": "e-radix",
       "symbol": "eXRD",
       "name": "E-RADIX",
       "amount": {
@@ -1244,8 +1227,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "EIGEN",
+      "id": "arbitrum-EIGEN",
+      "priceId": "eigenlayer",
       "symbol": "EIGEN",
       "name": "Eigen",
       "amount": {
@@ -1261,8 +1244,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "eUSD",
+      "id": "arbitrum-eUSD",
+      "priceId": "electronic-usd",
       "symbol": "eUSD",
       "name": "Electronic Dollar",
       "amount": {
@@ -1278,8 +1261,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x57e114B691Db790C35207b2e685D4A43181e6061-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ENA",
+      "id": "arbitrum-ENA",
+      "priceId": "ethena",
       "symbol": "ENA",
       "name": "ENA",
       "amount": {
@@ -1295,8 +1278,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ENJ",
+      "id": "arbitrum-ENJ",
+      "priceId": "enjincoin",
       "symbol": "ENJ",
       "name": "Enjin Coin",
       "amount": {
@@ -1312,8 +1295,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xfE80D611c6403f70e5B1b9B722D2B3510B740B2B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "EQB",
+      "id": "arbitrum-EQB",
+      "priceId": "equilibria-finance",
       "symbol": "EQB",
       "name": "Equilibria Token",
       "amount": {
@@ -1329,8 +1312,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA2085073878152aC3090eA13D1e41bD69e60Dc99-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ELG",
+      "id": "arbitrum-ELG",
+      "priceId": "escoin-token",
       "symbol": "ELG",
       "name": "EscoinToken",
       "amount": {
@@ -1346,8 +1329,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x35fA164735182de50811E8e2E824cFb9B6118ac2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "eETH",
+      "id": "arbitrum-eETH",
+      "priceId": "ether-fi-staked-eth",
       "symbol": "eETH",
       "name": "ether.fi ETH",
       "amount": {
@@ -1363,8 +1346,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ETHFI",
+      "id": "arbitrum-ETHFI",
+      "priceId": "ether-fi",
       "symbol": "ETHFI",
       "name": "ether.fi governance token",
       "amount": {
@@ -1380,8 +1363,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ENS",
+      "id": "arbitrum-ENS",
+      "priceId": "ethereum-name-service",
       "symbol": "ENS",
       "name": "Ethereum Name Service",
       "amount": {
@@ -1397,8 +1380,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ETH+",
+      "id": "arbitrum-ETH+",
+      "priceId": "reserve-protocol-eth-plus",
       "symbol": "ETH+",
       "name": "ETHPlus",
       "amount": {
@@ -1414,8 +1397,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA35b1B31Ce002FBF2058D22F30f95D405200A15b-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ETHx",
+      "id": "arbitrum-ETHx",
+      "priceId": "stader-ethx",
       "symbol": "ETHx",
       "name": "ETHx",
       "amount": {
@@ -1431,8 +1414,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "EURA",
+      "id": "arbitrum-EURA",
+      "priceId": "ageur",
       "symbol": "EURA",
       "name": "EURA (previously agEUR)",
       "amount": {
@@ -1448,8 +1431,25 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xC581b735A1688071A1746c968e0798D642EDE491-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "EURT",
+      "id": "arbitrum-EURC",
+      "priceId": "euro-coin",
+      "symbol": "EURC",
+      "name": "Euro Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-EURT",
+      "priceId": "tether-eurt",
       "symbol": "EURT",
       "name": "Euro Tether",
       "amount": {
@@ -1465,8 +1465,25 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4E15361FD6b4BB609Fa63C81A2be19d873717870-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FTM",
+      "id": "arbitrum-CLEAR",
+      "priceId": "everclear",
+      "symbol": "CLEAR",
+      "name": "Everclear",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-FTM",
+      "priceId": "wrapped-fantom",
       "symbol": "FTM",
       "name": "Fantom Token",
       "amount": {
@@ -1482,8 +1499,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xa0246c9032bC3A600820415aE600c6388619A14D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FARM",
+      "id": "arbitrum-FARM",
+      "priceId": "harvest-finance",
       "symbol": "FARM",
       "name": "FARM Reward Token",
       "amount": {
@@ -1499,8 +1516,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FET",
+      "id": "arbitrum-FET",
+      "priceId": "fetch-ai",
       "symbol": "FET",
       "name": "Fetch",
       "amount": {
@@ -1516,8 +1533,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x939069722D568B5498CcBA4356E800EaefEFD2a5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FNXAI",
+      "id": "arbitrum-FNXAI",
+      "priceId": "finanx-ai",
       "symbol": "FNXAI",
       "name": "Finanx AI",
       "amount": {
@@ -1533,8 +1550,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xd0D56273290D339aaF1417D9bfa1bb8cFe8A0933-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FOOM",
+      "id": "arbitrum-FOOM",
+      "priceId": "foom",
       "symbol": "FOOM",
       "name": "FOOM",
       "amount": {
@@ -1550,8 +1567,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FORE",
+      "id": "arbitrum-FORE",
+      "priceId": "fore-protocol",
       "symbol": "FORE",
       "name": "FORE Protocol",
       "amount": {
@@ -1567,8 +1584,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x41545f8b9472D758bB669ed8EaEEEcD7a9C4Ec29-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FORT",
+      "id": "arbitrum-FORT",
+      "priceId": "forta",
       "symbol": "FORT",
       "name": "Forta",
       "amount": {
@@ -1584,8 +1601,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FOX",
+      "id": "arbitrum-FOX",
+      "priceId": "shapeshift-fox-token",
       "symbol": "FOX",
       "name": "FOX",
       "amount": {
@@ -1601,8 +1618,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x853d955aCEf822Db058eb8505911ED77F175b99e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FRAX",
+      "id": "arbitrum-FRAX",
+      "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
       "amount": {
@@ -1618,8 +1635,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x5E8422345238F34275888049021821E8E08CAa1f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "frxETH",
+      "id": "arbitrum-frxETH",
+      "priceId": "frax-ether",
       "symbol": "frxETH",
       "name": "Frax Ether",
       "amount": {
@@ -1635,8 +1652,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FPI",
+      "id": "arbitrum-FPI",
+      "priceId": "frax-price-index",
       "symbol": "FPI",
       "name": "Frax Price Index",
       "amount": {
@@ -1652,8 +1669,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FXS",
+      "id": "arbitrum-FXS",
+      "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
       "amount": {
@@ -1669,8 +1686,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GALA",
+      "id": "arbitrum-GALA",
+      "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
       "amount": {
@@ -1686,8 +1703,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xd1d2Eb1B1e90B638588728b4130137D262C87cae-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GALA",
+      "id": "arbitrum-GALA",
+      "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
       "amount": {
@@ -1703,8 +1720,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xBa3335588D9403515223F109EdC4eB7269a9Ab5D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GEAR",
+      "id": "arbitrum-GEAR",
+      "priceId": "gearbox",
       "symbol": "GEAR",
       "name": "Gearbox",
       "amount": {
@@ -1720,8 +1737,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GENE",
+      "id": "arbitrum-GENE",
+      "priceId": "genomesdao",
       "symbol": "GENE",
       "name": "GenomesDAO",
       "amount": {
@@ -1737,8 +1754,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GTC",
+      "id": "arbitrum-GTC",
+      "priceId": "gitcoin",
       "symbol": "GTC",
       "name": "Gitcoin",
       "amount": {
@@ -1754,8 +1771,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6810e776880C02933D47DB1b9fc05908e5386b96-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GNO",
+      "id": "arbitrum-GNO",
+      "priceId": "gnosis",
       "symbol": "GNO",
       "name": "Gnosis Token",
       "amount": {
@@ -1771,8 +1788,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x830eB1204380E9c44434Db8700257025358707c6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GOB",
+      "id": "arbitrum-GOB",
+      "priceId": "goons-of-balatroon",
       "symbol": "GOB",
       "name": "Goons of Balatroon",
       "amount": {
@@ -1788,8 +1805,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0ab87046fBb341D058F17CBC4c1133F25a20a52f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "gOHM",
+      "id": "arbitrum-gOHM",
+      "priceId": "governance-ohm",
       "symbol": "gOHM",
       "name": "Governance OHM",
       "amount": {
@@ -1805,8 +1822,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xeEAA40B28A2d1b0B08f6f97bB1DD4B75316c6107-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GOVI",
+      "id": "arbitrum-GOVI",
+      "priceId": "govi",
       "symbol": "GOVI",
       "name": "GOVI",
       "amount": {
@@ -1822,8 +1839,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xc944E90C64B2c07662A292be6244BDf05Cda44a7-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "GRT",
+      "id": "arbitrum-GRT",
+      "priceId": "the-graph",
       "symbol": "GRT",
       "name": "Graph Token",
       "amount": {
@@ -1839,8 +1856,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x584bC13c7D411c00c01A62e8019472dE68768430-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "HEGIC",
+      "id": "arbitrum-HEGIC",
+      "priceId": "hegic",
       "symbol": "HEGIC",
       "name": "Hegic",
       "amount": {
@@ -1856,8 +1873,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6c6EE5e31d828De241282B9606C8e98Ea48526E2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "HOT",
+      "id": "arbitrum-HOT",
+      "priceId": "holotoken",
       "symbol": "HOT",
       "name": "HoloToken",
       "amount": {
@@ -1873,8 +1890,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "HOP",
+      "id": "arbitrum-HOP",
+      "priceId": "hop-protocol",
       "symbol": "HOP",
       "name": "Hop",
       "amount": {
@@ -1890,8 +1907,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ILV",
+      "id": "arbitrum-ILV",
+      "priceId": "illuvium",
       "symbol": "ILV",
       "name": "Illuvium",
       "amount": {
@@ -1907,8 +1924,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "IMX",
+      "id": "arbitrum-IMX",
+      "priceId": "immutable-x",
       "symbol": "IMX",
       "name": "Immutable X",
       "amount": {
@@ -1924,8 +1941,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "INJ",
+      "id": "arbitrum-INJ",
+      "priceId": "injective-protocol",
       "symbol": "INJ",
       "name": "Injective Token",
       "amount": {
@@ -1941,8 +1958,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "JASMY",
+      "id": "arbitrum-JASMY",
+      "priceId": "jasmycoin",
       "symbol": "JASMY",
       "name": "JasmyCoin",
       "amount": {
@@ -1958,8 +1975,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x02e7F808990638E9e67E1f00313037EDe2362361-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "KIBSHI",
+      "id": "arbitrum-KIBSHI",
+      "priceId": "kiboshib",
       "symbol": "KIBSHI",
       "name": "KiboShib",
       "amount": {
@@ -1975,8 +1992,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "KNC",
+      "id": "arbitrum-KNC",
+      "priceId": "kyber-network-crystal",
       "symbol": "KNC",
       "name": "Kyber Network Crystal v2",
       "amount": {
@@ -1992,8 +2009,25 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LDO",
+      "id": "arbitrum-LDY",
+      "priceId": "ledgity-token",
+      "symbol": "LDY",
+      "name": "Ledgity Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-LDO",
+      "priceId": "lido-dao",
       "symbol": "LDO",
       "name": "Lido DAO Token",
       "amount": {
@@ -2009,8 +2043,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xa3F4341C3fEf5963AB04135D2014AC7d68222E19-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LOGX",
+      "id": "arbitrum-LOGX",
+      "priceId": "logx-2",
       "symbol": "LOGX",
       "name": "LogX Network",
       "amount": {
@@ -2026,8 +2060,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xf4d2888d29D722226FafA5d9B24F9164c092421E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LOOKS",
+      "id": "arbitrum-LOOKS",
+      "priceId": "looksrare",
       "symbol": "LOOKS",
       "name": "LooksRare Token",
       "amount": {
@@ -2043,8 +2077,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LRC",
+      "id": "arbitrum-LRC",
+      "priceId": "loopring",
       "symbol": "LRC",
       "name": "LoopringCoin V2",
       "amount": {
@@ -2060,8 +2094,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LORDS",
+      "id": "arbitrum-LORDS",
+      "priceId": "lords",
       "symbol": "LORDS",
       "name": "Lords",
       "amount": {
@@ -2077,8 +2111,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LQTY",
+      "id": "arbitrum-LQTY",
+      "priceId": "liquity",
       "symbol": "LQTY",
       "name": "LQTY",
       "amount": {
@@ -2094,8 +2128,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA8b919680258d369114910511cc87595aec0be6D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LYXe",
+      "id": "arbitrum-LYXe",
+      "priceId": "lukso-token",
       "symbol": "LYXe",
       "name": "LUKSO Token",
       "amount": {
@@ -2111,8 +2145,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x5f98805A4E8be255a32880FDeC7F6728C6568bA0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LUSD",
+      "id": "arbitrum-LUSD",
+      "priceId": "liquity-usd",
       "symbol": "LUSD",
       "name": "LUSD Stablecoin",
       "amount": {
@@ -2128,8 +2162,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LYRA",
+      "id": "arbitrum-LYRA",
+      "priceId": "lyra-finance",
       "symbol": "LYRA",
       "name": "Lyra Token",
       "amount": {
@@ -2145,8 +2179,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MAGIC",
+      "id": "arbitrum-MAGIC",
+      "priceId": "magic",
       "symbol": "MAGIC",
       "name": "MAGIC",
       "amount": {
@@ -2162,8 +2196,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MIM",
+      "id": "arbitrum-MIM",
+      "priceId": "magic-internet-money",
       "symbol": "MIM",
       "name": "Magic Internet Money",
       "amount": {
@@ -2179,8 +2213,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MKR",
+      "id": "arbitrum-MKR",
+      "priceId": "maker",
       "symbol": "MKR",
       "name": "Maker",
       "amount": {
@@ -2196,8 +2230,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x3c3a81e81dc49A522A592e7622A7E711c06bf354-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MNT",
+      "id": "arbitrum-MNT",
+      "priceId": "mantle",
       "symbol": "MNT",
       "name": "Mantle",
       "amount": {
@@ -2213,8 +2247,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x57B946008913B82E4dF85f501cbAeD910e58D26C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "POND",
+      "id": "arbitrum-POND",
+      "priceId": "marlin",
       "symbol": "POND",
       "name": "Marlin POND",
       "amount": {
@@ -2230,8 +2264,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x69af81e73A73B40adF4f3d4223Cd9b1ECE623074-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MASK",
+      "id": "arbitrum-MASK",
+      "priceId": "mask-network",
       "symbol": "MASK",
       "name": "Mask Network",
       "amount": {
@@ -2247,8 +2281,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MATIC",
+      "id": "arbitrum-MATIC",
+      "priceId": "matic-network",
       "symbol": "MATIC",
       "name": "Matic Token",
       "amount": {
@@ -2264,8 +2298,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xec67005c4E498Ec7f55E092bd1d35cbC47C91892-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MLN",
+      "id": "arbitrum-MLN",
+      "priceId": "melon",
       "symbol": "MLN",
       "name": "Melon Token",
       "amount": {
@@ -2281,8 +2315,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x9E32b13ce7f2E80A01932B42553652E053D6ed8e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "Metis",
+      "id": "arbitrum-Metis",
+      "priceId": "metis-token",
       "symbol": "Metis",
       "name": "Metis Token",
       "amount": {
@@ -2298,8 +2332,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "Mog",
+      "id": "arbitrum-Mog",
+      "priceId": "mog-coin",
       "symbol": "Mog",
       "name": "Mog Coin",
       "amount": {
@@ -2315,8 +2349,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xb2490e357980cE57bF5745e181e537a64Eb367B1-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MOONS",
+      "id": "arbitrum-MOON",
+      "priceId": "moon",
       "symbol": "MOON",
       "name": "Moons",
       "amount": {
@@ -2332,8 +2366,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "USDM",
+      "id": "arbitrum-USDM",
+      "priceId": "mountain-protocol-usdm",
       "symbol": "USDM",
       "name": "Mountain Protocol USD",
       "amount": {
@@ -2349,8 +2383,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MXC",
+      "id": "arbitrum-MXC",
+      "priceId": "mxc",
       "symbol": "MXC",
       "name": "MXCToken",
       "amount": {
@@ -2366,8 +2400,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "MYRIA",
+      "id": "arbitrum-MYRIA",
+      "priceId": "myria",
       "symbol": "MYRIA",
       "name": "Myria",
       "amount": {
@@ -2383,8 +2417,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "NEXO",
+      "id": "arbitrum-NEXO",
+      "priceId": "nexo",
       "symbol": "NEXO",
       "name": "Nexo",
       "amount": {
@@ -2400,8 +2434,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x610dBd98A28EbbA525e9926b6aaF88f9159edbfd-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "NSTR",
+      "id": "arbitrum-NSTR",
+      "priceId": "nostra",
       "symbol": "NSTR",
       "name": "Nostra",
       "amount": {
@@ -2417,8 +2451,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x967da4048cD07aB37855c090aAF366e4ce1b9F48-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "OCEAN",
+      "id": "arbitrum-OCEAN",
+      "priceId": "ocean-protocol",
       "symbol": "OCEAN",
       "name": "Ocean Token",
       "amount": {
@@ -2434,8 +2468,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "OHM",
+      "id": "arbitrum-OHM",
+      "priceId": "olympus",
       "symbol": "OHM",
       "name": "Olympus",
       "amount": {
@@ -2451,8 +2485,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xd26114cd6EE289AccF82350c8d8487fedB8A0C07-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "OMG",
+      "id": "arbitrum-OMG",
+      "priceId": "omisego",
       "symbol": "OMG",
       "name": "OMGToken",
       "amount": {
@@ -2468,8 +2502,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "OMI",
+      "id": "arbitrum-OMI",
+      "priceId": "ecomi",
       "symbol": "OMI",
       "name": "OMI Token",
       "amount": {
@@ -2485,8 +2519,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ONDO",
+      "id": "arbitrum-ONDO",
+      "priceId": "ondo-finance",
       "symbol": "ONDO",
       "name": "Ondo",
       "amount": {
@@ -2502,8 +2536,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8207c1FfC5B6804F6024322CcF34F29c3541Ae26-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "OGN",
+      "id": "arbitrum-OGN",
+      "priceId": "origin-protocol",
       "symbol": "OGN",
       "name": "OriginToken",
       "amount": {
@@ -2519,8 +2553,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x21BfBDa47A0B4B5b1248c767Ee49F7caA9B23697-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "OVR",
+      "id": "arbitrum-OVR",
+      "priceId": "ovr",
       "symbol": "OVR",
       "name": "OVR",
       "amount": {
@@ -2536,8 +2570,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PSP",
+      "id": "arbitrum-PSP",
+      "priceId": "paraswap",
       "symbol": "PSP",
       "name": "ParaSwap",
       "amount": {
@@ -2553,8 +2587,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xD528cf2E081f72908e086F8800977df826B5a483-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PBX",
+      "id": "arbitrum-PBX",
+      "priceId": "paribus",
       "symbol": "PBX",
       "name": "Paribus",
       "amount": {
@@ -2570,8 +2604,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x45804880De22913dAFE09f4980848ECE6EcbAf78-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PAXG",
+      "id": "arbitrum-PAXG",
+      "priceId": "pax-gold",
       "symbol": "PAXG",
       "name": "Paxos Gold",
       "amount": {
@@ -2587,25 +2621,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x02f92800F57BCD74066F5709F1Daa1A4302Df875-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PEAS",
-      "symbol": "PEAS",
-      "name": "Peapods",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x02f92800F57BCD74066F5709F1Daa1A4302Df875",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1623784100,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "ethereum-0x808507121B80c02388fAd14726482e061B8da827-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PENDLE",
+      "id": "arbitrum-PENDLE",
+      "priceId": "pendle",
       "symbol": "PENDLE",
       "name": "Pendle",
       "amount": {
@@ -2621,8 +2638,25 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xb9f599ce614Feb2e1BBe58F180F370D05b39344E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PORK",
+      "id": "arbitrum-PEPU",
+      "priceId": "pepe-unchained",
+      "symbol": "PEPU",
+      "name": "Pepe Unchained",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-PORK",
+      "priceId": "pepefork",
       "symbol": "PORK",
       "name": "PepeFork",
       "amount": {
@@ -2638,8 +2672,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xbC396689893D065F41bc2C6EcbeE5e0085233447-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PERP",
+      "id": "arbitrum-PERP",
+      "priceId": "perpetual-protocol",
       "symbol": "PERP",
       "name": "Perpetual",
       "amount": {
@@ -2655,8 +2689,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PNK",
+      "id": "arbitrum-PNK",
+      "priceId": "kleros",
       "symbol": "PNK",
       "name": "Pinakion",
       "amount": {
@@ -2672,8 +2706,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x1796ae0b0fa4862485106a0de9b654eFE301D0b2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PMON",
+      "id": "arbitrum-PMON",
+      "priceId": "polychain-monsters",
       "symbol": "PMON",
       "name": "Polkamon",
       "amount": {
@@ -2689,8 +2723,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "POL",
+      "id": "arbitrum-POL",
+      "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
       "amount": {
@@ -2706,8 +2740,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "POLY",
+      "id": "arbitrum-POLY",
+      "priceId": "polymath",
       "symbol": "POLY",
       "name": "Polymath",
       "amount": {
@@ -2723,8 +2757,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6e5970DBd6fc7eb1f29C6D2eDF2bC4c36124C0C1-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "TRADE",
+      "id": "arbitrum-TRADE",
+      "priceId": "polytrade",
       "symbol": "TRADE",
       "name": "Polytrade",
       "amount": {
@@ -2740,8 +2774,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PREMIA",
+      "id": "arbitrum-PREMIA",
+      "priceId": "premia",
       "symbol": "PREMIA",
       "name": "Premia",
       "amount": {
@@ -2757,8 +2791,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x430EF9263E76DAE63c84292C3409D61c598E9682-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "PYR",
+      "id": "arbitrum-PYR",
+      "priceId": "vulcan-forged",
       "symbol": "PYR",
       "name": "PYR Token",
       "amount": {
@@ -2774,8 +2808,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4a220E6096B25EADb88358cb44068A3248254675-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "QNT",
+      "id": "arbitrum-QNT",
+      "priceId": "quant-network",
       "symbol": "QNT",
       "name": "Quant",
       "amount": {
@@ -2791,8 +2825,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x12BB890508c125661E03b09EC06E404bc9289040-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "RACA",
+      "id": "arbitrum-RACA",
+      "priceId": "radio-caca",
       "symbol": "RACA",
       "name": "Radio Caca V2",
       "amount": {
@@ -2808,8 +2842,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "RAI",
+      "id": "arbitrum-RAI",
+      "priceId": "rai",
       "symbol": "RAI",
       "name": "Rai Reflex Index",
       "amount": {
@@ -2825,8 +2859,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xD291E7a03283640FDc51b121aC401383A46cC623-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "RGT",
+      "id": "arbitrum-RGT",
+      "priceId": "rari-governance-token",
       "symbol": "RGT",
       "name": "Rari Governance Token",
       "amount": {
@@ -2842,8 +2876,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6De037ef9aD2725EB40118Bb1702EBb27e4Aeb24-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "RNDR",
+      "id": "arbitrum-RNDR",
+      "priceId": "render-token",
       "symbol": "RNDR",
       "name": "Render Token",
       "amount": {
@@ -2859,8 +2893,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xbf5495Efe5DB9ce00f80364C8B423567e58d2110-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ezETH",
+      "id": "arbitrum-ezETH",
+      "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
@@ -2876,8 +2910,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x408e41876cCCDC0F92210600ef50372656052a38-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "REN",
+      "id": "arbitrum-REN",
+      "priceId": "republic-protocol",
       "symbol": "REN",
       "name": "Republic Token",
       "amount": {
@@ -2893,8 +2927,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8f8221aFbB33998d8584A2B05749bA73c37a938a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "REQ",
+      "id": "arbitrum-REQ",
+      "priceId": "request-network",
       "symbol": "REQ",
       "name": "Request Token",
       "amount": {
@@ -2910,8 +2944,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x320623b8E4fF03373931769A31Fc52A4E78B5d70-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "RSR",
+      "id": "arbitrum-RSR",
+      "priceId": "reserve-rights-token",
       "symbol": "RSR",
       "name": "Reserve Rights",
       "amount": {
@@ -2927,8 +2961,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xae78736Cd615f374D3085123A210448E74Fc6393-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "rETH",
+      "id": "arbitrum-rETH",
+      "priceId": "rocket-pool-eth",
       "symbol": "rETH",
       "name": "Rocket Pool ETH",
       "amount": {
@@ -2944,8 +2978,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xD33526068D116cE69F19A9ee46F0bd304F21A51f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "RPL",
+      "id": "arbitrum-RPL",
+      "priceId": "rocket-pool",
       "symbol": "RPL",
       "name": "Rocket Pool Protocol",
       "amount": {
@@ -2961,8 +2995,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xc98D64DA73a6616c42117b582e832812e7B8D57F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "RSS3",
+      "id": "arbitrum-RSS3",
+      "priceId": "rss3",
       "symbol": "RSS3",
       "name": "RSS3",
       "amount": {
@@ -2978,8 +3012,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "rswETH",
+      "id": "arbitrum-rswETH",
+      "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
       "name": "rswETH",
       "amount": {
@@ -2995,8 +3029,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x3845badAde8e6dFF049820680d1F14bD3903a5d0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SAND",
+      "id": "arbitrum-SAND",
+      "priceId": "the-sandbox",
       "symbol": "SAND",
       "name": "SAND",
       "amount": {
@@ -3012,8 +3046,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0655977FEb2f289A4aB78af67BAB0d17aAb84367-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "scrvUSD",
+      "id": "arbitrum-scrvUSD",
+      "priceId": "savings-crvusd",
       "symbol": "scrvUSD",
       "name": "Savings crvUSD",
       "amount": {
@@ -3029,8 +3063,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x83F20F44975D03b1b09e64809B757c47f942BEeA-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "sDAI",
+      "id": "arbitrum-sDAI",
+      "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
       "amount": {
@@ -3046,8 +3080,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "sUSDS",
+      "id": "arbitrum-sUSDS",
+      "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
       "amount": {
@@ -3063,8 +3097,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SHIB",
+      "id": "arbitrum-SHIB",
+      "priceId": "shiba-inu",
       "symbol": "SHIB",
       "name": "SHIBA INU",
       "amount": {
@@ -3080,8 +3114,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "Silo",
+      "id": "arbitrum-Silo",
+      "priceId": "silo-finance",
       "symbol": "Silo",
       "name": "Silo Governance Token",
       "amount": {
@@ -3097,8 +3131,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x5B7533812759B45C2B44C19e320ba2cD2681b542-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "AGIX",
+      "id": "arbitrum-AGIX",
+      "priceId": "singularitynet",
       "symbol": "AGIX",
       "name": "SingularityNET Token",
       "amount": {
@@ -3114,8 +3148,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xAdF7C35560035944e805D98fF17d58CDe2449389-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SPEC",
+      "id": "arbitrum-SPEC",
+      "priceId": "spectral",
       "symbol": "SPEC",
       "name": "Spectral Token",
       "amount": {
@@ -3131,8 +3165,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x090185f2135308BaD17527004364eBcC2D37e5F6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SPELL",
+      "id": "arbitrum-SPELL",
+      "priceId": "spell-token",
       "symbol": "SPELL",
       "name": "Spell Token",
       "amount": {
@@ -3148,8 +3182,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SPX",
+      "id": "arbitrum-SPX",
+      "priceId": "spx6900",
       "symbol": "SPX",
       "name": "SPX6900",
       "amount": {
@@ -3165,8 +3199,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SSV",
+      "id": "arbitrum-SSV",
+      "priceId": "ssv-network",
       "symbol": "SSV",
       "name": "SSV Token",
       "amount": {
@@ -3182,8 +3216,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xef3A930e1FfFFAcd2fc13434aC81bD278B0ecC8d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "FIS",
+      "id": "arbitrum-FIS",
+      "priceId": "stafi",
       "symbol": "FIS",
       "name": "StaFi",
       "amount": {
@@ -3199,8 +3233,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SDT",
+      "id": "arbitrum-SDT",
+      "priceId": "stake-dao",
       "symbol": "SDT",
       "name": "Stake DAO Token",
       "amount": {
@@ -3216,25 +3250,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SDL",
-      "symbol": "SDL",
-      "name": "stake.link",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1623784100,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "ethereum-0xac3E018457B222d93114458476f3E3416Abbe38F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "sfrxETH",
+      "id": "arbitrum-sfrxETH",
+      "priceId": "staked-frax-ether",
       "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
       "amount": {
@@ -3250,8 +3267,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "sUSDz",
+      "id": "arbitrum-sUSDz",
+      "priceId": "anzen-staked-usdz",
       "symbol": "sUSDz",
       "name": "Staked USDz",
       "amount": {
@@ -3267,8 +3284,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xdB25f211AB05b1c97D595516F45794528a807ad8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "EURS",
+      "id": "arbitrum-EURS",
+      "priceId": "stasis-eurs",
       "symbol": "EURS",
       "name": "STASIS EURS Token",
       "amount": {
@@ -3284,8 +3301,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x744d70FDBE2Ba4CF95131626614a1763DF805B9E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SNT",
+      "id": "arbitrum-SNT",
+      "priceId": "status",
       "symbol": "SNT",
       "name": "Status Network Token",
       "amount": {
@@ -3301,8 +3318,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "weETHs",
+      "id": "arbitrum-weETHs",
+      "priceId": "etherfi-weeths",
       "symbol": "weETHs",
       "name": "Super Symbiotic LRT",
       "amount": {
@@ -3318,8 +3335,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SUPER",
+      "id": "arbitrum-SUPER",
+      "priceId": "superfarm",
       "symbol": "SUPER",
       "name": "SuperFarm",
       "amount": {
@@ -3335,8 +3352,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "xSUSHI",
+      "id": "arbitrum-xSUSHI",
+      "priceId": "xsushi",
       "symbol": "xSUSHI",
       "name": "SushiBar",
       "amount": {
@@ -3352,8 +3369,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6B3595068778DD592e39A122f4f5a5cF09C90fE2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SUSHI",
+      "id": "arbitrum-SUSHI",
+      "priceId": "sushi",
       "symbol": "SUSHI",
       "name": "SushiToken",
       "amount": {
@@ -3369,8 +3386,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0a6E7Ba5042B38349e437ec6Db6214AEC7B35676-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SWELL",
+      "id": "arbitrum-SWELL",
+      "priceId": "swell-network",
       "symbol": "SWELL",
       "name": "Swell Governance Token",
       "amount": {
@@ -3386,8 +3403,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xbe9F61555F50DD6167f2772e9CF7519790d96624-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SX",
+      "id": "arbitrum-SX",
+      "priceId": "sx-network-2",
       "symbol": "SX",
       "name": "SX Network",
       "amount": {
@@ -3403,8 +3420,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SIS",
+      "id": "arbitrum-SIS",
+      "priceId": "symbiosis-finance",
       "symbol": "SIS",
       "name": "Symbiosis",
       "amount": {
@@ -3420,8 +3437,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0f2D719407FdBeFF09D87557AbB7232601FD9F29-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SYN",
+      "id": "arbitrum-SYN",
+      "priceId": "synapse-2",
       "symbol": "SYN",
       "name": "Synapse",
       "amount": {
@@ -3437,8 +3454,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SNX",
+      "id": "arbitrum-SNX",
+      "priceId": "havven",
       "symbol": "SNX",
       "name": "Synthetix Network Token",
       "amount": {
@@ -3454,8 +3471,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x95CcffaE3Eb8767D4a941Ec43280961dde89F4dE-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "TBANK",
+      "id": "arbitrum-TBANK",
+      "priceId": "taobank",
       "symbol": "TBANK",
       "name": "TaoBank",
       "amount": {
@@ -3471,8 +3488,25 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "TRB",
+      "id": "arbitrum-TEL",
+      "priceId": "telcoin",
+      "symbol": "TEL",
+      "name": "Telcoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x467Bccd9d29f223BcE8043b84E8C8B282827790F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 2
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-TRB",
+      "priceId": "tellor",
       "symbol": "TRB",
       "name": "Tellor Tributes",
       "amount": {
@@ -3488,8 +3522,25 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8947da500Eb47F82df21143D0C01A29862a8C3c5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "THALES",
+      "id": "arbitrum-XAUt",
+      "priceId": "tether-gold",
+      "symbol": "XAUt",
+      "name": "Tether Gold",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-THALES",
+      "priceId": "thales",
       "symbol": "THALES",
       "name": "Thales DAO Token",
       "amount": {
@@ -3505,8 +3556,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xBAac2B4491727D78D2b78815144570b9f2Fe8899-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "DOG",
+      "id": "arbitrum-DOG",
+      "priceId": "the-doge-nft",
       "symbol": "DOG",
       "name": "The Doge NFT",
       "amount": {
@@ -3522,8 +3573,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xCdF7028ceAB81fA0C6971208e83fa7872994beE5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "T",
+      "id": "arbitrum-T",
+      "priceId": "threshold-network-token",
       "symbol": "T",
       "name": "Threshold Network Token",
       "amount": {
@@ -3539,8 +3590,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0000000000095413afC295d19EDeb1Ad7B71c952-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "LON",
+      "id": "arbitrum-LON",
+      "priceId": "tokenlon",
       "symbol": "LON",
       "name": "Tokenlon",
       "amount": {
@@ -3556,8 +3607,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "TRIBE",
+      "id": "arbitrum-TRIBE",
+      "priceId": "tribe-2",
       "symbol": "TRIBE",
       "name": "Tribe",
       "amount": {
@@ -3573,8 +3624,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0000000000085d4780B73119b644AE5ecd22b376-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "TUSD",
+      "id": "arbitrum-TUSD",
+      "priceId": "true-usd",
       "symbol": "TUSD",
       "name": "TrueUSD",
       "amount": {
@@ -3590,8 +3641,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xD13c7342e1ef687C5ad21b27c2b65D772cAb5C8c-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "UOS",
+      "id": "arbitrum-UOS",
+      "priceId": "ultra",
       "symbol": "UOS",
       "name": "Ultra Token",
       "amount": {
@@ -3607,8 +3658,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "UMA",
+      "id": "arbitrum-UMA",
+      "priceId": "uma",
       "symbol": "UMA",
       "name": "UMA Voting Token v1",
       "amount": {
@@ -3624,8 +3675,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "UNI",
+      "id": "arbitrum-UNI",
+      "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
       "amount": {
@@ -3641,8 +3692,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "USDC",
+      "id": "arbitrum-USDC",
+      "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
@@ -3658,8 +3709,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "USUAL",
+      "id": "arbitrum-USUAL",
+      "priceId": "usual",
       "symbol": "USUAL",
       "name": "USUAL",
       "amount": {
@@ -3675,8 +3726,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "VERI",
+      "id": "arbitrum-VERI",
+      "priceId": "veritaseum",
       "symbol": "VERI",
       "name": "Veritaseum",
       "amount": {
@@ -3692,8 +3743,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xbbEE07B3e8121227AfCFe1E2B82772246226128e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "VRTX",
+      "id": "arbitrum-VRTX",
+      "priceId": "vertex-protocol",
       "symbol": "VRTX",
       "name": "Vertex",
       "amount": {
@@ -3709,8 +3760,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "VITA",
+      "id": "arbitrum-VITA",
+      "priceId": "vitadao",
       "symbol": "VITA",
       "name": "VitaDAO Token",
       "amount": {
@@ -3726,8 +3777,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xde654f497A563dd7A121c176a125dD2F11F13a83-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "WXM",
+      "id": "arbitrum-WXM",
+      "priceId": "weatherxm-network",
       "symbol": "WXM",
       "name": "WeatherXM",
       "amount": {
@@ -3743,8 +3794,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xa02120696c7B8fE16C09C749E4598819b2B0E915-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "WXT",
+      "id": "arbitrum-WXT",
+      "priceId": "wirex",
       "symbol": "WXT",
       "name": "Wirex Token",
       "amount": {
@@ -3760,8 +3811,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x4691937a7508860F876c9c0a2a617E7d9E945D4B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "WOO",
+      "id": "arbitrum-WOO",
+      "priceId": "woo-network",
       "symbol": "WOO",
       "name": "Wootrade Network",
       "amount": {
@@ -3777,8 +3828,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x163f8C2467924be0ae7B5347228CABF260318753-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "WLD",
+      "id": "arbitrum-WLD",
+      "priceId": "worldcoin-wld",
       "symbol": "WLD",
       "name": "Worldcoin",
       "amount": {
@@ -3794,8 +3845,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xEDB171C18cE90B633DB442f2A6F72874093b49Ef-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "WAMPL",
+      "id": "arbitrum-WAMPL",
+      "priceId": "wrapped-ampleforth",
       "symbol": "WAMPL",
       "name": "Wrapped Ampleforth",
       "amount": {
@@ -3811,8 +3862,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x418D75f65a02b3D53B2418FB8E1fe493759c7605-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "WBNB",
+      "id": "arbitrum-WBNB",
+      "priceId": "binance-coin-wormhole",
       "symbol": "WBNB",
       "name": "Wrapped BNB",
       "amount": {
@@ -3828,8 +3879,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "WBTC",
+      "id": "arbitrum-WBTC",
+      "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "amount": {
@@ -3845,8 +3896,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "weETH",
+      "id": "arbitrum-weETH",
+      "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
@@ -3862,8 +3913,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "wUSDM",
+      "id": "arbitrum-wUSDM",
+      "priceId": "mountain-protocol-usdm",
       "symbol": "wUSDM",
       "name": "Wrapped Mountain Protocol USD",
       "amount": {
@@ -3879,8 +3930,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xD31a59c85aE9D8edEFeC411D448f90841571b89c-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "SOL",
+      "id": "arbitrum-SOL",
+      "priceId": "sol-wormhole",
       "symbol": "SOL",
       "name": "Wrapped SOL",
       "amount": {
@@ -3896,8 +3947,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "TONCOIN",
+      "id": "arbitrum-TONCOIN",
+      "priceId": "the-open-network",
       "symbol": "TONCOIN",
       "name": "Wrapped TON Coin",
       "amount": {
@@ -3913,8 +3964,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "YFI",
+      "id": "arbitrum-YFI",
+      "priceId": "yearn-finance",
       "symbol": "YFI",
       "name": "yearn.finance",
       "amount": {
@@ -3930,8 +3981,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xF55a93b613D172b86c2Ba3981a849DaE2aeCDE2f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "YFX",
+      "id": "arbitrum-YFX",
+      "priceId": "yfx",
       "symbol": "YFX",
       "name": "YFX",
       "amount": {
@@ -3947,8 +3998,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xfd418e42783382E86Ae91e445406600Ba144D162-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "ZRC",
+      "id": "arbitrum-ZRC",
+      "priceId": "zircuit",
       "symbol": "ZRC",
       "name": "Zircuit",
       "amount": {
@@ -3964,8 +4015,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "zunETH",
+      "id": "arbitrum-zunETH",
+      "priceId": "zunami-eth-2",
       "symbol": "zunETH",
       "name": "Zunami ETH",
       "amount": {
@@ -3981,8 +4032,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "ticker": "zunUSD",
+      "id": "arbitrum-zunUSD",
+      "priceId": "zunami-usd",
       "symbol": "zunUSD",
       "name": "Zunami USD",
       "amount": {
@@ -3998,8 +4049,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x6B175474E89094C44Da98b954EedeAC495271d0F-0xA10c7CE4b876998858b1a9E12b10092229539400",
-      "ticker": "DAI",
+      "id": "arbitrum-DAI",
+      "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
@@ -4015,8 +4066,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0-0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
-      "ticker": "wstETH",
+      "id": "arbitrum-wstETH",
+      "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
@@ -4032,8 +4083,8 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0x58b6A8A3302369DAEc383334672404Ee733aB239-0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
-      "ticker": "LPT",
+      "id": "arbitrum-LPT",
+      "priceId": "livepeer",
       "symbol": "LPT",
       "name": "Livepeer Token",
       "amount": {
@@ -4049,8 +4100,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
-      "ticker": "ATH",
+      "id": "arbitrum-ATH",
+      "priceId": "aethir",
       "symbol": "ATH",
       "name": "Aethir Token",
       "amount": {
@@ -4065,13 +4116,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548",
-      "ticker": "ARB",
+      "id": "arbitrum-ARB",
+      "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "ARB"
+        "priceId": "arbitrum"
       },
       "sinceTimestamp": 1679529600,
       "category": "other",
@@ -4079,8 +4130,8 @@
       "isAssociated": true
     },
     {
-      "id": "arbitrum-0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
-      "ticker": "BIFI",
+      "id": "arbitrum-BIFI",
+      "priceId": "beefy-finance",
       "symbol": "BIFI",
       "name": "beefy.finance",
       "amount": {
@@ -4095,8 +4146,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x2297aEbD383787A160DD0d9F71508148769342E3",
-      "ticker": "BTC.b",
+      "id": "arbitrum-BTC.b",
+      "priceId": "bitcoin-avalanche-bridged-btc-b",
       "symbol": "BTC.b",
       "name": "Bitcoin",
       "amount": {
@@ -4111,13 +4162,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
-      "ticker": "BOOP",
+      "id": "arbitrum-BOOP",
+      "priceId": "boop-2",
       "symbol": "BOOP",
       "name": "Boop",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "BOOP"
+        "priceId": "boop-2"
       },
       "sinceTimestamp": 1703116800,
       "category": "other",
@@ -4125,13 +4176,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8",
-      "ticker": "GRAIL",
+      "id": "arbitrum-GRAIL",
+      "priceId": "camelot-token",
       "symbol": "GRAIL",
       "name": "Camelot token",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "GRAIL"
+        "priceId": "camelot-token"
       },
       "sinceTimestamp": 1670371200,
       "category": "other",
@@ -4139,13 +4190,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
-      "ticker": "CATCH",
+      "id": "arbitrum-CATCH",
+      "priceId": "spacecatch",
       "symbol": "CATCH",
       "name": "CATCH",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "CATCH"
+        "priceId": "spacecatch"
       },
       "sinceTimestamp": 1718880774,
       "category": "other",
@@ -4153,8 +4204,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
-      "ticker": "CHEESE",
+      "id": "arbitrum-CHEESE",
+      "priceId": "cheese-2",
       "symbol": "CHEESE",
       "name": "CHEESE",
       "amount": {
@@ -4169,8 +4220,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
-      "ticker": "cbBTC",
+      "id": "arbitrum-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
       "amount": {
@@ -4185,13 +4236,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
-      "ticker": "DMT",
+      "id": "arbitrum-DMT",
+      "priceId": "dream-machine-token",
       "symbol": "DMT",
       "name": "DMT",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "DMT"
+        "priceId": "dream-machine-token"
       },
       "sinceTimestamp": 1684901612,
       "category": "other",
@@ -4199,8 +4250,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xf8173a39c56a554837C4C7f104153A005D284D11",
-      "ticker": "EDU",
+      "id": "arbitrum-EDU",
+      "priceId": "edu-coin",
       "symbol": "EDU",
       "name": "EDU Coin",
       "amount": {
@@ -4215,13 +4266,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
-      "ticker": "EGP",
+      "id": "arbitrum-EGP",
+      "priceId": "eigenpie",
       "symbol": "EGP",
       "name": "Eigenpie",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "EGP"
+        "priceId": "eigenpie"
       },
       "sinceTimestamp": 1727222400,
       "category": "other",
@@ -4229,13 +4280,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x87AAfFdF26c6885f6010219208D5B161ec7609c0",
-      "ticker": "EQU",
+      "id": "arbitrum-EQU",
+      "priceId": "equation",
       "symbol": "EQU",
       "name": "Equation",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "EQU"
+        "priceId": "equation"
       },
       "sinceTimestamp": 1698624000,
       "category": "other",
@@ -4243,8 +4294,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
-      "ticker": "ETHFI",
+      "id": "arbitrum-ETHFI",
+      "priceId": "ether-fi",
       "symbol": "ETHFI",
       "name": "ether.fi governance token",
       "amount": {
@@ -4259,8 +4310,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
-      "ticker": "FRAX",
+      "id": "arbitrum-FRAX",
+      "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
       "amount": {
@@ -4275,8 +4326,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x178412e79c25968a32e89b11f63B33F733770c2A",
-      "ticker": "frxETH",
+      "id": "arbitrum-frxETH",
+      "priceId": "frax-ether",
       "symbol": "frxETH",
       "name": "Frax Ether",
       "amount": {
@@ -4291,8 +4342,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
-      "ticker": "FPI",
+      "id": "arbitrum-FPI",
+      "priceId": "frax-price-index",
       "symbol": "FPI",
       "name": "Frax Price Index",
       "amount": {
@@ -4307,8 +4358,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x3405E88af759992937b84E58F2Fe691EF0EeA320",
-      "ticker": "FPIS",
+      "id": "arbitrum-FPIS",
+      "priceId": "frax-price-index-share",
       "symbol": "FPIS",
       "name": "Frax Price Index Share",
       "amount": {
@@ -4323,8 +4374,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
-      "ticker": "FXS",
+      "id": "arbitrum-FXS",
+      "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
       "amount": {
@@ -4339,8 +4390,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
-      "ticker": "GNS",
+      "id": "arbitrum-GNS",
+      "priceId": "gains-network",
       "symbol": "GNS",
       "name": "Gains Network",
       "amount": {
@@ -4355,13 +4406,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
-      "ticker": "G3",
+      "id": "arbitrum-G3",
+      "priceId": "gam3s-gg",
       "symbol": "G3",
       "name": "GAM3S.GG",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "G3"
+        "priceId": "gam3s-gg"
       },
       "sinceTimestamp": 1712620800,
       "category": "other",
@@ -4369,8 +4420,22 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
-      "ticker": "GHO",
+      "id": "arbitrum-G7",
+      "priceId": "game7",
+      "symbol": "G7",
+      "name": "Game7",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "game7"
+      },
+      "sinceTimestamp": 1739404800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-GHO",
+      "priceId": "gho",
       "symbol": "GHO",
       "name": "Gho Token",
       "amount": {
@@ -4385,13 +4450,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
-      "ticker": "GMX",
+      "id": "arbitrum-GMX",
+      "priceId": "gmx",
       "symbol": "GMX",
       "name": "GMX",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "GMX"
+        "priceId": "gmx"
       },
       "sinceTimestamp": 1631491200,
       "category": "stablecoin",
@@ -4399,8 +4464,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
-      "ticker": "GRT",
+      "id": "arbitrum-GRT",
+      "priceId": "the-graph",
       "symbol": "GRT",
       "name": "Graph Token",
       "amount": {
@@ -4415,13 +4480,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x3404149e9EE6f17Fb41DB1Ce593ee48FBDcD9506",
-      "ticker": "HDN",
+      "id": "arbitrum-HDN",
+      "priceId": "hydranet",
       "symbol": "HDN",
       "name": "Hydranet",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "HDN"
+        "priceId": "hydranet"
       },
       "sinceTimestamp": 1687566748,
       "category": "other",
@@ -4429,8 +4494,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
-      "ticker": "JOE",
+      "id": "arbitrum-JOE",
+      "priceId": "joe",
       "symbol": "JOE",
       "name": "JoeToken",
       "amount": {
@@ -4445,13 +4510,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x10393c20975cF177a3513071bC110f7962CD67da",
-      "ticker": "JONES",
+      "id": "arbitrum-JONES",
+      "priceId": "jones-dao",
       "symbol": "JONES",
       "name": "Jones DAO",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "JONES"
+        "priceId": "jones-dao"
       },
       "sinceTimestamp": 1643500800,
       "category": "other",
@@ -4459,8 +4524,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "ticker": "rsETH",
+      "id": "arbitrum-rsETH",
+      "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
       "amount": {
@@ -4475,8 +4540,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x6985884C4392D348587B19cb9eAAf157F13271cd",
-      "ticker": "ZRO",
+      "id": "arbitrum-ZRO",
+      "priceId": "layerzero",
       "symbol": "ZRO",
       "name": "LayerZero",
       "amount": {
@@ -4491,13 +4556,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xF19547f9ED24aA66b03c3a552D181Ae334FBb8DB",
-      "ticker": "LODE",
+      "id": "arbitrum-LODE",
+      "priceId": "lodestar",
       "symbol": "LODE",
       "name": "Lodestar",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "LODE"
+        "priceId": "lodestar"
       },
       "sinceTimestamp": 1669075200,
       "category": "other",
@@ -4505,8 +4570,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xa61F74247455A40b01b0559ff6274441FAfa22A3",
-      "ticker": "MGP",
+      "id": "arbitrum-MGP",
+      "priceId": "magpie",
       "symbol": "MGP",
       "name": "Magpie Token",
       "amount": {
@@ -4521,8 +4586,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
-      "ticker": "MOLTEN",
+      "id": "arbitrum-MOLTEN",
+      "priceId": "molten-2",
       "symbol": "MOLTEN",
       "name": "Molten",
       "amount": {
@@ -4537,8 +4602,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
-      "ticker": "MOR",
+      "id": "arbitrum-MOR",
+      "priceId": "morpheusai",
       "symbol": "MOR",
       "name": "MOR",
       "amount": {
@@ -4553,8 +4618,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
-      "ticker": "USDM",
+      "id": "arbitrum-USDM",
+      "priceId": "mountain-protocol-usdm",
       "symbol": "USDM",
       "name": "Mountain Protocol USD",
       "amount": {
@@ -4569,13 +4634,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x20547341E58fB558637FA15379C92e11F7b7F710",
-      "ticker": "MOZ",
+      "id": "arbitrum-MOZ",
+      "priceId": "mozaic",
       "symbol": "MOZ",
       "name": "Mozaic Token",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "MOZ"
+        "priceId": "mozaic"
       },
       "sinceTimestamp": 1694131200,
       "category": "other",
@@ -4583,13 +4648,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xaeDF7656fBB47c5B97dD529aC1D0e807E051f2dd",
-      "ticker": "MXC",
+      "id": "arbitrum-MXC",
+      "priceId": "mxc",
       "symbol": "MXC",
       "name": "MXC Token",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "MXC"
+        "priceId": "mxc"
       },
       "sinceTimestamp": 1687777847,
       "category": "other",
@@ -4597,13 +4662,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xdadeca1167fe47499e53Eb50F261103630974905",
-      "ticker": "NRN",
+      "id": "arbitrum-NRN",
+      "priceId": "neuron",
       "symbol": "NRN",
       "name": "Neuron",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "NRN"
+        "priceId": "neuron"
       },
       "sinceTimestamp": 1719187200,
       "category": "other",
@@ -4611,8 +4676,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
-      "ticker": "PEPE",
+      "id": "arbitrum-PEPE",
+      "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
       "amount": {
@@ -4627,8 +4692,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x3082CC23568eA640225c2467653dB90e9250AaA0",
-      "ticker": "RDNT",
+      "id": "arbitrum-RDNT",
+      "priceId": "radiant-capital",
       "symbol": "RDNT",
       "name": "Radiant",
       "amount": {
@@ -4643,8 +4708,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x2416092f143378750bb29b79eD961ab195CcEea5",
-      "ticker": "ezETH",
+      "id": "arbitrum-ezETH",
+      "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
@@ -4659,8 +4724,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xabD587f2607542723b17f14d00d99b987C29b074",
-      "ticker": "SDEX",
+      "id": "arbitrum-SDEX",
+      "priceId": "smardex",
       "symbol": "SDEX",
       "name": "SmarDex Token",
       "amount": {
@@ -4675,13 +4740,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x11F98c7E42A367DaB4f200d2fdc460fb445CE9a8",
-      "ticker": "SPARTA",
+      "id": "arbitrum-SPARTA",
+      "priceId": "spartadex",
       "symbol": "SPARTA",
       "name": "SPARTA",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "SPARTA"
+        "priceId": "spartadex"
       },
       "sinceTimestamp": 1691452800,
       "category": "other",
@@ -4689,8 +4754,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
-      "ticker": "sFRAX",
+      "id": "arbitrum-sFRAX",
+      "priceId": "staked-frax",
       "symbol": "sFRAX",
       "name": "Staked FRAX",
       "amount": {
@@ -4705,8 +4770,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
-      "ticker": "sfrxETH",
+      "id": "arbitrum-sfrxETH",
+      "priceId": "staked-frax-ether",
       "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
       "amount": {
@@ -4721,8 +4786,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "ticker": "sUSDe",
+      "id": "arbitrum-sUSDe",
+      "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
@@ -4737,8 +4802,24 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
-      "ticker": "STG",
+      "id": "arbitrum-STONE",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1719602078,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-STG",
+      "priceId": "stargate-finance",
       "symbol": "STG",
       "name": "StargateToken",
       "amount": {
@@ -4753,13 +4834,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xB299751B088336E165dA313c33e3195B8c6663A6",
-      "ticker": "STAR",
+      "id": "arbitrum-STAR",
+      "priceId": "starheroes",
       "symbol": "STAR",
       "name": "StarHeroes",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "STAR"
+        "priceId": "starheroes"
       },
       "sinceTimestamp": 1710201600,
       "category": "other",
@@ -4767,8 +4848,24 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
-      "ticker": "TIA.n",
+      "id": "arbitrum-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+        "chain": "arbitrum",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1706918400,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-TIA.n",
+      "priceId": "bridged-tia-hyperlane",
       "symbol": "TIA.n",
       "name": "TIA",
       "amount": {
@@ -4783,8 +4880,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-      "ticker": "USDC",
+      "id": "arbitrum-USDC",
+      "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
@@ -4799,8 +4896,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "ticker": "USDe",
+      "id": "arbitrum-USDe",
+      "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
       "amount": {
@@ -4815,8 +4912,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
-      "ticker": "USDX",
+      "id": "arbitrum-USDX",
+      "priceId": "usdx-money-usdx",
       "symbol": "USDX",
       "name": "USDX",
       "amount": {
@@ -4831,13 +4928,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
-      "ticker": "VELA",
+      "id": "arbitrum-VELA",
+      "priceId": "vela-token",
       "symbol": "VELA",
       "name": "VelaToken",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "VELA"
+        "priceId": "vela-token"
       },
       "sinceTimestamp": 1674864000,
       "category": "other",
@@ -4845,13 +4942,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
-      "ticker": "WINR",
+      "id": "arbitrum-WINR",
+      "priceId": "winr-protocol",
       "symbol": "WINR",
       "name": "WINR",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "WINR"
+        "priceId": "winr-protocol"
       },
       "sinceTimestamp": 1679011200,
       "category": "other",
@@ -4859,8 +4956,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0xD8724322f44E5c58D7A815F542036fb17DbbF839",
-      "ticker": "wOETH",
+      "id": "arbitrum-wOETH",
+      "priceId": "wrapped-oeth",
       "symbol": "wOETH",
       "name": "Wrapped OETH",
       "amount": {
@@ -4875,8 +4972,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
-      "ticker": "SOL",
+      "id": "arbitrum-SOL",
+      "priceId": "solana",
       "symbol": "SOL",
       "name": "Wrapped SOL",
       "amount": {
@@ -4891,13 +4988,13 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
-      "ticker": "XAI",
+      "id": "arbitrum-XAI",
+      "priceId": "xai-blockchain",
       "symbol": "XAI",
       "name": "Xai",
       "amount": {
         "type": "circulatingSupply",
-        "ticker": "XAI"
+        "priceId": "xai-blockchain"
       },
       "sinceTimestamp": 1704758400,
       "category": "other",
@@ -4905,8 +5002,8 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
-      "ticker": "XBG",
+      "id": "arbitrum-XBG",
+      "priceId": "xborg",
       "symbol": "XBG",
       "name": "XBorg",
       "amount": {

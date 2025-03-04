@@ -100,7 +100,7 @@ export default async function Page(props: Props) {
         </div>
       )}
       <ScalingProjectSummary project={projectEntry} />
-      <ContentWrapper mobileFull>
+      <ContentWrapper mobileFull type="project">
         {isNavigationEmpty ? (
           <ProjectDetails items={projectEntry.sections} />
         ) : (
