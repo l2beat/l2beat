@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe531a0ca0465bee779e7c6197dcc8c6e71fefb6b
+Generated with discovered.json: 0xe3a011a38874b834989e6f3fd607ba37bb237943
 
-# Diff at Tue, 04 Mar 2025 10:39:53 GMT:
+# Diff at Tue, 04 Mar 2025 12:06:23 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21951256
-- current block number: 21951256
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21951256
+- current block number: 21973413
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+config related: starknet discodrive.
 
 ## Config/verification related changes
 

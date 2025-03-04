@@ -1,7 +1,7 @@
 {
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
-  "blockNumber": 21966050,
+  "blockNumber": 21973413,
   "configHash": "0xd3754cfdb19ebcc3f50fc6a8ba706eb622d725f1f6244a2e672a68b060735841",
   "contracts": [
     {
