@@ -39,7 +39,6 @@ export async function getProvider(
         url: 'ERROR',
         apiKey: 'ERROR',
       },
-      celestiaApiUrl: 'ERROR',
     },
   ]
 
