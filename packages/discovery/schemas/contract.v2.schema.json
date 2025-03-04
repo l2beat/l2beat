@@ -8,7 +8,11 @@
     "$schema": {
       "type": "string"
     },
-    "extends": { "type": "string" },
+    "extends": {
+      "type": "string",
+      "deprecated": true,
+      "description": "⚠️ Deprecated: use 'extends' only if you cannot use templates for some reason."
+    },
     "canActIndependently": { "type": "boolean" },
     "ignoreDiscovery": { "type": "boolean" },
     "proxyType": { "type": "string" },
