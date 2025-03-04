@@ -62,7 +62,7 @@ export function getProject(
 
   const response: ApiProjectResponse = { entries: [] }
   for (const { chain, config, discovery } of data) {
-    const meta = getMeta(discovery)
+    const meta = getMeta([discovery])
     const contracts = discovery.contracts
       .map((contract) => {
         const contarctConfig = config.for(contract.address)
