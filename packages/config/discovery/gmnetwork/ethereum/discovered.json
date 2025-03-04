@@ -302,8 +302,8 @@
         "l2OutputOracle": "0x53C64d7c9a28911203Ba4BE2a6cA58254184920a",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",

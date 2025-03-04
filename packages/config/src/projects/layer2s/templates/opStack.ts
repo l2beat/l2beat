@@ -1125,8 +1125,8 @@ function getDAProvider(
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -1294,8 +1294,8 @@ function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
 
   const daProvider =
     templateVars.daProvider ??
