@@ -89,13 +89,12 @@ export async function getScalingProjectEntry(
     | 'scalingInfo'
     | 'scalingRisks'
     | 'scalingStage'
-    | 'scalingDa'
     | 'scalingTechnology'
     | 'contracts'
     | 'permissions'
     | 'tvlInfo'
     | 'tvlConfig',
-    'chainConfig' | 'isUpcoming' | 'isArchived'
+    'scalingDa' | 'chainConfig' | 'isUpcoming' | 'isArchived'
   >,
 ): Promise<ScalingProjectEntry> {
   /** @deprecated */

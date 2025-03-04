@@ -66,14 +66,13 @@ export default async function Page(props: Props) {
       'scalingInfo',
       'scalingRisks',
       'scalingStage',
-      'scalingDa',
       'scalingTechnology',
       'contracts',
       'permissions',
       'tvlInfo',
       'tvlConfig',
     ],
-    optional: ['chainConfig', 'isUpcoming', 'isArchived'],
+    optional: ['chainConfig', 'scalingDa', 'isUpcoming', 'isArchived'],
   })
   if (!project) {
     notFound()

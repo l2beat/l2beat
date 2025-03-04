@@ -1,10 +1,11 @@
-import type { Layer2, Layer3 } from '@l2beat/config'
-import { layer2s, layer3s } from '@l2beat/config'
+import { type Project, layer2s, layer3s } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { NextResponse } from 'next/server'
 import { getCostsProjects } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { getFinalityProjects } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getLiveness } from '~/server/features/scaling/liveness/get-liveness'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
+import { ps } from '~/server/projects'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
@@ -27,10 +28,15 @@ async function getResponse() {
   const liveness = Object.keys(await getLiveness())
   const finality = (await getFinalityProjects()).map((f) => f.id.toString())
 
+  const projects = await ps.getProjects({
+    select: ['statuses', 'scalingInfo', 'scalingTechnology'],
+    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'isArchived'],
+  })
+
   return {
     success: true,
     data: {
-      projects: [...layer2s, ...layer3s].map((p) =>
+      projects: projects.map((p) =>
         toResponseProject(
           p,
           costs,
@@ -44,7 +50,10 @@ async function getResponse() {
 }
 
 function toResponseProject(
-  project: Layer2 | Layer3,
+  project: Project<
+    'statuses' | 'scalingInfo' | 'scalingTechnology',
+    'discoveryInfo' | 'milestones' | 'isArchived' | 'isUpcoming'
+  >,
   costs: string[],
   liveness: string[],
   finality: string[],
@@ -54,18 +63,24 @@ function toResponseProject(
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
+  /** @deprecated */
+  const legacy =
+    layer2s.find((p) => p.id === project.id) ??
+    layer3s.find((p) => p.id === project.id)
+  assert(legacy !== undefined)
+
   return {
     id: project.id.toString(),
     tvs,
-    display: project.display,
-    type: project.type === 'layer2' ? 'L2' : 'L3',
+    display: legacy.display,
+    type: project.scalingInfo.layer === 'layer2' ? 'L2' : 'L3',
     arePermissionsDiscoveryDriven:
       project.discoveryInfo?.permissionsDiscoDriven ?? false,
     areContractsDiscoveryDriven:
       project.discoveryInfo?.contractsDiscoDriven ?? false,
-    isArchived: project.isArchived === true,
-    isUpcoming: project.isUpcoming === true,
-    isUnderReview: project.isUnderReview === true,
+    isArchived: !!project.isArchived,
+    isUpcoming: !!project.isUpcoming,
+    isUnderReview: project.statuses.isUnderReview,
 
     costsConfigured: costs.includes(project.id.toString()),
     livenessConfigured: liveness.includes(project.id.toString()),
@@ -74,9 +89,9 @@ function toResponseProject(
     operatorConfigured: operatorSection !== undefined,
     withdrawalsConfigured: withdrawalsSection !== undefined,
     otherConsiderationsConfigured: otherConsiderationsSection !== undefined,
-    stateDerivationConfigured: project.stateDerivation !== undefined,
-    stateValidationConfigured: project.stateValidation !== undefined,
+    stateDerivationConfigured: legacy.stateDerivation !== undefined,
+    stateValidationConfigured: legacy.stateValidation !== undefined,
     upgradesAndGovernanceConfigured:
-      project.type === 'layer2' && project.upgradesAndGovernance !== undefined,
+      legacy.type === 'layer2' && legacy.upgradesAndGovernance !== undefined,
   }
 }
