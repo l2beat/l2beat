@@ -4,7 +4,6 @@ import path from 'path'
 export interface Config {
   projectRootPath?: string
   discoveryPath?: string
-  configPackagePath?: string
 }
 
 const CONFIG_FILENAME = '.l2b'
@@ -45,7 +44,6 @@ export function readConfig(): Config {
   }
 
   const projectRootPath = path.dirname(configFilePath)
-  const configPackagePath = path.join(projectRootPath, 'packages', 'config')
   let discoveryPath: string | undefined
   const content = readFileSync(configFilePath, 'utf8')
   const lines = filterComments(content.split('\n'))
@@ -65,7 +63,6 @@ export function readConfig(): Config {
   return {
     ...defaultConfig,
     discoveryPath,
-    configPackagePath,
     projectRootPath,
   }
 }
