@@ -45,10 +45,10 @@ export const sophon: Layer2 = zkStackL2({
     },
   },
   associatedTokens: ['SOPH'],
-  gasTokens: { tracked: ['SOPH'] },
   chainConfig: {
     name: 'sophon',
     chainId: 50104,
+    gasTokens: ['SOPH'],
     explorerUrl: 'https://explorer.sophon.xyz',
     sinceTimestamp: new UnixTime(1729531437),
     apis: [
