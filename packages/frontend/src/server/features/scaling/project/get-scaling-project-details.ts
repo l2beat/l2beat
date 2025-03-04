@@ -42,7 +42,7 @@ export async function getScalingProjectDetails({
 }: Params) {
   const permissionsSection = legacy.permissions
     ? getPermissionsSection({
-        id: legacy.id,
+        id: project.id,
         type: legacy.type,
         hostChain: hostChain?.id,
         isUnderReview: !!legacy.isUnderReview,
@@ -53,7 +53,7 @@ export async function getScalingProjectDetails({
 
   const contractsSection = getContractsSection(
     {
-      id: legacy.id,
+      id: project.id,
       type: legacy.type,
       hostChain: hostChain?.id,
       isVerified: !project.statuses.isUnverified,
@@ -79,24 +79,24 @@ export async function getScalingProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   const dataAvailabilitySection = getDataAvailabilitySection(project)
-  const sequencingSection = getSequencingSection(legacy)
+  const sequencingSection = getSequencingSection(project)
   const trackedTransactions =
     legacy.type === 'layer2' ? getTrackedTransactions(legacy) : undefined
 
   await Promise.all([
     api.tvs.chart.prefetch({
       range: '1y',
-      filter: { type: 'projects', projectIds: [legacy.id] },
+      filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart.prefetch({
       range: '1y',
-      filter: { type: 'projects', projectIds: [legacy.id] },
+      filter: { type: 'projects', projectIds: [project.id] },
     }),
     legacy.type === 'layer2'
       ? api.costs.chartWithDataPosted.prefetch({
           range: '1y',
-          projectId: legacy.id,
+          projectId: project.id,
         })
       : undefined,
   ])
@@ -104,17 +104,17 @@ export async function getScalingProjectDetails({
     await Promise.all([
       api.tvs.chart({
         range: '1y',
-        filter: { type: 'projects', projectIds: [legacy.id] },
+        filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,
       }),
       api.activity.chart({
         range: '1y',
-        filter: { type: 'projects', projectIds: [legacy.id] },
+        filter: { type: 'projects', projectIds: [project.id] },
       }),
       legacy.type === 'layer2'
         ? api.costs.chartWithDataPosted({
             range: '1y',
-            projectId: legacy.id,
+            projectId: project.id,
           })
         : undefined,
       getTokensForProject(legacy),
@@ -146,7 +146,7 @@ export async function getScalingProjectDetails({
         id: 'tvs',
         stacked: true,
         title: 'Value Secured',
-        projectId: legacy.id,
+        projectId: project.id,
         milestones: sortedMilestones,
         tokens,
       },
@@ -159,7 +159,7 @@ export async function getScalingProjectDetails({
       props: {
         id: 'activity',
         title: 'Activity',
-        projectId: legacy.id,
+        projectId: project.id,
         milestones: sortedMilestones,
         category: legacy.display.category,
         projectName: legacy.display.name,
@@ -178,7 +178,7 @@ export async function getScalingProjectDetails({
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
-        projectId: legacy.id,
+        projectId: project.id,
         milestones: sortedMilestones,
         trackedTransactions,
       },
