@@ -62,9 +62,7 @@ export class DataFormulaExecutor {
       promises.push(...this.processPrices(prices, timestamp, isLatestMode))
 
       this.logger.info(`Fetching data...`)
-      console.time('Data fetched')
       await Promise.all(promises)
-      console.timeEnd('Data fetched')
     }
   }
 
