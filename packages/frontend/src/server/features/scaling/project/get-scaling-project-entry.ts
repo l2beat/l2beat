@@ -14,18 +14,34 @@ import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
+import {
+  isActivityChartDataEmpty,
+  isTvsChartDataEmpty,
+} from '~/server/features/utils/is-chart-data-empty'
+import { api } from '~/trpc/server'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
+import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
+import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
+import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
+import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
+import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
+import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
+import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
+import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
-import { getScalingProjectDetails } from './get-scaling-project-details'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
 
@@ -94,7 +110,13 @@ export async function getScalingProjectEntry(
     | 'permissions'
     | 'tvlInfo'
     | 'tvlConfig',
-    'scalingDa' | 'customDa' | 'chainConfig' | 'isUpcoming' | 'isArchived'
+    // optional
+    | 'scalingDa'
+    | 'customDa'
+    | 'chainConfig'
+    | 'isUpcoming'
+    | 'isArchived'
+    | 'milestones'
   >,
 ): Promise<ScalingProjectEntry> {
   /** @deprecated */
@@ -171,21 +193,402 @@ export async function getScalingProjectEntry(
   }
   const daSolution = await getScalingDaSolution(project)
 
+  await Promise.all([
+    api.tvs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+      excludeAssociatedTokens: false,
+    }),
+    api.activity.chart.prefetch({
+      range: '1y',
+      filter: { type: 'projects', projectIds: [project.id] },
+    }),
+    project.scalingInfo.layer === 'layer2'
+      ? api.costs.chartWithDataPosted.prefetch({
+          range: '1y',
+          projectId: project.id,
+        })
+      : undefined,
+  ])
+  const [tvsChartData, activityChartData, costsChartData, tokens] =
+    await Promise.all([
+      api.tvs.chart({
+        range: '1y',
+        filter: { type: 'projects', projectIds: [project.id] },
+        excludeAssociatedTokens: false,
+      }),
+      api.activity.chart({
+        range: '1y',
+        filter: { type: 'projects', projectIds: [project.id] },
+      }),
+      project.scalingInfo.layer === 'layer2'
+        ? api.costs.chartWithDataPosted({
+            range: '1y',
+            projectId: project.id,
+          })
+        : undefined,
+      getTokensForProject(legacy),
+    ])
+
+  const sections: ProjectDetailsSection[] = []
+
+  const sortedMilestones =
+    project.milestones?.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    ) ?? []
+
   const hostChain =
     project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
       ? layer2s.find((layer2) => layer2.id === project.scalingInfo.hostChain.id)
       : undefined
   const isHostChainVerified =
     hostChain !== undefined ? isVerified(hostChain) : true
-  const sections = await getScalingProjectDetails({
-    legacy: legacy,
-    project,
-    hostChain,
+  const hostChainWarning = hostChain
+    ? { hostChain: hostChain.display }
+    : undefined
+  const hostChainRisksSummary = hostChain
+    ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
+    : hostChain
+  const hostChainWarningWithRiskCount =
+    hostChain && hostChainRisksSummary
+      ? {
+          hostChain: hostChain.display,
+          riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
+            .length,
+        }
+      : undefined
+
+  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+    sections.push({
+      type: 'ChartSection',
+      props: {
+        id: 'tvs',
+        stacked: true,
+        title: 'Value Secured',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        tokens,
+      },
+    })
+  }
+
+  if (!isActivityChartDataEmpty(activityChartData)) {
+    sections.push({
+      type: 'ChartSection',
+      props: {
+        id: 'activity',
+        title: 'Activity',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        category: project.scalingInfo.type,
+        projectName: project.name,
+      },
+    })
+  }
+
+  const trackedTransactions =
+    legacy.type === 'layer2' ? getTrackedTransactions(legacy) : undefined
+  if (
+    !project.isUpcoming &&
+    trackedTransactions &&
+    costsChartData &&
+    costsChartData.length > 0
+  ) {
+    sections.push({
+      type: 'CostsSection',
+      props: {
+        id: 'onchain-costs',
+        title: 'Onchain costs',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        trackedTransactions,
+      },
+    })
+  }
+
+  if (
+    !project.isUpcoming &&
+    project.milestones &&
+    project.milestones.length > 0
+  ) {
+    sections.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: sortedMilestones,
+      },
+    })
+  }
+
+  if (legacy.display.detailedDescription) {
+    sections.push({
+      type: 'DetailedDescriptionSection',
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: project.display.description,
+        detailedDescription: legacy.display.detailedDescription,
+      },
+    })
+  }
+
+  const riskSummary = getScalingRiskSummarySection(
+    legacy,
+    !project.statuses.isUnverified,
+  )
+  if (riskSummary.riskGroups.length > 0) {
+    sections.push({
+      type: 'RiskSummarySection',
+      props: {
+        ...riskSummary,
+        id: 'risk-summary',
+        title: 'Risk summary',
+        hostChainWarning: hostChainWarningWithRiskCount,
+        isUnderReview: project.statuses.isUnderReview,
+      },
+    })
+  }
+
+  if (project.isUpcoming) {
+    sections.push({
+      type: 'UpcomingDisclaimer',
+      excludeFromNavigation: true,
+    })
+    return { ...common, sections }
+  }
+
+  if (hostChain && common.rosette.host) {
+    sections.push({
+      type: 'L3RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        l2: {
+          name: hostChain.display.name,
+          risks: common.rosette.host,
+        },
+        l3: {
+          name: project.name,
+          risks: common.rosette.self,
+        },
+        combined: common.rosette.stacked,
+        warning: legacy.display.warning,
+        redWarning: project.statuses.redWarning,
+        isVerified: !project.statuses.isUnverified,
+        isUnderReview: project.statuses.isUnderReview,
+      },
+    })
+  } else {
+    sections.push({
+      type: 'RiskAnalysisSection',
+      props: {
+        id: 'risk-analysis',
+        title: 'Risk analysis',
+        rosetteType: 'pizza',
+        rosetteValues: common.rosette.self,
+        warning: legacy.display.warning,
+        redWarning: project.statuses.redWarning,
+        isVerified: !project.statuses.isUnverified,
+        isUnderReview: project.statuses.isUnderReview,
+      },
+    })
+  }
+
+  if (project.scalingStage.stage !== 'NotApplicable') {
+    sections.push({
+      type: 'StageSection',
+      props: {
+        id: 'stage',
+        title: 'Rollup stage',
+        stageConfig: project.scalingStage,
+        name: project.name,
+        icon: `/icons/${project.slug}.png`,
+        type: project.scalingInfo.type,
+        isUnderReview: project.statuses.isUnderReview,
+        isAppchain: project.scalingInfo.capability === 'appchain',
+        additionalConsiderations:
+          project.scalingStage.stage !== 'UnderReview'
+            ? project.scalingStage.additionalConsiderations
+            : undefined,
+      },
+    })
+  }
+
+  const technologySection = await getScalingTechnologySection(project)
+  if (technologySection) {
+    sections.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'technology',
+        title: 'Technology',
+        ...technologySection,
+        hostChainWarning,
+      },
+    })
+  }
+
+  const dataAvailabilitySection = getDataAvailabilitySection(project)
+  if (dataAvailabilitySection) {
+    sections.push({
+      type: 'Group',
+      props: {
+        id: 'da-layer',
+        title: 'Data availability',
+        items: dataAvailabilitySection,
+        description: project.customDa?.description,
+        isUnderReview: project.statuses.isUnderReview,
+      },
+    })
+  }
+
+  if (project.scalingTechnology.stateDerivation) {
+    sections.push({
+      type: 'StateDerivationSection',
+      props: {
+        id: 'state-derivation',
+        title: 'State derivation',
+        isUnderReview:
+          project.statuses.isUnderReview ||
+          !!project.scalingTechnology.stateDerivation.isUnderReview,
+        ...project.scalingTechnology.stateDerivation,
+      },
+    })
+  }
+
+  if (project.scalingTechnology.stateValidation) {
+    sections.push({
+      type: 'StateValidationSection',
+      props: {
+        id: 'state-validation',
+        title: 'State validation',
+        stateValidation: project.scalingTechnology.stateValidation,
+        diagram: getDiagramParams(
+          'state-validation',
+          project.scalingTechnology.stateValidationImage ?? project.slug,
+        ),
+        isUnderReview:
+          project.statuses.isUnderReview ||
+          !!project.scalingTechnology.stateValidation.isUnderReview,
+      },
+    })
+  }
+
+  const operatorSection = getOperatorSection(project)
+  if (operatorSection) {
+    sections.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'operator',
+        title: 'Operator',
+        ...operatorSection,
+        hostChainWarning,
+      },
+    })
+  }
+
+  const sequencingSection = getSequencingSection(project)
+  if (sequencingSection) {
+    sections.push({
+      type: 'SequencingSection',
+      props: {
+        id: 'sequencing',
+        title: 'Sequencing',
+        ...sequencingSection,
+      },
+    })
+  }
+
+  const withdrawalsSection = getWithdrawalsSection(project)
+  if (withdrawalsSection) {
+    sections.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'withdrawals',
+        title: 'Withdrawals',
+        ...withdrawalsSection,
+        hostChainWarning,
+      },
+    })
+  }
+
+  const otherConsiderationsSection = getOtherConsiderationsSection(project)
+  if (otherConsiderationsSection) {
+    sections.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
+      },
+    })
+  }
+  if (project.scalingTechnology.upgradesAndGovernance) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: project.scalingTechnology.upgradesAndGovernance,
+        diagram: {
+          type: 'upgrades-and-governance',
+          slug:
+            project.scalingTechnology.upgradesAndGovernanceImage ??
+            project.slug,
+        },
+        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+        isUnderReview: project.statuses.isUnderReview,
+      },
+    })
+  }
+
+  const permissionsSection = getPermissionsSection({
+    id: project.id,
+    type: project.scalingInfo.layer,
+    hostChain: hostChain?.id,
+    isUnderReview: project.statuses.isUnderReview,
+    permissions: project.permissions,
     daSolution,
-    isHostChainVerified,
-    projectsChangeReport,
-    rosette: common.rosette,
   })
+  if (permissionsSection) {
+    const permissionedEntities = project.customDa?.dac?.knownMembers
+
+    sections.push({
+      type: 'PermissionsSection',
+      props: {
+        ...permissionsSection,
+        id: 'permissions',
+        title: 'Permissions',
+        permissionedEntities,
+      },
+    })
+  }
+
+  const contractsSection = getContractsSection(
+    {
+      id: project.id,
+      type: project.scalingInfo.layer,
+      hostChain: hostChain?.id,
+      isVerified: !project.statuses.isUnverified,
+      slug: project.slug,
+      contracts: project.contracts,
+      isUnderReview: project.statuses.isUnderReview,
+      escrows: legacy.config.escrows,
+      architectureImage: legacy.display.architectureImage,
+      daSolution,
+    },
+    projectsChangeReport,
+  )
+  if (contractsSection) {
+    sections.push({
+      type: 'ContractsSection',
+      props: {
+        ...contractsSection,
+        id: 'contracts',
+        title: 'Smart contracts',
+      },
+    })
+  }
 
   return { ...common, sections }
 }

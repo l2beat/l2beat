@@ -26,7 +26,7 @@ type ProjectParams = {
   isUnderReview?: boolean
   isVerified: boolean
   architectureImage?: string
-  contracts: ProjectContracts
+  contracts?: ProjectContracts
   daSolution?: DaSolution
   escrows: ProjectEscrow[] | undefined
   hostChain?: string
@@ -41,6 +41,9 @@ export function getContractsSection(
   projectParams: ProjectParams,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
+  if (!projectParams.contracts) {
+    return undefined
+  }
   if (
     Object.values(projectParams.contracts.addresses).flat().length === 0 &&
     projectParams.daSolution?.contracts?.length === 0

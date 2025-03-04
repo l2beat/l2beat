@@ -14,7 +14,7 @@ import { toVerificationStatus } from './to-verification-status'
 type ProjectParams = {
   type: 'layer2' | 'layer3' | 'bridge'
   id: string
-  permissions: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   daSolution?: DaSolution
   isUnderReview: boolean
   hostChain?: string
@@ -47,6 +47,9 @@ function permissionsAreEmpty(
 export function getPermissionsSection(
   projectParams: ProjectParams,
 ): PermissionSection | undefined {
+  if (!projectParams.permissions) {
+    return undefined
+  }
   if (
     projectParams.permissions !== 'UnderReview' &&
     Object.values(projectParams.permissions).every((p) =>

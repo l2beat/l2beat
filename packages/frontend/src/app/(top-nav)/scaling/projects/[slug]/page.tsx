@@ -78,6 +78,7 @@ export default async function Page(props: Props) {
       'customDa',
       'isUpcoming',
       'isArchived',
+      'milestones',
     ],
   })
   if (!project) {
