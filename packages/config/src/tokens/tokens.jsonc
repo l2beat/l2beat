@@ -5941,6 +5941,21 @@
   ],
   "soneium": [
     {
+      "symbol": "vASTR",
+      "address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
+      "source": "external",
+      "coingeckoId": "bifrost-voucher-astr",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "PIPO",
       "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
       "source": "external",

@@ -8186,6 +8186,28 @@
       }
     },
     {
+      "name": "Bifrost Voucher ASTR",
+      "coingeckoId": "bifrost-voucher-astr",
+      "address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
+      "symbol": "vASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1736815677,
+      "coingeckoListingTimestamp": 1710979200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34706/large/vASTR.png?1705893008",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Pipo",
       "coingeckoId": "pipo-2",
       "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
