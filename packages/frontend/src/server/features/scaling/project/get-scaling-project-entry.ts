@@ -190,7 +190,7 @@ export async function getScalingProjectEntry(
     isAppchain: project.scalingInfo.capability === 'appchain',
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
-    countdowns: getCountdowns(legacy),
+    countdowns: getCountdowns(project),
     rosette: getScalingRosette(project),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig: isProjectOther(project.scalingInfo)
