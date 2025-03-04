@@ -27,7 +27,7 @@ const args = {
 }
 
 const cmd = command({
-  name: 'generate-tvs-config',
+  name: 'execute',
   args,
   handler: async (args) => {
     const env = getEnv()
@@ -45,6 +45,18 @@ const cmd = command({
     } as TvsConfig
 
     const tvs = await localExecutor.run(config, [timestamp], false)
+
+    fs.writeFileSync(
+      './src/modules/tvs/breakdown.json',
+      JSON.stringify(
+        {
+          project: args.project,
+          values: tvs.get(timestamp.toNumber()),
+        },
+        null,
+        2,
+      ) + '\n',
+    )
 
     outputTVS(tvs, timestamp, logger)
 

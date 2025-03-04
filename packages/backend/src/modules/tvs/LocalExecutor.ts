@@ -8,7 +8,7 @@ import {
   HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import { LocalStorage } from './LocalStorage'
 import { ValueService } from './ValueService'
@@ -134,15 +134,10 @@ export class LocalExecutor {
         (contract) => contract.version === '3',
       )
 
-      assert(
-        multicallV3,
-        `MulticallV3 contract not found for ${chainConfig.name}`,
-      )
-
       rpcs.set(
         chainConfig.name,
         new RpcClientPOC(rpc, chainConfig.name, this.logger, {
-          multicallV3: multicallV3.address,
+          ...(multicallV3?.address ? { multicallV3: multicallV3.address } : {}),
           batchingEnabled: multicallV3 ? false : true,
         }),
       )
