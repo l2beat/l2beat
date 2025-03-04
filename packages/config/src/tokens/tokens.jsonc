@@ -5941,6 +5941,21 @@
   ],
   "soneium": [
     {
+      "symbol": "PIPO",
+      "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
+      "source": "external",
+      "coingeckoId": "pipo-2",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "WBTC",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
       "source": "external",
