@@ -252,7 +252,7 @@ export const TokenScreening = command({
             )
           }
           let newSupplyInfo: TokenSupplyInfo | null = null
-          let canonicalL2Supply: string | null = null
+          let canonicalL2Supply = supplyInfo.l2Supply
           let canonicalPct = 0
           let weirdPct = 0
           if (
@@ -264,9 +264,38 @@ export const TokenScreening = command({
               chain,
               escrows,
             )
+            if (newSupplyInfo) {
+              supplyInfo.l1Supply = newSupplyInfo.l1Supply
+              supplyInfo.l2Supply = newSupplyInfo.l2Supply
+              if (Number(newSupplyInfo.l2Supply) > 0) {
+                if (newSupplyInfo.type === 'Canonical Token') {
+                  canonicalPct = Number(
+                    Math.min(
+                      100,
+                      (Number(newSupplyInfo.l2Supply) /
+                        Number(newSupplyInfo.escrowBalance)) *
+                        100,
+                    ).toFixed(2),
+                  )
+                } else {
+                  canonicalPct = Number(
+                    Math.min(
+                      100,
+                      (Number(canonicalL2Supply) /
+                        Number(newSupplyInfo.l2Supply)) *
+                        100,
+                    ).toFixed(2),
+                  )
+                  supplyInfo.reason = supplyInfo.reason
+                    ? `${supplyInfo.reason}`
+                    : 'L2 supply significantly greater than escrow balance'
+                }
+                weirdPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
+              }
+            }
           } else {
+             // if L2 address is the same as coingeckos, supplyInfo.l2Supply is l2 total supply
             canonicalL2Supply = supplyInfo.escrowBalance // approximate canonical supply (+- in transit)
-            // if L2 address is the same as coingeckos, supplyInfo.l2Supply is l2 total supply
             canonicalPct = Number(
               Math.min(
                 100,
@@ -275,63 +304,34 @@ export const TokenScreening = command({
             )
             weirdPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
           }
-          if (newSupplyInfo) {
-            canonicalL2Supply = supplyInfo.l2Supply
-            supplyInfo.l1Supply = newSupplyInfo.l1Supply
-            supplyInfo.l2Supply = newSupplyInfo.l2Supply
-            if (Number(newSupplyInfo.l2Supply) > 0) {
-              if (newSupplyInfo.type === 'Canonical Token') {
-                canonicalPct = Number(
-                  Math.min(
-                    100,
-                    (Number(newSupplyInfo.l2Supply) /
-                      Number(newSupplyInfo.escrowBalance)) *
-                      100,
-                  ).toFixed(2),
-                )
-              } else {
-                canonicalPct = Number(
-                  Math.min(
-                    100,
-                    (Number(canonicalL2Supply) /
-                      Number(newSupplyInfo.l2Supply)) *
-                      100,
-                  ).toFixed(2),
-                )
-                supplyInfo.reason = supplyInfo.reason
-                  ? `${supplyInfo.reason}`
-                  : 'L2 supply significantly greater than escrow balance'
-              }
-              weirdPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
-            }
-
-            const l2Minters = await getL2Minters(l2AddressFromCoingecko, chain)
-            const mintersType = await checkMintersType(
+          // minter analysis
+          const l2Minters = await getL2Minters(l2AddressFromCoingecko, chain)
+          const mintersType = await checkMintersType(
+            l2Minters.map((m) => ({
+              address: m.address,
+              name: m.name ?? 'Unknown',
+            })),
+          )
+          if (mintersType.type === 'Bridge Minter') {
+            supplyInfo.type = 'External Token'
+            supplyInfo.reason =
+              mintersType.bridge +
+              ' (' +
+              (mintersType.matchingContracts ?? []).join(', ') +
+              ')'
+          } else if (mintersType.type === 'Unknown') {
+            const bridgeName = matchBridgeName(
               l2Minters.map((m) => ({
                 address: m.address,
                 name: m.name ?? 'Unknown',
               })),
             )
-            if (mintersType.type === 'Bridge Minter') {
+            if (bridgeName.type === 'External Token') {
               supplyInfo.type = 'External Token'
-              supplyInfo.reason =
-                mintersType.bridge +
-                ' (' +
-                (mintersType.matchingContracts ?? []).join(', ') +
-                ')'
-            } else if (mintersType.type === 'Unknown') {
-              const bridgeName = matchBridgeName(
-                l2Minters.map((m) => ({
-                  address: m.address,
-                  name: m.name ?? 'Unknown',
-                })),
-              )
-              if (bridgeName.type === 'External Token') {
-                supplyInfo.type = 'External Token'
-                supplyInfo.reason = bridgeName.bridge
-              }
+              supplyInfo.reason = bridgeName.bridge
             }
           }
+          // print non-canonical result summary
           console.table({
             'L1 Supply': Number(supplyInfo.l1Supply).toFixed(2),
             'L2 Supply': Number(supplyInfo.l2Supply).toFixed(2),
