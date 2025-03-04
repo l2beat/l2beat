@@ -4,13 +4,12 @@
   "category": "bridge-external",
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
   "types": {
-    // "WithdrawalActivationString": {
-    //   "typeCaster": "Mapping",
-    //   "arg": {
-    //     "": "not active",
-    //     "0x0000000000000000000000000000000000455448": "active"
-    //   }
-    // },
+    "UintMaxMeansInactive": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "115792089237316195423570985008687907853269984665640564039457584007913129639935": "inactive"
+      }
+    },
     "TokenStatus": {
       "typeCaster": "Mapping",
       "arg": {
@@ -23,7 +22,7 @@
   },
   "fields": {
     "$admin": {
-      "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
+      "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.",
       "severity": "HIGH",
       "target": {
         "permissions": [
@@ -35,19 +34,14 @@
       }
     },
     "withdrawalLimitStatus": {
-      "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.",
+      "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.",
       "severity": "HIGH",
       "handler": {
-        "type": "event",
-        "select": "token",
-        "add": {
-          "event": "WithdrawalLimitEnabled"
-        },
-        "remove": {
-          "event": "WithdrawalLimitDisabled"
-        }
-      }
-      // "returnType": "(WithdrawalActivationString)" // BUG
+        "type": "call",
+        "method": "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+        "args": ["{{bridgedToken}}"]
+      },
+      "returnType": "(UintMaxMeansInactive)"
     },
     "maxTotalBalance": {
       "description": "The maximum total balance that can be locked in the bridge.",
@@ -136,7 +130,7 @@
       }
     },
     "govAdminAC": {
-      "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin.",
+      "description": "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -148,7 +142,7 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "manage critical access control roles related to upgrades."
+            "description": "manage critical access control roles and the role that can upgrade the implementation."
           }
         ]
       }
