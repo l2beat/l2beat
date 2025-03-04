@@ -11,6 +11,7 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/mapConfig'
+import type { Token } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
@@ -21,7 +22,7 @@ const args = {
 }
 
 const cmd = command({
-  name: 'execute-tvs',
+  name: 'generate-tvs-config',
   args,
   handler: async (args) => {
     const env = getEnv()
@@ -30,7 +31,7 @@ const cmd = command({
 
     logger.info(
       'Generating TVS config ' +
-        (args.project ? `for project '${args.project}'` : ''),
+      (args.project ? `for project '${args.project}'` : ''),
     )
 
     // get token data
@@ -60,15 +61,7 @@ const cmd = command({
     assert(nonZeroTokens, 'No data for timestamp')
 
     // write to file
-    const filePath = `./src/modules/tvs/config/${args.project}.json`
-    logger.info(`Writing results to file: ${filePath}`)
-    const wrapper = {
-      $schema: 'schema/tvs-config-schema.json',
-      projectId: args.project,
-      tokens: nonZeroTokens,
-    }
-
-    fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2))
+    writeToFile(nonZeroTokens, logger)
     process.exit(0)
   },
 })
@@ -96,4 +89,16 @@ function initLogger(env: Env) {
     ],
   })
   return logger
+}
+
+function writeToFile(nonZeroTokens: Token[], logger: Logger) {
+  const filePath = `./src/modules/tvs/config/${args.project}.json`
+  logger.info(`Writing results to file: ${filePath}`)
+  const wrapper = {
+    $schema: 'schema/tvs-config-schema.json',
+    projectId: args.project,
+    tokens: nonZeroTokens,
+  }
+
+  fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2))
 }
