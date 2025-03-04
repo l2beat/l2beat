@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x8445f4a395a711619b6201312a10c8e6fba6b9d6
+Generated with discovered.json: 0x6a0cf5f548cb2d8f8b40e5c3d5b0b4c15d4a2b2d
+
+# Diff at Tue, 04 Mar 2025 10:39:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21744139
+- current block number: 21744139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744139 (main branch discovery), not current.
+
+```diff
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa) {
+    +++ description: None
+      sinceBlock:
++        12477538
+    }
+```
+
+```diff
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9) {
+    +++ description: None
+      sinceBlock:
++        13938818
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      sinceBlock:
++        12875622
+    }
+```
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      sinceBlock:
++        12875629
+    }
+```
+
+```diff
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    +++ description: None
+      sinceBlock:
++        12945363
+    }
+```
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      sinceBlock:
++        12477537
+    }
+```
+
+Generated with discovered.json: 0x3d68639a989344e713845ff6dc586369c92b6d21
 
 # Diff at Fri, 31 Jan 2025 11:13:48 GMT:
 

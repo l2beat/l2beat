@@ -2,20 +2,21 @@
   "name": "lumia",
   "chain": "ethereum",
   "blockNumber": 21764836,
-  "configHash": "0xb626a60d0e9b96197f36fdb2aa32e6c905ff71387a3a04babb12e65ca4066baa",
+  "configHash": "0xaa8d5baddd4ead709d4b42648336bf64cf7d3846fccc1089b02917d65d51f003",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
-      "name": "FflonkVerifier",
+      "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
-      "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
+      "sinceBlock": 19505052,
       "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -42,6 +43,7 @@
         }
       ],
       "sinceTimestamp": 1720110635,
+      "sinceBlock": 20234353,
       "values": {
         "$admin": "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a",
         "$implementation": "0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB",
@@ -103,6 +105,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1719499031,
+      "sinceBlock": 20183666,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
@@ -170,6 +173,7 @@
         }
       ],
       "sinceTimestamp": 1720110623,
+      "sinceBlock": 20234352,
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"

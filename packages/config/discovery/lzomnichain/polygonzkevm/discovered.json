@@ -9,6 +9,7 @@
       "address": "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
       "unverified": true,
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5878,
       "values": { "$immutable": true }
     },
     {
@@ -16,6 +17,7 @@
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "unverified": true,
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5880,
       "values": { "$immutable": true }
     },
     {
@@ -31,6 +33,7 @@
         }
       ],
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5875,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
@@ -41,6 +44,7 @@
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "unverified": true,
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5879,
       "values": { "$immutable": true }
     },
     {
@@ -48,6 +52,7 @@
       "address": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
       "unverified": true,
       "sinceTimestamp": 1679974072,
+      "sinceBlock": 5886,
       "values": { "$immutable": true }
     },
     {
@@ -61,6 +66,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1712271299,
+      "sinceBlock": 11336913,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -94,6 +100,7 @@
         }
       ],
       "sinceTimestamp": 1679975850,
+      "sinceBlock": 6150,
       "values": {
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
@@ -107,6 +114,7 @@
       ],
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5873,
       "values": {
         "$immutable": true,
         "BLOCK_VERSION": 65535,
@@ -126,8 +134,7 @@
           "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
         ],
         "owner": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827"
-      },
-      "derivedName": "Endpoint"
+      }
     },
     {
       "name": "",
@@ -142,6 +149,7 @@
         }
       ],
       "sinceTimestamp": 1679974072,
+      "sinceBlock": 5885,
       "values": {
         "$admin": "0x3c2269811836af69497E5F486A85D7316753cf62",
         "$implementation": "0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F",
@@ -173,6 +181,7 @@
         }
       ],
       "sinceTimestamp": 1679975953,
+      "sinceBlock": 6153,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f",
@@ -201,6 +210,7 @@
         "ulnLookup"
       ],
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5882,
       "values": {
         "$immutable": true,
         "chainAddressSizeMap": {
@@ -1381,8 +1391,7 @@
           "267": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "274": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     }
   ],
   "eoas": [

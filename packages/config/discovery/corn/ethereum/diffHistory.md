@@ -1,3 +1,235 @@
+Generated with discovered.json: 0x28267fb5261f1cf2cb4b6cb78f50528a33246a59
+
+# Diff at Tue, 04 Mar 2025 10:39:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21642560
+- current block number: 21642560
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21642560 (main branch discovery), not current.
+
+```diff
+    contract wBTC Escrow (0x00943b11764176C3a8323aEFCBd6fE70CFb6272d) {
+    +++ description: None
+      sinceBlock:
++        21379583
+    }
+```
+
+```diff
+    contract OneStepProverMath (0x036147913eEb42E97790F9a693246c8444290AB6) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        20643936
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x21c6F81b1063f09A6c26EDc74fBb9beb349A5E96) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        20643935
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x231173CC90cB8486A7dbD1733B5105254316D50A) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        20643937
+    }
+```
+
+```diff
+    contract Outbox (0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract Inbox (0x37693F11f3D724E55D0B03D5F328D8202C913243) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract SequencerInbox (0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract Governor (0x515C7d8Fcb950f8b030ac08C994b37b4b8F3F7B5) {
+    +++ description: None
+      sinceBlock:
++        21181998
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x6282197777e7c318C7209bd7059110886aa429C6) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x72b55c2C38EadE57C10047746632A369A060A46E) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        20643934
+    }
+```
+
+```diff
+    contract Bridge (0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract RollupProxy (0x828C71bc1D7A34F32FfA624240633b6B7272C3D6) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x84eA2523b271029FFAeB58fc6E6F1435a280db44) {
+    +++ description: This contract implements view only utilities for validators.
+      sinceBlock:
++        20643951
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x8672705351C81f40B55b1ac2A1998de66166d0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract cbBTC Escrow (0x957C9DC25DE6B8E46a7Fa0D081bA749DD005B54f) {
+    +++ description: None
+      sinceBlock:
++        21379628
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x9f403f2054736884518E6D3f510C02f5959BDCC6) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        20643940
+    }
+```
+
+```diff
+    contract ChallengeManager (0xBb309FFFC24F77927d7C4eb86BaA67D8f9dC0EB8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sinceBlock:
++        21221163
+    }
+```
+
+```diff
+    contract CornMultisig (0xCff1ad9f09b32252171207e8525c90B18D4E2C7D) {
+    +++ description: None
+      sinceBlock:
++        21279265
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84) {
+    +++ description: None
+      sinceBlock:
++        21221163
+    }
+```
+
+Generated with discovered.json: 0x825d3bcfe48ba33283bfcae2434c7fccfbb0abb7
+
+# Diff at Thu, 27 Feb 2025 11:45:30 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21642560
+- current block number: 21642560
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21642560 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "ERC20Outbox"
++        "Outbox"
+      displayName:
+-        "Outbox"
+    }
+```
+
+```diff
+    contract Inbox (0x37693F11f3D724E55D0B03D5F328D8202C913243) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "ERC20Inbox"
++        "Inbox"
+      displayName:
+-        "Inbox"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x6282197777e7c318C7209bd7059110886aa429C6) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      name:
+-        "ERC20RollupEventInbox"
++        "RollupEventInbox"
+      displayName:
+-        "RollupEventInbox"
+    }
+```
+
+```diff
+    contract Bridge (0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "ERC20Bridge"
++        "Bridge"
+      displayName:
+-        "Bridge"
+    }
+```
+
 Generated with discovered.json: 0xc8a98993923ec1439f24823bbabca70aba8b90fb
 
 # Diff at Fri, 21 Feb 2025 14:05:49 GMT:

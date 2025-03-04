@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xcdbae8134d7da162cbf57479762ea835bc44f9dc
+Generated with discovered.json: 0x8653b5422b89f05d3dc098c2d4ac47408ec677b3
+
+# Diff at Tue, 04 Mar 2025 10:40:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 249925893
+- current block number: 249925893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 249925893 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    +++ description: None
+      sinceBlock:
++        186015816
+    }
+```
+
+```diff
+    contract ArbitrumL2Gateway (0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
+    +++ description: None
+      sinceBlock:
++        185950532
+    }
+```
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      sinceBlock:
++        123482330
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
+    +++ description: None
+      sinceBlock:
++        186015816
+    }
+```
+
+```diff
+    contract zkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
+    +++ description: None
+      sinceBlock:
++        185950340
+    }
+```
+
+Generated with discovered.json: 0xdaf524ce7fda886280e598f0339747312506acdd
 
 # Diff at Mon, 20 Jan 2025 11:10:36 GMT:
 

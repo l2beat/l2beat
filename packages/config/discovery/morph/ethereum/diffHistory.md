@@ -1,4 +1,134 @@
-Generated with discovered.json: 0x5fbf9509e2b786fb4e83afb7d368168776810694
+Generated with discovered.json: 0x6109da590feb8c79cd1d775c6c2a491d66a46e5b
+
+# Diff at Tue, 04 Mar 2025 10:39:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21716626
+- current block number: 21716626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21716626 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      sinceBlock:
++        20996843
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      sinceBlock:
++        20996854
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      sinceBlock:
++        20996776
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      sinceBlock:
++        20996821
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      sinceBlock:
++        20996858
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      sinceBlock:
++        21664323
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      sinceBlock:
++        20996850
+    }
+```
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      sinceBlock:
++        20996846
+    }
+```
+
+```diff
+    contract MorphOpsMultisig (0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      sinceBlock:
++        21020988
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
+      sinceBlock:
++        20996899
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      sinceBlock:
++        20996813
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154) {
+    +++ description: Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.
+      sinceBlock:
++        21614228
+    }
+```
+
+```diff
+    contract MorphUpgradeMultisig (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      sinceBlock:
++        21135313
+    }
+```
+
+```diff
+    contract Whitelist (0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) {
+    +++ description: Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.
+      sinceBlock:
++        20998580
+    }
+```
+
+Generated with discovered.json: 0x003aaa7a46d1f310931c353ed8f8597f22930574
 
 # Diff at Tue, 04 Feb 2025 12:31:43 GMT:
 

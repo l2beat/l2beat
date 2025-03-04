@@ -39,7 +39,7 @@ export const sxnetwork: Layer2 = orbitStackL2({
     },
   },
   isNodeAvailable: 'UnderReview',
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['SX'],

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
+  "category": "bridge-external",
+  "fields": {
+    "$admin": {
+      "description": "Same as the `GOVERNANCE_ADMIN` access control role.",
+      "severity": "HIGH",
+      "target": {
+        "permissions": [
+          {
+            "type": "upgrade",
+            "delay": "{{getUpgradeActivationDelay}}"
+          }
+        ]
+      }
+    }
+  }
+}

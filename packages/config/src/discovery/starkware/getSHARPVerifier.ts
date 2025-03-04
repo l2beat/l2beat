@@ -6,7 +6,7 @@ import { ProjectDiscovery } from '../ProjectDiscovery'
 import { getProxyGovernance } from './getProxyGovernance'
 
 // NOTE(radomski): The way SHARPVerifier works after the upgrade is the
-// following: Everything goes through SHARPVerifierProxy which calls CallProxy
+// following: Everything goes through SHARPVerifierCallProxy which calls CallProxy
 // as a fallback. CallProxy then calls the new SHARPVerifier that still
 // references the old SHARPVerifier. When verifying a proof the new
 // SHARPVerifier checks if a fact is valid. Since the old fact registry has
@@ -40,7 +40,7 @@ import { getProxyGovernance } from './getProxyGovernance'
 const discovery = new ProjectDiscovery('shared-sharp-verifier')
 
 const SHARP_VERIFIER_PROXY = discovery.getContractDetails(
-  'SHARPVerifierProxy',
+  'SHARPVerifierCallProxy',
   'CallProxy for GpsStatementVerifier.',
 )
 
@@ -60,7 +60,7 @@ const MEMORY_FACT_REGISTRY = discovery.getContractDetails(
 )
 
 const OLD_MEMORY_FACT_REGISTRY = discovery.getContractDetails(
-  'OldMemoryPageFactRegistry',
+  'Level2MemoryPageFactRegistry',
   'Same as MemoryPageFactRegistry but stores facts proved by the old SHARP Verifier, used as a fallback.',
 )
 
@@ -75,7 +75,7 @@ const MERKLE_STATEMENT_CONTRACT = discovery.getContractDetails(
 )
 
 const upgradeDelay = discovery.getContractValue<number>(
-  'SHARPVerifierProxy',
+  'SHARPVerifierCallProxy',
   'StarkWareProxy_upgradeDelay',
 )
 
@@ -95,7 +95,7 @@ export function getSHARPVerifierContracts(
 ) {
   assert(
     verifierAddress === SHARP_VERIFIER_PROXY.address,
-    `SHARPVerifierProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
+    `SHARPVerifierCallProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
   )
 
   return SHARP_VERIFIER_CONTRACTS
@@ -107,16 +107,16 @@ export function getSHARPVerifierGovernors(
 ): ProjectPermission[] {
   assert(
     verifierAddress === SHARP_VERIFIER_PROXY.address &&
-      getProxyGovernance(discovery, 'SHARPVerifierProxy')[0].address ===
+      getProxyGovernance(discovery, 'SHARPVerifierCallProxy')[0].address ===
         discovery.getContract('SHARPVerifierAdminMultisig').address &&
-      getProxyGovernance(discovery, 'SHARPVerifierProxy').length === 1,
-    `SHARPVerifierProxy or governance address mismatch. This project probably uses a different SHARP verifier or the admin has changed (${projectDiscovery.projectName})`,
+      getProxyGovernance(discovery, 'SHARPVerifierCallProxy').length === 1,
+    `SHARPVerifierCallProxy or governance address mismatch. This project probably uses a different SHARP verifier or the admin has changed (${projectDiscovery.projectName})`,
   )
 
   return [
     projectDiscovery.getPermissionDetails(
       'SHARP Verifier Governors',
-      getProxyGovernance(discovery, 'SHARPVerifierProxy'),
+      getProxyGovernance(discovery, 'SHARPVerifierCallProxy'),
       'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
         delayDescriptionFromSeconds(upgradeDelay),
     ),

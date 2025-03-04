@@ -1,4 +1,126 @@
-Generated with discovered.json: 0x62269bbc8b9531807ad3280df52c47ae83c47c08
+Generated with discovered.json: 0xebbe07c7fa672b187c1f7c0510570a32368e47ad
+
+# Diff at Tue, 04 Mar 2025 10:39:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21543795
+- current block number: 21543795
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543795 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) {
+    +++ description: None
+      sinceBlock:
++        11149814
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512) {
+    +++ description: None
+      sinceBlock:
++        12087157
+    }
+```
+
+```diff
+    contract AgentRegistry (0x39B9bf169a7e225ba037C443A40460c77438ea14) {
+    +++ description: None
+      sinceBlock:
++        11149547
+    }
+```
+
+```diff
+    contract ProtocolFeeVault (0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171) {
+    +++ description: None
+      sinceBlock:
++        9644449
+    }
+```
+
+```diff
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      sinceBlock:
++        12009173
+    }
+```
+
+```diff
+    contract BlockVerifier (0x6150343E0F43A17519c0327c41eDd9eBE88D01ef) {
+    +++ description: None
+      sinceBlock:
++        11149533
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x674bdf20A0F284D710BC40872100128e2d66Bd3f) {
+    +++ description: None
+      sinceBlock:
++        11149779
+    }
+```
+
+```diff
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
+    +++ description: None
+      sinceBlock:
++        21278465
+    }
+```
+
+```diff
+    contract LRC_v2 (0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD) {
+    +++ description: None
+      sinceBlock:
++        7544036
+    }
+```
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      sinceBlock:
++        11326208
+    }
+```
+
+```diff
+    contract LoopringV3 (0xe56D6ccab6551932C0356E4e8d5dAF0630920C71) {
+    +++ description: None
+      sinceBlock:
++        11150215
+    }
+```
+
+```diff
+    contract FastWithdrawalAgent (0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31) {
+    +++ description: None
+      sinceBlock:
++        11149548
+    }
+```
+
+```diff
+    contract UserStakingPool (0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b) {
+    +++ description: None
+      sinceBlock:
++        8967548
+    }
+```
+
+Generated with discovered.json: 0xcf18a36cf3e08f6b14a8e8ee7487127783ac0b28
 
 # Diff at Mon, 20 Jan 2025 11:09:42 GMT:
 

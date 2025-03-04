@@ -27,6 +27,7 @@
         "getConstants"
       ],
       "sinceTimestamp": 1603950102,
+      "sinceBlock": 11149814,
       "values": {
         "$admin": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "$immutable": false,
@@ -107,8 +108,7 @@
         "proxyOwner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "shutdownTriggered": [],
         "version": "3.6.0"
-      },
-      "derivedName": "ExchangeV3"
+      }
     },
     {
       "name": "LoopringIOExchangeOwner",
@@ -117,6 +117,7 @@
         "0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"
       ],
       "sinceTimestamp": 1616396742,
+      "sinceBlock": 12087157,
       "values": {
         "$immutable": true,
         "blockSubmitters": [
@@ -138,8 +139,7 @@
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
-      },
-      "derivedName": "LoopringIOExchangeOwner"
+      }
     },
     {
       "name": "AgentRegistry",
@@ -148,6 +148,7 @@
         "0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"
       ],
       "sinceTimestamp": 1603946693,
+      "sinceBlock": 11149547,
       "values": {
         "$immutable": true,
         "agents": [
@@ -292,8 +293,7 @@
         ],
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "AgentRegistry"
+      }
     },
     {
       "name": "ProtocolFeeVault",
@@ -302,6 +302,7 @@
         "0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"
       ],
       "sinceTimestamp": 1583852946,
+      "sinceBlock": 9644449,
       "values": {
         "$immutable": true,
         "DAO_PERDENTAGE": 20,
@@ -332,6 +333,7 @@
       ],
       "description": "Auxiliary contract able to force withdrawals from L1 on behalf of users.",
       "sinceTimestamp": 1615357743,
+      "sinceBlock": 12009173,
       "values": {
         "$immutable": true,
         "managers": [
@@ -344,8 +346,7 @@
         "numManagers": 5,
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "ForcedWithdrawalAgent"
+      }
     },
     {
       "name": "BlockVerifier",
@@ -354,6 +355,7 @@
         "0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"
       ],
       "sinceTimestamp": 1603946469,
+      "sinceBlock": 11149533,
       "values": {
         "$immutable": true,
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
@@ -367,13 +369,13 @@
         "0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"
       ],
       "sinceTimestamp": 1603949642,
+      "sinceBlock": 11149779,
       "values": {
         "$immutable": true,
         "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "DefaultDepositContract"
+      }
     },
     {
       "name": "Safe",
@@ -386,6 +388,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732702979,
+      "sinceBlock": 21278465,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -409,6 +412,7 @@
         "0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"
       ],
       "sinceTimestamp": 1554948637,
+      "sinceBlock": 7544036,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -435,6 +439,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1606289169,
+      "sinceBlock": 11326208,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -463,6 +468,7 @@
         "0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"
       ],
       "sinceTimestamp": 1603955371,
+      "sinceBlock": 11150215,
       "values": {
         "$immutable": true,
         "blockVerifierAddress": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
@@ -486,8 +492,8 @@
         "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
       ],
       "sinceTimestamp": 1603946697,
-      "values": { "$immutable": true },
-      "derivedName": "FastWithdrawalAgent"
+      "sinceBlock": 11149548,
+      "values": { "$immutable": true }
     },
     {
       "name": "UserStakingPool",
@@ -497,6 +503,7 @@
       ],
       "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"],
       "sinceTimestamp": 1574241665,
+      "sinceBlock": 8967548,
       "values": {
         "$immutable": true,
         "getTotalStaking": "479473040632219091170868",
@@ -512,8 +519,7 @@
           "depositedAt": 0,
           "claimedAt": 1615983279
         }
-      },
-      "derivedName": "UserStakingPool"
+      }
     }
   ],
   "eoas": [

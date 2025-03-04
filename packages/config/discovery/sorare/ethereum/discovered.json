@@ -2,7 +2,7 @@
   "name": "sorare",
   "chain": "ethereum",
   "blockNumber": 19825381,
-  "configHash": "0x2e5aae3a8d115b869f2faf42cdda6d4e593ca8abc8cb1ed41b6e2a1a4240af77",
+  "configHash": "0x347b84b6b2b5142101c15493a487ad2b4e768bbda8211d45556a8b2f6cf39680",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -12,6 +12,7 @@
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
       "sinceTimestamp": 1626352379,
+      "sinceBlock": 12831566,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": true,
@@ -25,6 +26,7 @@
         "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
       ],
       "sinceTimestamp": 1630836435,
+      "sinceBlock": 13165081,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -39,8 +41,7 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 2
-      },
-      "derivedName": "Committee"
+      }
     },
     {
       "name": "GpsFactRegistryAdapter",
@@ -49,6 +50,7 @@
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "sinceTimestamp": 1678702991,
+      "sinceBlock": 16818452,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -74,6 +76,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678893035,
+      "sinceBlock": 16834095,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -125,6 +128,7 @@
         "getValidiumVaultRoot"
       ],
       "sinceTimestamp": 1626352527,
+      "sinceBlock": 12831579,
       "values": {
         "$admin": [
           "0x5918481F777dBe437De249492B90AffB4e655de4",

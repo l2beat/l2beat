@@ -1,4 +1,134 @@
-Generated with discovered.json: 0xb1c7130a501ef3fd1ba1a8ef3d5c6b6858d2d7ab
+Generated with discovered.json: 0x57a24a06f14a449ba3071d1cf6dfc0bae48fca66
+
+# Diff at Tue, 04 Mar 2025 10:39:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21937199
+- current block number: 21937199
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21937199 (main branch discovery), not current.
+
+```diff
+    contract ReplicaUpgradeBeacon (0x10a432946e24C49866c243a13BE7205B3EF929ee) {
+    +++ description: None
+      sinceBlock:
++        13187690
+    }
+```
+
+```diff
+    contract RecoveryManager (0x2bB2a5A724170357cb691841F40d26A950d8C33D) {
+    +++ description: None
+      sinceBlock:
++        13643255
+    }
+```
+
+```diff
+    contract UpdaterManager (0x2CC80EE8a3f9c85309866F4C6BDF82f6846891EC) {
+    +++ description: None
+      sinceBlock:
++        13187663
+    }
+```
+
+```diff
+    contract BridgeUpgradeBeacon (0x3b96B42D1F4962CB21049fB237A886E2860AfacB) {
+    +++ description: None
+      sinceBlock:
++        13188015
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x42303634F37956687fB7ff2c6146AC842481A052) {
+    +++ description: None
+      sinceBlock:
++        13187679
+    }
+```
+
+```diff
+    contract Governor (0x5Fa96B622D1F4e920b92040c10fA297ca496ad37) {
+    +++ description: None
+      sinceBlock:
++        13186744
+    }
+```
+
+```diff
+    contract GovernanceUpgradeBeacon (0x681Edb6d52138cEa8210060C309230244BcEa61b) {
+    +++ description: None
+      sinceBlock:
++        13187679
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47) {
+    +++ description: None
+      sinceBlock:
++        13188015
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b) {
+    +++ description: None
+      sinceBlock:
++        13187725
+    }
+```
+
+```diff
+    contract HomeUpgradeBeacon (0x9E4C2547307e221383A4bcba6065389C69Bd4628) {
+    +++ description: None
+      sinceBlock:
++        13187674
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B) {
+    +++ description: None
+      sinceBlock:
++        13187658
+    }
+```
+
+```diff
+    contract GnosisSafe (0xBcd15f82Ae461335257d0851A18948784cF79E9d) {
+    +++ description: None
+      sinceBlock:
++        13084652
+    }
+```
+
+```diff
+    contract XAppConnectionManager (0xcEc158A719d11005Bd9339865965bed938BEafA3) {
+    +++ description: None
+      sinceBlock:
++        13187669
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97) {
+    +++ description: None
+      sinceBlock:
++        13187674
+    }
+```
+
+Generated with discovered.json: 0x9d2ca0aef81158acc5183d269c3925008fef91c0
 
 # Diff at Mon, 20 Jan 2025 11:09:50 GMT:
 

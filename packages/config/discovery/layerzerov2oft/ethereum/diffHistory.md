@@ -1,3 +1,446 @@
+Generated with discovered.json: 0x5006145c4f11b6071c929e8e8d3da0eb73ad406c
+
+# Diff at Tue, 04 Mar 2025 11:25:54 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@be38e12d3ff947ca8de40f3a23a9ba1875a54f5a block: 21943925
+- current block number: 21943925
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21943925 (main branch discovery), not current.
+
+```diff
+    contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        "BlockedMessageLib"
++        ""
+      sourceHashes:
+-        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+      values.messageLibType:
+-        2
+      values.version:
+-        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      unverified:
++        true
+    }
+```
+
+Generated with discovered.json: 0x670bd134ce0dddd064f85983e268df9a193a9747
+
+# Diff at Tue, 04 Mar 2025 10:39:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21943925
+- current block number: 21943925
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21943925 (main branch discovery), not current.
+
+```diff
+    contract WTIA_OFTAdapter (0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2) {
+    +++ description: None
+      sinceBlock:
++        19398639
+    }
+```
+
+```diff
+    contract  (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      sinceBlock:
++        19093746
+    }
+```
+
+```diff
+    contract TBankOFT (0x1762c17f671FA27cE6C59256f5F28242de9274d0) {
+    +++ description: None
+      sinceBlock:
++        19341581
+    }
+```
+
+```diff
+    contract TRESTLE_OFTAdapter (0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E) {
+    +++ description: None
+      sinceBlock:
++        19941017
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
+      sinceBlock:
++        19093715
+    }
+```
+
+```diff
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      sinceBlock:
++        19093715
+    }
+```
+
+```diff
+    contract DineroOFTLockbox (0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208) {
+    +++ description: None
+      sinceBlock:
++        19330462
+    }
+```
+
+```diff
+    contract StakedFraxEtherOFTAdapter (0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A) {
+    +++ description: None
+      sinceBlock:
++        19471548
+    }
+```
+
+```diff
+    contract StakedUSDeOFTAdapter (0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2) {
+    +++ description: None
+      sinceBlock:
++        19392822
+    }
+```
+
+```diff
+    contract FraxSharesOFTAdapter (0x23432452B720C80553458496D4D9d7C5003280d0) {
+    +++ description: None
+      sinceBlock:
++        19471501
+    }
+```
+
+```diff
+    contract EvmZkMptValidator (0x276816F1931aFac123BdaeA54afF02BE6fd73e14) {
+    +++ description: None
+      sinceBlock:
++        21077569
+    }
+```
+
+```diff
+    contract HorizenDVN (0x380275805876Ff19055EA900CDb2B46a94ecF20D) {
+    +++ description: None
+      sinceBlock:
++        19109198
+    }
+```
+
+```diff
+    contract EvmMptValidator (0x38C967856d17E900042Af447B3346bfF26C8ed4B) {
+    +++ description: None
+      sinceBlock:
++        21077568
+    }
+```
+
+```diff
+    contract CyberTokenAdapter (0x3d2fe83ea885C2E43A422C82C738847669708210) {
+    +++ description: None
+      sinceBlock:
++        19966610
+    }
+```
+
+```diff
+    contract MysoOFTAdapter (0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6) {
+    +++ description: None
+      sinceBlock:
++        19724628
+    }
+```
+
+```diff
+    contract ENAOFTAdapter (0x58538e6A46E07434d7E7375Bc268D3cb839C0133) {
+    +++ description: None
+      sinceBlock:
++        19621397
+    }
+```
+
+```diff
+    contract LayerZeroDVN (0x589dEDbD617e0CBcB916A9223F4d1300c294236b) {
+    +++ description: None
+      sinceBlock:
++        19093742
+    }
+```
+
+```diff
+    contract USDeOFTAdapter (0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34) {
+    +++ description: None
+      sinceBlock:
++        19392586
+    }
+```
+
+```diff
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056) {
+    +++ description: None
+      sinceBlock:
++        19093724
+    }
+```
+
+```diff
+    contract ParamOFTAdapter (0x6182995916d79DeDb60db1570776F9994fCdCA0a) {
+    +++ description: None
+      sinceBlock:
++        19922710
+    }
+```
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      sinceBlock:
++        21094853
+    }
+```
+
+```diff
+    contract MyOFTAdapter (0x801642B6efB861fE624dAD704b7A747779d9B433) {
+    +++ description: None
+      sinceBlock:
++        19430083
+    }
+```
+
+```diff
+    contract RSETH_OFTAdapter (0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) {
+    +++ description: None
+      sinceBlock:
++        19166120
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      sinceBlock:
++        19294337
+    }
+```
+
+```diff
+    contract  (0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB) {
+    +++ description: None
+      sinceBlock:
++        19109197
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      sinceBlock:
++        19093732
+    }
+```
+
+```diff
+    contract GnosisSafe (0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7) {
+    +++ description: None
+      sinceBlock:
++        19296636
+    }
+```
+
+```diff
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711) {
+    +++ description: None
+      sinceBlock:
++        19769079
+    }
+```
+
+```diff
+    contract  (0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b) {
+    +++ description: None
+      sinceBlock:
++        19093741
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
+      sinceBlock:
++        19093729
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: None
+      sinceBlock:
++        19093731
+    }
+```
+
+```diff
+    contract CyberTokenAdapter (0xCB07992DE144bDeE56fDb66Fff2454B43243b052) {
+    +++ description: None
+      sinceBlock:
++        20081436
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sinceBlock:
++        14457816
+    }
+```
+
+```diff
+    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sinceBlock:
++        18095084
+    }
+```
+
+```diff
+    contract KinetixFinanceTokenOFTAdapter (0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf) {
+    +++ description: None
+      sinceBlock:
++        19889373
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sinceBlock:
++        18095085
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      sinceBlock:
++        19291481
+    }
+```
+
+```diff
+    contract StakedFraxOFTAdapter (0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E) {
+    +++ description: None
+      sinceBlock:
++        19471547
+    }
+```
+
+```diff
+    contract MaviaOFTAdapter (0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D) {
+    +++ description: None
+      sinceBlock:
++        19294730
+    }
+```
+
+```diff
+    contract EtherFiOFTAdapter (0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D) {
+    +++ description: None
+      sinceBlock:
++        19630191
+    }
+```
+
+Generated with discovered.json: 0x8655f685e513a1f4afef472be4a47ec129a1c889
+
+# Diff at Fri, 28 Feb 2025 09:24:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a673c79f7be232b805781e844ed3929c5c5bb288 block: 21910109
+- current block number: 21943925
+
+## Description
+
+BlockedMessageLib verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21910109 (main branch discovery), not current.
+
+```diff
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        ""
++        "BlockedMessageLib"
+      unverified:
+-        true
+      values.messageLibType:
++        2
+      values.version:
++        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      sourceHashes:
++        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+    }
+```
+
+Generated with discovered.json: 0x84f31a7ab770e0165f9cd087e6de64edcdd466d9
+
+# Diff at Thu, 27 Feb 2025 11:45:54 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21910109
+- current block number: 21910109
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21910109 (main branch discovery), not current.
+
+```diff
+    contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        "BlockedMessageLib"
++        ""
+      sourceHashes:
+-        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+      values.messageLibType:
+-        2
+      values.version:
+-        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      unverified:
++        true
+    }
+```
+
 Generated with discovered.json: 0x18f71c002c81ae000bb4ca18f2aa1acd3b230aed
 
 # Diff at Wed, 12 Feb 2025 10:38:14 GMT:

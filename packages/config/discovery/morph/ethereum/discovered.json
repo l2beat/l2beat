@@ -63,6 +63,7 @@
         }
       ],
       "sinceTimestamp": 1729307471,
+      "sinceBlock": 20996843,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
         "$implementation": "0xDb0734109051DaAB5c32E45e9a5ad0548B2df714",
@@ -106,8 +107,7 @@
         "slashRemaining": 0,
         "stakingValue": "1000000000000000000",
         "withdrawalLockBlocks": 3
-      },
-      "derivedName": "L1Staking"
+      }
     },
     {
       "name": "L1ETHGateway",
@@ -126,6 +126,7 @@
         }
       ],
       "sinceTimestamp": 1729307603,
+      "sinceBlock": 20996854,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
         "$implementation": "0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c",
@@ -146,8 +147,7 @@
         "messenger": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
-      },
-      "derivedName": "L1ETHGateway"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -191,11 +191,11 @@
         }
       ],
       "sinceTimestamp": 1729306655,
+      "sinceBlock": 20996776,
       "values": {
         "$immutable": true,
         "owner": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "L1MessageQueueWithGasPriceOracle",
@@ -215,6 +215,7 @@
       ],
       "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
       "sinceTimestamp": 1729307207,
+      "sinceBlock": 20996821,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
         "$implementation": "0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA",
@@ -245,8 +246,7 @@
         "pendingQueueIndex": 6155,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
-      },
-      "derivedName": "L1MessageQueueWithGasPriceOracle"
+      }
     },
     {
       "name": "L1StandardERC20Gateway",
@@ -265,6 +265,7 @@
         }
       ],
       "sinceTimestamp": 1729307651,
+      "sinceBlock": 20996858,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
         "$implementation": "0x75BC012fA81DF052baFc4EF9255Af29B6C4e5301",
@@ -287,8 +288,7 @@
         "messenger": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
-      },
-      "derivedName": "L1StandardERC20Gateway"
+      }
     },
     {
       "name": "MultipleVersionRollupVerifier",
@@ -298,6 +298,7 @@
       ],
       "description": "Used to update the verifier and keep track of current and old versions.",
       "sinceTimestamp": 1737359447,
+      "sinceBlock": 21664323,
       "values": {
         "$immutable": true,
         "latestVerifier": [
@@ -310,8 +311,7 @@
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1]
-      },
-      "derivedName": "MultipleVersionRollupVerifier"
+      }
     },
     {
       "name": "L1GatewayRouter",
@@ -330,6 +330,7 @@
         }
       ],
       "sinceTimestamp": 1729307555,
+      "sinceBlock": 20996850,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
         "$implementation": "0x6D9623d44C4A1629815D9d6236FF25C4f82Cc819",
@@ -351,8 +352,7 @@
         "gatewayInContext": "0x0000000000000000000000000000000000000000",
         "gateways": ["0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"],
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
-      },
-      "derivedName": "L1GatewayRouter"
+      }
     },
     {
       "name": "MorphRollup",
@@ -537,6 +537,7 @@
         "lastFinalizedBatchIndex"
       ],
       "sinceTimestamp": 1729307507,
+      "sinceBlock": 20996846,
       "values": {
         "__maxNumTxInChunk": 0,
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
@@ -647,6 +648,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729598531,
+      "sinceBlock": 21020988,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -693,6 +695,7 @@
         }
       ],
       "sinceTimestamp": 1729308143,
+      "sinceBlock": 20996899,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
         "$implementation": "0xCb13746Fc891fC2e7D824870D00a26F43fE6123e",
@@ -723,8 +726,7 @@
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": true
-      },
-      "derivedName": "EnforcedTxGateway"
+      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -744,6 +746,7 @@
       ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1729307111,
+      "sinceBlock": 20996813,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
         "$implementation": "0x0cC37d5239F9027A1269f53D83c73084D538f3a9",
@@ -774,8 +777,7 @@
         "paused": false,
         "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "xDomainMessageSender": "0x000000000000000000000000000000000000dEaD"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "ZkEvmVerifierV1",
@@ -785,12 +787,12 @@
       ],
       "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.",
       "sinceTimestamp": 1736755163,
+      "sinceBlock": 21614228,
       "values": {
         "$immutable": true,
         "programVkey": "0x001bdbe2a0f4839f3e7ca3b42ab1ca9d012e23249d17564c953d3557aede919c",
         "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      },
-      "derivedName": "ZkEvmVerifierV1"
+      }
     },
     {
       "name": "MorphUpgradeMultisig",
@@ -851,6 +853,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1730976923,
+      "sinceBlock": 21135313,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -882,11 +885,11 @@
       ],
       "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.",
       "sinceTimestamp": 1729328435,
+      "sinceBlock": 20998580,
       "values": {
         "$immutable": true,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
-      },
-      "derivedName": "Whitelist"
+      }
     }
   ],
   "eoas": [

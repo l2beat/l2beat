@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x69b94b3a022d65b7acfebc0f7795b4a478cdec02
+Generated with discovered.json: 0x365ee6f4bb307b92759cbdff07aaf2a3196971ff
+
+# Diff at Tue, 04 Mar 2025 10:39:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 18939731
+- current block number: 18939731
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18939731 (main branch discovery), not current.
+
+```diff
+    contract BlockVerifier (0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e) {
+    +++ description: None
+      sinceBlock:
++        17087068
+    }
+```
+
+```diff
+    contract LoopringOwner (0x2028834B2c0A36A918c10937EeA71BE4f932da52) {
+    +++ description: None
+      sinceBlock:
++        17285500
+    }
+```
+
+```diff
+    contract LoopringV3 (0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458) {
+    +++ description: None
+      sinceBlock:
++        17087402
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83) {
+    +++ description: None
+      sinceBlock:
++        17087703
+    }
+```
+
+```diff
+    contract FeeVault (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C) {
+    +++ description: None
+      sinceBlock:
++        11970338
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA) {
+    +++ description: None
+      sinceBlock:
++        17087506
+    }
+```
+
+```diff
+    contract ExchangeV3 (0xe63602a9B3DFE983187525AC985Fec4F57B24eD5) {
+    +++ description: None
+      sinceBlock:
++        17087504
+    }
+```
+
+Generated with discovered.json: 0x7e050309eefd3e9124895780b5c4943edf67521b
 
 # Diff at Mon, 27 Jan 2025 08:44:31 GMT:
 

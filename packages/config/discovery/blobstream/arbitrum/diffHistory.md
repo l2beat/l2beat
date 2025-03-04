@@ -1,4 +1,110 @@
-Generated with discovered.json: 0xa7c99eaf20533f0c595d61b97de507fab43a05e9
+Generated with discovered.json: 0xfd628e0e9dfecc10f812505d62c5e2569f3d2951
+
+# Diff at Tue, 04 Mar 2025 10:40:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 305996466
+- current block number: 305996466
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305996466 (main branch discovery), not current.
+
+```diff
+    contract SuccinctFeeVault (0x296666e937b270193B960a7cEC526B351F353166) {
+    +++ description: None
+      sinceBlock:
++        175545872
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sinceBlock:
++        226384983
+    }
+```
+
+```diff
+    contract HeaderRangeVerifier (0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3) {
+    +++ description: None
+      sinceBlock:
++        193139337
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      sinceBlock:
++        188141651
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      sinceBlock:
++        190629615
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      sinceBlock:
++        191198934
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sinceBlock:
++        245028307
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      sinceBlock:
++        266979384
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      sinceBlock:
++        69837457
+    }
+```
+
+```diff
+    contract  (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      sinceBlock:
++        291720238
+    }
+```
+
+```diff
+    contract NextHeaderVerifier (0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C) {
+    +++ description: None
+      sinceBlock:
++        193139692
+    }
+```
+
+Generated with discovered.json: 0xab070335bf656a277b62c714f8192d4ed60b43cb
 
 # Diff at Fri, 14 Feb 2025 14:06:18 GMT:
 

@@ -37,7 +37,7 @@ export const getCachedActivityChartData = cache(
     previewRecategorisation: boolean,
   ) => {
     const db = getDb()
-    const projects = getActivityProjects()
+    const projects = (await getActivityProjects())
       .filter(createActivityProjectsFilter(filter, previewRecategorisation))
       .map((p) => p.id)
       .concat(ProjectId.ETHEREUM)

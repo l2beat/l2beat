@@ -1,4 +1,78 @@
-Generated with discovered.json: 0xed9d63f1ee94831e65ea3b4974dee7a2d422dd15
+Generated with discovered.json: 0x99cc1ca90dee47834ec85543d56806a2b77ed3b8
+
+# Diff at Tue, 04 Mar 2025 10:39:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20017695
+- current block number: 20017695
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017695 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      sinceBlock:
++        15448318
+    }
+```
+
+```diff
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      sinceBlock:
++        13857570
+    }
+```
+
+```diff
+    contract AxelarGasServiceOperators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) {
+    +++ description: None
+      sinceBlock:
++        18782489
+    }
+```
+
+```diff
+    contract TokenDeployer (0xb28478319B64f8D47e19A120209A211D902F8b8f) {
+    +++ description: None
+      sinceBlock:
++        18389965
+    }
+```
+
+```diff
+    contract Multisig (0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68) {
+    +++ description: None
+      sinceBlock:
++        18388582
+    }
+```
+
+```diff
+    contract AxelarAuthWeighted (0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0) {
+    +++ description: None
+      sinceBlock:
++        18389964
+    }
+```
+
+```diff
+    contract InterchainGovernance (0xfDF36A30070ea0241d69052ea85ff44Ad0476a66) {
+    +++ description: None
+      sinceBlock:
++        18394640
+    }
+```
+
+Generated with discovered.json: 0x3bf39cc365df5aa2ae1730c7ca49f5e92c559a1c
 
 # Diff at Mon, 20 Jan 2025 11:10:00 GMT:
 

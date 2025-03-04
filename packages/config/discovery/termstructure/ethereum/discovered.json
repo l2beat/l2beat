@@ -30,6 +30,7 @@
         "getTokenNum"
       ],
       "sinceTimestamp": 1716263903,
+      "sinceBlock": 19915746,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -241,8 +242,7 @@
         "isEvacuMode": false,
         "nomineeOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
-      },
-      "derivedName": "ZkTrueUp"
+      }
     },
     {
       "name": "Verifier",
@@ -251,6 +251,7 @@
         "0x67dda2434d66037220b8cf67f02205cb656fc8378fc0b5d0371ce8031274f4ce"
       ],
       "sinceTimestamp": 1716263747,
+      "sinceBlock": 19915733,
       "values": { "$immutable": true }
     },
     {
@@ -264,6 +265,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716254495,
+      "sinceBlock": 19914967,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -296,6 +298,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716254831,
+      "sinceBlock": 19914994,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -322,6 +325,7 @@
       "address": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
       "unverified": true,
       "sinceTimestamp": 1716263735,
+      "sinceBlock": 19915732,
       "values": { "$immutable": true }
     },
     {
@@ -331,8 +335,8 @@
         "0x7330507f8514566e42d7ae9942cb8825f30a89685dfadea06e8f02d6477e9ec8"
       ],
       "sinceTimestamp": 1716263891,
-      "values": { "$immutable": true, "isEvacuMode": false },
-      "derivedName": "EvacuationFacet"
+      "sinceBlock": 19915745,
+      "values": { "$immutable": true, "isEvacuMode": false }
     },
     {
       "name": "AccountFacet",
@@ -341,8 +345,8 @@
         "0xfe9a185d63abab90311e0fe1c1ac9cf8ff75eb18b8894eec37fc861eaad40d34"
       ],
       "sinceTimestamp": 1716263771,
-      "values": { "$immutable": true, "getAccountNum": 0 },
-      "derivedName": "AccountFacet"
+      "sinceBlock": 19915735,
+      "values": { "$immutable": true, "getAccountNum": 0 }
     },
     {
       "name": "RollupFacet",
@@ -351,12 +355,12 @@
         "0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043"
       ],
       "sinceTimestamp": 1716263831,
+      "sinceBlock": 19915740,
       "values": {
         "$immutable": true,
         "getBlockNum": [0, 0, 0],
         "getL1RequestNum": [0, 0, 0]
-      },
-      "derivedName": "RollupFacet"
+      }
     },
     {
       "name": "EvacuVerifier",
@@ -365,6 +369,7 @@
         "0x5c5089086b3995e62860454cc54ad1f86295fb59c0104a9bd303b2c1c0993c20"
       ],
       "sinceTimestamp": 1716263759,
+      "sinceBlock": 19915734,
       "values": { "$immutable": true }
     },
     {
@@ -378,6 +383,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716253799,
+      "sinceBlock": 19914909,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -410,6 +416,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716254159,
+      "sinceBlock": 19914939,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

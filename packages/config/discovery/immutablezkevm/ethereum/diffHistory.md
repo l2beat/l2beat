@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x5237621e6cd6a2c7afba4cfa84aed6b8d0632524
+Generated with discovered.json: 0x0c99de24fb6eee5f7a407308cf2c0a9c94d4642c
+
+# Diff at Tue, 04 Mar 2025 10:39:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20977341
+- current block number: 20977341
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977341 (main branch discovery), not current.
+
+```diff
+    contract AxelarGatewayProxyMultisig (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      sinceBlock:
++        13857570
+    }
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      sinceBlock:
++        18817837
+    }
+```
+
+```diff
+    contract ChildERC20 (0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1) {
+    +++ description: None
+      sinceBlock:
++        18817824
+    }
+```
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      sinceBlock:
++        18817832
+    }
+```
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      sinceBlock:
++        18816399
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      sinceBlock:
++        18817829
+    }
+```
+
+Generated with discovered.json: 0x702376d7ffd74ea708030fced753dd88d32e006f
 
 # Diff at Mon, 20 Jan 2025 11:09:36 GMT:
 

@@ -1,9 +1,9 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
   ProjectId,
-  type UnixTime,
+  UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -224,41 +224,37 @@ export function getNitroGovernance(
   l2TreasuryQuorumPercent: number,
 ): string {
   return `
-  All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
-  and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s.
-  While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through
-  multisigs on all three chains. Although they are technically separate and connect to different target permissions,
-  their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One sending crosschain transactions.
-  
-  
-  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (Proposer-) Security Council on Arbitrum One
-  and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs
-  (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts.
-  These two general paths have the same destination: the respective UpgradeExecutor smart contract.
-  
-  
-  Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a
-  CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${formatSeconds(
+All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
+and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s.
+While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through
+multisigs on all three chains. Although they are technically separate and connect to different target permissions,
+their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One sending crosschain transactions.
+
+Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (Proposer-) Security Council on Arbitrum One
+and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs
+(one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts.
+These two general paths have the same destination: the respective UpgradeExecutor smart contract.
+
+Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a
+CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${formatSeconds(
     l2TimelockDelay,
   )} delay and then sends it to the Outbox contract on Ethereum. This incurs another delay (the challenge period) of ${formatSeconds(
     challengeWindowSeconds,
   )}.
-  When that has passed, the L1 Timelock delays for additional ${formatSeconds(
+When that has passed, the L1 Timelock delays for additional ${formatSeconds(
     l1TimelockDelay,
   )}. Both timelocks serve as delays during which the transparent transaction contents can be audited,
-  and, in the case of the final L1 timelock, cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner restricted functions of the respective destination smart contracts
-  through the UpgradeExecutor on Ethereum. If the predefined  transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
-  
-  
-  Operator roles like the Sequencers and Validators are managed using the same paths.
-  Sequencer changes can be delegated to a Batch Poster Manager role.
-  
-  
-  Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
+and, in the case of the final L1 timelock, cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner restricted functions of the respective destination smart contracts
+through the UpgradeExecutor on Ethereum. If the predefined  transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
+
+Operator roles like the Sequencers and Validators are managed using the same paths.
+Sequencer changes can be delegated to a Batch Poster Manager role.
+
+Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
     treasuryTimelockDelay,
   )}
-  Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel
-  these transactions or schedule different ones but can overwrite them anyway by having upgrade permissions for all the underlying smart contracts.`
+Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel
+these transactions or schedule different ones but can overwrite them anyway by having upgrade permissions for all the underlying smart contracts.`
 }
 
 function defaultStateValidation(
@@ -346,7 +342,7 @@ function orbitStackCommon(
   type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
-  incomingNativeDA?: ProjectDataAvailability,
+  hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
     ScalingProjectDisplay,
@@ -366,13 +362,6 @@ function orbitStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValueOrUndefined(
-      'SequencerInbox',
-      'postsBlobs',
-    ) ??
-    false
 
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -390,7 +379,7 @@ function orbitStackCommon(
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
-  const daProvider = getDAProvider(templateVars)
+  const daProvider = getDAProvider(type, templateVars, explorerUrl, hostChainDA)
 
   const isUsingEspressoSequencer =
     templateVars.discovery.getContractValueOrUndefined<string>(
@@ -412,19 +401,6 @@ function orbitStackCommon(
     ) * blockNumberOpcodeTimeSeconds
 
   const postsToExternalDA = !postsToEthereum(templateVars)
-
-  let daBadge = daProvider?.badge
-  if (!postsToExternalDA) {
-    daBadge = usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata
-  }
-
-  assert(daBadge !== undefined, 'DA badge must be defined')
-
-  const nativeDA = incomingNativeDA ?? {
-    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }
 
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
@@ -459,7 +435,7 @@ function orbitStackCommon(
   //     'validatorWhitelistDisabled',
   //   )
 
-  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daBadge]
+  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daProvider.badge]
 
   if (isUsingEspressoSequencer) {
     automaticBadges.push(BADGES.Other.EspressoPreconfs)
@@ -495,7 +471,7 @@ function orbitStackCommon(
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
-    riskView: getRiskView(type, templateVars, daProvider),
+    riskView: getRiskView(templateVars, daProvider),
     stage: computedStage(templateVars),
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -526,10 +502,10 @@ function orbitStackCommon(
         },
       ),
       daTracking: getDaTracking(templateVars),
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
+      gasTokens: [
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
     },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
@@ -540,26 +516,9 @@ function orbitStackCommon(
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
-      dataAvailability: templateVars.nonTemplateTechnology?.dataAvailability ??
-        daProvider?.technology ?? {
-          ...(usesBlobs
-            ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
-            : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
-          references: [
-            {
-              title:
-                'Sequencing followed by deterministic execution - Arbitrum documentation',
-              url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
-            },
-            ...explorerReferences(explorerUrl, [
-              {
-                title:
-                  'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
-                address: safeGetImplementation(templateVars.sequencerInbox),
-              },
-            ]),
-          ],
-        },
+      dataAvailability:
+        templateVars.nonTemplateTechnology?.dataAvailability ??
+        daProvider.technology,
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -637,7 +596,7 @@ function orbitStackCommon(
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
-    dataAvailability: decideDA(daProvider, nativeDA),
+    dataAvailability: extractDA(daProvider),
   }
 }
 
@@ -652,7 +611,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    baseChain.dataAvailability,
+    hostChainDAProvider(baseChain),
   )
 
   const getStackedRisks = () => {
@@ -747,7 +706,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     },
     config: {
       ...common.config,
-      trackedTxs: templateVars.trackedTxs,
+      trackedTxs: getTrackedTxs(templateVars),
       finality: templateVars.finality,
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
@@ -774,8 +733,8 @@ function getDaTracking(
     'batchPosters',
   )
 
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
 
   return usesBlobs
     ? [
@@ -832,9 +791,8 @@ function ifPostsToEthereum<T>(
 }
 
 function getRiskView(
-  type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
-  daProvider: DAProvider | undefined,
+  daProvider: DAProvider,
 ): ScalingProjectRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -881,16 +839,10 @@ function getRiskView(
       })(),
     dataAvailability:
       templateVars.nonTemplateRiskView?.dataAvailability ??
-      (daProvider !== undefined
-        ? daProvider.riskViewDA
-        : type === 'layer2'
-          ? RISK_VIEW.DATA_ON_CHAIN
-          : RISK_VIEW.DATA_ON_CHAIN_L3),
+      daProvider.riskViewDA,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      (daProvider !== undefined
-        ? daProvider.riskViewExitWindow
-        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
+      daProvider.riskViewExitWindow,
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -923,10 +875,61 @@ function getRiskView(
 }
 
 function getDAProvider(
+  type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
-): DAProvider | undefined {
+  explorerUrl: string | undefined,
+  hostChainDA?: DAProvider,
+): DAProvider {
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
+
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
+
   if (postsToEthereum(templateVars)) {
-    return undefined
+    const usesBlobs =
+      templateVars.usesBlobs ??
+      templateVars.discovery.getContractValueOrUndefined(
+        'SequencerInbox',
+        'postsBlobs',
+      ) ??
+      false
+
+    return {
+      layer:
+        (hostChainDA?.layer ?? usesBlobs)
+          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+          : DA_LAYERS.ETH_CALLDATA,
+      bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
+      mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge:
+        hostChainDA?.badge ??
+        (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
+      riskViewDA:
+        type === 'layer2'
+          ? RISK_VIEW.DATA_ON_CHAIN
+          : RISK_VIEW.DATA_ON_CHAIN_L3,
+      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology: {
+        ...(usesBlobs
+          ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+          : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
+        references: [
+          {
+            title:
+              'Sequencing followed by deterministic execution - Arbitrum documentation',
+            url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+          },
+          ...explorerReferences(explorerUrl, [
+            {
+              title:
+                'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+              address: safeGetImplementation(templateVars.sequencerInbox),
+            },
+          ]),
+        ],
+      },
+    }
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
@@ -936,12 +939,6 @@ function getDAProvider(
 
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
-
-  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
-    templateVars.discovery,
-  )
-
-  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   if (isUsingValidBlobstreamWmr) {
     return {
@@ -974,19 +971,132 @@ function getDAProvider(
   }
 }
 
-function decideDA(
-  daProvider: DAProvider | undefined,
-  nativeDA: ProjectDataAvailability | undefined,
-): ProjectDataAvailability | undefined {
-  if (daProvider !== undefined) {
-    return {
-      layer: daProvider.layer,
-      bridge: daProvider.bridge,
-      mode: daProvider.mode,
-    }
-  }
+function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
+  const sequencerInbox = templateVars.discovery.getContract('SequencerInbox')
+  const outbox = templateVars.discovery.getContract('Outbox')
 
-  return nativeDA
+  assert(
+    sequencerInbox.sinceTimestamp !== undefined,
+    'SequencerInbox must have a sinceTimestamp',
+  )
+  assert(
+    outbox.sinceTimestamp !== undefined,
+    'Outbox must have a sinceTimestamp',
+  )
+
+  const genesisTimestamp = Math.min(
+    sequencerInbox.sinceTimestamp,
+    outbox.sinceTimestamp,
+  )
+
+  return [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0xe0bc9729',
+        functionSignature:
+          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x8f111f3c',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x6e620055',
+        functionSignature:
+          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x69cacded',
+        functionSignature:
+          'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: outbox.address,
+        selector: '0xa04cee60',
+        functionSignature:
+          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+        sinceTimestamp: new UnixTime(genesisTimestamp),
+      },
+    },
+  ]
+}
+
+function extractDA(daProvider: DAProvider): ProjectDataAvailability {
+  return {
+    layer: daProvider.layer,
+    bridge: daProvider.bridge,
+    mode: daProvider.mode,
+  }
 }
 
 function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
@@ -1026,4 +1136,27 @@ function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
       rollupNodeLink: templateVars.nodeSourceLink,
     },
   )
+}
+
+function hostChainDAProvider(hostChain: Layer2): DAProvider {
+  const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
+  assert(DABadge !== undefined, 'Host chain must have data availability badge')
+  assert(
+    hostChain.technology.dataAvailability !== undefined,
+    'Host chain must have technology data availability',
+  )
+  assert(
+    hostChain.dataAvailability !== undefined,
+    'Host chain must have data availability',
+  )
+
+  return {
+    layer: hostChain.dataAvailability.layer,
+    bridge: hostChain.dataAvailability.bridge,
+    mode: hostChain.dataAvailability.mode,
+    riskViewDA: hostChain.riskView.dataAvailability,
+    riskViewExitWindow: hostChain.riskView.exitWindow,
+    technology: hostChain.technology.dataAvailability,
+    badge: DABadge,
+  }
 }

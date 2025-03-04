@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x3601f9ae8e1c8bee3c9262fa92f917a465cc3f5c
+Generated with discovered.json: 0xe1056a1216ee07174e348a7f99b4f8f4ce1ae398
+
+# Diff at Tue, 04 Mar 2025 10:40:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 124973335
+- current block number: 124973335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 124973335 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      sinceBlock:
++        108503592
+    }
+```
+
+```diff
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      sinceBlock:
++        117746854
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      sinceBlock:
++        117748367
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      sinceBlock:
++        117748367
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
+    +++ description: None
+      sinceBlock:
++        117746900
+    }
+```
+
+Generated with discovered.json: 0xf6a85b69338095742fdf4ed0e0a0e9acb44a4647
 
 # Diff at Mon, 20 Jan 2025 11:10:42 GMT:
 

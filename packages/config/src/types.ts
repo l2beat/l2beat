@@ -821,6 +821,8 @@ export interface BaseProject {
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
+  scalingTechnology?: ProjectScalingTechnology
+  customDa?: CustomDa
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
   activityConfig?: ProjectActivityConfig
@@ -869,6 +871,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   links: ProjectLinks
+  badges: Badge[]
 }
 
 export interface ProjectLinks {
@@ -1160,4 +1163,25 @@ export interface ProjectTvlEscrow {
   source?: ProjectEscrow['source']
   bridgedUsing?: TokenBridgedUsing
   sharedEscrow?: SharedEscrow
+}
+
+export interface ProjectScalingTechnology {
+  warning?: string
+  detailedDescription?: string
+  architectureImage?: string
+  stateCorrectness?: ProjectTechnologyChoice
+  newCryptography?: ProjectTechnologyChoice
+  dataAvailability?: ProjectTechnologyChoice
+  operator?: ProjectTechnologyChoice
+  sequencing?: ProjectTechnologyChoice
+  sequencingImage?: string
+  forceTransactions?: ProjectTechnologyChoice
+  exitMechanisms?: ProjectTechnologyChoice[]
+  massExit?: ProjectTechnologyChoice
+  otherConsiderations?: ProjectTechnologyChoice[]
+  upgradesAndGovernance?: string
+  upgradesAndGovernanceImage?: string
+  stateDerivation?: ScalingProjectStateDerivation
+  stateValidation?: ScalingProjectStateValidation
+  stateValidationImage?: string
 }

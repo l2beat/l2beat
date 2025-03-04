@@ -1,4 +1,182 @@
-Generated with discovered.json: 0xcfdba7e8ecb36436b17b9417a5e958dea7e62196
+Generated with discovered.json: 0xd83e0965de4f2442b6658a94736d979244d02c08
+
+# Diff at Tue, 04 Mar 2025 10:39:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: None
+      sinceBlock:
++        13627370
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      sinceBlock:
++        19424659
+    }
+```
+
+```diff
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9) {
+    +++ description: None
+      sinceBlock:
++        13626929
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7) {
+    +++ description: None
+      sinceBlock:
++        13625270
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: None
+      sinceBlock:
++        13627429
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      sinceBlock:
++        13616534
+    }
+```
+
+```diff
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9) {
+    +++ description: None
+      sinceBlock:
++        13626959
+    }
+```
+
+```diff
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528) {
+    +++ description: None
+      sinceBlock:
++        19717907
+    }
+```
+
+```diff
+    contract  (0x5fF5316CD1C015970eEC83D34a69E504B577a5bb) {
+    +++ description: None
+      sinceBlock:
++        13627861
+    }
+```
+
+```diff
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: None
+      sinceBlock:
++        19697815
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: None
+      sinceBlock:
++        14561258
+    }
+```
+
+```diff
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063) {
+    +++ description: None
+      sinceBlock:
++        14577582
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      sinceBlock:
++        19424653
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        13625248
+    }
+```
+
+```diff
+    contract MToken (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
+    +++ description: None
+      sinceBlock:
++        11434969
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      sinceBlock:
++        19438866
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57) {
+    +++ description: None
+      sinceBlock:
++        13625297
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      sinceBlock:
++        19424665
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: None
+      sinceBlock:
++        14567320
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: None
+      sinceBlock:
++        13628326
+    }
+```
+
+Generated with discovered.json: 0xa45d280158816c143fa16d7daff05fae2222eee7
 
 # Diff at Tue, 04 Feb 2025 12:31:42 GMT:
 

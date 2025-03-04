@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x75a3aef6774486c2fb94e07bae1302af103d749c
+Generated with discovered.json: 0x3b37a6ae0a73608a04a1b30f9c45526737b5fcf4
+
+# Diff at Tue, 04 Mar 2025 10:39:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21630407
+- current block number: 21630407
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630407 (main branch discovery), not current.
+
+```diff
+    contract FuelSecurityCouncil (0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      sinceBlock:
++        20682521
+    }
+```
+
+```diff
+    contract Safe (0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc) {
+    +++ description: None
+      sinceBlock:
++        20871672
+    }
+```
+
+```diff
+    contract FuelERC20Gateway (0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67) {
+    +++ description: None
+      sinceBlock:
++        20678194
+    }
+```
+
+```diff
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      sinceBlock:
++        20620434
+    }
+```
+
+```diff
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      sinceBlock:
++        20620432
+    }
+```
+
+Generated with discovered.json: 0xdeb7afb89024e7b82826cafae6ba6c3066ed213d
 
 # Diff at Wed, 15 Jan 2025 14:14:10 GMT:
 

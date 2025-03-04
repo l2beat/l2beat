@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x1eb191ae9764994081c1d1e60dd6ec0ffb8e0010
+Generated with discovered.json: 0xe022a1427389cbff5e7e9a99a53a53afc968eabc
+
+# Diff at Tue, 04 Mar 2025 10:42:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 8312690
+- current block number: 8312690
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8312690 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      sinceBlock:
++        803957
+    }
+```
+
+```diff
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      sinceBlock:
++        804285
+    }
+```
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      sinceBlock:
++        838126
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      sinceBlock:
++        808599
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      sinceBlock:
++        808599
+    }
+```
+
+Generated with discovered.json: 0x03032aa452fc8e872cc93b7452288ee80e919b51
 
 # Diff at Mon, 20 Jan 2025 11:10:49 GMT:
 

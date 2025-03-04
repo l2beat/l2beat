@@ -23,6 +23,7 @@
       ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
@@ -63,6 +64,7 @@
       ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
@@ -99,6 +101,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
@@ -131,6 +134,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
@@ -164,6 +168,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
@@ -192,6 +197,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013",
@@ -218,6 +224,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014",
@@ -257,6 +264,7 @@
         "blobBaseFee"
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
@@ -302,6 +310,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
@@ -326,6 +335,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
@@ -335,7 +345,7 @@
       "derivedName": ""
     },
     {
-      "name": "ProxyAdmin",
+      "name": "L2ProxyAdmin",
       "address": "0x4200000000000000000000000000000000000018",
       "template": "opstack/Layer2/L2ProxyAdmin",
       "sourceHashes": [
@@ -343,7 +353,6 @@
         "0xe6aa6a8aed0808dc2e9355191d252aeab0c0891c1f81e4c9e51bc206fee6740c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "L2ProxyAdmin",
       "description": "Administration contract for other contract proxies.",
       "issuedPermissions": [
         {
@@ -415,6 +424,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
@@ -423,7 +433,8 @@
         "addressManager": "0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
         "owner": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "BaseFeeVault",
@@ -443,6 +454,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
@@ -475,6 +487,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
@@ -507,6 +520,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020",
@@ -533,6 +547,7 @@
         }
       ],
       "sinceTimestamp": 1733498412,
+      "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",

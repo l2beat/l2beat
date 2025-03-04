@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xf75b50488b7c4bccc60f66909a2dde49c92e6564
+Generated with discovered.json: 0x297af54cd97a1a67d5d6d63d86f444685b6a6f23
+
+# Diff at Tue, 04 Mar 2025 10:39:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21387345
+- current block number: 21387345
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387345 (main branch discovery), not current.
+
+```diff
+    contract Committee (0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295) {
+    +++ description: None
+      sinceBlock:
++        12107592
+    }
+```
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: None
+      sinceBlock:
++        12831566
+    }
+```
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      sinceBlock:
++        12011518
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE) {
+    +++ description: None
+      sinceBlock:
++        13849860
+    }
+```
+
+```diff
+    contract IMXProxyGovernanceMultisig2 (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      sinceBlock:
++        18816399
+    }
+```
+
+Generated with discovered.json: 0x0dc28e635561479f5220d2326f983a93cc261f35
 
 # Diff at Mon, 20 Jan 2025 11:09:36 GMT:
 

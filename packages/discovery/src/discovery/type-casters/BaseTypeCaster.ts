@@ -1,4 +1,4 @@
-import type { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '../output/types'
 
 export type ArgType = { [key: string]: string | number | boolean }
 

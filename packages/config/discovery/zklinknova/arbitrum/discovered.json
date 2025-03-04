@@ -17,6 +17,7 @@
         }
       ],
       "sinceTimestamp": 1709296973,
+      "sinceBlock": 186015816,
       "values": {
         "$immutable": true,
         "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
@@ -41,6 +42,7 @@
         }
       ],
       "sinceTimestamp": 1709280477,
+      "sinceBlock": 185950532,
       "values": {
         "$admin": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "$implementation": "0x413552461b0b2c13f117d885b52AaA2f23374B1D",
@@ -61,8 +63,7 @@
         "getRemoteGateway": "0x273D59aed2d793167c162E64b9162154B07583C0",
         "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "ZKLINK": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
-      },
-      "derivedName": "ArbitrumL2Gateway"
+      }
     },
     {
       "name": "ArbitrumOwner",
@@ -85,6 +86,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692604751,
+      "sinceBlock": 123482330,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -124,6 +126,7 @@
         }
       ],
       "sinceTimestamp": 1709296973,
+      "sinceBlock": 186015816,
       "values": {
         "$admin": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
         "$implementation": "0x1202e0557A23531D09015C802e993d6423685FfB",
@@ -143,8 +146,7 @@
         "l2Bridge": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
         "l2TokenBeacon": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
     },
     {
       "name": "zkLink",
@@ -171,6 +173,7 @@
         "totalValidatorForwardFee"
       ],
       "sinceTimestamp": 1709280428,
+      "sinceBlock": 185950340,
       "values": {
         "$admin": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "$implementation": "0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305",

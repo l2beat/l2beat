@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xb889a0abab47305e146ce9968a9eb2aea16b7e8c
+
+# Diff at Tue, 04 Mar 2025 10:39:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21285557
+- current block number: 21285557
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285557 (main branch discovery), not current.
+
+```diff
+    contract TransactionManager (0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09) {
+    +++ description: None
+      sinceBlock:
++        13548432
+    }
+```
+
+```diff
+    contract FulfillInterpreter (0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a) {
+    +++ description: None
+      sinceBlock:
++        13548432
+    }
+```
+
 Generated with discovered.json: 0x77d20bee381b4412c296d4815718f24895dad59e
 
 # Diff at Mon, 14 Oct 2024 10:50:11 GMT:

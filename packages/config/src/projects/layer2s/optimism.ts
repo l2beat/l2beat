@@ -1,8 +1,4 @@
 import {
-  type ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
-import {
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -33,17 +29,10 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './templates/generateDiscoveryDrivenSections'
+import { safeGetImplementation } from './templates/utils'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
-
-function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = get$Implementations(contract.values)[0]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
-}
 
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'OptimismPortal',
@@ -132,7 +121,6 @@ export const optimism: Layer2 = {
     BADGES.DA.EthereumBlobs,
     BADGES.Stack.OPStack,
     BADGES.Infra.Superchain,
-    BADGES.Other.L3HostChain,
     BADGES.Other.Governance,
   ],
   display: {

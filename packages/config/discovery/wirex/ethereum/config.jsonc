@@ -7,9 +7,7 @@
     "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
-  "sharedModules": {
-    "PolygonRollupManager": "shared-polygon-cdk"
-  },
+  "sharedModules": ["shared-polygon-cdk"],
   "names": {
     "0x78253E2E6120164bd826668A4C96Db20f78A94c9": "Validium"
   }

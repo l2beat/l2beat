@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1612680486,
+      "sinceBlock": 11807778,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -46,6 +47,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1621970023,
+      "sinceBlock": 12505303,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -79,6 +81,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1587354416,
+      "sinceBlock": 9907020,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -114,6 +117,7 @@
       ],
       "ignoreInWatchMode": ["totalTokens"],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
@@ -124,8 +128,7 @@
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
         "totalTokens": 184,
         "validators": ["0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
-      },
-      "derivedName": "Governance"
+      }
     },
     {
       "name": "TokenGovernance",
@@ -134,6 +137,7 @@
         "0xbc5215ffaf06b3d4f7facebe48a2d345c8b0cf97c800aa3f8e644d843a86ae03"
       ],
       "sinceTimestamp": 1645178700,
+      "sinceBlock": 14229421,
       "values": {
         "$immutable": true,
         "governance": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
@@ -142,8 +146,7 @@
         "listingFeeToken": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "tokenListers": ["0xE24f4870Ab85DE8E356C5fC56138587206c70d99"],
         "treasury": "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
-      },
-      "derivedName": "TokenGovernance"
+      }
     },
     {
       "name": "UpgradeGatekeeper",
@@ -166,6 +169,7 @@
         }
       ],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$immutable": true,
         "getMaster": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
@@ -179,8 +183,7 @@
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
         "versionId": 11
-      },
-      "derivedName": "UpgradeGatekeeper"
+      }
     },
     {
       "name": "Verifier",
@@ -198,13 +201,13 @@
         }
       ],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206",
         "$pastUpgrades": [],
         "$upgradeCount": 0
-      },
-      "derivedName": "Verifier"
+      }
     },
     {
       "name": "NftFactory",
@@ -214,6 +217,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1626171128,
+      "sinceBlock": 12818185,
       "values": {
         "$immutable": true,
         "baseURI": "",
@@ -240,6 +244,7 @@
         }
       ],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": [
@@ -294,6 +299,7 @@
         "0x379cacebf61f1aa488b2a43b02fff3f8d7835d9dca8f342a13570553219e6e8c"
       ],
       "sinceTimestamp": 1557156465,
+      "sinceBlock": 7708066,
       "values": { "$immutable": true }
     },
     {
@@ -307,6 +313,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1585581484,
+      "sinceBlock": 9773819,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",

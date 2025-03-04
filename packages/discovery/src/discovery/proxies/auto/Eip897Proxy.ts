@@ -1,6 +1,6 @@
-import type { ProxyDetails } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { BigNumber } from 'ethers'
+import type { ProxyDetails } from '../types'
 
 import type { IProvider } from '../../provider/IProvider'
 

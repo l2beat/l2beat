@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0xf7c46c8defff5407e93c77a8e3c7344cd335d40f7ce71ca81c9d2bd045643388",
+  "configHash": "0xaa0ce0b2729a3c8393ab6febbbaca0bcb1dc1a33e61d734e431a836ef3dc3e00",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -23,6 +23,7 @@
       ],
       "ignoreInWatchMode": ["totalBridgedDAI"],
       "sinceTimestamp": 1695199499,
+      "sinceBlock": 18175991,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
@@ -57,7 +58,7 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "PolygonZkEVMEtrog",
+      "name": "PolygonZkEVM",
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -65,7 +66,6 @@
         "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -76,6 +76,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1706364971,
+      "sinceBlock": 19098451,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
@@ -144,6 +145,7 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
+      "derivedName": "PolygonZkEVMEtrog",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -163,6 +165,7 @@
         }
       ],
       "sinceTimestamp": 1700125979,
+      "sinceBlock": 18583475,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6",
@@ -184,16 +187,17 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "FflonkVerifier_11",
+      "name": "Verifier",
       "address": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x1b9299553467d8c5557640b4aa02efa58c4fd2cec8e008db1a70ce0a1c5a131b"
       ],
-      "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1726821035,
+      "sinceBlock": 20790618,
       "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier_11",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -213,6 +217,7 @@
         }
       ],
       "sinceTimestamp": 1703945135,
+      "sinceBlock": 18898811,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0x18FED1E19dC564DC917D203be9d40790472D22e9",
@@ -270,6 +275,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1694792111,
+      "sinceBlock": 18142537,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

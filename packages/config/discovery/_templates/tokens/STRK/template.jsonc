@@ -2,6 +2,7 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "STRK_tokenContract",
   "ignoreMethods": ["getPastTotalSupply"],
+  "ignoreInWatchMode": ["totalSupply"],
   "fields": {
     "accessControl": {
       "handler": {

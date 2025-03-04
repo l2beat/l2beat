@@ -20,6 +20,7 @@
         }
       ],
       "sinceTimestamp": 1661972207,
+      "sinceBlock": 15448318,
       "values": {
         "$admin": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "$implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
@@ -41,8 +42,7 @@
         "implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "AxelarGasService"
+      }
     },
     {
       "name": "Gateway",
@@ -53,6 +53,7 @@
       ],
       "proxyType": "Axelar proxy",
       "sinceTimestamp": 1640210870,
+      "sinceBlock": 13857570,
       "values": {
         "$implementation": "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098",
         "$pastUpgrades": [
@@ -120,6 +121,7 @@
         "0xa898c8df7706ef8117978fb0d8653aea9d509fa5e96475894390689c93b28187"
       ],
       "sinceTimestamp": 1702533995,
+      "sinceBlock": 18782489,
       "values": {
         "$immutable": true,
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
@@ -134,6 +136,7 @@
         "0xb697944037f1be572b23ca3eabbb455b59abdb05b45851313635da227ccc52c3"
       ],
       "sinceTimestamp": 1697785883,
+      "sinceBlock": 18389965,
       "values": { "$immutable": true }
     },
     {
@@ -143,6 +146,7 @@
         "0xfca353778b820ad49261c7887cf13ab259a89edab86eef4aeb90e1b2b2a948f5"
       ],
       "sinceTimestamp": 1697769227,
+      "sinceBlock": 18388582,
       "values": {
         "$immutable": true,
         "signerAccounts": [
@@ -166,13 +170,13 @@
       ],
       "ignoreInWatchMode": ["currentEpoch"],
       "sinceTimestamp": 1697785871,
+      "sinceBlock": 18389964,
       "values": {
         "$immutable": true,
         "currentEpoch": 225,
         "owner": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "AxelarAuthWeighted"
+      }
     },
     {
       "name": "InterchainGovernance",
@@ -181,6 +185,7 @@
         "0x36106df3599f7c698c4c70652810248df4da03bd579b99553e2852b368632ff6"
       ],
       "sinceTimestamp": 1697842379,
+      "sinceBlock": 18394640,
       "values": {
         "$immutable": true,
         "gateway": "0x4F4495243837681061C4743b74B3eEdf548D56A5",

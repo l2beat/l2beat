@@ -1,3 +1,1734 @@
+Generated with discovered.json: 0xe531a0ca0465bee779e7c6197dcc8c6e71fefb6b
+
+# Diff at Tue, 04 Mar 2025 10:39:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21951256
+- current block number: 21951256
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21951256 (main branch discovery), not current.
+
+```diff
+    contract EcdsaPointsXColumn (0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey1Column (0x032e5cDb729Ce94638ACA9e82A22688109B43046) {
+    +++ description: None
+      sinceBlock:
++        20376819
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly0 (0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x05C98569CA566a2035b87dE7d1b623C950798035) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3) {
+    +++ description: None
+      sinceBlock:
++        20376782
+    }
+```
+
+```diff
+    contract CpuOods (0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey1Column (0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey0Column0 (0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey1Column0 (0x1E8E41141347E01f33d84718b7f4cEFB433D5a94) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly1 (0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676) {
+    +++ description: None
+      sinceBlock:
++        19079946
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey1Column0 (0x20F10963eBCA608f8B24a5AEE275861B20ec868E) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract SHARPVerifierAdminMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      sinceBlock:
++        16770549
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x243682b9A01455ac671c97D8dE686EBd4EE25791) {
+    +++ description: None
+      sinceBlock:
++        20376816
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier0 (0x28E3aD4201ba416B23d9950503dB28a9232BE32a) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey2Column0 (0x2b159027d7F0E23D5C15b0517e33DdA838C46045) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly2 (0x307982EB84858A04d32b5e0b72D152be5A3eEcEA) {
+    +++ description: None
+      sinceBlock:
++        19079946
+    }
+```
+
+```diff
+    contract FriStatementContract (0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract MerkleStatementContract (0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x351666E9EeA6E012f08695ccd1923f37519563f1) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract Level2CpuOods0 (0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract Level2PedersenHashPointsXColumn (0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB) {
+    +++ description: None
+      sinceBlock:
++        19079932
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x3d57526c1C8D63fa2A8704487Df65e9000166c8E) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract Level2MemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA) {
+    +++ description: None
+      sinceBlock:
++        19079931
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x42AF9498647Be47A256C9cc8278eE94473Cb7771) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly3 (0x450909cC615036Ca4772dDDd8a69988B031811c9) {
+    +++ description: None
+      sinceBlock:
++        19079931
+    }
+```
+
+```diff
+    contract SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay.
+      sinceBlock:
++        13480127
+    }
+```
+
+```diff
+    contract Level2CpuOods1 (0x473E7B002f9A3109fd0FcdA4597935E4E610f367) {
+    +++ description: None
+      sinceBlock:
++        19079946
+    }
+```
+
+```diff
+    contract CpuOods (0x4742f8723CAE9C17Cb1D54708898904fB43621c9) {
+    +++ description: None
+      sinceBlock:
++        20376820
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey2Column (0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract CpuOods (0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract Level2CpuOods2 (0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB) {
+    +++ description: None
+      sinceBlock:
++        19079981
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey0Column (0x53daC4aB94955f35657463252a7b25F343A14451) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515) {
+    +++ description: Bootloader program for the SHARPVerifier.
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier1 (0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d) {
+    +++ description: None
+      sinceBlock:
++        19079933
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier2 (0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460) {
+    +++ description: None
+      sinceBlock:
++        19079946
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey1Column1 (0x62960C874379653D7BBe3644Ac653736Da2eda12) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract Level2MerkleStatementContract (0x634DCf4f1421Fc4D95A968A559a450ad0245804c) {
+    +++ description: None
+      sinceBlock:
++        19079933
+    }
+```
+
+```diff
+    contract CpuOods (0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e) {
+    +++ description: None
+      sinceBlock:
++        20376782
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier3 (0x66F2345D003511a1A60D87E3984Bb8d12C21A970) {
+    +++ description: None
+      sinceBlock:
++        19079986
+    }
+```
+
+```diff
+    contract Level2CpuOods3 (0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract Level3SHARPVerifier (0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6) {
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+      sinceBlock:
++        16430088
+    }
+```
+
+```diff
+    contract Level2CpuOods4 (0x704DFf65eD9b3d121d469b7A790A9927C853607F) {
+    +++ description: None
+      sinceBlock:
++        19079933
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey0Column1 (0x75D887d2437eF87EA17B93143716BECD7BBbCa0a) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey0Column0 (0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier4 (0x8055948c530dbBc19cc350d53473EEe3a1e3d22B) {
+    +++ description: None
+      sinceBlock:
++        19079994
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract Level2CpuOods5 (0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1) {
+    +++ description: None
+      sinceBlock:
++        19079933
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey1Column (0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc) {
+    +++ description: None
+      sinceBlock:
++        20376818
+    }
+```
+
+```diff
+    contract Level2EcdsaPointsYColumn (0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1) {
+    +++ description: None
+      sinceBlock:
++        19079933
+    }
+```
+
+```diff
+    contract SHARPVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      sinceBlock:
++        20407220
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE) {
+    +++ description: None
+      sinceBlock:
++        20376816
+    }
+```
+
+```diff
+    contract CpuOods (0xA9db7bDfbc3664C8954f490e4d94B8607a080f23) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier5 (0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9) {
+    +++ description: None
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xAaAe0edF6536de72E7163D293518c40011179f8a) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract CpuOods (0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0) {
+    +++ description: None
+      sinceBlock:
++        20376785
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67) {
+    +++ description: None
+      sinceBlock:
++        20376782
+    }
+```
+
+```diff
+    contract Level2CairoBootloaderProgram (0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40) {
+    +++ description: Bootloader program for the SHARPVerifier.
+      sinceBlock:
++        19079931
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey2Column1 (0xB5A5759Dd063899F213eB9699906B445f855660D) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly4 (0xB62Dc40175812208f509B69506315A48C92fb15A) {
+    +++ description: None
+      sinceBlock:
++        19079933
+    }
+```
+
+```diff
+    contract Level2CpuOods6 (0xB640935b164024EF1BC0b9e176432c440a5cd4dc) {
+    +++ description: None
+      sinceBlock:
++        19079986
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey0Column (0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF) {
+    +++ description: None
+      sinceBlock:
++        20376819
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier6 (0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc) {
+    +++ description: None
+      sinceBlock:
++        19079946
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey1Column1 (0xC2969a099F22430e20bcE237F469ac6F3101Ac5f) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B) {
+    +++ description: None
+      sinceBlock:
++        20376782
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey0Column (0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540) {
+    +++ description: None
+      sinceBlock:
++        20376816
+    }
+```
+
+```diff
+    contract Level2EcdsaPointsXColumn (0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B) {
+    +++ description: None
+      sinceBlock:
++        19079932
+    }
+```
+
+```diff
+    contract Level2CpuOods7 (0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4) {
+    +++ description: None
+      sinceBlock:
++        19093862
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly5 (0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02) {
+    +++ description: None
+      sinceBlock:
++        19079986
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier7 (0xD0fC19710c389ef4a7244656cB08db08eA9D88b4) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract Level2SHARPVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+      sinceBlock:
++        19093880
+    }
+```
+
+```diff
+    contract CpuOods (0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40) {
+    +++ description: None
+      sinceBlock:
++        20376784
+    }
+```
+
+```diff
+    contract CpuOods (0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84) {
+    +++ description: None
+      sinceBlock:
++        20376782
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly6 (0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey2Column (0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD) {
+    +++ description: None
+      sinceBlock:
++        20376818
+    }
+```
+
+```diff
+    contract Level2FriStatementContract (0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb) {
+    +++ description: None
+      sinceBlock:
++        19079933
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xe155154845950573EC5F518fC0D4950AB71303ff) {
+    +++ description: None
+      sinceBlock:
++        20376821
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (0xE3929Ea107238Ce59d64A3cE497f12b57846B716) {
+    +++ description: None
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly7 (0xE5313feE344376D22A42C9F0919e7F0d43920CAc) {
+    +++ description: None
+      sinceBlock:
++        19079994
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460) {
+    +++ description: Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.
+      sinceBlock:
++        20376781
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey0Column1 (0xe7B835eA7e348B25aF2480272C4cA28429573293) {
+    +++ description: None
+      sinceBlock:
++        19093879
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey0Column (0xedFfEA8296945aA91FC035Aefc8c33D737dBc573) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey1Column (0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc) {
+    +++ description: None
+      sinceBlock:
++        20377720
+    }
+```
+
+```diff
+    contract Level2PedersenHashPointsYColumn (0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd) {
+    +++ description: None
+      sinceBlock:
++        19079932
+    }
+```
+
+Generated with discovered.json: 0xa84d934cf1c8e32e772a9256c107c7b88ece99f3
+
+# Diff at Sat, 01 Mar 2025 11:47:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a345eaeb3dc1d9d41bdaf608eb366f7f0aae874a block: 21766214
+- current block number: 21951256
+
+## Description
+
+config related: renamed some starknet contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766214 (main branch discovery), not current.
+
+```diff
+    contract EcdsaPointsXColumn (0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey1Column (0x032e5cDb729Ce94638ACA9e82A22688109B43046) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly0 (0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x05C98569CA566a2035b87dE7d1b623C950798035) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey1Column (0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey0Column0 (0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey1Column0 (0x1E8E41141347E01f33d84718b7f4cEFB433D5a94) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly1 (0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey1Column0 (0x20F10963eBCA608f8B24a5AEE275861B20ec868E) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SHARPVerifierAdminMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x243682b9A01455ac671c97D8dE686EBd4EE25791) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier0 (0x28E3aD4201ba416B23d9950503dB28a9232BE32a) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey2Column0 (0x2b159027d7F0E23D5C15b0517e33DdA838C46045) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly2 (0x307982EB84858A04d32b5e0b72D152be5A3eEcEA) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract FriStatementContract (0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract MerkleStatementContract (0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x351666E9EeA6E012f08695ccd1923f37519563f1) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuOods0 (0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PedersenHashPointsXColumn (0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x3d57526c1C8D63fa2A8704487Df65e9000166c8E) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2MemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x42AF9498647Be47A256C9cc8278eE94473Cb7771) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly3 (0x450909cC615036Ca4772dDDd8a69988B031811c9) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay.
+      name:
+-        "SHARPVerifierProxy"
++        "SHARPVerifierCallProxy"
+      values.upgradeActivationDelayFmt:
++        "0s"
+      template:
++        "shared-sharp-verifier/SHARPVerifierCallProxy"
+      description:
++        "Upgradable contract through which the SHARPVerifier can be called. This allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 0s delay."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract Level2CpuOods1 (0x473E7B002f9A3109fd0FcdA4597935E4E610f367) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0x4742f8723CAE9C17Cb1D54708898904fB43621c9) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey2Column (0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuOods2 (0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey0Column (0x53daC4aB94955f35657463252a7b25F343A14451) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515) {
+    +++ description: Bootloader program for the SHARPVerifier.
+      template:
++        "shared-sharp-verifier/CairoBootloaderProgram"
+      description:
++        "Bootloader program for the SHARPVerifier."
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier1 (0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier2 (0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey1Column1 (0x62960C874379653D7BBe3644Ac653736Da2eda12) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2MerkleStatementContract (0x634DCf4f1421Fc4D95A968A559a450ad0245804c) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier3 (0x66F2345D003511a1A60D87E3984Bb8d12C21A970) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuOods3 (0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level3SHARPVerifier (0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6) {
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+      name:
+-        "OldSHARPVerifier"
++        "Level3SHARPVerifier"
+      template:
+-        "shared-sharp-verifier/DeprecatedVerifier"
++        "shared-sharp-verifier/Level3SHARPVerifier"
+      values.bootloaderProgramContractAddress:
+-        "0x0000000000000000000000000000000000000008"
+      values.cpuFrilessVerifiers:
+-        []
+      values.memoryPageFactRegistry:
+-        "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4"
+      description:
++        "Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuOods4 (0x704DFf65eD9b3d121d469b7A790A9927C853607F) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonPartialRoundKey0Column1 (0x75D887d2437eF87EA17B93143716BECD7BBbCa0a) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey0Column0 (0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier4 (0x8055948c530dbBc19cc350d53473EEe3a1e3d22B) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuOods5 (0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey1Column (0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2EcdsaPointsYColumn (0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SHARPVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      template:
+-        "shared-sharp-verifier/Verifier"
++        "shared-sharp-verifier/SHARPVerifier"
+      description:
++        "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output."
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0xA9db7bDfbc3664C8954f490e4d94B8607a080f23) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier5 (0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xAaAe0edF6536de72E7163D293518c40011179f8a) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CairoBootloaderProgram (0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40) {
+    +++ description: Bootloader program for the SHARPVerifier.
+      template:
++        "shared-sharp-verifier/CairoBootloaderProgram"
+      description:
++        "Bootloader program for the SHARPVerifier."
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey2Column1 (0xB5A5759Dd063899F213eB9699906B445f855660D) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly4 (0xB62Dc40175812208f509B69506315A48C92fb15A) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuOods6 (0xB640935b164024EF1BC0b9e176432c440a5cd4dc) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey0Column (0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier6 (0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey1Column1 (0xC2969a099F22430e20bcE237F469ac6F3101Ac5f) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey0Column (0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2EcdsaPointsXColumn (0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuOods7 (0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly5 (0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuFrilessVerifier7 (0xD0fC19710c389ef4a7244656cB08db08eA9D88b4) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/CpuFrilessVerifier"
++        "shared-sharp-verifier/Level2CpuFrilessVerifier"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2SHARPVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+      template:
+-        "shared-sharp-verifier/DeprecatedVerifier"
++        "shared-sharp-verifier/Level2SHARPVerifier"
+      description:
++        "Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuOods (0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly6 (0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey2Column (0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2FriStatementContract (0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xe155154845950573EC5F518fC0D4950AB71303ff) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (0xE3929Ea107238Ce59d64A3cE497f12b57846B716) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2CpuConstraintPoly7 (0xE5313feE344376D22A42C9F0919e7F0d43920CAc) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460) {
+    +++ description: Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/MemoryPageFactRegistry"
+      description:
++        "Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier."
+    }
+```
+
+```diff
+    contract Level2PoseidonPoseidonFullRoundKey0Column1 (0xe7B835eA7e348B25aF2480272C4cA28429573293) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey0Column (0xedFfEA8296945aA91FC035Aefc8c33D737dBc573) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey1Column (0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Level2PedersenHashPointsYColumn (0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/ignoreCompute"
++        "shared-sharp-verifier/ignoreComputeSpam"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OldMemoryPageFactRegistry (0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8b4d91c6e108abe69cf276f6947ea54a64b20646
 
 # Diff at Mon, 03 Feb 2025 13:17:17 GMT:

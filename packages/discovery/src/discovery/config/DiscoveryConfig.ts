@@ -1,8 +1,8 @@
 import { hashJson } from '@l2beat/shared'
 import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { join } from 'lodash'
+import type { DiscoveryOutput } from '../output/types'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
 import {
@@ -29,7 +29,7 @@ export class DiscoveryConfig {
       join(process.cwd(), '../config'),
     ),
   ) {
-    this.sharedModuleDiscovery = Object.values(config.sharedModules ?? {}).map(
+    this.sharedModuleDiscovery = (config.sharedModules ?? []).map(
       (projectName) => {
         return configReader.readDiscovery(projectName, config.chain)
       },
@@ -81,9 +81,7 @@ export class DiscoveryConfig {
   }
 
   get sharedModules(): string[] {
-    return this.config.sharedModules
-      ? Object.values(this.config.sharedModules)
-      : []
+    return this.config.sharedModules ?? []
   }
 
   get hash(): Hash256 {

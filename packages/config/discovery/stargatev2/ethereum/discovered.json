@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 21844076,
+  "blockNumber": 21944318,
   "configHash": "0xe258f6c5dc45a630fb6859ed9623346b9382302cdc8302786e57c01bee1e3989",
   "contracts": [
     {
@@ -11,13 +11,13 @@
         "0x3857982ba9867dfe0d878491a8f43962a5ae20721e924738425e3e6902cf9097"
       ],
       "sinceTimestamp": 1716837503,
+      "sinceBlock": 19963243,
       "values": {
         "$immutable": true,
         "admin": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "getTransferGasLimit": 2300,
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705"
-      },
-      "derivedName": "Treasurer"
+      }
     },
     {
       "name": "LayerZero Executor",
@@ -32,6 +32,7 @@
         }
       ],
       "sinceTimestamp": 1706308043,
+      "sinceBlock": 19093746,
       "values": {
         "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
         "$implementation": "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805",
@@ -64,6 +65,7 @@
       ],
       "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
       "sinceTimestamp": 1706307671,
+      "sinceBlock": 19093715,
       "values": {
         "$immutable": true,
         "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
@@ -94,25 +96,15 @@
           "severity": "HIGH",
           "description": "MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack."
         }
-      },
-      "derivedName": "EndpointV2"
+      }
     },
     {
-      "name": "BlockedMessageLib",
+      "name": "",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-      "sourceHashes": [
-        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
-      ],
+      "unverified": true,
       "sinceTimestamp": 1706307671,
-      "values": {
-        "$immutable": true,
-        "messageLibType": 2,
-        "version": {
-          "major": "18446744073709551615",
-          "minor": 255,
-          "endpointVersion": 2
-        }
-      }
+      "sinceBlock": 19093715,
+      "values": { "$immutable": true }
     },
     {
       "name": "StargatePool",
@@ -128,6 +120,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837323,
+      "sinceBlock": 19963228,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -146,14 +139,14 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "21786536762099363",
-        "poolBalance": "635437677000000000000",
+        "plannerFee": "21997405696127320",
+        "poolBalance": "426160233000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 721407,
-        "tvl": "6000066726000000000000"
+        "treasuryFee": 567967,
+        "tvl": "1972061093000000000000"
       }
     },
     {
@@ -163,13 +156,13 @@
         "0xc36d2c5087e47e6fad11a1bea54e8da1eba1b67863c32a5961968d43a77b2f0b"
       ],
       "sinceTimestamp": 1716837491,
+      "sinceBlock": 19963242,
       "values": {
         "$immutable": true,
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "rewardTokens": ["0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"],
         "staking": "0xFF551fEDdbeDC0AeE764139cCD9Cb644Bb04A6BD"
-      },
-      "derivedName": "StargateMultiRewarder"
+      }
     },
     {
       "name": "Treasury",
@@ -178,6 +171,7 @@
         "0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"
       ],
       "sinceTimestamp": 1706307779,
+      "sinceBlock": 19093724,
       "values": {
         "$immutable": true,
         "lzTokenEnabled": false,
@@ -197,6 +191,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1647498793,
+      "sinceBlock": 14402408,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -213,7 +208,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 899,
+        "nonce": 903,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -225,6 +220,7 @@
         "0xb151141227bb08ead5b1a7d464402bf23feaf60625a773cb8ced48745eb66fe6"
       ],
       "sinceTimestamp": 1716837383,
+      "sinceBlock": 19963233,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -263,8 +259,7 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      },
-      "derivedName": "CreditMessaging"
+      }
     },
     {
       "name": "TokenMessaging",
@@ -274,6 +269,7 @@
       ],
       "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes",
       "sinceTimestamp": 1716837371,
+      "sinceBlock": 19963232,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -287,8 +283,7 @@
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
-      },
-      "derivedName": "TokenMessaging"
+      }
     },
     {
       "name": "ReadLib1002",
@@ -297,6 +292,7 @@
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
       ],
       "sinceTimestamp": 1730488859,
+      "sinceBlock": 21094853,
       "values": {
         "$immutable": true,
         "getTreasuryAndNativeFeeCap": [
@@ -322,6 +318,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837299,
+      "sinceBlock": 19963227,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -340,14 +337,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "557425349121081193",
-        "poolBalance": "151886633543000000000000",
+        "plannerFee": "638378761521553390",
+        "poolBalance": "139668323840000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 7163161,
-        "tvl": "13657119267000000000000"
+        "treasuryFee": 8042886,
+        "tvl": "12146873278000000000000"
       }
     },
     {
@@ -357,6 +354,7 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "sinceTimestamp": 1716344279,
+      "sinceBlock": 19922400,
       "values": {
         "$immutable": true,
         "allowlistSize": 0,
@@ -385,6 +383,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837359,
+      "sinceBlock": 19963231,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -405,14 +404,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "352711289750109836",
-        "poolBalance": 17759964083815,
+        "plannerFee": "390727764889193638",
+        "poolBalance": 7969577441477,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 127757259516,
-        "tvl": 11129287130921
+        "treasuryFee": 136202431133,
+        "tvl": 7438226970021
       }
     },
     {
@@ -426,6 +425,7 @@
         }
       ],
       "sinceTimestamp": 1687808651,
+      "sinceBlock": 17565746,
       "values": { "$immutable": true }
     },
     {
@@ -441,6 +441,7 @@
         }
       ],
       "sinceTimestamp": 1706307875,
+      "sinceBlock": 19093732,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
@@ -453,6 +454,7 @@
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "sinceTimestamp": 1706489567,
+      "sinceBlock": 19108732,
       "values": {
         "$immutable": true,
         "allowlistSize": 0,
@@ -475,6 +477,7 @@
       ],
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307839,
+      "sinceBlock": 19093729,
       "values": {
         "$immutable": true,
         "getExecutorConfig": [
@@ -490,8 +493,7 @@
         "getExecutorConfig": {
           "description": "The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])"
         }
-      },
-      "derivedName": "SendUln302"
+      }
     },
     {
       "name": "StargatePoolUSDC",
@@ -507,6 +509,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837347,
+      "sinceBlock": 19963230,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -527,14 +530,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "338100845832313192",
-        "poolBalance": 249917498833189,
+        "plannerFee": "391355738591013591",
+        "poolBalance": 326944387563508,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 75071840097,
-        "tvl": 16476043998226
+        "treasuryFee": 85741580648,
+        "tvl": 13925128414944
       }
     },
     {
@@ -545,6 +548,7 @@
       ],
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307863,
+      "sinceBlock": 19093731,
       "values": {
         "$immutable": true,
         "getUlnConfig": [
@@ -566,8 +570,7 @@
         "getUlnConfig": {
           "description": "The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
         }
-      },
-      "derivedName": "ReceiveUln302"
+      }
     },
     {
       "name": "",
@@ -582,6 +585,7 @@
         }
       ],
       "sinceTimestamp": 1687808675,
+      "sinceBlock": 17565748,
       "values": {
         "$admin": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
         "$implementation": "0x319AE539b5BA554b09A46791cdb88b10E4d8F627",
@@ -616,6 +620,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648243585,
+      "sinceBlock": 14457816,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -631,7 +636,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 230,
+        "nonce": 233,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -650,6 +655,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837335,
+      "sinceBlock": 19963229,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -683,6 +689,7 @@
       "address": "0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006",
       "unverified": true,
       "sinceTimestamp": 1716344279,
+      "sinceBlock": 19922400,
       "values": { "$immutable": true }
     }
   ],
@@ -837,13 +844,6 @@
       "function transferOwnership(address newOwner)",
       "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
       "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
-    ],
-    "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
-      "error LZ_NotImplemented()",
-      "function isSupportedEid(uint32) pure returns (bool)",
-      "function messageLibType() pure returns (uint8)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
     "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",

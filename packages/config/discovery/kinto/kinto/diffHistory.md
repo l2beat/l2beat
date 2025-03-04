@@ -1,4 +1,182 @@
-Generated with discovered.json: 0x9bef403f2da339fdac1f1b99bc2d9ef000fd5cae
+Generated with discovered.json: 0x77182c898d801cb222df6aa336109165870f2470
+
+# Diff at Tue, 04 Mar 2025 10:41:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 758248
+- current block number: 758248
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 758248 (main branch discovery), not current.
+
+```diff
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      sinceBlock:
++        234135
+    }
+```
+
+```diff
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      sinceBlock:
++        234141
+    }
+```
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sinceBlock:
++        181511
+    }
+```
+
+```diff
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03) {
+    +++ description: None
+      sinceBlock:
++        169
+    }
+```
+
+```diff
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd) {
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+      sinceBlock:
++        68
+    }
+```
+
+```diff
+    contract EntryPoint (0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb) {
+    +++ description: None
+      sinceBlock:
++        61
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      sinceBlock:
++        84
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x340487b92808B84c2bd97C87B590EE81267E04a7) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract Socket (0x3e9727470C66B1e77034590926CDe0242B5A3dCc) {
+    +++ description: None
+      sinceBlock:
++        130639
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.
+      sinceBlock:
++        126
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      sinceBlock:
++        205278
+    }
+```
+
+```diff
+    contract  (0x87799989341A07F495287B1433eea98398FD73aA) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: None
+      sinceBlock:
++        65
+    }
+```
+
+```diff
+    contract  (0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.
+      sinceBlock:
++        64
+    }
+```
+
+```diff
+    contract BundleBulker (0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d) {
+    +++ description: None
+      sinceBlock:
++        129612
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9eC0253E4174a14C0536261888416451A407Bf79) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      sinceBlock:
++        234140
+    }
+```
+
+```diff
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA) {
+    +++ description: None
+      sinceBlock:
++        185011
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+      sinceBlock:
++        59
+    }
+```
+
+Generated with discovered.json: 0x505af3caad8c9a7b11115942b44d2dfd09eaf642
 
 # Diff at Mon, 24 Feb 2025 15:41:14 GMT:
 

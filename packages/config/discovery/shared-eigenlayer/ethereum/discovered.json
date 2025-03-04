@@ -13,6 +13,7 @@
       ],
       "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.",
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$immutable": true,
         "pausers": [
@@ -21,8 +22,7 @@
           "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
         ],
         "unpauser": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      },
-      "derivedName": "PauserRegistry"
+      }
     },
     {
       "name": "StrategiesBeacon",
@@ -32,6 +32,7 @@
       ],
       "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
       "sinceTimestamp": 1723232219,
+      "sinceBlock": 20493176,
       "values": {
         "$immutable": true,
         "implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
@@ -49,6 +50,7 @@
       "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
       "ignoreInWatchMode": ["latestPress", "canPress"],
       "sinceTimestamp": 1727895695,
+      "sinceBlock": 20879772,
       "values": {
         "$immutable": true,
         "canPress": false,
@@ -73,8 +75,7 @@
           "severity": "MEDIUM",
           "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
         }
-      },
-      "derivedName": "TokenHopper"
+      }
     },
     {
       "name": "AVSDirectory",
@@ -121,6 +122,7 @@
       ],
       "ignoreInWatchMode": ["avs"],
       "sinceTimestamp": 1711141931,
+      "sinceBlock": 19492759,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
@@ -199,8 +201,7 @@
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060"
-      },
-      "derivedName": "AVSDirectory"
+      }
     },
     {
       "name": "EigenLayerOwningMultisig",
@@ -223,6 +224,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686681203,
+      "sinceBlock": 17472874,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -285,6 +287,7 @@
         }
       ],
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
@@ -320,8 +323,7 @@
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "STAKER_DELEGATION_TYPEHASH": "0x39111bc4a4d688e1f685123d7497d4615370152a8ee4a0593e647bd06ad8bb0b",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "DelegationManager"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -337,6 +339,7 @@
         }
       ],
       "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
       "values": {
         "$immutable": true,
         "owner": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
@@ -485,6 +488,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732236023,
+      "sinceBlock": 21239749,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -522,6 +526,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686325811,
+      "sinceBlock": 17443669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -552,6 +557,7 @@
         "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
       ],
       "sinceTimestamp": 1686348959,
+      "sinceBlock": 17445565,
       "values": {
         "$immutable": true,
         "implementation": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
@@ -602,6 +608,7 @@
         }
       ],
       "sinceTimestamp": 1723232243,
+      "sinceBlock": 20493178,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74",
@@ -618,8 +625,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyBeacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "StrategyFactory"
+      }
     },
     {
       "name": "EigenPod",
@@ -629,6 +635,7 @@
         "0xda9b2195cd2d07052198378564d56758772451df9c7849c8d958ef8e2207e059"
       ],
       "sinceTimestamp": 1724181107,
+      "sinceBlock": 20571837,
       "values": {
         "$immutable": true,
         "activeValidatorCount": 0,
@@ -671,6 +678,7 @@
         }
       ],
       "sinceTimestamp": 1732299167,
+      "sinceBlock": 21244979,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -760,6 +768,7 @@
         }
       ],
       "sinceTimestamp": 1721406755,
+      "sinceBlock": 20341793,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x29A954e9e7F12936Db89b183ECdf879fBBB99F14",
@@ -796,8 +805,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "rewardsUpdater": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "RewardsCoordinator"
+      }
     },
     {
       "name": "Safe",
@@ -810,6 +818,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1728099143,
+      "sinceBlock": 20896663,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -867,6 +876,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
       "values": {
         "$admin": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
         "$implementation": "0xF2b225815F70c9b327DC9db758A36c92A4279b17",
@@ -956,6 +966,7 @@
         }
       ],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b",
@@ -987,8 +998,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyWhitelister": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
-      },
-      "derivedName": "StrategyManager"
+      }
     },
     {
       "name": "EigenLayerProxyAdmin",
@@ -1033,6 +1043,7 @@
         }
       ],
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
@@ -1084,6 +1095,7 @@
       ],
       "ignoreInWatchMode": ["numPods"],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa",
@@ -1120,8 +1132,7 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "EigenPodManager"
+      }
     },
     {
       "name": "EigenLayerBeigenOwningMultisig",
@@ -1140,6 +1151,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732299383,
+      "sinceBlock": 21244997,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -1166,6 +1178,7 @@
       ],
       "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.",
       "sinceTimestamp": 1727895359,
+      "sinceBlock": 20879744,
       "values": {
         "$immutable": true,
         "amounts": ["321855128516280769230770", "965565385548842307692308"],
@@ -1175,8 +1188,7 @@
         "firstSubmissionStartTimestamp": 1723680000,
         "firstSubmissionTriggerCutoff": 1727913600,
         "rewardsCoordinator": "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
-      },
-      "derivedName": "RewardAllStakersActionGenerator"
+      }
     },
     {
       "name": "EigenLayerTokenMultisig",
@@ -1189,6 +1201,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1697498675,
+      "sinceBlock": 18366203,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1357,6 +1370,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686327791,
+      "sinceBlock": 17443829,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1401,6 +1415,7 @@
         }
       ],
       "sinceTimestamp": 1732234379,
+      "sinceBlock": 21239612,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -1489,6 +1504,7 @@
         }
       ],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xF3234220163a757edf1E11a8a085638D9B236614",
@@ -1515,8 +1531,7 @@
         "paused": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "Slasher"
+      }
     },
     {
       "name": "StrategyBase",
@@ -1528,6 +1543,7 @@
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1723232207,
+      "sinceBlock": 20493175,
       "values": {
         "$immutable": true,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
@@ -1601,6 +1617,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1697499563,
+      "sinceBlock": 18366276,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0",
@@ -1739,6 +1756,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686680867,
+      "sinceBlock": 17472847,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

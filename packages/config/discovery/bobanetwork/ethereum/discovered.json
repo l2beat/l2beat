@@ -34,6 +34,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1710967919,
+      "sinceBlock": 19478405,
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xb52F8f5D1285e3bc13F9C53D27C6F7336a3B50A9",
@@ -76,8 +77,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -129,6 +130,7 @@
         }
       ],
       "sinceTimestamp": 1710967871,
+      "sinceBlock": 19478401,
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xd080A33E651780cD6f52F16020E1FFA04F0f15B2",
@@ -224,6 +226,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708125347,
+      "sinceBlock": 19243663,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -255,6 +258,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1628792652,
+      "sinceBlock": 13011949,
       "values": {
         "$immutable": false,
         "$implementation": "0x3b48597212f2622511585914CC4D4152c9B1B077",
@@ -351,6 +355,7 @@
         }
       ],
       "sinceTimestamp": 1710967823,
+      "sinceBlock": 19478397,
       "values": {
         "$immutable": true,
         "addressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
@@ -382,6 +387,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1710967859,
+      "sinceBlock": 19478400,
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xD8056243180C4b56a7d2ccd5df9c2696E1261826",
@@ -412,13 +418,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
       ],
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -429,10 +434,12 @@
         }
       ],
       "sinceTimestamp": 1628790631,
+      "sinceBlock": 13011797,
       "values": {
         "$immutable": true,
         "owner": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     },
     {
       "name": "SuperchainConfig",
@@ -457,6 +464,7 @@
         }
       ],
       "sinceTimestamp": 1710967835,
+      "sinceBlock": 19478398,
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0xe4e0f760409EB1661db76a4365c0803C3630270f",
@@ -504,6 +512,7 @@
         }
       ],
       "sinceTimestamp": 1710967883,
+      "sinceBlock": 19478402,
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0x99948157F4702B3EE9De4290C3dCDF2622Db9318",
@@ -559,6 +568,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1710967847,
+      "sinceBlock": 19478399,
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0x31f395dd26430a8CBFa530e31B46aaf7ad517017",
@@ -628,6 +638,7 @@
         }
       ],
       "sinceTimestamp": 1628793901,
+      "sinceBlock": 13012048,
       "values": {
         "$admin": "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc",
         "$implementation": "0x5Eb02901135865aF8Da6752aF92fbAe62258520F",

@@ -11,6 +11,7 @@
         "0x3a8dc61e76d801c8f238572cf0ed2aff6136a21f2b1730dff7360717e9b32db7"
       ],
       "sinceTimestamp": 1621598125,
+      "sinceBlock": 12477538,
       "values": {
         "$immutable": true,
         "allMembers": [
@@ -29,8 +30,7 @@
         "getMinimalQuorum": 3,
         "getNumberOfMembers": 4,
         "name": "ChainportCongressMembersRegistry"
-      },
-      "derivedName": "ChainportCongressMembersRegistry"
+      }
     },
     {
       "name": "MultisigVault2",
@@ -43,6 +43,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1641296925,
+      "sinceBlock": 13938818,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -74,6 +75,7 @@
         }
       ],
       "sinceTimestamp": 1626949762,
+      "sinceBlock": 12875622,
       "values": {
         "$immutable": true,
         "owner": "0xB6b4C7aC240b1f176c5589d064733066a83884a1"
@@ -92,6 +94,7 @@
         }
       ],
       "sinceTimestamp": 1626949825,
+      "sinceBlock": 12875629,
       "values": {
         "$admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
         "$implementation": "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d",
@@ -172,6 +175,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1627899254,
+      "sinceBlock": 12945363,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -197,6 +201,7 @@
         "0x6fc47885abd30d6674764b88e43a68f4c96a8dd3dd28c11c769a1089b41158cc"
       ],
       "sinceTimestamp": 1621598093,
+      "sinceBlock": 12477537,
       "values": {
         "$immutable": true,
         "getMembersRegistry": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
@@ -208,8 +213,7 @@
           "severity": "MEDIUM",
           "description": "The amount of proposals ever created. Goes up by 1 for each proposal."
         }
-      },
-      "derivedName": "ChainportCongress"
+      }
     }
   ],
   "eoas": [

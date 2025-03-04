@@ -13,6 +13,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "sinceTimestamp": 1637076488,
+      "sinceBlock": 13627370,
       "values": {
         "$immutable": false,
         "$implementation": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
@@ -48,6 +49,7 @@
       ],
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
       "sinceTimestamp": 1710314867,
+      "sinceBlock": 19424659,
       "values": {
         "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
         "$implementation": "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC",
@@ -75,8 +77,7 @@
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
         "totalLocked": "489592026707194902745743",
         "totalRewardsLiquidated": "21186281823923435000000"
-      },
-      "derivedName": "LockingInfo"
+      }
     },
     {
       "name": "ChainStorageContainer-SCC-batches",
@@ -91,6 +92,7 @@
         "lengthByChainId"
       ],
       "sinceTimestamp": 1637070395,
+      "sinceBlock": 13626929,
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
@@ -110,6 +112,7 @@
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
       "sinceTimestamp": 1637047500,
+      "sinceBlock": 13625270,
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
@@ -134,6 +137,7 @@
         }
       ],
       "sinceTimestamp": 1637077208,
+      "sinceBlock": 13627429,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
@@ -201,6 +205,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1636927409,
+      "sinceBlock": 13616534,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -245,6 +250,7 @@
         "getTotalElements"
       ],
       "sinceTimestamp": 1637070766,
+      "sinceBlock": 13626959,
       "values": {
         "$immutable": true,
         "batches": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
@@ -273,6 +279,7 @@
         "0xe429226928e3766e14dbbf6391a4caa68cf9e4c12cb9e81ef04b84a38747449a"
       ],
       "sinceTimestamp": 1713873023,
+      "sinceBlock": 19717907,
       "values": {
         "$immutable": true,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d"
@@ -283,6 +290,7 @@
       "address": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb",
       "unverified": true,
       "sinceTimestamp": 1637083067,
+      "sinceBlock": 13627861,
       "values": { "$immutable": true }
     },
     {
@@ -296,6 +304,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1713630491,
+      "sinceBlock": 19697815,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -331,6 +340,7 @@
         }
       ],
       "sinceTimestamp": 1649638297,
+      "sinceBlock": 14561258,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
@@ -360,6 +370,7 @@
         "0x8406419ac446023c37b27d0154da77b664a20b7da231802e32193c8883d32d06"
       ],
       "sinceTimestamp": 1649859244,
+      "sinceBlock": 14577582,
       "values": {
         "$immutable": true,
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
@@ -388,6 +399,7 @@
         }
       ],
       "sinceTimestamp": 1710314795,
+      "sinceBlock": 19424653,
       "values": {
         "$immutable": true,
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
@@ -411,6 +423,7 @@
         }
       ],
       "sinceTimestamp": 1637047108,
+      "sinceBlock": 13625248,
       "values": {
         "_1088_MVM_FraudVerifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
         "_1088_MVM_Proposer": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
@@ -437,8 +450,7 @@
           "description": "Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers.",
           "type": "CODE_CHANGE"
         }
-      },
-      "derivedName": "Lib_AddressManager"
+      }
     },
     {
       "name": "MToken",
@@ -447,6 +459,7 @@
         "0xd0f9d9680beb2766f32df8f35302771cde6d0ccb5c3e7f32fdacd13bf5c58203"
       ],
       "sinceTimestamp": 1607734167,
+      "sinceBlock": 11434969,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -454,8 +467,7 @@
         "owner": "0x0000000000000000000000000000000000000000",
         "symbol": "Metis",
         "totalSupply": "10000000000000000000000000"
-      },
-      "derivedName": "MToken"
+      }
     },
     {
       "name": "StateCommitmentChain",
@@ -481,6 +493,7 @@
         "getTotalElementsByChainId"
       ],
       "sinceTimestamp": 1710487823,
+      "sinceBlock": 19438866,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48",
@@ -507,6 +520,7 @@
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
       "sinceTimestamp": 1637047833,
+      "sinceBlock": 13625297,
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
@@ -543,6 +557,7 @@
         "rewardPerBlock"
       ],
       "sinceTimestamp": 1710314939,
+      "sinceBlock": 19424665,
       "values": {
         "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
         "$implementation": "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60",
@@ -632,8 +647,7 @@
         "signerUpdateThrottle": 1,
         "totalSequencers": 10,
         "WITHDRAWAL_DELAY": 1814400
-      },
-      "derivedName": "LockingPool"
+      }
     },
     {
       "name": "MVM_Verifier",
@@ -651,6 +665,7 @@
         }
       ],
       "sinceTimestamp": 1649719906,
+      "sinceBlock": 14567320,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
@@ -684,6 +699,7 @@
         }
       ],
       "sinceTimestamp": 1637089464,
+      "sinceBlock": 13628326,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",

@@ -16,6 +16,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1734387299,
+      "sinceBlock": 21418005,
       "values": {
         "$immutable": false,
         "$implementation": "0xF4e69D58027De611d9F142e6b0Db6b11569F50E7",
@@ -93,6 +94,7 @@
         }
       ],
       "sinceTimestamp": 1734387287,
+      "sinceBlock": 21418004,
       "values": {
         "$immutable": true,
         "addressManager": "0x51D5C516c818dcf63E67B28cB2516166D8578c06",
@@ -123,6 +125,7 @@
         }
       ],
       "sinceTimestamp": 1720099223,
+      "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
         "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
@@ -156,8 +159,7 @@
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
-      },
-      "derivedName": "SP1VerifierGateway"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -170,6 +172,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
+      "sinceBlock": 16780617,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -257,6 +260,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
+      "sinceBlock": 16990669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -298,6 +302,7 @@
         }
       ],
       "sinceTimestamp": 1734387287,
+      "sinceBlock": 21418004,
       "values": {
         "$immutable": true,
         "owner": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
@@ -322,6 +327,7 @@
         }
       ],
       "sinceTimestamp": 1734387299,
+      "sinceBlock": 21418005,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$implementation": "0x3E5404b298c858018D2439d488F0Fe1E94C71FE9",
@@ -363,6 +369,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1734387299,
+      "sinceBlock": 21418005,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$implementation": "0x5651e4f573303ec65Ba7579Fdc09166F7a403776",
@@ -410,6 +417,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
+      "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -451,6 +459,7 @@
         }
       ],
       "sinceTimestamp": 1734387323,
+      "sinceBlock": 21418007,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$implementation": "0xC46226fA9De738D48343f420b402a0EBd8F7DCeD",
@@ -502,6 +511,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1734387323,
+      "sinceBlock": 21418007,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$implementation": "0xE41997Df2A412ed5B56ac9f3997A72B6BeE9d888",
@@ -543,8 +553,7 @@
         "submissionInterval": 4320,
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "version": "v1.0.0-rc2"
-      },
-      "derivedName": "OPSuccinctL2OutputOracle"
+      }
     },
     {
       "name": "SuccinctGatewaySP1Multisig",
@@ -564,6 +573,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204135,
+      "sinceBlock": 20573748,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -589,6 +599,7 @@
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
       "sinceTimestamp": 1729727135,
+      "sinceBlock": 21031662,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
@@ -609,6 +620,7 @@
         }
       ],
       "sinceTimestamp": 1735949699,
+      "sinceBlock": 21547470,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
@@ -645,6 +657,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1734387299,
+      "sinceBlock": 21418005,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$implementation": "0x4334B0Ebd68dC3A4e35deD49014dEFA00C15219c",
@@ -678,8 +691,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -711,7 +724,6 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -737,6 +749,7 @@
         }
       ],
       "sinceTimestamp": 1734387287,
+      "sinceBlock": 21418004,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$implementation": "0xAb427Bb4125C36688A5a6ec7b1cA0A3A1A15E0c2",
@@ -774,6 +787,7 @@
         }
       ],
       "sinceTimestamp": 1734387311,
+      "sinceBlock": 21418006,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$implementation": "0x000FAF919Dc5a946B82bFfF252FAbC378bda1F50",

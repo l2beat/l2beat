@@ -95,6 +95,7 @@ export const eigenda: BaseProject = {
       explorers: ['https://blobs.eigenda.xyz/'],
       socialMedia: ['https://x.com/eigen_da'],
     },
+    badges: [],
   },
   daLayer: {
     type: 'DA Service',

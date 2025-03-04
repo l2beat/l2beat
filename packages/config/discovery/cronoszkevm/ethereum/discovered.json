@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 21766582,
-  "configHash": "0x6595d134687d9e6b61ec71cb546fa9a35e1819ce8b1be473aac5c508db5651a6",
+  "configHash": "0xd28b9d61ac5061713a25967a0755b55d57a80886fad0b37a9b886cbb71f88134",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -14,6 +14,7 @@
       ],
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
+      "sinceBlock": 21081436,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
@@ -45,6 +46,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1723609295,
+      "sinceBlock": 20524449,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -91,6 +93,7 @@
         }
       ],
       "sinceTimestamp": 1717520615,
+      "sinceBlock": 20019826,
       "values": {
         "$immutable": true,
         "executionDelay": 10800,
@@ -121,6 +124,7 @@
         }
       ],
       "sinceTimestamp": 1726967543,
+      "sinceBlock": 20802749,
       "values": {
         "$immutable": true,
         "acAdmins": [
@@ -170,8 +174,7 @@
         "FEE_ADMIN": "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e",
         "ORACLE": "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8",
         "UPGRADER": "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c"
-      },
-      "derivedName": "CronosZkEVMAdmin"
+      }
     },
     {
       "name": "CronosZkEvm",
@@ -232,6 +235,7 @@
         "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1722357035,
+      "sinceBlock": 20420571,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -446,12 +450,12 @@
         }
       ],
       "sinceTimestamp": 1722304883,
+      "sinceBlock": 20416268,
       "values": {
         "$immutable": true,
         "owner": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "TransactionFiltererDenyList"
+      }
     },
     {
       "name": "TxFiltererOwnerMultisig",
@@ -483,6 +487,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722375731,
+      "sinceBlock": 20422122,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

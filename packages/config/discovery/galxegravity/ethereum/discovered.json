@@ -13,6 +13,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148899,
+      "sinceBlock": 20569170,
       "values": { "$immutable": true }
     },
     {
@@ -36,6 +37,7 @@
         }
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
         "$implementation": "0x19431dc37098877486532250FB3158140717C00C",
@@ -70,6 +72,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148875,
+      "sinceBlock": 20569168,
       "values": { "$immutable": true }
     },
     {
@@ -81,14 +84,14 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
+      "sinceBlock": 18736154,
       "values": {
         "$immutable": true,
         "GRAVITY_STAKERS": [
           ["0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634"],
           false
         ]
-      },
-      "derivedName": "ValidatorUtils"
+      }
     },
     {
       "name": "OneStepProver0",
@@ -99,6 +102,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148863,
+      "sinceBlock": 20569167,
       "values": { "$immutable": true }
     },
     {
@@ -187,6 +191,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
+      "sinceBlock": 16990669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -232,6 +237,7 @@
         }
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
         "$implementation": "0x02E05A9245C5853f895daDcc3A8216C953C8736B",
@@ -254,7 +260,6 @@
         "sequencerInbox": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
         "totalChallengesCreated": 0
       },
-      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -283,6 +288,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
@@ -331,6 +337,7 @@
         }
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
         "$implementation": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
@@ -380,6 +387,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
         "$implementation": "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A",
@@ -430,7 +438,6 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
-      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -442,6 +449,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148911,
+      "sinceBlock": 20569171,
       "values": {
         "$immutable": true,
         "prover0": "0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5",
@@ -451,7 +459,7 @@
       }
     },
     {
-      "name": "ERC20RollupEventInbox",
+      "name": "RollupEventInbox",
       "address": "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
@@ -459,7 +467,6 @@
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "RollupEventInbox",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
@@ -472,6 +479,7 @@
         }
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
@@ -485,7 +493,8 @@
         "$upgradeCount": 1,
         "bridge": "0x7983403dDA368AA7d67145a9b81c5c517F364c42",
         "rollup": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239"
-      }
+      },
+      "derivedName": "ERC20RollupEventInbox"
     },
     {
       "name": "UpgradeExecutor",
@@ -523,6 +532,7 @@
         }
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
         "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
@@ -553,7 +563,6 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"]
       },
-      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -594,6 +603,7 @@
         }
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$immutable": true,
         "owner": "0xa5D23c69894241825dAffB570c3c742C0F52df96"
@@ -608,6 +618,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148887,
+      "sinceBlock": 20569169,
       "values": { "$immutable": true }
     },
     {
@@ -647,6 +658,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1716053843,
+      "sinceBlock": 19898364,
       "values": {
         "$admin": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
         "$implementation": [
@@ -730,7 +742,6 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
-      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",

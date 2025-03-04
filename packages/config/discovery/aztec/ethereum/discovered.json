@@ -14,6 +14,7 @@
       "description": "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.",
       "ignoreInWatchMode": ["txFeeBalance"],
       "sinceTimestamp": 1619631231,
+      "sinceBlock": 12330310,
       "values": {
         "$immutable": true,
         "convertConstant": 3155360,
@@ -30,8 +31,7 @@
           "severity": "LOW",
           "description": "Tip that gets added to a gas reimbursement for processing the rollup."
         }
-      },
-      "derivedName": "AztecFeeDistributor"
+      }
     },
     {
       "name": "TurboVerifier",
@@ -42,6 +42,7 @@
       ],
       "description": "Turbo Plonk ZK verifier.",
       "sinceTimestamp": 1707995675,
+      "sinceBlock": 19232962,
       "values": { "$immutable": true }
     },
     {
@@ -68,6 +69,7 @@
         "totalWithdrawn"
       ],
       "sinceTimestamp": 1614799636,
+      "sinceBlock": 11967192,
       "values": {
         "$immutable": true,
         "dataRoot": "0x147e58409694d7d1dfcc8b727753e682bbb6aabdb7f3f22ae464d5de1bd34405",
@@ -156,6 +158,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610552620,
+      "sinceBlock": 11647532,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

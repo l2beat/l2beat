@@ -39,6 +39,7 @@ export const blobstream: BaseProject = {
         'https://github.com/succinctlabs/blobstreamx',
       ],
     },
+    badges: [],
   },
   daBridge: {
     name: 'Blobstream',
@@ -49,7 +50,6 @@ export const blobstream: BaseProject = {
     }),
     technology: {
       description: `
-  
       ## Architecture
         
       ![Celestia blobstream architecture](/images/da-bridge-technology/celestia/blobstream/architecture.png#center)

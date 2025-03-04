@@ -2,7 +2,7 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 21766633,
-  "configHash": "0xf329cfe26647b61eee72b722c3d9f2e80f3815dec7ace7684c2875b00f38b574",
+  "configHash": "0xb69ced683560ad14374a7ddf63566941be09d42b31b4b7332538992d1d811d3c",
   "contracts": [
     {
       "name": "ValidatorsRegistry",
@@ -54,6 +54,7 @@
         }
       ],
       "sinceTimestamp": 1734690491,
+      "sinceBlock": 21443134,
       "values": {
         "$immutable": true,
         "getQuorum": 533,
@@ -80,8 +81,7 @@
           "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
           "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
         ]
-      },
-      "derivedName": "ValidatorsRegistry"
+      }
     },
     {
       "name": "DirectExitAdministrator",
@@ -98,6 +98,7 @@
         }
       ],
       "sinceTimestamp": 1734690695,
+      "sinceBlock": 21443151,
       "values": {
         "$immutable": true,
         "deposit": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
@@ -131,6 +132,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1734794243,
+      "sinceBlock": 21451725,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -157,8 +159,8 @@
       ],
       "description": "Verifier contract for merkle proofs.",
       "sinceTimestamp": 1734690407,
-      "values": { "$immutable": true },
-      "derivedName": "MPTProofVerifier"
+      "sinceBlock": 21443127,
+      "values": { "$immutable": true }
     },
     {
       "name": "SonicGatewayMultisig",
@@ -202,6 +204,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1733407067,
+      "sinceBlock": 21336741,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -250,6 +253,7 @@
         }
       ],
       "sinceTimestamp": 1734690647,
+      "sinceBlock": 21443147,
       "values": {
         "$admin": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
         "$implementation": "0x4cbd824685F1E21B119F230B54d65C5a7D2a5330",
@@ -284,8 +288,7 @@
         "proofVerifier": { "severity": "HIGH" },
         "stateOracle": { "severity": "HIGH" },
         "deadState": { "severity": "HIGH" }
-      },
-      "derivedName": "TokenDeposit"
+      }
     },
     {
       "name": "UpdateManager",
@@ -339,8 +342,9 @@
           "description": "update the state root."
         }
       ],
-      "ignoreInWatchMode": ["lastBlockNum"],
+      "ignoreInWatchMode": ["lastBlockNum", "fastLaneInUse"],
       "sinceTimestamp": 1734690815,
+      "sinceBlock": 21443161,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
@@ -408,8 +412,7 @@
         "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
         "updateVerifier": "0x72965045A6691E5A74299D1e878f303264D4D910",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "UpdateManager"
+      }
     },
     {
       "name": "StateOracle",
@@ -428,6 +431,7 @@
       ],
       "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "sinceTimestamp": 1734690443,
+      "sinceBlock": 21443130,
       "values": {
         "$immutable": true,
         "chainId": 146,
@@ -435,8 +439,7 @@
         "lastState": "0x1e4dd2c7434e8393889f81a784a5baaf0930e50c8e620e5c4c774ef53eaf3c29",
         "lastUpdateTime": 1738593395,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-      },
-      "derivedName": "StateOracle"
+      }
     },
     {
       "name": "TokenPairs",
@@ -468,6 +471,7 @@
         }
       ],
       "sinceTimestamp": 1734690539,
+      "sinceBlock": 21443138,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943",
@@ -501,8 +505,7 @@
         "TERMINATOR_ROLE": "0x26aab3fbd9c7d505a96c193ccd3127894549d6ee75e38e08a6cef48fbab511e8",
         "UNREGISTER_ROLE": "0x822120e1e3a621ffae2121fc52e9eb301eb26b031334bbf3018f0954c7360700",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "TokenPairs"
+      }
     }
   ],
   "eoas": [

@@ -1,8 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
 import { CONTRACTS } from './common'
-import { badgesCompareFn } from './projects/badges'
+import { BADGES, badgesCompareFn } from './projects/badges'
 import { bridges } from './projects/bridges'
 import { layer2s } from './projects/layer2s'
+import { mergeBadges } from './projects/layer2s/templates/utils'
 import { layer3s } from './projects/layer3s'
 import { getDiscoveryInfo } from './projects/project/getProjects'
 import { refactored } from './projects/refactored'
@@ -24,7 +25,10 @@ export function runConfigAdjustments() {
     .map((x) => x.chainConfig)
     .filter((x) => x !== undefined)
 
-  layer2s.forEach((p) => adjustLegacy(p, chains))
+  layer2s.forEach((p) => {
+    adjustLegacy(p, chains)
+    adjustBadges(p, layer3s)
+  })
   layer3s.forEach((p) => adjustLegacy(p, chains))
   bridges.forEach((p) => adjustLegacy(p, chains))
   refactored.forEach((p) => adjustRefactored(p, chains))
@@ -85,5 +89,14 @@ function adjustContracts(
     if (!verified) {
       project.contracts.risks.push(CONTRACTS.UNVERIFIED_RISK)
     }
+  }
+}
+
+function adjustBadges(project: Layer2, l3s: Layer3[]) {
+  const hostsL3 = l3s.some((l3) => l3.hostChain === project.id)
+  if (hostsL3) {
+    project.badges = mergeBadges(project.badges ?? [], [
+      BADGES.Other.L3HostChain,
+    ])
   }
 }

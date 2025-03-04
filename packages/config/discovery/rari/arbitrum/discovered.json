@@ -54,6 +54,7 @@
         }
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$immutable": true,
         "owner": "0x139C5A235632EDdad741ff380112B3161d31a21C"
@@ -68,6 +69,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734494390,
+      "sinceBlock": 285923886,
       "values": { "$immutable": true }
     },
     {
@@ -106,6 +108,7 @@
         }
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x20C6be2A0429A82a7bF113905a29d36CF6753B10",
@@ -147,6 +150,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734494392,
+      "sinceBlock": 285923896,
       "values": { "$immutable": true }
     },
     {
@@ -175,6 +179,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x74faA20aE77FFAb036369b24066Cc5d4251900D2",
@@ -201,7 +206,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "L1GatewayRouter",
+      "name": "GatewayRouter",
       "address": "0x2623C144B4d167f70893f6A8968B98c89a6C5F97",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -209,7 +214,6 @@
         "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -222,6 +226,7 @@
         }
       ],
       "sinceTimestamp": 1705716148,
+      "sinceBlock": 172197986,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x532Ba80626DF9042353fa9509A66a25eE90fc51B",
@@ -240,6 +245,7 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1GatewayRouter",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -279,6 +285,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x139C5A235632EDdad741ff380112B3161d31a21C",
         "$implementation": [
@@ -422,6 +429,7 @@
         }
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x198792E7e60688FEeB0b89f0ABD3b85953Dd05Cd",
@@ -463,6 +471,7 @@
         }
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x73D3a5E535cBF98B9b5Ff7fEb8EC26e61FCEC4b7",
@@ -487,6 +496,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734494395,
+      "sinceBlock": 285923906,
       "values": {
         "$immutable": true,
         "prover0": "0x0B851CA3b2f92Ad257283C38d95dC3Ded917300F",
@@ -496,25 +506,26 @@
       }
     },
     {
-      "name": "V3QuoteVerifier",
+      "name": "QuoteVerifier",
       "address": "0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1",
       "template": "espresso/Sequencing/QuoteVerifier",
       "sourceHashes": [
         "0xc6f6a066bf8a07836eade893ff10802899d88d921053005f78e94d1e18dd8b84"
       ],
-      "displayName": "QuoteVerifier",
       "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.",
       "ignoreInWatchMode": [""],
       "sinceTimestamp": 1732459265,
+      "sinceBlock": 277848126,
       "values": {
         "$immutable": true,
         "P256_VERIFIER": "0x0000000000000000000000000000000000000100",
         "pccsRouter": "0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5",
         "quoteVersion": 3
-      }
+      },
+      "derivedName": "V3QuoteVerifier"
     },
     {
-      "name": "L1ERC20Gateway",
+      "name": "ERC20Gateway",
       "address": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -522,7 +533,6 @@
         "0x12b277cae4866b3d1f1772fcb7f861dc23247452179f0736c9dbe7012f6c14f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -535,6 +545,7 @@
         }
       ],
       "sinceTimestamp": 1705716148,
+      "sinceBlock": 172197986,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0xcc6DcB3FaA2436270E696994f326426B76A9f731",
@@ -553,6 +564,7 @@
         "router": "0x2623C144B4d167f70893f6A8968B98c89a6C5F97",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -665,6 +677,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1709766231,
+      "sinceBlock": 187813903,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -685,7 +698,7 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "name": "L1CustomGateway",
+      "name": "CustomGateway",
       "address": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
       "template": "orbitstack/CustomGateway",
       "sourceHashes": [
@@ -693,7 +706,6 @@
         "0x8d9e1660cd96605e8727f611f7b96ef82ad6cd8a76db94cd253b74cddd1c6bce"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "CustomGateway",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
       "issuedPermissions": [
         {
@@ -706,6 +718,7 @@
         }
       ],
       "sinceTimestamp": 1705716148,
+      "sinceBlock": 172197986,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x0987F33E1d59ECcedbDd6356ED34F06dd7baDcF8",
@@ -723,6 +736,7 @@
         "router": "0x2623C144B4d167f70893f6A8968B98c89a6C5F97",
         "whitelist": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1CustomGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -734,6 +748,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734494391,
+      "sinceBlock": 285923891,
       "values": { "$immutable": true }
     },
     {
@@ -757,6 +772,7 @@
         }
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x84Cf78b9573daDb2FBa3028e49e0B5F785134360",
@@ -789,6 +805,7 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1704540879,
+      "sinceBlock": 167664692,
       "values": { "$immutable": true }
     },
     {
@@ -825,6 +842,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0x805dc3546d99AfB35EfB261b907679b67A08256e",
@@ -921,6 +939,7 @@
         }
       ],
       "sinceTimestamp": 1705716145,
+      "sinceBlock": 172197973,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
         "$implementation": "0xFd7A2567C6b56153f1b0D4FDbCc671d178a971fc",
@@ -964,6 +983,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the [Blobstream DA bridge](https://arbiscan.io/address/0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.",
       "sinceTimestamp": 1734494394,
+      "sinceBlock": 285923901,
       "values": {
         "$immutable": true,
         "BLOBSTREAM": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
@@ -980,6 +1000,7 @@
       "description": "The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.",
       "ignoreInWatchMode": [""],
       "sinceTimestamp": 1738111205,
+      "sinceBlock": 300328531,
       "values": {
         "$immutable": true,
         "mrEnclave": "0xba9fbb70ebedbffb016bcc4b75dd3747dacdba01d3eda1ab16255f87547965c7",

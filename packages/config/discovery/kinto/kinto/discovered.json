@@ -21,6 +21,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1729791292,
+      "sinceBlock": 234135,
       "values": {
         "$immutable": true,
         "clock": 1740395771,
@@ -40,8 +41,7 @@
         "ownerOf": [],
         "symbol": "NIO",
         "tokenURI": []
-      },
-      "derivedName": "NioGuardians"
+      }
     },
     {
       "name": "NioGovernor",
@@ -60,6 +60,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1729791297,
+      "sinceBlock": 234141,
       "values": {
         "$immutable": true,
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
@@ -88,8 +89,7 @@
         "version": "1",
         "votingDelay": 259200,
         "votingPeriod": 432000
-      },
-      "derivedName": "NioGovernor"
+      }
     },
     {
       "name": "BridgedKinto",
@@ -102,6 +102,7 @@
       "description": "KINTO token contract.",
       "ignoreInWatchMode": ["totalSupply", "clock"],
       "sinceTimestamp": 1718926428,
+      "sinceBlock": 181511,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xd70052c77dC9E5291c79842420a6d51010Ed014c",
@@ -161,8 +162,7 @@
         "TREASURY": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
-      },
-      "derivedName": "BridgedKinto"
+      }
     },
     {
       "name": "Faucet",
@@ -180,6 +180,7 @@
         }
       ],
       "sinceTimestamp": 1705342186,
+      "sinceBlock": 169,
       "values": {
         "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "$implementation": "0x6F04c790db5e6Cc7c041E1B8a9440a5045dFC550",
@@ -237,8 +238,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      },
-      "derivedName": "Faucet"
+      }
     },
     {
       "name": "SponsorPaymaster",
@@ -258,6 +258,7 @@
       ],
       "ignoreInWatchMode": ["getDeposit"],
       "sinceTimestamp": 1703803667,
+      "sinceBlock": 68,
       "values": {
         "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "$implementation": "0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB",
@@ -351,8 +352,7 @@
         "RATE_LIMIT_THRESHOLD_TOTAL": 50,
         "userOpMaxCost": "30000000000000000",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      },
-      "derivedName": "SponsorPaymaster"
+      }
     },
     {
       "name": "EntryPoint",
@@ -361,6 +361,7 @@
         "0x052509324b6377b27cdffc415a20ef12be0fb098b3612589bc014b90b2823b05"
       ],
       "sinceTimestamp": 1703803611,
+      "sinceBlock": 61,
       "values": {
         "$immutable": true,
         "SIG_VALIDATION_FAILED": 1,
@@ -419,6 +420,7 @@
       ],
       "ignoreInWatchMode": ["getNonce"],
       "sinceTimestamp": 1704061899,
+      "sinceBlock": 84,
       "values": {
         "$admin": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "$beacon": "0x87f0eE85bF3198654900a422832157abBba30828",
@@ -636,6 +638,7 @@
         }
       ],
       "sinceTimestamp": 1702609595,
+      "sinceBlock": 11,
       "values": {
         "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
         "$implementation": "0x658c50C317A4E18e62Db4efa1F37edFd315b91Fd",
@@ -665,6 +668,7 @@
       ],
       "ignoreInWatchMode": ["globalMessageCount"],
       "sinceTimestamp": 1715810609,
+      "sinceBlock": 130639,
       "values": {
         "$immutable": true,
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
@@ -676,8 +680,7 @@
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "transmitManager__": "0x6332e56A423480A211E301Cb85be12814e9238Bb",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
-      },
-      "derivedName": "Socket"
+      }
     },
     {
       "name": "KintoAppRegistry",
@@ -703,6 +706,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply", "appCount"],
       "sinceTimestamp": 1704852483,
+      "sinceBlock": 126,
       "values": {
         "$admin": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "$implementation": "0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1",
@@ -897,8 +901,7 @@
           "severity": "HIGH",
           "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
         }
-      },
-      "derivedName": "KintoAppRegistry"
+      }
     },
     {
       "name": "Treasury",
@@ -923,6 +926,7 @@
         }
       ],
       "sinceTimestamp": 1720574313,
+      "sinceBlock": 205278,
       "values": {
         "$admin": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "$implementation": "0x9fB9ad222C23E49478D716238754e0bFF863D367",
@@ -936,8 +940,7 @@
         "$upgradeCount": 1,
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "Treasury"
+      }
     },
     {
       "name": "",
@@ -952,6 +955,7 @@
         }
       ],
       "sinceTimestamp": 1702609595,
+      "sinceBlock": 11,
       "values": {
         "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
         "$implementation": "0xD9fca4D782a14AFBB5Ccb5fFd14Eab323Ea0Dc3C",
@@ -982,6 +986,7 @@
         "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
       ],
       "sinceTimestamp": 1703803644,
+      "sinceBlock": 65,
       "values": {
         "$immutable": true,
         "implementation": "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C",
@@ -1025,6 +1030,7 @@
         }
       ],
       "sinceTimestamp": 1702609595,
+      "sinceBlock": 11,
       "values": {
         "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
         "$implementation": "0x1ef98348554d453d6bC8794E8E0BFbfA659B5D00",
@@ -1073,6 +1079,7 @@
       ],
       "ignoreInWatchMode": ["totalWallets"],
       "sinceTimestamp": 1703803636,
+      "sinceBlock": 64,
       "values": {
         "$admin": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "$implementation": "0x1Bc47279D052Edb9C1770242287eFC23317Ed675",
@@ -1207,8 +1214,7 @@
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
         "totalWallets": 72511
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
-      "derivedName": "KintoWalletFactory"
+      "fieldMeta": { "owner": { "severity": "HIGH" } }
     },
     {
       "name": "BundleBulker",
@@ -1217,6 +1223,7 @@
         "0x408386b302e02efdf557e5fa0259ef0e8b8acc4605cb20e98bbbc01a6a3222ed"
       ],
       "sinceTimestamp": 1715107529,
+      "sinceBlock": 129612,
       "values": {
         "$immutable": true,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb"
@@ -1244,6 +1251,7 @@
         }
       ],
       "sinceTimestamp": 1702609595,
+      "sinceBlock": 11,
       "values": {
         "$immutable": true,
         "owner": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
@@ -1306,6 +1314,7 @@
         }
       ],
       "sinceTimestamp": 1729791296,
+      "sinceBlock": 234140,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -1506,8 +1515,7 @@
         "RolesRevoked": {
           "description": "List of roles revoked from accounts."
         }
-      },
-      "derivedName": "AccessManager"
+      }
     },
     {
       "name": "RewardsDistributor",
@@ -1524,6 +1532,7 @@
         "root"
       ],
       "sinceTimestamp": 1719513260,
+      "sinceBlock": 185011,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xF3D955B4cF3489A37027f0F3484E87328dBdBB39",
@@ -1586,8 +1595,7 @@
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      },
-      "derivedName": "RewardsDistributor"
+      }
     },
     {
       "name": "KintoID",
@@ -1684,6 +1692,7 @@
       ],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "sinceTimestamp": 1703803592,
+      "sinceBlock": 59,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x4aC06254558e144C41461a319822993900cE2eE4",
@@ -1836,8 +1845,7 @@
         "KYC_PROVIDERs": { "severity": "MEDIUM" },
         "GOVERNANCErs": { "severity": "HIGH" },
         "DEFAULT_ADMINs": { "severity": "HIGH" }
-      },
-      "derivedName": "KintoID"
+      }
     }
   ],
   "eoas": [

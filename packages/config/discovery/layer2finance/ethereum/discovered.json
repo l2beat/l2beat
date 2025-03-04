@@ -11,6 +11,7 @@
         "0x6ef430d51894cfb8e777520f64a1df14975bcd0d02c642bc3a7230a0c9407a33"
       ],
       "sinceTimestamp": 1619011064,
+      "sinceBlock": 12283767,
       "values": {
         "$immutable": true,
         "INIT_TRANSITION_STATE_ROOT": "0xcf277fb80a82478460e8988570b718f1e083ceb76f7e271a1a1497e5975f53ae"
@@ -23,6 +24,7 @@
         "0x4e59983723a2311ff5ff300ba5aa1533dca94726b04932b57697741b294d47c3"
       ],
       "sinceTimestamp": 1619011215,
+      "sinceBlock": 12283778,
       "values": {
         "$immutable": true,
         "blockChallengePeriod": 450,
@@ -38,8 +40,7 @@
         "pendingDepositsCommitHead": 321,
         "pendingDepositsExecuteHead": 321,
         "pendingDepositsTail": 321
-      },
-      "derivedName": "RollupChain"
+      }
     },
     {
       "name": "Registry",
@@ -48,6 +49,7 @@
         "0xebb65e547192b3206d06923231dcd1eed98be7f1c64c6ded8b96f7cc248f5708"
       ],
       "sinceTimestamp": 1619010636,
+      "sinceBlock": 12283733,
       "values": {
         "$immutable": true,
         "owner": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"

@@ -25,6 +25,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1600956399,
+      "sinceBlock": 10925774,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -73,6 +74,7 @@
       ],
       "ignoreInWatchMode": ["maxAvailablePerTx"],
       "sinceTimestamp": 1539028166,
+      "sinceBlock": 6478422,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "$implementation": "0x166124b75c798Cedf1B43655E9B5284eBd5203DB",
@@ -158,6 +160,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686042107,
+      "sinceBlock": 17420395,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -191,6 +194,7 @@
         }
       ],
       "sinceTimestamp": 1539028018,
+      "sinceBlock": 6478411,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "$implementation": "0x6943A218d58135793F1FE619414eD476C37ad65a",
@@ -231,8 +235,7 @@
           "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506"
         ],
         "version": 2
-      },
-      "derivedName": "BridgeValidators"
+      }
     },
     {
       "name": "DaiForeignBridge",
@@ -241,6 +244,7 @@
         "0xcb87e015ffbef1673d8778ea9b1172914c7fc9f9c57dc71e126ad5b0fb9bda62"
       ],
       "sinceTimestamp": 1633444035,
+      "sinceBlock": 13359601,
       "values": {
         "$immutable": true,
         "cDaiToken": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",

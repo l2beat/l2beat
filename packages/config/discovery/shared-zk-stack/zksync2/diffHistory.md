@@ -1,4 +1,186 @@
-Generated with discovered.json: 0x2e6a3b7dc5fb4f85b1c8f283d678bc5ba0876e89
+Generated with discovered.json: 0xea527b5dcf9806a3bd340ad0f223338fda340d20
+
+# Diff at Tue, 04 Mar 2025 10:40:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 56755451
+- current block number: 56755451
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 56755451 (main branch discovery), not current.
+
+```diff
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
+    +++ description: This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.
+      sinceBlock:
++        55404657
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      sinceBlock:
++        41197311
+    }
+```
+
+```diff
+    contract TokenTimelockController (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      sinceBlock:
++        41197308
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      sinceBlock:
++        41197430
+    }
+```
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      sinceBlock:
++        34572100
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      sinceBlock:
++        41196850
+    }
+```
+
+```diff
+    contract GovOpsTimelockController (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      sinceBlock:
++        41197426
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      sinceBlock:
++        34572095
+    }
+```
+
+Generated with discovered.json: 0x28177c39a81621a19a8bc43a34efb472c4d22016
+
+# Diff at Fri, 28 Feb 2025 11:37:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a673c79f7be232b805781e844ed3929c5c5bb288 block: 55387644
+- current block number: 56755451
+
+## Description
+
+Queue / execute [ZIP-5 Upgrade Governance Contracts](https://www.tally.xyz/gov/zksync/proposal/32477831455745537024214395992964479454779258818502397012096084176779102554510?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) and [ZIP-6 Prepare ZKsync for ZK Gateway](https://www.tally.xyz/gov/zksync/proposal/67712324710515983914473127418805437707715095849437613773846173900686148862581?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
+
+### gud / bad tldr (check notion for )
+gud meta:
+- the verification tool works and is helpful
+- most contracts are predeployed on L1 and verified
+- the audits have a summary section and working links to github
+- docs are on github
+gud:
+- more customizability for assets while keeping central cluster standards (asset routers and -handlers)
+- ZK stack comes closer to being an interop cluster: prep for proof aggregation (lower cost, similar security), preconfs, fast L3<->L3 bridging (not in this upgrade)
+- all in all clever architecture where chains will be bridgeable similar to assets (choose your settlement layer)
+bad meta:
+- verification tool has [some limitations](https://github.com/matter-labs/protocol-upgrade-verification-tool?tab=readme-ov-file#abilities-and-limitations-of-the-tool) (e.g. would be nice if there was a step-by-step to compile the `ecosystem-yaml` or contract bytecode myself).
+- docs are a bit confusing because they talk about much more than the current upgrade
+bad:
+- DA switching to worse DA (rollup -> validium) will be instant and can be done by local chain operators (not zk stack operators) unless actively prevented by DA mode `permanent-rollup`
+- token customizability in practice usually means worse trust assumptions and risk abstraction
+
+check [the wiki entry](https://www.notion.so/l2beat/ZK-stack-protocol-upgrade-v26-Gateway-1a0094a2aee78009af4efc679ecbd995) for more.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract TimelockController (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions.2.from:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.1.from:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.0.from:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      directlyReceivedPermissions.0.from:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      values.lateQuorumVoteExtension:
+-        604800
++        259200
+      values.proposalQueuedCount:
+-        4
++        6
+      values.timelock:
+-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      values.votingDelay:
+-        604800
++        259200
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714)
+    +++ description: This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.
+```
+
+## Source code changes
+
+```diff
+.../TimelockController.sol => .flat/ProtocolTimelockController.sol}       | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 55387644 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      name:
+-        "ProtocolTimelockController"
++        "TimelockController"
+      description:
+-        "Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s."
++        "Timelock contract allowing the queueing of transactions with a minimum delay of 0s."
+    }
+```
+
+Generated with discovered.json: 0x6cb5d3288c6bb3c43612f498940dc890a6723970
 
 # Diff at Wed, 26 Feb 2025 10:33:18 GMT:
 

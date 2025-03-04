@@ -28,6 +28,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$admin": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
         "$implementation": "0xCd0A8dc59685AF52cb706d73ab455FcA18eDC1D5",
@@ -70,6 +71,7 @@
         }
       ],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$immutable": true,
         "owner": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f"
@@ -87,6 +89,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$immutable": false,
         "$implementation": "0xEC097D3f3319F2A23aa82ee2e28d30FdCBe0d753",
@@ -139,6 +142,7 @@
         }
       ],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$admin": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
         "$implementation": "0x082AAd9468e3A4b430bA7851a36367D6B471F9B8",
@@ -192,6 +196,7 @@
         }
       ],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$immutable": true,
         "addressManager": "0x287bBa8116F2fc5a642bfD6027EBf5AD6522655C",
@@ -268,6 +273,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
+      "sinceBlock": 16990669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -322,6 +328,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$admin": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
         "$implementation": "0x69762714C496f76756D7aEbf8b4225F458cDf853",
@@ -337,8 +344,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "overhead": 0,
@@ -384,6 +391,7 @@
         }
       ],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$admin": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
         "$implementation": "0xCfB1b01c002Ab32859Dac851e7928B405dF8adE4",
@@ -417,6 +425,7 @@
         }
       ],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$admin": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
         "$implementation": "0x8D703A1eE5925D783aAbaFe2FC551A1cC62Bc5F7",
@@ -470,6 +479,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1718038307,
+      "sinceBlock": 20062740,
       "values": {
         "$admin": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
         "$implementation": "0xc2341b9265f7bDa95dc5c04cCB6A9801da7cBF75",

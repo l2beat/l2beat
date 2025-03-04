@@ -4,7 +4,7 @@ import type {
   ContractParameters,
   DiscoveryOutput,
   EoaParameters,
-} from '@l2beat/discovery-types'
+} from '../output/types'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,

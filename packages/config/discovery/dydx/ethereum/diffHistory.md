@@ -1,4 +1,326 @@
-Generated with discovered.json: 0x52bbf1578215f515429cb9dd0114f6e2b82eebcb
+Generated with discovered.json: 0xca660cc957c983c4624df9c0a50391be04f085a2
+
+# Diff at Tue, 04 Mar 2025 10:39:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21343041
+- current block number: 21343041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      sinceBlock:
++        12931482
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73) {
+    +++ description: None
+      sinceBlock:
++        11813202
+    }
+```
+
+```diff
+    contract CpuOods (0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5) {
+    +++ description: None
+      sinceBlock:
++        11813198
+    }
+```
+
+```diff
+    contract MerkleStatementContract (0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830) {
+    +++ description: None
+      sinceBlock:
++        11813198
+    }
+```
+
+```diff
+    contract ClaimsProxy (0x0fd829C3365A225FB9226e75c97c3A114bD3199e) {
+    +++ description: None
+      sinceBlock:
++        12931509
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92) {
+    +++ description: None
+      sinceBlock:
++        11813192
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D) {
+    +++ description: None
+      sinceBlock:
++        11813182
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x1F5459AA7857291112A8172ae1328248948d9d13) {
+    +++ description: None
+      sinceBlock:
++        11813186
+    }
+```
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      sinceBlock:
++        12931441
+    }
+```
+
+```diff
+    contract WrappedEthereumDydxToken (0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9) {
+    +++ description: None
+      sinceBlock:
++        18112365
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x4922f8750DFd040954b44F23980160342e308863) {
+    +++ description: None
+      sinceBlock:
++        11813200
+    }
+```
+
+```diff
+    contract EcdsaPointsXColumn (0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5) {
+    +++ description: None
+      sinceBlock:
++        11813192
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      sinceBlock:
++        12931493
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD) {
+    +++ description: None
+      sinceBlock:
++        12424523
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      sinceBlock:
++        12931442
+    }
+```
+
+```diff
+    contract ShortTimelockExecutor (0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc) {
+    +++ description: None
+      sinceBlock:
++        12816312
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      sinceBlock:
++        12931454
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      sinceBlock:
++        12931449
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      sinceBlock:
++        12931480
+    }
+```
+
+```diff
+    contract DydxGovernor (0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2) {
+    +++ description: None
+      sinceBlock:
++        12816310
+    }
+```
+
+```diff
+    contract GpsStatementVerifier (0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3) {
+    +++ description: None
+      sinceBlock:
++        12013702
+    }
+```
+
+```diff
+    contract Committee (0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1) {
+    +++ description: None
+      sinceBlock:
++        11834295
+    }
+```
+
+```diff
+    contract DydxToken (0x92D6C1e31e14520e676a687F0a93788B716BEff5) {
+    +++ description: None
+      sinceBlock:
++        12809555
+    }
+```
+
+```diff
+    contract ChainlinkAdapter (0x99B0599952a4FD2d1A1561Fa4C010827EaD30354) {
+    +++ description: None
+      sinceBlock:
++        12931491
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (0x9Bcf13C6b68450B427bfa86698D61901A8a3456D) {
+    +++ description: None
+      sinceBlock:
++        11813187
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      sinceBlock:
++        12931528
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      sinceBlock:
++        12931492
+    }
+```
+
+```diff
+    contract TreasuryVester (0xb9431E19B29B952d9358025f680077C3Fd37292f) {
+    +++ description: None
+      sinceBlock:
++        12931477
+    }
+```
+
+```diff
+    contract GovernanceStrategyV2 (0xc2f5F3505910Da80F0592a3Cc023881C50b16505) {
+    +++ description: None
+      sinceBlock:
++        18112366
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (0xD14fd39630Ec941C3bA6C791E3af9E0027013A15) {
+    +++ description: None
+      sinceBlock:
++        11813192
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      sinceBlock:
++        11834295
+    }
+```
+
+```diff
+    contract MerklePauserExecutor (0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52) {
+    +++ description: None
+      sinceBlock:
++        12816315
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3) {
+    +++ description: None
+      sinceBlock:
++        12013692
+    }
+```
+
+```diff
+    contract LongTimelockExecutor (0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B) {
+    +++ description: None
+      sinceBlock:
++        12816311
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (0xEfbCcE4659db72eC6897F46783303708cf9ACef8) {
+    +++ description: None
+      sinceBlock:
++        11813182
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: None
+      sinceBlock:
++        17065528
+    }
+```
+
+```diff
+    contract FriStatementContract (0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1) {
+    +++ description: None
+      sinceBlock:
++        11813198
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      sinceBlock:
++        12946416
+    }
+```
+
+Generated with discovered.json: 0x5db33511cf5bddbb87778a1a432d9dc05a2a4d36
 
 # Diff at Mon, 20 Jan 2025 11:09:26 GMT:
 

@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -24,20 +23,17 @@ import {
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-  getSHARPVerifierUpgradeDelay,
-} from '../../discovery/starkware'
+import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
-import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('starknet')
-const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
 
 const starknetDelaySeconds = discovery.getContractValue<number>(
   'Starknet',
@@ -230,37 +226,8 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
   discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
-const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'EKUBO',
-  discovery.getContractValue<number>('MultiBridge', 'maxTotalBalance_EKUBO'),
-  18,
-)
 
 const finalizationPeriod = 0
-
-const starknetUpgrader = discovery.getContractValue<EthereumAddress>(
-  'Starknet',
-  '$admin',
-)
-const ethEscrowUpgrader = discovery.getContractValue<EthereumAddress>(
-  'ETHBridge',
-  '$admin',
-)
-const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
-const operators = discovery.getPermissionedAccounts('Starknet', 'operators')
-
-assert(
-  starknetUpgrader ===
-    discovery.getContract('StarknetSecurityCouncil').address &&
-    governors[0].address ===
-      discovery.getContract('StarknetSecurityCouncil').address &&
-    governors.length === 1 &&
-    operators[1].address ===
-      discovery.getContract('StarknetSCMinorityMultisig').address &&
-    ethEscrowUpgrader ===
-      discovery.getContract('StarkgateBridgeMultisig').address,
-  `gov has changed, review non-discodriven perms, gov diagram and gov section.`,
-)
 
 const scThreshold = discovery.getMultisigStats('StarknetSecurityCouncil')
 const sharpMsThreshold = discovery.getMultisigStats(
@@ -500,9 +467,7 @@ export const starknet: Layer2 = {
         address: EthereumAddress(ESCROW_MULTIBRIDGE_ADDRESS),
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
         description:
-          'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).' +
-          ' ' +
-          escrowEKUBOMaxTotalBalanceString,
+          'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
         upgradableBy: [
           {
             name: 'StarkGate MultiBridge Admin',
@@ -1123,48 +1088,9 @@ export const starknet: Layer2 = {
       ],
     },
   },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('Starknet', {
-          description:
-            'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-          upgradableBy: [
-            {
-              name: 'StarknetSecurityCouncil',
-              delay: starknetDelaySeconds
-                ? formatSeconds(starknetDelaySeconds)
-                : 'No delay',
-            },
-          ],
-        }),
-        ...getSHARPVerifierContracts(discovery, verifierAddress),
-        discovery.getContractDetails(
-          'L1DaiGateway',
-          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        ),
-        discovery.getContractDetails('StarkgateManager', {
-          description:
-            'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
-          upgradableBy: [
-            {
-              name: 'StarkgateBridgeMultisig',
-              delay: formatSeconds(starkgateManagerDelaySeconds),
-            },
-          ],
-        }),
-        discovery.getContractDetails('StarkgateRegistry', {
-          description:
-            'A central registry contract to map token addresses to their StarkGate bridge contract.',
-          upgradableBy: [
-            {
-              name: 'StarkgateBridgeMultisig',
-              delay: formatSeconds(starkgateRegistryDelaySeconds),
-            },
-          ],
-        }),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   upgradesAndGovernance: `
@@ -1179,49 +1105,6 @@ export const starknet: Layer2 = {
   
   The shared SHARPVerifier contract is governed by the ${sharpMsThreshold} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting state validity of all StarkEx and SN stack chains that are using it and potentially allowing this Multisig to finalize malicious state updates.
   `,
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getMultisigPermission(
-          'StarknetSecurityCouncil',
-          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
-            delayDescriptionFromSeconds(starknetDelaySeconds),
-        ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getMultisigPermission(
-          'StarkgateBridgeMultisig',
-          'Can upgrade most of the Starkgate bridge escrows including ETHBridge and the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
-        ),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getPermissionedAccounts('Starknet', 'operators'),
-          'Allowed to post state updates. When all operators are down the state cannot be updated.',
-        ),
-        discovery.getMultisigPermission(
-          'StarknetSCMinorityMultisig',
-          'An Operator. Allowed to post state updates. This minority multisig with the SecurityCouncil members is the only fallback in case of censorship by other operators.',
-        ),
-        discovery.getMultisigPermission(
-          'StarkgateSecurityAgentMultisig',
-          'Can enable withdrawal limits for tokens in some Starkgate bridge Escrows.',
-        ),
-        discovery.getPermissionDetails(
-          'StarkGate LUSD owner',
-          getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
-          'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
-        ),
-        discovery.getPermissionDetails(
-          'StarkGate token blacklister EOA',
-          discovery.getAccessControlRolePermission(
-            'StarkgateManager',
-            'TOKEN_ADMIN',
-          ),
-          'Can remove and blacklist tokens from the Starkgate bridge.',
-        ),
-      ],
-    },
-  },
   milestones: [
     {
       title: 'Starknet starts using blobs',

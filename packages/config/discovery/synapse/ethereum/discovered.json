@@ -12,6 +12,7 @@
       ],
       "ignoreInWatchMode": ["getAdminBalance", "getVirtualPrice"],
       "sinceTimestamp": 1629082839,
+      "sinceBlock": 13033711,
       "values": {
         "$immutable": true,
         "flashLoanFeeBPS": 8,
@@ -46,14 +47,14 @@
         "0x8bcd2f8e4f39141963f6232b1fb1679eff06e88b0f5127e427cf7c7992b84d44"
       ],
       "sinceTimestamp": 1629082839,
+      "sinceBlock": 13033711,
       "values": {
         "$immutable": true,
         "decimals": 18,
         "name": "nUSD",
         "owner": "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8",
         "symbol": "nUSD"
-      },
-      "derivedName": "LPToken"
+      }
     },
     {
       "name": "SynapseBridge",
@@ -71,6 +72,7 @@
         }
       ],
       "sinceTimestamp": 1629082107,
+      "sinceBlock": 13033669,
       "values": {
         "$admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
         "$implementation": "0x31fe393815822edacBd81C2262467402199EFD0D",
@@ -154,8 +156,7 @@
         "paused": false,
         "startBlockNumber": 0,
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "SynapseBridge"
+      }
     },
     {
       "name": "TimelockController",
@@ -164,6 +165,7 @@
         "0xb8860ecb88ce9ef535fd75652844536335a1ab72f54ccfd0159be7e57422dc03"
       ],
       "sinceTimestamp": 1630038897,
+      "sinceBlock": 13105394,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -197,6 +199,7 @@
         "0xf7a803ef034ab7bcc0da9be0f9ef3781751290ab0651cf78d3f4255dc2f7b62c"
       ],
       "sinceTimestamp": 1637716982,
+      "sinceBlock": 13674290,
       "values": {
         "$immutable": true,
         "baseTokens": [
@@ -205,8 +208,7 @@
           "0xdAC17F958D2ee523a2206206994597C13D831ec7"
         ],
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "L1BridgeZap"
+      }
     },
     {
       "name": "Bridge Multisig",
@@ -219,6 +221,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1628970480,
+      "sinceBlock": 13025256,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -250,6 +253,7 @@
         }
       ],
       "sinceTimestamp": 1629075985,
+      "sinceBlock": 13033197,
       "values": {
         "$immutable": true,
         "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
@@ -268,6 +272,7 @@
         }
       ],
       "sinceTimestamp": 1603880884,
+      "sinceBlock": 11144602,
       "values": {
         "$immutable": true,
         "ALLOWANCE_TRANSFER_TYPEHASH": "0x80b006280932094e7cc965863eb5118dc07e5d272c6670c4a7c87299e04fceeb",

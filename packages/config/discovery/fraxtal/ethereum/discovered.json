@@ -5,7 +5,7 @@
   "configHash": "0x226900c84d8d0b22870c806b3a8f97dc457f1c3713d2d6c5a7a6713e72269e06",
   "contracts": [
     {
-      "name": "OptimismMintablePermitERC20Factory",
+      "name": "OptimismMintableERC20Factory",
       "address": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
@@ -13,7 +13,6 @@
         "0x42f31c7757e8d3066477571abb4a04e8b817c654c63f6c9f12c96af2a3d000ca"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "OptimismMintableERC20Factory",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
@@ -23,6 +22,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876",
@@ -42,7 +42,8 @@
         "bridge": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "BRIDGE": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintablePermitERC20Factory"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -56,6 +57,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": false,
         "$implementation": "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8",
@@ -142,6 +144,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": true,
         "addressManager": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
@@ -179,6 +182,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367",
@@ -214,8 +218,8 @@
         "l2OutputOracle": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -268,6 +272,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x30Cd695249394eED44C576f2caEC5304be6455F9",
@@ -308,6 +313,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23",
@@ -373,6 +379,7 @@
         }
       ],
       "sinceTimestamp": 1734221171,
+      "sinceBlock": 21404227,
       "values": {
         "$immutable": true,
         "amosArray": ["0xEcb9bBb97BD3C23e8f176075EDB3c68B9a1869Ae"],
@@ -387,13 +394,12 @@
       }
     },
     {
-      "name": "frxETH",
+      "name": "frxETH Token",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
       "template": "fraxtal/frxETH",
       "sourceHashes": [
         "0x35d2793b796cde40be8f1ddaa988ae1c8fd2ad9f55b4b4d74946d35832703efa"
       ],
-      "displayName": "frxETH Token",
       "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
       "issuedPermissions": [
         {
@@ -422,6 +428,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1665022895,
+      "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -437,7 +444,8 @@
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "totalSupply": "135157925288926895591978"
-      }
+      },
+      "derivedName": "frxETH"
     },
     {
       "name": "SuperchainConfig",
@@ -462,6 +470,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4",
@@ -525,6 +534,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65",
@@ -581,13 +591,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "FraxEtherMinter",
+      "name": "frxETH Minter",
       "address": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
       "template": "fraxtal/FraxEtherMinter",
       "sourceHashes": [
         "0x69f04bb460f0627fa685c48813134972ea72a339b1add8185fdde04f92a6e1f3"
       ],
-      "displayName": "frxETH Minter",
       "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
       "issuedPermissions": [
         {
@@ -611,6 +620,7 @@
         }
       ],
       "sinceTimestamp": 1734221195,
+      "sinceBlock": 21404229,
       "values": {
         "$immutable": true,
         "etherRouter": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
@@ -620,7 +630,8 @@
         "pendingTimelockAddress": "0x0000000000000000000000000000000000000000",
         "sfrxEthToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
         "timelockAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
-      }
+      },
+      "derivedName": "FraxEtherMinter"
     },
     {
       "name": "frxETHMultisig",
@@ -655,6 +666,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1665087971,
+      "sinceBlock": 15691435,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -678,13 +690,12 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "Timelock",
+      "name": "FrxEthTimelock",
       "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
       "template": "fraxtal/Timelock",
       "sourceHashes": [
         "0xf74d5abe93255d485a607a353bb85161caf16d07541125865eb5fd9220bce6c7"
       ],
-      "displayName": "FrxEthTimelock",
       "description": "Allows for time-delayed execution of transactions. Current delay is 2d.",
       "directlyReceivedPermissions": [
         {
@@ -699,6 +710,7 @@
         }
       ],
       "sinceTimestamp": 1608140486,
+      "sinceBlock": 11465576,
       "values": {
         "$immutable": true,
         "admin": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -708,7 +720,8 @@
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Timelock"
     },
     {
       "name": "AddressManager",
@@ -727,6 +740,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": true,
         "owner": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
@@ -750,6 +764,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4",
@@ -797,6 +812,7 @@
         "totalSupply"
       ],
       "sinceTimestamp": 1665022895,
+      "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
@@ -811,8 +827,7 @@
         "symbol": "sfrxETH",
         "totalAssets": "104200370016776283449414",
         "totalSupply": "93603354625166337676954"
-      },
-      "derivedName": "sfrxETH"
+      }
     },
     {
       "name": "FraxtalTimelockMultisig",
@@ -856,6 +871,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1629667690,
+      "sinceBlock": 13077564,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -877,13 +893,12 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "frxETHMinter",
+      "name": "frxETH Minter",
       "address": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
       "template": "fraxtal/FrxEthMinter",
       "sourceHashes": [
         "0xeb2d3e06200c7350a7bcb0c3b1b64c466c15459f1119fb068ae8a69483c30d55"
       ],
-      "displayName": "frxETH Minter",
       "description": "Accepts user-supplied ETH and converts it to frxETH.",
       "issuedPermissions": [
         {
@@ -907,6 +922,7 @@
       ],
       "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
       "sinceTimestamp": 1665022895,
+      "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
         "currentWithheldETH": "454434241964665580682",
@@ -922,7 +938,8 @@
         "submitPaused": false,
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "withholdRatio": 980000
-      }
+      },
+      "derivedName": "frxETHMinter"
     },
     {
       "name": "FraxtalMultisig",
@@ -1003,6 +1020,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

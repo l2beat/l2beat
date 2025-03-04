@@ -34,6 +34,7 @@
       ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1623784105,
+      "sinceBlock": 2107,
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93",
@@ -65,8 +66,7 @@
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "exitNum": 30482,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
-      },
-      "derivedName": "L2ERC20Gateway"
+      }
     },
     {
       "name": "ConstitutionHash",
@@ -77,6 +77,7 @@
       ],
       "description": "Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.",
       "sinceTimestamp": 1678968508,
+      "sinceBlock": 70398215,
       "values": {
         "$immutable": true,
         "constitutionHash": "0x28faf2acba9b3ff80ec484e3d5646931eeef40568b1b7c38dbe52b890bfd7938",
@@ -93,6 +94,7 @@
       ],
       "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678989500,
+      "sinceBlock": 70483363,
       "values": {
         "$immutable": true,
         "currentRecipientGroup": "0x8b234bd5528a58ba7b1b14a9a0f5ef254062f2bb23b279fedc35737c44dbf537",
@@ -179,6 +181,7 @@
         }
       ],
       "sinceTimestamp": 1678968508,
+      "sinceBlock": 70398215,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
@@ -247,6 +250,7 @@
         "0xf98882c836bb8026b07fe0c6af0e5fc52578e78078c523fcd7974fb69b833732"
       ],
       "sinceTimestamp": 1634920833,
+      "sinceBlock": 2454760,
       "values": {
         "$immutable": true,
         "decimals": 0,
@@ -266,6 +270,7 @@
         "0x4522be863ce454f4a528c27299d26dc69d407f11e5807129aaff93f36b44dd53"
       ],
       "sinceTimestamp": 1623784070,
+      "sinceBlock": 2103,
       "values": {
         "$immutable": true,
         "beacon": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
@@ -385,6 +390,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692138844,
+      "sinceBlock": 121762709,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -421,6 +427,7 @@
       ],
       "description": "Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.",
       "sinceTimestamp": 1632133487,
+      "sinceBlock": 1336834,
       "values": {
         "$immutable": true,
         "counterpartGateway": "0xD3B5b60020504bc3489D6949d545893982BA3011",
@@ -461,6 +468,7 @@
         }
       ],
       "sinceTimestamp": 1623784105,
+      "sinceBlock": 2108,
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278",
@@ -485,8 +493,7 @@
         "counterpartGateway": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L2GatewayRouter"
+      }
     },
     {
       "name": "L2WethGateway",
@@ -517,6 +524,7 @@
         }
       ],
       "sinceTimestamp": 1624913237,
+      "sinceBlock": 38495,
       "values": {
         "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
         "$implementation": "0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
@@ -552,8 +560,7 @@
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
-      },
-      "derivedName": "L2WethGateway"
+      }
     },
     {
       "name": "L2LPTGateway",
@@ -564,6 +571,7 @@
       ],
       "description": "Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.",
       "sinceTimestamp": 1644595982,
+      "sinceBlock": 5864786,
       "values": {
         "$immutable": true,
         "counterpartGateway": "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676",
@@ -573,8 +581,7 @@
         "l2Lpt": "0x289ba1701C2F088cf0faf8B3705246331cB8A839",
         "l2Router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
         "paused": false
-      },
-      "derivedName": "L2LPTGateway"
+      }
     },
     {
       "name": "UpgradeExecRouteBuilder",
@@ -584,6 +591,7 @@
         "0x4ed0927cf3d1bda79c1506ba72809f27e5eca436a34b45c47d5e1fa221a685b3"
       ],
       "sinceTimestamp": 1692138965,
+      "sinceBlock": 121763102,
       "values": {
         "$immutable": true,
         "DEFAULT_GOV_ACTION_CALLDATA": "0xb147f40c",
@@ -592,8 +600,7 @@
         "l1TimelockAddr": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
         "l1TimelockMinDelay": 259200,
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
-      },
-      "derivedName": "UpgradeExecRouteBuilder"
+      }
     },
     {
       "name": "TreasuryGovernor",
@@ -624,6 +631,7 @@
         }
       ],
       "sinceTimestamp": 1678968508,
+      "sinceBlock": 70398215,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
@@ -690,6 +698,7 @@
         }
       ],
       "sinceTimestamp": 1678968508,
+      "sinceBlock": 70398215,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
@@ -719,7 +728,6 @@
           "description": "The percentage of the total supply that can be minted by the owner once per year."
         }
       },
-      "derivedName": "L2ArbitrumToken",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     },
     {
@@ -731,13 +739,13 @@
       ],
       "description": "Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.",
       "sinceTimestamp": 1692138730,
+      "sinceBlock": 121762383,
       "values": {
         "$immutable": true,
         "actionContractId": "0x91a027369a797f7b79038b0977234c66212c6a4af81bff02b23b740c8fda9ddc",
         "SENTINEL_OWNERS": "0x0000000000000000000000000000000000000001",
         "store": "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
-      },
-      "derivedName": "SecurityCouncilMemberSyncAction"
+      }
     },
     {
       "name": "L2SecurityCouncilPropose",
@@ -764,6 +772,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692138742,
+      "sinceBlock": 121762420,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -800,6 +809,7 @@
       ],
       "description": "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678989486,
+      "sinceBlock": 70483310,
       "values": {
         "$immutable": true,
         "currentRecipientGroup": "0x8b234bd5528a58ba7b1b14a9a0f5ef254062f2bb23b279fedc35737c44dbf537",
@@ -850,6 +860,7 @@
         }
       ],
       "sinceTimestamp": 1678968508,
+      "sinceBlock": 70398215,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
@@ -923,6 +934,7 @@
       ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1678968435,
+      "sinceBlock": 70397931,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056",
@@ -984,6 +996,7 @@
         }
       ],
       "sinceTimestamp": 1678968508,
+      "sinceBlock": 70398215,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115",
@@ -1065,6 +1078,7 @@
         }
       ],
       "sinceTimestamp": 1692138965,
+      "sinceBlock": 121763102,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64",
@@ -1147,8 +1161,7 @@
           "severity": "MEDIUM",
           "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"
         }
-      },
-      "derivedName": "SecurityCouncilManager"
+      }
     },
     {
       "name": "L2GatewaysProxyAdmin",
@@ -1173,6 +1186,7 @@
         }
       ],
       "sinceTimestamp": 1623784105,
+      "sinceBlock": 2106,
       "values": {
         "$immutable": true,
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
@@ -1222,6 +1236,7 @@
         }
       ],
       "sinceTimestamp": 1678968400,
+      "sinceBlock": 70397784,
       "values": {
         "$immutable": true,
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
@@ -1235,6 +1250,7 @@
         "0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"
       ],
       "sinceTimestamp": 1623784070,
+      "sinceBlock": 2102,
       "values": {
         "$immutable": true,
         "implementation": "0x3f770Ac673856F105b586bb393d122721265aD46",
@@ -1289,6 +1305,7 @@
         }
       ],
       "sinceTimestamp": 1678968508,
+      "sinceBlock": 70398215,
       "values": {
         "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
         "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",

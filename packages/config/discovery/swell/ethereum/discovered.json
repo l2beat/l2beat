@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
@@ -57,6 +58,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732502723,
+      "sinceBlock": 21261870,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -92,6 +94,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
+      "sinceBlock": 19968607,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -124,6 +127,7 @@
         }
       ],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0xEBb9Aed39A3212F60599Fc06a2C1181164D5d8B6",
@@ -149,6 +153,7 @@
       ],
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1724975099,
+      "sinceBlock": 20637601,
       "values": {
         "$immutable": true,
         "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
@@ -169,6 +174,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -186,6 +192,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
+      "sinceBlock": 16780617,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -250,6 +257,7 @@
         }
       ],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$immutable": true,
         "addressManager": "0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A",
@@ -277,6 +285,7 @@
         }
       ],
       "sinceTimestamp": 1685377355,
+      "sinceBlock": 17365800,
       "values": {
         "$immutable": true,
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -366,6 +375,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420875,
+      "sinceBlock": 19185554,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -392,7 +402,6 @@
         "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "OptimismPortal",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "issuedPermissions": [
         {
@@ -403,6 +412,7 @@
       ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
@@ -465,6 +475,7 @@
         }
       ],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
@@ -514,6 +525,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
+      "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -555,6 +567,7 @@
       ],
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
@@ -600,6 +613,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
@@ -667,6 +681,7 @@
         }
       ],
       "sinceTimestamp": 1705954799,
+      "sinceBlock": 19064589,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -727,6 +742,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
+      "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -759,6 +775,7 @@
       ],
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1724975087,
+      "sinceBlock": 20637600,
       "values": {
         "$immutable": true,
         "challengePeriod": 86400,
@@ -781,6 +798,7 @@
       ],
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
@@ -874,6 +892,7 @@
         }
       ],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$immutable": true,
         "owner": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"
@@ -897,6 +916,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
+      "sinceBlock": 19185517,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -943,6 +963,7 @@
         }
       ],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -974,6 +995,7 @@
         }
       ],
       "sinceTimestamp": 1724111315,
+      "sinceBlock": 20566057,
       "values": {
         "$immutable": true,
         "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -1012,6 +1034,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0xF56D96B2535B932656d3c04Ebf51baBff241D886",
@@ -1043,8 +1066,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -1079,13 +1102,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
       ],
-      "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -1096,10 +1118,12 @@
         }
       ],
       "sinceTimestamp": 1624400033,
+      "sinceBlock": 12686687,
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -1113,6 +1137,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
@@ -1156,6 +1181,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
       "sinceTimestamp": 1734102575,
+      "sinceBlock": 21394394,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x7e97935FbDF2a27EA35c4fdDdaCf5ACd685e65A2",
@@ -1202,6 +1228,7 @@
         }
       ],
       "sinceTimestamp": 1732696703,
+      "sinceBlock": 21277945,
       "values": {
         "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -2125,7 +2152,7 @@
     "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
     "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
     "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
-    "opstack/OptimismPortal2": "0x4f4fd47650d0a6c200ce01c99bb6573854ddcbb6958312faef6a3fea21c76bf0",
+    "opstack/OptimismPortal2": "0x88e1ec872b590b2d98ed6383fc9d7759688e0f13d4b733cd63a7bcae7c5ce99d",
     "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
     "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",
     "opstack/SuperchainConfig": "0x38b312497b6b9a5247e304b69929d797dffc28d476435a84fdeb9f5d901bc1c2",

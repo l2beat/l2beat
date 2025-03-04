@@ -11,6 +11,7 @@
         "0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"
       ],
       "sinceTimestamp": 1706573417,
+      "sinceBlock": 9892035,
       "values": {
         "$immutable": true,
         "owner": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3"
@@ -39,6 +40,7 @@
         }
       ],
       "sinceTimestamp": 1719523667,
+      "sinceBlock": 16367160,
       "values": {
         "$immutable": true,
         "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
@@ -93,6 +95,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710507013,
+      "sinceBlock": 11858833,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -131,6 +134,7 @@
         }
       ],
       "sinceTimestamp": 1706574051,
+      "sinceBlock": 9892352,
       "values": {
         "$immutable": true,
         "feeVault": "0x296666e937b270193B960a7cEC526B351F353166",
@@ -164,8 +168,7 @@
           "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
           "type": "PERMISSION"
         }
-      },
-      "derivedName": "SuccinctGateway"
+      }
     },
     {
       "name": "Blobstream",
@@ -204,6 +207,7 @@
       ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1710651207,
+      "sinceBlock": 11930930,
       "values": {
         "$admin": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"],
         "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
@@ -287,6 +291,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724206353,
+      "sinceBlock": 18708503,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -312,6 +317,7 @@
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
       "sinceTimestamp": 1729727159,
+      "sinceBlock": 21468906,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
@@ -336,6 +342,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706568681,
+      "sinceBlock": 9889667,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -369,6 +376,7 @@
         }
       ],
       "sinceTimestamp": 1735949685,
+      "sinceBlock": 24580169,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
@@ -382,6 +390,7 @@
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
       ],
       "sinceTimestamp": 1711140063,
+      "sinceBlock": 12175358,
       "values": {
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
@@ -396,6 +405,7 @@
         "0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"
       ],
       "sinceTimestamp": 1711140011,
+      "sinceBlock": 12175332,
       "values": {
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f",

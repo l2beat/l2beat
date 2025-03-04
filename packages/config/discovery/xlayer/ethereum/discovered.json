@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 21764788,
-  "configHash": "0x52011b7a50b4554e3519049cf1648feab9e98390f788d536c5dc8fb1aa643367",
+  "configHash": "0xc0be4694459378a2201ccbb27952c2b52a5fdcae2dda65ef18bb35c6e5f8aa4d",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -29,6 +29,7 @@
         }
       ],
       "sinceTimestamp": 1711787327,
+      "sinceBlock": 19545591,
       "values": {
         "$admin": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
         "$implementation": "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8",
@@ -72,6 +73,7 @@
         }
       ],
       "sinceTimestamp": 1711787315,
+      "sinceBlock": 19545590,
       "values": {
         "$immutable": true,
         "owner": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
@@ -109,6 +111,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1711785755,
+      "sinceBlock": 19545462,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
@@ -168,16 +171,17 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "FflonkVerifier_13",
+      "name": "Verifier",
       "address": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x88e9672f9076cd809934d036a15eb65c30e0e253eccbfc4a15962b6580c8fcd3"
       ],
-      "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1734710375,
+      "sinceBlock": 21444781,
       "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier_13",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],

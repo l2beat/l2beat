@@ -10,7 +10,7 @@
   ],
   "names": {
     "0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor",
-    "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "ProtocolTimelockController",
+    "0x085b8B6407f150D62adB1EF926F7f304600ec714": "ProtocolTimelockController",
     "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor",
     "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": "TokenTimelockController",
     "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor",
@@ -68,7 +68,7 @@
       }
     },
     "ProtocolTimelockController": {
-      "description": "Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of {{getMinDelay_formatted}}."
+      "description": "This timelock has a minimum delay of {{getMinDelay_formatted}}. It does not have the L2_SENDER_ROLE yet."
     }
   }
 }

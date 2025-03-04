@@ -10,6 +10,7 @@ export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export {
+  Permission,
   RawDiscoveryConfig,
   BasePermissionEntries,
   RolePermissionEntries,
@@ -52,8 +53,9 @@ export { NoCache } from './discovery/provider/NoCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,
-  removeComments,
 } from './flatten/utils'
+export type { ContractConfig } from './discovery/config/ContractConfig'
+export type { ExplorerConfig } from './utils/IEtherscanClient'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { AllProviders } from './discovery/provider/AllProviders'
@@ -63,3 +65,18 @@ export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { DiscoverCommandArgs } from './cli/discoverCommand'
 export { ProviderStats } from './discovery/provider/Stats'
+export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
+export {
+  type ClingoFact,
+  type ClingoValue,
+  parseExportedFacts,
+} from './discovery/modelling/factTypes'
+export type {
+  DiscoveryOutput,
+  ContractParameters,
+  EoaParameters,
+  ReceivedPermission,
+  ResolvedPermissionPath,
+  ContractValue,
+} from './discovery/output/types'
+export { get$Implementations } from './discovery/utils/extractors'

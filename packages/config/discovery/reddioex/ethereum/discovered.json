@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0x628550fb5998ef1ec37672c9b37bcf3087541ece75fab27ff0762de5fa27dbc5",
+  "configHash": "0x0cf29200d1a82b407505a663ad596324d2fe8d824af63e5e15e7d6abbbafc273",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -12,6 +12,7 @@
         "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"
       ],
       "sinceTimestamp": 1663498763,
+      "sinceBlock": 15559994,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -35,6 +36,7 @@
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "sinceTimestamp": 1657453372,
+      "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -50,6 +52,7 @@
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
       "sinceTimestamp": 1657453372,
+      "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": false,
@@ -86,6 +89,7 @@
         "getValidiumVaultRoot"
       ],
       "sinceTimestamp": 1663498763,
+      "sinceBlock": 15559994,
       "values": {
         "$admin": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
         "$immutable": false,

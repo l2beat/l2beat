@@ -5,7 +5,7 @@
   "configHash": "0x85df22d1b432d9c256e354f5435140aa61417dab2d60ca1829f9aef9f294f3b9",
   "contracts": [
     {
-      "name": "ERC20Inbox",
+      "name": "Inbox",
       "address": "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -13,7 +13,6 @@
         "0xb2c117c2e00734a82fe4ab27d5fe91a6e152c06bbcdbf83db021ad32b6be3e60"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -26,6 +25,7 @@
         }
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
         "$implementation": "0xCd26Db56B29e88b5394063aEA727DB1a03E961a7",
@@ -44,6 +44,7 @@
         "paused": false,
         "sequencerInbox": "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C"
       },
+      "derivedName": "ERC20Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -84,6 +85,7 @@
         }
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$immutable": true,
         "owner": "0xe032d15909e90f9A36901abB08944653e9E87d72"
@@ -175,6 +177,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727880613,
+      "sinceBlock": 259640900,
       "values": {
         "$immutable": false,
         "$implementation": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
@@ -231,6 +234,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0xe032d15909e90f9A36901abB08944653e9E87d72",
         "$implementation": [
@@ -346,10 +350,11 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723189341,
+      "sinceBlock": 240992264,
       "values": { "$immutable": true }
     },
     {
-      "name": "ERC20Outbox",
+      "name": "Outbox",
       "address": "0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -357,7 +362,6 @@
         "0xfc1c087eedce3e4be0593d2e01fcd357b4980c69e03399574b4606e4f3b9ee04"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -370,6 +374,7 @@
         }
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
         "$implementation": "0x4D92EE5cCA2A93b30549a6398C063861F18B6726",
@@ -392,6 +397,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
       },
+      "derivedName": "ERC20Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -403,10 +409,11 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723189176,
+      "sinceBlock": 240991609,
       "values": { "$immutable": true }
     },
     {
-      "name": "ERC20Bridge",
+      "name": "Bridge",
       "address": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -414,7 +421,6 @@
         "0x730e8c5ec2de9c1ede82d8374adbf127fb1b095f21f58aad54f58469ae135857"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -432,6 +438,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
         "$implementation": "0x20B3C55fe4ecd989beB56E13b2A726110f0c3619",
@@ -457,6 +464,7 @@
         "sequencerMessageCount": 19232,
         "sequencerReportedSubMessageCount": 7089412
       },
+      "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -468,6 +476,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723189261,
+      "sinceBlock": 240991948,
       "values": { "$immutable": true }
     },
     {
@@ -479,6 +488,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723189094,
+      "sinceBlock": 240991280,
       "values": { "$immutable": true }
     },
     {
@@ -490,6 +500,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723189428,
+      "sinceBlock": 240992619,
       "values": {
         "$immutable": true,
         "prover0": "0xa301f8EdD4Cdf10553b6aB39d9724c56d7ab582F",
@@ -519,6 +530,7 @@
         }
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
         "$implementation": "0x6Feb471ce7D32ee16047F1A983ac4f592df96526",
@@ -547,6 +559,7 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1723189798,
+      "sinceBlock": 240994094,
       "values": { "$immutable": true }
     },
     {
@@ -585,6 +598,7 @@
         }
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
         "$implementation": "0xdbE68E9e47c4AC96Ab1300902b4B87A7E6470786",
@@ -651,6 +665,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
         "$implementation": "0x51120FA6D564A70E9F80874c0a55A4ee0c7396Fe",
@@ -710,7 +725,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20RollupEventInbox",
+      "name": "RollupEventInbox",
       "address": "0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
@@ -718,7 +733,6 @@
         "0x35bd9f6436158f2147578ce95b85de68f435e81f1f3ed3858f7523a8c4825a1a"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "RollupEventInbox",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
@@ -731,6 +745,7 @@
         }
       ],
       "sinceTimestamp": 1724863522,
+      "sinceBlock": 247653199,
       "values": {
         "$admin": "0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
         "$implementation": "0xF088dccfD7d39b24Ce0D4c91a4fEC3F56e3DBC96",
@@ -744,7 +759,8 @@
         "$upgradeCount": 1,
         "bridge": "0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c"
-      }
+      },
+      "derivedName": "ERC20RollupEventInbox"
     }
   ],
   "eoas": [

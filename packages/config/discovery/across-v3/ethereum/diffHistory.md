@@ -1,4 +1,310 @@
-Generated with discovered.json: 0x8534972f862684860953b5b8251a12aaefd6eeda
+Generated with discovered.json: 0xd46b9db40cf0836f1d4d9fa6f7cc32742e0b0ad4
+
+# Diff at Tue, 04 Mar 2025 10:38:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21802758
+- current block number: 21802758
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802758 (main branch discovery), not current.
+
+```diff
+    contract Zora_Adapter (0x024F2fC31CBDD8de17194b1892c834f98Ef5169b) {
+    +++ description: None
+      sinceBlock:
++        20512287
+    }
+```
+
+```diff
+    contract VotingToken (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828) {
+    +++ description: None
+      sinceBlock:
++        9247089
+    }
+```
+
+```diff
+    contract Soneium_Adapter (0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2) {
+    +++ description: None
+      sinceBlock:
++        21597341
+    }
+```
+
+```diff
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210) {
+    +++ description: None
+      sinceBlock:
++        21237154
+    }
+```
+
+```diff
+    contract Redstone_Adapter (0x188F8C95B7cfB7993B53a4F643efa687916f73fA) {
+    +++ description: None
+      sinceBlock:
++        20432774
+    }
+```
+
+```diff
+    contract Boba_Adapter (0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3) {
+    +++ description: None
+      sinceBlock:
++        14716798
+    }
+```
+
+```diff
+    contract AcrossConfigStore (0x3B03509645713718B78951126E0A6de6f10043f5) {
+    +++ description: None
+      sinceBlock:
++        14717196
+    }
+```
+
+```diff
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3) {
+    +++ description: None
+      sinceBlock:
++        9247083
+    }
+```
+
+```diff
+    contract PolygonTokenBridger (0x48d990AbDA20afa1fD1da713AbC041B60a922c65) {
+    +++ description: None
+      sinceBlock:
++        14704448
+    }
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: None
+      sinceBlock:
++        16697363
+    }
+```
+
+```diff
+    contract Ethereum_Adapter (0x527E872a5c3f0C7c24Fe33F2593cFB890a285084) {
+    +++ description: None
+      sinceBlock:
++        14704381
+    }
+```
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      sinceBlock:
++        17117454
+    }
+```
+
+```diff
+    contract Alephzero_Adapter (0x6F4083304C2cA99B077ACE06a5DcF670615915Af) {
+    +++ description: None
+      sinceBlock:
++        21131132
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: None
+      sinceBlock:
++        16697276
+    }
+```
+
+```diff
+    contract LpTokenFactory (0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d) {
+    +++ description: None
+      sinceBlock:
++        14704307
+    }
+```
+
+```diff
+    contract Ink_Adapter (0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2) {
+    +++ description: None
+      sinceBlock:
++        21438590
+    }
+```
+
+```diff
+    contract Linea_Adapter (0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE) {
+    +++ description: None
+      sinceBlock:
++        19402413
+    }
+```
+
+```diff
+    contract EmergencyProposalExecutor (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      sinceBlock:
++        10688070
+    }
+```
+
+```diff
+    contract Lisk_Adapter (0x8229E812f20537caA1e8Fb41749b4887B8a75C3B) {
+    +++ description: None
+      sinceBlock:
++        20184545
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+    +++ description: None
+      sinceBlock:
++        17176107
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: None
+      sinceBlock:
++        16697394
+    }
+```
+
+```diff
+    contract WorldChain_Adapter (0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32) {
+    +++ description: None
+      sinceBlock:
++        20963234
+    }
+```
+
+```diff
+    contract Polygon_Adapter (0xb4AeF0178f5725392A26eE18684C2aB62adc912e) {
+    +++ description: None
+      sinceBlock:
++        19915066
+    }
+```
+
+```diff
+    contract HubPool Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      sinceBlock:
++        13559776
+    }
+```
+
+```diff
+    contract Scroll_Adapter (0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F) {
+    +++ description: None
+      sinceBlock:
++        20318360
+    }
+```
+
+```diff
+    contract CoveredCallFinancialProductLibrary (0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58) {
+    +++ description: None
+      sinceBlock:
++        12234012
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      sinceBlock:
++        14819537
+    }
+```
+
+```diff
+    contract Base_Adapter (0xE1421233BF7158A19f89F17c9735F9cbd3D9529c) {
+    +++ description: None
+      sinceBlock:
++        19915087
+    }
+```
+
+```diff
+    contract Optimism_Adapter (0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b) {
+    +++ description: None
+      sinceBlock:
++        19915034
+    }
+```
+
+```diff
+    contract ZkSync_Adapter (0xE233009838CB898b50e0012a6E783FC9FeE447FB) {
+    +++ description: None
+      sinceBlock:
++        17842162
+    }
+```
+
+```diff
+    contract BondToken (0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea) {
+    +++ description: None
+      sinceBlock:
++        17980554
+    }
+```
+
+```diff
+    contract UMAOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24) {
+    +++ description: None
+      sinceBlock:
++        13545034
+    }
+```
+
+```diff
+    contract Mode_Adapter (0xf1B59868697f3925b72889ede818B9E7ba0316d0) {
+    +++ description: None
+      sinceBlock:
++        19914094
+    }
+```
+
+```diff
+    contract Blast_Adapter (0xF2bEf5E905AAE0295003ab14872F811E914EdD81) {
+    +++ description: None
+      sinceBlock:
++        20221494
+    }
+```
+
+```diff
+    contract DoctorWho_Adapter (0xFADcC43096756e1527306FD92982FEbBe3c629Fa) {
+    +++ description: None
+      sinceBlock:
++        21773451
+    }
+```
+
+```diff
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE) {
+    +++ description: None
+      sinceBlock:
++        16636058
+    }
+```
+
+Generated with discovered.json: 0xc81c768c833157376bd8b452462bae64089944f3
 
 # Diff at Sat, 08 Feb 2025 15:50:47 GMT:
 

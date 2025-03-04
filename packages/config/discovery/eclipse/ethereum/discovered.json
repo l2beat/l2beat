@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1715256563,
+      "sinceBlock": 19832392,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -38,6 +39,7 @@
         "0x39cf355665c54bebc4ab239f0a40e776f0f1f3ab01a77a95830c90f9517c48ca"
       ],
       "sinceTimestamp": 1730778803,
+      "sinceBlock": 21118887,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -91,8 +93,7 @@
         "TREASURY": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
-      },
-      "derivedName": "CanonicalBridge"
+      }
     },
     {
       "name": "AuthorityMultisig",
@@ -105,6 +106,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722032243,
+      "sinceBlock": 20393653,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -136,6 +138,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722018611,
+      "sinceBlock": 20392523,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -165,6 +168,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1722141227,
+      "sinceBlock": 20402682,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
@@ -189,8 +193,7 @@
         "paused": true,
         "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "EtherBridge"
+      }
     },
     {
       "name": "Mailbox",
@@ -201,6 +204,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1722141467,
+      "sinceBlock": 20402702,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
@@ -232,8 +236,7 @@
         "proxiableUUID": "EXPECT_REVERT",
         "TRUSTED_RELAYER_ROLE": "0xe8a0628d2ba937241981f34311d9db59dd5cf223365e8b6132bca13fc7ae519c",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "Mailbox"
+      }
     },
     {
       "name": "Upgrader0to1",
@@ -242,6 +245,7 @@
         "0x599d3ce0d649d659cb428825fa26a5ae43f782ff2acc3b65fd5d633f4a34f360"
       ],
       "sinceTimestamp": 1730774639,
+      "sinceBlock": 21118543,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -264,8 +268,7 @@
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
-      },
-      "derivedName": "Upgrader0to1"
+      }
     },
     {
       "name": "Treasury",
@@ -276,6 +279,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1722140987,
+      "sinceBlock": 20402663,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978",
@@ -356,8 +360,7 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53"
-      },
-      "derivedName": "Treasury"
+      }
     }
   ],
   "eoas": [

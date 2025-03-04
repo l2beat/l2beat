@@ -1,4 +1,94 @@
-Generated with discovered.json: 0xb331523618f5dcb7c526f8a69c1f8698d7ae69d6
+Generated with discovered.json: 0x1b4d88cabd1b57377b6b09432cece6eb19de3f2a
+
+# Diff at Tue, 04 Mar 2025 10:40:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20432700
+- current block number: 20432700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432700 (main branch discovery), not current.
+
+```diff
+    contract VerifierExit (0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81) {
+    +++ description: None
+      sinceBlock:
++        13809566
+    }
+```
+
+```diff
+    contract ZkSync (0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8) {
+    +++ description: None
+      sinceBlock:
++        13809566
+    }
+```
+
+```diff
+    contract Governance (0x83Cb1531Ec8447366501aE440478da245EcffB89) {
+    +++ description: None
+      sinceBlock:
++        13809566
+    }
+```
+
+```diff
+    contract ZkSwapListing (0x8aA2C56dca9d59F4317c2fad632c192b18127709) {
+    +++ description: None
+      sinceBlock:
++        13809902
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390) {
+    +++ description: None
+      sinceBlock:
++        13809566
+    }
+```
+
+```diff
+    contract Verifier (0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af) {
+    +++ description: None
+      sinceBlock:
++        13809566
+    }
+```
+
+```diff
+    contract UniswapV2Factory (0xc07f850b60E0EEd49a09E455b01a869C25963735) {
+    +++ description: None
+      sinceBlock:
++        13809566
+    }
+```
+
+```diff
+    contract ZkSeaNFT (0xc632347cc96A4400653E3514eA148630455295b5) {
+    +++ description: None
+      sinceBlock:
++        13809566
+    }
+```
+
+```diff
+    contract ZksToken (0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6) {
+    +++ description: None
+      sinceBlock:
++        11305469
+    }
+```
+
+Generated with discovered.json: 0xb14b2d7a9335725345f15ad28d11509be6a3dabc
 
 # Diff at Mon, 20 Jan 2025 11:10:25 GMT:
 

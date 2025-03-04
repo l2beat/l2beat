@@ -1,4 +1,110 @@
-Generated with discovered.json: 0x6f604b7398eddb9c5142e70b313626d86d8af685
+Generated with discovered.json: 0xd9db5b19783d2837617818d4703396b20319f21d
+
+# Diff at Tue, 04 Mar 2025 10:40:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      sinceBlock:
++        19915746
+    }
+```
+
+```diff
+    contract Verifier (0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE) {
+    +++ description: None
+      sinceBlock:
++        19915733
+    }
+```
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      sinceBlock:
++        19914967
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      sinceBlock:
++        19914994
+    }
+```
+
+```diff
+    contract  (0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D) {
+    +++ description: None
+      sinceBlock:
++        19915732
+    }
+```
+
+```diff
+    contract EvacuationFacet (0x882aBFb2F6A67d36350499991638044e8Bd83a72) {
+    +++ description: None
+      sinceBlock:
++        19915745
+    }
+```
+
+```diff
+    contract AccountFacet (0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A) {
+    +++ description: None
+      sinceBlock:
++        19915735
+    }
+```
+
+```diff
+    contract RollupFacet (0x955cdD2E56Ca2776a101a552A318d28fe311398D) {
+    +++ description: None
+      sinceBlock:
++        19915740
+    }
+```
+
+```diff
+    contract EvacuVerifier (0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467) {
+    +++ description: None
+      sinceBlock:
++        19915734
+    }
+```
+
+```diff
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      sinceBlock:
++        19914909
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      sinceBlock:
++        19914939
+    }
+```
+
+Generated with discovered.json: 0x785a9dfac765f29e258f8bc31ac8f245830e48a7
 
 # Diff at Mon, 14 Oct 2024 10:56:52 GMT:
 
