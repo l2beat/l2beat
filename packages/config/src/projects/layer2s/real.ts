@@ -42,6 +42,7 @@ export const real: Layer2 = orbitStackL2({
     name: 'real',
     chainId: 111188,
     explorerUrl: 'https://explorer.re.al',
+    gasTokens: ['reETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

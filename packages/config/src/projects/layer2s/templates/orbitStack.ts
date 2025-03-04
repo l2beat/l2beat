@@ -7,7 +7,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { unionBy, uniq } from 'lodash'
+import { isEmpty, unionBy } from 'lodash'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -451,10 +451,14 @@ function orbitStackCommon(
     (t) => !templateVars.untrackedGasTokens?.includes(t),
   )
 
-  const allGasTokens = uniq([
-    ...(templateVars.chainConfig?.gasTokens ?? []),
-    ...(templateVars.untrackedGasTokens ?? []),
-  ])
+  if (templateVars.untrackedGasTokens) {
+    assert(
+      templateVars.untrackedGasTokens?.every((t) =>
+        templateVars.chainConfig?.gasTokens?.includes(t),
+      ),
+      `${templateVars.discovery.projectName}: Every token configured in untrackedGasTokens has to be configured in chainConfig`,
+    )
+  }
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
@@ -514,7 +518,9 @@ function orbitStackCommon(
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
-      gasTokens: allGasTokens.length > 0 ? allGasTokens : ['ETH'],
+      gasTokens: !isEmpty(templateVars.chainConfig?.gasTokens)
+        ? templateVars.chainConfig?.gasTokens
+        : ['ETH'],
     },
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,

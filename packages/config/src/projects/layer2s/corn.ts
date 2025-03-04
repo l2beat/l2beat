@@ -83,6 +83,7 @@ export const corn: Layer2 = orbitStackL2({
     chainId: 21000000,
     explorerUrl: 'https://maizenet-explorer.usecorn.com',
     sinceTimestamp: new UnixTime(1732012151),
+    gasTokens: ['BTCN'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

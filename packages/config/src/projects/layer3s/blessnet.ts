@@ -66,6 +66,7 @@ export const blessnet: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['BLESS'],
   },
   discovery,
   bridge: discovery.getContract('Bridge'),

@@ -39,6 +39,7 @@ export const playblock: Layer3 = orbitStackL3({
     apis: [
       { type: 'rpc', url: 'https://playnance.drpc.org/', callsPerMinute: 1500 },
     ],
+    gasTokens: ['PBG'],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

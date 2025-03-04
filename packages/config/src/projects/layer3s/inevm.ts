@@ -59,6 +59,7 @@ export const inevm: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['INJ'],
   },
   discovery,
   bridge: discovery.getContract('Bridge'),
