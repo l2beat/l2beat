@@ -333,14 +333,14 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (legacy.display.detailedDescription) {
+  if (project.scalingTechnology.detailedDescription) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Detailed description',
         description: project.display.description,
-        detailedDescription: legacy.display.detailedDescription,
+        detailedDescription: project.scalingTechnology.detailedDescription,
       },
     })
   }

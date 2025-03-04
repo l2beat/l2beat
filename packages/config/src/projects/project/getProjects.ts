@@ -109,6 +109,7 @@ function layer2Or3ToProject(
     scalingDa: p.dataAvailability,
     scalingTechnology: {
       warning: p.display.warning,
+      detailedDescription: p.display.detailedDescription,
       ...p.technology,
       sequencingImage: p.display.sequencingImage,
       stateDerivation: p.stateDerivation,
