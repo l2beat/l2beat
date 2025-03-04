@@ -109,10 +109,10 @@ export async function getScalingProjectEntry(
     | 'scalingStage'
     | 'scalingTechnology'
     | 'contracts'
-    | 'permissions'
     | 'tvlInfo'
     | 'tvlConfig',
     // optional
+    | 'permissions'
     | 'scalingDa'
     | 'customDa'
     | 'chainConfig'
