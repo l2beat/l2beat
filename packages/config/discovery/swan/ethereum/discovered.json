@@ -16,6 +16,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1718644967,
+      "sinceBlock": 20112969,
       "values": {
         "$immutable": false,
         "$implementation": "0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D",
@@ -82,6 +83,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1718644931,
+      "sinceBlock": 20112966,
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x0092400cf9cbAC5ABD8518960Cb1F90663607630",
@@ -140,6 +142,7 @@
         }
       ],
       "sinceTimestamp": 1718644991,
+      "sinceBlock": 20112971,
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff",
@@ -191,6 +194,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1718644943,
+      "sinceBlock": 20112967,
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a",
@@ -216,8 +220,8 @@
         "l2OutputOracle": "0x1c22740A0B4511E11D76434A424487862b593901",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -268,6 +272,7 @@
         }
       ],
       "sinceTimestamp": 1718644799,
+      "sinceBlock": 20112955,
       "values": {
         "$immutable": true,
         "owner": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
@@ -334,6 +339,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1718644787,
+      "sinceBlock": 20112954,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -376,6 +382,7 @@
         }
       ],
       "sinceTimestamp": 1718644847,
+      "sinceBlock": 20112959,
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802",
@@ -419,6 +426,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1718644919,
+      "sinceBlock": 20112965,
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f",
@@ -492,6 +500,7 @@
         }
       ],
       "sinceTimestamp": 1718644811,
+      "sinceBlock": 20112956,
       "values": {
         "$immutable": true,
         "addressManager": "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f",
@@ -517,6 +526,7 @@
         }
       ],
       "sinceTimestamp": 1718644979,
+      "sinceBlock": 20112970,
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0x351ABA1B5B72E6bA8d530740f073993069e7BC69",
@@ -552,6 +562,7 @@
         }
       ],
       "sinceTimestamp": 1718644955,
+      "sinceBlock": 20112968,
       "values": {
         "$admin": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
         "$implementation": "0xc7e1EA328166Eea934429Eaa9F6c55Ef5548Efe7",

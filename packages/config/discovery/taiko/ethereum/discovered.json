@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21973766,
+  "blockNumber": 21973872,
   "configHash": "0xc81d1077e77af0189595ca0e2fd2bd6643beae042acf739d6ccbc786a093924d",
   "contracts": [
     {
@@ -197,35 +197,35 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 927231,
-          "blockHash_": "0xfb97712374289ef5d26b8b25cfc79548348a8c0d9a7b12def394b64301b22a09",
-          "stateRoot_": "0xd55817dab18d85e776f53f33608dffc8cde29a428055270056548c1d14a4f77b",
-          "verifiedAt_": 1741079687
+          "blockId_": 927263,
+          "blockHash_": "0x9110f268544b8f966ded086a6f09d4557f678aff273adfb3658c7a56bb21e6ac",
+          "stateRoot_": "0x5409aaf066b45675a76f2604d90ae3e1977019ab7fc134e4bfc751983ce6c089",
+          "verifiedAt_": 1741078931
         },
         "getLastVerifiedBlock": {
-          "blockId_": 927238,
-          "blockHash_": "0xb15fcddb3faa158a917fb82b9b30030c00ee1d4283352991cd6930e2350269b5",
+          "blockId_": 927272,
+          "blockHash_": "0xe6ce09f4c9f0bc87a087ebd9eaf6363e23e6cb0e7a75d9c12185c00c95165ea3",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1741078223
+          "verifiedAt_": 1741078931
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 927231,
-            "lastSynecdAt": 1741094219
+            "lastSyncedBlockId": 927263,
+            "lastSynecdAt": 1741094891
           },
           {
-            "numBlocks": 928165,
-            "lastVerifiedBlockId": 927238,
+            "numBlocks": 928227,
+            "lastVerifiedBlockId": 927272,
             "provingPaused": false,
-            "lastProposedIn": 21973766,
+            "lastProposedIn": 21973872,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
         "inNonReentrant": false,
-        "lastProposedIn": 21973766,
+        "lastProposedIn": 21973872,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -247,14 +247,14 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 927231,
-            "lastSynecdAt": 1741094219
+            "lastSyncedBlockId": 927263,
+            "lastSynecdAt": 1741094891
           },
           "slotB": {
-            "numBlocks": 928165,
-            "lastVerifiedBlockId": 927238,
+            "numBlocks": 928227,
+            "lastVerifiedBlockId": 927272,
             "provingPaused": false,
-            "lastProposedIn": 21973766,
+            "lastProposedIn": 21973872,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -327,7 +327,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1741094219,
+        "clock": 1741095503,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",

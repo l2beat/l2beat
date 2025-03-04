@@ -91,6 +91,7 @@ export type ContractParameters = {
   sourceHashes?: string[]
   unverified?: true
   sinceTimestamp?: number
+  sinceBlock?: number
   address: EthereumAddress
   proxyType?: string
   values?: Record<string, ContractValue | undefined>

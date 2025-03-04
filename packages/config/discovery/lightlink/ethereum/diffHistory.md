@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xb538ac776e6d392e5d2edc5000daec15b69d1546
+
+# Diff at Tue, 04 Mar 2025 10:39:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21965148
+- current block number: 21965148
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21965148 (main branch discovery), not current.
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      sinceBlock:
++        20019970
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: None
+      sinceBlock:
++        20019967
+    }
+```
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      sinceBlock:
++        17924532
+    }
+```
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      sinceBlock:
++        17924604
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: None
+      sinceBlock:
++        17924561
+    }
+```
+
+```diff
+    contract LightLinkERC20Bridge (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: None
+      sinceBlock:
++        17924631
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      sinceBlock:
++        20019964
+    }
+```
+
+```diff
+    contract RLPReader (0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2) {
+    +++ description: None
+      sinceBlock:
++        20019965
+    }
+```
+
 Generated with discovered.json: 0x41fbeddb0beeaaa5231b6983d4e63632ac9f9313
 
 # Diff at Mon, 03 Mar 2025 08:56:50 GMT:

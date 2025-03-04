@@ -1,16 +1,18 @@
-import type { Layer2, Layer3 } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { getTechnologySectionProps } from './get-technology-section-props'
+import { getTechnologySectionProps2 } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
-export function getWithdrawalsSection(project: Layer2 | Layer3) {
+export function getWithdrawalsSection(
+  project: Project<'statuses' | 'scalingTechnology'>,
+) {
   const items = [
-    ...(project.technology.exitMechanisms ?? []).map((x, i) =>
+    ...(project.scalingTechnology.exitMechanisms ?? []).map((x, i) =>
       makeTechnologyChoice(`exit-mechanisms-${i + 1}`, x),
     ),
-    project.technology.massExit &&
-      makeTechnologyChoice('mass-exit', project.technology.massExit),
+    project.scalingTechnology.massExit &&
+      makeTechnologyChoice('mass-exit', project.scalingTechnology.massExit),
   ].filter(notUndefined)
 
-  return getTechnologySectionProps(project, items)
+  return getTechnologySectionProps2(project, items)
 }

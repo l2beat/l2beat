@@ -15,8 +15,9 @@ export function runDiscoveryUi() {
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
   const config = readConfig()
-  assert(config.discoveryPath !== undefined)
-  const configReader = new ConfigReader(path.dirname(config.discoveryPath))
+  const discoveryPath = config.discoveryPath
+  assert(discoveryPath !== undefined)
+  const configReader = new ConfigReader(path.dirname(discoveryPath))
 
   app.use(express.json())
 
@@ -59,7 +60,7 @@ export function runDiscoveryUi() {
       return
     }
     executeTerminalCommand(
-      `(cd ../backend && pnpm discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
+      `(cd ${path.dirname(discoveryPath)} && l2b discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
       res,
     )
   })
@@ -79,8 +80,9 @@ export function runDiscoveryUi() {
       codePaths.length > 1 ? codePaths[1].path : codePaths[0].path
     const againstPath =
       against === 'templates' ? './discovery/_templates/' : './discovery/'
+
     executeTerminalCommand(
-      `(cd ../backend && l2b match-flat file "${implementationPath}" "${againstPath}")`,
+      `(cd ${path.dirname(discoveryPath)} && l2b match-flat file "${implementationPath}" "${againstPath}")`,
       res,
     )
   })

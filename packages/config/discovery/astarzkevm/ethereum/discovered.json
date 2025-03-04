@@ -14,6 +14,7 @@
       ],
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
+      "sinceBlock": 19505052,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -32,6 +33,7 @@
         }
       ],
       "sinceTimestamp": 1708624547,
+      "sinceBlock": 19284768,
       "values": {
         "$immutable": true,
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E"
@@ -69,6 +71,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1708632059,
+      "sinceBlock": 19285389,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
@@ -138,6 +141,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708443503,
+      "sinceBlock": 19269852,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -179,6 +183,7 @@
         }
       ],
       "sinceTimestamp": 1708624559,
+      "sinceBlock": 19284769,
       "values": {
         "$admin": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
         "$implementation": "0xF4e87685e323818E0aE35dCdFc3B65106002E456",
@@ -260,6 +265,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708444367,
+      "sinceBlock": 19269922,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

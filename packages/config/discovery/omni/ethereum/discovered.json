@@ -29,6 +29,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1600956399,
+      "sinceBlock": 10925774,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -71,6 +72,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686042107,
+      "sinceBlock": 17420395,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -104,6 +106,7 @@
         }
       ],
       "sinceTimestamp": 1579258532,
+      "sinceBlock": 9298324,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "$implementation": "0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316",
@@ -177,6 +180,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729072343,
+      "sinceBlock": 20977347,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -202,6 +206,7 @@
         "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
       ],
       "sinceTimestamp": 1634280699,
+      "sinceBlock": 13421129,
       "values": {
         "$immutable": true,
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
@@ -216,6 +221,7 @@
         "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
       ],
       "sinceTimestamp": 1634280299,
+      "sinceBlock": 13421099,
       "values": {
         "$immutable": true,
         "bridgeContract": "0x0000000000000000000000000000000000000000",
@@ -239,6 +245,7 @@
         "0xe9dafd12a790c5d8c0d3d444fdcfe8d4a6eed9555ba260f7ac7aa5590fba07ca"
       ],
       "sinceTimestamp": 1634281216,
+      "sinceBlock": 13421159,
       "values": {
         "$immutable": true,
         "aaveReceiver": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
@@ -267,6 +274,7 @@
         }
       ],
       "sinceTimestamp": 1596501090,
+      "sinceBlock": 10590093,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "$implementation": "0x8eB3b7D8498a6716904577b2579e1c313d48E347",
@@ -333,6 +341,7 @@
         }
       ],
       "sinceTimestamp": 1726023347,
+      "sinceBlock": 20724523,
       "values": {
         "$admin": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
         "$implementation": "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
@@ -378,6 +387,7 @@
         }
       ],
       "sinceTimestamp": 1579258396,
+      "sinceBlock": 9298314,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "$implementation": "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",

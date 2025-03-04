@@ -26,6 +26,7 @@
         }
       ],
       "sinceTimestamp": 1722414335,
+      "sinceBlock": 20425326,
       "values": {
         "$admin": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
         "$implementation": "0x0ac26945032143f6196d4bb5Ae03592BfAf822FD",
@@ -117,6 +118,7 @@
         "0x34de320a4a2a66cb410c0b6b04558c98586ea66fe69b35df6ee3ff7816eae03b"
       ],
       "sinceTimestamp": 1562142059,
+      "sinceBlock": 8077308,
       "values": {
         "$immutable": true,
         "$members": [
@@ -162,6 +164,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722594755,
+      "sinceBlock": 20440286,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -199,6 +202,7 @@
       ],
       "ignoreInWatchMode": ["depositCount"],
       "sinceTimestamp": 1655883630,
+      "sinceBlock": 15006576,
       "values": {
         "_MAX_PERCENTAGE": 1000000,
         "$admin": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
@@ -274,6 +278,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1513077455,
+      "sinceBlock": 4719568,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -289,6 +294,7 @@
         "0x38ea3c443d8341f4b59ebeae4d05a6064ff361f2f672ae8e49e2a96514a2261d"
       ],
       "sinceTimestamp": 1679637023,
+      "sinceBlock": 16895391,
       "values": {
         "$immutable": true,
         "accessControl": {

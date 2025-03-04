@@ -1,6 +1,6 @@
 import type { ProjectPermission, ProjectPermissions } from '@l2beat/config'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
-import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
+import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type {
   TechnologyContract,
@@ -14,7 +14,7 @@ import { toVerificationStatus } from './to-verification-status'
 type ProjectParams = {
   type: 'layer2' | 'layer3' | 'bridge'
   id: string
-  permissions: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   daSolution?: DaSolution
   isUnderReview: boolean
   hostChain?: string
@@ -47,6 +47,9 @@ function permissionsAreEmpty(
 export function getPermissionsSection(
   projectParams: ProjectParams,
 ): PermissionSection | undefined {
+  if (!projectParams.permissions) {
+    return undefined
+  }
   if (
     projectParams.permissions !== 'UnderReview' &&
     Object.values(projectParams.permissions).every((p) =>
@@ -113,7 +116,7 @@ function getDaSolution(
     ? {
         layerName: projectParams.daSolution.layerName,
         bridgeName: projectParams.daSolution.bridgeName,
-        hostChain: slugToDisplayName(projectParams.daSolution.hostChain),
+        hostChainName: projectParams.daSolution.hostChainName,
         permissions: {
           roles:
             projectParams.daSolution.permissions?.roles?.flatMap((permission) =>

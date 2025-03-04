@@ -290,10 +290,10 @@ function opStackCommon(
     chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
+      gasTokens: [
+        ...(templateVars.gasTokens?.tracked ?? []),
+        ...(templateVars.gasTokens?.untracked ?? []),
+      ],
       activityConfig: getActivityConfig(
         templateVars.activityConfig,
         templateVars.chainConfig,
@@ -365,7 +365,6 @@ function getDaTracking(
     'sequencerInbox',
   )
 
-  // TODO: update to deployment block number from discovery
   const inboxStartBlock =
     templateVars.discovery.getContractValueOrUndefined<number>(
       'SystemConfig',
@@ -1126,8 +1125,8 @@ function getDAProvider(
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -1295,8 +1294,8 @@ function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
 
   const daProvider =
     templateVars.daProvider ??
