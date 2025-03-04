@@ -14,7 +14,7 @@ export function TableLink({
       <a
         className={cn(
           'relative block w-max',
-          'before:absolute before:-inset-x-3 before:-inset-y-2 before:rounded',
+          'before:absolute before:-inset-x-3 before:-inset-y-2 before:rounded max-md:before:content-none',
           'before:hover:bg-pure-black/5 dark:before:hover:bg-pure-white/20',
           className,
         )}

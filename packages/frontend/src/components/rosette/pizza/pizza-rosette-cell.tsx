@@ -9,7 +9,7 @@ import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteTooltip } from './pizza-rosette-tooltip'
 
 interface Props {
-  href?: string
+  href: string
   values: RosetteValue[]
   isUnderReview?: boolean
 }
@@ -21,7 +21,10 @@ export function PizzaRosetteCell(props: Props) {
 
   return (
     <Tooltip>
-      <TooltipTrigger className="flex size-full items-center justify-center">
+      <TooltipTrigger
+        className="flex size-full items-center justify-center"
+        disabledOnMobile
+      >
         <TableLink href={props.href}>
           <PizzaRosetteIcon
             values={props.values}

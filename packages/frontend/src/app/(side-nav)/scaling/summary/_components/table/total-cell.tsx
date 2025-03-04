@@ -28,7 +28,7 @@ export interface TotalCellProps {
       }
     | undefined
   associatedTokenSymbols: string[]
-  href: string | undefined
+  href: string
   change?: number
   tvsWarnings?: WarningWithSentiment[]
 }
@@ -76,7 +76,7 @@ export function TotalCell(props: TotalCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger disabledOnMobile>
         <TableLink href={props.href}>
           <div className="flex flex-col items-end">
             <div className="flex items-center">
