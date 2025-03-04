@@ -141,11 +141,7 @@ interface TokenSupplyInfo {
   l1Supply: string
   l2Supply: string
   escrowBalance: string
-  type:
-    | 'Canonical Token'
-    | 'Non-canonical Token'
-    | 'External Token'
-    | 'Native Token'
+  type: 'Canonical Token' | 'Non-standard Token'
   reason?: string
 }
 
@@ -190,11 +186,11 @@ export const TokenScreening = command({
           l1Supply: '0',
           l2Supply: '0',
           escrowBalance: '0',
-          type: 'Non-canonical Token',
+          type: 'Non-standard Token',
           reason: 'No contract at L2 canonical address',
         }
         if (l2Address) {
-          // split between canonical and non-canonical
+          // split between canonical and non-standard
           supplyInfo = await getTokenSupplyInfo(
             tokenAddress.toString(),
             l2Address,
@@ -219,11 +215,11 @@ export const TokenScreening = command({
 
             const minters = await getL2Minters(l2Address, chain)
             if (minters.length > 1) {
-              supplyInfo.type = 'Non-canonical Token'
+              supplyInfo.type = 'Non-standard Token'
               supplyInfo.reason = 'No unique (canonical) minter'
             }
 
-            // if non-canonical summary is printed later after classication attempt
+            // if non-standard summary is printed later after classification attempt
             if (supplyInfo.type === 'Canonical Token') {
               console.table({
                 'L1 Supply': Number(supplyInfo.l1Supply).toFixed(2),
@@ -231,13 +227,13 @@ export const TokenScreening = command({
                 'Escrow Balance': Number(supplyInfo.escrowBalance).toFixed(2),
                 Type: supplyInfo.type,
                 Canonical: canonical,
-                'In Transit or Other': nonCanonical,
+                'Non-canonical or in transit': nonCanonical,
               })
             }
           }
         }
-        // try to classify non-canonical tokens
-        if (!l2Address || supplyInfo.type === 'Non-canonical Token') {
+        // try to classify non-standard tokens
+        if (!l2Address || supplyInfo.type === 'Non-standard Token') {
           // get L2 token address from coingecko
           const l2AddressFromCoingecko: string | null =
             await getL2TokenAddressFromCoingecko(tokenAddress, chain)
@@ -254,7 +250,7 @@ export const TokenScreening = command({
           let newSupplyInfo: TokenSupplyInfo | null = null
           let canonicalL2Supply = supplyInfo.l2Supply
           let canonicalPct = 0
-          let weirdPct = 0
+          let nonCanonicalPct = 0
           if (
             l2AddressFromCoingecko?.toLowerCase() !== l2Address?.toLowerCase()
           ) {
@@ -296,7 +292,9 @@ export const TokenScreening = command({
                     ? `${supplyInfo.reason}`
                     : 'L2 supply significantly greater than escrow balance'
                 }
-                weirdPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
+                nonCanonicalPct = Number(
+                  Math.max(0, 100 - canonicalPct).toFixed(2),
+                )
               }
             }
           } else {
@@ -308,7 +306,7 @@ export const TokenScreening = command({
                 (Number(canonicalL2Supply) / Number(supplyInfo.l2Supply)) * 100,
               ).toFixed(2),
             )
-            weirdPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
+            nonCanonicalPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
           }
           // minter analysis
           const l2Minters = await getL2Minters(l2AddressFromCoingecko, chain)
@@ -319,7 +317,6 @@ export const TokenScreening = command({
             })),
           )
           if (mintersType.type === 'Bridge Minter') {
-            supplyInfo.type = 'External Token'
             supplyInfo.reason =
               mintersType.bridge +
               ' (' +
@@ -332,12 +329,13 @@ export const TokenScreening = command({
                 name: m.name ?? 'Unknown',
               })),
             )
-            if (bridgeName.type === 'External Token') {
-              supplyInfo.type = 'External Token'
+            if (bridgeName.type === 'Native Minter') {
+              supplyInfo.reason = bridgeName.bridge
+            } else if (bridgeName.type === 'External Minter') {
               supplyInfo.reason = bridgeName.bridge
             }
           }
-          // print non-canonical result summary
+          // print non-standard result summary
           console.table({
             'L1 Supply': Number(supplyInfo.l1Supply).toFixed(2),
             'L2 Supply': Number(supplyInfo.l2Supply).toFixed(2),
@@ -346,7 +344,7 @@ export const TokenScreening = command({
             Canonical: `${canonicalPct}%`,
             [supplyInfo.type === 'Canonical Token'
               ? 'In Transit'
-              : 'Non-canonical']: `${weirdPct}%`,
+              : 'Non-canonical']: `${nonCanonicalPct}%`,
             ...(supplyInfo.type !== 'Canonical Token'
               ? { Reason: supplyInfo.reason }
               : {}),
@@ -514,7 +512,7 @@ async function getTokenSupplyInfo(
         l1Supply: '0',
         l2Supply: '0',
         escrowBalance: '0',
-        type: 'Non-canonical Token',
+        type: 'Non-standard Token',
         reason: 'L1 Contract Not ERC20 (totalSupply)',
       }
     }
@@ -526,7 +524,7 @@ async function getTokenSupplyInfo(
         l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
         l2Supply: '0',
         escrowBalance: ethersUtils.formatUnits(escrowBalance, decimals),
-        type: 'Non-canonical Token',
+        type: 'Non-standard Token',
         reason: 'No contract at L2 canonical address',
       }
     }
@@ -539,7 +537,7 @@ async function getTokenSupplyInfo(
         l1Supply: '0',
         l2Supply: '0',
         escrowBalance: '0',
-        type: 'Non-canonical Token',
+        type: 'Non-standard Token',
         reason: 'L2 contract not ERC20 (totalSupply)',
       }
     }
@@ -560,14 +558,14 @@ async function getTokenSupplyInfo(
         l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
         l2Supply: adjustedL2Supply,
         escrowBalance: adjustedEscrowBalance,
-        type: 'Non-canonical Token',
+        type: 'Non-standard Token',
         reason: 'L2 supply significantly greater than escrow balance',
       }
     }
 
     // sanity check for balance
     const tokenType =
-      Number(adjustedL2Supply) > 1 ? 'Canonical Token' : 'Non-canonical Token'
+      Number(adjustedL2Supply) > 1 ? 'Canonical Token' : 'Non-standard Token'
 
     return {
       l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
@@ -580,7 +578,7 @@ async function getTokenSupplyInfo(
       l1Supply: '0',
       l2Supply: '0',
       escrowBalance: '0',
-      type: 'Non-canonical Token',
+      type: 'Non-standard Token',
     }
   }
 }
@@ -777,19 +775,21 @@ function matchBridgeName(
   l2Minters: Array<{ address: string | null; name: string }>,
 ) {
   // Map bridge keywords to their official bridge names
-  const bridgeKeywordMap: { [key: string]: string } = {
-    circle: 'CCTP (Circle) minter',
-    mailbox: 'Hyperlane (Mailbox) minter',
+  const bridgeKeywordMap: {
+    [key: string]: { name: string; type: 'Native Minter' | 'External Minter' }
+  } = {
+    circle: { name: 'CCTP (Circle) minter', type: 'Native Minter' },
+    mailbox: { name: 'Hyperlane (Mailbox) minter', type: 'External Minter' },
   }
 
   // Check if any minter name contains bridge-related keywords
   for (const minter of l2Minters) {
     const lowerName = minter.name.toLowerCase()
-    for (const [keyword, bridgeName] of Object.entries(bridgeKeywordMap)) {
+    for (const [keyword, bridge] of Object.entries(bridgeKeywordMap)) {
       if (lowerName.includes(keyword)) {
         return {
-          type: 'External Token',
-          bridge: bridgeName,
+          type: bridge.type,
+          bridge: bridge.name,
         }
       }
     }
