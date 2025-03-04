@@ -20,7 +20,7 @@ export const penchain: Layer2 = upcomingL2({
       explorers: ['https://explorer-testnet.pentagon.games/'],
       socialMedia: [
         'https://x.com/pentagongames88',
-        'https://discord.com/invite/pentagongames88',
+        'https://discord.com/invite/pentagongamesxp',
         'https://youtube.com/@PentagonGamesXP',
         'https://t.me/PentagonGamesXP',
       ],
