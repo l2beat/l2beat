@@ -92,7 +92,7 @@ export async function getElasticChainTokens(
 
   const etherOnL2 = {
     id: TokenId.create(project.id, 'native'),
-    ticker: 'ethereum',
+    ticker: 'ETH',
     symbol: 'ETH',
     name: 'Ethereum',
     sinceTimestamp: chain.sinceTimestamp,

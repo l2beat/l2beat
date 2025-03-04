@@ -42,7 +42,7 @@ async function main() {
 
   const config = bobConfig
 
-  const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+  const timestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
   const tvs = await localExecutor.run(config, [timestamp], false)
 
   outputTVS(tvs, timestamp, config, logger)
@@ -247,6 +247,10 @@ function initChains(env: Env, http: HttpClient, logger: Logger) {
         '0xcA11bde05977b3631167028862bE2a173976CA11',
       ),
       callsPerMinute: 12000,
+    },
+    {
+      name: 'cronoszkevm',
+      callsPerMinute: 120,
     },
   ]
 

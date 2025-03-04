@@ -116,7 +116,7 @@
     },
     {
       "id": "cronoszkevm-native",
-      "ticker": "ethereum",
+      "ticker": "ETH",
       "symbol": "ETH",
       "name": "Ethereum",
       "sinceTimestamp": 1722394995,
