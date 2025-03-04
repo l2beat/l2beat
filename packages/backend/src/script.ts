@@ -7,21 +7,11 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import {
-  BlockProvider,
-  CoingeckoClient,
-  CoingeckoQueryService,
-  HttpClient,
-  RpcClient,
-} from '@l2beat/shared'
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ProjectService } from '@l2beat/config'
+import {} from '@l2beat/shared'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
 import { getKintoConfig } from './modules/tvs/projects/kinto'
-import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
-import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
-import { PriceProvider } from './modules/tvs/providers/PriceProvider'
-import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
-import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
 import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
 
 main()
@@ -33,7 +23,9 @@ main()
 async function main() {
   const env = getEnv()
   const logger = initLogger(env)
-  const localExecutor = initLocalExecutor(env, logger)
+
+  const ps = new ProjectService()
+  const localExecutor = new LocalExecutor(ps, env, logger)
 
   const config = await getKintoConfig()
 
@@ -156,29 +148,6 @@ function outputTVS(
   )
 }
 
-function initLocalExecutor(env: Env, logger: Logger) {
-  const http = new HttpClient()
-
-  const coingeckoQueryService = initCoingecko(env, logger, http)
-  const { rpcs, blockProviders } = initChains(env, http, logger)
-
-  const priceProvider = new PriceProvider(coingeckoQueryService)
-  const circulatingSupplyProvider = new CirculatingSupplyProvider(
-    coingeckoQueryService,
-  )
-  const totalSupplyProvider = new TotalSupplyProvider(rpcs)
-  const balanceProvider = new BalanceProvider(rpcs)
-
-  return new LocalExecutor(
-    priceProvider,
-    circulatingSupplyProvider,
-    blockProviders,
-    totalSupplyProvider,
-    balanceProvider,
-    logger,
-  )
-}
-
 function initLogger(env: Env) {
   const logLevel = env.string('LOG_LEVEL', 'INFO') as LogLevel
   const logger = new Logger({
@@ -191,83 +160,6 @@ function initLogger(env: Env) {
     ],
   })
   return logger
-}
-
-function initCoingecko(env: Env, logger: Logger, http: HttpClient) {
-  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const coingeckoClient = new CoingeckoClient({
-    apiKey: coingeckoApiKey,
-    retryStrategy: 'RELIABLE',
-    logger,
-    callsPerMinute: coingeckoApiKey ? 400 : 10,
-    http,
-    sourceName: 'coingecko',
-  })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-  return coingeckoQueryService
-}
-
-function initChains(env: Env, http: HttpClient, logger: Logger) {
-  // https://www.multicall3.com/deployments
-  const chains = [
-    {
-      name: 'ethereum',
-      multicallV3: EthereumAddress(
-        '0xcA11bde05977b3631167028862bE2a173976CA11',
-      ),
-      callsPerMinute: 12000,
-    },
-    {
-      name: 'arbitrum',
-      multicallV3: EthereumAddress(
-        '0xcA11bde05977b3631167028862bE2a173976CA11',
-      ),
-      callsPerMinute: 12000,
-    },
-    {
-      name: 'base',
-      multicallV3: EthereumAddress(
-        '0xcA11bde05977b3631167028862bE2a173976CA11',
-      ),
-      callsPerMinute: 12000,
-    },
-    {
-      name: 'kinto',
-      callsPerMinute: 1000,
-      batchingEnabled: true,
-    },
-    {
-      name: 'bob',
-      multicallV3: EthereumAddress(
-        '0xcA11bde05977b3631167028862bE2a173976CA11',
-      ),
-      callsPerMinute: 12000,
-    },
-  ]
-
-  const rpcs = new Map<string, RpcClientPOC>()
-  const blockProviders = new Map<string, BlockProvider>()
-
-  for (const chain of chains) {
-    const url = env.string(`${chain.name.toUpperCase()}_RPC_URL`)
-    const rpc = new RpcClient({
-      url,
-      http,
-      logger,
-      retryStrategy: 'RELIABLE',
-      sourceName: chain.name,
-      callsPerMinute: chain.callsPerMinute,
-    })
-    rpcs.set(
-      chain.name,
-      new RpcClientPOC(rpc, chain.name, logger, {
-        multicallV3: chain.multicallV3,
-        batchingEnabled: chain.batchingEnabled,
-      }),
-    )
-    blockProviders.set(chain.name, new BlockProvider(chain.name, [rpc]))
-  }
-  return { rpcs, blockProviders }
 }
 
 function toDollarString(value: number) {
