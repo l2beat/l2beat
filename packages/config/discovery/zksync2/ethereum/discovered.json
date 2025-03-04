@@ -14,6 +14,7 @@
       ],
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
+      "sinceBlock": 21081436,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
@@ -35,6 +36,7 @@
         }
       ],
       "sinceTimestamp": 1701258227,
+      "sinceBlock": 18677050,
       "values": {
         "$immutable": true,
         "minDelay": 0,
@@ -85,6 +87,7 @@
         "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1676315375,
+      "sinceBlock": 16621828,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -450,6 +453,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
       "sinceTimestamp": 1698065351,
+      "sinceBlock": 18413072,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x9a810469F4a451Ebb7ef53672142053b4971587c",
@@ -489,6 +493,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
       "sinceTimestamp": 1676370683,
+      "sinceBlock": 16626406,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0x8D231E4097C3cb200Ed62134B466AA615cE60336",
@@ -574,6 +579,7 @@
         }
       ],
       "sinceTimestamp": 1717520615,
+      "sinceBlock": 20019826,
       "values": {
         "$immutable": true,
         "executionDelay": 10800,
@@ -613,6 +619,7 @@
         }
       ],
       "sinceTimestamp": 1709850611,
+      "sinceBlock": 19386286,
       "values": {
         "$immutable": true,
         "constructorArgs": {

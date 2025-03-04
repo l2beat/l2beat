@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1625076853,
+      "sinceBlock": 12736916,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -41,6 +42,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "sinceTimestamp": 1628225875,
+      "sinceBlock": 12969385,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -61,6 +63,7 @@
         "0xd8c1c87ab8dd6a488c6544d121da18bd936a01cde20a7dd2b3d0f771e376fe37"
       ],
       "sinceTimestamp": 1625550046,
+      "sinceBlock": 12772100,
       "values": {
         "$immutable": true,
         "admin": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
@@ -78,6 +81,7 @@
         "0x0280d9153cd7cca43f1ed48d033d6863660ddf85ced54664b3491bf99b2af313"
       ],
       "sinceTimestamp": 1623907245,
+      "sinceBlock": 12650032,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -98,6 +102,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "sinceTimestamp": 1631654328,
+      "sinceBlock": 13226217,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -118,6 +123,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "sinceTimestamp": 1626739308,
+      "sinceBlock": 12860139,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -138,6 +144,7 @@
         "0x2b7aa191c2727e479449690cdb41f98bbcc67a31189e00edcd25ef5e4d272224"
       ],
       "sinceTimestamp": 1664398079,
+      "sinceBlock": 15634323,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -158,6 +165,7 @@
         "0x8a2a80add79397b17c716d503c7aa7cc60889161cdef47d55c8b8b519f5b90d7"
       ],
       "sinceTimestamp": 1663897247,
+      "sinceBlock": 15592825,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -179,6 +187,7 @@
         "0xaed8456169cf92120561541e8b5eee9af6a7b97882c06a21febf326148a53bc3"
       ],
       "sinceTimestamp": 1633066189,
+      "sinceBlock": 13331564,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -198,6 +207,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "sinceTimestamp": 1635022634,
+      "sinceBlock": 13476113,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -218,6 +228,7 @@
         "0x6b63f571e92a25b4c3f2638c0d2dfbc59d1208a0253e4e99ee58a21c681621ba"
       ],
       "sinceTimestamp": 1654646429,
+      "sinceBlock": 14923681,
       "values": {
         "$immutable": true,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
@@ -242,6 +253,7 @@
         "0xa6a292449d803c10fc738e9af7e5ad07eac4346aee687901ea5a9957b3ff4272"
       ],
       "sinceTimestamp": 1654646382,
+      "sinceBlock": 14923676,
       "values": {
         "$immutable": true,
         "accessControl": {

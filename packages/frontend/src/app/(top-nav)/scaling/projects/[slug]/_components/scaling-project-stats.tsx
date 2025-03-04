@@ -32,7 +32,6 @@ export function ScalingProjectStats({ project, className }: Props) {
       value={<TokenBreakdownStat tokenTvs={project.header.tvs?.tokens} />}
     />,
     <ProjectStat
-      key="past-day-uops"
       title="Past day UOPS"
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
       value={
@@ -50,7 +49,6 @@ export function ScalingProjectStats({ project, className }: Props) {
       }
     />,
     <ProjectStat
-      key="ops-count"
       title="30D ops count"
       value={
         project.header.activity ? (
@@ -60,9 +58,9 @@ export function ScalingProjectStats({ project, className }: Props) {
         )
       }
     />,
+
     project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
       <ProjectStat
-        key="gas-tokens"
         title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
         value={project.header.gasTokens.join(', ')}
       />
@@ -74,19 +72,18 @@ export function ScalingProjectStats({ project, className }: Props) {
           <a href="#stage">
             <StageCell
               stageConfig={project.stageConfig}
-              isAppchain={isAppchain}
+              isAppchain={project.isAppchain}
             />
           </a>
         }
       />
     ) : undefined,
     <ProjectStat
-      key="type"
       title="Type"
       value={<TypeInfo>{project.header.category}</TypeInfo>}
     />,
+
     <ProjectStat
-      key="purpose"
       title={pluralize(project.header.purposes.length, 'Purpose')}
       value={project.header.purposes.join(', ')}
     />,

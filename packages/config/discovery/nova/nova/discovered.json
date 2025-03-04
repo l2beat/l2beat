@@ -33,6 +33,7 @@
         }
       ],
       "sinceTimestamp": 1656313073,
+      "sinceBlock": 12,
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0x8f377770289863DF73Fe665B74460579F82321fb",
@@ -63,6 +64,7 @@
       ],
       "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678990053,
+      "sinceBlock": 3162027,
       "values": {
         "$immutable": true,
         "currentRecipientGroup": "0xf282fbf81236cb85617464bf2345689bad849c6122d8725eeef1a4cf78e8d9a3",
@@ -95,6 +97,7 @@
         "0xf98882c836bb8026b07fe0c6af0e5fc52578e78078c523fcd7974fb69b833732"
       ],
       "sinceTimestamp": 1656313093,
+      "sinceBlock": 19,
       "values": {
         "$immutable": true,
         "decimals": 0,
@@ -136,6 +139,7 @@
         }
       ],
       "sinceTimestamp": 1656314863,
+      "sinceBlock": 32,
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0xbe04Ab2728c924D678f9FC833E379688c6eFA317",
@@ -208,6 +212,7 @@
         }
       ],
       "sinceTimestamp": 1678968483,
+      "sinceBlock": 3154416,
       "values": {
         "$admin": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
         "$implementation": "0x3096EAEdcb3A3B665552660F4d921E565D0073cB",
@@ -257,6 +262,7 @@
       "displayName": "L2SurplusFee",
       "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678990053,
+      "sinceBlock": 3162026,
       "values": {
         "$immutable": true,
         "currentRecipientGroup": "0xc21cdeb0278022eeb6305048d7d033ce165b518e371bc91c58b76175e4f7fc2b",
@@ -325,6 +331,7 @@
         }
       ],
       "sinceTimestamp": 1656313068,
+      "sinceBlock": 10,
       "values": {
         "$immutable": true,
         "owner": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
@@ -359,6 +366,7 @@
       ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1656313084,
+      "sinceBlock": 16,
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f",
@@ -453,6 +461,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692138890,
+      "sinceBlock": 18117569,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -510,6 +519,7 @@
       ],
       "ignoreInWatchMode": ["exitNum"],
       "sinceTimestamp": 1656313079,
+      "sinceBlock": 14,
       "values": {
         "$admin": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
         "$implementation": "0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8",
@@ -540,6 +550,7 @@
         "0xf43827aa5935222c477d6cd1888896ff1336e4c0b2991e05d75ac9bbe6c41236"
       ],
       "sinceTimestamp": 1656313096,
+      "sinceBlock": 20,
       "values": {
         "$immutable": true,
         "implementation": "0x53923A0d1f4805463584c91b2E55d6c600A94E91",
@@ -553,6 +564,7 @@
         "0x4522be863ce454f4a528c27299d26dc69d407f11e5807129aaff93f36b44dd53"
       ],
       "sinceTimestamp": 1656313099,
+      "sinceBlock": 21,
       "values": {
         "$immutable": true,
         "beacon": "0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639",
@@ -578,6 +590,7 @@
         }
       ],
       "sinceTimestamp": 1678968471,
+      "sinceBlock": 3154409,
       "values": {
         "$immutable": true,
         "owner": "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
@@ -612,6 +625,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1678968495,
+      "sinceBlock": 3154421,
       "values": {
         "$admin": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
         "$implementation": "0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d",

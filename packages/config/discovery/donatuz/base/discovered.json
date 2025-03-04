@@ -16,6 +16,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1719319541,
+      "sinceBlock": 16265097,
       "values": {
         "$immutable": false,
         "$implementation": "0x55b6A23e45611e5856beC4b97c433908Ef84d8c5",
@@ -66,6 +67,7 @@
         }
       ],
       "sinceTimestamp": 1719319539,
+      "sinceBlock": 16265096,
       "values": {
         "$immutable": true,
         "owner": "0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"
@@ -130,6 +132,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708624405,
+      "sinceBlock": 10917529,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -185,6 +188,7 @@
         }
       ],
       "sinceTimestamp": 1719319541,
+      "sinceBlock": 16265097,
       "values": {
         "$immutable": true,
         "addressManager": "0x5416B7421c42B9218B29f688C47a46020c23cF0d",
@@ -226,6 +230,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1719319541,
+      "sinceBlock": 16265097,
       "values": {
         "$admin": "0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15",
         "$implementation": "0xC3B5Ddf3C1Bf4b6cF905533E0584288EF179E805",
@@ -291,6 +296,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1719319541,
+      "sinceBlock": 16265097,
       "values": {
         "$admin": "0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15",
         "$implementation": "0x157B6514c57D506A589b72F076d9F87b24E23Eac",
@@ -306,8 +312,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
           "isUsingEigenDA": true
         },
         "overhead": 188,
@@ -359,6 +365,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1719319541,
+      "sinceBlock": 16265097,
       "values": {
         "$admin": "0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15",
         "$implementation": "0x764b431e61972Ae785b504B373efb139F38A7694",
@@ -403,6 +410,7 @@
         }
       ],
       "sinceTimestamp": 1719319541,
+      "sinceBlock": 16265097,
       "values": {
         "$admin": "0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15",
         "$implementation": "0x5c94e4b101EF3bC8554890c7D33Fae938Be737c0",

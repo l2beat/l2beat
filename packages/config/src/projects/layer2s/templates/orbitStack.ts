@@ -737,8 +737,8 @@ function getDaTracking(
     'batchPosters',
   )
 
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
 
   return usesBlobs
     ? [

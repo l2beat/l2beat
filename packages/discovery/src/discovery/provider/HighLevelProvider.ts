@@ -292,4 +292,12 @@ export class HighLevelProvider implements IProvider {
   getBlobs(txHash: string): Promise<BlobsInBlock> {
     return this.provider.getBlobs(txHash)
   }
+
+  getCelestiaBlob(height: number, namespace: string, commitment: string) {
+    return this.provider.getCelestiaBlob(height, namespace, commitment)
+  }
+
+  getCelestiaBlockResultLogs(height: number) {
+    return this.provider.getCelestiaBlockResultLogs(height)
+  }
 }

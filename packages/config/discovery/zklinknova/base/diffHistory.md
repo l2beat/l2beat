@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x76a08971916fed146d9df206dee3dcddf409aa0d
+
+# Diff at Tue, 04 Mar 2025 10:40:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 19378036
+- current block number: 19378036
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19378036 (main branch discovery), not current.
+
+```diff
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
+    +++ description: None
+      sinceBlock:
++        12153218
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      sinceBlock:
++        12154343
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      sinceBlock:
++        12154343
+    }
+```
+
+```diff
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      sinceBlock:
++        12153175
+    }
+```
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      sinceBlock:
++        2908461
+    }
+```
+
 Generated with discovered.json: 0x7a7f365fdeb4c3c5657431017d1caab76e2dd469
 
 # Diff at Mon, 20 Jan 2025 11:10:40 GMT:
