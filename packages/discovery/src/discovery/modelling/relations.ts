@@ -18,30 +18,41 @@ interface InlineTemplate {
   when: (c: ContractOrEoa, p?: ReceivedPermission) => boolean
 }
 
-const contractTemplate: InlineTemplate = {
+const addressTemplate: InlineTemplate = {
   content: `
-contract(
+address(
   @self,
   "#$.chain",
-  "#$.address:raw",
+  "#$.address:raw").`,
+  when: () => true,
+}
+const addressNameTemplate: InlineTemplate = {
+  content: `
+addressName(
+  @self,
   "#$.name").`,
+  when: (c) => c.name !== undefined,
+}
+const addressTypeContractTemplate: InlineTemplate = {
+  content: `
+addressType(
+  @self,
+  contract).`,
   when: (c) => !c.isEoa,
 }
-const contractDescriptionTemplate: InlineTemplate = {
+const addressTypeEOATemplate: InlineTemplate = {
   content: `
-contractDescription(
+addressType(
+  @self,
+  eoa).`,
+  when: (c) => !!c.isEoa,
+}
+const addressDescriptionTemplate: InlineTemplate = {
+  content: `
+addressDescription(
   @self,
   "#$.description").`,
-  when: (c) => !c.isEoa && c.description !== undefined,
-}
-const eoaTemplate: InlineTemplate = {
-  content: `
-eoa(
-  @self,
-  "#$.chain",
-  "#$.address:raw",
-  "#$.name").`,
-  when: (c) => !!c.isEoa,
+  when: (c) => c.description !== undefined,
 }
 const permissionTemplate: InlineTemplate = {
   content: `
@@ -86,9 +97,11 @@ export function buildRelationsModels(
     )
 
     for (const template of [
-      contractTemplate,
-      contractDescriptionTemplate,
-      eoaTemplate,
+      addressTemplate,
+      addressNameTemplate,
+      addressTypeContractTemplate,
+      addressTypeEOATemplate,
+      addressDescriptionTemplate,
     ]) {
       if (template.when(contractOrEoa)) {
         const interpolated = interpolateModelTemplate(
