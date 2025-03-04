@@ -145,6 +145,14 @@ interface TokenSupplyInfo {
   reason?: string
 }
 
+// Add interface for token supply breakdown
+interface TokenSupplyBreakdown {
+  canonicalPct: number
+  nonCanonicalPct: number
+  nativePct: number
+  externalPct: number
+}
+
 export const TokenScreening = command({
   name: 'token-screening',
   description: 'Finds L2 token classification for L1 tokens',
@@ -182,13 +190,14 @@ export const TokenScreening = command({
         )
 
         // start classification screening
-        let supplyInfo: TokenSupplyInfo = {
-          l1Supply: '0',
-          l2Supply: '0',
-          escrowBalance: '0',
-          type: 'Non-standard Token',
-          reason: 'No contract at L2 canonical address',
-        }
+        let supplyInfo: TokenSupplyInfo & { breakdown?: TokenSupplyBreakdown } =
+          {
+            l1Supply: '0',
+            l2Supply: '0',
+            escrowBalance: '0',
+            type: 'Non-standard Token',
+            reason: 'No contract at L2 canonical address',
+          }
         if (l2Address) {
           // split between canonical and non-standard
           supplyInfo = await getTokenSupplyInfo(
@@ -200,25 +209,60 @@ export const TokenScreening = command({
           if (supplyInfo) {
             const l2Supply = Number(supplyInfo.l2Supply)
             const escrowBalance = Number(supplyInfo.escrowBalance)
-            let canonical = '0%'
-            let nonCanonical = '100%'
-
+            let canonicalPct = 0
+            let nonCanonicalPct = 100
             if (l2Supply > 0) {
-              const canonicalPct = Math.min(
-                100,
-                (l2Supply / escrowBalance) * 100,
-              )
-              const nonCanonicalPct = Math.max(0, 100 - canonicalPct)
-              canonical = `${canonicalPct.toFixed(2)}%`
-              nonCanonical = `${nonCanonicalPct.toFixed(2)}%`
+              canonicalPct = Math.min(100, (l2Supply / escrowBalance) * 100)
+              nonCanonicalPct = Math.max(0, 100 - canonicalPct)
             }
 
             const minters = await getL2Minters(l2Address, chain)
-            if (minters.length > 1) {
+            const mintersType = await checkMintersType(
+              minters.map((m) => ({
+                address: m.address,
+                name: m.name || 'Unknown',
+              })),
+            )
+            if (mintersType.type === 'Bridge Minter') {
               supplyInfo.type = 'Non-standard Token'
-              supplyInfo.reason = 'No unique (canonical) minter'
+              supplyInfo.reason =
+                mintersType.bridge +
+                ' (' +
+                (mintersType.matchingContracts ?? []).join(', ') +
+                ')'
+              supplyInfo.breakdown = {
+                canonicalPct: 0,
+                nonCanonicalPct: Number(nonCanonicalPct),
+                nativePct: 0,
+                externalPct: Number(nonCanonicalPct),
+              }
+            } else if (mintersType.type === 'Unknown') {
+              const bridgeName = matchBridgeName(
+                minters.map((m) => ({
+                  address: m.address,
+                  name: m.name || 'Unknown',
+                })),
+              )
+              if (bridgeName.type === 'Native Minter') {
+                supplyInfo.type = 'Non-standard Token'
+                supplyInfo.reason = bridgeName.bridge
+                supplyInfo.breakdown = {
+                  canonicalPct: 0,
+                  nonCanonicalPct: 0,
+                  nativePct: Number(nonCanonicalPct),
+                  externalPct: 0,
+                }
+              } else if (bridgeName.type === 'External Minter') {
+                supplyInfo.type = 'Non-standard Token'
+                supplyInfo.reason = bridgeName.bridge
+                supplyInfo.breakdown = {
+                  canonicalPct: 0,
+                  nonCanonicalPct: 0,
+                  nativePct: 0,
+                  externalPct: Number(nonCanonicalPct),
+                }
+              }
             }
-
             // if non-standard summary is printed later after classification attempt
             if (supplyInfo.type === 'Canonical Token') {
               console.table({
@@ -226,8 +270,8 @@ export const TokenScreening = command({
                 'L2 Supply': Number(supplyInfo.l2Supply).toFixed(2),
                 'Escrow Balance': Number(supplyInfo.escrowBalance).toFixed(2),
                 Type: supplyInfo.type,
-                Canonical: canonical,
-                'Non-canonical or in transit': nonCanonical,
+                Canonical: `${canonicalPct.toFixed(2)}%`,
+                'Non-canonical or in transit': `${nonCanonicalPct.toFixed(2)}%`,
               })
             }
           }
@@ -261,6 +305,13 @@ export const TokenScreening = command({
               escrows,
             )
             if (newSupplyInfo) {
+              if (
+                supplyInfo.type == 'Non-standard Token' &&
+                newSupplyInfo.type == 'Canonical Token'
+              ) {
+                supplyInfo.type = 'Non-standard Token'
+                supplyInfo.reason = 'Canonical address not found in escrow'
+              }
               supplyInfo.l1Supply = newSupplyInfo.l1Supply
               supplyInfo.l2Supply = newSupplyInfo.l2Supply
               if (supplyInfo.escrowBalance === '0') {
@@ -313,7 +364,7 @@ export const TokenScreening = command({
           const mintersType = await checkMintersType(
             l2Minters.map((m) => ({
               address: m.address,
-              name: m.name ?? 'Unknown',
+              name: m.name || 'Unknown',
             })),
           )
           if (mintersType.type === 'Bridge Minter') {
@@ -326,29 +377,45 @@ export const TokenScreening = command({
             const bridgeName = matchBridgeName(
               l2Minters.map((m) => ({
                 address: m.address,
-                name: m.name ?? 'Unknown',
+                name: m.name || 'Unknown',
               })),
             )
             if (bridgeName.type === 'Native Minter') {
               supplyInfo.reason = bridgeName.bridge
+              supplyInfo.breakdown = {
+                canonicalPct: 0,
+                nonCanonicalPct: 0,
+                nativePct: Number(nonCanonicalPct),
+                externalPct: 0,
+              }
             } else if (bridgeName.type === 'External Minter') {
               supplyInfo.reason = bridgeName.bridge
+              supplyInfo.breakdown = {
+                canonicalPct: 0,
+                nonCanonicalPct: 0,
+                nativePct: 0,
+                externalPct: Number(nonCanonicalPct),
+              }
             }
           }
           // print non-standard result summary
-          console.table({
+          const tableData: Record<string, string | number> = {
             'L1 Supply': Number(supplyInfo.l1Supply).toFixed(2),
             'L2 Supply': Number(supplyInfo.l2Supply).toFixed(2),
             'Escrow Balance': Number(supplyInfo.escrowBalance).toFixed(2),
             Type: supplyInfo.type,
+            Reason: supplyInfo.reason || '',
             Canonical: `${canonicalPct}%`,
-            [supplyInfo.type === 'Canonical Token'
-              ? 'In Transit'
-              : 'Non-canonical']: `${nonCanonicalPct}%`,
-            ...(supplyInfo.type !== 'Canonical Token'
-              ? { Reason: supplyInfo.reason }
-              : {}),
-          })
+            'Non-canonical': `${nonCanonicalPct}%`,
+          }
+
+          // Only add Native and External percentages if at least one is non-zero
+          if ((supplyInfo.breakdown?.nativePct || 0) > 0 || (supplyInfo.breakdown?.externalPct || 0) > 0) {
+            tableData['of which Native'] = `${supplyInfo.breakdown?.nativePct}%`
+            tableData['of which External'] = `${supplyInfo.breakdown?.externalPct}%`
+          }
+
+          console.table(tableData)
         }
       }
     }
@@ -484,7 +551,7 @@ async function getTokenSupplyInfo(
   l2Address: string,
   network: string,
   escrows: { [key: string]: string[] },
-): Promise<TokenSupplyInfo> {
+): Promise<TokenSupplyInfo & { breakdown?: TokenSupplyBreakdown }> {
   try {
     const l1Provider = new providers.JsonRpcProvider(
       utils.getRpcUrl('ethereum'),
@@ -548,30 +615,48 @@ async function getTokenSupplyInfo(
       decimals,
     )
 
-    // Check if L2 supply is significantly more than escrow balance
+    // Calculate supply breakdown
     const l2SupplyNum = Number(adjustedL2Supply)
     const escrowBalanceNum = Number(adjustedEscrowBalance)
 
-    if (l2SupplyNum > escrowBalanceNum * 2) {
-      // x2 threshold
-      return {
-        l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
-        l2Supply: adjustedL2Supply,
-        escrowBalance: adjustedEscrowBalance,
-        type: 'Non-standard Token',
-        reason: 'L2 supply significantly greater than escrow balance',
-      }
+    const breakdown: TokenSupplyBreakdown = {
+      canonicalPct: 0,
+      nonCanonicalPct: 0,
+      nativePct: 0,
+      externalPct: 0,
     }
 
-    // sanity check for balance
-    const tokenType =
-      Number(adjustedL2Supply) > 1 ? 'Canonical Token' : 'Non-standard Token'
+    if (l2SupplyNum > 0) {
+      // First determine canonical vs non-canonical split
+      breakdown.canonicalPct = Math.min(
+        100,
+        (escrowBalanceNum / l2SupplyNum) * 100,
+      )
+      breakdown.nonCanonicalPct = Math.max(0, 100 - breakdown.canonicalPct)
+    }
+
+    // Determine token type based on breakdown
+    let tokenType = 'Non-standard Token'
+    let reason = ''
+
+    if (Number(adjustedL2Supply) <= 1) {
+      tokenType = 'Non-standard Token'
+      reason = 'L2 supply too low'
+    } else if (breakdown.canonicalPct > 90) {
+      tokenType = 'Canonical Token'
+      reason = 'Canonical address found in escrow'
+    } else {
+      tokenType = 'Non-standard Token'
+      reason = 'L2 supply significantly greater than escrow balance'
+    }
 
     return {
       l1Supply: ethersUtils.formatUnits(l1Supply, decimals),
       l2Supply: adjustedL2Supply,
       escrowBalance: adjustedEscrowBalance,
-      type: tokenType,
+      type: tokenType as 'Canonical Token' | 'Non-standard Token',
+      reason,
+      breakdown,
     }
   } catch {
     return {
@@ -579,6 +664,12 @@ async function getTokenSupplyInfo(
       l2Supply: '0',
       escrowBalance: '0',
       type: 'Non-standard Token',
+      breakdown: {
+        canonicalPct: 0,
+        nonCanonicalPct: 0,
+        nativePct: 0,
+        externalPct: 0,
+      },
     }
   }
 }
