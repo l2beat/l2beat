@@ -29,12 +29,13 @@ transitivePermission(Receiver, Permission, Giver, Delay, Description, Delay, nil
   defaultedPermissionDelay(Receiver, Permission, Giver, Delay),
   defaultedPermissionDescription(Receiver, Permission, Giver, Description).
 
-transitivePermission(Receiver, Permission, Giver, OriginalDelay, OriginalDescription, TotalDelay, (cons(tuple(Via, "act", Delay), IndirectVia))) :-
-  transitivePermission(Via, Permission, Giver, OriginalDelay, OriginalDescription, PreviousTotalDelay, IndirectVia),
-  permission(Receiver, "act", Via),
-  defaultedPermissionDelay(Receiver, "act", Via, Delay),
-  TotalDelay = PreviousTotalDelay + Delay,
-  Permission != "act". % we're only interested in the "final" permission, not intermediate "act".
+transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay), IndirectVia))) :-
+  transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, PreviousTotalDelay, IndirectVia),
+  permission(Receiver, ViaPermission, Via),
+  defaultedPermissionDelay(Receiver, ViaPermission, Via, ViaDelay),
+  ViaPermission == "act",
+  TotalDelay = PreviousTotalDelay + ViaDelay,
+  OriginalPermission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
 % 2. Filtering permission to only those we want to display
 
