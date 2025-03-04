@@ -59,7 +59,7 @@ export function runDiscoveryUi() {
       return
     }
     executeTerminalCommand(
-      `(cd ../backend && pnpm discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
+      `(cd ${config.configPackagePath} && l2b discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
       res,
     )
   })
@@ -79,8 +79,9 @@ export function runDiscoveryUi() {
       codePaths.length > 1 ? codePaths[1].path : codePaths[0].path
     const againstPath =
       against === 'templates' ? './discovery/_templates/' : './discovery/'
+
     executeTerminalCommand(
-      `(cd ../backend && l2b match-flat file "${implementationPath}" "${againstPath}")`,
+      `(cd ${config.configPackagePath} && l2b match-flat file "${implementationPath}" "${againstPath}")`,
       res,
     )
   })
