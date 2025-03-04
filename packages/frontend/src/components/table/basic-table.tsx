@@ -182,6 +182,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
   return (
     <>
       <TableRow
+        data-slug={row.original.slug}
         className={cn(
           getRowClassNames(rowType),
           row.getIsExpanded() &&
@@ -189,7 +190,6 @@ export function BasicTableRow<T extends CommonProjectEntry>({
             '!border-none',
           className,
         )}
-        id={row.original.slug}
       >
         {row.getVisibleCells().map((cell) => {
           const { meta } = cell.column.columnDef

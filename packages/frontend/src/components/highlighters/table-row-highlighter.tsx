@@ -13,15 +13,15 @@ export function TableRowHighlighter() {
     })
 
     if (highlight) {
-      const element = document.getElementById(highlight)
+      const elements = document.querySelectorAll(`[data-slug="${highlight}"]`)
 
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      elements.forEach((element) => {
+        element.scrollIntoView({ block: 'center' })
         element.setAttribute('data-highlighted', 'true')
         setTimeout(() => {
           element.removeAttribute('data-highlighted')
         }, 5000)
-      }
+      })
     }
   }, [isClient])
 

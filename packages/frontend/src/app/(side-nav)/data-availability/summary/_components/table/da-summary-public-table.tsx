@@ -36,6 +36,7 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
       <>
         {remainingBridges.map((bridge) => (
           <TableRow
+            data-slug={`${row.original.slug}`}
             key={bridge.slug}
             className={getRowTypeClassNames({ isEthereum: false })}
           >
