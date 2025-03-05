@@ -62,7 +62,14 @@ export default async function Page(props: Props) {
       'display',
     ],
     where: ['isBridge'],
-    optional: ['chainConfig', 'isArchived', 'isUpcoming', 'milestones'],
+    optional: [
+      'chainConfig',
+      'isArchived',
+      'isUpcoming',
+      'milestones',
+      'contracts',
+      'permissions',
+    ],
   })
 
   if (!project) {

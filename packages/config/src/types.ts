@@ -700,6 +700,7 @@ export interface BridgeTechnology {
   validation?: ProjectTechnologyChoice
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
+  detailedDescription?: string
 }
 
 export interface CustomDa {

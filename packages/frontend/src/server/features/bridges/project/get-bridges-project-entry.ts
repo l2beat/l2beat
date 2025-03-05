@@ -4,8 +4,6 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { bridges } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -67,12 +65,14 @@ export async function getBridgesProjectEntry(
     | 'bridgeTechnology'
     | 'display',
     // optional
-    'chainConfig' | 'isArchived' | 'isUpcoming' | 'milestones'
+    | 'chainConfig'
+    | 'isArchived'
+    | 'isUpcoming'
+    | 'milestones'
+    | 'contracts'
+    | 'permissions'
   >,
 ): Promise<BridgesProjectEntry> {
-  /** @deprecated */
-  const legacy = bridges.find((x) => x.id === project.id)
-  assert(legacy)
   const [projectsChangeReport, tvsProjectStats] = await Promise.all([
     getProjectsChangeReport(),
     getTvsProjectStats(project),
@@ -162,20 +162,20 @@ export async function getBridgesProjectEntry(
     })
   }
 
-  if (legacy.display.detailedDescription) {
+  if (project.bridgeTechnology.detailedDescription) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Detailed description',
         description: project.display.description,
-        detailedDescription: legacy.display.detailedDescription,
+        detailedDescription: project.bridgeTechnology.detailedDescription,
       },
     })
   }
 
   const riskSummary = getBridgesRiskSummarySection(
-    legacy,
+    project,
     !project.statuses.isUnverified,
   )
   if (riskSummary.riskGroups.length > 0) {
@@ -190,7 +190,7 @@ export async function getBridgesProjectEntry(
     })
   }
 
-  const technologySection = getBridgeTechnologySection(legacy)
+  const technologySection = getBridgeTechnologySection(project)
   if (technologySection) {
     sections.push({
       type: 'TechnologySection',
@@ -206,7 +206,7 @@ export async function getBridgesProjectEntry(
     type: 'bridge',
     id: project.id,
     isUnderReview: project.statuses.isUnderReview,
-    permissions: legacy.permissions,
+    permissions: project.permissions,
   })
   if (permissionsSection) {
     sections.push({
@@ -223,12 +223,10 @@ export async function getBridgesProjectEntry(
     {
       type: 'bridge',
       id: project.id,
-      isVerified: !project.statuses.isUnverified,
       slug: project.slug,
-      contracts: legacy.contracts,
+      isVerified: !project.statuses.isUnverified,
       isUnderReview: project.statuses.isUnderReview,
-      escrows: legacy.config.escrows,
-      hostChainName: 'Ethereum',
+      contracts: project.contracts,
     },
     projectsChangeReport,
   )

@@ -566,12 +566,10 @@ export async function getScalingProjectEntry(
     {
       id: project.id,
       type: project.scalingInfo.layer,
-      hostChainName: project.scalingInfo.hostChain.name,
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: project.statuses.isUnderReview,
-      escrows: project.contracts.escrows,
       architectureImage: project.scalingTechnology.architectureImage,
       daSolution,
     },

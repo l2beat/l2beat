@@ -26,8 +26,6 @@ type ProjectParams = {
   architectureImage?: string
   contracts?: ProjectContracts
   daSolution?: DaSolution
-  escrows: ProjectEscrow[] | undefined
-  hostChainName: string
 }
 
 type ContractsSection = Omit<
@@ -74,9 +72,9 @@ export function getContractsSection(
     projectParams.daSolution?.contracts &&
     projectParams.daSolution.contracts.length !== 0
       ? {
-          layerName: projectParams.daSolution?.layerName,
-          bridgeName: projectParams.daSolution?.bridgeName,
-          hostChainName: projectParams.hostChainName,
+          layerName: projectParams.daSolution.layerName,
+          bridgeName: projectParams.daSolution.bridgeName,
+          hostChainName: projectParams.daSolution.hostChainName,
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
             return makeTechnologyContract(
               contract,
@@ -89,7 +87,7 @@ export function getContractsSection(
       : undefined
 
   const escrows =
-    projectParams.escrows
+    projectParams.contracts.escrows
       ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
@@ -189,7 +187,7 @@ function makeTechnologyContract(
     }
   }
 
-  const tokens = projectParams.escrows?.find(
+  const tokens = projectParams.contracts?.escrows?.find(
     (x) => x.address === item.address,
   )?.tokens
   // if contract is an escrow we already tweak it's name so we don't need to add this

@@ -209,7 +209,10 @@ function bridgeToProject(p: Bridge): BaseProject {
       destination: p.technology.destination,
       validatedBy: p.riskView.validatedBy.value,
     },
-    bridgeTechnology: p.technology,
+    bridgeTechnology: {
+      ...p.technology,
+      detailedDescription: p.display.detailedDescription,
+    },
     contracts: p.contracts,
     permissions: p.permissions,
     discoveryInfo: getDiscoveryInfo(p),

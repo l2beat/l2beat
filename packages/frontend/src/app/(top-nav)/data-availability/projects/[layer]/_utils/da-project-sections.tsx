@@ -44,12 +44,10 @@ export async function getRegularDaProjectSections({
     getContractsSection(
       {
         type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-        hostChainName: 'Ethereum', // TODO: Something is clearly wrong here
         id: bridge.id,
         isVerified,
         slug: bridge.slug,
         contracts: bridge.contracts ?? {},
-        escrows: undefined,
         isUnderReview: layer.statuses.isUnderReview,
       },
       projectsChangeReport,
