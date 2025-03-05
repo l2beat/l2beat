@@ -5,7 +5,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-export type Operator = 'sum' | 'diff'
+export type Operator = 'sum' | 'diff' | 'max' | 'min'
 
 export interface CalculationFormula {
   type: 'calculation'
@@ -23,6 +23,7 @@ export type AmountFormula =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
   | CirculatingSupplyAmountFormula
+  | ConstAmountFormula
 
 export interface BalanceOfEscrowAmountFormula {
   type: 'balanceOfEscrow'
@@ -49,6 +50,11 @@ export interface TotalSupplyAmountFormula {
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
   priceId: string
+}
+
+export interface ConstAmountFormula {
+  type: 'const'
+  value: number
 }
 
 export interface AmountConfigBase {

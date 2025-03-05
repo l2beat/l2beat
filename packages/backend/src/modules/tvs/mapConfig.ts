@@ -164,8 +164,10 @@ export function extractPricesAndAmounts(config: TvsConfig): {
       formulaPrices.forEach((p) => prices.set(p.priceId, p))
 
     } else {
-      const amount = createAmountConfig(token.amount)
-      amounts.set(amount.id, amount)
+      if (token.amount.type !== 'const') {
+        const amount = createAmountConfig(token.amount)
+        amounts.set(amount.id, amount)
+      }
     }
 
     const price = createPriceConfig({
@@ -197,7 +199,9 @@ export function extractPricesAndAmounts(config: TvsConfig): {
   }
 }
 
-export function createAmountConfig(formula: AmountFormula): AmountConfig {
+export function createAmountConfig(formula: BalanceOfEscrowAmountFormula
+  | TotalSupplyAmountFormula
+  | CirculatingSupplyAmountFormula): AmountConfig {
   switch (formula.type) {
     case 'balanceOfEscrow':
       return {
@@ -250,8 +254,10 @@ function processFormula(formula: CalculationFormula | ValueFormula | AmountFormu
     }
 
     if (f.type === 'value') {
-      const amount = createAmountConfig(f.amount)
-      formulaAmounts.push(amount)
+      if (f.amount.type !== 'const') {
+        const amount = createAmountConfig(f.amount)
+        formulaAmounts.push(amount)
+      }
 
       const price = createPriceConfig(f)
       formulaPrices.push(price)
@@ -259,8 +265,10 @@ function processFormula(formula: CalculationFormula | ValueFormula | AmountFormu
       return
     }
 
-    const amount = createAmountConfig(f as AmountFormula)
-    formulaAmounts.push(amount)
+    if (f.type !== 'const') {
+      const amount = createAmountConfig(f)
+      formulaAmounts.push(amount)
+    }
   }
 
   processFormulaRecursive(formula)

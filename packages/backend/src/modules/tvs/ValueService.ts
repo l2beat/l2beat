@@ -59,6 +59,10 @@ export class ValueService {
     formula: AmountFormula,
     timestamp: UnixTime,
   ): Promise<number> {
+    if (formula.type === 'const') {
+      return formula.value
+    }
+
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
     assert(amount !== undefined, `${formula.type} ${config.id}`)
