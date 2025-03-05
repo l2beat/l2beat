@@ -109,17 +109,15 @@ describe(groupFacts.name, () => {
     const knowledgeBase = new KnowledgeBase(
       ClingoFactFile.parse(factsFile).facts,
     )
-    const ethereumContractFacts = knowledgeBase.getFacts('fact', [
-      undefined,
-      undefined,
-      undefined,
-      'apple',
-    ])
-    const result = groupFacts(ethereumContractFacts, 0)
+    const result = groupFacts(knowledgeBase.facts, 0)
     expect(result).toEqual([
       {
         atom: 'fact',
         params: [['personA', 'personB'], 'can', 'eat', 'apple'],
+      },
+      {
+        atom: 'fact',
+        params: [['personC'], 'can', 'eat', 'fruit'],
       },
     ])
   })
