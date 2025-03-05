@@ -1,9 +1,9 @@
 import type {
   Badge,
   Project,
+  ProjectScalingCategory,
+  ProjectScalingStage,
   ReasonForBeingInOther,
-  ScalingProjectCategory,
-  StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -44,7 +44,7 @@ import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
 
-export interface ScalingProjectEntry {
+export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
   slug: string
@@ -59,7 +59,7 @@ export interface ScalingProjectEntry {
     badges?: Badge[]
     links: ProjectLink[]
     hostChain?: string
-    category: ScalingProjectCategory
+    category: ProjectScalingCategory
     purposes: string[]
     tvs?: {
       breakdown?: {
@@ -93,7 +93,7 @@ export interface ScalingProjectEntry {
   countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
 }
 
 export async function getScalingProjectEntry(
@@ -117,7 +117,7 @@ export async function getScalingProjectEntry(
     | 'milestones'
     | 'trackedTxsConfig'
   >,
-): Promise<ScalingProjectEntry> {
+): Promise<ProjectScalingEntry> {
   const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
     await Promise.all([
       getProjectsChangeReport(),
@@ -125,7 +125,7 @@ export async function getScalingProjectEntry(
       getTvsProjectStats(project),
     ])
 
-  const header: ScalingProjectEntry['header'] = {
+  const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,

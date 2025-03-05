@@ -1,7 +1,7 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
 } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
@@ -37,9 +37,9 @@ export async function getScalingArchivedEntries() {
 }
 
 export interface ScalingArchivedEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
+  category: ProjectScalingCategory
   purposes: string[]
-  stack: ScalingProjectStack | undefined
+  stack: ProjectScalingStack | undefined
   risks: RosetteValue[] | undefined
   totalTvs: number | undefined
   tvsOrder: number

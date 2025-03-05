@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 
 export const davos: Bridge = {
   type: 'bridge',

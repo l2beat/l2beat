@@ -1,4 +1,4 @@
-import type { ScalingProjectRiskCategory } from '@l2beat/config'
+import type { ProjectRiskCategory } from '@l2beat/config'
 import type { HostChainRisksWarningProps } from '~/components/host-chain-risks-warning'
 import { HostChainRisksWarning } from '~/components/host-chain-risks-warning'
 import { WarningBar } from '~/components/warning-bar'
@@ -18,7 +18,7 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
 
 export interface RiskGroup {
   start: number
-  name: ScalingProjectRiskCategory
+  name: ProjectRiskCategory
   items: RiskItem[]
 }
 

@@ -8,7 +8,7 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 
 export const layer2aWithDups = {
   type: 'layer2',

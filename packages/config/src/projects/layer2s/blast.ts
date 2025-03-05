@@ -4,7 +4,7 @@ import { EXITS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('blast')

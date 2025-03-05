@@ -18,7 +18,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
