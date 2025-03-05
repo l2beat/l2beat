@@ -4,7 +4,7 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -14,12 +14,11 @@ import type { TechnologyContract } from '../../../components/projects/sections/c
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import type { ContractUtils } from './get-contract-utils'
-import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   type: 'layer2' | 'layer3' | 'bridge'
-  id?: string
+  id: ProjectId
   slug: string
   isUnderReview?: boolean
   isVerified: boolean
@@ -62,6 +61,7 @@ export function getContractsSection(
               projectParams,
               !contract.isVerified,
               projectChangeReport,
+              contractUtils,
             )
           }),
         ]
@@ -82,6 +82,7 @@ export function getContractsSection(
               projectParams,
               !contract.isVerified,
               projectChangeReport,
+              contractUtils,
             )
           }),
         }
@@ -99,6 +100,7 @@ export function getContractsSection(
           projectParams,
           !contract.isVerified,
           projectChangeReport,
+          contractUtils,
           true,
         )
       }) ?? []
@@ -123,6 +125,7 @@ function makeTechnologyContract(
   projectParams: ProjectParams,
   isUnverified: boolean,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
+  contractUtils: ContractUtils,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = item.chain
@@ -224,16 +227,12 @@ function makeTechnologyContract(
   )
 
   const additionalReferences: ReferenceLink[] = []
-  const mainAddresses = [getAddress({ address: item.address })]
-  const implementationAddresses =
-    item.upgradeability?.implementations.map((implementation) =>
-      getAddress({ address: implementation }),
-    ) ?? []
 
-  const usedInProjects = getUsedInProjects(
-    projectParams,
-    mainAddresses,
-    implementationAddresses,
+  const usedInProjects = [
+    item.address,
+    ...(item.upgradeability?.implementations ?? []),
+  ].flatMap((address) =>
+    contractUtils.getUsedIn(projectParams.id, item.chain, address),
   )
 
   return {
