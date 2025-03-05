@@ -4,6 +4,7 @@ import {
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import { tokenList } from '../../tokens/tokens'
 import type {
@@ -33,7 +34,6 @@ import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
-import { runConfigAdjustments } from '../../adjustments'
 
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
