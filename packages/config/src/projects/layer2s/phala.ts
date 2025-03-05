@@ -89,6 +89,7 @@ export const phala: Layer2 = {
     chainId: 2035,
     explorerUrl: 'https://explorer.phala.network',
     sinceTimestamp: UnixTime.fromDate(new Date('2024-12-16T22:14:09Z')),
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'blockscout',
