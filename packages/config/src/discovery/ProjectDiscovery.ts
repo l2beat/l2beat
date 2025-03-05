@@ -140,7 +140,7 @@ export class ProjectDiscovery {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp ?? contractRaw.sinceTimestamp
     assert(
-      timestamp,
+      timestamp !== undefined,
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
 

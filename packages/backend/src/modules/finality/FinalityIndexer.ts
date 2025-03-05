@@ -102,7 +102,8 @@ export class FinalityIndexer extends ChildIndexer {
     )
 
     return (
-      !!latestSynced?.timestamp && latestSynced.timestamp >= targetTimestamp
+      latestSynced?.timestamp !== undefined &&
+      latestSynced.timestamp >= targetTimestamp
     )
   }
 
