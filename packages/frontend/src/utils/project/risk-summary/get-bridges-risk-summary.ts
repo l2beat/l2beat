@@ -1,4 +1,4 @@
-import type { Project, ScalingProjectRisk } from '@l2beat/config'
+import type { Project, ProjectRisk } from '@l2beat/config'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './group-risks'
@@ -19,7 +19,7 @@ export function getBridgesRiskSummarySection(
     },
   ]
 
-  const risks: (ScalingProjectRisk & { referencedId: string })[] = []
+  const risks: (ProjectRisk & { referencedId: string })[] = []
   for (const { id, value } of sections) {
     if (value) {
       risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))

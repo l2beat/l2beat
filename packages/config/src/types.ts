@@ -29,19 +29,35 @@ export interface TableReadyValue {
 }
 
 export interface ProjectTechnologyChoice {
-  /** Name of the specific technology choice */
   name: string
-  /** Description of the specific technology choice. Null means missing information */
   description: string
-  /** List of references backing up the claim */
   references: ReferenceLink[]
-  /** List of risks associated with the technology choice */
-  risks: ScalingProjectRisk[]
-  /** The description and research is incomplete */
+  risks: ProjectRisk[]
   isIncomplete?: boolean
-  /** The description and research is under review */
   isUnderReview?: boolean
 }
+
+export interface ReferenceLink {
+  title: string
+  url: string
+}
+
+export interface ProjectRisk {
+  category: ProjectRiskCategory
+  /** Description of the risk. Should form a sentence with the category */
+  text: string
+  isCritical?: boolean
+  _ignoreTextFormatting?: boolean
+}
+
+export type ProjectRiskCategory =
+  | 'Funds can be stolen if'
+  | 'Funds can be lost if'
+  | 'Funds can be frozen if'
+  | 'Funds can lose value if'
+  | 'Users can be censored if'
+  | 'MEV can be extracted if'
+  | 'Withdrawals can be delayed if'
 // #endregion
 
 export interface BaseProject {
@@ -65,7 +81,7 @@ export interface BaseProject {
 
   // scaling data
   scalingInfo?: ProjectScalingInfo
-  scalingStage?: StageConfig | undefined
+  scalingStage?: StageConfig
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   scalingTechnology?: ProjectScalingTechnology
@@ -260,15 +276,6 @@ export interface ProjectScalingInfo {
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
 }
-// #endregion
-
-export interface ReasonForBeingInOther {
-  label: string
-  shortDescription: string
-  description: string
-}
-
-export type ScalingProjectCapability = 'universal' | 'appchain'
 
 export type ScalingProjectCategory =
   | 'Optimistic Rollup'
@@ -277,6 +284,189 @@ export type ScalingProjectCategory =
   | 'Validium'
   | 'Optimium'
   | 'Other'
+
+export type ScalingProjectCapability = 'universal' | 'appchain'
+
+export interface ReasonForBeingInOther {
+  label: string
+  shortDescription: string
+  description: string
+}
+
+export type ScalingProjectStack =
+  | 'OP Stack'
+  | 'Arbitrum'
+  | 'StarkEx'
+  | 'ZKsync Lite'
+  | 'ZK Stack'
+  | 'Loopring'
+  | 'Polygon'
+  | 'OVM'
+  | 'SN Stack'
+  | 'Taiko'
+  | 'Cartesi Rollups'
+
+export type ScalingProjectStage =
+  | 'Not applicable'
+  | 'Under review'
+  | 'Stage 0'
+  | 'Stage 1'
+  | 'Stage 2'
+
+export type ScalingProjectPurpose =
+  | 'AI'
+  | 'Auctions'
+  | 'Betting'
+  | 'Bitcoin DApps'
+  | 'Bug bounty'
+  | 'Exchange'
+  | 'Gaming'
+  | 'Identity'
+  | 'Information'
+  | 'Interoperability'
+  | 'KYC-ed DeFi'
+  | 'Launchpad'
+  | 'Lending'
+  | 'Music'
+  | 'NFT'
+  | 'Oracles'
+  | 'Payments'
+  | 'Privacy'
+  | 'Universal'
+  | 'Social'
+  | 'Storage'
+  | 'RWA'
+  | 'IoT'
+  | 'Restaking'
+
+export type StageConfig =
+  | StageNotApplicable
+  | StageUnderReview
+  | StageConfigured
+
+export interface StageConfigured {
+  stage: Stage
+  downgradePending: StageDowngrade | undefined
+  missing?: MissingStageDetails
+  message: StageConfiguredMessage | undefined
+  summary: StageSummary[]
+  additionalConsiderations?: {
+    short: string
+    long: string
+  }
+}
+
+export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
+
+export interface StageDowngrade {
+  expiresAt: number
+  reason: string
+  toStage: Stage
+}
+
+export interface MissingStageDetails {
+  nextStage: Stage
+  principle: string | undefined
+  requirements: string[]
+}
+
+export interface StageConfiguredMessage {
+  type: 'underReview' | 'warning' | undefined
+  text: string
+}
+
+export interface StageSummary {
+  stage: Stage
+  principle:
+    | {
+        satisfied: boolean | 'UnderReview'
+        description: string
+      }
+    | undefined
+  requirements: {
+    satisfied: boolean | 'UnderReview'
+    description: string
+  }[]
+}
+
+export interface StageUnderReview {
+  stage: 'UnderReview'
+}
+
+export interface StageNotApplicable {
+  stage: 'NotApplicable'
+}
+export interface ProjectScalingRisks {
+  self: ScalingProjectRiskView
+  host: ScalingProjectRiskView | undefined
+  stacked: ScalingProjectRiskView | undefined
+}
+
+export interface ScalingProjectRiskView {
+  stateValidation: TableReadyValue
+  dataAvailability: TableReadyValue
+  exitWindow: TableReadyValue
+  sequencerFailure: TableReadyValue
+  proposerFailure: TableReadyValue
+}
+
+export interface ProjectDataAvailability {
+  layer: TableReadyValue & { projectId?: ProjectId }
+  bridge: TableReadyValue & { projectId?: ProjectId }
+  mode: TableReadyValue
+}
+
+export interface ProjectScalingTechnology {
+  warning?: string
+  detailedDescription?: string
+  architectureImage?: string
+  stateCorrectness?: ProjectTechnologyChoice
+  newCryptography?: ProjectTechnologyChoice
+  dataAvailability?: ProjectTechnologyChoice
+  operator?: ProjectTechnologyChoice
+  sequencing?: ProjectTechnologyChoice
+  sequencingImage?: string
+  forceTransactions?: ProjectTechnologyChoice
+  exitMechanisms?: ProjectTechnologyChoice[]
+  massExit?: ProjectTechnologyChoice
+  otherConsiderations?: ProjectTechnologyChoice[]
+  upgradesAndGovernance?: string
+  upgradesAndGovernanceImage?: string
+  stateDerivation?: ScalingProjectStateDerivation
+  stateValidation?: ScalingProjectStateValidation
+  stateValidationImage?: string
+}
+
+export interface ScalingProjectStateDerivation {
+  nodeSoftware: string
+  compressionScheme?: string
+  genesisState: string
+  dataFormat: string
+  isUnderReview?: boolean
+}
+
+export interface ScalingProjectStateValidation {
+  description: string
+  categories: ScalingProjectStateValidationCategory[]
+  proofVerification?: ProofVerification
+  isUnderReview?: boolean
+}
+
+export interface ScalingProjectStateValidationCategory {
+  title: // ZK
+    | 'ZK Circuits'
+    | 'Prover Architecture'
+    | 'Verification Keys Generation'
+    | 'Proven Program'
+    // Optimistic
+    | 'State root proposals'
+    | 'Challenges'
+    | 'Fast confirmations'
+  description: string
+  risks?: ProjectRisk[]
+  references?: ReferenceLink[]
+}
+// #endregion
 
 export interface ScalingProjectConfig {
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
@@ -400,111 +590,6 @@ export interface ElasticChainEscrow {
   tokensToAssignFromL1?: string[]
 }
 
-export type ScalingProjectStack =
-  | 'OP Stack'
-  | 'Arbitrum'
-  | 'StarkEx'
-  | 'ZKsync Lite'
-  | 'ZK Stack'
-  | 'Loopring'
-  | 'Polygon'
-  | 'OVM'
-  | 'SN Stack'
-  | 'Taiko'
-  | 'Cartesi Rollups'
-
-export type ScalingProjectPurpose =
-  | 'AI'
-  | 'Auctions'
-  | 'Betting'
-  | 'Bitcoin DApps'
-  | 'Bug bounty'
-  | 'Exchange'
-  | 'Gaming'
-  | 'Identity'
-  | 'Information'
-  | 'Interoperability'
-  | 'KYC-ed DeFi'
-  | 'Launchpad'
-  | 'Lending'
-  | 'Music'
-  | 'NFT'
-  | 'Oracles'
-  | 'Payments'
-  | 'Privacy'
-  | 'Universal'
-  | 'Social'
-  | 'Storage'
-  | 'RWA'
-  | 'IoT'
-  | 'Restaking'
-
-export interface ReferenceLink {
-  title: string
-  url: string
-}
-
-export interface ScalingProjectRisk {
-  /** Category of this risk */
-  category: ScalingProjectRiskCategory
-  /** Description of the risk. Should form a sentence with the category */
-  text: string
-  /** If the risk is particularly bad */
-  isCritical?: boolean
-  /** Ignore tests for formatting */
-  _ignoreTextFormatting?: boolean
-}
-
-export type ScalingProjectRiskCategory =
-  | 'Funds can be stolen if'
-  | 'Funds can be lost if'
-  | 'Funds can be frozen if'
-  | 'Funds can lose value if'
-  | 'Users can be censored if'
-  | 'MEV can be extracted if'
-  | 'Withdrawals can be delayed if'
-
-export interface ScalingProjectRiskView {
-  stateValidation: TableReadyValue
-  dataAvailability: TableReadyValue
-  exitWindow: TableReadyValue
-  sequencerFailure: TableReadyValue
-  proposerFailure: TableReadyValue
-}
-
-export interface ScalingProjectStateDerivation {
-  nodeSoftware: string
-  compressionScheme?: string
-  genesisState: string
-  dataFormat: string
-  isUnderReview?: boolean
-}
-
-type CategoryTitle =
-  // ZK
-  | 'ZK Circuits'
-  | 'Prover Architecture'
-  | 'Verification Keys Generation'
-  | 'Proven Program'
-  // Optimistic
-  | 'State root proposals'
-  | 'Challenges'
-  | 'Fast confirmations'
-
-export type ScalingProjectStateValidationCategory = {
-  title: CategoryTitle
-  description: string
-  risks?: ScalingProjectRisk[]
-  references?: ReferenceLink[]
-}
-
-export interface ScalingProjectStateValidation {
-  description: string
-  categories: ScalingProjectStateValidationCategory[]
-  proofVerification?: ProofVerification
-  isUnderReview?: boolean
-}
-
 export interface ScalingProjectTechnology {
   /** What state correctness mechanism is used in the project */
   stateCorrectness?: ProjectTechnologyChoice
@@ -550,12 +635,6 @@ export interface CustomTransactionApi<T extends string> {
   type: T
   defaultUrl: string
   defaultCallsPerMinute?: number
-}
-
-export interface ProjectDataAvailability {
-  layer: TableReadyValue & { projectId?: ProjectId }
-  bridge: TableReadyValue & { projectId?: ProjectId }
-  mode: TableReadyValue
 }
 
 export interface ProjectLivenessInfo {
@@ -812,78 +891,6 @@ export type ProjectDaTrackingConfig =
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
 
-export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
-
-export interface StageSummary {
-  stage: Stage
-  principle:
-    | {
-        satisfied: boolean | 'UnderReview'
-        description: string
-      }
-    | undefined
-  requirements: {
-    satisfied: boolean | 'UnderReview'
-    description: string
-  }[]
-}
-
-export interface MissingStageDetails {
-  nextStage: Stage
-  principle: string | undefined
-  requirements: string[]
-}
-
-export type StageConfig =
-  | StageNotApplicable
-  | StageUnderReview
-  | StageConfigured
-export type UsableStageConfig = StageUnderReview | StageConfigured
-
-export interface StageDowngrade {
-  expiresAt: number
-  reason: string
-  toStage: Stage
-}
-
-export interface StageConfigured {
-  stage: Stage
-  downgradePending: StageDowngrade | undefined
-  missing?: MissingStageDetails
-  message: StageConfiguredMessage | undefined
-  summary: StageSummary[]
-  additionalConsiderations?: {
-    short: string
-    long: string
-  }
-}
-
-export interface StageConfiguredMessage {
-  type: 'underReview' | 'warning' | undefined
-  text: string
-}
-
-interface StageUnderReview {
-  stage: 'UnderReview'
-}
-
-interface StageNotApplicable {
-  stage: 'NotApplicable'
-}
-
-export type ScalingProjectStage =
-  | 'Not applicable'
-  | 'Under review'
-  | 'Stage 0'
-  | 'Stage 1'
-  | 'Stage 2'
-
-export interface ProjectScalingRisks {
-  self: ScalingProjectRiskView
-  host: ScalingProjectRiskView | undefined
-  stacked: ScalingProjectRiskView | undefined
-}
-
 export interface ProjectTvlInfo {
   associatedTokens: string[]
   warnings: WarningWithSentiment[]
@@ -924,7 +931,7 @@ export interface DaBridge {
 export interface DaTechnology {
   /** Description of technology used by the data availability layer. [MARKDOWN] */
   description: string
-  risks?: ScalingProjectRisk[] // scaling risks on purpose
+  risks?: ProjectRisk[] // scaling risks on purpose
   references?: ReferenceLink[]
 }
 
@@ -1049,7 +1056,7 @@ export interface ProjectContracts {
   /** List of the contracts on a given chain */
   addresses: Record<string, ProjectContract[]>
   /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
+  risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
 }
 
@@ -1115,25 +1122,4 @@ export interface ProjectTvlEscrow {
   source?: ProjectEscrow['source']
   bridgedUsing?: TokenBridgedUsing
   sharedEscrow?: SharedEscrow
-}
-
-export interface ProjectScalingTechnology {
-  warning?: string
-  detailedDescription?: string
-  architectureImage?: string
-  stateCorrectness?: ProjectTechnologyChoice
-  newCryptography?: ProjectTechnologyChoice
-  dataAvailability?: ProjectTechnologyChoice
-  operator?: ProjectTechnologyChoice
-  sequencing?: ProjectTechnologyChoice
-  sequencingImage?: string
-  forceTransactions?: ProjectTechnologyChoice
-  exitMechanisms?: ProjectTechnologyChoice[]
-  massExit?: ProjectTechnologyChoice
-  otherConsiderations?: ProjectTechnologyChoice[]
-  upgradesAndGovernance?: string
-  upgradesAndGovernanceImage?: string
-  stateDerivation?: ScalingProjectStateDerivation
-  stateValidation?: ScalingProjectStateValidation
-  stateValidationImage?: string
 }

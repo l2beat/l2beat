@@ -1,5 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { CONTRACTS } from './common'
+import type { Layer3 } from './internalTypes'
+import type { Layer2 } from './internalTypes'
 import { BADGES, badgesCompareFn } from './projects/badges'
 import { bridges } from './projects/bridges'
 import { layer2s } from './projects/layer2s'
@@ -8,8 +10,6 @@ import { layer3s } from './projects/layer3s'
 import { getDiscoveryInfo } from './projects/project/getProjects'
 import { refactored } from './projects/refactored'
 import type { BaseProject, Bridge, ChainConfig } from './types'
-import type { Layer3 } from './internalTypes'
-import type { Layer2 } from './internalTypes'
 import { isProjectVerified, isVerified } from './verification/isVerified'
 
 let once = false

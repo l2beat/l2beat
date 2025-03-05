@@ -2,8 +2,8 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { CustomDa } from '../../types'
 import type { Layer2 } from '../../internalTypes'
+import type { CustomDa } from '../../types'
 import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,

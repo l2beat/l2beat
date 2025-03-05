@@ -1,4 +1,4 @@
-import type { Project, ScalingProjectRisk } from '@l2beat/config'
+import type { Project, ProjectRisk } from '@l2beat/config'
 import isArray from 'lodash/isArray'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
@@ -38,7 +38,7 @@ export function getScalingRiskSummarySection(
     },
   ]
 
-  const risks: (ScalingProjectRisk & { referencedId: string })[] = []
+  const risks: (ProjectRisk & { referencedId: string })[] = []
   for (const { id, value } of sections) {
     if (value) {
       if (isArray(value)) {

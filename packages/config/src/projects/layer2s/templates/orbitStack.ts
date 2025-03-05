@@ -26,6 +26,9 @@ import {
   formatDelay,
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../../internalTypes'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
+import type { ScalingProject } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -38,13 +41,13 @@ import type {
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectPermission,
+  ProjectRisk,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectDisplay,
   ScalingProjectPurpose,
-  ScalingProjectRisk,
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
@@ -53,9 +56,6 @@ import type {
   StageConfig,
   TableReadyValue,
 } from '../../../types'
-import type { Layer3 } from '../../../internalTypes'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ScalingProject } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
@@ -152,7 +152,7 @@ interface OrbitStackConfigCommon {
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
-  nonTemplateContractRisks?: ScalingProjectRisk[]
+  nonTemplateContractRisks?: ProjectRisk[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   isArchived?: boolean

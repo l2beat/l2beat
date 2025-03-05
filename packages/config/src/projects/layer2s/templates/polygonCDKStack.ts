@@ -22,6 +22,7 @@ import {
 } from '../../../common'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -41,7 +42,6 @@ import type {
   ScalingProjectTechnology,
   TableReadyValue,
 } from '../../../types'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { getStage } from '../common/stages/getStage'

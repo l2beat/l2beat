@@ -27,6 +27,9 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
+import type { Layer3 } from '../../../internalTypes'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
+import type { ScalingProject } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -40,6 +43,7 @@ import type {
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
+  ProjectRisk,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
@@ -47,7 +51,6 @@ import type {
   ScalingProjectCategory,
   ScalingProjectDisplay,
   ScalingProjectPurpose,
-  ScalingProjectRisk,
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
@@ -55,9 +58,6 @@ import type {
   StageConfig,
   TableReadyValue,
 } from '../../../types'
-import type { Layer3 } from '../../../internalTypes'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ScalingProject } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
@@ -240,12 +240,12 @@ function opStackCommon(
     architectureImage.push('permissionless')
   }
 
-  const nativeContractRisks: ScalingProjectRisk[] = [
+  const nativeContractRisks: ProjectRisk[] = [
     partOfSuperchain
       ? ({
           category: 'Funds can be stolen if',
           text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
-        } satisfies ScalingProjectRisk)
+        } satisfies ProjectRisk)
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 

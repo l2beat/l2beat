@@ -6,6 +6,8 @@ import {
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+import type { Layer3 } from '../../internalTypes'
+import type { Layer2 } from '../../internalTypes'
 import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
@@ -18,8 +20,6 @@ import type {
   ProjectTvlConfig,
   ProjectTvlEscrow,
 } from '../../types'
-import type { Layer3 } from '../../internalTypes'
-import type { Layer2 } from '../../internalTypes'
 import {
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,

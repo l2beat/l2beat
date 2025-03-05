@@ -1,7 +1,7 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { UsedInProject } from '../../../types'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2 } from '../../../internalTypes'
+import type { UsedInProject } from '../../../types'
 import { layer2s } from '../../layer2s'
 import { layer3s } from '../../layer3s'
 
