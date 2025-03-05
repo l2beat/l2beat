@@ -59,8 +59,7 @@ const daBridgeRisksColumn = columnHelper.display({
     }
     return (
       <GrissiniCell
-        values={bridge.risks.values}
-        hasNoBridge={bridge.risks.isNoBridge}
+        values={bridge.risks}
         href={
           ctx.row.original.id === ProjectId.ETHEREUM
             ? undefined

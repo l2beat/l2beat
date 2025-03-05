@@ -84,10 +84,7 @@ export interface DaBridgeSummaryEntry
     latest: number
     sevenDaysAgo: number
   }
-  risks: {
-    values: RosetteValue[]
-    isNoBridge: boolean
-  }
+  risks: RosetteValue[]
   usedIn: UsedInProject[]
   dacInfo:
     | {
@@ -120,10 +117,7 @@ function getDaSummaryEntry(
             : undefined,
       },
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
-      risks: {
-        isNoBridge: !!b.daBridge.risks.isNoBridge,
-        values: mapBridgeRisksToRosetteValues(b.daBridge.risks),
-      },
+      risks: mapBridgeRisksToRosetteValues(b.daBridge.risks),
       usedIn: b.daBridge.usedIn.sort(
         (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
       ),
@@ -140,10 +134,7 @@ function getDaSummaryEntry(
       tvs: getTvs(
         layer.daLayer.usedWithoutBridgeIn.map((project) => project.id),
       ),
-      risks: {
-        isNoBridge: true,
-        values: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
-      },
+      risks: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       usedIn: layer.daLayer.usedWithoutBridgeIn.sort(
         (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
       ),
@@ -203,10 +194,7 @@ function getDacEntry(
     href: `/scaling/projects/${project.slug}`,
     statuses: {},
     tvs,
-    risks: {
-      isNoBridge: !!project.customDa.risks.isNoBridge,
-      values: mapBridgeRisksToRosetteValues(project.customDa.risks),
-    },
+    risks: mapBridgeRisksToRosetteValues(project.customDa.risks),
     dacInfo,
     usedIn,
   }
@@ -251,10 +239,7 @@ function getEthereumEntry(
         href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
         statuses: {},
         tvs: getTvs(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
-        risks: {
-          values: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
-          isNoBridge: false,
-        },
+        risks: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
         dacInfo: undefined,
         usedIn: bridge.daBridge.usedIn,
       },

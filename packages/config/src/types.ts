@@ -700,6 +700,7 @@ export interface BridgeTechnology {
   validation?: ProjectTechnologyChoice
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
+  detailedDescription?: string
 }
 
 export interface CustomDa {
@@ -817,6 +818,7 @@ export interface BaseProject {
   display?: ProjectDisplay
   bridgeInfo?: ProjectBridgeInfo
   bridgeRisks?: BridgeRiskView
+  bridgeTechnology?: BridgeTechnology
   scalingInfo?: ProjectScalingInfo
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
@@ -1099,6 +1101,7 @@ export interface ProjectContracts {
   addresses: Record<string, ProjectContract[]>
   /** List of risks associated with the contracts */
   risks: ScalingProjectRisk[]
+  escrows?: ProjectEscrow[]
 }
 
 export interface ProjectDiscoveryInfo {

@@ -4,6 +4,7 @@ import {
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import { tokenList } from '../../tokens/tokens'
 import type {
@@ -35,6 +36,8 @@ import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
+  runConfigAdjustments()
+
   return refactored
     .concat(layer2s.map((p) => layer2Or3ToProject(p, [])))
     .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s)))
@@ -208,6 +211,10 @@ function bridgeToProject(p: Bridge): BaseProject {
       category: p.display.category,
       destination: p.technology.destination,
       validatedBy: p.riskView.validatedBy.value,
+    },
+    bridgeTechnology: {
+      ...p.technology,
+      detailedDescription: p.display.detailedDescription,
     },
     contracts: p.contracts,
     permissions: p.permissions,

@@ -6,7 +6,10 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import { ProjectService, getTokenData } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
+// TODO: This script should probably be part of config
+import { getTokenData } from '@l2beat/config/src/tokens/getTokenData'
+import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
@@ -44,8 +47,7 @@ const cmd = command({
       return
     }
 
-    // generate config
-    const tvsConfig = await generateConfigForProject(ps, args.project)
+    const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 
     logger.info('Executing TVS to exclude zero-valued tokens')
     const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
@@ -68,13 +70,35 @@ const cmd = command({
 
 run(cmd, process.argv.slice(2))
 
-async function generateConfigForProject(ps: ProjectService, projectId: string) {
+async function generateConfigForProject(
+  ps: ProjectService,
+  projectId: string,
+  logger: Logger,
+) {
   const project = await ps.getProject({
     id: ProjectId(projectId),
     select: ['tvlConfig', 'chainConfig'],
   })
+  assert(project, `${projectId}: No project found`)
+
+  const env = getEnv()
+  const rpc = new RpcClient({
+    http: new HttpClient(),
+    callsPerMinute: env.integer(
+      `${projectId.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+      120,
+    ),
+    retryStrategy: 'RELIABLE',
+    logger,
+    url: env.string(
+      `${projectId.toUpperCase()}_RPC_URL`,
+      project.chainConfig.apis.find((a) => a.type === 'rpc')?.url,
+    ),
+    sourceName: projectId,
+  })
+
   assert(project, `${projectId} project not found`)
-  return mapConfig(project, project.chainConfig)
+  return mapConfig(project, project.chainConfig, logger, rpc)
 }
 
 function initLogger(env: Env) {

@@ -14,7 +14,6 @@ export interface GrissiniCellProps {
   isUnderReview?: boolean
   className?: string
   iconClassName?: string
-  hasNoBridge?: boolean
   href?: string
   disabledOnMobile?: boolean
 }
@@ -36,17 +35,12 @@ export function GrissiniCell(props: GrissiniCellProps) {
         <TableLink href={props.href}>
           <GrissiniIcon
             values={props.values}
-            hasNoBridge={props.hasNoBridge}
             className={cn('size-8 md:size-8', props.iconClassName)}
           />
         </TableLink>
       </TooltipTrigger>
       <TooltipContent fitContent>
-        <GrissiniTooltip
-          values={props.values}
-          isUnderReview={isUnderReview}
-          hasNoBridge={props.hasNoBridge}
-        />
+        <GrissiniTooltip values={props.values} isUnderReview={isUnderReview} />
       </TooltipContent>
     </Tooltip>
   )

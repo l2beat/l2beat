@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs'
 import path from 'path'
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { mapConfig } from '../mapConfig'
@@ -12,7 +13,7 @@ export async function getArbitrumConfig(regenerate: boolean = false) {
       select: ['tvlConfig', 'chainConfig'],
     })
     assert(arbitrum, 'Arbitrum project not found')
-    return mapConfig(arbitrum, arbitrum.chainConfig)
+    return mapConfig(arbitrum, arbitrum.chainConfig, Logger.INFO)
   }
 
   const filePath = path.join(__dirname, 'arbitrum-config.json')

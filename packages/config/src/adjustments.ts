@@ -10,6 +10,8 @@ import { refactored } from './projects/refactored'
 import type { BaseProject, Bridge, ChainConfig, Layer2, Layer3 } from './types'
 import { isProjectVerified, isVerified } from './verification/isVerified'
 
+let once = false
+
 /**
  * Some things can only be computed once all projects have been configured.
  * You can think of this function as the stage-3 of config generation with:
@@ -21,6 +23,9 @@ import { isProjectVerified, isVerified } from './verification/isVerified'
  * process.
  */
 export function runConfigAdjustments() {
+  if (once) return
+  once = true
+
   const chains = [...layer2s, ...layer3s, ...bridges, ...refactored]
     .map((x) => x.chainConfig)
     .filter((x) => x !== undefined)
@@ -53,6 +58,7 @@ function adjustLegacy(
     }
   }
   adjustContracts(project, chains)
+  adjustEscrows(project)
 
   project.discoveryInfo = getDiscoveryInfo(project)
 }
@@ -98,5 +104,11 @@ function adjustBadges(project: Layer2, l3s: Layer3[]) {
     project.badges = mergeBadges(project.badges ?? [], [
       BADGES.Other.L3HostChain,
     ])
+  }
+}
+
+function adjustEscrows(project: Layer2 | Layer3 | Bridge) {
+  if (project.contracts) {
+    project.contracts.escrows = project.config.escrows
   }
 }

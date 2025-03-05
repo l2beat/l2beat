@@ -83,8 +83,7 @@ function BridgeCells({
       </TableCell>
       <TableCell className="flex items-center justify-center pl-4">
         <GrissiniCell
-          values={bridge.risks.values}
-          hasNoBridge={bridge.risks.isNoBridge}
+          values={bridge.risks}
           href={
             layer.id === ProjectId.ETHEREUM
               ? undefined
