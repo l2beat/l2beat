@@ -1,5 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/custom-link'
 import { useIsMobile } from '~/hooks/use-breakpoint'
@@ -42,9 +43,6 @@ export function ChartMilestones<T extends { timestamp: number }>({
     () => getTimestampedMilestones(data, milestones),
     [data, milestones],
   )
-  const [openedMilestoneIndex, setOpenedMilestoneIndex] = useState<
-    number | null
-  >(null)
 
   useEffect(() => {
     if (!ref.current) return
@@ -72,12 +70,9 @@ export function ChartMilestones<T extends { timestamp: number }>({
         return (
           <ChartMilestone
             key={data.milestone.date}
-            milestone={data.milestone}
             left={x * width - 10}
             milestoneIndex={milestoneIndex}
-            totalMilestones={validMilestones.length}
-            setOpenedMilestoneIndex={setOpenedMilestoneIndex}
-            openedMilestoneIndex={openedMilestoneIndex}
+            allMilestones={validMilestones}
           />
         )
       })}
@@ -86,74 +81,70 @@ export function ChartMilestones<T extends { timestamp: number }>({
 }
 
 function ChartMilestone({
-  milestone,
   left,
   milestoneIndex,
-  totalMilestones,
-  setOpenedMilestoneIndex,
-  openedMilestoneIndex,
+  allMilestones,
 }: {
-  milestone: Milestone
   left: number
   milestoneIndex: number
-  totalMilestones: number
-  setOpenedMilestoneIndex: (a: number | null) => void
-  openedMilestoneIndex: number | null
+  allMilestones: TimestampedMilestone[]
 }) {
   const isMobile = useIsMobile()
+  const [openedMilestone, setOpenedMilestone] = useState<number>(milestoneIndex)
 
-  const Icon = milestone.type === 'general' ? MilestoneIcon : IncidentIcon
+  const triggerMilestone = allMilestones[milestoneIndex]?.milestone
+  const tooltipMilestone = allMilestones[openedMilestone]?.milestone
+  assert(triggerMilestone && tooltipMilestone)
+
+  const Icon =
+    triggerMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
+  const UsedIcon =
+    tooltipMilestone?.type === 'general' ? MilestoneIcon : IncidentIcon
+
   const common =
     'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-8'
   if (isMobile) {
     return (
-      <Drawer
-        open={openedMilestoneIndex === milestoneIndex}
-        onOpenChange={(isOpen) => {
-          if (isOpen) {
-            setOpenedMilestoneIndex(milestoneIndex)
-          } else if (openedMilestoneIndex === milestoneIndex) {
-            setOpenedMilestoneIndex(null)
-          }
-        }}
-      >
+      <Drawer>
         <DrawerTrigger asChild>
           <Icon className={cn(common, 'scale-75')} style={{ left }} />
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
             <DialogTitle className="flex gap-1.5 font-bold">
-              <Icon className="size-[18px] shrink-0" />
-              <span>{milestone.title}</span>
+              <UsedIcon className="size-[18px] shrink-0" />
+              <span>{tooltipMilestone.title}</span>
             </DialogTitle>
             <DrawerDescription>
               <p className="mb-4 ml-6 text-xs text-secondary">
-                {formatDate(milestone.date.slice(0, 10))}
+                {formatDate(tooltipMilestone.date.slice(0, 10))}
               </p>
-              <p className="mb-2 leading-[140%]">{milestone.description}</p>
-              <CustomLink href={milestone.url}>Learn more</CustomLink>
+              <p className="mb-2 leading-[140%]">
+                {tooltipMilestone.description}
+              </p>
+              <CustomLink href={tooltipMilestone.url}>Learn more</CustomLink>
             </DrawerDescription>
           </DrawerHeader>
           <DrawerFooter className="flex flex-row items-center justify-between px-0 pb-8 pt-6">
             <Button
               size="sm"
               className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
-              onClick={() => setOpenedMilestoneIndex(milestoneIndex - 1)}
+              onClick={() => setOpenedMilestone((s) => s - 1)}
               aria-label="Previous milestone"
-              disabled={milestoneIndex === 0}
+              disabled={openedMilestone === 0}
             >
               <ChevronIcon className="mr-1 size-3 rotate-90" />
               Previous
             </Button>
             <div className="text-[13px] text-secondary">
-              {milestoneIndex + 1} of {totalMilestones}
+              {openedMilestone + 1} of {allMilestones.length}
             </div>
             <Button
               size="sm"
               className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
-              onClick={() => setOpenedMilestoneIndex(milestoneIndex + 1)}
+              onClick={() => setOpenedMilestone((s) => s + 1)}
               aria-label="Next milestone"
-              disabled={milestoneIndex === totalMilestones - 1}
+              disabled={openedMilestone === allMilestones.length - 1}
             >
               Next
               <ChevronIcon className="ml-1 size-3 -rotate-90" />
@@ -169,7 +160,7 @@ function ChartMilestone({
       <TooltipTrigger asChild>
         <a
           className={common}
-          href={milestone.url}
+          href={triggerMilestone.url}
           style={{ left }}
           target="_blank"
         >
@@ -178,14 +169,14 @@ function ChartMilestone({
       </TooltipTrigger>
       <TooltipContent side="bottom">
         <div className="mb-1 whitespace-nowrap">
-          {formatDate(milestone.date.slice(0, 10))}
+          {formatDate(triggerMilestone.date.slice(0, 10))}
         </div>
         <div className="mb-2 flex max-w-[216px] font-bold">
           <Icon className="mt-px size-3.5 shrink-0" />
-          <span className="ml-1.5 text-left">{milestone.title}</span>
+          <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
         </div>
         <div className="mb-1 max-w-[216px] text-left">
-          {milestone.description}
+          {triggerMilestone.description}
         </div>
       </TooltipContent>
     </Tooltip>
