@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x539ace82f003254b87d7d1e81c40544b6c098318
+
+# Diff at Wed, 05 Mar 2025 15:48:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5d3e3b01c9c6f1ecd34ee849b404794d8c094024 block: 21764836
+- current block number: 21981677
+
+## Description
+
+Lumia upgraded to known validium contract.
+
+## Watched changes
+
+```diff
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      values.$implementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.$pastUpgrades.1:
++        ["2025-03-05T12:12:47.000Z","0xc376c3725fb986eead241c5b7663e6e081f66b92984bc4b3f0c08d23a0101a35",["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]]
+      values.$upgradeCount:
+-        1
++        2
+      derivedName:
+-        "PolygonValidiumStorageMigration"
++        "PolygonValidiumEtrog"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Validium/PolygonValidiumEtrog.sol}             | 203 +++++++++++----------
+ 1 file changed, 111 insertions(+), 92 deletions(-)
+```
+
 Generated with discovered.json: 0xd002180745803850fbaa75f1c68b02af67455bd6
 
 # Diff at Tue, 04 Mar 2025 10:39:22 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "lumia",
   "chain": "ethereum",
-  "blockNumber": 21764836,
+  "blockNumber": 21981677,
   "configHash": "0xaa8d5baddd4ead709d4b42648336bf64cf7d3846fccc1089b02917d65d51f003",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
@@ -79,7 +79,7 @@
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "PolygonZkEVM",
@@ -108,15 +108,20 @@
       "sinceBlock": 20183666,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
         "$pastUpgrades": [
           [
             "2024-06-27T14:37:11.000Z",
             "0x03c9a006f95a45fda2a18e475242078b8563715bc621e21e62a78962e9fb4e63",
             ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ],
+          [
+            "2025-03-05T12:12:47.000Z",
+            "0xc376c3725fb986eead241c5b7663e6e081f66b92984bc4b3f0c08d23a0101a35",
+            ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "admin": "0x258862dec9a77db57b398c441390783293E2a7A1",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
@@ -136,7 +141,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x81e70422df4dd75b526e4cf6da4f00dfb7ead5248145b42ff3e3c2f36efd4288",
+        "lastAccInputHash": "0xfb32041d56deb96fe470882f03edf72da4f6f9d61121c6508475e884e47d2b93",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "prism",
@@ -156,7 +161,7 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
-      "derivedName": "PolygonValidiumStorageMigration",
+      "derivedName": "PolygonValidiumEtrog",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -235,11 +240,42 @@
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
+    "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB": [
+      "constructor()",
+      "error CommitteeAddressDoesNotExist()",
+      "error EmptyURLNotAllowed()",
+      "error TooManyRequiredSignatures()",
+      "error UnexpectedAddrsAndSignaturesSize()",
+      "error UnexpectedAddrsBytesLength()",
+      "error UnexpectedCommitteeHash()",
+      "error WrongAddrOrder()",
+      "event CommitteeUpdated(bytes32 committeeHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function committeeHash() view returns (bytes32)",
+      "function getAmountOfMembers() view returns (uint256)",
+      "function getProcotolName() pure returns (string)",
+      "function initialize()",
+      "function members(uint256) view returns (string url, address addr)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function requiredAmountOfSignatures() view returns (uint256)",
+      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
+      "function transferOwnership(address newOwner)",
+      "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
+    ],
+    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
       "error ExceedMaxVerifyBatches()",
+      "error FinalAccInputHashDoesNotMatch()",
       "error FinalNumBatchBelowLastVerifiedBatch()",
       "error FinalNumBatchDoesNotMatchPendingState()",
       "error FinalPendingStateNumInvalid()",
@@ -263,6 +299,7 @@
       "error InvalidRangeBatchTimeTarget()",
       "error InvalidRangeForceBatchTimeout()",
       "error InvalidRangeMultiplierBatchFee()",
+      "error L1InfoTreeLeafCountInvalid()",
       "error MaxTimestampSequenceInvalid()",
       "error NewAccInputHashDoesNotExist()",
       "error NewPendingStateTimeoutMustBeLower()",
@@ -294,6 +331,7 @@
       "event ForceBatch(uint64 indexed forceBatchNum, bytes32 lastGlobalExitRoot, address sequencer, bytes transactions)",
       "event InitialSequenceBatches(bytes transactions, bytes32 lastGlobalExitRoot, address sequencer)",
       "event Initialized(uint8 version)",
+      "event RollbackBatches(uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
       "event SequenceBatches(uint64 indexed numBatch, bytes32 l1InfoRoot)",
       "event SequenceForceBatches(uint64 indexed numBatch)",
       "event SetDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
@@ -331,7 +369,6 @@
       "function generateInitializeTransaction(uint32 networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, bytes _gasTokenMetadata) view returns (bytes)",
       "function globalExitRootManager() view returns (address)",
       "function initialize(address _admin, address sequencer, uint32 networkID, address _gasTokenAddress, string sequencerURL, string _networkName)",
-      "function initializeMigration()",
       "function isSequenceWithDataAvailabilityAllowed() view returns (bool)",
       "function lastAccInputHash() view returns (bytes32)",
       "function lastForceBatch() view returns (uint64)",
@@ -340,9 +377,10 @@
       "function onVerifyBatches(uint64 lastVerifiedBatch, bytes32 newStateRoot, address aggregator)",
       "function pendingAdmin() view returns (address)",
       "function pol() view returns (address)",
+      "function rollbackBatches(uint64 targetBatch, bytes32 accInputHashToRollback)",
       "function rollupManager() view returns (address)",
-      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)",
-      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase, bytes dataAvailabilityMessage)",
+      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)",
+      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase, bytes dataAvailabilityMessage)",
       "function sequenceForceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches)",
       "function setDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
       "function setForceBatchAddress(address newForceBatchAddress)",
@@ -353,36 +391,6 @@
       "function transferAdminRole(address newPendingAdmin)",
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
-    ],
-    "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB": [
-      "constructor()",
-      "error CommitteeAddressDoesNotExist()",
-      "error EmptyURLNotAllowed()",
-      "error TooManyRequiredSignatures()",
-      "error UnexpectedAddrsAndSignaturesSize()",
-      "error UnexpectedAddrsBytesLength()",
-      "error UnexpectedCommitteeHash()",
-      "error WrongAddrOrder()",
-      "event CommitteeUpdated(bytes32 committeeHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function committeeHash() view returns (bytes32)",
-      "function getAmountOfMembers() view returns (uint256)",
-      "function getProcotolName() pure returns (string)",
-      "function initialize()",
-      "function members(uint256) view returns (string url, address addr)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function requiredAmountOfSignatures() view returns (uint256)",
-      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
-      "function transferOwnership(address newOwner)",
-      "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
     "0x92726F7dE49300DBdb60930066bc1d0803c0740B": [
       "constructor(address _logic, address admin, bytes _data) payable",
