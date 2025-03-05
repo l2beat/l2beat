@@ -9,7 +9,7 @@ import {
   parseExportedFacts,
 } from '@l2beat/discovery'
 import { groupFacts } from '@l2beat/discovery/dist/discovery/modelling/KnowledgeBase'
-import { notUndefined } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {
@@ -57,45 +57,26 @@ export class PermissionsFromModel implements PermissionRegistry {
     this.modelIdRegistry = new ModelIdRegistry(this.knowledgeBase)
   }
 
-  getPermissionedContracts(): ContractParameters[] {
+  getPermissionedContracts(): EthereumAddress[] {
     const chain = this.projectDiscovery.chain
-    const getContractByAddress =
-      this.projectDiscovery.getContractByAddress.bind(this.projectDiscovery)
-    const getAddressData = this.modelIdRegistry.getAddressData.bind(
-      this.modelIdRegistry,
-    )
     return this.knowledgeBase
       .getFacts('showContractInPermissionsSection') // TODO: simply use permission facts
-      .map((fact) => getAddressData(fact.params[0] as string))
+      .map((fact) =>
+        this.modelIdRegistry.getAddressData(fact.params[0] as string),
+      )
       .filter((data) => data.chain === chain)
-      .map((data) => getContractByAddress(data.address))
-      .filter(notUndefined)
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
-        // return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
+      .map((data) => EthereumAddress.from(data.address))
   }
 
-  getPermissionedEoas(): EoaParameters[] {
+  getPermissionedEoas(): EthereumAddress[] {
     const chain = this.projectDiscovery.chain
-    const getEOAByAddress = this.projectDiscovery.getEOAByAddress.bind(
-      this.projectDiscovery,
-    )
-    const getAddressData = this.modelIdRegistry.getAddressData.bind(
-      this.modelIdRegistry,
-    )
     return this.knowledgeBase
       .getFacts('showEoaInPermissionsSection')
-      .map((fact) => getAddressData(fact.params[0] as string))
+      .map((fact) =>
+        this.modelIdRegistry.getAddressData(fact.params[0] as string),
+      )
       .filter((data) => data.chain === chain)
-      .map((data) => getEOAByAddress(data.address))
-      .filter(notUndefined)
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
-        // return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
+      .map((data) => EthereumAddress.from(data.address))
   }
 
   describePermissions(

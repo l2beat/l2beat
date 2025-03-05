@@ -1,4 +1,3 @@
-
 import { join } from 'path'
 import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import type {
@@ -767,11 +766,39 @@ export class ProjectDiscovery {
     return s
   }
 
+  getPermissionPriority(entry: ContractParameters | EoaParameters): number {
+    if (entry.receivedPermissions === undefined) {
+      return 0
+    }
+
+    const permissions = entry.receivedPermissions.map((p) => p.from)
+    const priority = permissions.reduce((acc, permission) => {
+      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
+    }, 0)
+
+    return priority
+  }
+
   getDiscoveredPermissions(): ProjectPermissions {
-    const relevantContracts = this.permissionRegistry.getPermissionedContracts()
-    const eoas = this.permissionRegistry.getPermissionedEoas()
+    const permissionedContracts = this.permissionRegistry
+      .getPermissionedContracts()
+      .map((address) => this.getContractByAddress(address))
+      .filter(notUndefined)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+    const permissionedEoas = this.permissionRegistry
+      .getPermissionedEoas()
+      .map((address) => this.getEOAByAddress(address))
+      .filter(notUndefined)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+
     const allActors: ProjectPermission[] = []
-    for (const contract of relevantContracts) {
+    for (const contract of permissionedContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
         allActors.push(
@@ -792,10 +819,7 @@ export class ProjectDiscovery {
       }
     }
 
-    for (const eoa of eoas) {
-      if (eoa.receivedPermissions === undefined) {
-        continue
-      }
+    for (const eoa of permissionedEoas) {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
@@ -812,7 +836,10 @@ export class ProjectDiscovery {
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
+    const roles = this.describeRolePermissions([
+      ...permissionedContracts,
+      ...permissionedEoas,
+    ])
 
     // NOTE(radomski): There are two groups of "permissions" we show. Roles and
     // actors.
@@ -843,7 +870,9 @@ export class ProjectDiscovery {
         return true
       }
 
-      const eoa = eoas.find((eoa) => eoa.address === account.address)
+      const eoa = permissionedEoas.find(
+        (eoa) => eoa.address === account.address,
+      )
       assert(eoa?.receivedPermissions !== undefined)
       const hasOnlyRole = eoa.receivedPermissions.every((p) =>
         RolePermissionEntries.map((x) => x.toString()).includes(p.permission),
