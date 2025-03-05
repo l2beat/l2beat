@@ -70,14 +70,10 @@ export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
 export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
   AmountConfigBase
 
-export type NativeWithPremintAmountConfig =
-  NativeAssetWithPremintAmountFormula & AmountConfigBase
-
 export type AmountConfig =
   | BalanceOfEscrowAmountConfig
   | TotalSupplyAmountConfig
   | CirculatingSupplyAmountConfig
-  | NativeWithPremintAmountConfig
 
 // token deployed to single chain
 export interface Token {
