@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 export const scalingTvsColumns = [
   ...getScalingCommonProjectColumns(
     columnHelper,
-    (row) => `/scaling/projects/${row.slug}`,
+    (row) => `/scaling/projects/${row.slug}#tvs`,
   ),
   columnHelper.group({
     id: 'data',

@@ -14,30 +14,25 @@ import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingDaEntries() {
-  const [tvs, projectsChangeReport, projects, daLayers, daBridges] =
-    await Promise.all([
-      getProjectsLatestTvsUsd(),
-      getProjectsChangeReport(),
-      ps.getProjects({
-        select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
-        optional: ['customDa'],
-        where: ['isScaling'],
-        whereNot: ['isUpcoming', 'isArchived'],
-      }),
-      ps.getProjects({
-        select: ['daLayer'],
-      }),
-      ps.getProjects({
-        select: ['daBridge'],
-      }),
-    ])
+  const [tvs, projectsChangeReport, projects, daLayers] = await Promise.all([
+    getProjectsLatestTvsUsd(),
+    getProjectsChangeReport(),
+    ps.getProjects({
+      select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
+      optional: ['customDa'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
+    ps.getProjects({
+      select: ['daLayer'],
+    }),
+  ])
 
   const entries = projects
     .map((project) =>
       getScalingDaEntry(
         project,
         daLayers,
-        daBridges,
         projectsChangeReport.getChanges(project.id),
         tvs[project.id],
       ),
@@ -62,7 +57,6 @@ function getScalingDaEntry(
     'customDa'
   >,
   daLayers: Project<'daLayer'>[],
-  daBridges: Project<'daBridge'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
 ): ScalingDaEntry {
@@ -70,7 +64,7 @@ function getScalingDaEntry(
     ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
-    daHref: getDaHref(project, daLayers, daBridges),
+    daHref: getDaHref(project, daLayers),
     stack: project.scalingInfo.stack,
     tvsOrder: tvs ?? -1,
   }
@@ -82,26 +76,18 @@ function getDaHref(
     'customDa'
   >,
   daLayers: Project<'daLayer'>[],
-  daBridges: Project<'daBridge'>[],
 ) {
   if (project.customDa) {
-    return `/scaling/projects/${project.slug}`
+    return `/data-availability/summary?tab=custom&highlight=${project.slug}`
   }
 
   const daLayer = daLayers.find(
     (l) => l.id === project.scalingDa.layer.projectId,
-  )
-  const daBridge = daBridges.find(
-    (b) => b.id === project.scalingDa.bridge.projectId,
   )
 
   if (!daLayer) {
     return undefined
   }
 
-  if (!daBridge) {
-    return `/data-availability/projects/${daLayer.slug}/no-bridge`
-  }
-
-  return `/data-availability/projects/${daLayer.slug}/${daBridge.slug}`
+  return `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`
 }

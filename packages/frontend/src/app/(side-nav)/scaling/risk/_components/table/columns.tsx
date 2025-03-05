@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<ScalingRiskEntry>()
 export const scalingRiskColumns = [
   ...getScalingCommonProjectColumns(
     columnHelper,
-    (row) => `/scaling/projects/${row.slug}`,
+    (row) => `/scaling/projects/${row.slug}#risk-analysis`,
   ),
   columnHelper.accessor((e) => adjustTableValue(e.risks.stateValidation), {
     header: 'State\nValidation',
