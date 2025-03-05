@@ -29,6 +29,7 @@ describe(mapConfig.name, () => {
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
     expect(result.tokens[0]).toEqual({
+      mode: 'auto',
       id: TokenId('arbitrum-ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
@@ -54,6 +55,7 @@ describe(mapConfig.name, () => {
         (t) => t.id === 'arbitrum-ARB' && t.amount.type === 'circulatingSupply',
       ),
     ).toEqual({
+      mode: 'auto',
       id: TokenId('arbitrum-ARB'),
       symbol: 'ARB',
       name: 'Arbitrum',
@@ -70,6 +72,7 @@ describe(mapConfig.name, () => {
     })
 
     expect(result.tokens.find((t) => t.id === 'arbitrum-ATH')).toEqual({
+      mode: 'auto',
       id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',
       name: 'Aethir Token',

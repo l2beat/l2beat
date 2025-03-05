@@ -71,6 +71,7 @@ export async function getAggLayerTokens(
       assert(chain.sinceTimestamp)
 
       return {
+        mode: 'auto' as const,
         id: TokenId.create(project.id, token.symbol),
         priceId: token.coingeckoId,
         symbol: token.symbol,
@@ -101,6 +102,7 @@ export async function getAggLayerTokens(
     assert(escrow.sharedEscrow.wethAddress)
 
     etherOnL2 = {
+      mode: 'auto' as const,
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
@@ -122,6 +124,7 @@ export async function getAggLayerTokens(
     assert(escrow.sharedEscrow.premintedAmount)
 
     etherOnL2 = {
+      mode: 'auto' as const,
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',

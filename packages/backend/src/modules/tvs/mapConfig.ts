@@ -170,6 +170,7 @@ export function createToken(
   }
 
   return {
+    mode: 'auto',
     id,
     // This is a temporary solution
     priceId: legacyToken.coingeckoId,

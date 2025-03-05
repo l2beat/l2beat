@@ -59,11 +59,25 @@ const cmd = command({
       ?.filter((token) => token.value !== 0)
       // TODO replace with amountId matching
       .map((token) => token.tokenConfig)
+      .sort((a, b) => a.id.localeCompare(b.id))
 
     assert(nonZeroTokens, 'No data for timestamp')
 
-    // write to file
-    writeToFile(args.project, nonZeroTokens, logger)
+    const filePath = `./src/modules/tvs/config/${args.project}.json`
+    const currentConfig = readFromFile(filePath)
+
+    const mergedTokens = nonZeroTokens.map((token) => {
+      const customToken = currentConfig.find(
+        (t) => t.id === token.id && t.mode === 'custom',
+      )
+      if (customToken) {
+        return customToken
+      }
+      return token
+    })
+
+    logger.info(`Writing results to file: ${filePath}`)
+    writeToFile(filePath, args.project, mergedTokens)
     process.exit(0)
   },
 })
@@ -115,14 +129,25 @@ function initLogger(env: Env) {
   return logger
 }
 
-function writeToFile(project: string, nonZeroTokens: Token[], logger: Logger) {
-  const filePath = `./src/modules/tvs/config/${project}.json`
-  logger.info(`Writing results to file: ${filePath}`)
+function writeToFile(
+  filePath: string,
+  project: string,
+  nonZeroTokens: Token[],
+) {
   const wrapper = {
     $schema: 'schema/tvs-config-schema.json',
     projectId: ProjectId(project),
     tokens: nonZeroTokens,
   }
 
-  fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2))
+  fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2) + '\n')
+}
+
+function readFromFile(filePath: string) {
+  if (!fs.existsSync(filePath)) {
+    return []
+  }
+
+  const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+  return json.tokens as Token[]
 }
