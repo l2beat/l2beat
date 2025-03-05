@@ -10,7 +10,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('reya')
 
 export const reya: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1715019483), // 2024-05-06T18:18:03Z
+  addedAt: UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
@@ -61,7 +61,7 @@ export const reya: Layer2 = orbitStackL2({
   //       selector: '0x8f111f3c',
   //       functionSignature:
   //         'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-  //       sinceTimestamp: new UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
+  //       sinceTimestamp: UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
   //     },
   //   },
   //   // add other SC-supported function signatures here if the sequencer changes behaviour (cp. kinto)
@@ -76,7 +76,7 @@ export const reya: Layer2 = orbitStackL2({
   //       selector: '0xa04cee60',
   //       functionSignature:
   //         'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-  //       sinceTimestamp: new UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
+  //       sinceTimestamp: UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
   //     },
   //   },
   // ],

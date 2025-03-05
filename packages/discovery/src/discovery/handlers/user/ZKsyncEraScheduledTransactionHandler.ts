@@ -123,7 +123,7 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
     return parsed.map(
       (entry) =>
         ({
-          delay: entry.parsedLog.args.delay.toNumber(),
+          delay: entry.parsedLog.args.delay,
           operation: entry.parsedLog.args[1],
         }) satisfies ScheduledShadow,
     )
@@ -144,7 +144,7 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
       parsed.map(
         async (entry) =>
           ({
-            delay: entry.parsedLog.args.delay.toNumber(),
+            delay: entry.parsedLog.args.delay,
             operation: await this.decodeOperation(
               provider,
               entry.blockNumber,

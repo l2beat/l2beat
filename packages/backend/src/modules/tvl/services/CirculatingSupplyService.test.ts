@@ -33,8 +33,8 @@ describe(CirculatingSupplyService.name, () => {
         database: mockObject<Database>(),
       })
 
-      const from = new UnixTime(100)
-      const to = new UnixTime(300)
+      const from = UnixTime(100)
+      const to = UnixTime(300)
       const coingeckoId = CoingeckoId('id')
       const config = mockObject<CirculatingSupplyEntry>({
         chain: 'chain',
@@ -64,8 +64,8 @@ describe(CirculatingSupplyService.name, () => {
 
     it('returns DB record when CirculatingSupplyProvider fails', async () => {
       const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const from = to.add(-1, 'hours').add(1, 'seconds') // indexer ticks
-      const lastFetched = to.add(-1, 'hours')
+      const from = to - UnixTime(1, 'hours') + UnixTime(1, 'seconds') // indexer ticks
+      const lastFetched = to - UnixTime(1, 'hours')
 
       const coingeckoId = CoingeckoId('coingecko-id')
       const config = mockObject<CirculatingSupplyEntry>({
@@ -89,7 +89,7 @@ describe(CirculatingSupplyService.name, () => {
         getLatestAmount: async () => ({
           configId,
           timestamp: lastFetched,
-          amount: BigInt(lastFetched.toNumber()) * 10n ** 18n,
+          amount: BigInt(lastFetched) * 10n ** 18n,
         }),
       })
 
@@ -109,7 +109,7 @@ describe(CirculatingSupplyService.name, () => {
         {
           configId,
           timestamp: to,
-          amount: BigInt(lastFetched.toNumber()) * 10n ** 18n,
+          amount: BigInt(lastFetched) * 10n ** 18n,
         },
       ])
 
@@ -122,7 +122,7 @@ describe(CirculatingSupplyService.name, () => {
     it('works only for latest hour', async () => {
       const coingeckoId = CoingeckoId('coingecko-id')
       const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const from = to.add(-365, 'days')
+      const from = to - UnixTime(365, 'days')
 
       const config = mockObject<CirculatingSupplyEntry>({
         chain: 'chain',
@@ -168,8 +168,8 @@ describe(CirculatingSupplyService.name, () => {
       const result = circulatingSupplyProvider.getAdjustedTo(from, to)
 
       const expected = CoingeckoQueryService.calculateAdjustedTo(
-        new UnixTime(from),
-        new UnixTime(to),
+        UnixTime(from),
+        UnixTime(to),
       )
 
       expect(result).toEqual(expected)
@@ -183,14 +183,14 @@ function amount(
 ): AmountRecord {
   return {
     configId: createAmountId(config),
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     amount: BigInt(timestamp) * 10n ** BigInt(config.decimals), // for the sake of tests simplicity it is the same
   }
 }
 
 function coingeckoResponse(timestamp: number) {
   return {
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     value: timestamp, // for the sake of tests simplicity it is the same
   }
 }

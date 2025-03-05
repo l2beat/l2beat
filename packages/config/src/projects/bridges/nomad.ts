@@ -19,7 +19,7 @@ const challengeWindowSeconds = discovery.getContractValue<number>(
 export const nomad: Bridge = {
   type: 'bridge',
   id: ProjectId('nomad'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Nomad',
@@ -42,7 +42,7 @@ export const nomad: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3'),
-        sinceTimestamp: new UnixTime(1641899423),
+        sinceTimestamp: UnixTime(1641899423),
         tokens: '*',
         chain: 'ethereum',
       },

@@ -84,6 +84,6 @@ export class AvailDaProvider implements DaProvider {
     const timestamp =
       referenceTimestamp + blockDifference * blockInterval + TIMESTAMP_SHIFT
 
-    return new UnixTime(timestamp)
+    return UnixTime(timestamp)
   }
 }

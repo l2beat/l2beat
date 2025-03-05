@@ -26,13 +26,13 @@ export async function getStatus<
     assert(config, `Config should be defined for ${indexer.indexerId}`)
     processed.add(config.configId)
 
-    const latestTimestamp = new UnixTime(indexer.safeHeight)
-    if (latestTimestamp.gte(targetTimestamp)) {
+    const latestTimestamp = UnixTime(indexer.safeHeight)
+    if (latestTimestamp >= targetTimestamp) {
       continue
     }
 
     // TODO: what about max height?
-    if (latestTimestamp.lt(getExclusionBoundary(targetTimestamp))) {
+    if (latestTimestamp < getExclusionBoundary(targetTimestamp)) {
       excluded.add(config.configId)
     } else {
       lagging.push({

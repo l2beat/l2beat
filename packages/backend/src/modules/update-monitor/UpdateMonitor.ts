@@ -123,8 +123,8 @@ export class UpdateMonitor {
       chain: runner.chain,
       projects: projectConfigs.length,
       blockNumber,
-      timestamp: timestamp.toNumber(),
-      date: timestamp.toDate().toISOString(),
+      timestamp: timestamp,
+      date: UnixTime.toDate(timestamp).toISOString(),
     })
 
     for (const projectConfig of projectConfigs) {
@@ -160,8 +160,8 @@ export class UpdateMonitor {
     this.logger.info('Update finished', {
       chain: runner.chain,
       blockNumber,
-      timestamp: timestamp.toNumber(),
-      date: timestamp.toDate().toISOString(),
+      timestamp: timestamp,
+      date: UnixTime.toDate(timestamp).toISOString(),
     })
   }
 

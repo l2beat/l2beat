@@ -30,10 +30,7 @@ async function getPastUpgrades(provider: IProvider, address: EthereumAddress) {
   assert(blocks.every((b) => b !== undefined))
 
   const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
+    blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
 
   const selectorAddress: Map<string, string> = new Map()

@@ -1,5 +1,4 @@
 import type { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BlockTimestampProvider } from './BlockTimestampProvider'
 
@@ -17,11 +16,11 @@ describe(BlockTimestampProvider.name, () => {
         blockProvider: mockObject<BlockProvider>({}),
       })
 
-      const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
+      const blockNumber = await service.getBlockNumberAtOrBefore(0)
 
       expect(blockNumber).toEqual(BLOCK_NUMBER)
       expect(explorerClient.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
-        UnixTime.ZERO,
+        0,
       )
     })
 
@@ -36,12 +35,10 @@ describe(BlockTimestampProvider.name, () => {
         blockProvider: blockProvider,
       })
 
-      const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
+      const blockNumber = await service.getBlockNumberAtOrBefore(0)
 
       expect(blockNumber).toEqual(BLOCK_NUMBER)
-      expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
-        UnixTime.ZERO,
-      )
+      expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(0)
     })
 
     it('fetches using RPC if there is an issue with provider', async () => {
@@ -58,12 +55,10 @@ describe(BlockTimestampProvider.name, () => {
         blockProvider,
       })
 
-      const blockNumber = await service.getBlockNumberAtOrBefore(UnixTime.ZERO)
+      const blockNumber = await service.getBlockNumberAtOrBefore(0)
 
       expect(blockNumber).toEqual(BLOCK_NUMBER)
-      expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
-        UnixTime.ZERO,
-      )
+      expect(blockProvider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(0)
     })
   })
 })

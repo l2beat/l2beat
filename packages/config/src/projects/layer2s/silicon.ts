@@ -30,7 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const silicon: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
+  addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [BADGES.DA.DAC],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
@@ -84,7 +84,7 @@ export const silicon: Layer2 = polygonCDKStack({
     name: 'silicon',
     chainId: 2355,
     explorerUrl: 'https://scope.silicon.network',
-    sinceTimestamp: new UnixTime(1724183531),
+    sinceTimestamp: UnixTime(1724183531),
     apis: [
       { type: 'rpc', url: 'https://rpc.silicon.network', callsPerMinute: 1500 },
     ],

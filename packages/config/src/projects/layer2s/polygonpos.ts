@@ -41,7 +41,7 @@ export const polygonpos: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
   capability: 'universal',
-  addedAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
+  addedAt: UnixTime(1664808578), // 2022-10-03T14:49:38Z
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

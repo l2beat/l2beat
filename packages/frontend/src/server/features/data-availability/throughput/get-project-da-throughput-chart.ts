@@ -38,8 +38,8 @@ const getCachedProjectDaThroughputChartData = cache(
   > => {
     const db = getDb()
     const days = rangeToDays(range)
-    const to = UnixTime.now().toStartOf('day').add(-1, 'days')
-    const from = days ? to.add(-days, 'days') : null
+    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime(1, 'days')
+    const from = days ? to - UnixTime(days, 'days') : null
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
       [projectId],
       [from, to],
@@ -52,7 +52,7 @@ const getCachedProjectDaThroughputChartData = cache(
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => {
-      return [timestamp.toNumber(), grouped[timestamp.toNumber()] ?? 0]
+      return [timestamp, grouped[timestamp] ?? 0]
     })
   },
   ['project-da-throughput-chart-data'],
@@ -64,7 +64,7 @@ function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
   let maxTimestamp = -Infinity
   const result: Record<number, number> = {}
   for (const record of records) {
-    const timestamp = record.timestamp.toNumber()
+    const timestamp = record.timestamp
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = Number(value)
@@ -74,8 +74,8 @@ function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
   }
   return {
     grouped: result,
-    minTimestamp: new UnixTime(minTimestamp),
-    maxTimestamp: new UnixTime(maxTimestamp),
+    minTimestamp: UnixTime(minTimestamp),
+    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 
@@ -83,14 +83,14 @@ function getMockProjectDaThroughputChartData({
   range,
 }: ProjectDaThroughputChartParams): ProjectDaThroughputDataPoint[] {
   const days = rangeToDays(range) ?? 730
-  const to = UnixTime.now().toStartOf('day')
-  const from = to.add(-days, 'days')
+  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const from = to - UnixTime(days, 'days')
 
   const timestamps = generateTimestamps([from, to], 'daily')
   return timestamps.map((timestamp) => {
     // Generate random but somewhat realistic values
     const throughputValue = Math.random() * 900_000_000 + 90_000_000
 
-    return [timestamp.toNumber(), Math.round(throughputValue)]
+    return [timestamp, Math.round(throughputValue)]
   })
 }

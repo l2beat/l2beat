@@ -11,7 +11,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('real')
 
 export const real: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
+  addedAt: UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
@@ -51,7 +51,7 @@ export const real: Layer2 = orbitStackL2({
         version: '3',
       },
     ],
-    sinceTimestamp: new UnixTime(1710580715),
+    sinceTimestamp: UnixTime(1710580715),
     coingeckoPlatform: 're-al',
     apis: [
       { type: 'rpc', url: 'https://real.drpc.org', callsPerMinute: 1500 },

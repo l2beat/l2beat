@@ -31,7 +31,7 @@ export class BlockTxsCountService {
       return {
         txsCount,
         uopsCount,
-        timestamp: new UnixTime(block.timestamp),
+        timestamp: UnixTime(block.timestamp),
         number: block.number,
       }
     })

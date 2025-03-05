@@ -26,7 +26,7 @@ describe(BaseAnalyzer.name, () => {
         mockObject<LivenessRecord>({
           configurationId: mockConfigurationId,
           txHash: 'tx3',
-          timestamp: now.add(-1, 'hours'),
+          timestamp: now - UnixTime(1, 'hours'),
         }),
         mockObject<LivenessRecord>({
           configurationId: mockConfigurationId,
@@ -36,7 +36,7 @@ describe(BaseAnalyzer.name, () => {
         mockObject<LivenessRecord>({
           configurationId: mockConfigurationId,
           txHash: 'tx2',
-          timestamp: now.add(1, 'hours'),
+          timestamp: now + UnixTime(1, 'hours'),
         }),
       ]
 
@@ -76,14 +76,14 @@ describe(BaseAnalyzer.name, () => {
       )
 
       expect(
-        await mockAnalyzer.analyzeInterval(now, now.add(10, 'hours')),
+        await mockAnalyzer.analyzeInterval(now, now + UnixTime(10, 'hours')),
       ).toEqual([
         {
-          l1Timestamp: now.toNumber(),
+          l1Timestamp: now,
           l2Blocks: [{ blockNumber: 2, timestamp: 1 }],
         },
         {
-          l1Timestamp: now.add(1, 'hours').toNumber(),
+          l1Timestamp: now + UnixTime(1, 'hours'),
           l2Blocks: [{ blockNumber: 2, timestamp: 1 }],
         },
       ])
@@ -91,8 +91,8 @@ describe(BaseAnalyzer.name, () => {
         mockLivenessRepository.getByConfigurationIdWithinTimeRange,
       ).toHaveBeenCalledWith(
         [mockConfigurationId],
-        now.add(-1, 'days'),
-        now.add(10, 'hours'),
+        now - UnixTime(1, 'days'),
+        now + UnixTime(10, 'hours'),
       )
       expect(getFinalitySpy).toHaveBeenCalledTimes(2)
       expect(getFinalitySpy).toHaveBeenCalledWith({

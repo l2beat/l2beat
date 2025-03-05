@@ -61,7 +61,7 @@ export const lightlink: Layer2 = {
   type: 'layer2',
   id: ProjectId('lightlink'),
   capability: 'universal',
-  addedAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
+  addedAt: UnixTime(1718443080), // 2024-06-15T09:18:00Z
   badges: [BADGES.VM.EVM, BADGES.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -98,12 +98,12 @@ export const lightlink: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
-        sinceTimestamp: new UnixTime(1692181067),
+        sinceTimestamp: UnixTime(1692181067),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
-        sinceTimestamp: new UnixTime(1692185219),
+        sinceTimestamp: UnixTime(1692185219),
         tokens: '*',
       }),
     ],
@@ -121,7 +121,7 @@ export const lightlink: Layer2 = {
     name: 'lightlink',
     chainId: 1890,
     explorerUrl: 'https://phoenix.lightlink.io',
-    sinceTimestamp: new UnixTime(1692181067),
+    sinceTimestamp: UnixTime(1692181067),
     apis: [
       {
         type: 'rpc',

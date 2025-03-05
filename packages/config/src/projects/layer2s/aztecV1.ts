@@ -49,7 +49,7 @@ const assumedBlockTime = 12 // in seconds
 export const aztecV1: Layer2 = {
   type: 'layer2',
   id: ProjectId('aztec'),
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   capability: 'appchain',
   display: {
     name: 'Zk.Money v1 (Aztec v1)',
@@ -78,7 +78,7 @@ export const aztecV1: Layer2 = {
       {
         address: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
         chain: 'ethereum',
-        sinceTimestamp: new UnixTime(1614799636),
+        sinceTimestamp: UnixTime(1614799636),
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
     ],
@@ -102,7 +102,7 @@ export const aztecV1: Layer2 = {
           selector: '0x06011a46',
           functionSignature:
             'function processRollup(bytes proofData, bytes signatures, bytes viewingKeys, bytes providerSignature, address provider, address feeReceiver, uint256 feeLimit)',
-          sinceTimestamp: new UnixTime(1614799636),
+          sinceTimestamp: UnixTime(1614799636),
         },
       },
       {
@@ -124,7 +124,7 @@ export const aztecV1: Layer2 = {
           selector: '0xd1c65264',
           functionSignature:
             'function escapeHatch(bytes proofData, bytes signatures, bytes viewingKeys)',
-          sinceTimestamp: new UnixTime(1614799636),
+          sinceTimestamp: UnixTime(1614799636),
         },
       },
     ],

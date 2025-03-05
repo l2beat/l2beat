@@ -291,8 +291,8 @@ describe(createGetStage.name, () => {
       PROJECT_COUNTDOWNS.stageChanges = expiresAt
     })
 
-    const FUTURE_TIME = UnixTime.now().add(30, 'days')
-    const PAST_TIME = UnixTime.now().add(-30, 'days')
+    const FUTURE_TIME = UnixTime.now() + UnixTime(30, 'days')
+    const PAST_TIME = UnixTime.now() - UnixTime(30, 'days')
 
     it('keeps current stage and has missing requirements if principle and requirements are not met and timer not expired', () => {
       PROJECT_COUNTDOWNS.stageChanges = FUTURE_TIME
@@ -357,7 +357,7 @@ describe(createGetStage.name, () => {
       expect(result).toEqual({
         stage: 'Stage 1',
         downgradePending: {
-          expiresAt: FUTURE_TIME.toNumber(),
+          expiresAt: FUTURE_TIME,
           reason: 'PRINCIPLE_FALSE',
           toStage: 'Stage 0',
         },

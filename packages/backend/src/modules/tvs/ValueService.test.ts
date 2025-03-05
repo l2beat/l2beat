@@ -61,7 +61,7 @@ describe(ValueService.name, () => {
       expect(result).toEqual(
         new Map<number, TokenValue[]>([
           [
-            mockTimestamp.toNumber(),
+            mockTimestamp,
             [
               {
                 tokenConfig: tvsConfig.tokens[0],
@@ -195,7 +195,7 @@ describe(ValueService.name, () => {
       expect(result).toEqual(
         new Map<number, TokenValue[]>([
           [
-            mockTimestamp.toNumber(),
+            mockTimestamp,
             [
               {
                 tokenConfig: tvsConfig.tokens[0],
@@ -276,7 +276,7 @@ describe(ValueService.name, () => {
       expect(result).toEqual(
         new Map<number, TokenValue[]>([
           [
-            mockTimestamp.toNumber(),
+            mockTimestamp,
             [
               {
                 tokenConfig: tvsConfig.tokens[0],

@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const lachain: Layer2 = upcomingL2({
   id: 'lachain',
   capability: 'universal',
-  addedAt: new UnixTime(1740072754), // 2025-01-20T17:32:34Z
+  addedAt: UnixTime(1740072754), // 2025-01-20T17:32:34Z
   display: {
     name: 'LaChain',
     slug: 'lachain',

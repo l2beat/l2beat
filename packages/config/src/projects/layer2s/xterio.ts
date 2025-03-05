@@ -30,7 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const xterio: Layer2 = opStackL2({
-  addedAt: new UnixTime(1714996778), // 2024-05-06T11:59:38Z
+  addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
   additionalBadges: [BADGES.DA.CustomDA, BADGES.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
@@ -64,7 +64,7 @@ export const xterio: Layer2 = opStackL2({
     'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
-  genesisTimestamp: new UnixTime(1716537433),
+  genesisTimestamp: UnixTime(1716537433),
   chainConfig: {
     name: 'xterio',
     chainId: 2702128,

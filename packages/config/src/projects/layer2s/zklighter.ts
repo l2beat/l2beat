@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const zklighter: Layer2 = upcomingL2({
   id: 'zklighter',
   capability: 'universal',
-  addedAt: new UnixTime(1711551933), // 2024-03-27T15:05:33Z
+  addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   display: {
     name: 'zkLighter',
     slug: 'zklighter',

@@ -12,7 +12,7 @@ const upgradeability = {
 }
 
 export const ancient: Layer2 = opStackL2({
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -54,7 +54,7 @@ export const ancient: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1705985147),
+  genesisTimestamp: UnixTime(1705985147),
   isNodeAvailable: 'UnderReview',
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start

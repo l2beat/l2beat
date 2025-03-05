@@ -27,7 +27,7 @@ export function toRecord(row: Selectable<L2Cost>): L2CostRecord {
 export function toRow(record: L2CostRecord): Insertable<L2Cost> {
   return {
     ...record,
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
     configurationId: record.configurationId.toString(),
     gasPrice: record.gasPrice.toString(),
     blobGasPrice: record.blobGasPrice?.toString() ?? null,

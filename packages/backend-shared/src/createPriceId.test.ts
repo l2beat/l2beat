@@ -23,12 +23,12 @@ describe(createPriceId.name, () => {
     },
     {
       key: 'sinceTimestamp',
-      newValue: new UnixTime(1),
+      newValue: UnixTime(1),
       shouldUpdateHash: false,
     },
     {
       key: 'untilTimestamp',
-      newValue: new UnixTime(2),
+      newValue: UnixTime(2),
       shouldUpdateHash: false,
     },
     {
@@ -59,7 +59,7 @@ function mock(v?: Partial<PriceConfigEntry>): PriceConfigEntry {
     chain: 'chain',
     type: 'coingecko',
     coingeckoId: CoingeckoId('id'),
-    sinceTimestamp: UnixTime.ZERO,
+    sinceTimestamp: 0,
     assetId: AssetId('test'),
     ...v,
   }

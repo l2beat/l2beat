@@ -8,7 +8,7 @@ import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('mantapacific')
 
 export const mantapacific: Layer2 = opStackL2({
-  addedAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
+  addedAt: UnixTime(1693907285), // 2023-09-05T09:48:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   reasonsForBeingOther: [
@@ -77,7 +77,7 @@ export const mantapacific: Layer2 = opStackL2({
       { type: 'blockscout', url: 'https://pacific-explorer.manta.network/api' },
     ],
   },
-  genesisTimestamp: new UnixTime(1679202395),
+  genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [
     {

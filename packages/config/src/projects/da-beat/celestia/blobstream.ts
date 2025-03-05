@@ -19,7 +19,7 @@ export const blobstream: BaseProject = {
   slug: 'blobstream',
   name: 'Blobstream',
   shortName: undefined,
-  addedAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
+  addedAt: UnixTime(1729253328), // 2024-10-18T12:08:48Z
   // data
   statuses: {
     yellowWarning: undefined,

@@ -16,7 +16,7 @@ export const grvt: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],
-  addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
+  addedAt: UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {

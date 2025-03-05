@@ -29,7 +29,7 @@ export const metis: Layer2 = {
   type: 'layer2',
   id: ProjectId('metis'),
   capability: 'universal',
-  addedAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
+  addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA, BADGES.Fork.OVM],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -100,7 +100,7 @@ export const metis: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b'),
-        sinceTimestamp: new UnixTime(1637077208),
+        sinceTimestamp: UnixTime(1637077208),
         tokens: '*',
         chain: 'ethereum',
         premintedTokens: ['Metis'],

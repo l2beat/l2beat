@@ -50,8 +50,8 @@ function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
         coingeckoId: CoingeckoId(coingeckoId),
         configurations: prices.map((price) => ({
           properties: price,
-          minHeight: price.sinceTimestamp.toNumber(),
-          maxHeight: price.untilTimestamp?.toNumber() ?? null,
+          minHeight: price.sinceTimestamp,
+          maxHeight: price.untilTimestamp ?? null,
           id: createPriceId(price),
         })),
         priceService,
@@ -66,9 +66,7 @@ function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
     tags: { tag: 'price' },
     parents: indexers,
     indexerService,
-    minHeight: Math.min(
-      ...config.prices.map((price) => price.sinceTimestamp.toNumber()),
-    ),
+    minHeight: Math.min(...config.prices.map((price) => price.sinceTimestamp)),
   })
 
   return { indexers, descendant }
@@ -90,9 +88,9 @@ function getBaseEntry(value: CoingeckoPriceConfigEntry) {
     assetId: value.assetId.toString(),
     address: value.address.toString(),
     chain: value.chain,
-    sinceTimestamp: value.sinceTimestamp.toNumber(),
+    sinceTimestamp: value.sinceTimestamp,
     ...(Object.keys(value).includes('untilTimestamp')
-      ? { untilTimestamp: value.untilTimestamp?.toNumber() }
+      ? { untilTimestamp: value.untilTimestamp }
       : {}),
   }
 }

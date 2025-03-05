@@ -28,7 +28,7 @@ const responseMock = {
       gas_limit: '7538928',
       index: 3,
       success: true,
-      timestamp: NOW.toDate().toISOString(),
+      timestamp: UnixTime.toDate(NOW).toISOString(),
       to: {
         ens_domain_name: null,
         hash: '0xdd9C826196cf3510B040A8784D85aE36674c7Ed2',

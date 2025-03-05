@@ -5,7 +5,7 @@ import { getValuesStatus } from './get-tvs-values-status'
 
 describe(getValuesStatus.name, () => {
   it('everything up to date', () => {
-    const targetTimestamp = new UnixTime(100)
+    const targetTimestamp = UnixTime(100)
     const valuesByTimestamp = {
       '100': [mockValue('A', 100), mockValue('B', 100), mockValue('C', 100)],
     }
@@ -16,10 +16,10 @@ describe(getValuesStatus.name, () => {
   })
 
   it('data source excluded', () => {
-    const targetTimestamp = UnixTime.ZERO.add(14, 'days')
+    const targetTimestamp = UnixTime(14, 'days')
 
     // It is later than 7D ago, so will be considered excluded
-    const timestamp = targetTimestamp.add(-10, 'days').toNumber()
+    const timestamp = targetTimestamp - UnixTime(10, 'days')
     const valuesByTimestamp = {
       [timestamp]: [mockValue('A', timestamp)],
       // No entry for "B", will be considered excluded
@@ -34,11 +34,11 @@ describe(getValuesStatus.name, () => {
   })
 
   it('data source lagging', () => {
-    const targetTimestamp = UnixTime.ZERO.add(14, 'days')
+    const targetTimestamp = UnixTime(14, 'days')
 
     // It is earlier than 7D ago, so will be considered lagging
-    const timestamp = targetTimestamp.add(-4, 'hours').toNumber()
-    const timestamp7DaysAgo = targetTimestamp.add(-7, 'days').toNumber()
+    const timestamp = targetTimestamp - UnixTime(4, 'hours')
+    const timestamp7DaysAgo = targetTimestamp - UnixTime(7, 'days')
     const valuesByTimestamp = {
       // this one is needed for the function assumptions about the data
       [timestamp7DaysAgo]: [mockValue('A', timestamp7DaysAgo)],
@@ -53,7 +53,7 @@ describe(getValuesStatus.name, () => {
     expect(result.lagging).toEqual([
       {
         id: 'A',
-        latestTimestamp: new UnixTime(timestamp),
+        latestTimestamp: UnixTime(timestamp),
       },
     ])
     expect(result.excluded).toBeEmpty()
@@ -64,7 +64,7 @@ function mockValue(source: string, timestamp: number) {
   return {
     projectId: ProjectId('project'),
     dataSource: source,
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     canonical: 0n,
     canonicalAssociated: 0n,
     canonicalForTotal: 0n,
@@ -84,9 +84,7 @@ function mockValue(source: string, timestamp: number) {
 function mockProject(sources: string[]): TvsProject {
   return {
     projectId: ProjectId('project'),
-    minTimestamp: UnixTime.ZERO,
-    sources: new Map(
-      sources.map((s) => [s, { name: 's', minTimestamp: UnixTime.ZERO }]),
-    ),
+    minTimestamp: 0,
+    sources: new Map(sources.map((s) => [s, { name: 's', minTimestamp: 0 }])),
   }
 }

@@ -15,7 +15,7 @@ const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
 
 export const cronoszkevm: Layer2 = zkStackL2({
-  addedAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
+  addedAt: UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],
@@ -42,7 +42,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
     chainId: 388,
     coingeckoPlatform: 'cronos-zkevm',
     explorerUrl: 'https://explorer.zkevm.cronos.org',
-    sinceTimestamp: new UnixTime(1722394995),
+    sinceTimestamp: UnixTime(1722394995),
     apis: [
       {
         type: 'rpc',

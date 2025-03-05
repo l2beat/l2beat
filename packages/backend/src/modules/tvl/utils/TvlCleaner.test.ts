@@ -14,8 +14,8 @@ describe(TvlCleaner.name, () => {
         onNewHour: () => () => {},
       })
       const mockSyncOptimizer = mockObject<SyncOptimizer>({
-        hourlyCutOffWithGracePeriod: UnixTime.ZERO,
-        sixHourlyCutOffWithGracePeriod: UnixTime.ZERO,
+        hourlyCutOffWithGracePeriod: 0,
+        sixHourlyCutOffWithGracePeriod: 0,
       })
       const mockRepository = mockObject<Database['tvlCleaner']>()
       const tvlCleaner = new TvlCleaner(
@@ -135,8 +135,8 @@ describe(TvlCleaner.name, () => {
     })
 
     it('skips if hourly and six hourly was already cleared', async () => {
-      const hourlyDeletionBoundary = new UnixTime(1000)
-      const sixHourlyDeletionBoundary = new UnixTime(2000)
+      const hourlyDeletionBoundary = UnixTime(1000)
+      const sixHourlyDeletionBoundary = UnixTime(2000)
       const clock = mockObject<Clock>({
         onNewHour: () => () => {},
       })

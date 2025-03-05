@@ -1,11 +1,11 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 
 export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
   type: 'Contract',
   address: EthereumAddress.ZERO,
   name: '',
-  deploymentTimestamp: UnixTime.ZERO,
+  deploymentTimestamp: 0,
   deploymentBlockNumber: 0,
   derivedName: undefined,
   isVerified: false,

@@ -32,8 +32,8 @@ describe(OpStackStateUpdateAnalyzer.name, () => {
         l2provider,
       )
       const results = await calculator.analyze(
-        { txHash: '0x123', timestamp: new UnixTime(previousL1Timestamp) },
-        { txHash: '0x456', timestamp: new UnixTime(currentL1Timestamp) },
+        { txHash: '0x123', timestamp: UnixTime(previousL1Timestamp) },
+        { txHash: '0x456', timestamp: UnixTime(currentL1Timestamp) },
       )
 
       expect(results).toEqualUnsorted([

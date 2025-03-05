@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('oevnetwork')
 
 export const oev: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
+  addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [

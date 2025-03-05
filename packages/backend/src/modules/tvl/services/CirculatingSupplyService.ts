@@ -73,7 +73,7 @@ export class CirculatingSupplyService {
       `${configuration.coingeckoId}: DB fallback triggered: failed to fetch circulating supply from provider`,
       {
         coingeckoId: configuration.coingeckoId,
-        latestHour: latestHour.toNumber(),
+        latestHour: latestHour,
         fallbackSupply: fallbackSupply.amount,
       },
     )
@@ -87,8 +87,8 @@ export class CirculatingSupplyService {
 
   getAdjustedTo(from: number, to: number): UnixTime {
     return CoingeckoQueryService.calculateAdjustedTo(
-      new UnixTime(from),
-      new UnixTime(to),
+      UnixTime(from),
+      UnixTime(to),
     )
   }
 }
@@ -100,14 +100,14 @@ function assertLatestHour(
   coingeckoId: CoingeckoId,
   logger: Logger,
 ) {
-  const diff = to.toNumber() - from.toNumber()
+  const diff = to - from
   if (diff >= 3600) {
     logger.error(`Timestamps diff too large to perform fallback`, { diff })
     throw error
   }
   assert(
-    to.isFull('hour'),
-    `Latest hour assert failed for ${coingeckoId} <${from.toNumber()},${to.toNumber()}>`,
+    UnixTime.isFull(to, 'hour'),
+    `Latest hour assert failed for ${coingeckoId} <${from},${to}>`,
   )
 
   return to

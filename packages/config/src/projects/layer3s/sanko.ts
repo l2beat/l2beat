@@ -9,7 +9,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
+  addedAt: UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],
@@ -42,7 +42,7 @@ export const sanko: Layer3 = orbitStackL3({
     name: 'sanko',
     chainId: 1996,
     explorerUrl: 'https://explorer.sanko.xyz',
-    sinceTimestamp: new UnixTime(1712970000),
+    sinceTimestamp: UnixTime(1712970000),
     coingeckoPlatform: 'sanko',
     multicallContracts: [
       {

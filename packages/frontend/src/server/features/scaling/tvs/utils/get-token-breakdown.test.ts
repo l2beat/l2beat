@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import type { ValueRecord } from '@l2beat/database'
@@ -9,7 +9,7 @@ describe(getTokenBreakdown.name, () => {
     const values: ValueRecord[] = [
       {
         projectId: ProjectId('first'),
-        timestamp: new UnixTime(0),
+        timestamp: 0,
         dataSource: '',
         canonical: 10n,
         canonicalAssociated: 1n,

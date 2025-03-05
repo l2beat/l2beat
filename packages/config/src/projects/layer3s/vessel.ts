@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const vessel: Layer3 = upcomingL3({
   id: 'vessel',
   capability: 'universal',
-  addedAt: new UnixTime(1740996247),
+  addedAt: UnixTime(1740996247),
   hostChain: ProjectId('scroll'),
   display: {
     name: 'Vessel',

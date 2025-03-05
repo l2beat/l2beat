@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const lootchain: Layer2 = upcomingL2({
   id: 'lootchain',
   capability: 'universal',
-  addedAt: new UnixTime(1740488493),
+  addedAt: UnixTime(1740488493),
   display: {
     name: 'Loot Chain',
     slug: 'lootchain',

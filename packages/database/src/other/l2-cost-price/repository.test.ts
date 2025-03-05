@@ -13,7 +13,10 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
   })
 
   it(L2CostPriceRepository.prototype.insertMany.name, async () => {
-    const records = [record({ timestamp: NOW.add(-1, 'hours') }), record()]
+    const records = [
+      record({ timestamp: NOW - UnixTime(1, 'hours') }),
+      record(),
+    ]
 
     await repository.insertMany(records)
 
@@ -23,26 +26,26 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
 
   it(L2CostPriceRepository.prototype.getByTimestampRange.name, async () => {
     const records = [
-      record({ timestamp: NOW.add(-2, 'hours') }),
-      record({ timestamp: NOW.add(-1, 'hours') }),
+      record({ timestamp: NOW - UnixTime(2, 'hours') }),
+      record({ timestamp: NOW - UnixTime(1, 'hours') }),
       record(),
-      record({ timestamp: NOW.add(1, 'hours') }),
-      record({ timestamp: NOW.add(2, 'hours') }),
+      record({ timestamp: NOW + UnixTime(1, 'hours') }),
+      record({ timestamp: NOW + UnixTime(2, 'hours') }),
     ]
     await repository.insertMany(records)
 
     const result = await repository.getByTimestampRange(
-      NOW.add(-1, 'hours'),
-      NOW.add(1, 'hours'),
+      NOW - UnixTime(1, 'hours'),
+      NOW + UnixTime(1, 'hours'),
     )
     expect(result).toEqual([records[1]!, records[2]!, records[3]!])
   })
 
   it(L2CostPriceRepository.prototype.deleteAfter.name, async () => {
     const records = [
-      record({ timestamp: NOW.add(-1, 'hours') }),
+      record({ timestamp: NOW - UnixTime(1, 'hours') }),
       record(),
-      record({ timestamp: NOW.add(1, 'hours') }),
+      record({ timestamp: NOW + UnixTime(1, 'hours') }),
     ]
     await repository.insertMany(records)
 

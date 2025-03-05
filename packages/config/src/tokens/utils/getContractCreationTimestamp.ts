@@ -16,7 +16,7 @@ export async function getContractCreationTimestamp(
   )
 
   const block = await provider.getBlock(creationBlock)
-  return new UnixTime(block.timestamp)
+  return UnixTime(block.timestamp)
 }
 
 async function bisectToFindCreationBlock(

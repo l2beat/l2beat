@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('ebichain')
 
 export const ebichain: Layer2 = orbitStackL2({
   discovery,
-  addedAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
+  addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [

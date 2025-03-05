@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { BaseProject } from '../../types'
 import { ProjectService } from './ProjectService'
@@ -10,7 +10,7 @@ describe(ProjectService.name, () => {
       slug: 'foochain',
       name: 'Foo Chain',
       shortName: undefined,
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
       isScaling: true,
       isArchived: true,
     },
@@ -19,7 +19,7 @@ describe(ProjectService.name, () => {
       slug: 'barnetwork',
       name: 'Bar Network',
       shortName: 'Bar',
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
       isScaling: true,
     },
   ]
@@ -35,7 +35,7 @@ describe(ProjectService.name, () => {
       slug: 'foochain',
       name: 'Foo Chain',
       shortName: undefined,
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
     })
   })
 
@@ -59,7 +59,7 @@ describe(ProjectService.name, () => {
       slug: 'foochain',
       name: 'Foo Chain',
       shortName: undefined,
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
       isScaling: true,
       isBridge: undefined,
       isArchived: true,
@@ -78,7 +78,7 @@ describe(ProjectService.name, () => {
         slug: 'foochain',
         name: 'Foo Chain',
         shortName: undefined,
-        addedAt: UnixTime.ZERO,
+        addedAt: 0,
         isScaling: true,
         isBridge: undefined,
         isArchived: true,
@@ -88,7 +88,7 @@ describe(ProjectService.name, () => {
         slug: 'barnetwork',
         name: 'Bar Network',
         shortName: 'Bar',
-        addedAt: UnixTime.ZERO,
+        addedAt: 0,
         isScaling: true,
         isBridge: undefined,
         isArchived: undefined,

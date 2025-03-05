@@ -39,7 +39,7 @@ describe(ValueService.name, () => {
     const addressA = EthereumAddress.random()
     const CONFIG_A = mockObject<TotalSupplyEntry>({
       assetId: AssetId.create('chain', addressA),
-      sinceTimestamp: UnixTime.ZERO,
+      sinceTimestamp: 0,
       address: addressA,
       chain: 'chain',
       includeInTotal: true,
@@ -52,7 +52,7 @@ describe(ValueService.name, () => {
     const addressB = EthereumAddress.random()
     const CONFIG_B = mockObject<TotalSupplyEntry>({
       assetId: AssetId.create('chain', addressB),
-      sinceTimestamp: new UnixTime(300),
+      sinceTimestamp: UnixTime(300),
       address: addressB,
       chain: 'chain',
       includeInTotal: false,
@@ -71,11 +71,7 @@ describe(ValueService.name, () => {
       [AssetId.create(CONFIG_A.chain, CONFIG_A.address), 'a'],
       [AssetId.create(CONFIG_B.chain, CONFIG_B.address), 'b'],
     ])
-    const timestamps: UnixTime[] = [
-      new UnixTime(100),
-      new UnixTime(200),
-      new UnixTime(300),
-    ]
+    const timestamps: UnixTime[] = [UnixTime(100), UnixTime(200), UnixTime(300)]
 
     const service = new ValueService(
       mockObject<Database>({
@@ -93,15 +89,15 @@ describe(ValueService.name, () => {
     )
 
     expect(result).toEqual([
-      valueRecord({ timestamp: new UnixTime(100) }),
+      valueRecord({ timestamp: UnixTime(100) }),
       valueRecord({
-        timestamp: new UnixTime(200),
+        timestamp: UnixTime(200),
         canonical: 200n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 200n * 10n ** BigInt(USD_DECIMALS),
         ether: 200n * 10n ** BigInt(USD_DECIMALS),
       }),
       valueRecord({
-        timestamp: new UnixTime(300),
+        timestamp: UnixTime(300),
         canonical: 300n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 300n * 10n ** BigInt(USD_DECIMALS),
         external: 300n * 10n ** BigInt(USD_DECIMALS),
@@ -112,14 +108,14 @@ describe(ValueService.name, () => {
 
     expect(amountRepository.getByConfigIdsInRange).toHaveBeenOnlyCalledWith(
       ['a', 'b'],
-      new UnixTime(100),
-      new UnixTime(300),
+      UnixTime(100),
+      UnixTime(300),
     )
 
     expect(priceRepository.getByConfigIdsInRange).toHaveBeenOnlyCalledWith(
       ['a', 'b'],
-      new UnixTime(100),
-      new UnixTime(300),
+      UnixTime(100),
+      UnixTime(300),
     )
   })
 })

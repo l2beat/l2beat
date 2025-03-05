@@ -18,7 +18,7 @@ const discovery = new ProjectDiscovery('lzomnichain')
 export const lzOmnichain: Bridge = {
   type: 'bridge',
   id: ProjectId('lzomnichain'),
-  addedAt: new UnixTime(1677513767), // 2023-02-27T16:02:47Z
+  addedAt: UnixTime(1677513767), // 2023-02-27T16:02:47Z
   display: {
     name: 'Omnichain (LayerZero)',
     slug: 'omnichain',

@@ -19,7 +19,7 @@ const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
 export const amarok: Bridge = {
   type: 'bridge',
   id: ProjectId('amarok'),
-  addedAt: new UnixTime(1680097524), // 2023-03-29T13:45:24Z
+  addedAt: UnixTime(1680097524), // 2023-03-29T13:45:24Z
   display: {
     name: 'Connext',
     slug: 'connext',
@@ -65,20 +65,20 @@ export const amarok: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
-        sinceTimestamp: new UnixTime(1671625595),
+        sinceTimestamp: UnixTime(1671625595),
         tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD'],
         chain: 'ethereum',
       },
       // shared ezETH lockbox (xERC20)
       {
         address: EthereumAddress('0xC8140dA31E6bCa19b287cC35531c2212763C2059'),
-        sinceTimestamp: new UnixTime(1671625595),
+        sinceTimestamp: UnixTime(1671625595),
         tokens: ['ezETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x22f424Bca11FE154c403c277b5F8dAb54a4bA29b'),
-        sinceTimestamp: new UnixTime(1693790555),
+        sinceTimestamp: UnixTime(1693790555),
         tokens: ['NEXT'],
         chain: 'ethereum',
       },

@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('fluence')
 
 export const fluence: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
+  addedAt: UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [

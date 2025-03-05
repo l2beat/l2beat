@@ -8,7 +8,7 @@ import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('soon')
 
 export const soon: Layer2 = opStackL2({
-  addedAt: new UnixTime(1726836904), // 2024-09-20T12:55:04Z
+  addedAt: UnixTime(1726836904), // 2024-09-20T12:55:04Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
   additionalBadges: [BADGES.DA.EigenDA, BADGES.VM.SolanaVM],
@@ -52,6 +52,6 @@ export const soon: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1696566432), // TODO: update
+  genesisTimestamp: UnixTime(1696566432), // TODO: update
   isNodeAvailable: false,
 })

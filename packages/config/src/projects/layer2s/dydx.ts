@@ -81,7 +81,7 @@ export const dydx: Layer2 = {
   type: 'layer2',
   id: ProjectId('dydx'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.Stack.StarkEx,
@@ -144,14 +144,14 @@ export const dydx: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
-        sinceTimestamp: new UnixTime(1613033682),
+        sinceTimestamp: UnixTime(1613033682),
         tokens: ['USDC'],
         ...priorityExecutorUpgradeability,
       }),
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1613033682),
+      sinceTimestamp: UnixTime(1613033682),
       resyncLastDays: 7,
     },
     trackedTxs: [
@@ -168,7 +168,7 @@ export const dydx: Layer2 = {
           selector: '0x9b3b76cc',
           functionSignature:
             'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
-          sinceTimestamp: new UnixTime(1615417556),
+          sinceTimestamp: UnixTime(1615417556),
         },
       },
       {
@@ -184,7 +184,7 @@ export const dydx: Layer2 = {
           selector: '0x538f9406',
           functionSignature:
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1613033682),
+          sinceTimestamp: UnixTime(1613033682),
         },
       },
     ],

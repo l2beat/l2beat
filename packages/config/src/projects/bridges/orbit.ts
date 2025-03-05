@@ -16,7 +16,7 @@ const orbitMultisigThreshold = `${discovery.getContractValue<number>(
 export const orbit: Bridge = {
   type: 'bridge',
   id: ProjectId('orbit'),
-  addedAt: new UnixTime(1663234549), // 2022-09-15T09:35:49Z
+  addedAt: UnixTime(1663234549), // 2022-09-15T09:35:49Z
   display: {
     name: 'Orbit Bridge',
     slug: 'orbit',
@@ -51,7 +51,7 @@ export const orbit: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a'),
-        sinceTimestamp: new UnixTime(1603950507),
+        sinceTimestamp: UnixTime(1603950507),
         tokens: [
           'ETH',
           'USDT',
@@ -66,19 +66,19 @@ export const orbit: Bridge = {
       },
       {
         address: EthereumAddress('0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0'),
-        sinceTimestamp: new UnixTime(1603950507),
+        sinceTimestamp: UnixTime(1603950507),
         tokens: ['cDAI'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x830433dE03ABedE062660CC629e1A2c714272474'),
-        sinceTimestamp: new UnixTime(1603950507),
+        sinceTimestamp: UnixTime(1603950507),
         tokens: ['cUSDC'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xd910f6F23889919fAd9C8cE3171dd557cE0308Da'),
-        sinceTimestamp: new UnixTime(1603950507),
+        sinceTimestamp: UnixTime(1603950507),
         tokens: ['cWBTC'],
         chain: 'ethereum',
       },

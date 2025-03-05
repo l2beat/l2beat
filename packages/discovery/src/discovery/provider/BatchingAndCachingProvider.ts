@@ -531,7 +531,7 @@ export class BatchingAndCachingProvider {
         return undefined
       } else {
         const parsed = parseCacheEntry(cached)
-        parsed.timestamp = new UnixTime(parsed.timestamp)
+        parsed.timestamp = UnixTime(parsed.timestamp)
         return parsed
       }
     }

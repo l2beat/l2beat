@@ -119,13 +119,15 @@ function getChartData(
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const { days, resolution } = getRangeConfig(range)
-  const target = getTvsTargetTimestamp().toStartOf(
+  const target = UnixTime.toStartOf(
+    getTvsTargetTimestamp(),
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from = days !== null ? target.add(-days, 'days') : MIN_TIMESTAMPS.tvs
+  const from =
+    days !== null ? target - UnixTime(days, 'days') : MIN_TIMESTAMPS.tvs
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
-    return [timestamp.toNumber(), 3000, 2000, 1000, 1200]
+    return [timestamp, 3000, 2000, 1000, 1200]
   })
 }

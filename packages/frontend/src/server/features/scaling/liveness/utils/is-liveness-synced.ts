@@ -2,8 +2,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 
 export function isLivenessSynced(syncedUntil: UnixTime): boolean {
-  const syncTarget = UnixTime.now().add(-6, 'hours').toStartOf('hour')
-  return syncTarget.lte(syncedUntil)
+  const syncTarget = UnixTime.toStartOf(
+    UnixTime.now() - UnixTime(6, 'hours'),
+    'hour',
+  )
+  return syncTarget <= syncedUntil
 }
 
 export function getLivenessSyncWarning(
@@ -13,7 +16,7 @@ export function getLivenessSyncWarning(
     return undefined
   }
   return `Liveness data for this item is not synced since ${formatTimestamp(
-    syncedUntil.toNumber(),
+    syncedUntil,
     {
       mode: 'datetime',
       longMonthName: true,

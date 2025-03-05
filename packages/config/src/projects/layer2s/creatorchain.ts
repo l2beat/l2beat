@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const creatorchain: Layer2 = upcomingL2({
   id: 'creatorchain',
   capability: 'universal',
-  addedAt: new UnixTime(1740170319),
+  addedAt: UnixTime(1740170319),
   display: {
     name: 'Creator Chain',
     slug: 'creatorchain',

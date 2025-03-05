@@ -1,5 +1,5 @@
 import type { TrackedTxId } from '@l2beat/shared'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type LivenessRecord, toRecord, toRow } from './entity'
 import { selectLiveness } from './select'
@@ -20,7 +20,7 @@ export class LivenessRepository extends BaseRepository {
       .selectFrom('Liveness')
       .select(selectLiveness)
       .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '>=', since.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(since))
       .distinctOn(['timestamp', 'configurationId'])
       .orderBy('timestamp', 'desc')
       .execute()
@@ -37,7 +37,7 @@ export class LivenessRepository extends BaseRepository {
       .selectFrom('Liveness')
       .select(selectLiveness)
       .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '<', to.toDate())
+      .where('timestamp', '<', UnixTime.toDate(to))
       .distinctOn(['timestamp', 'configurationId'])
       .orderBy('timestamp', 'desc')
       .execute()
@@ -51,13 +51,13 @@ export class LivenessRepository extends BaseRepository {
   ): Promise<LivenessRecord[]> {
     if (configurationIds.length === 0) return []
 
-    assert(from.toNumber() < to.toNumber(), 'From must be less than to')
+    assert(from < to, 'From must be less than to')
     const rows = await this.db
       .selectFrom('Liveness')
       .select(selectLiveness)
       .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .distinctOn(['timestamp', 'configurationId'])
       .orderBy('timestamp', 'desc')
       .execute()
@@ -81,7 +81,7 @@ export class LivenessRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('Liveness')
       .where('configurationId', '=', id.toString())
-      .where('timestamp', '>=', deleteFromInclusive.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(deleteFromInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
@@ -94,8 +94,8 @@ export class LivenessRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('Liveness')
       .where('configurationId', '=', id)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .where('timestamp', '<=', toInclusive.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

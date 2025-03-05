@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const xsolla: Layer2 = upcomingL2({
   id: 'xsolla',
   capability: 'universal',
-  addedAt: new UnixTime(1740072617), // 2025-01-20T17:30:17Z
+  addedAt: UnixTime(1740072617), // 2025-01-20T17:30:17Z
   display: {
     name: 'Xsolla ZK',
     slug: 'xsolla',

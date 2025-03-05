@@ -19,7 +19,7 @@ describe(BlockTimestampIndexer.name, () => {
     it('finds timestamp to sync and gets closest block', async () => {
       const from = 100
       const to = 300
-      const timestampToSync = new UnixTime(200)
+      const timestampToSync = UnixTime(200)
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: mockFn().returnsOnce(timestampToSync),
       })
@@ -57,13 +57,13 @@ describe(BlockTimestampIndexer.name, () => {
         blockNumber: 666,
       })
 
-      expect(newSafeHeight).toEqual(timestampToSync.toNumber())
+      expect(newSafeHeight).toEqual(timestampToSync)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
       const from = 100
       const to = 300
-      const timestampToSync = new UnixTime(200)
+      const timestampToSync = UnixTime(200)
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: mockFn().returns(timestampToSync),
       })
@@ -99,7 +99,7 @@ describe(BlockTimestampIndexer.name, () => {
     it('returns if optimized timestamp is later than to', async () => {
       const from = 100
       const to = 300
-      const timestampToSync = new UnixTime(to + 100)
+      const timestampToSync = UnixTime(to + 100)
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: mockFn().returnsOnce(timestampToSync),
       })
@@ -145,7 +145,7 @@ describe(BlockTimestampIndexer.name, () => {
 
       expect(
         blockTimestampRepository.deleteAfterExclusive,
-      ).toHaveBeenCalledWith('ethereum', new UnixTime(targetHeight))
+      ).toHaveBeenCalledWith('ethereum', UnixTime(targetHeight))
       expect(newSafeHeight).toEqual(targetHeight)
     })
   })

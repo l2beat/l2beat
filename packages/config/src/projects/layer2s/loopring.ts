@@ -49,7 +49,7 @@ export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'Loopring',
@@ -104,7 +104,7 @@ export const loopring: Layer2 = {
       // WeDEX: Beta 1
       {
         address: EthereumAddress('0x7D3D221A8D8AbDd868E8e88811fFaF033e68E108'),
-        sinceTimestamp: new UnixTime(1575539271),
+        sinceTimestamp: UnixTime(1575539271),
         tokens: ['LRC', 'USDT'],
         isHistorical: true,
         chain: 'ethereum',
@@ -112,14 +112,14 @@ export const loopring: Layer2 = {
       // WeDEX: Beta 2
       {
         address: EthereumAddress('0xD97D09f3bd931a14382ac60f156C1285a56Bb51B'),
-        sinceTimestamp: new UnixTime(1578284114),
+        sinceTimestamp: UnixTime(1578284114),
         tokens: ['LRC', 'USDT'],
         isHistorical: true,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x674bdf20A0F284D710BC40872100128e2d66Bd3f'),
-        sinceTimestamp: new UnixTime(1603949642),
+        sinceTimestamp: UnixTime(1603949642),
         tokens: '*',
         chain: 'ethereum',
       },
@@ -170,7 +170,7 @@ export const loopring: Layer2 = {
           selector: '0xdcb2aa31',
           functionSignature:
             'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
-          sinceTimestamp: new UnixTime(1616396742),
+          sinceTimestamp: UnixTime(1616396742),
         },
       },
     ],
@@ -183,7 +183,7 @@ export const loopring: Layer2 = {
     finality: {
       lag: 0,
       type: 'Loopring',
-      minTimestamp: new UnixTime(1616396742),
+      minTimestamp: UnixTime(1616396742),
       stateUpdate: 'disabled',
     },
   },

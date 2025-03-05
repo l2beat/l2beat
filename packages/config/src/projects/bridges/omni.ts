@@ -32,7 +32,7 @@ const pausable = {
 export const omni: Bridge = {
   type: 'bridge',
   id: ProjectId('omni'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Omnibridge',
     slug: 'omni',
@@ -70,7 +70,7 @@ export const omni: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x88ad09518695c6c3712AC10a214bE5109a655671'),
-        sinceTimestamp: new UnixTime(1596501090),
+        sinceTimestamp: UnixTime(1596501090),
         tokens: '*',
         chain: 'ethereum',
       },

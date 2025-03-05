@@ -7,10 +7,7 @@ describe(clampRangeToDay.name, () => {
   it('the same day', () => {
     const from = UnixTime.fromDate(new Date('2022-01-01T12:00:00Z'))
 
-    const result = clampRangeToDay(
-      from.toNumber(),
-      from.add(1, 'hours').toNumber(),
-    )
+    const result = clampRangeToDay(from, from + UnixTime(1, 'hours'))
 
     expect(result).toEqual({
       from,
@@ -22,7 +19,7 @@ describe(clampRangeToDay.name, () => {
     const from = UnixTime.fromDate(new Date('2022-01-01T12:00:00Z'))
     const to = UnixTime.fromDate(new Date('2022-01-02T12:00:00Z'))
 
-    const result = clampRangeToDay(from.toNumber(), to.toNumber())
+    const result = clampRangeToDay(from, to)
     expect(result).toEqual({
       from,
       to: UnixTime.fromDate(new Date('2022-01-02T00:00:00Z')),

@@ -44,7 +44,7 @@ const vaultWeight =
 export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
   capability: 'appchain',
-  addedAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
+  addedAt: UnixTime(1709724246), // 2024-03-06T11:24:06Z
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
@@ -88,7 +88,7 @@ export const termstructure: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x09E01425780094a9754B2bd8A3298f73ce837CF9'),
-        sinceTimestamp: new UnixTime(1716263903),
+        sinceTimestamp: UnixTime(1716263903),
         tokens: '*',
       }),
     ],
@@ -103,7 +103,7 @@ export const termstructure: Layer2 = {
           selector: '0x0d874ce4',
           functionSignature:
             'function commitBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])',
-          sinceTimestamp: new UnixTime(1716263903),
+          sinceTimestamp: UnixTime(1716263903),
         },
       },
       {
@@ -119,7 +119,7 @@ export const termstructure: Layer2 = {
           selector: '0x70ab1eb6',
           functionSignature:
             'function verifyBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])',
-          sinceTimestamp: new UnixTime(1716263903),
+          sinceTimestamp: UnixTime(1716263903),
         },
       },
       {
@@ -135,7 +135,7 @@ export const termstructure: Layer2 = {
           selector: '0x632a5607',
           functionSignature:
             'function executeBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])',
-          sinceTimestamp: new UnixTime(1716263903),
+          sinceTimestamp: UnixTime(1716263903),
         },
       },
     ],

@@ -27,11 +27,11 @@ describe(Clock.name, () => {
   describe(Clock.prototype.getFirstHour.name, () => {
     it('returns minTimestamp aligned to an hour', () => {
       time.setSystemTime(10_000_000_000_000)
-      const start = new UnixTime(123456789)
+      const start = UnixTime(123456789)
       const clock = new Clock(start, 0)
 
       const firstHour = clock.getFirstHour()
-      expect(firstHour).toEqual(start.toNext('hour'))
+      expect(firstHour).toEqual(UnixTime.toNext(start, 'hour'))
     })
 
     it('cannot get first hour with minTimestamp in the future', () => {
@@ -47,11 +47,11 @@ describe(Clock.name, () => {
   describe(Clock.prototype.getFirstDay.name, () => {
     it('returns minTimestamp aligned to an hour', () => {
       time.setSystemTime(10_000_000_000_000)
-      const start = new UnixTime(123456789)
+      const start = UnixTime(123456789)
       const clock = new Clock(start, 0)
 
       const firstHour = clock.getFirstDay()
-      expect(firstHour).toEqual(start.toNext('day'))
+      expect(firstHour).toEqual(UnixTime.toNext(start, 'day'))
     })
 
     it('cannot get first day with minTimestamp in the future', () => {
@@ -67,7 +67,7 @@ describe(Clock.name, () => {
   describe(Clock.prototype.getLastHour.name, () => {
     it('can return the last hour', () => {
       setTime('13:05:48')
-      const clock = new Clock(new UnixTime(0), 0)
+      const clock = new Clock(0, 0)
 
       const lastHour = clock.getLastHour()
       expect(lastHour).toEqual(toTimestamp('13:00:00'))
@@ -75,7 +75,7 @@ describe(Clock.name, () => {
 
     it('uses the specified delay', () => {
       setTime('13:05:48')
-      const clock = new Clock(new UnixTime(0), 10 * 60)
+      const clock = new Clock(0, 10 * 60)
 
       const lastHour = clock.getLastHour()
       expect(lastHour).toEqual(toTimestamp('12:00:00'))
@@ -90,7 +90,7 @@ describe(Clock.name, () => {
       setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 
       const sixHourlyCutoffDays = 3
-      const clock = new Clock(UnixTime.ZERO, 0, 1, sixHourlyCutoffDays)
+      const clock = new Clock(0, 0, 1, sixHourlyCutoffDays)
 
       const result = clock.getSixHourlyCutoff(targetTimestamp)
 
@@ -108,7 +108,7 @@ describe(Clock.name, () => {
       setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 
       const hourlyCutoffDays = 1
-      const clock = new Clock(UnixTime.ZERO, 0, hourlyCutoffDays, 3)
+      const clock = new Clock(0, 0, hourlyCutoffDays, 3)
 
       const result = clock.getHourlyCutoff(targetTimestamp)
 
@@ -134,43 +134,43 @@ describe(Clock.name, () => {
 
       expect(timestamps).toEqual([
         minTimestamp, // 22.06
-        minTimestamp.add(1, 'days'),
-        minTimestamp.add(2, 'days'),
-        minTimestamp.add(3, 'days'),
-        minTimestamp.add(4, 'days'),
-        minTimestamp.add(4, 'days').add(18, 'hours'),
-        minTimestamp.add(5, 'days'),
-        minTimestamp.add(5, 'days').add(6, 'hours'),
-        minTimestamp.add(5, 'days').add(12, 'hours'),
-        minTimestamp.add(5, 'days').add(18, 'hours'),
-        minTimestamp.add(6, 'days'),
-        minTimestamp.add(6, 'days').add(6, 'hours'),
-        minTimestamp.add(6, 'days').add(12, 'hours'),
-        minTimestamp.add(6, 'days').add(13, 'hours'),
-        minTimestamp.add(6, 'days').add(14, 'hours'),
-        minTimestamp.add(6, 'days').add(15, 'hours'),
-        minTimestamp.add(6, 'days').add(16, 'hours'),
-        minTimestamp.add(6, 'days').add(17, 'hours'),
-        minTimestamp.add(6, 'days').add(18, 'hours'),
-        minTimestamp.add(6, 'days').add(19, 'hours'),
-        minTimestamp.add(6, 'days').add(20, 'hours'),
-        minTimestamp.add(6, 'days').add(21, 'hours'),
-        minTimestamp.add(6, 'days').add(22, 'hours'),
-        minTimestamp.add(6, 'days').add(23, 'hours'),
-        minTimestamp.add(7, 'days'),
-        minTimestamp.add(7, 'days').add(1, 'hours'),
-        minTimestamp.add(7, 'days').add(2, 'hours'),
-        minTimestamp.add(7, 'days').add(3, 'hours'),
-        minTimestamp.add(7, 'days').add(4, 'hours'),
-        minTimestamp.add(7, 'days').add(5, 'hours'),
-        minTimestamp.add(7, 'days').add(6, 'hours'),
-        minTimestamp.add(7, 'days').add(7, 'hours'),
-        minTimestamp.add(7, 'days').add(8, 'hours'),
-        minTimestamp.add(7, 'days').add(9, 'hours'),
-        minTimestamp.add(7, 'days').add(10, 'hours'),
-        minTimestamp.add(7, 'days').add(11, 'hours'),
-        minTimestamp.add(7, 'days').add(12, 'hours'),
-        minTimestamp.add(7, 'days').add(13, 'hours'),
+        minTimestamp + UnixTime(1, 'days'),
+        minTimestamp + UnixTime(2, 'days'),
+        minTimestamp + UnixTime(3, 'days'),
+        minTimestamp + UnixTime(4, 'days'),
+        minTimestamp + UnixTime(4, 'days') + UnixTime(18, 'hours'),
+        minTimestamp + UnixTime(5, 'days'),
+        minTimestamp + UnixTime(5, 'days') + UnixTime(6, 'hours'),
+        minTimestamp + UnixTime(5, 'days') + UnixTime(12, 'hours'),
+        minTimestamp + UnixTime(5, 'days') + UnixTime(18, 'hours'),
+        minTimestamp + UnixTime(6, 'days'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(6, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(12, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(13, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(14, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(15, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(16, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(17, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(18, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(19, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(20, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(21, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(22, 'hours'),
+        minTimestamp + UnixTime(6, 'days') + UnixTime(23, 'hours'),
+        minTimestamp + UnixTime(7, 'days'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(1, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(2, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(3, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(4, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(5, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(6, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(7, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(8, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(9, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(10, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(11, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(12, 'hours'),
+        minTimestamp + UnixTime(7, 'days') + UnixTime(13, 'hours'),
       ])
     })
   })

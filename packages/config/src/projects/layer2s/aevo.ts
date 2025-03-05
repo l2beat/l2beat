@@ -8,7 +8,7 @@ import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
-  addedAt: new UnixTime(1694090052), // 2023-09-07T12:34:12Z
+  addedAt: UnixTime(1694090052), // 2023-09-07T12:34:12Z
   additionalBadges: [BADGES.DA.EigenDA, BADGES.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
@@ -67,7 +67,7 @@ export const aevo: Layer2 = opStackL2({
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
   },
-  genesisTimestamp: new UnixTime(1679202395),
+  genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [
     {

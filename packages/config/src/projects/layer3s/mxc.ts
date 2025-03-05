@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const mxc: Layer3 = upcomingL3({
   id: ProjectId('mxc'),
   capability: 'universal',
-  addedAt: new UnixTime(1710847645), // 2024-03-19T11:27:25Z
+  addedAt: UnixTime(1710847645), // 2024-03-19T11:27:25Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'MXC Moonchain zkEVM',

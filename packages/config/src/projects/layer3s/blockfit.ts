@@ -6,7 +6,7 @@ import { underReviewL3 } from '../layer2s/templates/underReview'
 export const blockfit: Layer3 = underReviewL3({
   id: 'blockfit',
   capability: 'universal',
-  addedAt: new UnixTime(1739285196), // 2025-02-11T14:46:36Z
+  addedAt: UnixTime(1739285196), // 2025-02-11T14:46:36Z
   hostChain: ProjectId('nova'),
   badges: [BADGES.Stack.Orbit, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {

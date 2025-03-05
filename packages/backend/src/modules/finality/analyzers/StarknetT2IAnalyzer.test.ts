@@ -38,7 +38,7 @@ describe(StarknetT2IAnalyzer.name, () => {
         l2Client,
       )
 
-      const tx = { txHash: TX_HASH, timestamp: new UnixTime(L1_TIMESTAMP) }
+      const tx = { txHash: TX_HASH, timestamp: UnixTime(L1_TIMESTAMP) }
       const previousTx = tx // not used
       const result = await analyzer.analyze(previousTx, tx)
 

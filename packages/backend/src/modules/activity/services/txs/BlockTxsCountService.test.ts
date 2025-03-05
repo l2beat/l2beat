@@ -17,8 +17,8 @@ describe(BlockTxsCountService.name, () => {
 
       const client = mockRpcClient([
         { timestamp: START, count: 1, number: 1 },
-        { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
-        { timestamp: START.add(2, 'days'), count: 5, number: 3 },
+        { timestamp: START + UnixTime(1, 'hours'), count: 2, number: 2 },
+        { timestamp: START + UnixTime(2, 'days'), count: 5, number: 3 },
       ])
 
       const txsCountProvider = new BlockTxsCountService({
@@ -30,8 +30,15 @@ describe(BlockTxsCountService.name, () => {
 
       const result = await txsCountProvider.getTxsCount(1, 3)
       expect(result).toEqual([
-        activityRecord('a', START.toStartOf('day'), 3, 5, 1, 2),
-        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5, 7, 3, 3),
+        activityRecord('a', UnixTime.toStartOf(START, 'day'), 3, 5, 1, 2),
+        activityRecord(
+          'a',
+          UnixTime.toStartOf(START + UnixTime(2, 'days'), 'day'),
+          5,
+          7,
+          3,
+          3,
+        ),
       ])
       expect(analyzer.calculateUops).toHaveBeenCalledTimes(3)
       expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(3)
@@ -41,7 +48,7 @@ describe(BlockTxsCountService.name, () => {
       const analyzer = new RpcUopsAnalyzer()
       const client = mockRpcClient([
         { timestamp: START, count: 1, number: 1 },
-        { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
+        { timestamp: START + UnixTime(1, 'hours'), count: 2, number: 2 },
       ])
       const assessCount = mockFn((count) => count - 1)
 
@@ -54,7 +61,7 @@ describe(BlockTxsCountService.name, () => {
       })
       const result = await txsCountProvider.getTxsCount(1, 2)
       expect(result).toEqual([
-        activityRecord('a', START.toStartOf('day'), 1, 3, 1, 2),
+        activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 3, 1, 2),
       ])
       expect(assessCount).toHaveBeenCalledTimes(4)
       expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(2)
@@ -69,7 +76,7 @@ function mockRpcClient(
   blocks.forEach(({ timestamp, count, number }) =>
     mockGetBlock.resolvesToOnce({
       transactions: transactions(count),
-      timestamp: timestamp.toNumber(),
+      timestamp: timestamp,
       number,
     }),
   )

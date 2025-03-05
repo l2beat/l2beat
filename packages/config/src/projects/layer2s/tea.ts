@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const tea: Layer2 = upcomingL2({
   id: 'tea',
   capability: 'universal',
-  addedAt: new UnixTime(1739629387),
+  addedAt: UnixTime(1739629387),
   display: {
     name: 'Tea',
     slug: 'tea',

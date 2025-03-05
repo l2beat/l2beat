@@ -50,7 +50,7 @@ const discoveredExecutorConfig: [number, string] = discovery.getContractValue(
 export const stargatev2: Bridge = {
   type: 'bridge',
   id: ProjectId('stargatev2'),
-  addedAt: new UnixTime(1718620600), // 2024-06-17T10:36:40Z
+  addedAt: UnixTime(1718620600), // 2024-06-17T10:36:40Z
   display: {
     name: 'Stargate v2 (LayerZero v2)',
     shortName: 'Stargate v2',

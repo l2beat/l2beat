@@ -30,7 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const cyber: Layer2 = opStackL2({
-  addedAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
+  addedAt: UnixTime(1713364684), // 2024-04-17T14:38:04Z
   associatedTokens: ['CYBER'],
   discovery,
   additionalBadges: [BADGES.RaaS.AltLayer],
@@ -73,7 +73,7 @@ export const cyber: Layer2 = opStackL2({
     chainId: 7560,
     explorerUrl: 'https://cyberscan.co',
     coingeckoPlatform: 'cyber',
-    sinceTimestamp: new UnixTime(1713428569), // block 1 ts
+    sinceTimestamp: UnixTime(1713428569), // block 1 ts
     multicallContracts: [
       {
         sinceBlock: 1,
@@ -94,7 +94,7 @@ export const cyber: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1713428569),
+  genesisTimestamp: UnixTime(1713428569),
   isNodeAvailable: 'UnderReview',
   customDa: {
     type: 'DA Challenges',

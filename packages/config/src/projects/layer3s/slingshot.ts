@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const slingshot: Layer3 = upcomingL3({
   id: 'slingshot',
   capability: 'universal',
-  addedAt: new UnixTime(1740738600),
+  addedAt: UnixTime(1740738600),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Slingshot',

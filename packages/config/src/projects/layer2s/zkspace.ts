@@ -36,7 +36,7 @@ export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
   capability: 'appchain',
-  addedAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
+  addedAt: UnixTime(1629199654), // 2021-08-17T11:27:34Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.EthereumCalldata,
@@ -76,7 +76,7 @@ export const zkspace: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
-        sinceTimestamp: new UnixTime(1639569183),
+        sinceTimestamp: UnixTime(1639569183),
         tokens: '*',
       }),
     ],
@@ -100,7 +100,7 @@ export const zkspace: Layer2 = {
           selector: '0x6898e6fc',
           functionSignature:
             'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
-          sinceTimestamp: new UnixTime(1639569183),
+          sinceTimestamp: UnixTime(1639569183),
         },
       },
     ],

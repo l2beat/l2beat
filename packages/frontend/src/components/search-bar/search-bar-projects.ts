@@ -25,7 +25,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
       kind: getKind(p),
       isUpcoming: !!p.isUpcoming,
       iconUrl: `/icons/${p.slug}.png`,
-      addedAt: p.addedAt.toNumber(),
+      addedAt: p.addedAt,
       tags: [p.slug],
     } satisfies Partial<SearchBarProject>
 
@@ -63,7 +63,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
           href: `/data-availability/projects/${p.slug}/no-bridge`,
           category: 'da',
           tags: [p.slug, 'no-bridge'],
-          addedAt: p.addedAt.toNumber(),
+          addedAt: p.addedAt,
         })
       }
     }
@@ -78,7 +78,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
           href: `/data-availability/projects/${layer.slug}/${p.slug}`,
           category: 'da',
           tags: [layer.slug, p.slug],
-          addedAt: p.addedAt.toNumber(),
+          addedAt: p.addedAt,
         })
       }
     }

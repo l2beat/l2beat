@@ -11,21 +11,21 @@ describe(calculateStats.name, () => {
       {
         record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
-          timestamp: NOW.add(-1, 'days'),
+          timestamp: NOW - UnixTime(1, 'days'),
         }),
         duration: 10,
       },
       {
         record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
-          timestamp: NOW.add(-10, 'days'),
+          timestamp: NOW - UnixTime(10, 'days'),
         }),
         duration: 20,
       },
       {
         record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
-          timestamp: NOW.add(-40, 'days'),
+          timestamp: NOW - UnixTime(40, 'days'),
         }),
         duration: 30,
       },

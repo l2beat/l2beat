@@ -8,7 +8,7 @@ import { opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('shape')
 
 export const shape: Layer2 = opStackL2({
-  addedAt: new UnixTime(1730131160), // 2024-10-28
+  addedAt: UnixTime(1730131160), // 2024-10-28
   additionalBadges: [BADGES.RaaS.Alchemy],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -32,8 +32,8 @@ export const shape: Layer2 = opStackL2({
   },
   finality: {
     type: 'OPStack',
-    minTimestamp: new UnixTime(1721744473),
-    genesisTimestamp: new UnixTime(1721744473),
+    minTimestamp: UnixTime(1721744473),
+    genesisTimestamp: UnixTime(1721744473),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -51,6 +51,6 @@ export const shape: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1721744473),
+  genesisTimestamp: UnixTime(1721744473),
   stateDerivation: DERIVATION.OPSTACK('SHAPE'),
 })

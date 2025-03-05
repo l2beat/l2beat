@@ -99,7 +99,7 @@ export const getCachedRecategorisedActivityChartData = cache(
       Object.values(aggregatedOthersEntries).length === 0 &&
       Object.values(aggregatedEthereumEntries).length === 0
     ) {
-      return { data: [], syncWarning, syncedUntil: syncedUntil.toNumber() }
+      return { data: [], syncWarning, syncedUntil: syncedUntil }
     }
 
     const startTimestamp = Math.min(
@@ -109,17 +109,17 @@ export const getCachedRecategorisedActivityChartData = cache(
       ...Object.keys(aggregatedEthereumEntries).map(Number),
     )
     const timestamps = generateTimestamps(
-      [new UnixTime(startTimestamp), adjustedRange[1]],
+      [UnixTime(startTimestamp), adjustedRange[1]],
       'daily',
     )
 
     const data: [number, number, number, number, number][] = timestamps.map(
       (timestamp) => {
-        const rollupsEntry = aggregatedRollupsEntries[timestamp.toNumber()]
+        const rollupsEntry = aggregatedRollupsEntries[timestamp]
         const validiumsAndOptimiumsEntry =
-          aggregatedValidiumsAndOptimiumsEntries[timestamp.toNumber()]
-        const othersEntry = aggregatedOthersEntries[timestamp.toNumber()]
-        const ethereumEntry = aggregatedEthereumEntries[timestamp.toNumber()]
+          aggregatedValidiumsAndOptimiumsEntries[timestamp]
+        const othersEntry = aggregatedOthersEntries[timestamp]
+        const ethereumEntry = aggregatedEthereumEntries[timestamp]
 
         const rollupsCount = rollupsEntry?.uopsCount ?? 0
         const validiumsAndOptimiumsCount =
@@ -139,7 +139,7 @@ export const getCachedRecategorisedActivityChartData = cache(
     return {
       data,
       syncWarning,
-      syncedUntil: syncedUntil.toNumber(),
+      syncedUntil: syncedUntil,
     }
   },
   ['recategorised-activity-chart-data'],
@@ -170,6 +170,6 @@ function getMockRecategorisedActivityChart(
       12000,
     ]),
     syncWarning: getActivitySyncWarning(adjustedRange[1]),
-    syncedUntil: adjustedRange[1].toNumber(),
+    syncedUntil: adjustedRange[1],
   }
 }

@@ -10,15 +10,15 @@ describe(aggregatePerDay.name, () => {
     const project = ProjectId('project')
     const result = aggregatePerDay(project, [
       block(START, 1, 1, 1),
-      block(START.add(1, 'hours'), 5, 8, 2),
-      block(START.add(2, 'hours'), 2, 3, 3),
-      block(START.add(1, 'days'), 2, 2, 4),
-      block(START.add(1, 'days').add(1, 'hours'), 6, 7, 5),
+      block(START + UnixTime(1, 'hours'), 5, 8, 2),
+      block(START + UnixTime(2, 'hours'), 2, 3, 3),
+      block(START + UnixTime(1, 'days'), 2, 2, 4),
+      block(START + UnixTime(1, 'days') + UnixTime(1, 'hours'), 6, 7, 5),
     ])
 
     expect(result).toEqual([
       activityRecord(project, START, 8, 12, 1, 3),
-      activityRecord(project, START.add(1, 'days'), 8, 9, 4, 5),
+      activityRecord(project, START + UnixTime(1, 'days'), 8, 9, 4, 5),
     ])
   })
 })

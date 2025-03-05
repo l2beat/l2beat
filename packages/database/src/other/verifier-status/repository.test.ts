@@ -40,8 +40,8 @@ describeDatabase(VerifierStatusRepository.name, (db) => {
     const existingRecord = {
       address: EthereumAddress.random().toString(),
       chainId: ChainId.ETHEREUM,
-      lastUsed: UnixTime.now().add(-2, 'hours'),
-      lastUpdated: UnixTime.now().add(-1, 'hours'),
+      lastUsed: UnixTime.now() - UnixTime(2, 'hours'),
+      lastUpdated: UnixTime.now() - UnixTime(1, 'hours'),
     }
 
     beforeEach(async () => {

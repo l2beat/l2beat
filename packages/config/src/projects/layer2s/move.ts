@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const move: Layer2 = upcomingL2({
   id: 'move',
   capability: 'universal',
-  addedAt: new UnixTime(1717924525), // 2024-06-09T09:15:25Z
+  addedAt: UnixTime(1717924525), // 2024-06-09T09:15:25Z
   display: {
     name: 'M2',
     slug: 'move',

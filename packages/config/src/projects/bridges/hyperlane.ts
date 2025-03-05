@@ -23,7 +23,7 @@ const multisigIsmThresholdString =
 export const hyperlane: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
-  addedAt: new UnixTime(1738918243), // 2025-02-07T
+  addedAt: UnixTime(1738918243), // 2025-02-07T
   display: {
     name: 'Hyperlane Nexus',
     slug: 'hyperlane',

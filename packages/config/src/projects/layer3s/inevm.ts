@@ -10,7 +10,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('inevm', 'arbitrum')
 
 export const inevm: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
+  addedAt: UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
   additionalPurposes: ['Interoperability'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [

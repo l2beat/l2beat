@@ -87,11 +87,9 @@ function getDataWithConfiguredThroughputs(
       const nextConfig = arr[i + 1]
       return {
         ...config,
-        sinceTimestamp: new UnixTime(config.sinceTimestamp)
-          .toStartOf('day')
-          .toNumber(),
+        sinceTimestamp: UnixTime.toStartOf(config.sinceTimestamp, 'day'),
         untilTimestamp: nextConfig
-          ? new UnixTime(nextConfig.sinceTimestamp).toStartOf('day').toNumber()
+          ? UnixTime.toStartOf(nextConfig.sinceTimestamp, 'day')
           : Infinity,
         maxDaily: config.size * batchesPerDay,
         targetDaily: config.target ? config.target * batchesPerDay : null,

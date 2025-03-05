@@ -5,7 +5,7 @@ import type { Bridge } from '../../internalTypes'
 export const harmony: Bridge = {
   type: 'bridge',
   id: ProjectId('harmony'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Harmony',
     slug: 'harmony',
@@ -19,19 +19,19 @@ export const harmony: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0xF9Fb1c508Ff49F78b60d3A96dea99Fa5d7F3A8A6'),
-        sinceTimestamp: new UnixTime(1610602801),
+        sinceTimestamp: UnixTime(1610602801),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xfD53b1B4AF84D59B20bF2C20CA89a6BeeAa2c628'),
-        sinceTimestamp: new UnixTime(1602456041),
+        sinceTimestamp: UnixTime(1602456041),
         tokens: ['BUSD'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2dCCDB493827E15a5dC8f8b72147E6c4A5620857'),
-        sinceTimestamp: new UnixTime(1602456188),
+        sinceTimestamp: UnixTime(1602456188),
         tokens: [
           'USDC',
           'USDT',

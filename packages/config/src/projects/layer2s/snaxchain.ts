@@ -6,7 +6,7 @@ import { underReviewL2 } from './templates/underReview'
 export const snaxchain: Layer2 = underReviewL2({
   id: 'snaxchain',
   capability: 'universal',
-  addedAt: new UnixTime(1740099913),
+  addedAt: UnixTime(1740099913),
   badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Conduit],
   display: {
     name: 'SNAXchain',
@@ -43,7 +43,7 @@ export const snaxchain: Layer2 = underReviewL2({
   escrows: [
     {
       address: EthereumAddress('0x936D881b4760D5e9b6D55b774f65c509236b4743'), // optiPortal
-      sinceTimestamp: new UnixTime(1723518000),
+      sinceTimestamp: UnixTime(1723518000),
       tokens: ['ETH'],
       chain: 'ethereum',
     },

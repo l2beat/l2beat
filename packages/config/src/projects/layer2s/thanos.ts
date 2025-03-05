@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const thanos: Layer2 = upcomingL2({
   id: 'thanos',
   capability: 'universal',
-  addedAt: new UnixTime(1726844759), // 2024-09-20T15:05:59Z
+  addedAt: UnixTime(1726844759), // 2024-09-20T15:05:59Z
   display: {
     name: 'THANOS',
     slug: 'thanos',

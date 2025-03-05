@@ -35,7 +35,10 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     // we only need to go one day back
-    const maxDepth = UnixTime.now().add(-1, 'days').toStartOf('day').toNumber()
+    const maxDepth = UnixTime.toStartOf(
+      UnixTime.now() - UnixTime(1, 'days'),
+      'day',
+    )
     if (to <= maxDepth) {
       this.logger.info('Skipping update', { from, to })
       return to
@@ -66,7 +69,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       })
     })
 
-    return unixTo.toNumber()
+    return unixTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -83,7 +86,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     )
 
     // we need data from 2 * SYNC_RANGE past days to calculate standard deviation
-    const deviationRange = to.add(-1 * this.SYNC_RANGE * 2, 'days')
+    const deviationRange = to - UnixTime(1 * this.SYNC_RANGE * 2, 'days')
 
     for (const project of this.$.projects) {
       const activeConfigs = getActiveConfigurations(project, configurations)
@@ -156,7 +159,9 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     // if the oldest record is newer than 2 * SYNC_RANGE -1 we can't calculate anomalies
     const lastRecord = livenessRecords.at(-1)
     if (
-      lastRecord?.timestamp.gt(to.add(-1 * (2 * this.SYNC_RANGE - 1), 'days'))
+      lastRecord?.timestamp &&
+      lastRecord.timestamp >
+        to - UnixTime(1 * (2 * this.SYNC_RANGE - 1), 'days')
     )
       return []
 
@@ -174,8 +179,9 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     const intervals = calculateIntervals(livenessRecords)
 
-    const lastIndex = intervals.findIndex((interval) =>
-      interval.record.timestamp.lte(to.add(-1 * this.SYNC_RANGE, 'days')),
+    const lastIndex = intervals.findIndex(
+      (interval) =>
+        interval.record.timestamp <= to - UnixTime(1 * this.SYNC_RANGE, 'days'),
     )
 
     const { means, stdDeviations } = this.calculate30DayRollingStats(
@@ -187,10 +193,10 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     const currentRange = intervals.slice(0, lastIndex)
     currentRange.forEach((interval) => {
-      const point = interval.record.timestamp.toStartOf('minute').toNumber()
+      const point = UnixTime.toStartOf(interval.record.timestamp, 'minute')
       const mean = means.get(point)
       const stdDev = stdDeviations.get(
-        interval.record.timestamp.toStartOf('minute').toNumber(),
+        UnixTime.toStartOf(interval.record.timestamp, 'minute'),
       )
 
       assert(mean !== undefined, 'Mean should not be undefined')
@@ -238,24 +244,21 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       initialWindow.map((r) => r.duration).filter(notUndefined),
     )
 
-    result.means.set(timeStart.toNumber(), mean)
-    result.stdDeviations.set(
-      timeStart.toNumber(),
-      rollingStdDev.getStandardDeviation(),
-    )
-    while (timeStart.gte(upTo.add(-1 * this.SYNC_RANGE, 'days'))) {
-      timeStart = timeStart.add(-1, 'minutes')
+    result.means.set(timeStart, mean)
+    result.stdDeviations.set(timeStart, rollingStdDev.getStandardDeviation())
+    while (timeStart >= upTo - UnixTime(1 * this.SYNC_RANGE, 'days')) {
+      timeStart = timeStart - UnixTime(1, 'minutes')
       const leftFence = timeStart
-      const rightFence = timeStart.add(-1 * this.SYNC_RANGE, 'days')
+      const rightFence = timeStart - UnixTime(1 * this.SYNC_RANGE, 'days')
 
-      while (entireScope[windowStartIndex].record.timestamp.gte(leftFence)) {
+      while (entireScope[windowStartIndex].record.timestamp >= leftFence) {
         sum -= entireScope[windowStartIndex].duration ?? 0
         rollingStdDev.removeValue(entireScope[windowStartIndex].duration ?? 0)
         windowStartIndex++
       }
       while (
         windowEndIndex < entireScope.length &&
-        entireScope[windowEndIndex].record.timestamp.gte(rightFence)
+        entireScope[windowEndIndex].record.timestamp >= rightFence
       ) {
         sum += entireScope[windowEndIndex].duration ?? 0
         rollingStdDev.addValue(entireScope[windowEndIndex].duration ?? 0)
@@ -263,11 +266,8 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       }
 
       const mean = sum / (windowEndIndex - windowStartIndex)
-      result.means.set(timeStart.toNumber(), mean)
-      result.stdDeviations.set(
-        timeStart.toNumber(),
-        rollingStdDev.getStandardDeviation(),
-      )
+      result.means.set(timeStart, mean)
+      result.stdDeviations.set(timeStart, rollingStdDev.getStandardDeviation())
     }
 
     return result

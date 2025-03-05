@@ -78,8 +78,8 @@ describe('bridges', () => {
             }`,
           )
 
-          expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-            chain.sinceTimestamp.toNumber(),
+          expect(escrow.sinceTimestamp).toBeGreaterThanOrEqual(
+            chain.sinceTimestamp,
           )
         })
       }
@@ -187,7 +187,10 @@ describe('bridges', () => {
         for (const milestone of project.milestones) {
           it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
-              UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+              UnixTime.isFull(
+                UnixTime.fromDate(new Date(milestone.date)),
+                'day',
+              ),
             ).toEqual(true)
           })
         }

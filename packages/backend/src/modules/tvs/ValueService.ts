@@ -49,7 +49,7 @@ export class ValueService {
         })
       }
 
-      result.set(timestamp.toNumber(), values)
+      result.set(timestamp, values)
     }
 
     return await Promise.resolve(result)

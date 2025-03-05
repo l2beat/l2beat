@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const aiechain: Layer2 = upcomingL2({
   id: 'aiechain',
   capability: 'universal',
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   display: {
     name: 'AIE Chain',
     slug: 'aie-chain',

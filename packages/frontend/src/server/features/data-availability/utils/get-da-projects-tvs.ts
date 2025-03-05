@@ -15,8 +15,8 @@ export async function getDaProjectsTvs(projectIds: ProjectId[]) {
 type DaProjectsTvs = Awaited<ReturnType<typeof getDaProjectsTvsData>>
 async function getDaProjectsTvsData(projectIds: ProjectId[]) {
   const db = getDb()
-  const to = UnixTime.now().toStartOf('hour').add(-1, 'hours')
-  const from = to.add(-7, 'days')
+  const to = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(1, 'hours')
+  const from = to - UnixTime(7, 'days')
   const values = await db.value.getValuesByProjectIdsAndTimeRange(projectIds, [
     from,
     to,
@@ -25,16 +25,12 @@ async function getDaProjectsTvsData(projectIds: ProjectId[]) {
   const byProject = groupBy(values, 'projectId')
 
   const aggregated = Object.entries(byProject).map(([projectId, values]) => {
-    const timestamps = values.map((v) => v.timestamp.toNumber())
+    const timestamps = values.map((v) => v.timestamp)
     const latestTimestamp = Math.max(...timestamps)
     const oldestTimestamp = Math.min(...timestamps)
 
-    const latestValues = values.filter(
-      (v) => v.timestamp.toNumber() === latestTimestamp,
-    )
-    const oldestValues = values.filter(
-      (v) => v.timestamp.toNumber() === oldestTimestamp,
-    )
+    const latestValues = values.filter((v) => v.timestamp === latestTimestamp)
+    const oldestValues = values.filter((v) => v.timestamp === oldestTimestamp)
 
     const latestTvs = sumTvs(latestValues)
     const oldestTvs = sumTvs(oldestValues)

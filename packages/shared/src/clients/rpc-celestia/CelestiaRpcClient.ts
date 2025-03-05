@@ -32,7 +32,7 @@ export class CelestiaRpcClient extends ClientCore {
     return {
       number: Number(block.height),
       hash: 'UNSUPPORTED',
-      timestamp: blockTimestamp.toNumber(),
+      timestamp: blockTimestamp,
       transactions: [], // UNSUPPORTED
     }
   }

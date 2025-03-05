@@ -13,7 +13,7 @@ import type { Layer2 } from '../../internalTypes'
 export const layer2aWithDups = {
   type: 'layer2',
   id: ProjectId('layer2a'),
-  addedAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  addedAt: UnixTime(1723722996), // 2024-08-15T11:56:36Z
   capability: 'universal',
   display: {
     name: 'Layer2a',
@@ -46,7 +46,7 @@ export const layer2aWithDups = {
           isVerified: true,
           chain: 'ethereum',
         },
-        sinceTimestamp: new UnixTime(1609459200),
+        sinceTimestamp: UnixTime(1609459200),
         tokens: ['SNX'],
         chain: 'ethereum',
       },
@@ -58,7 +58,7 @@ export const layer2aWithDups = {
           isVerified: true,
           chain: 'ethereum',
         },
-        sinceTimestamp: new UnixTime(1609459200),
+        sinceTimestamp: UnixTime(1609459200),
         tokens: ['SNX'],
         chain: 'ethereum',
       },

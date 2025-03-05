@@ -48,7 +48,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
 
 function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
   return {
-    dataTimestamp: UnixTime.now().toNumber(),
+    dataTimestamp: UnixTime.now(),
     breakdown: {
       canonical: [
         {

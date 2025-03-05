@@ -99,7 +99,7 @@ export function processAnalysis(
           receivedPermissions,
           directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,
-          sinceTimestamp: x.deploymentTimestamp?.toNumber(),
+          sinceTimestamp: x.deploymentTimestamp,
           sinceBlock: x.deploymentBlockNumber,
           values:
             Object.keys(x.values).length === 0

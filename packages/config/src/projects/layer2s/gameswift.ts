@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const gameswift: Layer2 = upcomingL2({
   id: 'gameswift',
   capability: 'universal',
-  addedAt: new UnixTime(1740488671),
+  addedAt: UnixTime(1740488671),
   display: {
     name: 'GameSwift',
     slug: 'gameswift',

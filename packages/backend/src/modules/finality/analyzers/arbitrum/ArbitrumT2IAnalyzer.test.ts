@@ -22,7 +22,7 @@ describe(ArbitrumT2IAnalyzer.name, () => {
     })
     const tx = {
       txHash: '0x123',
-      timestamp: new UnixTime(1700001000),
+      timestamp: UnixTime(1700001000),
     }
     const previousTx = tx
     const result = await analyzer.analyze(previousTx, tx)
@@ -73,7 +73,7 @@ describe(ArbitrumT2IAnalyzer.name, () => {
     })
     const tx = {
       txHash: '0x123',
-      timestamp: new UnixTime(1700001000),
+      timestamp: UnixTime(1700001000),
     }
     const previousTx = tx
     const result = await analyzer.analyze(previousTx, tx)

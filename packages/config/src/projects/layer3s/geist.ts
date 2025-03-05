@@ -10,7 +10,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('geist', 'base')
 
 export const geist: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   additionalPurposes: ['Gaming', 'NFT'],
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   reasonsForBeingOther: [

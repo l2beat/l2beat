@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const specular: Layer2 = upcomingL2({
   id: 'specular',
   capability: 'universal',
-  addedAt: new UnixTime(1704292936), // 2024-01-03T14:42:16Z
+  addedAt: UnixTime(1704292936), // 2024-01-03T14:42:16Z
   display: {
     name: 'Specular',
     slug: 'specular',

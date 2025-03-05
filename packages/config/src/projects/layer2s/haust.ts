@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const haust: Layer2 = upcomingL2({
   id: 'haust',
   capability: 'universal',
-  addedAt: new UnixTime(1736600180), // 2024-11-12T10:56:20Z
+  addedAt: UnixTime(1736600180), // 2024-11-12T10:56:20Z
   display: {
     name: 'Haust Network',
     slug: 'haust',

@@ -14,8 +14,8 @@ export async function GET(
   const subtype = TrackedTxsConfigSubtype.catch('batchSubmissions').parse(
     searchParams.get('subtype'),
   )
-  const to = UnixTime.now().toStartOf('hour')
-  const from = to.add(-30, 'days')
+  const to = UnixTime.toStartOf(UnixTime.now(), 'hour')
+  const from = to - UnixTime(30, 'days')
 
   const response = await getCachedResponse(params.projectId, subtype, from, to)
   return NextResponse.json(response)
@@ -89,7 +89,7 @@ function getRelevantConfigs(
     (c) =>
       c.properties.projectId === projectId &&
       c.properties.subtype === subtype &&
-      c.minHeight <= to.toNumber() &&
-      (!c.maxHeight || c.maxHeight >= from.toNumber()),
+      c.minHeight <= to &&
+      (!c.maxHeight || c.maxHeight >= from),
   )
 }

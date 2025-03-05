@@ -4,7 +4,7 @@ import { upcomingL2 } from './templates/upcoming'
 
 export const axonum: Layer2 = upcomingL2({
   id: 'axonum',
-  addedAt: new UnixTime(1715871969), // 2024-05-16T15:06:09Z
+  addedAt: UnixTime(1715871969), // 2024-05-16T15:06:09Z
   capability: 'universal',
   display: {
     name: 'Axonum',

@@ -23,9 +23,9 @@ export async function getCostsWithThroughputData(
   const da = await getProjectDaThroughputChart(params)
   const timestampedDaData = Object.fromEntries(da ?? [])
   return costs.map((cost) => {
-    const dailyTimestamp = new UnixTime(cost[0]).toStartOf('day')
+    const dailyTimestamp = UnixTime.toStartOf(cost[0], 'day')
     const isHourlyRange = params.range === '1d' || params.range === '7d'
-    const posted = timestampedDaData[dailyTimestamp.toNumber()]
+    const posted = timestampedDaData[dailyTimestamp]
     return [
       ...cost,
       posted !== undefined ? (isHourlyRange ? posted / 24 : posted) : null,

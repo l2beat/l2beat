@@ -16,7 +16,7 @@ const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 export const polynetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('polynetwork'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Poly Bridge',
     slug: 'polynetwork',
@@ -71,14 +71,14 @@ export const polynetwork: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x250e76987d838a75310c34bf422ea9f1AC4Cc906'),
-        sinceTimestamp: new UnixTime(1599099893),
+        sinceTimestamp: UnixTime(1599099893),
         tokens: '*',
         chain: 'ethereum',
       },
       {
         // This new Escrow address has been added on 20 Oct 2022.
         address: EthereumAddress('0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868'),
-        sinceTimestamp: new UnixTime(1666256303),
+        sinceTimestamp: UnixTime(1666256303),
         tokens: ['ETH'],
         chain: 'ethereum',
       },

@@ -9,7 +9,7 @@ import {
   tokenList,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { getAggLayerTokens } from './providers/aggLayer'
 import { getElasticChainTokens } from './providers/elasticChain'
@@ -142,7 +142,7 @@ export function createToken(
         decimals: legacyToken.decimals,
       } as TotalSupplyAmountFormula
 
-      sinceTimestamp = UnixTime.max(
+      sinceTimestamp = Math.max(
         chain.sinceTimestamp,
         legacyToken.sinceTimestamp,
       )
@@ -158,7 +158,7 @@ export function createToken(
         priceId: legacyToken.coingeckoId,
       } as CirculatingSupplyAmountFormula
 
-      sinceTimestamp = UnixTime.max(
+      sinceTimestamp = Math.max(
         chain.sinceTimestamp,
         legacyToken.sinceTimestamp,
       )

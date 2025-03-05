@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const zentachain: Layer2 = upcomingL2({
   id: 'zentachain',
   capability: 'universal',
-  addedAt: new UnixTime(1706277671), // 2024-01-26T14:01:11Z
+  addedAt: UnixTime(1706277671), // 2024-01-26T14:01:11Z
   display: {
     name: 'Zentachain',
     slug: 'zentachain',

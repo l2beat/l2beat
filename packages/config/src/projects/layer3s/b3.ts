@@ -9,7 +9,7 @@ import { opStackL3 } from '../layer2s/templates/opStack'
 const discovery = new ProjectDiscovery('b3', 'base')
 
 export const b3: Layer3 = opStackL3({
-  addedAt: new UnixTime(1722376845),
+  addedAt: UnixTime(1722376845),
   additionalBadges: [
     BADGES.DA.Celestia,
     BADGES.RaaS.Caldera,
@@ -59,7 +59,7 @@ export const b3: Layer3 = opStackL3({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  genesisTimestamp: new UnixTime(1722378840),
+  genesisTimestamp: UnixTime(1722378840),
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM=',

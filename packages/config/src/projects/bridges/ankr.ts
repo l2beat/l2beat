@@ -5,7 +5,7 @@ import type { Bridge } from '../../internalTypes'
 export const ankr: Bridge = {
   type: 'bridge',
   id: ProjectId('ankr'),
-  addedAt: new UnixTime(1710858245), // 2024-03-19T14:24:05Z
+  addedAt: UnixTime(1710858245), // 2024-03-19T14:24:05Z
   isUnderReview: true,
   display: {
     name: 'Ankr',
@@ -30,7 +30,7 @@ export const ankr: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0xc437DF90B37C1dB6657339E31BfE54627f0e7181'),
-        sinceTimestamp: new UnixTime(1646203700),
+        sinceTimestamp: UnixTime(1646203700),
         tokens: ['ANKR', 'ankrETH', 'ankrPOL'],
         chain: 'ethereum',
       },

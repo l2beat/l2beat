@@ -23,7 +23,7 @@ export const sophon: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.Avail],
-  addedAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
+  addedAt: UnixTime(1716536140), // 2024-05-24T07:35:40Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',
@@ -50,7 +50,7 @@ export const sophon: Layer2 = zkStackL2({
     chainId: 50104,
     gasTokens: ['SOPH'],
     explorerUrl: 'https://explorer.sophon.xyz',
-    sinceTimestamp: new UnixTime(1729531437),
+    sinceTimestamp: UnixTime(1729531437),
     apis: [
       {
         type: 'rpc',

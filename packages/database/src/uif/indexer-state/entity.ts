@@ -14,7 +14,10 @@ export interface IndexerStateRecord {
 export function toRow(record: IndexerStateRecord): Insertable<IndexerState> {
   return {
     ...record,
-    minTimestamp: record.minTimestamp?.toDate(),
+    minTimestamp:
+      record.minTimestamp !== undefined
+        ? UnixTime.toDate(record.minTimestamp)
+        : undefined,
   }
 }
 

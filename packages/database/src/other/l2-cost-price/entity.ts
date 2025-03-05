@@ -16,7 +16,7 @@ export function toRecord(row: Selectable<L2CostPrice>): L2CostPriceRecord {
 
 export function toRow(record: L2CostPriceRecord): Insertable<L2CostPrice> {
   return {
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
     priceUsd: record.priceUsd,
   }
 }

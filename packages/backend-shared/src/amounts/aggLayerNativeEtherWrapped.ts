@@ -4,7 +4,6 @@ import {
   type AggLayerNativeEtherWrapped,
   AssetId,
   type Token,
-  UnixTime,
 } from '@l2beat/shared-pure'
 
 export function getAggLayerNativeEtherWrappedEntry(
@@ -25,10 +24,7 @@ export function getAggLayerNativeEtherWrappedEntry(
   const symbol = 'ETH'
   const source = 'canonical'
   const includeInTotal = true
-  const sinceTimestamp = UnixTime.max(
-    chain.sinceTimestamp,
-    escrow.sinceTimestamp,
-  )
+  const sinceTimestamp = Math.max(chain.sinceTimestamp, escrow.sinceTimestamp)
   const untilTimestamp = escrow.untilTimestamp
   const decimals = 18
   const isAssociated = false

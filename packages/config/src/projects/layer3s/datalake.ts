@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const datalake: Layer3 = upcomingL3({
   id: 'datalake',
   capability: 'universal',
-  addedAt: new UnixTime(1738498515), // 2025-02-02T14:15:15Z
+  addedAt: UnixTime(1738498515), // 2025-02-02T14:15:15Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'DataLake',

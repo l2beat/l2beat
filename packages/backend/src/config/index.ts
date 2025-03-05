@@ -18,7 +18,7 @@ export function getConfig(): Promise<Config> {
         isLocal: true,
         minTimestampOverride: env.optionalBoolean('NO_TIMESTAMP_OVERRIDE')
           ? undefined
-          : UnixTime.now().add(-7, 'days').toStartOf('hour'),
+          : UnixTime.toStartOf(UnixTime.now() - UnixTime(7, 'days'), 'hour'),
       })
     case 'staging':
       return makeConfig(env, { name: 'Backend/Staging' })

@@ -4,7 +4,6 @@ import {
   AssetId,
   type CirculatingSupplyEntry,
   type Token,
-  UnixTime,
 } from '@l2beat/shared-pure'
 
 export function getCirculatingSupplyEntry(
@@ -22,10 +21,7 @@ export function getCirculatingSupplyEntry(
   const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
     token.symbol,
   )
-  const sinceTimestamp = UnixTime.max(
-    chain.sinceTimestamp,
-    token.sinceTimestamp,
-  )
+  const sinceTimestamp = Math.max(chain.sinceTimestamp, token.sinceTimestamp)
 
   return {
     address: address,

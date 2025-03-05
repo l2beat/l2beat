@@ -26,7 +26,7 @@ export const MOCKS_FOR_TVL = {
 function amountRecord(configId: string, timestamp: number): AmountRecord {
   return {
     configId: configId,
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     amount: BigInt(timestamp) * 10n ** BigInt(DECIMALS),
   }
 }
@@ -38,7 +38,7 @@ function amountConfiguration(v: Partial<TotalSupplyEntry>) {
     chain: 'chain',
     project: ProjectId('project'),
     source: 'canonical',
-    sinceTimestamp: UnixTime.ZERO,
+    sinceTimestamp: 0,
     includeInTotal: true,
     decimals: DECIMALS,
     assetId: AssetId.create(v.chain ?? 'chain', v.address),
@@ -52,7 +52,7 @@ function amountConfiguration(v: Partial<TotalSupplyEntry>) {
 function priceRecord(id: string, timestamp: number): PriceRecord {
   return {
     configId: id,
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     priceUsd: 1,
   }
 }
@@ -62,7 +62,7 @@ function priceConfiguration(v: Partial<CoingeckoPriceConfigEntry>) {
     assetId: AssetId.create(v.chain ?? 'chain', v.address),
     address: EthereumAddress.ZERO,
     chain: 'chain',
-    sinceTimestamp: UnixTime.ZERO,
+    sinceTimestamp: 0,
     type: 'coingecko',
     coingeckoId: CoingeckoId('coingeckoId'),
     ...v,
@@ -73,7 +73,7 @@ function valueRecord(v?: Partial<ValueRecord>) {
   return {
     projectId: ProjectId('project'),
     dataSource: 'chain',
-    timestamp: new UnixTime(0),
+    timestamp: 0,
     canonical: 0n,
     canonicalAssociated: 0n,
     canonicalForTotal: 0n,

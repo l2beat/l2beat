@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('hychain', 'ethereum')
 
 export const hychain: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1710846977), // 2024-03-19T11:16:17Z
+  addedAt: UnixTime(1710846977), // 2024-03-19T11:16:17Z
   additionalBadges: [BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [

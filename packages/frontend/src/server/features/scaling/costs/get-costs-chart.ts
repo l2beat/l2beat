@@ -62,20 +62,20 @@ export const getCachedCostsChartData = cache(
 
     const summedByTimestamp = sumByTimestamp(data, resolution)
 
-    const minTimestamp = new UnixTime(Math.min(...summedByTimestamp.keys()))
-    const maxTimestamp = new UnixTime(Math.max(...summedByTimestamp.keys()))
+    const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
+    const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
 
     const timestamps = generateTimestamps(
       [minTimestamp, maxTimestamp],
       resolution,
     )
     const result = timestamps.map((timestamp) => {
-      const entry = summedByTimestamp.get(timestamp.toNumber())
+      const entry = summedByTimestamp.get(timestamp)
       const blobsFallback =
-        timestamp.toNumber() >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
+        timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
       if (!entry) {
         return [
-          timestamp.toNumber(),
+          timestamp,
           0,
           0,
           0,
@@ -91,7 +91,7 @@ export const getCachedCostsChartData = cache(
         ] as const
       }
       return [
-        timestamp.toNumber(),
+        timestamp,
         entry.overheadGas,
         entry.overheadGasEth,
         entry.overheadGasUsd,
@@ -124,7 +124,7 @@ function getMockCostsChartData({
   const timestamps = generateTimestamps(range, resolution)
 
   return timestamps.map((timestamp) => [
-    timestamp.toNumber(),
+    timestamp,
     20000,
     0.5,
     1000,
@@ -163,9 +163,11 @@ function sumByTimestamp(
   >()
 
   for (const record of records) {
-    const timestamp = record.timestamp
-      .toStartOf(resolution === 'daily' ? 'day' : 'hour')
-      .toNumber()
+    const timestamp = UnixTime.toStartOf(
+      record.timestamp,
+      resolution === 'daily' ? 'day' : 'hour',
+    )
+
     const existing = result.get(timestamp)
     if (existing) {
       result.set(timestamp, {

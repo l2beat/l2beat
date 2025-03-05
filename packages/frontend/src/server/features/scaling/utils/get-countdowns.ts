@@ -23,7 +23,7 @@ export function getCountdowns(
       project.scalingInfo.reasonsForBeingOther &&
       project.scalingInfo.type !== 'Other'
         ? {
-            expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
+            expiresAt: PROJECT_COUNTDOWNS.otherMigration,
             pretendingToBe: project.scalingInfo.type,
             reasons: project.scalingInfo.reasonsForBeingOther,
           }
