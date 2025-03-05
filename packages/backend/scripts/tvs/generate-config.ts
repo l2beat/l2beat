@@ -45,7 +45,7 @@ const cmd = command({
       return
     }
 
-    const tvsConfig = await generateConfigForProject(ps, args.project)
+    const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 
     logger.info('Executing TVS to exclude zero-valued tokens')
     const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
@@ -68,7 +68,11 @@ const cmd = command({
 
 run(cmd, process.argv.slice(2))
 
-async function generateConfigForProject(ps: ProjectService, projectId: string) {
+async function generateConfigForProject(
+  ps: ProjectService,
+  projectId: string,
+  logger: Logger,
+) {
   const project = await ps.getProject({
     id: ProjectId(projectId),
     select: ['tvlConfig', 'chainConfig'],
@@ -83,7 +87,7 @@ async function generateConfigForProject(ps: ProjectService, projectId: string) {
       120,
     ),
     retryStrategy: 'RELIABLE',
-    logger: Logger.INFO,
+    logger,
     url: env.string(
       `${projectId.toUpperCase()}_RPC_URL`,
       project.chainConfig.apis.find((a) => a.type === 'rpc')?.url,
@@ -92,7 +96,7 @@ async function generateConfigForProject(ps: ProjectService, projectId: string) {
   })
 
   assert(project, `${projectId} project not found`)
-  return mapConfig(project, project.chainConfig, rpc)
+  return mapConfig(project, project.chainConfig, logger, rpc)
 }
 
 function initLogger(env: Env) {

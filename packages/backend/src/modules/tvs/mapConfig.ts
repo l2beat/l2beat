@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import type { Logger } from '@l2beat/backend-tools'
 import {
   type AggLayerEscrow,
   type ChainConfig,
@@ -29,6 +30,7 @@ import {
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
+  logger: Logger,
   rpcClient?: RpcClient,
 ): Promise<TvsConfig> {
   const tokens: Token[] = []
@@ -36,12 +38,12 @@ export async function mapConfig(
   for (const escrow of project.tvlConfig.escrows) {
     if (escrow.sharedEscrow) {
       if (rpcClient === undefined) {
-        console.warn(`No Multicall passed, sharedEscrow support is not enabled`)
+        logger.warn(`No Multicall passed, sharedEscrow support is not enabled`)
         continue
       }
 
       if (escrow.sharedEscrow.type === 'AggLayer') {
-        console.log(`Querying for AggLayer L2 tokens addresses`)
+        logger.info(`Querying for AggLayer L2 tokens addresses`)
         const aggLayerL2Tokens = await getAggLayerTokens(
           project,
           chain,
@@ -56,7 +58,7 @@ export async function mapConfig(
       }
 
       if (escrow.sharedEscrow.type === 'ElasticChain') {
-        console.log(`Querying for ElasticChain L2 tokens addresses`)
+        logger.info(`Querying for ElasticChain L2 tokens addresses`)
 
         const elasticChainTokens = await getElasticChainTokens(
           project,

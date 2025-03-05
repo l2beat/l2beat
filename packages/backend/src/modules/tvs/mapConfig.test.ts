@@ -8,6 +8,7 @@ import {
 import { expect, mockObject } from 'earl'
 import { extractPricesAndAmounts, mapConfig } from './mapConfig'
 import { type Token, TokenId, type TvsConfig } from './types'
+import { Logger } from '@l2beat/backend-tools'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
@@ -18,7 +19,11 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = await mapConfig(arbitrum, arbitrum.chainConfig)
+    const result = await mapConfig(
+      arbitrum,
+      arbitrum.chainConfig,
+      Logger.SILENT,
+    )
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
