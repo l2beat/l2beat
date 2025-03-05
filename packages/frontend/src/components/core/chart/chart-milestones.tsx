@@ -15,7 +15,6 @@ import { DialogTitle } from '../dialog'
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTrigger,
@@ -56,15 +55,17 @@ export function ChartMilestones<T extends { timestamp: number }>({
 
   if (!timestampedMilestones || width === undefined) return null
 
-  const validMilestones = timestampedMilestones.filter((data) => data.milestone)
+  const sortedMilestones = [...milestones].sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime()
+  })
 
   return (
     <div data-role="milestones">
       {timestampedMilestones?.map((data, index) => {
         if (!data.milestone) return null
         const x = index / (timestampedMilestones.length - 1)
-        const milestoneIndex = validMilestones.findIndex(
-          (m) => m.milestone?.date === data.milestone?.date,
+        const milestoneIndex = sortedMilestones.findIndex(
+          (m) => m.date === data.milestone?.date,
         )
 
         return (
@@ -72,7 +73,7 @@ export function ChartMilestones<T extends { timestamp: number }>({
             key={data.milestone.date}
             left={x * width - 10}
             milestoneIndex={milestoneIndex}
-            allMilestones={validMilestones}
+            allMilestones={sortedMilestones}
           />
         )
       })}
@@ -87,19 +88,14 @@ function ChartMilestone({
 }: {
   left: number
   milestoneIndex: number
-  allMilestones: TimestampedMilestone[]
+  allMilestones: Milestone[]
 }) {
   const isMobile = useIsMobile()
-  const [openedMilestone, setOpenedMilestone] = useState<number>(milestoneIndex)
-
-  const triggerMilestone = allMilestones[milestoneIndex]?.milestone
-  const tooltipMilestone = allMilestones[openedMilestone]?.milestone
-  assert(triggerMilestone && tooltipMilestone)
+  const triggerMilestone = allMilestones[milestoneIndex]
+  assert(triggerMilestone)
 
   const Icon =
     triggerMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
-  const UsedIcon =
-    tooltipMilestone?.type === 'general' ? MilestoneIcon : IncidentIcon
 
   const common =
     'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-8'
@@ -110,46 +106,10 @@ function ChartMilestone({
           <Icon className={cn(common, 'scale-75')} style={{ left }} />
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerHeader>
-            <DialogTitle className="flex gap-1.5 font-bold">
-              <UsedIcon className="size-[18px] shrink-0" />
-              <span>{tooltipMilestone.title}</span>
-            </DialogTitle>
-            <DrawerDescription>
-              <p className="mb-4 ml-6 text-xs text-secondary">
-                {formatDate(tooltipMilestone.date.slice(0, 10))}
-              </p>
-              <p className="mb-2 leading-[140%]">
-                {tooltipMilestone.description}
-              </p>
-              <CustomLink href={tooltipMilestone.url}>Learn more</CustomLink>
-            </DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter className="flex flex-row items-center justify-between px-0 pb-8 pt-6">
-            <Button
-              size="sm"
-              className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
-              onClick={() => setOpenedMilestone((s) => s - 1)}
-              aria-label="Previous milestone"
-              disabled={openedMilestone === 0}
-            >
-              <ChevronIcon className="mr-1 size-3 rotate-90" />
-              Previous
-            </Button>
-            <div className="text-[13px] text-secondary">
-              {openedMilestone + 1} of {allMilestones.length}
-            </div>
-            <Button
-              size="sm"
-              className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
-              onClick={() => setOpenedMilestone((s) => s + 1)}
-              aria-label="Next milestone"
-              disabled={openedMilestone === allMilestones.length - 1}
-            >
-              Next
-              <ChevronIcon className="ml-1 size-3 -rotate-90" />
-            </Button>
-          </DrawerFooter>
+          <MilestoneDrawerContent
+            milestoneIndex={milestoneIndex}
+            allMilestones={allMilestones}
+          />
         </DrawerContent>
       </Drawer>
     )
@@ -180,6 +140,64 @@ function ChartMilestone({
         </div>
       </TooltipContent>
     </Tooltip>
+  )
+}
+
+function MilestoneDrawerContent({
+  milestoneIndex,
+  allMilestones,
+}: {
+  milestoneIndex: number
+  allMilestones: Milestone[]
+}) {
+  const [openedMilestone, setOpenedMilestone] = useState<number>(milestoneIndex)
+  const tooltipMilestone = allMilestones[openedMilestone]
+  assert(tooltipMilestone)
+
+  const Icon =
+    tooltipMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
+
+  return (
+    <>
+      <DrawerHeader>
+        <DialogTitle className="flex gap-1.5 font-bold">
+          <Icon className="size-[18px] shrink-0" />
+          <span>{tooltipMilestone.title}</span>
+        </DialogTitle>
+        <p className="mb-4 ml-6 text-xs text-secondary">
+          {formatDate(tooltipMilestone.date.slice(0, 10))}
+        </p>
+        <p className="mb-2 text-sm leading-[140%]">
+          {tooltipMilestone.description}
+        </p>
+        <CustomLink href={tooltipMilestone.url}>Learn more</CustomLink>
+      </DrawerHeader>
+      <DrawerFooter className="flex flex-row items-center justify-between px-0 pb-8 pt-6">
+        <Button
+          size="sm"
+          className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
+          onClick={() => setOpenedMilestone((s) => s - 1)}
+          aria-label="Previous milestone"
+          disabled={openedMilestone === 0}
+        >
+          <ChevronIcon className="mr-1 size-3 rotate-90" />
+          Previous
+        </Button>
+        <div className="text-[13px] text-secondary">
+          {openedMilestone + 1} of {allMilestones.length}
+        </div>
+        <Button
+          size="sm"
+          className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
+          onClick={() => setOpenedMilestone((s) => s + 1)}
+          aria-label="Next milestone"
+          disabled={openedMilestone === allMilestones.length - 1}
+        >
+          Next
+          <ChevronIcon className="ml-1 size-3 -rotate-90" />
+        </Button>
+      </DrawerFooter>
+    </>
   )
 }
 
