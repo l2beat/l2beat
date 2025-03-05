@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cn } from '~/utils/cn'
-import { LinkWithOnHoverPrefetch } from '../link/link-with-on-hover-prefetch'
+import { TableRowHighlighter } from '../highlighters/table-row-highlighter'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -17,6 +17,7 @@ const Table = ({
           {...props}
         />
       </div>
+      <TableRowHighlighter />
     </div>
   )
 }
@@ -57,8 +58,10 @@ const TableRow = ({
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
+    // eslint-disable-next-line tailwindcss/no-custom-classname
     className={cn(
-      'group/row border-b border-b-divider hover:shadow-sm',
+      'group/row border-b border-b-divider',
+      'data-[highlighted]:!mask-none data-[highlighted]:animate-row-highlight',
       className,
     )}
     {...props}
@@ -101,40 +104,22 @@ TableHead.displayName = 'TableHead'
 const TableCell = ({
   className,
   children,
-  href,
   align,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
-  href?: string
   align?: 'right' | 'center'
 }) => (
   <td
     className={cn(
       'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
-      !href && [
-        'pr-3 first:pl-2 last:pr-2 md:pr-4',
-        align === 'center' && 'text-center',
-        align === 'right' && 'text-right',
-        className,
-      ],
+      'pr-3 first:pl-2 last:pr-4 md:pr-4',
+      align === 'center' && 'text-center *:mx-auto',
+      align === 'right' && 'text-right *:ml-auto',
+      className,
     )}
     {...props}
   >
-    {href ? (
-      <LinkWithOnHoverPrefetch
-        href={href}
-        className={cn(
-          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
-          align === 'center' && 'justify-center',
-          align === 'right' && 'justify-end',
-          className,
-        )}
-      >
-        {children}
-      </LinkWithOnHoverPrefetch>
-    ) : (
-      children
-    )}
+    {children}
   </td>
 )
 TableCell.displayName = 'TableCell'

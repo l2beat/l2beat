@@ -1,5 +1,6 @@
 import type { ProjectScalingStage } from '@l2beat/config'
 
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import {
   StageBadge,
   getStageTextClassname,
@@ -17,9 +18,10 @@ import { StageTooltip } from './stage-tooltip'
 export interface StageCellProps {
   stageConfig: ProjectScalingStage
   isAppchain: boolean
+  href?: string
 }
 
-export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
+export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
   const hasNotice =
     stageConfig.stage !== 'UnderReview' &&
     stageConfig.stage !== 'NotApplicable' &&
@@ -27,24 +29,25 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger
-        className="flex gap-1 max-md:pb-[5px] max-md:pt-2"
-        disabledOnMobile
-      >
-        <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
-        {hasNotice && (
-          <CircleQuestionMarkIcon
-            className={cn(
-              'mt-px size-5 fill-current',
-              getStageTextClassname(stageConfig.stage),
+      <TooltipTrigger disabledOnMobile>
+        <TableLink href={href} className={cn(isAppchain && 'md:py-1')}>
+          <div className="flex gap-1 max-md:pb-[5px] max-md:pt-2">
+            <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
+            {hasNotice && (
+              <CircleQuestionMarkIcon
+                className={cn(
+                  'mt-px size-5 fill-current',
+                  getStageTextClassname(stageConfig.stage),
+                )}
+              />
             )}
-          />
-        )}
-        {stageConfig.stage !== 'NotApplicable' &&
-          stageConfig.stage !== 'UnderReview' &&
-          stageConfig.downgradePending && (
-            <StopwatchIcon className="mt-[3px]" />
-          )}
+            {stageConfig.stage !== 'NotApplicable' &&
+              stageConfig.stage !== 'UnderReview' &&
+              stageConfig.downgradePending && (
+                <StopwatchIcon className="mt-[3px]" />
+              )}
+          </div>
+        </TableLink>
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />

@@ -44,7 +44,7 @@ export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
   }
 
   const trigger = (
-    <TwoRowCell>
+    <TwoRowCell className="w-max">
       <TwoRowCell.First className="flex items-center gap-1">
         <SentimentText sentiment={value.sentiment ?? 'neutral'}>
           {value.value}

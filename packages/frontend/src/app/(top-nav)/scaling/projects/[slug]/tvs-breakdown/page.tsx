@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { PrimaryCardHighlighter } from '~/components/highlighters/primary-card-highlighter'
 import { PrimaryCard } from '~/components/primary-card'
 import { env } from '~/env'
 import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
@@ -76,23 +77,23 @@ export default async function Page(props: Props) {
       />
       <div className="md:mt-6 md:space-y-6">
         {canonical.length > 0 && (
-          <PrimaryCard>
+          <PrimaryCard id="canonical">
             <CanonicallyBridgedTable tokens={canonical} />
           </PrimaryCard>
         )}
         {external.length > 0 && (
-          <PrimaryCard>
+          <PrimaryCard id="external">
             <ExternallyBridgedTable tokens={external} />
           </PrimaryCard>
         )}
         {native.length > 0 && (
-          <PrimaryCard>
+          <PrimaryCard id="native">
             <NativelyMintedTable tokens={native} />
           </PrimaryCard>
         )}
       </div>
-
       <RequestTokenBox />
+      <PrimaryCardHighlighter />
     </>
   )
 }

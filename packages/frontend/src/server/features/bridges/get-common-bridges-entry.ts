@@ -22,7 +22,6 @@ export function getCommonBridgesEntry({
     slug: project.slug,
     name: project.name,
     shortName: project.shortName,
-    href: `/bridges/projects/${project.slug}`,
     filterable: {
       type: project.bridgeInfo.category,
       validatedBy: project.bridgeInfo.validatedBy,

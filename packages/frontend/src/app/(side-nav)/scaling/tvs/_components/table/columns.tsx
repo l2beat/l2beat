@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
+import { TableLink } from '../../../summary/_components/table/table-link'
 import type { ScalingTvsTableRow } from '../../_utils/to-table-rows'
 import { TotalValueSecuredCell } from './total-value-secured-cell'
 import { ValueSecuredCell } from './value-secured-cell'
@@ -9,7 +10,10 @@ import { ValueSecuredCell } from './value-secured-cell'
 const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
 export const scalingTvsColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}#tvs`,
+  ),
   columnHelper.group({
     id: 'data',
     header: undefined,
@@ -38,6 +42,7 @@ export const scalingTvsColumns = [
             }
             return (
               <TotalValueSecuredCell
+                href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown`}
                 tvsWarnings={ctx.row.original.tvs.warnings}
                 breakdown={{
                   canonical: data.breakdown.canonical,
@@ -65,13 +70,22 @@ export const scalingTvsColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-
-      return (
+      const children = (
         <ValueSecuredCell
           value={data.breakdown.canonical}
           change={data.change.canonical}
         />
       )
+      if (data.breakdown.canonical > 0) {
+        return (
+          <TableLink
+            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`}
+          >
+            {children}
+          </TableLink>
+        )
+      }
+      return children
     },
     sortUndefined: 'last',
     meta: {
@@ -89,13 +103,22 @@ export const scalingTvsColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-
-      return (
+      const children = (
         <ValueSecuredCell
           value={data.breakdown.external}
           change={data.change.external}
         />
       )
+      if (data.breakdown.external > 0) {
+        return (
+          <TableLink
+            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`}
+          >
+            {children}
+          </TableLink>
+        )
+      }
+      return children
     },
     sortUndefined: 'last',
     meta: {
@@ -113,13 +136,22 @@ export const scalingTvsColumns = [
       if (!data) {
         return <NoDataBadge />
       }
-
-      return (
+      const children = (
         <ValueSecuredCell
           value={data.breakdown.native}
           change={data.change.native}
         />
       )
+      if (data.breakdown.native > 0) {
+        return (
+          <TableLink
+            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`}
+          >
+            {children}
+          </TableLink>
+        )
+      }
+      return children
     },
     sortUndefined: 'last',
     meta: {

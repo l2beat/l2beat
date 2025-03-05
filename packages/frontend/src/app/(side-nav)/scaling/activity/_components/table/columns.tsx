@@ -33,7 +33,11 @@ export const getScalingActivityColumns = (
   metric: ActivityMetric,
   opts?: CommonProjectColumnsOptions,
 ) => [
-  ...getScalingCommonProjectColumns(columnHelper, opts),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}#activity`,
+    opts,
+  ),
   columnHelper.accessor('data.pastDayCount', {
     header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
     cell: (ctx) => {

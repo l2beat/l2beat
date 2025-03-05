@@ -11,7 +11,10 @@ import type { BridgesRiskEntry } from '~/server/features/bridges/get-bridges-ris
 const columnHelper = createColumnHelper<BridgesRiskEntry>()
 
 export const bridgesRisksColumns = [
-  ...getBridgesCommonProjectColumns(columnHelper),
+  ...getBridgesCommonProjectColumns(
+    columnHelper,
+    (row) => `/bridges/projects/${row.slug}`,
+  ),
   columnHelper.accessor((e) => adjustTableValue(e.destination), {
     header: 'Destination',
     meta: {

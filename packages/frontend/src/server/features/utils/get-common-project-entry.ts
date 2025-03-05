@@ -9,7 +9,6 @@ export interface CommonProjectEntry {
   nameSecondLine?: string
   shortName?: string
   slug: string
-  href: string | undefined
   statuses:
     | {
         yellowWarning?: string

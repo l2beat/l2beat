@@ -23,9 +23,9 @@ import {
 import { TableEmptyState } from './table-empty-state'
 import { getCommonPinningStyles } from './utils/common-pinning-styles'
 import {
+  getRowClassNames,
+  getRowClassNamesWithoutOpacity,
   getRowType,
-  getRowTypeClassNames,
-  getRowTypeClassNamesWithoutOpacity,
 } from './utils/row-type'
 
 export interface BasicTableProps<T extends CommonProjectEntry> {
@@ -81,7 +81,7 @@ export function BasicTable<T extends CommonProjectEntry>(
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
                         header.column.getIsPinned() &&
-                          getRowTypeClassNamesWithoutOpacity(null),
+                          getRowClassNamesWithoutOpacity(null),
                       )}
                       style={getCommonPinningStyles(header.column)}
                     >
@@ -119,7 +119,7 @@ export function BasicTable<T extends CommonProjectEntry>(
                         'rounded-tr-lg',
                     ],
                     header.column.getIsPinned() &&
-                      getRowTypeClassNamesWithoutOpacity(null),
+                      getRowClassNamesWithoutOpacity(null),
                     header.column.columnDef.meta?.headClassName,
                   )}
                   align={header.column.columnDef.meta?.align}
@@ -182,8 +182,9 @@ export function BasicTableRow<T extends CommonProjectEntry>({
   return (
     <>
       <TableRow
+        data-slug={row.original.slug}
         className={cn(
-          getRowTypeClassNames(rowType),
+          getRowClassNames(rowType),
           row.getIsExpanded() &&
             props.renderSubComponent?.({ row }) &&
             '!border-none',
@@ -193,7 +194,6 @@ export function BasicTableRow<T extends CommonProjectEntry>({
         {row.getVisibleCells().map((cell) => {
           const { meta } = cell.column.columnDef
           const groupParams = getBasicTableGroupParams(cell.column)
-          const href = getBasicTableHref(row.original.href, meta?.hash)
 
           if (meta?.hideIfNull && cell.renderValue() === null) {
             return null
@@ -206,11 +206,8 @@ export function BasicTableRow<T extends CommonProjectEntry>({
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
               <TableCell
-                href={href}
                 align={meta?.align}
                 className={cn(
-                  cell.column.getIsPinned() &&
-                    getRowTypeClassNamesWithoutOpacity(rowType),
                   groupParams?.isFirstInGroup && 'pl-6',
                   groupParams?.isLastInGroup && '!pr-6',
                   cell.column.getCanSort() && meta?.align === undefined
@@ -218,6 +215,8 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                       ? 'pl-10'
                       : 'pl-4'
                     : undefined,
+                  cell.column.getIsPinned() &&
+                    getRowClassNamesWithoutOpacity(rowType),
                   meta?.cellClassName,
                 )}
                 style={getCommonPinningStyles(cell.column)}
@@ -225,9 +224,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>
-              {groupParams?.isLastInGroup && (
-                <BasicTableColumnFiller as="td" href={href} />
-              )}
+              {groupParams?.isLastInGroup && <BasicTableColumnFiller as="td" />}
             </React.Fragment>
           )
         })}
@@ -275,8 +272,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
           className={cn(
             'h-4',
             !header.isPlaceholder && 'rounded-b-lg',
-            header.column.getIsPinned() &&
-              getRowTypeClassNamesWithoutOpacity(null),
+            header.column.getIsPinned() && getRowClassNamesWithoutOpacity(null),
           )}
           style={getCommonPinningStyles(header.column)}
         />
@@ -285,25 +281,11 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   )
 }
 
-type ColumnFillerProps =
-  | {
-      as: 'th' | 'colgroup'
-    }
-  | {
-      as: 'td'
-      href: string | undefined
-    }
-
-function BasicTableColumnFiller(props: ColumnFillerProps) {
-  if (props.as === 'td') {
-    return (
-      <td>
-        <a href={props.href} className="flex h-full w-4 items-center" />
-      </td>
-    )
-  }
-
-  const Comp = props.as
+function BasicTableColumnFiller({
+  as: Comp,
+}: {
+  as: 'th' | 'colgroup' | 'td'
+}) {
   return <Comp className="w-4" />
 }
 

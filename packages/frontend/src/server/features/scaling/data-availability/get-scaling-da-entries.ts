@@ -14,13 +14,17 @@ import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingDaEntries() {
-  const [tvs, projectsChangeReport, projects] = await Promise.all([
+  const [tvs, projectsChangeReport, projects, daLayers] = await Promise.all([
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
+      optional: ['customDa'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
+    }),
+    ps.getProjects({
+      select: ['daLayer'],
     }),
   ])
 
@@ -28,6 +32,7 @@ export async function getScalingDaEntries() {
     .map((project) =>
       getScalingDaEntry(
         project,
+        daLayers,
         projectsChangeReport.getChanges(project.id),
         tvs[project.id],
       ),
@@ -43,10 +48,15 @@ export interface ScalingDaEntry extends CommonScalingEntry {
   dataAvailability: ProjectScalingDa
   stack: ProjectScalingStack | undefined
   tvsOrder: number
+  daHref: string | undefined
 }
 
 function getScalingDaEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingDa' | 'display'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
+    'customDa'
+  >,
+  daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
 ): ScalingDaEntry {
@@ -54,7 +64,30 @@ function getScalingDaEntry(
     ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
+    daHref: getDaHref(project, daLayers),
     stack: project.scalingInfo.stack,
     tvsOrder: tvs ?? -1,
   }
+}
+
+function getDaHref(
+  project: Project<
+    'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
+    'customDa'
+  >,
+  daLayers: Project<'daLayer'>[],
+) {
+  if (project.customDa) {
+    return `/data-availability/summary?tab=custom&highlight=${project.slug}`
+  }
+
+  const daLayer = daLayers.find(
+    (l) => l.id === project.scalingDa.layer.projectId,
+  )
+
+  if (!daLayer) {
+    return undefined
+  }
+
+  return `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`
 }
