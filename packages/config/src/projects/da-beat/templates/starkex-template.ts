@@ -5,7 +5,7 @@ import {
   getCommittee,
 } from '../../../discovery/starkware'
 import type {
-  CustomDa,
+  ProjectCustomDa,
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
@@ -21,7 +21,7 @@ interface TemplateVars {
   discovery?: ProjectDiscovery
 }
 
-export function StarkexDAC(template: TemplateVars): CustomDa {
+export function StarkexDAC(template: TemplateVars): ProjectCustomDa {
   const { committeePermission, minSigners }: Partial<CommitteeResult> =
     template.discovery ? getCommittee(template.discovery) : {}
 

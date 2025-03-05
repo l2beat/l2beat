@@ -42,7 +42,7 @@ import type {
   ScalingProjectCapability,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
-  StageConfig,
+  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -93,7 +93,7 @@ export interface ZkStackConfigCommon {
   chainConfig?: ChainConfig
   usesBlobs?: boolean
   isUnderReview?: boolean
-  stage?: StageConfig
+  stage?: ProjectScalingStage
   additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]

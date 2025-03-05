@@ -8,15 +8,15 @@ import type {
 import type {
   Badge,
   BridgeCategory,
-  BridgeRiskView,
-  BridgeTechnology,
+  ProjectBridgeRisks,
+  ProjectBridgeTechnology,
   ChainConfig,
-  CustomDa,
+  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
   ProjectContracts,
   ProjectDaTrackingConfig,
-  ProjectDataAvailability,
+  ProjectScalingDa,
   ProjectDiscoveryInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
@@ -34,7 +34,7 @@ import type {
   ScalingProjectStack,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
-  StageConfig,
+  ProjectScalingStage,
   WarningWithSentiment,
 } from './types'
 
@@ -59,13 +59,13 @@ export interface ScalingProject {
   /** Technical chain configuration */
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
-  dataAvailability?: ProjectDataAvailability
+  dataAvailability?: ProjectScalingDa
   /** Details about the custom availability solution */
-  customDa?: CustomDa
+  customDa?: ProjectCustomDa
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
-  stage: StageConfig
+  stage: ProjectScalingStage
   /** Deep dive into layer2 technology */
   technology: ScalingProjectTechnology
   /** Open-source node details */
@@ -256,8 +256,8 @@ export interface Bridge {
   display: BridgeDisplay
   config: BridgeConfig
   chainConfig?: ChainConfig
-  riskView: BridgeRiskView
-  technology: BridgeTechnology
+  riskView: ProjectBridgeRisks
+  technology: ProjectBridgeTechnology
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]

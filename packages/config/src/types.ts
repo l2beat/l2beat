@@ -75,23 +75,23 @@ export interface BaseProject {
 
   // bridge data
   bridgeInfo?: ProjectBridgeInfo
-  bridgeRisks?: BridgeRiskView
-  bridgeTechnology?: BridgeTechnology
+  bridgeRisks?: ProjectBridgeRisks
+  bridgeTechnology?: ProjectBridgeTechnology
 
   // scaling data
   scalingInfo?: ProjectScalingInfo
-  scalingStage?: StageConfig
+  scalingStage?: ProjectScalingStage
   scalingRisks?: ProjectScalingRisks
-  scalingDa?: ProjectDataAvailability
+  scalingDa?: ProjectScalingDa
   scalingTechnology?: ProjectScalingTechnology
 
   // da data
-  daLayer?: DaLayer
-  daBridge?: DaBridge
-  customDa?: CustomDa
+  daLayer?: ProjectDaLayer
+  daBridge?: ProjectDaBridge
+  customDa?: ProjectCustomDa
 
   // zk catalog data
-  proofVerification?: ProofVerification
+  proofVerification?: ProjectProofVerification
 
   // feature configs
   tvlInfo?: ProjectTvlInfo
@@ -238,13 +238,13 @@ export interface ProjectBridgeInfo {
 
 export type BridgeCategory = 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
 
-export interface BridgeRiskView {
+export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
 }
 
-export interface BridgeTechnology {
+export interface ProjectBridgeTechnology {
   canonical?: boolean
   destination: string[]
   principleOfOperation?: ProjectTechnologyChoice
@@ -338,7 +338,7 @@ export type ScalingProjectPurpose =
   | 'IoT'
   | 'Restaking'
 
-export type StageConfig =
+export type ProjectScalingStage =
   | StageNotApplicable
   | StageUnderReview
   | StageConfigured
@@ -409,7 +409,7 @@ export interface ScalingProjectRiskView {
   proposerFailure: TableReadyValue
 }
 
-export interface ProjectDataAvailability {
+export interface ProjectScalingDa {
   layer: TableReadyValue & { projectId?: ProjectId }
   bridge: TableReadyValue & { projectId?: ProjectId }
   mode: TableReadyValue
@@ -447,7 +447,7 @@ export interface ScalingProjectStateDerivation {
 export interface ScalingProjectStateValidation {
   description: string
   categories: ScalingProjectStateValidationCategory[]
-  proofVerification?: ProofVerification
+  proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
 }
 
@@ -468,7 +468,7 @@ export interface ScalingProjectStateValidationCategory {
 // #endregion
 
 // #region da data
-export interface DaLayer {
+export interface ProjectDaLayer {
   name?: string
   description?: string
   type: string
@@ -554,7 +554,7 @@ export interface DaEconomicSecurity {
   }
 }
 
-export interface DaBridge {
+export interface ProjectDaBridge {
   name: string
   daLayer: ProjectId
   technology: DaTechnology
@@ -586,7 +586,7 @@ export interface DacInfo {
   hideMembers?: boolean
 }
 
-export interface CustomDa {
+export interface ProjectCustomDa {
   /** Will show the project name if not provided. */
   name?: string
   description?: string
@@ -602,7 +602,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #endregion
 
 // #region zk catalog data
-export interface ProofVerification {
+export interface ProjectProofVerification {
   shortDescription?: string
   aggregation: boolean
   verifiers: OnchainVerifier[]

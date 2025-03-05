@@ -1,6 +1,6 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
-  CustomDa,
+  ProjectCustomDa,
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
@@ -17,7 +17,7 @@ interface TemplateVars {
   discovery: ProjectDiscovery
 }
 
-export function AnytrustDAC(template: TemplateVars): CustomDa {
+export function AnytrustDAC(template: TemplateVars): ProjectCustomDa {
   const dac = template.discovery.getContractValue<{
     membersCount: number
     requiredSignatures: number

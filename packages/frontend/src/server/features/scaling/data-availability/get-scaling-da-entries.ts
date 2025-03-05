@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectDataAvailability,
+  ProjectScalingDa,
   ScalingProjectCategory,
   ScalingProjectStack,
 } from '@l2beat/config'
@@ -40,7 +40,7 @@ export async function getScalingDaEntries() {
 
 export interface ScalingDaEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
-  dataAvailability: ProjectDataAvailability
+  dataAvailability: ProjectScalingDa
   stack: ScalingProjectStack | undefined
   tvsOrder: number
 }

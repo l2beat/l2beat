@@ -6,7 +6,7 @@ import type { ScalingProjectTechnology } from '../../../internalTypes'
 import type {
   ProjectContracts,
   ScalingProjectRiskView,
-  StageConfig,
+  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { isUnderReview } from './isUnderReview'
@@ -24,7 +24,7 @@ describe(isUnderReview.name, () => {
     contracts: mockObject<ProjectContracts>({}),
     riskView: mockObject<ScalingProjectRiskView>(),
     config: mockObject<Layer2Config>(),
-    stage: mockObject<StageConfig>({ stage: 'Stage 1' }),
+    stage: mockObject<ProjectScalingStage>({ stage: 'Stage 1' }),
   }
 
   it('returns false', () => {

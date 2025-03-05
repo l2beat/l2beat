@@ -3,7 +3,7 @@ import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../internalTypes'
-import type { CustomDa } from '../../types'
+import type { ProjectCustomDa } from '../../types'
 import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -39,7 +39,7 @@ const requiredStakeFormatted = parseFloat(
   utils.formatEther(requiredStake),
 ).toLocaleString()
 
-const mantleDa: CustomDa = {
+const mantleDa: ProjectCustomDa = {
   type: 'Data Availability Committee',
   name: 'Mantle DA',
   description:

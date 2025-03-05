@@ -1,4 +1,4 @@
-import type { CustomDa, DaTechnology, DacInfo } from '../../../types'
+import type { ProjectCustomDa, DaTechnology, DacInfo } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DAC } from './dac-template'
 
@@ -6,7 +6,7 @@ interface TemplateVars {
   dac: DacInfo
 }
 
-export function PolygoncdkDAC(template: TemplateVars): CustomDa {
+export function PolygoncdkDAC(template: TemplateVars): ProjectCustomDa {
   const technology: DaTechnology = {
     description: `
 ## Architecture

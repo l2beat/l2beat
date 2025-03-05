@@ -1,5 +1,5 @@
 import type {
-  CustomDa,
+  ProjectCustomDa,
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
@@ -21,7 +21,7 @@ export interface DacTemplateVars {
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
 }
 
-export function DAC(template: DacTemplateVars): CustomDa {
+export function DAC(template: DacTemplateVars): ProjectCustomDa {
   const description =
     template.technology?.description ??
     `

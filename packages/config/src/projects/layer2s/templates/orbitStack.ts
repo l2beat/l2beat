@@ -37,11 +37,11 @@ import type {
 import type {
   Badge,
   ChainConfig,
-  CustomDa,
+  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
-  ProjectDataAvailability,
+  ProjectScalingDa,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectPermission,
@@ -55,7 +55,7 @@ import type {
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
   ScalingProjectStateValidationCategory,
-  StageConfig,
+  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -69,7 +69,7 @@ import {
 } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
-type DAProvider = ProjectDataAvailability & {
+type DAProvider = ProjectScalingDa & {
   riskViewDA: TableReadyValue
   riskViewExitWindow: TableReadyValue
   technology: ProjectTechnologyChoice
@@ -151,7 +151,7 @@ interface OrbitStackConfigCommon {
   chainConfig?: ChainConfig
   usesBlobs?: boolean
   additionalBadges?: Badge[]
-  stage?: StageConfig
+  stage?: ProjectScalingStage
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplateContractRisks?: ProjectRisk[]
@@ -160,7 +160,7 @@ interface OrbitStackConfigCommon {
   isArchived?: boolean
   /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
   untrackedGasTokens?: string[]
-  customDa?: CustomDa
+  customDa?: ProjectCustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -1102,7 +1102,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
   ]
 }
 
-function extractDA(daProvider: DAProvider): ProjectDataAvailability {
+function extractDA(daProvider: DAProvider): ProjectScalingDa {
   return {
     layer: daProvider.layer,
     bridge: daProvider.bridge,
@@ -1110,7 +1110,9 @@ function extractDA(daProvider: DAProvider): ProjectDataAvailability {
   }
 }
 
-function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
+function computedStage(
+  templateVars: OrbitStackConfigCommon,
+): ProjectScalingStage {
   const postsToL1 = postsToEthereum(templateVars)
 
   if (templateVars.stage !== undefined) {

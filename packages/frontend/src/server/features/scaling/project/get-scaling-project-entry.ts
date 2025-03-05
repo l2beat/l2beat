@@ -1,9 +1,9 @@
 import type {
   Badge,
   Project,
+  ProjectScalingStage,
   ReasonForBeingInOther,
   ScalingProjectCategory,
-  StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -93,7 +93,7 @@ export interface ScalingProjectEntry {
   countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
 }
 
 export async function getScalingProjectEntry(

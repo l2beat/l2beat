@@ -38,11 +38,11 @@ import type {
 import type {
   Badge,
   ChainConfig,
-  CustomDa,
+  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
-  ProjectDataAvailability,
+  ProjectScalingDa,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -57,7 +57,7 @@ import type {
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
-  StageConfig,
+  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -121,7 +121,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   addedAt: UnixTime
   daProvider?: DAProvider
-  customDa?: CustomDa
+  customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
@@ -151,7 +151,7 @@ interface OpStackConfigCommon {
   hasProperSecurityCouncil?: boolean
   usesBlobs?: boolean
   isUnderReview?: boolean
-  stage?: StageConfig
+  stage?: ProjectScalingStage
   additionalBadges?: Badge[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
@@ -732,7 +732,7 @@ function getRiskViewProposerFailure(
 function computedStage(
   templateVars: OpStackConfigCommon,
   postsToEthereum: boolean,
-): StageConfig {
+): ProjectScalingStage {
   if (!postsToEthereum || templateVars.isNodeAvailable === undefined) {
     return { stage: 'NotApplicable' }
   }
@@ -1089,7 +1089,7 @@ function getTechnologyExitMechanism(
   return result
 }
 
-function extractDA(daProvider: DAProvider): ProjectDataAvailability {
+function extractDA(daProvider: DAProvider): ProjectScalingDa {
   return {
     layer: daProvider.layer,
     bridge: daProvider.bridge,

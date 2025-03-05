@@ -30,7 +30,7 @@ import type {
 import type {
   Badge,
   ChainConfig,
-  CustomDa,
+  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
   ProjectContract,
@@ -65,7 +65,7 @@ export interface PolygonCDKStackConfig {
   addedAt: UnixTime
   capability?: ScalingProjectCapability
   daProvider?: DAProvider
-  customDa?: CustomDa
+  customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
