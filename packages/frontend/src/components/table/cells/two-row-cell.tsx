@@ -6,7 +6,7 @@ interface Props {
 }
 
 export function TwoRowCell({ children, className }: Props) {
-  return <div className={className}>{children}</div>
+  return <div className={cn('text-left', className)}>{children}</div>
 }
 
 TwoRowCell.First = TwoRowCellFirstRow
