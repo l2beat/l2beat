@@ -3,6 +3,7 @@ import {
   Drawer,
   DrawerContent,
   DrawerDescription,
+  DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from './core/drawer'
@@ -21,12 +22,14 @@ export function TabInfoWithDrawer({
             <div className="text-2xs font-medium underline">{title}</div>
           </DrawerTrigger>
           <DrawerContent className="px-1 pb-8">
-            <DrawerTitle className="text-[18px] font-semibold text-zinc-800 dark:text-primary">
-              {title}
-            </DrawerTitle>
-            <DrawerDescription className="mt-4 text-sm font-normal text-zinc-500 dark:text-primary">
-              {content}
-            </DrawerDescription>
+            <DrawerHeader>
+              <DrawerTitle className="text-[18px] font-semibold text-zinc-800 dark:text-primary">
+                {title}
+              </DrawerTitle>
+              <DrawerDescription className="mt-4 text-sm font-normal text-zinc-500 dark:text-primary">
+                {content}
+              </DrawerDescription>
+            </DrawerHeader>
           </DrawerContent>
         </Drawer>
       </div>
