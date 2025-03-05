@@ -10,9 +10,7 @@ import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
   Bridge,
-  Layer2,
   Layer2TxConfig,
-  Layer3,
   ProjectCostsInfo,
   ProjectDiscoveryInfo,
   ProjectEscrow,
@@ -20,6 +18,8 @@ import type {
   ProjectTvlConfig,
   ProjectTvlEscrow,
 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
+import type { Layer2 } from '../../internalTypes'
 import {
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,

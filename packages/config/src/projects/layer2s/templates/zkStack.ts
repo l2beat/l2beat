@@ -24,8 +24,6 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   Badge,
   ChainConfig,
-  Layer2,
-  Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
   Milestone,
@@ -44,6 +42,7 @@ import type {
   StageConfig,
   TableReadyValue,
 } from '../../../types'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'

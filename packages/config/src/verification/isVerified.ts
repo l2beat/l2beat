@@ -1,4 +1,6 @@
-import type { BaseProject, Bridge, Layer2, Layer3 } from '../types'
+import type { BaseProject, Bridge } from '../types'
+import type { Layer3 } from '../internalTypes'
+import type { Layer2 } from '../internalTypes'
 
 // TODO(radomski): Permissions
 export function isVerified(project: Layer2 | Layer3 | Bridge): boolean {

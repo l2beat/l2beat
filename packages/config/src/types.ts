@@ -10,19 +10,85 @@ import type {
   TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { REASON_FOR_BEING_OTHER } from './common'
+
+export interface BaseProject {
+  id: ProjectId
+  slug: string
+  name: string
+  /** Used in place of name in tables to save space. */
+  shortName: string | undefined
+  addedAt: UnixTime
+  // data
+  statuses?: ProjectStatuses
+  display?: ProjectDisplay
+  milestones?: Milestone[]
+  chainConfig?: ChainConfig
+
+  bridgeInfo?: ProjectBridgeInfo
+  bridgeRisks?: BridgeRiskView
+  bridgeTechnology?: BridgeTechnology
+
+  scalingInfo?: ProjectScalingInfo
+  scalingStage?: StageConfig | undefined
+  scalingRisks?: ProjectScalingRisks
+  scalingDa?: ProjectDataAvailability
+  scalingTechnology?: ProjectScalingTechnology
+
+  daLayer?: DaLayer
+  daBridge?: DaBridge
+  customDa?: CustomDa
+
+  proofVerification?: ProofVerification
+
+  tvlInfo?: ProjectTvlInfo
+  tvlConfig?: ProjectTvlConfig
+  activityConfig?: ProjectActivityConfig
+  livenessInfo?: ProjectLivenessInfo
+  livenessConfig?: ProjectLivenessConfig
+  costsInfo?: ProjectCostsInfo
+  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
+  finalityInfo?: Layer2FinalityDisplay
+  finalityConfig?: Layer2FinalityConfig
+  daTrackingConfig?: ProjectDaTrackingConfig[]
+
+  permissions?: Record<string, ProjectPermissions>
+  contracts?: ProjectContracts
+  discoveryInfo?: ProjectDiscoveryInfo
+  // tags
+  isBridge?: true
+  isScaling?: true
+  isZkCatalog?: true
+  isDaLayer?: true
+  isUpcoming?: true
+  isArchived?: true
+  hasActivity?: true
+}
+
+export interface ProjectStatuses {
+  yellowWarning: string | undefined
+  redWarning: string | undefined
+  isUnderReview: boolean
+  isUnverified: boolean
+  // countdowns
+  otherMigration?: {
+    expiresAt: number
+    pretendingToBe: ScalingProjectCategory
+    reasons: ReasonForBeingInOther[]
+  }
+}
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
-export type WarningSentiment = 'bad' | 'warning' | 'neutral'
-
 export interface WarningWithSentiment {
   value: string
-  sentiment: WarningSentiment
+  sentiment: 'bad' | 'warning' | 'neutral'
 }
 
-export type ReasonForBeingInOther =
-  (typeof REASON_FOR_BEING_OTHER)[keyof typeof REASON_FOR_BEING_OTHER]
+export interface ReasonForBeingInOther {
+  label: string
+  shortDescription: string
+  description: string
+}
 
 export interface MulticallContractConfig {
   address: EthereumAddress
@@ -89,53 +155,6 @@ export interface Milestone {
   date: string
   description?: string
   type: 'general' | 'incident'
-}
-
-/** Base interface for Layer2s and Layer3s. The hope is that Layer2 and Layer3 will dissapear and only this will remain. */
-export interface ScalingProject {
-  /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
-  id: ProjectId
-  capability: ScalingProjectCapability
-  /** Date of creation of the file (not the project) */
-  addedAt: UnixTime
-  /** Is this project archived? */
-  isArchived?: boolean
-  /** Is this project an upcoming rollup? */
-  isUpcoming?: boolean
-  /** Has this project changed and is under review? */
-  isUnderReview?: boolean
-  /** Information displayed about the project on the frontend */
-  display: ScalingProjectDisplay
-  /** Information required to calculate the stats of the project */
-  config: ScalingProjectConfig
-  /** Technical chain configuration */
-  chainConfig?: ChainConfig
-  /** Data availability of scaling project */
-  dataAvailability?: ProjectDataAvailability
-  /** Details about the custom availability solution */
-  customDa?: CustomDa
-  /** Risk view values for this layer2 */
-  riskView: ScalingProjectRiskView
-  /** Rollup stage */
-  stage: StageConfig
-  /** Deep dive into layer2 technology */
-  technology: ScalingProjectTechnology
-  /** Open-source node details */
-  stateDerivation?: ScalingProjectStateDerivation
-  /** Explains how project validates state */
-  stateValidation?: ScalingProjectStateValidation
-  /** List of smart contracts used in the layer2 */
-  contracts: ProjectContracts
-  /** List of permissioned addresses on a given chain */
-  permissions?: Record<string, ProjectPermissions>
-  /** Links to recent developments, milestones achieved by the project */
-  milestones?: Milestone[]
-  /** List of badges */
-  badges?: Badge[]
-  /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
-  reasonsForBeingOther?: ReasonForBeingInOther[]
-  /** Discodrive markers */
-  discoveryInfo?: ProjectDiscoveryInfo
 }
 
 export type ScalingProjectCapability = 'universal' | 'appchain'
@@ -453,22 +472,6 @@ export interface ProjectDataAvailability {
   mode: TableReadyValue
 }
 
-export interface Layer2 extends ScalingProject {
-  type: 'layer2'
-  display: Layer2Display
-  config: Layer2Config
-  /** Upgrades and governance explained */
-  upgradesAndGovernance?: string
-}
-
-export interface Layer2Display extends ScalingProjectDisplay {
-  /** Tooltip contents for liveness tab for given project */
-  liveness?: ProjectLivenessInfo
-  finality?: Layer2FinalityDisplay
-  /** Warning for Costs */
-  costsWarning?: WarningWithSentiment
-}
-
 export interface ProjectLivenessInfo {
   explanation?: string
   warnings?: {
@@ -643,14 +646,6 @@ export interface SubVerifier {
   link?: string
 }
 
-export interface Layer3 extends ScalingProject {
-  type: 'layer3'
-  /** ProjectId of hostChain */
-  hostChain: ProjectId
-  /** Stacked risk view values for this layer3 and it's base chain */
-  stackedRiskView: ScalingProjectRiskView
-}
-
 export interface Bridge {
   type: 'bridge'
   id: ProjectId
@@ -804,70 +799,6 @@ interface StageUnderReview {
 
 interface StageNotApplicable {
   stage: 'NotApplicable'
-}
-
-export interface BaseProject {
-  id: ProjectId
-  slug: string
-  name: string
-  /** Used in place of name in tables to save space. */
-  shortName: string | undefined
-  addedAt: UnixTime
-  // data
-  statuses?: ProjectStatuses
-  display?: ProjectDisplay
-  bridgeInfo?: ProjectBridgeInfo
-  bridgeRisks?: BridgeRiskView
-  bridgeTechnology?: BridgeTechnology
-  scalingInfo?: ProjectScalingInfo
-  scalingStage?: StageConfig | undefined
-  scalingRisks?: ProjectScalingRisks
-  scalingDa?: ProjectDataAvailability
-  scalingTechnology?: ProjectScalingTechnology
-  customDa?: CustomDa
-  tvlInfo?: ProjectTvlInfo
-  tvlConfig?: ProjectTvlConfig
-  activityConfig?: ProjectActivityConfig
-  /** Display information for the liveness feature. If present liveness is enabled for this project. */
-  livenessInfo?: ProjectLivenessInfo
-  livenessConfig?: ProjectLivenessConfig
-  /** Display information for the costs feature. If present costs is enabled for this project. */
-  costsInfo?: ProjectCostsInfo
-  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
-  /** Configuration for the finality feature. If present finality is enabled for this project. */
-  finalityInfo?: Layer2FinalityDisplay
-  /** Configuration for the finality feature. If present finality is enabled for this project. */
-  finalityConfig?: Layer2FinalityConfig
-  daTrackingConfig?: ProjectDaTrackingConfig[]
-  proofVerification?: ProofVerification
-  daLayer?: DaLayer
-  daBridge?: DaBridge
-  permissions?: Record<string, ProjectPermissions>
-  contracts?: ProjectContracts
-  discoveryInfo?: ProjectDiscoveryInfo
-  chainConfig?: ChainConfig
-  milestones?: Milestone[]
-  // tags
-  isBridge?: true
-  isScaling?: true
-  isZkCatalog?: true
-  isDaLayer?: true
-  isUpcoming?: true
-  isArchived?: true
-  hasActivity?: true
-}
-
-export interface ProjectStatuses {
-  yellowWarning: string | undefined
-  redWarning: string | undefined
-  isUnderReview: boolean
-  isUnverified: boolean
-  // countdowns
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ScalingProjectCategory
-    reasons: ReasonForBeingInOther[]
-  }
 }
 
 export interface ProjectDisplay {

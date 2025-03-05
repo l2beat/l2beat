@@ -26,8 +26,6 @@ import type {
   Badge,
   ChainConfig,
   CustomDa,
-  Layer2,
-  Layer2Display,
   Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
@@ -43,6 +41,7 @@ import type {
   ScalingProjectTechnology,
   TableReadyValue,
 } from '../../../types'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { getStage } from '../common/stages/getStage'

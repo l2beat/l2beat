@@ -7,7 +7,9 @@ import { mergeBadges } from './projects/layer2s/templates/utils'
 import { layer3s } from './projects/layer3s'
 import { getDiscoveryInfo } from './projects/project/getProjects'
 import { refactored } from './projects/refactored'
-import type { BaseProject, Bridge, ChainConfig, Layer2, Layer3 } from './types'
+import type { BaseProject, Bridge, ChainConfig } from './types'
+import type { Layer3 } from './internalTypes'
+import type { Layer2 } from './internalTypes'
 import { isProjectVerified, isVerified } from './verification/isVerified'
 
 let once = false

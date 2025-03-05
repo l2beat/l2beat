@@ -1,4 +1,6 @@
-import type { Bridge, Layer2, Layer3, TableReadyValue } from '../../../types'
+import type { Bridge, TableReadyValue } from '../../../types'
+import type { Layer3 } from '../../../internalTypes'
+import type { Layer2 } from '../../../internalTypes'
 
 // this function should be updated when new sections that can be under review are added
 export function isUnderReview(project: Layer2 | Bridge | Layer3): boolean {

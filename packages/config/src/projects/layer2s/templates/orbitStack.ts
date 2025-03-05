@@ -30,11 +30,8 @@ import type {
   Badge,
   ChainConfig,
   CustomDa,
-  Layer2,
-  Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
-  Layer3,
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
@@ -44,7 +41,6 @@ import type {
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
-  ScalingProject,
   ScalingProjectCapability,
   ScalingProjectDisplay,
   ScalingProjectPurpose,
@@ -57,6 +53,9 @@ import type {
   StageConfig,
   TableReadyValue,
 } from '../../../types'
+import type { Layer3 } from '../../../internalTypes'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
+import type { ScalingProject } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
