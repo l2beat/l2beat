@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x70df65f04fca6d46be0546c366b08acb9582600c
+Generated with discovered.json: 0xd2ce0d697da64d821eeb92b653ae740af3a91430
 
-# Diff at Wed, 05 Mar 2025 11:44:15 GMT:
+# Diff at Wed, 05 Mar 2025 14:42:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 19825361
-- current block number: 19825361
+- current block number: 21981345
 
 ## Description
 
@@ -54,13 +54,19 @@ discovery. Values are for block 19825361 (main branch discovery), not current.
 ```
 
 ```diff
-    contract FinalizableCommittee (0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446) {
-    +++ description: None
+    contract DACommittee (0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
       name:
 -        "Committee"
-+        "FinalizableCommittee"
-      values.constructorArgs:
--        [["0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1","0xC37a598468A59D5d6DCeb889847B5824aD61697e","0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9","0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00"],"2"]
++        "DACommittee"
+      template:
++        "starkex/Committee"
+      description:
++        "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2."
+      fieldMeta:
++        {"constructorArgs":{"description":"Includes DAC members and threshold."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 

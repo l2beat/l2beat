@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe01ed88a8c2c5e4a75f6d5a2943b57db15ad9e02
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+discodrive starkex chains.
 
 ## Config/verification related changes
 
