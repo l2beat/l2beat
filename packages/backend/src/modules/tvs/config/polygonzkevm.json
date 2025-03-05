@@ -1211,11 +1211,21 @@
       "category": "ether",
       "source": "canonical",
       "amount": {
-        "type": "nativeWithPremint",
-        "chain": "polygonzkevm",
-        "decimals": 18,
-        "l2BridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "premintedAmount": "200000000000000000000000000"
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "const",
+            "value": 200000000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "chain": "polygonzkevm",
+            "decimals": 18,
+            "address": "native",
+            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+          }
+        ]
       },
       "isAssociated": false
     },

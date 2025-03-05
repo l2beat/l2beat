@@ -267,18 +267,6 @@ export function createAmountConfig(
         id: hash([formula.type, formula.priceId]),
         ...formula,
       }
-
-    case 'nativeWithPremint':
-      return {
-        id: hash([
-          formula.type,
-          formula.chain,
-          formula.decimals.toString(),
-          formula.l2BridgeAddress.toString(),
-          formula.premintedAmount.toString(),
-        ]),
-        ...formula,
-      }
   }
 }
 

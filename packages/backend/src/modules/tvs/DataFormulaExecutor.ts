@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
 import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
-import { bigIntToNumber } from './bigIntToNumber'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
 import type { PriceProvider } from './providers/PriceProvider'
@@ -11,7 +10,6 @@ import type {
   AmountConfig,
   BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountConfig,
-  NativeAssetWithPremintAmountFormula,
   PriceConfig,
   TotalSupplyAmountConfig,
 } from './types'
@@ -89,11 +87,6 @@ export class DataFormulaExecutor {
           }
           case 'balanceOfEscrow': {
             const value = await this.fetchEscrowBalance(amount, block)
-            await this.storage.writeAmount(amount.id, timestamp, value)
-            break
-          }
-          case 'nativeWithPremint': {
-            const value = await this.fetchNativeWithPremint(amount, block)
             await this.storage.writeAmount(amount.id, timestamp, value)
             break
           }
@@ -243,26 +236,6 @@ export class DataFormulaExecutor {
           )
 
     return escrowBalance
-  }
-
-  async fetchNativeWithPremint(
-    config: NativeAssetWithPremintAmountFormula,
-    blockNumber: number,
-  ): Promise<number> {
-    this.logger.debug(`Fetching native balance on ${config.chain}`)
-
-    const nativeBalanceInBridge =
-      await this.balanceProvider.getNativeAssetBalance(
-        config.chain,
-        config.l2BridgeAddress,
-        config.decimals,
-        blockNumber,
-      )
-
-    return (
-      bigIntToNumber(config.premintedAmount, config.decimals) -
-      nativeBalanceInBridge
-    )
   }
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {

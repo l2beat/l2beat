@@ -12,6 +12,7 @@ import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
+import { bigIntToNumber } from '../bigIntToNumber'
 import { createToken } from '../mapConfig'
 import { type Token, TokenId } from '../types'
 
@@ -129,11 +130,21 @@ export async function getAggLayerTokens(
       category: 'ether' as const,
       source: 'canonical' as const,
       amount: {
-        type: 'nativeWithPremint' as const,
-        chain: project.id,
-        decimals: 18,
-        l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
-        premintedAmount: escrow.sharedEscrow.premintedAmount,
+        type: 'calculation',
+        operator: 'diff',
+        arguments: [
+          {
+            type: 'const',
+            value: bigIntToNumber(escrow.sharedEscrow.premintedAmount, 18),
+          },
+          {
+            type: 'balanceOfEscrow',
+            chain: project.id,
+            decimals: 18,
+            address: 'native',
+            escrowAddress: AGGLAYER_L2BRIDGE_ADDRESS,
+          },
+        ],
       },
       isAssociated: false,
     }
