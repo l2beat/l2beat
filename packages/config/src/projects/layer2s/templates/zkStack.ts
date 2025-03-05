@@ -25,13 +25,13 @@ import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
-  Layer2FinalityConfig,
   Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectContract,
   ProjectDaTrackingConfig,
   ProjectEscrow,
+  ProjectFinalityConfig,
   ProjectPermissions,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
@@ -77,7 +77,7 @@ export interface ZkStackConfigCommon {
   diamondContract: ContractParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
-  finality?: Layer2FinalityConfig
+  finality?: ProjectFinalityConfig
   l2OutputOracle?: ContractParameters
   portal?: ContractParameters
   milestones?: Milestone[]

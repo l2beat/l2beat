@@ -30,18 +30,19 @@ import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type { ScalingProject } from '../../../internalTypes'
+import type { ScalingProjectDisplay } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
   CustomDa,
-  Layer2FinalityConfig,
-  Layer2FinalityDisplay,
   Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
+  ProjectFinalityConfig,
+  ProjectFinalityInfo,
   ProjectLivenessInfo,
   ProjectRisk,
   ProjectTechnologyChoice,
@@ -57,7 +58,6 @@ import type {
   StageConfig,
   TableReadyValue,
 } from '../../../types'
-import type { ScalingProjectDisplay } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
@@ -130,7 +130,7 @@ interface OpStackConfigCommon {
   l1StandardBridgePremintedTokens?: string[]
   activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
-  finality?: Layer2FinalityConfig
+  finality?: ProjectFinalityConfig
   l2OutputOracle?: ContractParameters
   disputeGameFactory?: ContractParameters
   portal?: ContractParameters
@@ -1178,7 +1178,7 @@ function getLiveness(
 
 function getFinality(
   templateVars: OpStackConfigCommon,
-): Layer2FinalityDisplay | undefined {
+): ProjectFinalityInfo | undefined {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
 
   return ifPostsToEthereum(templateVars, {

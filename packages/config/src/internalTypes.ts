@@ -3,16 +3,16 @@ import type {
   Badge,
   ChainConfig,
   CustomDa,
-  Layer2FinalityConfig,
-  Layer2FinalityDisplay,
   Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectContracts,
-  ProjectDataAvailability,
   ProjectDaTrackingConfig,
+  ProjectDataAvailability,
   ProjectDiscoveryInfo,
   ProjectEscrow,
+  ProjectFinalityConfig,
+  ProjectFinalityInfo,
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
@@ -89,7 +89,7 @@ export interface Layer2 extends ScalingProject {
 export interface Layer2Display extends ScalingProjectDisplay {
   /** Tooltip contents for liveness tab for given project */
   liveness?: ProjectLivenessInfo
-  finality?: Layer2FinalityDisplay
+  finality?: ProjectFinalityInfo
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }
@@ -119,7 +119,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
   /** Configuration for getting finality data */
-  finality?: Layer2FinalityConfig
+  finality?: ProjectFinalityConfig
 }
 
 export interface ScalingProjectDisplay {

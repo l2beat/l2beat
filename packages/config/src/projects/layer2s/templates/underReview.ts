@@ -2,6 +2,7 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
+import type { ScalingProjectDisplay } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -9,7 +10,6 @@ import type {
   ProjectEscrow,
   ScalingProjectCapability,
 } from '../../../types'
-import type { ScalingProjectDisplay } from '../../../internalTypes'
 import { getActivityConfig } from './activity'
 
 interface UnderReviewConfigCommon {

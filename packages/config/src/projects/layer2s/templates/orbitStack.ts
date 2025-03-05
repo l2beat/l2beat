@@ -29,17 +29,18 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type { ScalingProject } from '../../../internalTypes'
+import type { ScalingProjectDisplay } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
   CustomDa,
-  Layer2FinalityConfig,
   Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
+  ProjectFinalityConfig,
   ProjectPermission,
   ProjectRisk,
   ProjectTechnologyChoice,
@@ -55,7 +56,6 @@ import type {
   StageConfig,
   TableReadyValue,
 } from '../../../types'
-import type { ScalingProjectDisplay } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
@@ -137,7 +137,7 @@ interface OrbitStackConfigCommon {
   }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
-  finality?: Layer2FinalityConfig
+  finality?: ProjectFinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>

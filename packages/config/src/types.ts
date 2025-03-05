@@ -102,8 +102,8 @@ export interface BaseProject {
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
   trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
-  finalityInfo?: Layer2FinalityDisplay
-  finalityConfig?: Layer2FinalityConfig
+  finalityInfo?: ProjectFinalityInfo
+  finalityConfig?: ProjectFinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
 
   // discovery data
@@ -602,6 +602,225 @@ export interface CustomDa {
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #endregion
 
+// #region zk catalog data
+export interface ProofVerification {
+  shortDescription?: string
+  aggregation: boolean
+  verifiers: OnchainVerifier[]
+  requiredTools: RequiredTool[]
+}
+
+export type OnchainVerifier = {
+  name: string
+  description: string
+  contractAddress: EthereumAddress
+  /** Link to the smart contract code on an explorer. Automatically set. */
+  url?: string
+  chainId: ChainId
+  subVerifiers: SubVerifier[]
+} & (
+  | {
+      verified: 'yes' | 'failed'
+      /** Details of entity that performed verification */
+      performedBy: {
+        name: string
+        link: string
+      }
+    }
+  | { verified: 'no' }
+)
+
+export interface SubVerifier {
+  name: string
+  proofSystem: string
+  mainArithmetization: string
+  mainPCS: string
+  trustedSetup?: StringWithAutocomplete<'None'>
+  link?: string
+}
+
+export interface RequiredTool {
+  name: string
+  version: string
+  link?: string
+}
+// #endregion
+
+// #region feature configs
+export interface ProjectTvlInfo {
+  associatedTokens: string[]
+  warnings: WarningWithSentiment[]
+}
+
+/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlConfig {
+  escrows: ProjectTvlEscrow[]
+  associatedTokens: string[]
+}
+
+/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlEscrow {
+  address: EthereumAddress
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  tokens: (Token & { isPreminted: boolean })[]
+  chain: string
+  includeInTotal?: boolean
+  source?: ProjectEscrowSource
+  bridgedUsing?: TokenBridgedUsing
+  sharedEscrow?: SharedEscrow
+}
+
+export type ProjectEscrowSource = 'canonical' | 'external' | 'native'
+
+export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
+
+export interface AggLayerEscrow {
+  type: 'AggLayer'
+  nativeAsset: 'etherPreminted' | 'etherWrapped'
+  wethAddress?: EthereumAddress
+  /** It has to be string because frontend need to serialize it as cache key */
+  premintedAmount?: string
+  /** Which tokens from L1 shared bridge should be assigned to this project,
+   * this is a heuristic and works only until other projects using this bridge
+   * are not bridging this token. This flag was added to handle
+   * non-ETH gas tokens e.g. OKB, GPT
+   */
+  tokensToAssignFromL1?: string[]
+}
+
+export interface ElasticChainEscrow {
+  type: 'ElasticChain'
+  l2BridgeAddress: EthereumAddress
+  /** ERC20 address of ether on L2 */
+  l2EtherAddress: EthereumAddress
+  /** Which tokens from L1 shared bridge should be assigned to this project,
+   * this is a heuristic and works only until other projects using this bridge
+   * are not bridging this token. This flag was added to handle
+   * non-ETH gas tokens e.g. OKB, GPT
+   */
+  tokensToAssignFromL1?: string[]
+}
+
+export type ProjectActivityConfig = BlockActivityConfig | DayActivityConfig
+
+export interface BlockActivityConfig {
+  type: 'block'
+  adjustCount?: AdjustCount
+  startBlock?: number
+}
+
+export type AdjustCount =
+  | { type: 'SubtractOne' }
+  | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+
+export interface DayActivityConfig {
+  type: 'day'
+  sinceTimestamp: UnixTime
+  resyncLastDays?: number
+}
+
+export interface ProjectLivenessInfo {
+  explanation?: string
+  warnings?: {
+    stateUpdates?: string
+    batchSubmissions?: string
+    proofSubmissions?: string
+  }
+}
+
+export interface ProjectLivenessConfig {
+  duplicateData: {
+    from: TrackedTxsConfigSubtype
+    to: TrackedTxsConfigSubtype
+  }
+}
+
+export interface ProjectCostsInfo {
+  warning?: WarningWithSentiment
+}
+
+export interface ProjectFinalityInfo {
+  /** Warning tooltip content for finality tab for given project */
+  warnings?: {
+    timeToInclusion?: WarningWithSentiment
+    stateUpdateDelay?: WarningWithSentiment
+  }
+  /** Finalization period displayed in table for given project (time in seconds) */
+  finalizationPeriod?: number
+}
+
+export type ProjectFinalityConfig =
+  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
+  | {
+      type:
+        | 'Linea'
+        | 'zkSyncEra'
+        | 'Scroll'
+        | 'zkSyncLite'
+        | 'Starknet'
+        | 'Arbitrum'
+        | 'Loopring'
+        | 'Degate'
+        | 'PolygonZkEvm'
+
+      minTimestamp: UnixTime
+      lag: number
+      stateUpdate: StateUpdateMode
+    }
+  | {
+      type: 'OPStack'
+      minTimestamp: UnixTime
+      lag: number
+      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
+      // you can get this values by calling the RPC method optimism_rollupConfig
+      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
+      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
+      // <rpc-url> | jq
+      genesisTimestamp: UnixTime
+      l2BlockTimeSeconds: number
+      stateUpdate: StateUpdateMode
+    }
+
+/**
+ * Determines how the state update should be handled.
+ * - `analyze`: The state update delay should be analyzed as a part of the update.
+ * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
+ * - `disabled`: The state update analyzer will not be run.
+ */
+export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
+
+export type ProjectDaTrackingConfig =
+  | EthereumDaTrackingConfig
+  | CelestiaDaTrackingConfig
+  | AvailDaTrackingConfig
+
+export interface EthereumDaTrackingConfig {
+  type: 'ethereum'
+  daLayer: ProjectId
+  inbox: string
+  sequencers?: string[]
+  sinceBlock: number
+  untilBlock?: number
+}
+
+export interface CelestiaDaTrackingConfig {
+  type: 'celestia'
+  daLayer: ProjectId
+  namespace: string
+  sinceBlock: number
+  untilBlock?: number
+}
+
+export interface AvailDaTrackingConfig {
+  type: 'avail'
+  daLayer: ProjectId
+  appId: string
+  sinceBlock: number
+  untilBlock?: number
+}
+// #endregion
+
 export interface ScalingProjectUpgradeability {
   proxyType: string
   immutable?: boolean
@@ -634,8 +853,7 @@ export interface ProjectEscrow {
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
-  source?: 'canonical' | 'external' | 'native'
-  /** Bridge used for this escrow */
+  source?: ProjectEscrowSource
   bridgedUsing?: {
     bridges: {
       name: string
@@ -645,35 +863,6 @@ export interface ProjectEscrow {
     warning?: string
   }
   sharedEscrow?: SharedEscrow
-}
-
-export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
-
-export interface AggLayerEscrow {
-  type: 'AggLayer'
-  nativeAsset: 'etherPreminted' | 'etherWrapped'
-  wethAddress?: EthereumAddress
-  /** It has to be string because frontend need to serialize it as cache key */
-  premintedAmount?: string
-  /** Which tokens from L1 shared bridge should be assigned to this project,
-   * this is a heuristic and works only until other projects using this bridge
-   * are not bridging this token. This flag was added to handle
-   * non-ETH gas tokens e.g. OKB, GPT
-   */
-  tokensToAssignFromL1?: string[]
-}
-
-export interface ElasticChainEscrow {
-  type: 'ElasticChain'
-  l2BridgeAddress: EthereumAddress
-  /** ERC20 address of ether on L2 */
-  l2EtherAddress: EthereumAddress
-  /** Which tokens from L1 shared bridge should be assigned to this project,
-   * this is a heuristic and works only until other projects using this bridge
-   * are not bridging this token. This flag was added to handle
-   * non-ETH gas tokens e.g. OKB, GPT
-   */
-  tokensToAssignFromL1?: string[]
 }
 
 export interface ScalingProjectTechnology {
@@ -697,49 +886,6 @@ export interface ScalingProjectTechnology {
   otherConsiderations?: ProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
-}
-
-export type ProjectActivityConfig = BlockActivityConfig | DayActivityConfig
-
-export interface BlockActivityConfig {
-  type: 'block'
-  adjustCount?: AdjustCount
-  startBlock?: number
-}
-
-export type AdjustCount =
-  | { type: 'SubtractOne' }
-  | { type: 'SubtractOneSinceBlock'; blockNumber: number }
-
-export interface DayActivityConfig {
-  type: 'day'
-  sinceTimestamp: UnixTime
-  resyncLastDays?: number
-}
-
-export interface CustomTransactionApi<T extends string> {
-  type: T
-  defaultUrl: string
-  defaultCallsPerMinute?: number
-}
-
-export interface ProjectLivenessInfo {
-  explanation?: string
-  warnings?: {
-    stateUpdates?: string
-    batchSubmissions?: string
-    proofSubmissions?: string
-  }
-}
-
-export interface Layer2FinalityDisplay {
-  /** Warning tooltip content for finality tab for given project */
-  warnings?: {
-    timeToInclusion?: WarningWithSentiment
-    stateUpdateDelay?: WarningWithSentiment
-  }
-  /** Finalization period displayed in table for given project (time in seconds) */
-  finalizationPeriod?: number
 }
 
 export type Layer2TxConfig = {
@@ -797,97 +943,6 @@ interface SharedBridge {
   untilTimestamp?: UnixTime
 }
 
-export interface ProjectLivenessConfig {
-  duplicateData: {
-    from: TrackedTxsConfigSubtype
-    to: TrackedTxsConfigSubtype
-  }
-}
-
-/**
- * Determines how the state update should be handled.
- * - `analyze`: The state update delay should be analyzed as a part of the update.
- * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
- * - `disabled`: The state update analyzer will not be run.
- */
-export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
-
-export type Layer2FinalityConfig =
-  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
-  | {
-      type:
-        | 'Linea'
-        | 'zkSyncEra'
-        | 'Scroll'
-        | 'zkSyncLite'
-        | 'Starknet'
-        | 'Arbitrum'
-        | 'Loopring'
-        | 'Degate'
-        | 'PolygonZkEvm'
-
-      minTimestamp: UnixTime
-      lag: number
-      stateUpdate: StateUpdateMode
-    }
-  | {
-      type: 'OPStack'
-      minTimestamp: UnixTime
-      lag: number
-      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
-      // you can get this values by calling the RPC method optimism_rollupConfig
-      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
-      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
-      // <rpc-url> | jq
-      genesisTimestamp: UnixTime
-      l2BlockTimeSeconds: number
-      stateUpdate: StateUpdateMode
-    }
-
-export type FinalityType = Layer2FinalityConfig['type']
-
-export interface ProofVerification {
-  shortDescription?: string
-  aggregation: boolean
-  verifiers: OnchainVerifier[]
-  requiredTools: RequiredTool[]
-}
-
-export type OnchainVerifier = {
-  name: string
-  description: string
-  contractAddress: EthereumAddress
-  /** Link to the smart contract code on an explorer. Automatically set. */
-  url?: string
-  chainId: ChainId
-  subVerifiers: SubVerifier[]
-} & (
-  | {
-      verified: 'yes' | 'failed'
-      /** Details of entity that performed verification */
-      performedBy: {
-        name: string
-        link: string
-      }
-    }
-  | { verified: 'no' }
-)
-
-export interface RequiredTool {
-  name: string
-  version: string
-  link?: string
-}
-
-export interface SubVerifier {
-  name: string
-  proofSystem: string
-  mainArithmetization: string
-  mainPCS: string
-  trustedSetup?: StringWithAutocomplete<'None'>
-  link?: string
-}
-
 export interface Bridge {
   type: 'bridge'
   id: ProjectId
@@ -922,45 +977,6 @@ export interface BridgeDisplay {
 export interface BridgeConfig {
   associatedTokens?: string[]
   escrows: ProjectEscrow[]
-}
-
-export interface EthereumDaTrackingConfig {
-  type: 'ethereum'
-  daLayer: ProjectId
-  inbox: string
-  sequencers?: string[]
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface CelestiaDaTrackingConfig {
-  type: 'celestia'
-  daLayer: ProjectId
-  namespace: string
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export interface AvailDaTrackingConfig {
-  type: 'avail'
-  daLayer: ProjectId
-  appId: string
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export type ProjectDaTrackingConfig =
-  | EthereumDaTrackingConfig
-  | CelestiaDaTrackingConfig
-  | AvailDaTrackingConfig
-
-export interface ProjectTvlInfo {
-  associatedTokens: string[]
-  warnings: WarningWithSentiment[]
-}
-
-export interface ProjectCostsInfo {
-  warning?: WarningWithSentiment
 }
 
 export interface ProjectPermissions {
@@ -1046,23 +1062,4 @@ export interface ProjectContract {
   references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
-}
-
-/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlConfig {
-  escrows: ProjectTvlEscrow[]
-  associatedTokens: string[]
-}
-
-/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlEscrow {
-  address: EthereumAddress
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-  tokens: (Token & { isPreminted: boolean })[]
-  chain: string
-  includeInTotal?: boolean
-  source?: ProjectEscrow['source']
-  bridgedUsing?: TokenBridgedUsing
-  sharedEscrow?: SharedEscrow
 }

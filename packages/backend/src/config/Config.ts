@@ -1,6 +1,6 @@
 import type {
   ChainConfig,
-  Layer2FinalityConfig,
+  ProjectFinalityConfig,
   OnchainVerifier,
   Project,
   ProjectActivityConfig,
@@ -122,7 +122,7 @@ export interface FinalityConfig {
   readonly configurations: FinalityConfigProject[]
 }
 
-export type FinalityConfigProject = Layer2FinalityConfig & {
+export type FinalityConfigProject = ProjectFinalityConfig & {
   projectId: ProjectId
   url?: string
   callsPerMinute?: number
