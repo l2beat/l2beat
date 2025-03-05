@@ -16,7 +16,7 @@ export function ProjectSectionHighlighter() {
         element.setAttribute('data-highlighted', 'true')
         setTimeout(() => {
           element.removeAttribute('data-highlighted')
-        }, 5000)
+        }, 3000)
       }
     }
   }

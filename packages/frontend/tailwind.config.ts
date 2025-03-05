@@ -256,9 +256,14 @@ const config: Config = {
           to: { height: '0', opacity: '0%' },
         },
         'row-highlight': {
-          '0%': { backgroundColor: 'hsl(var(--row-highlight))' },
-          '50%': { backgroundColor: 'hsl(var(--surface-primary))' },
-          '100%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '0%': { backgroundColor: 'transparent' },
+          '50%': { backgroundColor: 'hsl(var(--brand) / 0.15)' },
+          '100%': { backgroundColor: 'transparent' },
+        },
+        'row-highlight-no-opacity': {
+          '0%': { backgroundColor: 'hsl(var(--surface-primary))' },
+          '50%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '100%': { backgroundColor: 'hsl(var(--surface-primary))' },
         },
       },
       animation: {
@@ -268,6 +273,8 @@ const config: Config = {
         'collapsible-down': 'collapsible-down 0.3s ease-out',
         'collapsible-up': 'collapsible-up 0.3s ease-out',
         'row-highlight': 'row-highlight 1.5s ease-in-out infinite',
+        'row-highlight-no-opacity':
+          'row-highlight-no-opacity 1.5s ease-in-out infinite',
       },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
