@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x76ae29cb961f64dfe5f709058bcecf0382e521ec
+
+# Diff at Wed, 05 Mar 2025 11:05:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 19825376
+- current block number: 19825376
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825376 (main branch discovery), not current.
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: Helper contract for registering limit orders from L1.
+      template:
++        "starkex/OrderRegistry"
+      description:
++        "Helper contract for registering limit orders from L1."
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).
+      values.programHashMapped:
++        "3485280386001712778192330279103973322645241679001461923469191557000342180556"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`)."
+    }
+```
+
+```diff
+    contract StarkExchange (0x82123571C8a5e0910280C066bc634c4945FFcbC8) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      name:
+-        "Proxy"
++        "StarkExchange"
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e","via":[]}
+      issuedPermissions.5:
++        {"permission":"operateStarknet","to":"0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5","via":[]}
+      issuedPermissions.4:
++        {"permission":"operateStarknet","to":"0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e","description":"manage the token admin role.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      values.getActionCount:
+-        0
+      values.getActionHashByIndex:
+-        []
+      values.operators:
++        ["0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e","0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"]
+      values.tokenAdmins:
++        ["0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978","0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"]
+      template:
++        "starkex/StarkExchange"
+      description:
++        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."},"isFinalized":{"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."},"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0xdfa44aad687c6cc52b3c72cca4f8ff8391e0bb45
 
 # Diff at Tue, 04 Mar 2025 10:39:19 GMT:

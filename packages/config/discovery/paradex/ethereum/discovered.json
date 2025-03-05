@@ -250,6 +250,7 @@
         "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
       ],
       "proxyType": "StarkWare proxy",
+      "displayName": "StarkExchange",
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
@@ -691,7 +692,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starknet/Starknet": "0xc985555492da2d7a096ec1b5befaacc3779b2e3af53a61bf8bb8b8ea37a753e7",
+    "starknet/Starknet": "0x685fe1f49f4c3cdf9d0309bdbd2fe0869c4749a9dc8d076c293c10aac05ae2a4",
     "starknet/StarknetERC20Bridge": "0x44547f029ed96803504a04745eecd15111d42373717f3f6b7e16bf251255ec25"
   }
 }

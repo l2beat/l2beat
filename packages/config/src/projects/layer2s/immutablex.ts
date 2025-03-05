@@ -2,7 +2,6 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -22,20 +21,19 @@ import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
-import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
 } from '../da-beat/common'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import { generateDiscoveryDrivenContracts, generateDiscoveryDrivenPermissions } from './templates/generateDiscoveryDrivenSections'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('immutablex')
 

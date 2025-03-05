@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x70df65f04fca6d46be0546c366b08acb9582600c
+
+# Diff at Wed, 05 Mar 2025 11:44:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 19825361
+- current block number: 19825361
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825361 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x1390f521A79BaBE99b69B37154D63D431da27A07) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x303775491494a08b07365938787274F742a81F63","via":[]}
+      issuedPermissions.3:
++        {"permission":"operateStarknet","to":"0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x4a5e124201c38bf7a618388A8185D3f5C8E9133f","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x303775491494a08b07365938787274F742a81F63","description":"manage the token admin role.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      values.getActionCount:
+-        6
+      values.getAssetInfo:
+-        []
+      values.initializerSize:
+-        0
+      values.OPERATORS:
+-        ["0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25"]
+      values.operators:
++        ["0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25"]
+      values.tokenAdmins:
++        ["0x4a5e124201c38bf7a618388A8185D3f5C8E9133f"]
+      template:
++        "starkex/StarkExchange"
+      description:
++        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."},"isFinalized":{"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."},"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract FinalizableCommittee (0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446) {
+    +++ description: None
+      name:
+-        "Committee"
++        "FinalizableCommittee"
+      values.constructorArgs:
+-        [["0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1","0xC37a598468A59D5d6DCeb889847B5824aD61697e","0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9","0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00"],"2"]
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      values.programHashMapped:
++        "16830627573509542901909952446321116535677491650708854009406762893086223513"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`)."
+    }
+```
+
+```diff
+    contract OrderRegistry (0x806d435a82B0381bD884540c2235147c13B97fe6) {
+    +++ description: Helper contract for registering limit orders from L1.
+      template:
++        "starkex/OrderRegistry"
+      description:
++        "Helper contract for registering limit orders from L1."
+    }
+```
+
 Generated with discovered.json: 0x37a91c5fcd7430c1e72cc1bc1ad58deae4c53a22
 
 # Diff at Tue, 04 Mar 2025 10:39:01 GMT:

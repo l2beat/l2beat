@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb9837b88db729002354e910426ae9e545bedbea5
+Generated with discovered.json: 0x25d429897ca9f76c0d5917833928571151ceba56
 
-# Diff at Wed, 05 Mar 2025 09:26:59 GMT:
+# Diff at Wed, 05 Mar 2025 11:05:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21973412
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb9837b88db729002354e910426ae9e545bedbea5
 
 ## Description
 
-discodrive.
+discodrive sn stack and starkex chains.
 
 ## Config/verification related changes
 
@@ -123,6 +123,8 @@ discovery. Values are for block 21973412 (main branch discovery), not current.
       fieldMeta.isFinalized.description:
 -        "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
 +        "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+      displayName:
++        "StarkExchange"
     }
 ```
 

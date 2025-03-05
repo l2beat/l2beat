@@ -5,46 +5,7 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x1390f521A79BaBE99b69B37154D63D431da27A07"],
   "names": {
-    "0x1390f521A79BaBE99b69B37154D63D431da27A07": "StarkExchange",
-    "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446": "Committee",
     "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25": "Operator"
   },
-  "sharedModules": ["shared-sharp-verifier"],
-  "overrides": {
-    "StarkExchange": {
-      "ignoreMethods": [
-        "getActionHashByIndex",
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "isAssetRegistered",
-        "validatedSelectors"
-      ],
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getSequenceNumber",
-        "getValidiumVaultRoot"
-      ],
-      "fields": {
-        "OPERATORS": {
-          "handler": {
-            "type": "event",
-            "select": "operator",
-            "add": { "event": "LogOperatorAdded" },
-            "remove": { "event": "LogOperatorRemoved" }
-          }
-        }
-      }
-    },
-    "Committee": {
-      "fields": {
-        "constructorArgs": {
-          "handler": {
-            "type": "constructorArgs"
-          }
-        }
-      }
-    }
-  }
+  "sharedModules": ["shared-sharp-verifier"]
 }

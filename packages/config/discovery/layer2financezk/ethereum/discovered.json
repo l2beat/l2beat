@@ -8,9 +8,11 @@
     {
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
+      "description": "Helper contract for registering limit orders from L1.",
       "sinceTimestamp": 1626352379,
       "sinceBlock": 12831566,
       "values": {
@@ -39,9 +41,11 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
+      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).",
       "sinceTimestamp": 1640107463,
       "sinceBlock": 13849860,
       "values": {
@@ -49,12 +53,14 @@
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
-        "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556"
+        "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
+        "programHashMapped": "3485280386001712778192330279103973322645241679001461923469191557000342180556"
       }
     },
     {
-      "name": "Proxy",
+      "name": "StarkExchange",
       "address": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+      "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0x87045c081a3bd84c271153c36a9a503f84bc3035077d34144332c329d3fcb92d",
         "0x54407214d4211e41ecb742c3df7564e352844c1f5da38ef2e206b0465bd5345b",
@@ -66,12 +72,53 @@
         "0x93b21bfbef09c4e60d6a17309877245220508c54478159a8f2b9dbfb60576c4b"
       ],
       "proxyType": "StarkWare diamond",
+      "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
+        {
+          "permission": "governStarknet",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "description": "manage the token admin role.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
           "via": []
         }
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getVaultRoot"
       ],
       "sinceTimestamp": 1645130774,
       "sinceBlock": 14225869,
@@ -119,8 +166,6 @@
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getActionCount": 0,
-        "getActionHashByIndex": [],
         "getAssetInfo": [],
         "getLastBatchId": 115,
         "getOrderRoot": "2449344249870982788470726390907865854777361400154633433874282805096307135974",
@@ -143,6 +188,10 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
+        "operators": [
+          "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
+        ],
         "OPERATORS": [
           "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
           "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
@@ -152,11 +201,30 @@
         "PROXY_VERSION": "3.0.1",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
         "StarkWareDiamond_upgradeDelay": 0,
+        "tokenAdmins": [
+          "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+          "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+        ],
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERIFIER_REMOVAL_DELAY": 2419200,
         "VERSION": "4.0.1"
-      }
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."
+        },
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+        }
+      },
+      "derivedName": "Proxy",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Comp",
@@ -207,7 +275,21 @@
   "eoas": [
     {
       "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+        },
+        {
+          "permission": "interact",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "manage the token admin role."
+        },
+        {
+          "permission": "operateStarknet",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+        },
         {
           "permission": "upgrade",
           "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
@@ -215,8 +297,35 @@
       ]
     },
     { "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" },
-    { "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5" },
-    { "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988" }
+    {
+      "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+        }
+      ]
+    },
+    {
+      "address": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
+    },
+    {
+      "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
+    }
   ],
   "abis": {
     "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [
@@ -605,5 +714,9 @@
       "function transferOwnership(address newOwner)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "starkex/GpsFactRegistryAdapter": "0x468083ab169d51d66960b7537dc740b631b2dcb51a1ec42fcda36f394bbdba42",
+    "starkex/OrderRegistry": "0x0ffe907cb8a8111c330638d3c73ccff6cbd95d81237cf9b4ce8cc541ae6921dd",
+    "starkex/StarkExchange": "0x5c5e54fcdb039ee0c9d391311f96fcb1814274d604224656e5b4c101fecb382e"
+  }
 }

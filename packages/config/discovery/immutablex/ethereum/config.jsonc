@@ -7,5 +7,5 @@
   "names": {
     "0xD2C37fC6fD89563187f3679304975655e448D192": "IMXAdminMultisig"
   },
-  "sharedModules": ["shared-sharp-verifier"],
+  "sharedModules": ["shared-sharp-verifier"]
 }

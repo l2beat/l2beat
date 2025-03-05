@@ -3,13 +3,13 @@
   "displayName": "GpsFactRegistryAdapter",
   "description": "Adapter between the core contract and the {{gpsContract}}. Stores the Cairo programHash (`{{programHash}}`).",
   "fields": {
-        "programHashMapped": {
-          "handler": {
-            "type": "call",
-            "method": "programHash",
-            "args": []
-          },
-          // "returnType": "(starknetProgramHashes)" // TODO
-        }
+    "programHashMapped": {
+      "handler": {
+        "type": "call",
+        "method": "programHash",
+        "args": []
       }
+      // "returnType": "(starknetProgramHashes)" // TODO
+    }
+  }
 }
