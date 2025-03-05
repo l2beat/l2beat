@@ -17,7 +17,7 @@ export interface CallProvider {
 export class MulticallClient {
   constructor(
     private readonly provider: CallProvider,
-    private readonly config: MulticallConfig,
+    private readonly config?: MulticallConfig,
   ) {}
 
   async multicallNamed(
@@ -50,12 +50,14 @@ export class MulticallClient {
     requests: MulticallRequest[],
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
-    if (this.config.sinceBlock > blockNumber) {
+    const config = this.config
+
+    if (!config || config.sinceBlock > blockNumber) {
       return this.executeIndividual(requests, blockNumber)
     } else {
       const batches = toBatches(requests, this.config.batchSize)
       const batchedResults = await Promise.all(
-        batches.map((batch) => this.executeBatch(batch, blockNumber)),
+        batches.map((batch) => this.executeBatch(batch, blockNumber, config)),
       )
       return batchedResults.flat()
     }
@@ -89,15 +91,16 @@ export class MulticallClient {
   private async executeBatch(
     requests: MulticallRequest[],
     blockNumber: number,
+    config: MulticallConfig,
   ): Promise<MulticallResponse[]> {
-    const encoded = this.config.encodeBatch(requests)
+    const encoded = config.encodeBatch(requests)
     try {
       const result = await this.provider.call(
-        this.config.address,
+        config.address,
         encoded,
         blockNumber,
       )
-      return this.config.decodeBatch(result)
+      return config.decodeBatch(result)
     } catch (e) {
       const parsed = ethersError.safeParse(e)
       if (parsed.success) {
