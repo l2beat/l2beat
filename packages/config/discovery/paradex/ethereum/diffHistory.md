@@ -1,20 +1,20 @@
-Generated with discovered.json: 0xb84094f596f92003548987a6f03ee10a59bcb2fa
+Generated with discovered.json: 0x4896ce229b2ad40e55361da050f6eb0b73004918
 
-# Diff at Tue, 04 Mar 2025 13:50:23 GMT:
+# Diff at Wed, 05 Mar 2025 09:22:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@0419464c20df73247de1100695c4a9c7b171bb8d block: 21629810
-- current block number: 21973903
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21973412
+- current block number: 21979760
 
 ## Description
 
-discodrive.
+Provide description of changes. This section will be preserved.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21629810 (main branch discovery), not current.
+discovery. Values are for block 21973412 (main branch discovery), not current.
 
 ```diff
     contract ParadexAdminMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
@@ -22,14 +22,12 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
       name:
 -        "ParadexImplementationGovernorMultisig"
 +        "ParadexAdminMultisig"
-      severity:
-+        "HIGH"
     }
 ```
 
 ```diff
     contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
-    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
       issuedPermissions.6:
 +        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
       issuedPermissions.5:
@@ -106,7 +104,7 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
       template:
 +        "starknet/StarknetERC20Bridge"
       description:
-+        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}},{"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}]
       category:
@@ -117,27 +115,25 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
 ```diff
     contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
     +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
-      issuedPermissions.1.to:
--        "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670"
-+        "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
       values.governors:
 -        ["0x8Cef438c3e363e15F9619e32D9b5D04ff777D670","0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"]
-      fieldMeta.$admin:
-+        {"severity":"HIGH","description":"Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."}
+      fieldMeta.isFinalized.description:
+-        "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
++        "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
     }
 ```
 
-Generated with discovered.json: 0x4d638d9de7f7ed9ac4c06ed26a47d0578ebed99e
+Generated with discovered.json: 0xe78246ec0e1cf3a12468e99d0ad4f6cdb7bd7406
 
-# Diff at Tue, 04 Mar 2025 10:39:36 GMT:
+# Diff at Tue, 04 Mar 2025 12:05:46 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21629810
-- current block number: 21629810
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21629810
+- current block number: 21973412
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+config related: starknet discodrive.
 
 ## Config/verification related changes
 
@@ -148,6 +144,8 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
 ```diff
     contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
     +++ description: None
+      severity:
++        "HIGH"
       sinceBlock:
 +        18927365
     }
@@ -164,6 +162,11 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
 ```diff
     contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
     +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.1.to:
+-        "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670"
++        "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
+      fieldMeta.$admin:
++        {"severity":"HIGH","description":"Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."}
       sinceBlock:
 +        17733931
     }

@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 21973903,
+  "blockNumber": 21979760,
   "configHash": "0x18baa1fce322d48ff991b191b9017cbf5b200c10ce511717dc29d522711985ec",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -57,7 +57,7 @@
         "0xbe08cd77d92ae2b4d333c5d2850e16d06e16d98de2a8435e0a49dc35ad73b915"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -321,7 +321,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 4458,
+        "l1ToL2MessageNonce": 4520,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -336,9 +336,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1341184226135713396529093460489303959539051345750875648997549798496073508259",
-        "stateBlockNumber": 435700,
-        "stateRoot": "745362834601949035979934526562698146523164172853303492396131475789705091001",
+        "stateBlockHash": "2378319297183751297253754820066023972640132997678759932158381226018233794888",
+        "stateBlockNumber": 443100,
+        "stateRoot": "1792607517067585482308344813734074820286587429622735534796780869416888503403",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -349,7 +349,7 @@
         },
         "isFinalized": {
           "severity": "HIGH",
-          "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
+          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
         },
         "programHash": {
           "severity": "HIGH",
@@ -691,7 +691,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601",
-    "starknet/StarknetERC20Bridge": "0x1327c44d622cf611664687f6236f6c1543efb6da64a0643e517f20a2c2749413"
+    "starknet/Starknet": "0xcdb3ed934eb13d75373cfddf4e78dd5367266c541313a6cf1fb166e594ee7790",
+    "starknet/StarknetERC20Bridge": "0x44547f029ed96803504a04745eecd15111d42373717f3f6b7e16bf251255ec25"
   }
 }
