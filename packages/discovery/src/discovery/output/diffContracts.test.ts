@@ -1,8 +1,8 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { diffContracts } from './diffContracts'
+import type { ContractParameters } from './types'
 
 describe(diffContracts.name, () => {
   const OLD_ADDRESS = EthereumAddress.random()

@@ -53,7 +53,10 @@ import {
   LineaRolesModuleHandler,
   LineaRolesModuleHandlerDefinition,
 } from './LineaRolesModuleHandler'
-import { OpStackDAHandler, OpStackDAHandlerDefinition } from './OpDAHandler'
+import {
+  OpStackDAHandler,
+  OpStackDAHandlerDefinition,
+} from './OpDaHandler/OpDAHandler'
 import {
   OpStackSequencerInboxHandler,
   OpStackSequencerInboxHandlerDefinition,

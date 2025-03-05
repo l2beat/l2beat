@@ -12,7 +12,6 @@ import {
   CustomSystemInfo,
   PublicSystemInfo,
 } from '../_components/da-category-info'
-import { groupBySystem } from '../_utils/group-by-system'
 import { DaRiskTable } from './_components/table/da-risk-table'
 
 export const metadata = getDefaultMetadata({
@@ -22,8 +21,7 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const items = await getDaRiskEntries()
-  const { publicSystems, customSystems } = groupBySystem(items)
+  const { publicSystems, customSystems } = await getDaRiskEntries()
 
   return (
     <div>

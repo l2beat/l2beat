@@ -10,14 +10,11 @@
   "names": {
     "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": "StarkExchange",
     "0x28780349A33eEE56bb92241bAAB8095449e24306": "Committee",
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "VerifierGovernorMultisig",
     "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "GovernanceMultisig",
     "0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a": "DeversiFiTreasuryMultisig"
   },
-  "sharedModules": {
-    "SHARPVerifierProxy": "shared-sharp-verifier"
-  },
+  "sharedModules": ["shared-sharp-verifier"],
   "overrides": {
     "StarkExchange": {
       "ignoreMethods": [

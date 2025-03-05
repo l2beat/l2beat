@@ -41,7 +41,7 @@
       "type": "array",
       "items": { "$ref": "#/$defs/address" }
     },
-    "imports": {
+    "import": {
       "description": "A list of discovery configs to import",
       "type": "array",
       "items": { "type": "string" }
@@ -81,13 +81,9 @@
     },
     "sharedModules": {
       "description": "An object which keys are contract identifiers and values are names of shared modules",
-      "type": "object",
+      "type": "array",
       "unevaluatedProperties": false,
-      "patternProperties": {
-        "^.+$": {
-          "type": "string"
-        }
-      }
+      "items": { "type": "string" }
     },
     "overrides": {
       "type": "object",

@@ -43,7 +43,7 @@ export function TerminalPanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  const chains = getProjectResponse.data?.chains ?? []
+  const chains = getProjectResponse.data?.entries ?? []
 
   useEffect(() => {
     clear()
@@ -57,7 +57,7 @@ export function TerminalPanel() {
 
   useEffect(() => {
     if (chains[0] && !command.chain) {
-      setChain(chains[0].name)
+      setChain(chains[0].chain)
     }
   }, [chains, command.chain])
 
@@ -70,8 +70,8 @@ export function TerminalPanel() {
           className="border bg-coffee-800 p-1 font-bold text-xs uppercase"
         >
           {chains.map((chain, i) => (
-            <option key={i} value={chain.name}>
-              {chain.name}
+            <option key={i} value={chain.chain}>
+              {chain.chain}
             </option>
           ))}
         </select>

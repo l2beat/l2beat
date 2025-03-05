@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 21766583,
-  "configHash": "0x6ade56325d0af6edaec8b721a1771e8202612d37dff048aa345e8e93ef02c236",
+  "configHash": "0x61c0a117c1ace0dfcc79761ec912c8e377baf8820e35b1e87f3c0b216bec3124",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -14,6 +14,7 @@
       ],
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
+      "sinceBlock": 21081436,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
@@ -58,6 +59,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729305923,
+      "sinceBlock": 20996715,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -124,6 +126,7 @@
         }
       ],
       "sinceTimestamp": 1733129219,
+      "sinceBlock": 21313725,
       "values": {
         "$admin": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "$implementation": "0x8319feDe99061C6723c86D366a903e8fa3a0f541",
@@ -189,6 +192,7 @@
         }
       ],
       "sinceTimestamp": 1717520615,
+      "sinceBlock": 20019826,
       "values": {
         "$immutable": true,
         "executionDelay": 10800,
@@ -228,6 +232,7 @@
         }
       ],
       "sinceTimestamp": 1730797559,
+      "sinceBlock": 21120440,
       "values": {
         "$immutable": true,
         "owner": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
@@ -275,6 +280,7 @@
         }
       ],
       "sinceTimestamp": 1733129219,
+      "sinceBlock": 21313725,
       "values": {
         "$admin": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "$implementation": "0xf7B67bDDb74B5eD3De49e1a6Da4D1d7460F00780",
@@ -349,6 +355,7 @@
         "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1731379871,
+      "sinceBlock": 21168735,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -544,6 +551,7 @@
         }
       ],
       "sinceTimestamp": 1730964035,
+      "sinceBlock": 21134244,
       "values": {
         "$immutable": true,
         "minDelay": 0,

@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x11052f435956db5778583985b67156d005981ce1
+
+# Diff at Tue, 04 Mar 2025 10:42:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 8983528
+- current block number: 8983528
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8983528 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      sinceBlock:
++        6433793
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      sinceBlock:
++        6441298
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      sinceBlock:
++        6441298
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      sinceBlock:
++        6433884
+    }
+```
+
+```diff
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      sinceBlock:
++        6435761
+    }
+```
+
 Generated with discovered.json: 0xa75f692e134ec83e02bf52d34443e0f7fe6b5b8d
 
 # Diff at Wed, 12 Feb 2025 08:42:48 GMT:

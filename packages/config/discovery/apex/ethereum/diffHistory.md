@@ -1,4 +1,126 @@
-Generated with discovered.json: 0x10b022360b9f50e573aad891bd60b9aaa27ffb74
+Generated with discovered.json: 0xb2d8a3bc5dc64199033f1cb7a91245e8f27c5e20
+
+# Diff at Tue, 04 Mar 2025 10:38:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21872281
+- current block number: 21872281
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872281 (main branch discovery), not current.
+
+```diff
+    contract AggregationRouterV4 (0x1111111254fb6c44bAC0beD2854e76F90643097d) {
+    +++ description: None
+      sinceBlock:
++        13556016
+    }
+```
+
+```diff
+    contract CommitteeUSDC (0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4) {
+    +++ description: None
+      sinceBlock:
++        16233442
+    }
+```
+
+```diff
+    contract MultiSigPoolUSDT (0x379c15156B527D6E693bED60d1FBb44CE46046b8) {
+    +++ description: None
+      sinceBlock:
++        18475677
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) {
+    +++ description: None
+      sinceBlock:
++        18377195
+    }
+```
+
+```diff
+    contract AggregationRouterV4Owner (0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1) {
+    +++ description: None
+      sinceBlock:
++        11502031
+    }
+```
+
+```diff
+    contract CommitteeUSDT (0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800) {
+    +++ description: None
+      sinceBlock:
++        18377195
+    }
+```
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      sinceBlock:
++        15322967
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) {
+    +++ description: None
+      sinceBlock:
++        15322966
+    }
+```
+
+```diff
+    contract TransferRegistry (0xBE9a129909EbCb954bC065536D2bfAfBd170d27A) {
+    +++ description: None
+      sinceBlock:
++        11899719
+    }
+```
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      sinceBlock:
++        16282082
+    }
+```
+
+```diff
+    contract StarkExchangeUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: None
+      sinceBlock:
++        18377191
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: None
+      sinceBlock:
++        15396280
+    }
+```
+
+```diff
+    contract MultiSigPoolUSDC (0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE) {
+    +++ description: None
+      sinceBlock:
++        15414333
+    }
+```
+
+Generated with discovered.json: 0x38230bf391f21e818fe4fcf5837049e6204e1609
 
 # Diff at Tue, 18 Feb 2025 09:12:11 GMT:
 

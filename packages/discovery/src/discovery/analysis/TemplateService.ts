@@ -1,7 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
 
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { hashJson } from '@l2beat/shared'
 import {
   assert,
@@ -13,6 +12,7 @@ import { flatteningHash, hashFirstSource } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 

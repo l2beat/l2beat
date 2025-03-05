@@ -22,6 +22,7 @@
         }
       ],
       "sinceTimestamp": 1721184959,
+      "sinceBlock": 20323396,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0x24574dbF51a36b8ffaAf07B3B44eC0a261731fB2",
@@ -109,6 +110,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721184719,
+      "sinceBlock": 20323376,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -152,6 +154,7 @@
         }
       ],
       "sinceTimestamp": 1721184863,
+      "sinceBlock": 20323388,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3",
@@ -193,6 +196,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1737905915,
+      "sinceBlock": 21709637,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -237,6 +241,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1721184911,
+      "sinceBlock": 20323392,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0x2705B4628552F8F9E5f39DBb5a3Ec47B20cf6EA3",
@@ -272,8 +277,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -355,6 +360,7 @@
         }
       ],
       "sinceTimestamp": 1721184755,
+      "sinceBlock": 20323379,
       "values": {
         "$immutable": true,
         "addressManager": "0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6",
@@ -374,6 +380,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1721184935,
+      "sinceBlock": 20323394,
       "values": {
         "$immutable": false,
         "$implementation": "0xe691A05BE8323Ce70A30A7ef733962A0d3b238E2",
@@ -425,6 +432,7 @@
         }
       ],
       "sinceTimestamp": 1721184947,
+      "sinceBlock": 20323395,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0x06Be6cB1bDaFa97662F629383B32E75aD46b312A",
@@ -465,6 +473,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1721184899,
+      "sinceBlock": 20323391,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0x387422038358EE160aC57Dcd7aF73F9CC9401749",
@@ -525,6 +534,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1721184983,
+      "sinceBlock": 20323398,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0xf31575705C047eC4D3Eb05F0917B9aA404179e3A",
@@ -588,6 +598,7 @@
         }
       ],
       "sinceTimestamp": 1721184791,
+      "sinceBlock": 20323382,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0x8486fB8acCE33702EAd543D234e904eDfB35E220",
@@ -626,6 +637,7 @@
         }
       ],
       "sinceTimestamp": 1721184923,
+      "sinceBlock": 20323393,
       "values": {
         "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$implementation": "0x5Bf18b3c88b0B04BDC2C8F0c55362D14aCFB2168",
@@ -660,6 +672,7 @@
         }
       ],
       "sinceTimestamp": 1721184731,
+      "sinceBlock": 20323377,
       "values": {
         "$immutable": true,
         "owner": "0x7617f4a55d62b9EE49578D9C90593e58E607415F"

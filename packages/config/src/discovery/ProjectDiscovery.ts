@@ -1,17 +1,14 @@
 import { join } from 'path'
 import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
-import {
-  type ContractParameters,
-  type ContractValue,
-  type DiscoveryOutput,
-  type EoaParameters,
-  type PermissionType,
-  type ReceivedPermission,
-  type ResolvedPermissionPath,
-  get$Admins,
-  get$Implementations,
-  toAddressArray,
-} from '@l2beat/discovery-types'
+import type {
+  ContractParameters,
+  ContractValue,
+  DiscoveryOutput,
+  EoaParameters,
+  Permission,
+  ReceivedPermission,
+  ResolvedPermissionPath,
+} from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -34,6 +31,7 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
+import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -726,7 +724,7 @@ export class ProjectDiscovery {
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
     const ultimatePermissionToPrefix: {
-      [key in PermissionType]: string | undefined
+      [key in Permission]: string | undefined
     } = {
       interact: 'Is allowed to interact with',
       upgrade: 'Can upgrade the implementation of',
@@ -743,6 +741,9 @@ export class ProjectDiscovery {
       validateBridge: 'A Validator',
       validateBridge2: 'A Validator',
       aggregatePolygon: 'A trusted Aggregator',
+      operateStarknet: 'An Operator',
+      governStarknet: 'A Governor',
+      member: 'Is a member of',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -762,7 +763,7 @@ export class ProjectDiscovery {
         },
       ),
     ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as PermissionType
+      const permission = key.split('►')[0] as Permission
       const via = key.split('►')[1] ?? ''
       const description = key.split('►')[2] ?? ''
       const condition = key.split('►')[3] ?? ''
@@ -772,7 +773,7 @@ export class ProjectDiscovery {
         return ''
       }
 
-      const permissionsRequiringTarget: PermissionType[] = [
+      const permissionsRequiringTarget: Permission[] = [
         'interact',
         'upgrade',
         'act',
@@ -785,7 +786,7 @@ export class ProjectDiscovery {
         : ''
 
       return `${[
-        ultimatePermissionToPrefix[permission as PermissionType],
+        ultimatePermissionToPrefix[permission as Permission],
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
@@ -802,7 +803,7 @@ export class ProjectDiscovery {
     contractOrEoa: ContractParameters | EoaParameters,
   ): string[] {
     const directPermissionToPrefix: {
-      [key in PermissionType]: string | undefined
+      [key in Permission]: string | undefined
     } = {
       interact: 'Can be used to interact with',
       upgrade: 'Can be used to upgrade implementation of',
@@ -819,6 +820,9 @@ export class ProjectDiscovery {
       validateBridge: 'Can act as a Validator',
       validateBridge2: 'Can act as a Validator',
       aggregatePolygon: 'Can act as a trusted Aggregator',
+      operateStarknet: 'Can act as an Operator',
+      governStarknet: 'Can act as a Governor',
+      member: 'Is a member of',
     }
 
     return Object.entries(
@@ -833,11 +837,11 @@ export class ProjectDiscovery {
           ].join('►'),
       ),
     ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as PermissionType
+      const permission = key.split('►')[0] as Permission
       const description = key.split('►')[1] ?? ''
       const condition = key.split('►')[2] ?? ''
       const delay = key.split('►')[3] ?? ''
-      const permissionsRequiringTarget: PermissionType[] = [
+      const permissionsRequiringTarget: Permission[] = [
         'interact',
         'upgrade',
         'act',
@@ -1228,6 +1232,16 @@ const roleDescriptions: {
     name: 'Trusted Aggregator (Proposer)',
     description:
       'Permissioned to post new state roots and global exit roots accompanied by ZK proofs.', // and accounting proofs for CDK sovereign (others) chains
+  },
+  operateStarknet: {
+    name: 'Operator',
+    description:
+      'Permissioned to regularly update and prove the state of the L2 on L1.',
+  },
+  governStarknet: {
+    name: 'Governor',
+    description:
+      'Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
   },
 }
 

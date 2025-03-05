@@ -2,7 +2,7 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 20640703,
-  "configHash": "0x0ae1ca2402f2d4f15bfa81e222a8bd183b4ceb70721b173a68fe3f925560d7e5",
+  "configHash": "0x0109f039df6bd000a992669c4179bb79aa4013d77ce23d8dcd6ac4df1416f43a",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -12,6 +12,7 @@
         "0x83a4f7af4e5a371aadb57903aed1b1f96556a0b3eb4665044a65ad8f70a89edc"
       ],
       "sinceTimestamp": 1603626845,
+      "sinceBlock": 11125447,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -38,6 +39,7 @@
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "sinceTimestamp": 1691481095,
+      "sinceBlock": 17868827,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -53,6 +55,7 @@
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
       "sinceTimestamp": 1626352379,
+      "sinceBlock": 12831566,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": true,
@@ -66,6 +69,7 @@
         "0x379cacebf61f1aa488b2a43b02fff3f8d7835d9dca8f342a13570553219e6e8c"
       ],
       "sinceTimestamp": 1576678980,
+      "sinceBlock": 9125981,
       "values": { "$immutable": true },
       "derivedName": "Proxy"
     },
@@ -98,6 +102,7 @@
         "getValidiumVaultRoot"
       ],
       "sinceTimestamp": 1590491810,
+      "sinceBlock": 10141009,
       "values": {
         "$admin": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
         "$immutable": false,
@@ -372,6 +377,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1683214307,
+      "sinceBlock": 17188210,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

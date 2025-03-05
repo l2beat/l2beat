@@ -11,6 +11,7 @@
         "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
       ],
       "sinceTimestamp": 1665890591,
+      "sinceBlock": 15757967,
       "values": {
         "$immutable": true,
         "getProofType": 2,
@@ -29,6 +30,7 @@
         "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
       ],
       "sinceTimestamp": 1661529370,
+      "sinceBlock": 15416287,
       "values": {
         "$immutable": true,
         "feeEnabled": false,
@@ -46,6 +48,7 @@
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
       "sinceTimestamp": 1661529280,
+      "sinceBlock": 15416271,
       "values": {
         "$immutable": true,
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
@@ -70,6 +73,7 @@
         "0xe59a44fb1b8121ccc17fa92e39fdd2b677d3ad575587692f8b1e4351878230d7"
       ],
       "sinceTimestamp": 1666143827,
+      "sinceBlock": 15778949,
       "values": {
         "$immutable": true,
         "aptosChainId": 108,
@@ -99,6 +103,7 @@
         }
       ],
       "sinceTimestamp": 1661536020,
+      "sinceBlock": 15416736,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
@@ -125,6 +130,7 @@
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
       "sinceTimestamp": 1661280206,
+      "sinceBlock": 15398311,
       "values": {
         "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
@@ -141,6 +147,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1647498793,
+      "sinceBlock": 14402408,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -169,6 +176,7 @@
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
       "sinceTimestamp": 1647316591,
+      "sinceBlock": 14388880,
       "values": {
         "$immutable": true,
         "BLOCK_VERSION": 65535,
@@ -190,6 +198,7 @@
       "address": "0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7",
       "unverified": true,
       "sinceTimestamp": 1661531834,
+      "sinceBlock": 15416447,
       "values": { "$immutable": true }
     },
     {
@@ -205,6 +214,7 @@
         }
       ],
       "sinceTimestamp": 1661531835,
+      "sinceBlock": 15416448,
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
         "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f",
@@ -257,6 +267,7 @@
         }
       ],
       "sinceTimestamp": 1661448939,
+      "sinceBlock": 15410443,
       "values": {
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
@@ -267,6 +278,7 @@
       "address": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
       "unverified": true,
       "sinceTimestamp": 1661535988,
+      "sinceBlock": 15416732,
       "values": { "$immutable": true }
     },
     {
@@ -282,6 +294,7 @@
         }
       ],
       "sinceTimestamp": 1647317012,
+      "sinceBlock": 14388905,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
@@ -298,6 +311,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648243585,
+      "sinceBlock": 14457816,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

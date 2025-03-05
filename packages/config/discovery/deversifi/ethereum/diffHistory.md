@@ -1,4 +1,70 @@
-Generated with discovered.json: 0xb50f976884ea48a3398e60e4db29320bbeb2aaa8
+Generated with discovered.json: 0x096f62ec82f5b2c114ca38e4c1eb89268c0faf3f
+
+# Diff at Tue, 04 Mar 2025 10:39:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20640703
+- current block number: 20640703
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640703 (main branch discovery), not current.
+
+```diff
+    contract Committee (0x28780349A33eEE56bb92241bAAB8095449e24306) {
+    +++ description: None
+      sinceBlock:
++        11125447
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73) {
+    +++ description: None
+      sinceBlock:
++        17868827
+    }
+```
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: None
+      sinceBlock:
++        12831566
+    }
+```
+
+```diff
+    contract DeversiFiTreasuryMultisig (0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a) {
+    +++ description: None
+      sinceBlock:
++        9125981
+    }
+```
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      sinceBlock:
++        10141009
+    }
+```
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      sinceBlock:
++        17188210
+    }
+```
+
+Generated with discovered.json: 0xcf4dfa83635d7492a8e727a8609fad68ee0c2d1a
 
 # Diff at Mon, 20 Jan 2025 11:09:25 GMT:
 

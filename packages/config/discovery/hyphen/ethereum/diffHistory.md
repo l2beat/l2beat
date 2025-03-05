@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x97c74ab4ba0e44b360a2abce696b1a468e65d149
+
+# Diff at Tue, 04 Mar 2025 10:39:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20138492
+- current block number: 20138492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472) {
+    +++ description: None
+      sinceBlock:
++        14375007
+    }
+```
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      sinceBlock:
++        14375018
+    }
+```
+
+```diff
+    contract ExecutorManager (0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399) {
+    +++ description: None
+      sinceBlock:
++        14375002
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      sinceBlock:
++        14761234
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      sinceBlock:
++        14375014
+    }
+```
+
 Generated with discovered.json: 0x6f70269e0c9ca6f17531efd051802626f01cbe98
 
 # Diff at Mon, 20 Jan 2025 11:09:35 GMT:

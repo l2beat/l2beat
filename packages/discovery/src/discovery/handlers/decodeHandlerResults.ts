@@ -1,10 +1,9 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
-
 import { getErrorMessage } from '@l2beat/shared-pure'
 import type {
   DiscoveryContract,
   DiscoveryCustomType,
 } from '../config/RawDiscoveryConfig'
+import type { ContractParameters } from '../output/types'
 import { TypeApplier } from '../type-casters/TypeApplier'
 import type { HandlerResult } from './Handler'
 

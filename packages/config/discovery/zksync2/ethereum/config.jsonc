@@ -16,9 +16,7 @@
     "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD": "ValidatorTimelockOld",
     "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61": "Governance"
   },
-  "sharedModules": {
-    "doesThisKeyDoAnything": "shared-zk-stack"
-  },
+  "sharedModules": ["shared-zk-stack"],
   "overrides": {
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       // local override over the template to fetch the validators from the shared contract

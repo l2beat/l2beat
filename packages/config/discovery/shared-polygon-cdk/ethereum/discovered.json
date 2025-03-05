@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21802929,
+  "blockNumber": 21965308,
   "configHash": "0xc0d918344f3b3f55bcdef0dad0a62f018b54bcf4a22373d7ba3fc3b0c9a4da2a",
   "contracts": [
     {
@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1679653103,
+      "sinceBlock": 16896716,
       "values": {
         "$immutable": true,
         "owner": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
@@ -129,6 +130,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678956815,
+      "sinceBlock": 16839348,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -173,6 +175,7 @@
       ],
       "ignoreInWatchMode": ["getRoot"],
       "sinceTimestamp": 1679653127,
+      "sinceBlock": 16896718,
       "values": {
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
         "$implementation": "0x0FeB850B183C57534b56b7d56520133C8f9BDB65",
@@ -193,7 +196,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x70367f76d6d3ab9ddc4ec435f9af7c0425c392b704d57b2f99733cf960fdf97e",
+        "getRoot": "0xa777bbb6119f1f4068336ce11742e0e016b34d8fb277dc2c32e76e7b1a857af2",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -227,6 +230,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678429487,
+      "sinceBlock": 16795950,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -327,6 +331,7 @@
         "totalVerifiedBatches"
       ],
       "sinceTimestamp": 1679653163,
+      "sinceBlock": 16896721,
       "values": {
         "_HALT_AGGREGATION_TIMEOUT": "1 week",
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
@@ -439,7 +444,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x8e6837d41d91184079187bf2b3f5bfc96755eaace3841ce6128ec199a352979e",
+        "getRollupExitRoot": "0xdb708c1d661a786ebd0a73e4773c55b810509573725dcdecfd9a6bf1399cb25d",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -457,14 +462,15 @@
           [true],
           [true],
           [false],
+          [false],
           [false]
         ],
-        "lastAggregationTimestamp": 1739031239,
+        "lastAggregationTimestamp": 1740991967,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
-        "rollupCount": 15,
+        "rollupCount": 16,
         "rollupsDataV2": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -600,6 +606,15 @@
             7,
             0,
             "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ],
+          [
+            "0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
+            3344,
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            12,
+            7,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ]
         ],
         "rollupTypeCount": 9,
@@ -677,8 +692,8 @@
             "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
-        "totalSequencedBatches": 591719,
-        "totalVerifiedBatches": 591174,
+        "totalSequencedBatches": 642321,
+        "totalVerifiedBatches": 641683,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -733,6 +748,7 @@
       ],
       "ignoreInWatchMode": ["getRoot", "depositCount"],
       "sinceTimestamp": 1679653151,
+      "sinceBlock": 16896720,
       "values": {
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
         "$implementation": "0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
@@ -755,8 +771,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 54048,
-        "getRoot": "0xbae721eef85de84b961e6ab30e0fab0656314bc717b9b013071fa0ca5786e07e",
+        "depositCount": 55217,
+        "getRoot": "0xf7df6423e1d2a31f745e6db1f6e3ad30d854bf651b35629bb3afdad2979a9785",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2",
@@ -780,6 +796,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722533147,
+      "sinceBlock": 20435175,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -798,7 +815,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -854,6 +871,7 @@
         }
       ],
       "sinceTimestamp": 1679653187,
+      "sinceBlock": 16896723,
       "values": {
         "$immutable": true,
         "accessControl": {

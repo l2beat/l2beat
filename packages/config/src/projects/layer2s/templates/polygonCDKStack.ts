@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -85,7 +85,6 @@ export interface PolygonCDKStackConfig {
   additionalBadges?: Badge[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: string[]
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
@@ -168,7 +167,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
       escrows: templateVars.nonTemplateEscrows,
       activityConfig: getActivityConfig(
         templateVars.activityConfig,
@@ -307,7 +305,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               stateUpdate: 'disabled',
             },
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,

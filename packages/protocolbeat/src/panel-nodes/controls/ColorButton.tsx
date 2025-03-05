@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store/store'
 import { SELECTABLE_COLORS } from '../view/colors/colors'
+import { oklchColorToCSS } from '../view/colors/oklch'
 import { ControlButton } from './ControlButton'
 
 export function ColorButton() {
@@ -76,7 +77,7 @@ function ColorPicker({ onColorChange }: ColorPickerProps) {
       />
       {SELECTABLE_COLORS.map((c, i) => (
         <button
-          style={{ backgroundColor: c.color }}
+          style={{ backgroundColor: oklchColorToCSS(c.color) }}
           className="h-12 w-12 rounded border border-coffee-600 shadow-xl hover:ring"
           key={i}
           onClick={() => onColorChange(i + 1)}

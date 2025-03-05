@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x759627b72d480eabcdce0eba35a1b8334d2c5c5c
+Generated with discovered.json: 0xdfa44aad687c6cc52b3c72cca4f8ff8391e0bb45
+
+# Diff at Tue, 04 Mar 2025 10:39:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 19825376
+- current block number: 19825376
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825376 (main branch discovery), not current.
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: None
+      sinceBlock:
++        12831566
+    }
+```
+
+```diff
+    contract StrategyCompound (0x5b000954F70B0410685193B0afd3074B744B5C97) {
+    +++ description: None
+      sinceBlock:
++        14473373
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE) {
+    +++ description: None
+      sinceBlock:
++        13849860
+    }
+```
+
+```diff
+    contract Proxy (0x82123571C8a5e0910280C066bc634c4945FFcbC8) {
+    +++ description: None
+      sinceBlock:
++        14225869
+    }
+```
+
+```diff
+    contract Comp (0xc00e94Cb662C3520282E6f5717214004A7f26888) {
+    +++ description: None
+      sinceBlock:
++        9601359
+    }
+```
+
+```diff
+    contract Broker (0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5) {
+    +++ description: None
+      sinceBlock:
++        14473363
+    }
+```
+
+```diff
+    contract Committee (0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9) {
+    +++ description: None
+      sinceBlock:
++        14652355
+    }
+```
+
+Generated with discovered.json: 0x6ccddb5bf9b82f23ae279bdfef12e1df6a8c41f8
 
 # Diff at Mon, 20 Jan 2025 11:09:40 GMT:
 

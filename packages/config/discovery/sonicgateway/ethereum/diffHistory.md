@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xc8815cf637572915bb9b85471ce6ec89bf944feb
+
+# Diff at Tue, 04 Mar 2025 10:39:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21766633
+- current block number: 21766633
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766633 (main branch discovery), not current.
+
+```diff
+    contract ValidatorsRegistry (0x72965045A6691E5A74299D1e878f303264D4D910) {
+    +++ description: Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).
+      sinceBlock:
++        21443134
+    }
+```
+
+```diff
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329) {
+    +++ description: None
+      sinceBlock:
++        21443151
+    }
+```
+
+```diff
+    contract SonicGatewayOpsMultisig (0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B) {
+    +++ description: None
+      sinceBlock:
++        21451725
+    }
+```
+
+```diff
+    contract MPTProofVerifier (0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306) {
+    +++ description: Verifier contract for merkle proofs.
+      sinceBlock:
++        21443127
+    }
+```
+
+```diff
+    contract SonicGatewayMultisig (0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0) {
+    +++ description: None
+      sinceBlock:
++        21336741
+    }
+```
+
+```diff
+    contract TokenDeposit (0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20) {
+    +++ description: Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.
+      sinceBlock:
++        21443147
+    }
+```
+
+```diff
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4) {
+    +++ description: Entry point for state (oracle) updates.
+      sinceBlock:
++        21443161
+    }
+```
+
+```diff
+    contract StateOracle (0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f) {
+    +++ description: Simple contract that saves the latest state root.
+      sinceBlock:
++        21443130
+    }
+```
+
+```diff
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4) {
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+      sinceBlock:
++        21443138
+    }
+```
+
 Generated with discovered.json: 0x17f5da83e23bf7e0425e03a08b51fcb5bc947ee7
 
 # Diff at Tue, 04 Feb 2025 12:32:45 GMT:

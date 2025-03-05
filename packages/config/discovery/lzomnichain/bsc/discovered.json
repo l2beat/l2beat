@@ -11,6 +11,7 @@
         "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
       ],
       "sinceTimestamp": 1665890525,
+      "sinceBlock": 22214736,
       "values": {
         "$immutable": true,
         "getProofType": 2,
@@ -28,6 +29,7 @@
         "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
       ],
       "sinceTimestamp": 1661528757,
+      "sinceBlock": 20783075,
       "values": {
         "$immutable": true,
         "feeEnabled": false,
@@ -55,6 +57,7 @@
         }
       ],
       "sinceTimestamp": 1647317014,
+      "sinceBlock": 16070466,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
@@ -68,6 +71,7 @@
       ],
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1647316942,
+      "sinceBlock": 16070442,
       "values": {
         "$immutable": true,
         "BLOCK_VERSION": 65535,
@@ -98,6 +102,7 @@
         "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
       ],
       "sinceTimestamp": 1661528745,
+      "sinceBlock": 20783071,
       "values": {
         "$immutable": true,
         "getProofType": 1,
@@ -124,6 +129,7 @@
         "ulnLookup"
       ],
       "sinceTimestamp": 1661528751,
+      "sinceBlock": 20783073,
       "values": {
         "$immutable": true,
         "chainAddressSizeMap": {
@@ -1453,6 +1459,7 @@
         }
       ],
       "sinceTimestamp": 1661535965,
+      "sinceBlock": 20785459,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583",
@@ -1482,6 +1489,7 @@
         }
       ],
       "sinceTimestamp": 1687808648,
+      "sinceBlock": 29447446,
       "values": { "$immutable": true }
     },
     {
@@ -1491,6 +1499,7 @@
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
       "sinceTimestamp": 1661280106,
+      "sinceBlock": 20700392,
       "values": {
         "$immutable": true,
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
@@ -1509,6 +1518,7 @@
         }
       ],
       "sinceTimestamp": 1669425920,
+      "sinceBlock": 23375394,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0xc9A227D0319f42e8C5997BD639a5286642474849",
@@ -1529,6 +1539,7 @@
         }
       ],
       "sinceTimestamp": 1687808660,
+      "sinceBlock": 29447450,
       "values": {
         "$admin": "0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C",
         "$implementation": "0x893BB42a352CA8Ee8bCb58348455DD3966368737",
@@ -1563,6 +1574,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648073735,
+      "sinceBlock": 16320592,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -1601,6 +1613,7 @@
         }
       ],
       "sinceTimestamp": 1661448871,
+      "sinceBlock": 20756603,
       "values": {
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
@@ -1622,6 +1635,7 @@
         }
       ],
       "sinceTimestamp": 1661531611,
+      "sinceBlock": 20784014,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
         "$implementation": "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0",
@@ -1679,6 +1693,7 @@
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
       "sinceTimestamp": 1694218835,
+      "sinceBlock": 31576791,
       "values": {
         "$immutable": true,
         "allowlistSize": 0,
@@ -1708,6 +1723,7 @@
         }
       ],
       "sinceTimestamp": 1669420588,
+      "sinceBlock": 23373734,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
         "$implementation": "0x8363302080e711E0CAb978C081b9e69308d49808",
@@ -1727,6 +1743,7 @@
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
       "sinceTimestamp": 1694218841,
+      "sinceBlock": 31576793,
       "values": { "$immutable": true }
     }
   ],

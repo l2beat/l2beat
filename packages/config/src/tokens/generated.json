@@ -8186,6 +8186,72 @@
       }
     },
     {
+      "name": "Bifrost Voucher ASTR",
+      "coingeckoId": "bifrost-voucher-astr",
+      "address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
+      "symbol": "vASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1736815677,
+      "coingeckoListingTimestamp": 1710979200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34706/large/vASTR.png?1705893008",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pipo",
+      "coingeckoId": "pipo-2",
+      "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
+      "symbol": "PIPO",
+      "decimals": 18,
+      "deploymentTimestamp": 1737015079,
+      "coingeckoListingTimestamp": 1739923200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54474/large/Pipo.jpg?1739951527",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pufETH",
+      "coingeckoId": "pufeth",
+      "address": "0x6c460b2c6D6719562D5dA43E5152B375e79B9A8B",
+      "symbol": "pufETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1739368935,
+      "coingeckoListingTimestamp": 1707696000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Solv BTC",
       "coingeckoId": "solv-btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
@@ -8225,6 +8291,28 @@
           {
             "name": "CCIP (via interport.fi)",
             "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1738846985,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
           }
         ]
       }

@@ -37,10 +37,12 @@ export const real: Layer2 = orbitStackL2({
       ],
     },
   },
+  untrackedGasTokens: ['reETH'],
   chainConfig: {
     name: 'real',
     chainId: 111188,
     explorerUrl: 'https://explorer.re.al',
+    gasTokens: ['reETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -61,7 +63,6 @@ export const real: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  gasTokens: { untracked: ['reETH'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xfC89B875970122E24C6C5ADd4Dea139443943ea7'),

@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "blockNumber": 21387345,
-  "configHash": "0x464d6968f1f645163736de22661da896795c25b4028a39e92994b9258e147b70",
+  "configHash": "0xdda35d6f95b2c2ea787db86b4610626be11176817bf79c0e2444d2fb15b920af",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -12,6 +12,7 @@
         "0x83a4f7af4e5a371aadb57903aed1b1f96556a0b3eb4665044a65ad8f70a89edc"
       ],
       "sinceTimestamp": 1616668125,
+      "sinceBlock": 12107592,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -38,6 +39,7 @@
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
       "sinceTimestamp": 1626352379,
+      "sinceBlock": 12831566,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": true,
@@ -73,6 +75,7 @@
         "getVaultRoot"
       ],
       "sinceTimestamp": 1615389188,
+      "sinceBlock": 12011518,
       "values": {
         "$admin": "0xD2C37fC6fD89563187f3679304975655e448D192",
         "$immutable": false,
@@ -226,6 +229,7 @@
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "sinceTimestamp": 1640107463,
+      "sinceBlock": 13849860,
       "values": {
         "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
@@ -251,6 +255,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1702945151,
+      "sinceBlock": 18816399,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

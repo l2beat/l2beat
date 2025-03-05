@@ -13,6 +13,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148739,
+      "sinceBlock": 18679696,
       "values": {
         "$immutable": true,
         "prover0": "0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc",
@@ -30,6 +31,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148715,
+      "sinceBlock": 18679684,
       "values": { "$immutable": true }
     },
     {
@@ -53,6 +55,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0xcA00Db0289131B71A6624f62666bd54305697BB2",
@@ -83,6 +86,7 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1709320645,
+      "sinceBlock": 11265649,
       "values": { "$immutable": true }
     },
     {
@@ -94,6 +98,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148731,
+      "sinceBlock": 18679692,
       "values": { "$immutable": true }
     },
     {
@@ -112,6 +117,7 @@
         }
       ],
       "sinceTimestamp": 1709053969,
+      "sinceBlock": 11132311,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -152,6 +158,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x98DB769A9E15D66EA04665da0dF616596c296BA8",
@@ -232,6 +239,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x5C2950Bd136716540e1F5CF442f2AB0aD2F413A7",
@@ -282,6 +290,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x4326B3755539d35b0A8846bF9b33982A8eA42c93",
@@ -384,6 +393,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1730411695,
+      "sinceBlock": 21811174,
       "values": {
         "$immutable": false,
         "$implementation": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
@@ -413,6 +423,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148707,
+      "sinceBlock": 18679680,
       "values": { "$immutable": true }
     },
     {
@@ -451,6 +462,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x3C4DF76De31816443C207E49F9fE48737C8F2746",
@@ -506,6 +518,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1737507257,
+      "sinceBlock": 25358955,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -569,6 +582,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028",
         "$implementation": [
@@ -702,6 +716,7 @@
         }
       ],
       "sinceTimestamp": 1729063511,
+      "sinceBlock": 21137082,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -729,6 +744,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148725,
+      "sinceBlock": 18679689,
       "values": { "$immutable": true }
     },
     {
@@ -752,6 +768,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x20fA6358f89Ed16d48F6588a8f500887354Ff56c",
@@ -803,6 +820,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0xc00336Cdf86AE7AD58D8773B0114082C190D28D5",
@@ -871,6 +889,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$immutable": true,
         "owner": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
