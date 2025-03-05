@@ -147,11 +147,7 @@ describeDatabase(PriceRepository.name, (db) => {
         saved('b', UnixTime(1), 1),
       ])
 
-      await repository.deleteByConfigInTimeRange(
-        'a'.repeat(12),
-        UnixTime(0),
-        UnixTime(1),
-      )
+      await repository.deleteByConfigInTimeRange('a'.repeat(12), 0, UnixTime(1))
 
       const results = await repository.getAll()
       expect(results).toEqual([saved('b', UnixTime(1), 1)])

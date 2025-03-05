@@ -291,7 +291,7 @@ describe(CoingeckoQueryService.name, () => {
 
   describe(CoingeckoQueryService.calculateAdjustedTo.name, () => {
     it('adjust range for coingecko hourly query range', () => {
-      const from = UnixTime(0)
+      const from = 0
       const to =
         from + UnixTime(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * 2, 'days')
 
@@ -303,7 +303,7 @@ describe(CoingeckoQueryService.name, () => {
     })
 
     it('does not adjust if the range is smaller than MAX_DAYS_FOR_ONE_CALL', () => {
-      const from = UnixTime(0)
+      const from = 0
       const to =
         from + UnixTime(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL - 1, 'days')
 

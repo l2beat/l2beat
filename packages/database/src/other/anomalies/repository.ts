@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type AnomalyRecord, toRecord, toRow } from './entity'
 import { selectAnomaly } from './select'

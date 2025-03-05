@@ -62,13 +62,7 @@ export class EtherscanClient implements IEtherscanClient {
     apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
   ): EtherscanClient {
-    return new EtherscanClient(
-      httpClient,
-      url,
-      apiKey,
-      UnixTime(0),
-      unsupportedMethods,
-    )
+    return new EtherscanClient(httpClient, url, apiKey, 0, unsupportedMethods)
   }
 
   // Etherscan API is not stable enough to trust it to return "closest" block.

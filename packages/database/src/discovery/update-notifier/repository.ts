@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { type ChainId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type UpdateNotifierRecord, toRecord, toRow } from './entity'
 import { selectUpdateNotifier } from './select'

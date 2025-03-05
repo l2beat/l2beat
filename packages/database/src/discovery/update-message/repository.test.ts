@@ -32,7 +32,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
       projectName: 'project',
       chain: 'ethereum',
       blockNumber: 1,
-      timestamp: UnixTime(0),
+      timestamp: 0,
       message: 'Initial message',
     }
     await repository.upsert(message)
@@ -72,7 +72,7 @@ function record(params?: Partial<UpdateMessageRecord>): UpdateMessageRecord {
     projectName: 'project',
     chain: 'ethereum',
     blockNumber: 1,
-    timestamp: UnixTime(0),
+    timestamp: 0,
     message: 'Test message',
     ...params,
   }
