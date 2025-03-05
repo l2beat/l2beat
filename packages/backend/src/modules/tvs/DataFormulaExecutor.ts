@@ -44,7 +44,7 @@ export class DataFormulaExecutor {
     const promises: Promise<void>[] = []
 
     for (const timestamp of timestamps) {
-      const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
+      const blockNumbers = blockNumbersToTimestamps.get(timestamp)
       assert(blockNumbers)
 
       promises.push(
@@ -258,13 +258,13 @@ export class DataFormulaExecutor {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.debug(
-        `Fetching latest block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching latest block number for timestamp ${timestamp} on ${chain}`,
       )
       const latestBlock = await block.getLatestBlockNumber()
       result.set(chain, latestBlock)
     }
 
-    return new Map([[timestamp.toNumber(), result]])
+    return new Map([[timestamp, result]])
   }
 
   async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
@@ -272,7 +272,7 @@ export class DataFormulaExecutor {
 
     for (const timestamp of timestamps) {
       result.set(
-        timestamp.toNumber(),
+        timestamp,
         await this.getTimestampToBlockNumbersMapping(chains, timestamp),
       )
     }
@@ -295,7 +295,7 @@ export class DataFormulaExecutor {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.info(
-        `Fetching block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching block number for timestamp ${timestamp} on ${chain}`,
       )
       const blockNumber = await block.getBlockNumberAtOrBefore(timestamp)
       result.set(chain, blockNumber)

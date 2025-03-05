@@ -12,7 +12,7 @@ export class DayTxsCountService {
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (day) => ({
       count: await this.provider.getDailyCount(day),
-      timestamp: UnixTime.fromDays(day),
+      timestamp: UnixTime(day, 'days'),
     }))
     const counts = await Promise.all(queries)
 
@@ -21,8 +21,8 @@ export class DayTxsCountService {
       timestamp: c.timestamp,
       count: c.count,
       uopsCount: null,
-      start: c.timestamp.toStartOf('day').toNumber(),
-      end: c.timestamp.add(1, 'days').add(-1, 'seconds').toNumber(),
+      start: UnixTime.toStartOf(c.timestamp, 'day'),
+      end: c.timestamp + UnixTime(1, 'days') - UnixTime(1, 'seconds'),
     }))
   }
 }

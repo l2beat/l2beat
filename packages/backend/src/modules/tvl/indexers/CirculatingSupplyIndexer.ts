@@ -19,7 +19,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       configHash: $.minHeight.toString(),
     })
     this.configurationId = createAmountId($.configuration)
-    this.maxHeight = this.$.configuration.untilTimestamp?.toNumber()
+    this.maxHeight = this.$.configuration.untilTimestamp
   }
 
   async update(from: number, to: number): Promise<number> {
@@ -36,14 +36,14 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
 
     const amounts =
       await this.$.circulatingSupplyService.fetchCirculatingSupplies(
-        new UnixTime(from),
+        UnixTime(from),
         adjustedTo,
         { ...this.$.configuration, id: this.configurationId },
       )
 
     this.logger.info('Fetched amounts in range', {
       from,
-      to: adjustedTo.toNumber(),
+      to: adjustedTo,
       amounts: amounts.length,
     })
 
@@ -56,25 +56,25 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
 
     this.logger.info('Saved amounts into DB', {
       from,
-      to: adjustedTo.toNumber(),
+      to: adjustedTo,
       amounts: nonZeroAmounts.length,
     })
 
-    return adjustedTo.toNumber()
+    return adjustedTo
   }
 
   private getAdjustedTo(from: number, to: number) {
     const adjustedTo = this.$.circulatingSupplyService.getAdjustedTo(from, to)
 
-    return this.maxHeight && this.maxHeight < adjustedTo.toNumber()
-      ? new UnixTime(this.maxHeight)
+    return this.maxHeight && this.maxHeight < adjustedTo
+      ? UnixTime(this.maxHeight)
       : adjustedTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     const deletedRecords = await this.$.db.amount.deleteByConfigAfter(
       this.configurationId,
-      new UnixTime(targetHeight),
+      UnixTime(targetHeight),
     )
 
     if (deletedRecords > 0) {

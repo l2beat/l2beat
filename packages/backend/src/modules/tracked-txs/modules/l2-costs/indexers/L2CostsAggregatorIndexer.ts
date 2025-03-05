@@ -8,7 +8,7 @@ import type { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import {
   assert,
   type ProjectId,
-  type UnixTime,
+  UnixTime,
   clampRangeToDay,
 } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
@@ -44,7 +44,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     const [shiftedFrom, shiftedTo] = this.shift(from, to)
 
-    if (shiftedFrom.equals(shiftedTo)) {
+    if (shiftedFrom === shiftedTo) {
       // there's nothing to sync
       return to
     }
@@ -65,7 +65,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       count: aggregated.length,
     })
 
-    return shiftedTo.add(1, 'seconds').toNumber()
+    return shiftedTo + UnixTime(1, 'seconds')
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -80,19 +80,19 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
 
     // start from a beginning of an hour
     // 13:00:01 => 13:00:00
-    const shiftedUnixFrom = unixFrom.toStartOf('hour')
+    const shiftedUnixFrom = UnixTime.toStartOf(unixFrom, 'hour')
 
     // end on last full hour
     // 13:45:51 => 13:00:00
-    let shiftedUnixTo = unixTo.toStartOf('hour')
+    let shiftedUnixTo = UnixTime.toStartOf(unixTo, 'hour')
 
-    if (shiftedUnixFrom.equals(shiftedUnixTo)) {
+    if (shiftedUnixFrom === shiftedUnixTo) {
       return [shiftedUnixFrom, shiftedUnixTo]
     }
 
     // do not include ending hour
     // 13:00:00 => 12:59:59
-    shiftedUnixTo = shiftedUnixTo.add(-1, 'seconds')
+    shiftedUnixTo = shiftedUnixTo - UnixTime(1, 'seconds')
 
     this.logger.info('Time range shifted', {
       shiftedFrom: shiftedUnixFrom,
@@ -139,15 +139,13 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const map = new Map<string, AggregatedL2CostRecord>()
 
     for (const record of records) {
-      const timestamp = record.timestamp.toStartOf('hour')
+      const timestamp = UnixTime.toStartOf(record.timestamp, 'hour')
       const key = `${record.projectId}:${timestamp.toString()}`
 
-      const ethUsdPrice = ethPrices.find((p) => p.timestamp.equals(timestamp))
+      const ethUsdPrice = ethPrices.find((p) => p.timestamp === timestamp)
       assert(
         ethUsdPrice,
-        `[${
-          L2CostsAggregatorIndexer.name
-        }]: ETH price not found: ${timestamp.toNumber()}`,
+        `[${L2CostsAggregatorIndexer.name}]: ETH price not found: ${timestamp}`,
       )
 
       const multiplier = multipliers.find(

@@ -449,7 +449,8 @@ describe(UpdateNotifier.name, () => {
           },
         ],
       }
-      const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
+      const timestamp =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + UnixTime(6, 'hours')
       const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
       const rows = [
         ['project-b', 'ethereum', '3', '2', '', ''],
@@ -465,7 +466,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
+        `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
         'INTERNAL',
       )
     })
@@ -526,7 +527,8 @@ describe(UpdateNotifier.name, () => {
           randomReminder('chainwhip'),
         ],
       }
-      const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
+      const timestamp =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + UnixTime(6, 'hours')
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 
@@ -553,7 +555,8 @@ describe(UpdateNotifier.name, () => {
       )
 
       const reminders = {}
-      const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
+      const timestamp =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + UnixTime(1, 'hours')
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 

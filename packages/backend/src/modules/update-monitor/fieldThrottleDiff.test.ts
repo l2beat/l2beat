@@ -113,8 +113,8 @@ describe(fieldThrottleDiff.name, () => {
 function mockRecord(diff: DiscoveryDiff[]): UpdateNotifierRecord {
   return {
     id: 1,
-    createdAt: UnixTime.now().add(-30, 'minutes'),
-    updatedAt: UnixTime.now().add(-30, 'minutes'),
+    createdAt: UnixTime.now() - UnixTime(30, 'minutes'),
+    updatedAt: UnixTime.now() - UnixTime(30, 'minutes'),
     projectName: 'project',
     blockNumber: 24392345,
     diff: diff,

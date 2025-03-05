@@ -7,7 +7,7 @@ import type { Clock } from '../../../tools/Clock'
 import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 
-const LAST_HOUR = UnixTime.now().add(-1, 'hours')
+const LAST_HOUR = UnixTime.now() - UnixTime(1, 'hours')
 
 describe(BlockTargetIndexer.name, () => {
   describe(BlockTargetIndexer.prototype.start.name, () => {

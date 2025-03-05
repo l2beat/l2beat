@@ -10,6 +10,7 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { DaTrackingConfig } from '../../../config/Config'
 
 export class DaService {
@@ -23,7 +24,7 @@ export class DaService {
     const addOrMerge = (record: DataAvailabilityRecord) => {
       const existing = updatedRecords.find(
         (r) =>
-          r.timestamp.toNumber() === record.timestamp.toNumber() &&
+          r.timestamp === record.timestamp &&
           r.daLayer === record.daLayer &&
           r.projectId === record.projectId,
       )
@@ -55,7 +56,7 @@ export class DaService {
             records.push({
               projectId: c.projectId,
               daLayer: blob.daLayer,
-              timestamp: blob.blockTimestamp.toStartOf('day'),
+              timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
               totalSize: blob.size,
             })
           }
@@ -67,7 +68,7 @@ export class DaService {
               records.push({
                 projectId: c.projectId,
                 daLayer: blob.daLayer,
-                timestamp: blob.blockTimestamp.toStartOf('day'),
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
                 totalSize: blob.size,
               })
             }
@@ -80,7 +81,7 @@ export class DaService {
               records.push({
                 projectId: c.projectId,
                 daLayer: blob.daLayer,
-                timestamp: blob.blockTimestamp.toStartOf('day'),
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
                 totalSize: blob.size,
               })
             }
@@ -93,7 +94,7 @@ export class DaService {
               records.push({
                 projectId: c.projectId,
                 daLayer: blob.daLayer,
-                timestamp: blob.blockTimestamp.toStartOf('day'),
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
                 totalSize: blob.size,
               })
             }

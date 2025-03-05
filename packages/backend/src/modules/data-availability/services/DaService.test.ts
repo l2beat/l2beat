@@ -62,19 +62,19 @@ describe(DaService.name, () => {
         {
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 1000n,
         },
         {
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 300n,
         },
         {
           projectId: 'project-ethereum-2',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 300n,
         },
       ])
@@ -114,13 +114,13 @@ describe(DaService.name, () => {
         {
           projectId: 'celestia',
           daLayer: 'celestia',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 300n,
         },
         {
           projectId: 'project-celestia-1',
           daLayer: 'celestia',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 100n,
         },
       ])
@@ -160,13 +160,13 @@ describe(DaService.name, () => {
         {
           projectId: 'avail',
           daLayer: 'avail',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 300n,
         },
         {
           projectId: 'project-avail-1',
           daLayer: 'avail',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 100n,
         },
       ])
@@ -200,7 +200,7 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
-          blockTimestamp: TIME.add(-1, 'days'),
+          blockTimestamp: TIME - UnixTime(1, 'days'),
           size: BigInt(300),
         } as EthereumBlob,
         // blob matching project-ethereum-1 on next day
@@ -209,7 +209,7 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
-          blockTimestamp: TIME.add(1, 'days'),
+          blockTimestamp: TIME + UnixTime(1, 'days'),
           size: BigInt(400),
         } as EthereumBlob,
       ]
@@ -219,28 +219,28 @@ describe(DaService.name, () => {
         {
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day').add(-1, 'days'),
+          timestamp: UnixTime.toStartOf(TIME, 'day') - UnixTime(1, 'days'),
           totalSize: 10000n,
         },
         // project record for previous day
         {
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day').add(-1, 'days'),
+          timestamp: UnixTime.toStartOf(TIME, 'day') - UnixTime(1, 'days'),
           totalSize: 1000n,
         },
         // ethereum record for current day
         {
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 10000n,
         },
         // project record for current day
         {
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 1000n,
         },
       ]
@@ -255,42 +255,42 @@ describe(DaService.name, () => {
         {
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day').add(-1, 'days'),
+          timestamp: UnixTime.toStartOf(TIME, 'day') - UnixTime(1, 'days'),
           totalSize: 10300n, // 10 000 + 300
         },
 
         {
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day').add(-1, 'days'),
+          timestamp: UnixTime.toStartOf(TIME, 'day') - UnixTime(1, 'days'),
           totalSize: 1300n, // 1 000 + 300
         },
 
         {
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 10300n, // 10 000 + 100 + 200
         },
 
         {
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day'),
+          timestamp: UnixTime.toStartOf(TIME, 'day'),
           totalSize: 1300n, // 1 000 + 100 + 200
         },
 
         {
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day').add(1, 'days'),
+          timestamp: UnixTime.toStartOf(TIME, 'day') + UnixTime(1, 'days'),
           totalSize: 400n,
         },
 
         {
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: TIME.toStartOf('day').add(1, 'days'),
+          timestamp: UnixTime.toStartOf(TIME, 'day') + UnixTime(1, 'days'),
           totalSize: 400n,
         },
       ])

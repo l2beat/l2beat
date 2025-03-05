@@ -1,5 +1,5 @@
 import type { Database, UpdateMessageRecord } from '@l2beat/database'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
 export class UpdateMessagesService {
   constructor(
@@ -18,10 +18,8 @@ export class UpdateMessagesService {
   }
 
   private prune(reference: UnixTime) {
-    const cutoff = reference.add(
-      -this.updateMessagesRetentionPeriodDays,
-      'days',
-    )
+    const cutoff =
+      reference - UnixTime(this.updateMessagesRetentionPeriodDays, 'days')
 
     return this.db.updateMessage.deleteBefore(cutoff)
   }
