@@ -7,5 +7,5 @@ export function clampRangeToDay(
   if (UnixTime.toStartOf(from, 'day') !== UnixTime.toStartOf(to, 'day')) {
     return { from, to: UnixTime.toNext(from, 'day') }
   }
-  return { from, to: to }
+  return { from, to }
 }
