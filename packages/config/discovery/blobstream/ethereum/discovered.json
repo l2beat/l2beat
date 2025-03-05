@@ -11,6 +11,7 @@
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
       ],
       "sinceTimestamp": 1717613939,
+      "sinceBlock": 20027571,
       "values": {
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
@@ -25,6 +26,7 @@
         "0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"
       ],
       "sinceTimestamp": 1706575919,
+      "sinceBlock": 19115866,
       "values": {
         "$immutable": true,
         "owner": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0"
@@ -53,6 +55,7 @@
         }
       ],
       "sinceTimestamp": 1720099223,
+      "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
         "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
@@ -102,6 +105,7 @@
         }
       ],
       "sinceTimestamp": 1706575991,
+      "sinceBlock": 19115872,
       "values": {
         "$immutable": true,
         "feeVault": "0x296666e937b270193B960a7cEC526B351F353166",
@@ -174,6 +178,7 @@
       ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1717615307,
+      "sinceBlock": 20027685,
       "values": {
         "$admin": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
@@ -256,6 +261,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1717613015,
+      "sinceBlock": 20027494,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -295,6 +301,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204135,
+      "sinceBlock": 20573748,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -331,6 +338,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678822115,
+      "sinceBlock": 16828272,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -357,6 +365,7 @@
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
       "sinceTimestamp": 1729727135,
+      "sinceBlock": 21031662,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
@@ -377,6 +386,7 @@
         }
       ],
       "sinceTimestamp": 1735949699,
+      "sinceBlock": 21547470,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
@@ -388,6 +398,7 @@
       "address": "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E",
       "unverified": true,
       "sinceTimestamp": 1717613795,
+      "sinceBlock": 20027559,
       "values": { "$immutable": true },
       "derivedName": ""
     }

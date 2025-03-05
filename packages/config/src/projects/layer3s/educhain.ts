@@ -48,9 +48,9 @@ export const educhain: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['EDU'],
   },
   associatedTokens: ['EDU'],
-  gasTokens: { tracked: ['EDU'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),

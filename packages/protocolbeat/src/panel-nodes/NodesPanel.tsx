@@ -51,6 +51,8 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     }
     const nodes: Node[] = []
     for (const chain of data.entries) {
+      const hueShift = chain.project.startsWith('shared') ? 90 : 0
+
       for (const contract of [
         ...chain.initialContracts,
         ...chain.discoveredContracts,
@@ -67,6 +69,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
           color: 0,
+          hueShift,
           data: null,
           fields: toNodeFields(contract.fields),
         }
@@ -82,6 +85,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           address,
           box: { x: 0, y: 0, width: NODE_WIDTH, height: 0 },
           color: 0,
+          hueShift,
           data: null,
           fields: [],
         }

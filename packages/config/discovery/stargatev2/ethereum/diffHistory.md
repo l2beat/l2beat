@@ -1,3 +1,248 @@
+Generated with discovered.json: 0xe00f34163aeb9f579dfeb05071713442be8e07a4
+
+# Diff at Tue, 04 Mar 2025 11:26:37 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@be38e12d3ff947ca8de40f3a23a9ba1875a54f5a block: 21944318
+- current block number: 21944318
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        "BlockedMessageLib"
++        ""
+      sourceHashes:
+-        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+      values.messageLibType:
+-        2
+      values.version:
+-        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      unverified:
++        true
+    }
+```
+
+Generated with discovered.json: 0x30eba0a09fe248da5fd2f6db605273d31dd8090b
+
+# Diff at Tue, 04 Mar 2025 10:40:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21944318
+- current block number: 21944318
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract Treasurer (0x1041D127b2d4BC700F0F563883bC689502606918) {
+    +++ description: None
+      sinceBlock:
++        19963243
+    }
+```
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      sinceBlock:
++        19093746
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      sinceBlock:
++        19093715
+    }
+```
+
+```diff
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      sinceBlock:
++        19093715
+    }
+```
+
+```diff
+    contract StargatePool (0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D) {
+    +++ description: None
+      sinceBlock:
++        19963228
+    }
+```
+
+```diff
+    contract StargateMultiRewarder (0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881) {
+    +++ description: None
+      sinceBlock:
++        19963242
+    }
+```
+
+```diff
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056) {
+    +++ description: None
+      sinceBlock:
++        19093724
+    }
+```
+
+```diff
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      sinceBlock:
++        14402408
+    }
+```
+
+```diff
+    contract CreditMessaging (0x6b8aD17795d89B283e6D0362A87A403f3544bb9d) {
+    +++ description: None
+      sinceBlock:
++        19963233
+    }
+```
+
+```diff
+    contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) {
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+      sinceBlock:
++        19963232
+    }
+```
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      sinceBlock:
++        21094853
+    }
+```
+
+```diff
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      sinceBlock:
++        19963227
+    }
+```
+
+```diff
+    contract Stargate Verifier (0x8FafAE7Dd957044088b3d0F67359C327c6200d18) {
+    +++ description: None
+      sinceBlock:
++        19922400
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973) {
+    +++ description: None
+      sinceBlock:
++        19963231
+    }
+```
+
+```diff
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5) {
+    +++ description: None
+      sinceBlock:
++        17565746
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      sinceBlock:
++        19093732
+    }
+```
+
+```diff
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      sinceBlock:
++        19108732
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      sinceBlock:
++        19093729
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      sinceBlock:
++        19963230
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      sinceBlock:
++        19093731
+    }
+```
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      sinceBlock:
++        17565748
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sinceBlock:
++        14457816
+    }
+```
+
+```diff
+    contract StargatePool (0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3) {
+    +++ description: None
+      sinceBlock:
++        19963229
+    }
+```
+
+```diff
+    contract  (0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006) {
+    +++ description: None
+      sinceBlock:
++        19922400
+    }
+```
+
 Generated with discovered.json: 0x0f3a7ad4b9e88baa08e9eac3add521bd714e4cc6
 
 # Diff at Fri, 28 Feb 2025 10:42:53 GMT:

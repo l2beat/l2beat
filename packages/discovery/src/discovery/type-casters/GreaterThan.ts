@@ -6,7 +6,7 @@ import type { ContractValue } from '../output/types'
 import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 
 const Validator = z.object({
-  value: z.number(),
+  value: z.union([z.number(), z.string()]),
   trueResult: z.union([z.number(), z.string()]).optional(),
   falseResult: z.union([z.number(), z.string()]).optional(),
 })

@@ -11,7 +11,6 @@ import { MainPageHeader } from '~/components/main-page-header'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { PublicSystemInfo } from '../_components/da-category-info'
-import { groupBySystem } from '../_utils/group-by-system'
 import { DaThroughputPublicTable } from './_components/table/da-throughput-public-table'
 import { IncludeScalingOnlyProvider } from './_context/da-throughput-context'
 
@@ -20,7 +19,6 @@ export default async function Page() {
     getDaThroughputEntries(),
     api.da.chart.prefetch({ range: '30d', includeScalingOnly: false }),
   ])
-  const { publicSystems } = groupBySystem(entries)
 
   return (
     <HydrateClient>
@@ -35,14 +33,14 @@ export default async function Page() {
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>
               <DirectoryTabsTrigger value="public">
-                Public <CountBadge>{publicSystems.length}</CountBadge>
+                Public <CountBadge>{entries.length}</CountBadge>
               </DirectoryTabsTrigger>
             </DirectoryTabsList>
             <DirectoryTabsContent value="public" className="pt-4 sm:pt-3">
               <PublicSystemInfo />
               <DaThroughputChart />
               <HorizontalSeparator className="my-5" />
-              <DaThroughputPublicTable items={publicSystems} />
+              <DaThroughputPublicTable items={entries} />
             </DirectoryTabsContent>
           </DirectoryTabs>
         </IncludeScalingOnlyProvider>

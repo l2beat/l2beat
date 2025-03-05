@@ -27,7 +27,7 @@ const MOCK_PROJECTS: TrackedTxProject[] = [
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
         subtype: MOCK_CONFIGURATION_TYPE,
-        untilTimestamp: UnixTime.now(),
+        untilTimestamp: UnixTime.now().toNumber(),
       }),
     ],
   },

@@ -54,8 +54,8 @@ const cmd = command({
     )
     const costsConfigs = projectConfig?.configurations.filter(
       (c): c is TrackedTxCostsConfig =>
-        c.sinceTimestamp.lte(endDate) &&
-        (!c.untilTimestamp || c.untilTimestamp.gte(startDate)) &&
+        c.sinceTimestamp < endDate.toNumber() &&
+        (!c.untilTimestamp || c.untilTimestamp > startDate.toNumber()) &&
         c.type === 'l2costs',
     )
 
@@ -102,8 +102,8 @@ const cmd = command({
       console.log(
         `Proof config: ${c.id} |`,
         getConfigDetails(c.params),
-        `Since: ${c.sinceTimestamp.toNumber()}`,
-        `Until: ${c.untilTimestamp ? c.untilTimestamp.toNumber() : '-'} |`,
+        `Since: ${c.sinceTimestamp}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp : '-'} |`,
         'Multiplier:',
         c.costMultiplier,
       )
@@ -113,8 +113,8 @@ const cmd = command({
       console.log(
         `Batch config: ${c.id} |`,
         getConfigDetails(c.params),
-        `Since: ${c.sinceTimestamp.toNumber()}`,
-        `Until: ${c.untilTimestamp ? c.untilTimestamp.toNumber() : '-'} |`,
+        `Since: ${c.sinceTimestamp}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp : '-'} |`,
         'Multiplier:',
         c.costMultiplier,
       )

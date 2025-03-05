@@ -59,11 +59,6 @@ const MEMORY_FACT_REGISTRY = discovery.getContractDetails(
   'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary onchain data.',
 )
 
-const OLD_MEMORY_FACT_REGISTRY = discovery.getContractDetails(
-  'Level2MemoryPageFactRegistry',
-  'Same as MemoryPageFactRegistry but stores facts proved by the old SHARP Verifier, used as a fallback.',
-)
-
 const FRI_STATEMENT_CONTRACT = discovery.getContractDetails(
   'FriStatementContract',
   'Part of STARK Verifier.',
@@ -86,7 +81,6 @@ const SHARP_VERIFIER_CONTRACTS = [
   MERKLE_STATEMENT_CONTRACT,
   CAIRO_BOOTLOADER_PROGRAM,
   MEMORY_FACT_REGISTRY,
-  OLD_MEMORY_FACT_REGISTRY,
 ]
 
 export function getSHARPVerifierContracts(

@@ -1,3 +1,222 @@
+Generated with discovered.json: 0x6138560bbdce90a6b4dca0cd2b8a8e81a4ec3bcc
+
+# Diff at Tue, 04 Mar 2025 13:38:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21938094
+- current block number: 21973872
+
+## Description
+
+Taiko admin multisig signer change.
+
+## Watched changes
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.0:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@21938094/Safe/Safe.sol => /dev/null      | 1088 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   37 -
+ 2 files changed, 1125 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21938094 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) {
+    +++ description: None
+      sinceBlock:
++        19773966
+    }
+```
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      sinceBlock:
++        19773965
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      sinceBlock:
++        19731197
+    }
+```
+
+```diff
+    contract MainnetProverSet (0x280eAbfd252f017B78e15b69580F249F45FB55Fa) {
+    +++ description: None
+      sinceBlock:
++        21835609
+    }
+```
+
+```diff
+    contract MainnetTierRouter (0x44d307a9ec47aA55a7a30849d065686753C86Db6) {
+    +++ description: None
+      sinceBlock:
++        21913221
+    }
+```
+
+```diff
+    contract SigVerifyLib (0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9) {
+    +++ description: None
+      sinceBlock:
++        19773966
+    }
+```
+
+```diff
+    contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc) {
+    +++ description: None
+      sinceBlock:
++        21127238
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      sinceBlock:
++        19773965
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      sinceBlock:
++        19773964
+    }
+```
+
+```diff
+    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
+    +++ description: None
+      sinceBlock:
++        21141069
+    }
+```
+
+```diff
+    contract SP1RemoteVerifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
+    +++ description: None
+      sinceBlock:
++        21613149
+    }
+```
+
+```diff
+    contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.
+      sinceBlock:
++        19911920
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: None
+      sinceBlock:
++        19773966
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      sinceBlock:
++        19773963
+    }
+```
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      sinceBlock:
++        19744335
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      sinceBlock:
++        19773963
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      sinceBlock:
++        19773965
+    }
+```
+
+```diff
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
+    +++ description: None
+      sinceBlock:
++        21278465
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      sinceBlock:
++        19773963
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      sinceBlock:
++        19773965
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: None
+      sinceBlock:
++        19773963
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9) {
+    +++ description: None
+      sinceBlock:
++        21613126
+    }
+```
+
 Generated with discovered.json: 0x0053ad113edc05a21195e9b85a7648cb175ce75f
 
 # Diff at Thu, 27 Feb 2025 13:52:49 GMT:

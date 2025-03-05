@@ -1,11 +1,21 @@
 import { readFileSync } from 'fs'
 import path from 'path'
-import type { TvsConfig } from '../types'
+import { Logger } from '@l2beat/backend-tools'
+import { ProjectService } from '@l2beat/config'
+import { assert, ProjectId } from '@l2beat/shared-pure'
+import { mapConfig } from '../mapConfig'
 
-// const arbitrum = await ps.getProject({ id: ProjectId('arbitrum'), select: ['tvlConfig', 'chainConfig'] })
-// export const arbitrumConfig = mapConfig(arbitrum, arbitrum.chainConfig)
+export async function getArbitrumConfig(regenerate: boolean = false) {
+  if (regenerate) {
+    const ps = new ProjectService()
+    const arbitrum = await ps.getProject({
+      id: ProjectId('arbitrum'),
+      select: ['tvlConfig', 'chainConfig'],
+    })
+    assert(arbitrum, 'Arbitrum project not found')
+    return mapConfig(arbitrum, arbitrum.chainConfig, Logger.INFO)
+  }
 
-const filePath = path.join(__dirname, 'arbitrum-config.json')
-export const arbitrumConfig: TvsConfig = JSON.parse(
-  readFileSync(filePath, 'utf8'),
-)
+  const filePath = path.join(__dirname, 'arbitrum-config.json')
+  return JSON.parse(readFileSync(filePath, 'utf8'))
+}

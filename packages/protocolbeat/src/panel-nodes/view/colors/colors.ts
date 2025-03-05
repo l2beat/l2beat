@@ -1,8 +1,8 @@
 import type { ApiAddressType } from '../../../api/types'
-import colors from '../../../colors.json'
-import { oklchColorToCSS } from './oklch'
+import colors from '../../../oklchColors.json'
+import { type OklchColor, oklchColorToCSS } from './oklch'
 
-export const SELECTABLE_COLORS: { color: string; isDark: boolean }[] = [
+export const SELECTABLE_COLORS: { color: OklchColor; isDark: boolean }[] = [
   { color: colors.aux.red, isDark: false },
   { color: colors.aux.orange, isDark: false },
   { color: colors.aux.yellow, isDark: false },
@@ -20,23 +20,33 @@ export const SELECTABLE_COLORS: { color: string; isDark: boolean }[] = [
 export function getColor({
   id,
   color,
+  hueShift,
   addressType,
 }: {
   id: string
   color: number
+  hueShift: number
   addressType: ApiAddressType
 }): { color: string; isDark: boolean } {
-  if (color === 0) {
-    if (addressType === 'Unknown') {
-      return { color: colors.aux.red, isDark: false }
-    }
-    return getChainColor(id.split(':')[0] ?? '')
+  const result =
+    color === 0
+      ? addressType === 'Unknown'
+        ? { color: colors.aux.red, isDark: false }
+        : getChainColor(id.split(':')[0] ?? '')
+      : (SELECTABLE_COLORS[color - 1] ?? { color: colors.white, isDark: false })
+
+  const colorCopy = {
+    ...result.color,
+    h: (result.color.h + hueShift) % 360,
   }
-  return SELECTABLE_COLORS[color - 1] ?? { color: 'white', isDark: false }
+  return {
+    color: oklchColorToCSS(colorCopy),
+    isDark: result.isDark,
+  }
 }
 
 function getChainColor(chain: string): {
-  color: string
+  color: OklchColor
   isDark: boolean
 } {
   if (chain === 'eth' || chain === 'ethereum') {
@@ -59,11 +69,11 @@ function getChainColor(chain: string): {
   }
 
   return {
-    color: oklchColorToCSS({
+    color: {
       l: 0.75,
       c: 0.12,
       h: stringHash(chain) % 360,
-    }),
+    },
     isDark: false,
   }
 }

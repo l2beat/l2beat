@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x442cadafa802b101f34a95c00599bc3b5a7158f1
+
+# Diff at Tue, 04 Mar 2025 13:37:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21543795
+- current block number: 21973864
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      values.$members.1:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98"
+      values.$members.0:
+-        "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98"
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@21543795/Safe/Safe.sol => /dev/null      | 1088 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   37 -
+ 2 files changed, 1125 deletions(-)
+```
+
 Generated with discovered.json: 0xcf18a36cf3e08f6b14a8e8ee7487127783ac0b28
 
 # Diff at Mon, 20 Jan 2025 11:09:42 GMT:

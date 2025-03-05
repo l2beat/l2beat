@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x4ff5a37d102021d30e38d205a47d6091ae2f30a6
+
+# Diff at Tue, 04 Mar 2025 10:40:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 19532229
+- current block number: 19532229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532229 (main branch discovery), not current.
+
+```diff
+    contract FeeHandlerRouter (0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF) {
+    +++ description: None
+      sinceBlock:
++        18661897
+    }
+```
+
+```diff
+    contract Permissionless Generic Handler (0x31282123E7bcd947e2c1Bc364d564839574fAdCD) {
+    +++ description: None
+      sinceBlock:
++        18334705
+    }
+```
+
+```diff
+    contract Bridge (0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089) {
+    +++ description: None
+      sinceBlock:
++        17471016
+    }
+```
+
+```diff
+    contract BasicFeeHandler (0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7) {
+    +++ description: None
+      sinceBlock:
++        18661909
+    }
+```
+
+```diff
+    contract Community Multisig (0xc4d8b2F5501C765dE0C5E12550118F397B197D05) {
+    +++ description: None
+      sinceBlock:
++        16991929
+    }
+```
+
+```diff
+    contract ERC20 Bridge Handler (0xC832588193cd5ED2185daDA4A531e0B26eC5B830) {
+    +++ description: None
+      sinceBlock:
++        17471017
+    }
+```
+
+```diff
+    contract Admin Multisig (0xde79695d5cefF7c324552B3ecbe6165f77FCdF53) {
+    +++ description: None
+      sinceBlock:
++        17464490
+    }
+```
+
+```diff
+    contract AccessControlSegregator (0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E) {
+    +++ description: None
+      sinceBlock:
++        17471014
+    }
+```
+
 Generated with discovered.json: 0x5a25cb01428284f79577c636e731367a9e062419
 
 # Diff at Mon, 14 Oct 2024 10:56:38 GMT:

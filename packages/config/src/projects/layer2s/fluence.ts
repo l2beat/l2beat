@@ -42,7 +42,6 @@ export const fluence: Layer2 = orbitStackL2({
       tokens: '*',
     }),
   ],
-  gasTokens: { tracked: ['FLT'] },
   associatedTokens: ['FLT'],
   chainConfig: {
     name: 'fluence',
@@ -54,6 +53,7 @@ export const fluence: Layer2 = orbitStackL2({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['FLT'],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

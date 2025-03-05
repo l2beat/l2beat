@@ -35,7 +35,6 @@ export const hychain: Layer2 = orbitStackL2({
     },
   },
   discovery,
-  gasTokens: { tracked: ['TOPIA'] },
   associatedTokens: ['TOPIA'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -50,6 +49,7 @@ export const hychain: Layer2 = orbitStackL2({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['TOPIA'],
   },
   customDa: AnytrustDAC({ discovery }),
 })

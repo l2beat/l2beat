@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xe78246ec0e1cf3a12468e99d0ad4f6cdb7bd7406
+
+# Diff at Tue, 04 Mar 2025 12:05:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21629810
+- current block number: 21973412
+
+## Description
+
+config related: starknet discodrive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629810 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      severity:
++        "HIGH"
+      sinceBlock:
++        18927365
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      sinceBlock:
++        17939980
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.1.to:
+-        "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670"
++        "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
+      fieldMeta.$admin:
++        {"severity":"HIGH","description":"Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."}
+      sinceBlock:
++        17733931
+    }
+```
+
 Generated with discovered.json: 0xbb762d1a259a23cacb05fde683e76c251e76ffab
 
 # Diff at Sat, 01 Mar 2025 11:44:40 GMT:

@@ -33,6 +33,7 @@
         }
       ],
       "sinceTimestamp": 1738853604,
+      "sinceBlock": 55404657,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -129,6 +130,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723145395,
+      "sinceBlock": 41197311,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -208,6 +210,7 @@
         }
       ],
       "sinceTimestamp": 1723145391,
+      "sinceBlock": 41197308,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -287,6 +290,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723145514,
+      "sinceBlock": 41197430,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -364,6 +368,7 @@
       ],
       "ignoreInWatchMode": ["clock", "totalSupply"],
       "sinceTimestamp": 1716317326,
+      "sinceBlock": 34572100,
       "values": {
         "$admin": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
         "$implementation": "0x01a6715d3560241E09E865a46122bf347A576c09",
@@ -480,6 +485,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723144920,
+      "sinceBlock": 41196850,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -549,6 +555,7 @@
         }
       ],
       "sinceTimestamp": 1723145510,
+      "sinceBlock": 41197426,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -601,6 +608,7 @@
         }
       ],
       "sinceTimestamp": 1716317321,
+      "sinceBlock": 34572095,
       "values": {
         "$immutable": true,
         "owner": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
