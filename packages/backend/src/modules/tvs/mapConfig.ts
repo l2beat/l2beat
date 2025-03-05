@@ -156,8 +156,17 @@ export function extractPricesAndAmounts(config: TvsConfig): {
   const prices = new Map<string, PriceConfig>()
 
   for (const token of config.tokens) {
-    const amount = createAmountConfig(token.amount)
-    amounts.set(amount.id, amount)
+    if (token.amount.type === 'calculation') {
+      const { formulaAmounts, formulaPrices } = processFormula(
+        token.amount,
+      )
+      formulaAmounts.forEach((a) => amounts.set(a.id, a))
+      formulaPrices.forEach((p) => prices.set(p.priceId, p))
+
+    } else {
+      const amount = createAmountConfig(token.amount)
+      amounts.set(amount.id, amount)
+    }
 
     const price = createPriceConfig({
       amount: token.amount,
@@ -225,14 +234,20 @@ export function createPriceConfig(formula: ValueFormula): PriceConfig {
   }
 }
 
-function processFormula(formula: CalculationFormula | ValueFormula): {
+function processFormula(formula: CalculationFormula | ValueFormula | AmountFormula): {
   formulaAmounts: AmountConfig[]
   formulaPrices: PriceConfig[]
 } {
   const formulaAmounts: AmountConfig[] = []
   const formulaPrices: PriceConfig[] = []
 
-  const processFormulaRecursive = (f: CalculationFormula | ValueFormula) => {
+  const processFormulaRecursive = (f: CalculationFormula | ValueFormula | AmountFormula) => {
+    if (f.type === 'calculation') {
+      for (const arg of f.arguments) {
+        processFormulaRecursive(arg)
+      }
+    }
+
     if (f.type === 'value') {
       const amount = createAmountConfig(f.amount)
       formulaAmounts.push(amount)
@@ -243,9 +258,8 @@ function processFormula(formula: CalculationFormula | ValueFormula): {
       return
     }
 
-    for (const arg of f.arguments) {
-      processFormulaRecursive(arg)
-    }
+    const amount = createAmountConfig(f as AmountFormula)
+    formulaAmounts.push(amount)
   }
 
   processFormulaRecursive(formula)

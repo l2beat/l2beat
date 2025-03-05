@@ -10,7 +10,7 @@ import type {
 } from './types'
 
 export class ValueService {
-  constructor(private readonly storage: DataStorage) {}
+  constructor(private readonly storage: DataStorage) { }
 
   async calculate(
     config: TvsConfig,
@@ -22,7 +22,7 @@ export class ValueService {
       const values: TokenValue[] = []
 
       for (const token of config.tokens) {
-        const amount = await this.executeAmountFormula(token.amount, timestamp)
+        const amount = await this.executeFormula(token.amount, timestamp)
         const value = await this.executeValueFormula(
           {
             amount: token.amount,
@@ -79,34 +79,39 @@ export class ValueService {
   }
 
   private async executeFormula(
-    formula: CalculationFormula | ValueFormula,
+    formula: CalculationFormula | ValueFormula | AmountFormula,
     timestamp: UnixTime,
   ): Promise<number> {
     const executeFormulaRecursive = async (
-      formula: CalculationFormula | ValueFormula,
+      formula: CalculationFormula | ValueFormula | AmountFormula,
       timestamp: UnixTime,
     ): Promise<number> => {
       if (formula.type === 'value') {
         return await this.executeValueFormula(formula, timestamp)
       }
 
-      return await formula.arguments.reduce(
-        async (
-          acc: Promise<number>,
-          current: CalculationFormula | ValueFormula,
-          index: number,
-        ) => {
-          const valueAcc = await acc
-          const value = await executeFormulaRecursive(current, timestamp)
+      if (formula.type === 'calculation') {
+        return await formula.arguments.reduce(
+          async (
+            acc: Promise<number>,
+            current: CalculationFormula | ValueFormula | AmountFormula,
+            index: number,
+          ) => {
+            const valueAcc = await acc
+            const value = await executeFormulaRecursive(current, timestamp)
 
-          if (formula.operator === 'sum') {
-            return Promise.resolve(valueAcc + value)
-          } else {
-            return Promise.resolve(index === 0 ? value : valueAcc - value)
-          }
-        },
-        Promise.resolve(0),
-      )
+            if (formula.operator === 'sum') {
+              return Promise.resolve(valueAcc + value)
+            } else {
+              return Promise.resolve(index === 0 ? value : valueAcc - value)
+            }
+          },
+          Promise.resolve(0),
+        )
+      }
+
+      return await this.executeAmountFormula(formula, timestamp)
+
     }
 
     return await executeFormulaRecursive(formula, timestamp)

@@ -10,7 +10,7 @@ export type Operator = 'sum' | 'diff'
 export interface CalculationFormula {
   type: 'calculation'
   operator: Operator
-  arguments: (CalculationFormula | ValueFormula)[]
+  arguments: (CalculationFormula | ValueFormula | AmountFormula)[]
 }
 
 export type ValueFormula = {
@@ -77,7 +77,7 @@ export interface Token {
   priceId: string
   symbol: string
   name: string
-  amount: AmountFormula
+  amount: AmountFormula | CalculationFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)
