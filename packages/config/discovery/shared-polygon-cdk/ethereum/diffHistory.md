@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x2deb95bbd0324c9bd2dec12a1ad0938615c05a58
+
+# Diff at Wed, 05 Mar 2025 16:39:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5d3e3b01c9c6f1ecd34ee849b404794d8c094024 block: 21965308
+- current block number: 21981930
+
+## Description
+
+Related to lumia upgrating to latest validium (type 7).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.4:
+-        4
++        7
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.3:
+-        9
++        12
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+    }
+```
+
 Generated with discovered.json: 0xca48085bb640a1c7b33063a665f4872987b4f21f
 
 # Diff at Tue, 04 Mar 2025 10:39:51 GMT:
