@@ -62,7 +62,7 @@ export default async function Page(props: Props) {
 
   const projectEntry = await getBridgesProjectEntry(project)
   const navigationSections = projectDetailsToNavigationSections(
-    projectEntry.projectDetails,
+    projectEntry.sections,
   )
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -77,7 +77,7 @@ export default async function Page(props: Props) {
       <BridgesProjectSummary project={projectEntry} />
       <ContentWrapper mobileFull>
         {isNavigationEmpty ? (
-          <ProjectDetails items={projectEntry.projectDetails} />
+          <ProjectDetails items={projectEntry.sections} />
         ) : (
           <div className="gap-x-12 md:flex">
             <div className="mt-10 hidden w-[242px] shrink-0 md:block">
@@ -92,7 +92,7 @@ export default async function Page(props: Props) {
             </div>
             <div className="w-full">
               <HighlightableLinkContextProvider>
-                <ProjectDetails items={projectEntry.projectDetails} />
+                <ProjectDetails items={projectEntry.sections} />
               </HighlightableLinkContextProvider>
             </div>
           </div>
