@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
-import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
+import { CombinedGrissiniCell } from '~/components/rosette/grissini/combined-grissini-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   TypeExplanationTooltip,
@@ -81,13 +81,10 @@ export const columns = [
       }
 
       return (
-        <div className="flex gap-1.5">
-          <GrissiniCell values={ctx.row.original.risks.daLayer} />
-          <GrissiniCell
-            values={ctx.row.original.risks.daBridge}
-            hasNoBridge={ctx.row.original.risks.daBridge?.length === 0}
-          />
-        </div>
+        <CombinedGrissiniCell
+          daLayerRisks={ctx.row.original.risks.daLayer}
+          daBridgeRisks={ctx.row.original.risks.daBridge}
+        />
       )
     },
     meta: {
