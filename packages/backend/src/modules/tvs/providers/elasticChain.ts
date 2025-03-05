@@ -11,7 +11,7 @@ import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
-import { createToken } from '../mapConfig'
+import { createEscrowToken } from '../mapConfig'
 import { type Token, TokenId } from '../types'
 
 export const bridgeInterface = new utils.Interface([
@@ -116,7 +116,7 @@ export async function getElasticChainTokens(
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
       tokensToAssignFromL1.push(
-        createToken(token, project, ethereum.chainConfig, escrow),
+        createEscrowToken(project, ethereum.chainConfig, escrow, token),
       )
     }
   }

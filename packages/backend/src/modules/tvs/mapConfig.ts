@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import { getEscrowUntilTimestamp } from '@l2beat/backend-shared'
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggLayerEscrow,
@@ -78,8 +79,7 @@ export async function mapConfig(
           )
         }
 
-        const token = createToken(legacyToken, project, chain, escrow)
-        tokens.push(token)
+        tokens.push(createEscrowToken(project, chain, escrow, legacyToken))
       }
     }
   }
@@ -94,113 +94,57 @@ export async function mapConfig(
   }
 }
 
-export function createToken(
-  legacyToken: LegacyToken & { isPreminted?: boolean },
-  project: Project<'tvlConfig', 'chainConfig'>,
+export function createEscrowToken(
+  project: Project<'tvlConfig'>,
   chain: ChainConfig,
-  escrow?: ProjectTvlEscrow,
+  escrow: ProjectTvlEscrow,
+  legacyToken: LegacyToken & { isPreminted?: boolean },
 ): Token {
+  const id = TokenId.create(project.id, legacyToken.symbol)
+
   let amountFormula: CalculationFormula | AmountFormula
-  let sinceTimestamp: UnixTime
-  let untilTimestamp: UnixTime | undefined
-  let source: 'canonical' | 'external' | 'native'
-  let id: TokenId
 
-  if (escrow) {
-    id = TokenId.create(chain.name, legacyToken.symbol)
-
-    if (legacyToken.isPreminted) {
-      amountFormula = {
-        type: 'calculation',
-        operator: 'min',
-        arguments: [
-          {
-            type: 'circulatingSupply',
-            priceId: legacyToken.coingeckoId,
-          },
-          {
-            type: 'balanceOfEscrow',
-            address: legacyToken.address ?? 'native',
-            escrowAddress: escrow.address,
-            chain: escrow.chain,
-            decimals: legacyToken.decimals,
-          },
-        ],
-      }
-    } else {
-      amountFormula = {
-        type: 'balanceOfEscrow',
-        address: legacyToken.address ?? 'native',
-        chain: escrow.chain,
-        escrowAddress: escrow.address,
-        decimals: legacyToken.decimals,
-      } as BalanceOfEscrowAmountFormula
+  if (legacyToken.isPreminted) {
+    amountFormula = {
+      type: 'calculation',
+      operator: 'min',
+      arguments: [
+        {
+          type: 'circulatingSupply',
+          priceId: legacyToken.coingeckoId,
+        },
+        {
+          type: 'balanceOfEscrow',
+          address: legacyToken.address ?? 'native',
+          escrowAddress: escrow.address,
+          chain: escrow.chain,
+          decimals: legacyToken.decimals,
+        },
+      ],
     }
-
-    sinceTimestamp = escrow.sinceTimestamp
-    untilTimestamp = escrow.untilTimestamp
-    source = escrow.source ?? 'canonical'
-
-    return {
-      id,
-      // This is a temporary solution
-      priceId: legacyToken.coingeckoId,
-      symbol: legacyToken.symbol,
-      name: legacyToken.name,
-      amount: amountFormula,
-      sinceTimestamp,
-      untilTimestamp,
-      category: legacyToken.category,
-      source: source,
-      isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-        legacyToken.symbol,
-      ),
-    }
+  } else {
+    amountFormula = {
+      type: 'balanceOfEscrow',
+      address: legacyToken.address ?? 'native',
+      chain: escrow.chain,
+      escrowAddress: escrow.address,
+      decimals: legacyToken.decimals,
+    } as BalanceOfEscrowAmountFormula
   }
 
-  switch (legacyToken.supply) {
-    case 'totalSupply':
-      assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
-
-      id = TokenId.create(chain.name, legacyToken.symbol)
-
-      amountFormula = {
-        type: 'totalSupply',
-        address: legacyToken.address,
-        chain: chain.name,
-        decimals: legacyToken.decimals,
-      } as TotalSupplyAmountFormula
-
-      sinceTimestamp = UnixTime.max(
-        chain.sinceTimestamp,
-        legacyToken.sinceTimestamp,
-      )
-      source = legacyToken.source
-      break
-    case 'circulatingSupply':
-      assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
-
-      id = TokenId.create(chain.name, legacyToken.symbol)
-
-      amountFormula = {
-        type: 'circulatingSupply',
-        priceId: legacyToken.coingeckoId,
-      } as CirculatingSupplyAmountFormula
-
-      sinceTimestamp = UnixTime.max(
-        chain.sinceTimestamp,
-        legacyToken.sinceTimestamp,
-      )
-      source = legacyToken.source
-      break
-
-    default:
-      throw new Error(`Unsupported supply type ${legacyToken.supply}`)
-  }
+  assert(chain.sinceTimestamp)
+  const sinceTimestamp = UnixTime.max(
+    UnixTime.max(chain.sinceTimestamp, legacyToken.sinceTimestamp),
+    escrow.sinceTimestamp,
+  )
+  const untilTimestamp = getEscrowUntilTimestamp(
+    legacyToken.untilTimestamp,
+    escrow.untilTimestamp,
+  )
+  const source = escrow.source ?? 'canonical'
 
   return {
     id,
-    // This is a temporary solution
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
     name: legacyToken.name,
@@ -209,6 +153,58 @@ export function createToken(
     untilTimestamp,
     category: legacyToken.category,
     source: source,
+    isAssociated: !!project.tvlConfig.associatedTokens?.includes(
+      legacyToken.symbol,
+    ),
+  }
+}
+
+export function createToken(
+  legacyToken: LegacyToken,
+  project: Project<'tvlConfig', 'chainConfig'>,
+  chain: ChainConfig,
+): Token {
+  assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
+
+  const id = TokenId.create(chain.name, legacyToken.symbol)
+  let amountFormula: AmountFormula
+
+  switch (legacyToken.supply) {
+    case 'totalSupply':
+      amountFormula = {
+        type: 'totalSupply',
+        address: legacyToken.address,
+        chain: chain.name,
+        decimals: legacyToken.decimals,
+      } as TotalSupplyAmountFormula
+      break
+
+    case 'circulatingSupply':
+      amountFormula = {
+        type: 'circulatingSupply',
+        priceId: legacyToken.coingeckoId,
+      } as CirculatingSupplyAmountFormula
+      break
+
+    default:
+      throw new Error(`Unsupported supply type ${legacyToken.supply}`)
+  }
+
+  const sinceTimestamp = UnixTime.max(
+    chain.sinceTimestamp,
+    legacyToken.sinceTimestamp,
+  )
+
+  return {
+    id,
+    priceId: legacyToken.coingeckoId,
+    symbol: legacyToken.symbol,
+    name: legacyToken.name,
+    amount: amountFormula,
+    sinceTimestamp,
+    untilTimestamp: undefined,
+    category: legacyToken.category,
+    source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
       legacyToken.symbol,
     ),
