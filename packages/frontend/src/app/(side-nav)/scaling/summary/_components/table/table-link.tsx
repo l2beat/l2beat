@@ -14,9 +14,8 @@ export function TableLink({
     return (
       <LinkWithOnHoverPrefetch
         className={cn(
-          'relative block w-max',
-          'before:absolute before:-inset-x-3 before:-inset-y-2 before:rounded max-md:before:content-none',
-          'before:hover:bg-pure-black/5 dark:before:hover:bg-pure-white/20',
+          '-mx-3 block w-max rounded md:px-3 md:py-2',
+          'hover:bg-pure-black/5 dark:hover:bg-pure-white/20',
           className,
         )}
         href={href}
