@@ -1,12 +1,7 @@
 import type { Project } from '@l2beat/config'
-import {
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { UnixTime, formatSeconds, notUndefined } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
-import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import { type CommonDaEntry, getCommonDaEntry } from '../get-common-da-entry'
 import {
   type ThroughputTableData,
   getDaThroughputTable,
@@ -79,9 +74,7 @@ interface DaThroughputEntryData {
   totalPosted: number
 }
 
-export interface DaThroughputEntry extends CommonProjectEntry {
-  href: string | undefined
-  isPublic: boolean
+export interface DaThroughputEntry extends CommonDaEntry {
   data: DaThroughputEntryData
   scalingOnlyData: DaThroughputEntryData
   finality: string | undefined
@@ -100,17 +93,9 @@ function getDaThroughputEntry(
   const notSyncedStatus = data
     ? getThroughputSyncWarning(new UnixTime(data.syncedUntil))
     : undefined
+  const href = `/data-availability/projects/${project.slug}/${bridge ? bridge.slug : 'no-bridge'}`
   return {
-    id: ProjectId(project.id),
-    slug: project.slug,
-    name: project.name,
-    nameSecondLine: project.daLayer.type,
-    href: `/data-availability/projects/${project.slug}/${bridge ? bridge.slug : 'no-bridge'}`,
-    statuses: {
-      underReview: project.statuses.isUnderReview ? 'config' : undefined,
-      syncWarning: notSyncedStatus,
-    },
-    isPublic: project.daLayer.systemCategory === 'public',
+    ...getCommonDaEntry({ project, href, syncWarning: notSyncedStatus }),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,

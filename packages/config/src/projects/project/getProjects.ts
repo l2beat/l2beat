@@ -237,8 +237,8 @@ function toBackendTrackedTxsConfig(
     config.uses.map((use) => {
       const base = {
         projectId,
-        sinceTimestamp: config.query.sinceTimestamp,
-        untilTimestamp: config.query.untilTimestamp,
+        sinceTimestamp: config.query.sinceTimestamp.toNumber(),
+        untilTimestamp: config.query.untilTimestamp?.toNumber(),
         type: use.type,
         subtype: use.subtype,
         costMultiplier:
@@ -253,6 +253,7 @@ function toBackendTrackedTxsConfig(
               formula: 'functionCall',
               address: config.query.address,
               selector: config.query.selector,
+              signature: config.query.functionSignature,
             },
           }
         }

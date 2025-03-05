@@ -5,13 +5,19 @@ import type {
   UsedInProject,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import type { TabbedDaEntries } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
+import { groupByDaTabs } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
-import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import {
+  type CommonDaEntry,
+  getCommonDaEntry,
+  getCommonDacDaEntry,
+} from '../get-common-da-entry'
 import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
@@ -20,7 +26,9 @@ import {
 } from '../utils/get-da-projects-tvs'
 import { getDaUsers } from '../utils/get-da-users'
 
-export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
+export async function getDaSummaryEntries(): Promise<
+  TabbedDaEntries<DaSummaryEntry>
+> {
   const [layers, bridges, dacs] = await Promise.all([
     ps.getProjects({ select: ['daLayer', 'statuses'] }),
     ps.getProjects({ select: ['daBridge', 'statuses'] }),
@@ -51,14 +59,14 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
   )
   const dacEntries = dacs.map((dac) => getDacEntry(dac, getTvs))
 
-  return [...layerEntries, ...dacEntries].sort(
-    (a, b) => b.tvs.latest - a.tvs.latest,
+  return groupByDaTabs(
+    [...layerEntries, ...dacEntries].sort(
+      (a, b) => b.tvs.latest - a.tvs.latest,
+    ),
   )
 }
 
-export interface DaSummaryEntry extends CommonProjectEntry {
-  href: string | undefined
-  isPublic: boolean
+export interface DaSummaryEntry extends CommonDaEntry {
   economicSecurity: number | undefined
   risks: RosetteValue[]
   fallback: TableReadyValue | undefined
@@ -70,8 +78,8 @@ export interface DaSummaryEntry extends CommonProjectEntry {
   bridges: DaBridgeSummaryEntry[]
 }
 
-export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
-  href: string | undefined
+export interface DaBridgeSummaryEntry
+  extends Omit<CommonDaEntry, 'id' | 'tab'> {
   tvs: {
     latest: number
     sevenDaysAgo: number
@@ -152,15 +160,7 @@ function getDaSummaryEntry(
   )
 
   return {
-    id: ProjectId(layer.id),
-    slug: layer.slug,
-    name: layer.name,
-    nameSecondLine: layer.daLayer.type,
-    href: daBridges[0]?.href,
-    statuses: {
-      underReview: layer.statuses.isUnderReview ? 'config' : undefined,
-    },
-    isPublic: layer.daLayer.systemCategory === 'public',
+    ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
     economicSecurity,
     risks: mapLayerRisksToRosetteValues(
       getDaLayerRisks(layer.daLayer, tvs.latest, economicSecurity),
@@ -212,16 +212,10 @@ function getDacEntry(
   }
 
   return {
-    id: project.id,
-    slug: project.slug,
-    name: project.customDa.name ?? `${project.name} DAC`,
-    nameSecondLine: project.customDa.type,
-    href: `/scaling/projects/${project.slug}#da-layer`,
-    statuses: {},
+    ...getCommonDacDaEntry({ project }),
     risks: mapLayerRisksToRosetteValues(project.customDa.risks),
     fallback: project.customDa.fallback,
     challengeMechanism: project.customDa.challengeMechanism ?? 'None',
-    isPublic: false,
     economicSecurity: undefined,
     tvs,
     bridges: [bridgeEntry],
@@ -247,6 +241,7 @@ function getEthereumEntry(
     nameSecondLine: layer.daLayer.type,
     href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     statuses: {},
+    tab: 'public',
     economicSecurity: economicSecurity,
     tvs: getTvs(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
     bridges: [
@@ -264,7 +259,6 @@ function getEthereumEntry(
         usedIn: bridge.daBridge.usedIn,
       },
     ],
-    isPublic: true,
     challengeMechanism: undefined,
     fallback: undefined,
     risks: mapLayerRisksToRosetteValues(layer.daLayer.risks),

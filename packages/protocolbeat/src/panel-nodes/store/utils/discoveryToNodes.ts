@@ -35,6 +35,7 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
       name,
       box: { x: 0, y: 0, width: 0, height: 0 },
       color: 0,
+      hueShift: 0,
       fields: mapFields(contract.values, chain, implementations),
       data: contract,
     }
@@ -48,6 +49,7 @@ export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
       name: `EOA ${eoa.address.slice(0, 6)}…${eoa.address.slice(-4)}`,
       box: { x: 0, y: 0, width: 0, height: 0 },
       color: 0,
+      hueShift: 0,
       fields: [],
       data: eoa,
     }),

@@ -46,9 +46,9 @@ export const apechain: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['APE'],
   },
   // associatedTokens: ['APE'],
-  gasTokens: { tracked: ['APE'] },
   overrideEscrows: [],
   customDa: AnytrustDAC({ discovery }),
 })

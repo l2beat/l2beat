@@ -1,7 +1,7 @@
 import type { Project, WarningWithSentiment } from '@l2beat/config'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
@@ -33,7 +33,7 @@ export async function getScalingCostsEntries() {
       ),
     )
     .sort(compareStageAndCost)
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingCostsEntry extends CommonScalingEntry {

@@ -29,6 +29,7 @@
     "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": "NioGuardians",
     "0x87f0eE85bF3198654900a422832157abBba30828": "BeaconKintoWallet"
   },
+  "maxAddresses": 200, // bumped from default 100 mainly due to the sanctioned to the eoas
   "types": {
     "RoleName": {
       "typeCaster": "Mapping",
@@ -263,6 +264,36 @@
       ],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "fields": {
+        "pendingSanctions": {
+          "description": "addresses sanctioned by any KYC_PROVIDER role.",
+          "handler": {
+            "type": "event",
+            "select": ["_to", "_timestamp"],
+            "add": {
+              "event": "SanctionAdded"
+            }
+          }
+        },
+        "removedSanctions": {
+          "description": "addresses unsanctioned manually by any KYC_PROVIDER role. Mind that sanctions also expire if not confirmed (and those do not emit).",
+          "handler": {
+            "type": "event",
+            "select": "_to",
+            "add": {
+              "event": "SanctionRemoved"
+            }
+          }
+        },
+        "confirmedSanctions": {
+          "description": "addresses confirmed sanctioned by the GOVERNANCE_ROLE.",
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "SanctionConfirmed"
+            }
+          }
+        },
         "accessControl": {
           "handler": {
             "type": "accessControl"

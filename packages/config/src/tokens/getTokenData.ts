@@ -31,7 +31,6 @@ export async function getTokenData(
   outputFilePath: string,
 ) {
   const logger: ScriptLogger = new ScriptLogger({})
-  logger.notify('Fetching token params\n')
   const coingeckoClient = getCoingeckoClient()
   let coinList: CoinListPlatformEntry[] | undefined = undefined
   const sourceToken = readTokensFile(sourceFilePath, logger)

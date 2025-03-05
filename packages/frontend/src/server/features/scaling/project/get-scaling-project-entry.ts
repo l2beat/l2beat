@@ -90,7 +90,7 @@ export interface ScalingProjectEntry {
       lastDayUops: number
       uopsWeeklyChange: number
     }
-    gasTokens: string[]
+    gasTokens?: string[]
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
@@ -109,16 +109,17 @@ export async function getScalingProjectEntry(
     | 'scalingStage'
     | 'scalingTechnology'
     | 'contracts'
-    | 'permissions'
     | 'tvlInfo'
     | 'tvlConfig',
     // optional
+    | 'permissions'
     | 'scalingDa'
     | 'customDa'
     | 'chainConfig'
     | 'isUpcoming'
     | 'isArchived'
     | 'milestones'
+    | 'trackedTxsConfig'
   >,
 ): Promise<ScalingProjectEntry> {
   /** @deprecated */
@@ -170,10 +171,7 @@ export async function getScalingProjectEntry(
         }
       : undefined,
     badges: project.display.badges,
-    gasTokens:
-      !legacy.config.gasTokens || legacy.config.gasTokens.length === 0
-        ? ['ETH']
-        : legacy.config.gasTokens,
+    gasTokens: project.chainConfig?.gasTokens,
   }
 
   const changes = projectsChangeReport.getChanges(project.id)
@@ -298,8 +296,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const trackedTransactions =
-    legacy.type === 'layer2' ? getTrackedTransactions(legacy) : undefined
+  const trackedTransactions = getTrackedTransactions(project)
   if (
     !project.isUpcoming &&
     trackedTransactions &&

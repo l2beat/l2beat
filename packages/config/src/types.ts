@@ -41,6 +41,8 @@ export interface ChainConfig {
   /** undefined is reserved for non-evm chains that don't have a notion of chain id! */
   chainId: number | undefined
   explorerUrl?: string
+  /** Tokens that can be used to pay the gas fee */
+  gasTokens?: string[]
   multicallContracts?: MulticallContractConfig[]
   coingeckoPlatform?: string
   /**
@@ -149,8 +151,6 @@ export type ScalingProjectCategory =
 export interface ScalingProjectConfig {
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
   associatedTokens?: string[]
-  /** Tokens that can be used to pay the gas fee */
-  gasTokens?: string[]
   /** List of contracts in which L1 funds are locked */
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */

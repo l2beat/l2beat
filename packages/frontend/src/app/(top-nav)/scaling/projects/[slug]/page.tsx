@@ -68,17 +68,18 @@ export default async function Page(props: Props) {
       'scalingStage',
       'scalingTechnology',
       'contracts',
-      'permissions',
       'tvlInfo',
       'tvlConfig',
     ],
     optional: [
+      'permissions',
       'chainConfig',
       'scalingDa',
       'customDa',
       'isUpcoming',
       'isArchived',
       'milestones',
+      'trackedTxsConfig',
     ],
   })
   if (!project) {
