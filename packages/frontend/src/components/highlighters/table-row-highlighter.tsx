@@ -8,9 +8,6 @@ export function TableRowHighlighter() {
     if (!isClient) return
     const params = new URLSearchParams(window.location.search)
     const highlight = params.get('highlight')
-    document.querySelectorAll('[data-highlighted]').forEach((el) => {
-      el.removeAttribute('data-highlighted')
-    })
 
     if (highlight) {
       const elements = document.querySelectorAll(`[data-slug="${highlight}"]`)
