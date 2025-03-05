@@ -25,7 +25,11 @@ export function getTvsBreakdown(
   configMapping: ConfigMapping,
   chains: ChainConfig[],
 ) {
-  return async function (projectId: ProjectId, target?: UnixTime) {
+  return async function (
+    projectId: ProjectId,
+    gasTokens?: string[],
+    target?: UnixTime,
+  ) {
     const chainConverter = new ChainConverter(chains)
 
     const targetTimestamp =
@@ -110,6 +114,7 @@ export function getTvsBreakdown(
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
+              isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
               tokenAddress: address === 'native' ? undefined : address,
               escrows: [
                 {
@@ -137,6 +142,7 @@ export function getTvsBreakdown(
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
+            isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
             tokenAddress: address === 'native' ? undefined : address,
             bridgedUsing: config.bridgedUsing ?? {
               bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
@@ -153,6 +159,7 @@ export function getTvsBreakdown(
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
+            isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
             // TODO: force fe to accept "native"
             tokenAddress: address === 'native' ? undefined : address,
           })

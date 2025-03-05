@@ -3,9 +3,10 @@ import Image from 'next/image'
 interface Props {
   iconUrl: string
   symbol: string
+  isGasToken?: boolean
 }
 
-export function TokenNameCell({ iconUrl, symbol }: Props) {
+export function TokenNameCell({ iconUrl, symbol, isGasToken }: Props) {
   return (
     <div className="flex items-center justify-start gap-2 pr-4 md:pr-2">
       <Image
@@ -15,7 +16,9 @@ export function TokenNameCell({ iconUrl, symbol }: Props) {
         className="size-5 rounded-full"
         alt={`Icon of ${symbol}`}
       />
-      <span className="text-xs font-medium">{symbol}</span>
+      <span className="text-xs font-medium">
+        {symbol} {isGasToken && '(gas)'}
+      </span>
     </div>
   )
 }
