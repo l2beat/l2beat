@@ -24,7 +24,7 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
-  ScalingProjectTechnology,
+  ProjectScalingTechnology,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -36,13 +36,13 @@ import type {
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectPermissions,
+  ProjectScalingCapability,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingStage,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -64,7 +64,7 @@ export interface DAProvider {
 
 export interface ZkStackConfigCommon {
   addedAt: UnixTime
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
@@ -96,10 +96,10 @@ export interface ZkStackConfigCommon {
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
-  nonTemplateRiskView?: Partial<ScalingProjectRiskView>
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {

@@ -5,11 +5,11 @@ import {
   getCommittee,
 } from '../../../discovery/starkware'
 import type {
-  ProjectCustomDa,
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
   DacInfo,
+  ProjectCustomDa,
 } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'

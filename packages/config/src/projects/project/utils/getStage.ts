@@ -1,6 +1,6 @@
-import type { ScalingProjectStage, ProjectScalingStage } from '../../../types'
+import type { ProjectScalingStage, ProjectStageName } from '../../../types'
 
-export function getStage(config: ProjectScalingStage): ScalingProjectStage {
+export function getStage(config: ProjectScalingStage): ProjectStageName {
   if (config.stage === 'NotApplicable') {
     return 'Not applicable'
   }

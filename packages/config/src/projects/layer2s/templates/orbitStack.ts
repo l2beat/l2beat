@@ -29,33 +29,33 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type { ScalingProject } from '../../../internalTypes'
-import type { ScalingProjectDisplay } from '../../../internalTypes'
+import type { ProjectScalingDisplay } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
-  ScalingProjectTechnology,
+  ProjectScalingTechnology,
 } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
-  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
+  ProjectCustomDa,
   ProjectDaTrackingConfig,
-  ProjectScalingDa,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectPermission,
   ProjectRisk,
+  ProjectScalingCapability,
+  ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingStage,
+  ProjectScalingStateDerivation,
+  ProjectScalingStateValidation,
+  ProjectScalingStateValidationCategory,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectStateValidationCategory,
-  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -122,7 +122,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
 
 interface OrbitStackConfigCommon {
   addedAt: UnixTime
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
@@ -134,17 +134,17 @@ interface OrbitStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
-  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ScalingProjectDisplay['category']
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingDisplay['category']
   }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
   finality?: ProjectFinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
-  nonTemplateRiskView?: Partial<ScalingProjectRiskView>
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   activityConfig?: ProjectActivityConfig
   milestones?: Milestone[]
   trackedTxs?: Layer2TxConfig[]
@@ -152,11 +152,11 @@ interface OrbitStackConfigCommon {
   usesBlobs?: boolean
   additionalBadges?: Badge[]
   stage?: ProjectScalingStage
-  stateValidation?: ScalingProjectStateValidation
-  stateDerivation?: ScalingProjectStateDerivation
+  stateValidation?: ProjectScalingStateValidation
+  stateDerivation?: ProjectScalingStateDerivation
   nonTemplateContractRisks?: ProjectRisk[]
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
   isArchived?: boolean
   /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
   untrackedGasTokens?: string[]
@@ -178,7 +178,7 @@ interface OrbitStackConfigCommon {
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  stackedRiskView?: Partial<ScalingProjectRiskView>
+  stackedRiskView?: Partial<ProjectScalingRiskView>
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -259,8 +259,8 @@ function defaultStateValidation(
   currentRequiredStake: number,
   challengePeriod: number,
   existFastConfirmer: boolean = false,
-): ScalingProjectStateValidation {
-  const categories: ScalingProjectStateValidationCategory[] = [
+): ProjectScalingStateValidation {
+  const categories: ProjectScalingStateValidationCategory[] = [
     {
       title: 'State root proposals',
       description: `Whitelisted validators propose state roots as children of a previous state root. A state root can have multiple conflicting children. This structure forms a graph, and therefore, in the contracts, state roots are referred to as nodes. Each proposal requires a stake, currently set to ${utils.formatEther(
@@ -342,7 +342,7 @@ function orbitStackCommon(
   hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
-    ScalingProjectDisplay,
+    ProjectScalingDisplay,
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
@@ -804,7 +804,7 @@ function ifPostsToEthereum<T>(
 function getRiskView(
   templateVars: OrbitStackConfigCommon,
   daProvider: DAProvider,
-): ScalingProjectRiskView {
+): ProjectScalingRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )

@@ -8,15 +8,14 @@ import type {
 import type {
   Badge,
   BridgeCategory,
-  ProjectBridgeRisks,
-  ProjectBridgeTechnology,
   ChainConfig,
-  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
+  ProjectBridgeRisks,
+  ProjectBridgeTechnology,
   ProjectContracts,
+  ProjectCustomDa,
   ProjectDaTrackingConfig,
-  ProjectScalingDa,
   ProjectDiscoveryInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
@@ -25,16 +24,17 @@ import type {
   ProjectLivenessConfig,
   ProjectLivenessInfo,
   ProjectPermissions,
+  ProjectScalingCapability,
+  ProjectScalingCategory,
+  ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingStack,
+  ProjectScalingStage,
+  ProjectScalingStateDerivation,
+  ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectCategory,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectStack,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ProjectScalingStage,
   WarningWithSentiment,
 } from './types'
 
@@ -43,7 +43,7 @@ import type {
 export interface ScalingProject {
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
-  capability: ScalingProjectCapability
+  capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
   /** Is this project archived? */
@@ -53,9 +53,9 @@ export interface ScalingProject {
   /** Has this project changed and is under review? */
   isUnderReview?: boolean
   /** Information displayed about the project on the frontend */
-  display: ScalingProjectDisplay
+  display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */
-  config: ScalingProjectConfig
+  config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
@@ -63,15 +63,15 @@ export interface ScalingProject {
   /** Details about the custom availability solution */
   customDa?: ProjectCustomDa
   /** Risk view values for this layer2 */
-  riskView: ScalingProjectRiskView
+  riskView: ProjectScalingRiskView
   /** Rollup stage */
   stage: ProjectScalingStage
   /** Deep dive into layer2 technology */
-  technology: ScalingProjectTechnology
+  technology: ProjectScalingTechnology
   /** Open-source node details */
-  stateDerivation?: ScalingProjectStateDerivation
+  stateDerivation?: ProjectScalingStateDerivation
   /** Explains how project validates state */
-  stateValidation?: ScalingProjectStateValidation
+  stateValidation?: ProjectScalingStateValidation
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses on a given chain */
@@ -94,7 +94,7 @@ export interface Layer2 extends ScalingProject {
   upgradesAndGovernance?: string
 }
 
-export interface Layer2Display extends ScalingProjectDisplay {
+export interface Layer2Display extends ProjectScalingDisplay {
   /** Tooltip contents for liveness tab for given project */
   liveness?: ProjectLivenessInfo
   finality?: ProjectFinalityInfo
@@ -107,10 +107,10 @@ export interface Layer3 extends ScalingProject {
   /** ProjectId of hostChain */
   hostChain: ProjectId
   /** Stacked risk view values for this layer3 and it's base chain */
-  stackedRiskView: ScalingProjectRiskView
+  stackedRiskView: ProjectScalingRiskView
 }
 
-export interface ScalingProjectConfig {
+export interface ProjectScalingConfig {
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
   associatedTokens?: string[]
   /** List of contracts in which L1 funds are locked */
@@ -121,7 +121,7 @@ export interface ScalingProjectConfig {
   daTracking?: ProjectDaTrackingConfig[]
 }
 
-export interface Layer2Config extends ScalingProjectConfig {
+export interface Layer2Config extends ProjectScalingConfig {
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
@@ -130,7 +130,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   finality?: ProjectFinalityConfig
 }
 
-export interface ScalingProjectDisplay {
+export interface ProjectScalingDisplay {
   /** Name of the scaling project, will be used as a display name on the website */
   name: string
   /** Short name of the scaling project, will be used in some places on the website as a display name */
@@ -138,9 +138,9 @@ export interface ScalingProjectDisplay {
   /** Url friendly scaling project name, will be used in website urls */
   slug: string
   /** Name of the category the scaling project belongs to */
-  category: ScalingProjectCategory
+  category: ProjectScalingCategory
   /** Technological stack */
-  stack?: ScalingProjectStack
+  stack?: ProjectScalingStack
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string
   /** Warning for TVL */
@@ -154,7 +154,7 @@ export interface ScalingProjectDisplay {
   /** Detailed description of the scaling project, will be visible in detailed description section */
   detailedDescription?: string
   /** A short (<20 characters) description of the use case */
-  purposes: ScalingProjectPurpose[]
+  purposes: ProjectScalingPurpose[]
   /** List of links */
   links: ProjectLinks
   /** Name of the architecture image to show in the contract section if present, otherwise use slug */
@@ -167,7 +167,7 @@ export interface ScalingProjectDisplay {
   sequencingImage?: string
 }
 
-export interface ScalingProjectTechnology {
+export interface ProjectScalingTechnology {
   /** What state correctness mechanism is used in the project */
   stateCorrectness?: ProjectTechnologyChoice
   /** What is the new cryptography used in the project */

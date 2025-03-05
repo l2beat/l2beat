@@ -1,12 +1,12 @@
 import type {
   Project,
+  ProjectScalingCapability,
+  ProjectScalingCategory,
   ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingStack,
   ProjectScalingStage,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectCategory,
-  ScalingProjectPurpose,
-  ScalingProjectStack,
   WarningWithSentiment,
 } from '@l2beat/config'
 import { compact } from 'lodash'
@@ -55,11 +55,11 @@ export async function getScalingSummaryEntries() {
 }
 
 export interface ScalingSummaryEntry extends CommonScalingEntry {
-  capability: ScalingProjectCapability
+  capability: ProjectScalingCapability
   stage: ProjectScalingStage
-  category: ScalingProjectCategory
-  purposes: ScalingProjectPurpose[]
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  purposes: ProjectScalingPurpose[]
+  stack: ProjectScalingStack | undefined
   dataAvailability: ProjectScalingDa | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {

@@ -1,10 +1,10 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
-  ProjectCustomDa,
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
   DacInfo,
+  ProjectCustomDa,
 } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DAC } from './dac-template'

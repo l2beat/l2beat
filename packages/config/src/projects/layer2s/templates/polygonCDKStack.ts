@@ -25,23 +25,23 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
-  ScalingProjectTechnology,
+  ProjectScalingTechnology,
 } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
-  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
   ProjectContract,
+  ProjectCustomDa,
   ProjectEscrow,
   ProjectPermissions,
+  ProjectScalingCapability,
+  ProjectScalingPurpose,
+  ProjectScalingStateDerivation,
+  ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectPurpose,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -63,29 +63,29 @@ export interface DAProvider {
 
 export interface PolygonCDKStackConfig {
   addedAt: UnixTime
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   daProvider?: DAProvider
   customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
-  stateDerivation?: ScalingProjectStateDerivation
+  stateDerivation?: ProjectScalingStateDerivation
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: ProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
   isForcedBatchDisallowed: boolean
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
   upgradesAndGovernance?: string
-  stateValidation?: ScalingProjectStateValidation
+  stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
   additionalBadges?: Badge[]
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string

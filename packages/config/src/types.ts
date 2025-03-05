@@ -130,7 +130,7 @@ export interface ProjectStatuses {
   // countdowns
   otherMigration?: {
     expiresAt: number
-    pretendingToBe: ScalingProjectCategory
+    pretendingToBe: ProjectScalingCategory
     reasons: ReasonForBeingInOther[]
   }
 }
@@ -258,8 +258,8 @@ export interface ProjectBridgeTechnology {
 // #region scaling data
 export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
-  type: ScalingProjectCategory
-  capability: ScalingProjectCapability
+  type: ProjectScalingCategory
+  capability: ProjectScalingCapability
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
@@ -269,14 +269,14 @@ export interface ProjectScalingInfo {
     name: string
     shortName: string | undefined
   }
-  stack: ScalingProjectStack | undefined
+  stack: ProjectScalingStack | undefined
   raas: string | undefined
   daLayer: string
-  stage: ScalingProjectStage
-  purposes: ScalingProjectPurpose[]
+  stage: ProjectStageName
+  purposes: ProjectScalingPurpose[]
 }
 
-export type ScalingProjectCategory =
+export type ProjectScalingCategory =
   | 'Optimistic Rollup'
   | 'ZK Rollup'
   | 'Plasma'
@@ -284,7 +284,7 @@ export type ScalingProjectCategory =
   | 'Optimium'
   | 'Other'
 
-export type ScalingProjectCapability = 'universal' | 'appchain'
+export type ProjectScalingCapability = 'universal' | 'appchain'
 
 export interface ReasonForBeingInOther {
   label: string
@@ -292,7 +292,7 @@ export interface ReasonForBeingInOther {
   description: string
 }
 
-export type ScalingProjectStack =
+export type ProjectScalingStack =
   | 'OP Stack'
   | 'Arbitrum'
   | 'StarkEx'
@@ -305,14 +305,14 @@ export type ScalingProjectStack =
   | 'Taiko'
   | 'Cartesi Rollups'
 
-export type ScalingProjectStage =
+export type ProjectStageName =
   | 'Not applicable'
   | 'Under review'
   | 'Stage 0'
   | 'Stage 1'
   | 'Stage 2'
 
-export type ScalingProjectPurpose =
+export type ProjectScalingPurpose =
   | 'AI'
   | 'Auctions'
   | 'Betting'
@@ -396,12 +396,12 @@ export interface StageNotApplicable {
   stage: 'NotApplicable'
 }
 export interface ProjectScalingRisks {
-  self: ScalingProjectRiskView
-  host: ScalingProjectRiskView | undefined
-  stacked: ScalingProjectRiskView | undefined
+  self: ProjectScalingRiskView
+  host: ProjectScalingRiskView | undefined
+  stacked: ProjectScalingRiskView | undefined
 }
 
-export interface ScalingProjectRiskView {
+export interface ProjectScalingRiskView {
   stateValidation: TableReadyValue
   dataAvailability: TableReadyValue
   exitWindow: TableReadyValue
@@ -431,12 +431,12 @@ export interface ProjectScalingTechnology {
   otherConsiderations?: ProjectTechnologyChoice[]
   upgradesAndGovernance?: string
   upgradesAndGovernanceImage?: string
-  stateDerivation?: ScalingProjectStateDerivation
-  stateValidation?: ScalingProjectStateValidation
+  stateDerivation?: ProjectScalingStateDerivation
+  stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
 }
 
-export interface ScalingProjectStateDerivation {
+export interface ProjectScalingStateDerivation {
   nodeSoftware: string
   compressionScheme?: string
   genesisState: string
@@ -444,14 +444,14 @@ export interface ScalingProjectStateDerivation {
   isUnderReview?: boolean
 }
 
-export interface ScalingProjectStateValidation {
+export interface ProjectScalingStateValidation {
   description: string
-  categories: ScalingProjectStateValidationCategory[]
+  categories: ProjectScalingStateValidationCategory[]
   proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
 }
 
-export interface ScalingProjectStateValidationCategory {
+export interface ProjectScalingStateValidationCategory {
   title: // ZK
     | 'ZK Circuits'
     | 'Prover Architecture'

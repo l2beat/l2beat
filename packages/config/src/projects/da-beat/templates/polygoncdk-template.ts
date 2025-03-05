@@ -1,4 +1,4 @@
-import type { ProjectCustomDa, DaTechnology, DacInfo } from '../../../types'
+import type { DaTechnology, DacInfo, ProjectCustomDa } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DAC } from './dac-template'
 

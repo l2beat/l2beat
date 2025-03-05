@@ -2,18 +2,18 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ScalingProjectDisplay } from '../../../internalTypes'
+import type { ProjectScalingDisplay } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
-  ScalingProjectCapability,
+  ProjectScalingCapability,
 } from '../../../types'
 
 export interface UpcomingConfigL2 {
   id: string
   addedAt: UnixTime
   display: Layer2Display
-  capability: ScalingProjectCapability
+  capability: ProjectScalingCapability
   badges?: Badge[]
   chainConfig?: ChainConfig
 }
@@ -21,8 +21,8 @@ export interface UpcomingConfigL2 {
 export interface UpcomingConfigL3 {
   id: string
   addedAt: UnixTime
-  display: ScalingProjectDisplay
-  capability: ScalingProjectCapability
+  display: ProjectScalingDisplay
+  capability: ProjectScalingCapability
   hostChain: Layer3['hostChain']
   badges?: Badge[]
 }

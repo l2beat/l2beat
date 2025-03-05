@@ -1,9 +1,9 @@
 import type {
-  ProjectCustomDa,
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
   DacInfo,
+  ProjectCustomDa,
 } from '../../../types'
 import {
   DaCommitteeSecurityRisk,

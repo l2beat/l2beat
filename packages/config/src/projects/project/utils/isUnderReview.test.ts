@@ -2,10 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type { Layer2Config } from '../../../internalTypes'
-import type { ScalingProjectTechnology } from '../../../internalTypes'
+import type { ProjectScalingTechnology } from '../../../internalTypes'
 import type {
   ProjectContracts,
-  ScalingProjectRiskView,
+  ProjectScalingRiskView,
   ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
@@ -18,11 +18,11 @@ describe(isUnderReview.name, () => {
     id: ProjectId('project-id'),
     capability: 'universal',
     display: mockObject<Layer2Display>(),
-    technology: mockObject<ScalingProjectTechnology>({
+    technology: mockObject<ProjectScalingTechnology>({
       isUnderReview: undefined,
     }),
     contracts: mockObject<ProjectContracts>({}),
-    riskView: mockObject<ScalingProjectRiskView>(),
+    riskView: mockObject<ProjectScalingRiskView>(),
     config: mockObject<Layer2Config>(),
     stage: mockObject<ProjectScalingStage>({ stage: 'Stage 1' }),
   }

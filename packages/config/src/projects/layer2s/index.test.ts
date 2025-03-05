@@ -10,7 +10,7 @@ import { utils } from 'ethers'
 import { uniq } from 'lodash'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { ScalingProjectTechnology } from '../../internalTypes'
+import type { ProjectScalingTechnology } from '../../internalTypes'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
 import type { ProjectTechnologyChoice, ReferenceLink } from '../../types'
@@ -335,7 +335,7 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         describe(layer2.display.name, () => {
           type Key = Exclude<
-            keyof ScalingProjectTechnology,
+            keyof ProjectScalingTechnology,
             'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 

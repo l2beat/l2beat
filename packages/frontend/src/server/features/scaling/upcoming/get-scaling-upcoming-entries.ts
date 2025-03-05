@@ -1,7 +1,7 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
 } from '@l2beat/config'
 import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
@@ -23,8 +23,8 @@ export async function getScalingUpcomingEntries() {
 
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
   initialOrder: number
-  category: ScalingProjectCategory
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  stack: ProjectScalingStack | undefined
   purposes: string[]
 }
 

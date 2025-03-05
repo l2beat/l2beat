@@ -1,10 +1,10 @@
 import type {
   ChainConfig,
-  ProjectFinalityConfig,
   OnchainVerifier,
   Project,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
+  ProjectFinalityConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'

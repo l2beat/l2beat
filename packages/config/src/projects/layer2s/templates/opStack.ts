@@ -30,34 +30,34 @@ import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type { ScalingProject } from '../../../internalTypes'
-import type { ScalingProjectDisplay } from '../../../internalTypes'
+import type { ProjectScalingDisplay } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
-  ScalingProjectTechnology,
+  ProjectScalingTechnology,
 } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
-  ProjectCustomDa,
   Milestone,
   ProjectActivityConfig,
+  ProjectCustomDa,
   ProjectDaTrackingConfig,
-  ProjectScalingDa,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
   ProjectLivenessInfo,
   ProjectRisk,
+  ProjectScalingCapability,
+  ProjectScalingCategory,
+  ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingStage,
+  ProjectScalingStateDerivation,
+  ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectCategory,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -115,7 +115,7 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   architectureImage?: string
   stateValidationImage?: string
   isArchived?: true
@@ -136,14 +136,14 @@ interface OpStackConfigCommon {
   l2OutputOracle?: ContractParameters
   disputeGameFactory?: ContractParameters
   portal?: ContractParameters
-  stateDerivation?: ScalingProjectStateDerivation
-  stateValidation?: ScalingProjectStateValidation
+  stateDerivation?: ProjectScalingStateDerivation
+  stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -153,13 +153,13 @@ interface OpStackConfigCommon {
   isUnderReview?: boolean
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
-  riskView?: ScalingProjectRiskView
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
+  riskView?: ProjectScalingRiskView
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ScalingProjectCategory
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingCategory
   }
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
@@ -185,7 +185,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  stackedRiskView?: ScalingProjectRiskView
+  stackedRiskView?: ProjectScalingRiskView
 }
 
 function opStackCommon(
@@ -195,7 +195,7 @@ function opStackCommon(
   hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
-    ScalingProjectDisplay,
+    ProjectScalingDisplay,
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
@@ -477,7 +477,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 
 function getStateValidation(
   templateVars: OpStackConfigCommon,
-): ScalingProjectStateValidation | undefined {
+): ProjectScalingStateValidation | undefined {
   if (templateVars.stateValidation !== undefined) {
     return templateVars.stateValidation
   }
@@ -593,7 +593,7 @@ function describeOPFP({
   gameSplitDepth: number
   gameClockExtension: number
   oracleChallengePeriod: number
-}): ScalingProjectStateValidation {
+}): ProjectScalingStateValidation {
   const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
 
   const gameMaxClockExtension =
@@ -659,7 +659,7 @@ function describeOPFP({
 function getRiskView(
   templateVars: OpStackConfigCommon,
   daProvider: DAProvider | undefined,
-): ScalingProjectRiskView {
+): ProjectScalingRiskView {
   return {
     stateValidation: getRiskViewStateValidation(templateVars),
     exitWindow: getRiskViewExitWindow(templateVars),
@@ -781,7 +781,7 @@ function getTechnology(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
   daProvider: DAProvider | undefined,
-): ScalingProjectTechnology {
+): ProjectScalingTechnology {
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )

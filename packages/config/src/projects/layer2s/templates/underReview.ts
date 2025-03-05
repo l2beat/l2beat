@@ -2,20 +2,20 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type { Layer3 } from '../../../internalTypes'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ScalingProjectDisplay } from '../../../internalTypes'
+import type { ProjectScalingDisplay } from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
   ProjectActivityConfig,
   ProjectEscrow,
-  ScalingProjectCapability,
+  ProjectScalingCapability,
 } from '../../../types'
 import { getActivityConfig } from './activity'
 
 interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
-  capability: ScalingProjectCapability
+  capability: ProjectScalingCapability
   activityConfig?: ProjectActivityConfig
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
@@ -29,7 +29,7 @@ export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
 }
 
 export interface UnderReviewConfigL3 extends UnderReviewConfigCommon {
-  display: ScalingProjectDisplay
+  display: ProjectScalingDisplay
   hostChain: Layer3['hostChain']
   associatedTokens?: string[]
 }
