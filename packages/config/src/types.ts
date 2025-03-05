@@ -817,6 +817,7 @@ export interface BaseProject {
   display?: ProjectDisplay
   bridgeInfo?: ProjectBridgeInfo
   bridgeRisks?: BridgeRiskView
+  bridgeTechnology?: BridgeTechnology
   scalingInfo?: ProjectScalingInfo
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
