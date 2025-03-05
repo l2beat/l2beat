@@ -13,7 +13,7 @@ import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
-import { ContractUtils } from './get-contract-utils'
+import type { ContractUtils } from './get-contract-utils'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 

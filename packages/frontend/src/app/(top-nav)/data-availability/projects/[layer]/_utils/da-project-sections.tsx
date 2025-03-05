@@ -2,12 +2,12 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getDaThroughputSection } from './get-da-throughput-section'
-import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 
 type RegularDetailsParams = {
   layer: Project<

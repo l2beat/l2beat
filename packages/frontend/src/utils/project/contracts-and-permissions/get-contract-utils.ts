@@ -1,5 +1,5 @@
-import { UsedInProject } from '@l2beat/config'
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import type { UsedInProject } from '@l2beat/config'
+import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 
 export interface ContractUtils {
@@ -38,7 +38,7 @@ function createContractUtils(chainNameMap: Map<string, string>): ContractUtils {
       }
       return name
     },
-    getUsedIn(projectId, chain, address) {
+    getUsedIn(_projectId, _chain, _address) {
       throw new Error('Not implemeneted')
     },
   }

@@ -17,6 +17,7 @@ import {
 } from '~/server/features/utils/is-chart-data-empty'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
@@ -42,7 +43,6 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
-import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 
 export interface ScalingProjectEntry {
   type: 'layer3' | 'layer2'

@@ -10,6 +10,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { isTvsChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -20,7 +21,6 @@ import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getTvsProjectStats } from '../../scaling/tvs/get-tvs-project-stats'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
-import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 
 export interface BridgesProjectEntry {
   name: string

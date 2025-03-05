@@ -7,7 +7,7 @@ import type {
 } from '../../../components/projects/sections/contract-entry'
 import type { UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
-import { ContractUtils } from './get-contract-utils'
+import type { ContractUtils } from './get-contract-utils'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
