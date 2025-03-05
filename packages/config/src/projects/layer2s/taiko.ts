@@ -279,6 +279,7 @@ export const taiko: Layer2 = {
     chainId: 167000,
     explorerUrl: 'https://taikoscan.io',
     sinceTimestamp: new UnixTime(1716620627),
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'rpc',
