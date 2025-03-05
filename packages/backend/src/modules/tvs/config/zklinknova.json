@@ -116,7 +116,7 @@
         "escrowAddress": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
         "decimals": 18
       },
-      "sinceTimestamp": 1709218085,
+      "sinceTimestamp": 1709273393,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -133,7 +133,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 18
       },
-      "sinceTimestamp": 1709218113,
+      "sinceTimestamp": 1712880000,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -150,7 +150,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 18
       },
-      "sinceTimestamp": 1709218113,
+      "sinceTimestamp": 1710337050,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -167,7 +167,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 6
       },
-      "sinceTimestamp": 1709218113,
+      "sinceTimestamp": 1709273393,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -184,7 +184,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 6
       },
-      "sinceTimestamp": 1709218113,
+      "sinceTimestamp": 1709273393,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -201,7 +201,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 8
       },
-      "sinceTimestamp": 1709218113,
+      "sinceTimestamp": 1709273393,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -286,7 +286,7 @@
         "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1713484800,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -371,7 +371,7 @@
         "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1710979200,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -551,7 +551,7 @@
           }
         ]
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1721606400,
       "category": "other",
       "source": "canonical",
       "isAssociated": true
@@ -891,7 +891,7 @@
         "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
         "decimals": 18
       },
-      "sinceTimestamp": 1709297040,
+      "sinceTimestamp": 1718668800,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -1044,7 +1044,7 @@
         "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18
       },
-      "sinceTimestamp": 1709296973,
+      "sinceTimestamp": 1712448000,
       "category": "other",
       "source": "external",
       "isAssociated": false

@@ -29,7 +29,7 @@ import {
 
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig,
+  chain: ChainConfig | undefined,
   logger: Logger,
   rpcClient?: RpcClient,
 ): Promise<TvsConfig> {
@@ -79,13 +79,13 @@ export async function mapConfig(
           )
         }
 
-        tokens.push(createEscrowToken(project, chain, escrow, legacyToken))
+        tokens.push(createEscrowToken(project, escrow, legacyToken))
       }
     }
   }
 
   for (const legacyToken of project.tvlConfig.tokens) {
-    tokens.push(createToken(legacyToken, project, chain))
+    tokens.push(createToken(legacyToken, project))
   }
 
   return {
@@ -96,11 +96,12 @@ export async function mapConfig(
 
 export function createEscrowToken(
   project: Project<'tvlConfig'>,
-  chain: ChainConfig,
   escrow: ProjectTvlEscrow,
   legacyToken: LegacyToken & { isPreminted?: boolean },
 ): Token {
-  const id = TokenId.create(project.id, legacyToken.symbol)
+  const id = project.isBridge
+    ? TokenId.createForBridge(project.id, escrow.chain, legacyToken.symbol)
+    : TokenId.create(project.id, legacyToken.symbol)
 
   let amountFormula: CalculationFormula | AmountFormula
 
@@ -132,9 +133,9 @@ export function createEscrowToken(
     } as BalanceOfEscrowAmountFormula
   }
 
-  assert(chain.sinceTimestamp)
   const sinceTimestamp = UnixTime.max(
-    UnixTime.max(chain.sinceTimestamp, legacyToken.sinceTimestamp),
+    // TODO: make sure it takes chain.sinceTimestamp into consideration
+    legacyToken.sinceTimestamp,
     escrow.sinceTimestamp,
   )
   const untilTimestamp = getEscrowUntilTimestamp(
@@ -162,11 +163,8 @@ export function createEscrowToken(
 export function createToken(
   legacyToken: LegacyToken,
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig,
 ): Token {
-  assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
-
-  const id = TokenId.create(chain.name, legacyToken.symbol)
+  const id = TokenId.create(project.id, legacyToken.symbol)
   let amountFormula: AmountFormula
 
   switch (legacyToken.supply) {
@@ -174,7 +172,7 @@ export function createToken(
       amountFormula = {
         type: 'totalSupply',
         address: legacyToken.address,
-        chain: chain.name,
+        chain: project.id,
         decimals: legacyToken.decimals,
       } as TotalSupplyAmountFormula
       break
@@ -190,19 +188,15 @@ export function createToken(
       throw new Error(`Unsupported supply type ${legacyToken.supply}`)
   }
 
-  const sinceTimestamp = UnixTime.max(
-    chain.sinceTimestamp,
-    legacyToken.sinceTimestamp,
-  )
-
   return {
     id,
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
     name: legacyToken.name,
     amount: amountFormula,
-    sinceTimestamp,
-    untilTimestamp: undefined,
+    // TODO: make sure it aligns with chain
+    sinceTimestamp: legacyToken.sinceTimestamp,
+    untilTimestamp: legacyToken.untilTimestamp,
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(

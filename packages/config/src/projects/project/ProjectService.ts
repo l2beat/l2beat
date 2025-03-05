@@ -2,7 +2,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
 import { getProjects } from './getProjects'
 
-type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
+type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt' | 'isBridge'
 type Key = Exclude<keyof BaseProject, BasicKeys>
 // Black magic: https://stackoverflow.com/a/78872927
 type OptionalToUndefined<T> = { [K in {} & keyof T]: T[K] }
@@ -88,6 +88,7 @@ function createMap<K extends Key, O extends Key>(query: {
     'name',
     'shortName',
     'addedAt',
+    'isBridge',
     ...(query.select ?? []),
     ...(query.optional ?? []),
   ] as (keyof Project<K, O>)[]

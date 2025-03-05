@@ -75,25 +75,28 @@ async function generateConfigForProject(
 ) {
   const project = await ps.getProject({
     id: ProjectId(projectId),
-    select: ['tvlConfig', 'chainConfig'],
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
   })
   assert(project, `${projectId}: No project found`)
 
   const env = getEnv()
-  const rpc = new RpcClient({
-    http: new HttpClient(),
-    callsPerMinute: env.integer(
-      `${projectId.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-      120,
-    ),
-    retryStrategy: 'RELIABLE',
-    logger,
-    url: env.string(
-      `${projectId.toUpperCase()}_RPC_URL`,
-      project.chainConfig.apis.find((a) => a.type === 'rpc')?.url,
-    ),
-    sourceName: projectId,
-  })
+  const rpc = project.chainConfig
+    ? new RpcClient({
+        http: new HttpClient(),
+        callsPerMinute: env.integer(
+          `${projectId.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+          120,
+        ),
+        retryStrategy: 'RELIABLE',
+        logger,
+        url: env.string(
+          `${projectId.toUpperCase()}_RPC_URL`,
+          project.chainConfig.apis.find((a) => a.type === 'rpc')?.url,
+        ),
+        sourceName: projectId,
+      })
+    : undefined
 
   assert(project, `${projectId} project not found`)
   return mapConfig(project, project.chainConfig, logger, rpc)

@@ -1,13 +1,12 @@
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
-import {
-  type AggLayerEscrow,
-  type ChainConfig,
-  type Project,
-  ProjectService,
-  type ProjectTvlEscrow,
+import type {
+  AggLayerEscrow,
+  ChainConfig,
+  Project,
+  ProjectTvlEscrow,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, Bytes, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
@@ -23,10 +22,11 @@ const ORIGIN_NETWORK = 0
 
 export async function getAggLayerTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig,
+  chain: ChainConfig | undefined,
   escrow: ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
   rpcClient: RpcClient,
 ): Promise<Token[]> {
+  assert(chain, `${project.id}: chain should be defined`)
   const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
     toMulticallConfigEntry(m),
   )
@@ -155,17 +155,10 @@ export async function getAggLayerTokens(
   const tokensToAssignFromL1: Token[] = []
 
   if (escrow.sharedEscrow.tokensToAssignFromL1) {
-    const ethereum = await new ProjectService().getProject({
-      id: ProjectId('ethereum'),
-      select: ['chainConfig'],
-    })
-    assert(ethereum)
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
-      tokensToAssignFromL1.push(
-        createEscrowToken(project, ethereum.chainConfig, escrow, token),
-      )
+      tokensToAssignFromL1.push(createEscrowToken(project, escrow, token))
     }
   }
 

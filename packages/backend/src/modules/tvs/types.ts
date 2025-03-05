@@ -168,3 +168,11 @@ export function TokenId(value: string) {
 TokenId.create = function (chain: string, symbol: string) {
   return TokenId(`${chain}-${symbol}`)
 }
+
+TokenId.createForBridge = function (
+  bridge: string,
+  chain: string,
+  symbol: string,
+) {
+  return TokenId(`${bridge}-${chain}-${symbol}`)
+}
