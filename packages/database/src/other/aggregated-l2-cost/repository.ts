@@ -92,7 +92,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
       .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
-    if (from) {
+    if (from !== null) {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 

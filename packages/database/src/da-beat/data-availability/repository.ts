@@ -57,7 +57,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
-    if (from) {
+    if (from !== null) {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
@@ -85,7 +85,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
-    if (from) {
+    if (from !== null) {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
@@ -111,7 +111,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
-    if (from) {
+    if (from !== null) {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 

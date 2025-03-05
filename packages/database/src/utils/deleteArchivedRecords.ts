@@ -26,7 +26,7 @@ export async function deleteHourlyUntil(
       eb.and(
         [
           eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
-          dateRange.from
+          dateRange.from !== undefined
             ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
             : undefined,
           // do not delete six hourly and daily
@@ -52,7 +52,7 @@ export async function deleteSixHourlyUntil(
       eb.and(
         [
           eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
-          dateRange.from
+          dateRange.from !== undefined
             ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
             : undefined,
           // do not delete daily
