@@ -10,6 +10,7 @@ import type { DaSummaryEntry } from '~/server/features/data-availability/summary
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
+import { ProjectId } from '@l2beat/shared-pure'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -32,7 +33,17 @@ const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
-    return <GrissiniCell values={ctx.row.original.risks} />
+    return (
+      <GrissiniCell
+        values={ctx.row.original.risks}
+        href={
+          ctx.row.original.id === ProjectId.ETHEREUM
+            ? undefined
+            : `/data-availability/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`
+        }
+        disabledOnMobile
+      />
+    )
   },
   meta: {
     align: 'center',

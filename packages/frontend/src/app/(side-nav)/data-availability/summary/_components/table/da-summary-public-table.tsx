@@ -1,4 +1,5 @@
 'use client'
+import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
@@ -40,7 +41,7 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
             key={bridge.slug}
             className={getRowTypeClassNames({ isEthereum: false })}
           >
-            <BridgeCells bridge={bridge} />
+            <BridgeCells layer={row.original} bridge={bridge} />
           </TableRow>
         ))}
       </>
@@ -52,7 +53,9 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
       return null
     }
 
-    return <BridgeCells bridge={row.original.bridges[0]!} />
+    return (
+      <BridgeCells layer={row.original} bridge={row.original.bridges[0]!} />
+    )
   }
 
   return (
@@ -65,8 +68,10 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
 }
 
 function BridgeCells({
+  layer,
   bridge,
 }: {
+  layer: DaSummaryEntry
   bridge: DaBridgeSummaryEntry
 }) {
   return (
@@ -80,6 +85,12 @@ function BridgeCells({
         <GrissiniCell
           values={bridge.risks.values}
           hasNoBridge={bridge.risks.isNoBridge}
+          href={
+            layer.id === ProjectId.ETHEREUM
+              ? undefined
+              : `/data-availability/risk?tab=${layer.tab}&highlight=${layer.slug}`
+          }
+          disabledOnMobile
         />
       </TableCell>
       <TableCell className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]">

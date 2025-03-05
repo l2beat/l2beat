@@ -1,6 +1,6 @@
 import type { ColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
-import Link from 'next/link'
+import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { EM_DASH } from '~/consts/characters'
 import { IndexCell } from '../../cells/index-cell'
 
@@ -38,7 +38,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
     columnHelper.display({
       id: 'logo',
       cell: (ctx) => (
-        <Link href={`/projects/${ctx.row.original.slug}`}>
+        <LinkWithOnHoverPrefetch href={`/projects/${ctx.row.original.slug}`}>
           <Image
             className="min-h-[20px] min-w-[20px]"
             src={`/icons/${ctx.row.original.slug}.png`}
@@ -46,7 +46,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
             height={20}
             alt={`${ctx.row.original.name} logo`}
           />
-        </Link>
+        </LinkWithOnHoverPrefetch>
       ),
       meta: {
         headClassName: 'w-0',

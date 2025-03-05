@@ -1,3 +1,4 @@
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import { cn } from '~/utils/cn'
 import {
   Tooltip,
@@ -14,6 +15,8 @@ export interface GrissiniCellProps {
   className?: string
   iconClassName?: string
   hasNoBridge?: boolean
+  href?: string
+  disabledOnMobile?: boolean
 }
 
 export function GrissiniCell(props: GrissiniCellProps) {
@@ -28,12 +31,15 @@ export function GrissiniCell(props: GrissiniCellProps) {
           'flex size-full items-center justify-center',
           props.className,
         )}
+        disabledOnMobile={props.disabledOnMobile}
       >
-        <GrissiniIcon
-          values={props.values}
-          hasNoBridge={props.hasNoBridge}
-          className={cn('size-8 md:size-8', props.iconClassName)}
-        />
+        <TableLink href={props.href}>
+          <GrissiniIcon
+            values={props.values}
+            hasNoBridge={props.hasNoBridge}
+            className={cn('size-8 md:size-8', props.iconClassName)}
+          />
+        </TableLink>
       </TooltipTrigger>
       <TooltipContent fitContent>
         <GrissiniTooltip
