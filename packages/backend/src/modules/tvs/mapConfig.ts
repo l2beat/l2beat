@@ -246,6 +246,7 @@ function processFormula(formula: CalculationFormula | ValueFormula | AmountFormu
       for (const arg of f.arguments) {
         processFormulaRecursive(arg)
       }
+      return
     }
 
     if (f.type === 'value') {
