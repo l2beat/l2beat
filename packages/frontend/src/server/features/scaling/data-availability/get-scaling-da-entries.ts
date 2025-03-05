@@ -85,7 +85,7 @@ function getDaHref(
   daBridges: Project<'daBridge'>[],
 ) {
   if (project.customDa) {
-    return `/scaling/projects/${project.slug}#da-layer`
+    return `/scaling/projects/${project.slug}`
   }
 
   const daLayer = daLayers.find(

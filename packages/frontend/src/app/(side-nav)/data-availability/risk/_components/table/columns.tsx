@@ -9,12 +9,15 @@ import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
-export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
+export const [indexColumn, logoColumn] = getDaCommonProjectColumns(
+  columnHelper,
+  (row) => `${row.href}#da-layer`,
+)
 
 const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
   cell: (ctx) => (
-    <TableLink href={ctx.row.original.href}>
+    <TableLink href={`${ctx.row.original.href}#da-layer`}>
       <ProjectNameCell project={ctx.row.original} />
     </TableLink>
   ),

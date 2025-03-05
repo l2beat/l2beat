@@ -12,7 +12,7 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
-    ...getCommonProjectColumns(columnHelper, opts),
+    ...getCommonProjectColumns(columnHelper, getHref, opts),
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => {

@@ -41,7 +41,7 @@ export function getCommonDacDaEntry({
     slug: project.slug,
     name: project.customDa.name ?? `${project.name} DAC`,
     nameSecondLine: project.customDa.type,
-    href: `/scaling/projects/${project.slug}#da-layer`,
+    href: `/scaling/projects/${project.slug}`,
     tab: 'custom',
     statuses: {
       underReview: project.statuses.isUnderReview ? 'config' : undefined,

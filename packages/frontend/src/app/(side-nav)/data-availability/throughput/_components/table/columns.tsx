@@ -14,7 +14,10 @@ export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
 
 const columnHelper = createColumnHelper<DaThroughputTableData>()
 
-export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
+export const [indexColumn, logoColumn] = getDaCommonProjectColumns(
+  columnHelper,
+  (row) => `${row.href}#throughput`,
+)
 
 export const publicSystemsColumns = [
   indexColumn,
@@ -22,7 +25,7 @@ export const publicSystemsColumns = [
   columnHelper.accessor('name', {
     header: 'DA Layer',
     cell: (ctx) => (
-      <TableLink href={ctx.row.original.href}>
+      <TableLink href={`${ctx.row.original.href}#throughput`}>
         <ProjectNameCell project={ctx.row.original} />
       </TableLink>
     ),

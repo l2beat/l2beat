@@ -15,6 +15,7 @@ export interface CommonProjectColumnsOptions {
 
 export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
   columnHelper: ColumnHelper<T>,
+  getHref: (row: T) => string,
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
@@ -38,7 +39,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
     columnHelper.display({
       id: 'logo',
       cell: (ctx) => (
-        <LinkWithOnHoverPrefetch href={`/projects/${ctx.row.original.slug}`}>
+        <LinkWithOnHoverPrefetch href={getHref(ctx.row.original)}>
           <Image
             className="min-h-[20px] min-w-[20px]"
             src={`/icons/${ctx.row.original.slug}.png`}
