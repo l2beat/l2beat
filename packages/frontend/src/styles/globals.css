@@ -27,6 +27,8 @@
     --link-stroke: 212 100% 86.5%;
     --link: 223 69% 50.6%;
 
+    --row-highlight: 284 53.5% 91.6%;
+
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
     --chart-ethereum-secondary: 212 100% 66.3%;
@@ -87,6 +89,8 @@
     --divider: 226 14.3% 28.8%;
     --link-stroke: 217 56.3% 18.8%;
     --link: 212 100% 66.3%;
+
+    --row-highlight: 271 20% 20.6%;
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;

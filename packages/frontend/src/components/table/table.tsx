@@ -61,7 +61,7 @@ const TableRow = ({
     // eslint-disable-next-line tailwindcss/no-custom-classname
     className={cn(
       'group/row border-b border-b-divider',
-      'data-[highlighted]:!mask-none data-[highlighted]:border-b data-[highlighted]:bg-brand/15',
+      'data-[highlighted]:!mask-none data-[highlighted]:animate-row-highlight',
       className,
     )}
     {...props}
