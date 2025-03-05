@@ -1,5 +1,5 @@
 import type { ProjectPermission, ProjectPermissions } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import type {

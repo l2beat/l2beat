@@ -3,7 +3,6 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { Markdown } from '../../markdown/markdown'
-import { BigPentagonRosette } from '../../rosette/pentagon/big-pentagon-rosette'
 import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 import type { RosetteValue } from '../../rosette/types'
 import { SentimentText } from '../../sentiment-text'
@@ -12,7 +11,6 @@ import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
-  rosetteType: 'pizza' | 'pentagon'
   rosetteValues: RosetteValue[]
   warning: string | undefined
   isVerified: boolean | undefined
@@ -21,7 +19,6 @@ export interface RiskAnalysisSectionProps extends ProjectSectionProps {
 }
 
 export function RiskAnalysisSection({
-  rosetteType,
   rosetteValues,
   warning,
   isVerified,
@@ -63,16 +60,7 @@ export function RiskAnalysisSection({
       )}
 
       {!shouldHideRosette && (
-        <>
-          {rosetteType === 'pizza' ? (
-            <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
-          ) : (
-            <BigPentagonRosette
-              values={rosetteValues}
-              className="mx-auto my-6"
-            />
-          )}
-        </>
+        <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
       )}
       {Object.values(rosetteValues).map((value) => (
         <SingleRisk key={value.name} value={value} />

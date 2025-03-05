@@ -1,5 +1,5 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
+import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import type { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
 import { ps } from '~/server/projects'
 
 export interface ContractUtils {

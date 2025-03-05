@@ -1,12 +1,18 @@
 import { createHash } from 'crypto'
+import type { Logger } from '@l2beat/backend-tools'
 import {
+  type AggLayerEscrow,
   type ChainConfig,
+  type ElasticChainEscrow,
   type Project,
   type ProjectTvlEscrow,
   tokenList,
 } from '@l2beat/config'
+import type { RpcClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { getAggLayerTokens } from './providers/aggLayer'
+import { getElasticChainTokens } from './providers/elasticChain'
 import {
   type AmountConfig,
   type AmountFormula,
@@ -21,29 +27,61 @@ import {
   type ValueFormula,
 } from './types'
 
-export function mapConfig(
+export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
-): TvsConfig {
+  logger: Logger,
+  rpcClient?: RpcClient,
+): Promise<TvsConfig> {
   const tokens: Token[] = []
 
-  // map escrows to tokens
   for (const escrow of project.tvlConfig.escrows) {
-    // TODO - implement support for shared escrows
     if (escrow.sharedEscrow) {
-      continue
-    }
-
-    for (const legacyToken of escrow.tokens) {
-      if (!legacyToken.id.endsWith('native')) {
-        assert(
-          legacyToken.address,
-          `Token address is required ${legacyToken.id}`,
-        )
+      if (rpcClient === undefined) {
+        logger.warn(`No Multicall passed, sharedEscrow support is not enabled`)
+        continue
       }
 
-      const token = createToken(legacyToken, project, chain, escrow)
-      tokens.push(token)
+      if (escrow.sharedEscrow.type === 'AggLayer') {
+        logger.info(`Querying for AggLayer L2 tokens addresses`)
+        const aggLayerL2Tokens = await getAggLayerTokens(
+          project,
+          chain,
+          // TODO: fix types
+          escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+          rpcClient,
+        )
+
+        // TODO: add support for L1 assets
+        // add support for native token
+        tokens.push(...aggLayerL2Tokens)
+      }
+
+      if (escrow.sharedEscrow.type === 'ElasticChain') {
+        logger.info(`Querying for ElasticChain L2 tokens addresses`)
+
+        const elasticChainTokens = await getElasticChainTokens(
+          project,
+          chain,
+          // TODO: fix types
+          escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+          rpcClient,
+        )
+
+        tokens.push(...elasticChainTokens)
+      }
+    } else {
+      for (const legacyToken of escrow.tokens) {
+        if (!legacyToken.id.endsWith('native')) {
+          assert(
+            legacyToken.address,
+            `Token address is required ${legacyToken.id}`,
+          )
+        }
+
+        const token = createToken(legacyToken, project, chain, escrow)
+        tokens.push(token)
+      }
     }
   }
 
@@ -62,7 +100,7 @@ export function mapConfig(
   }
 }
 
-function createToken(
+export function createToken(
   legacyToken: LegacyToken,
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
@@ -156,8 +194,16 @@ export function extractPricesAndAmounts(config: TvsConfig): {
   const prices = new Map<string, PriceConfig>()
 
   for (const token of config.tokens) {
-    const amount = createAmountConfig(token.amount)
-    amounts.set(amount.id, amount)
+    if (token.amount.type === 'calculation') {
+      const { formulaAmounts, formulaPrices } = processFormula(token.amount)
+      formulaAmounts.forEach((a) => amounts.set(a.id, a))
+      formulaPrices.forEach((p) => prices.set(p.priceId, p))
+    } else {
+      if (token.amount.type !== 'const') {
+        const amount = createAmountConfig(token.amount)
+        amounts.set(amount.id, amount)
+      }
+    }
 
     const price = createPriceConfig({
       amount: token.amount,
@@ -188,7 +234,12 @@ export function extractPricesAndAmounts(config: TvsConfig): {
   }
 }
 
-export function createAmountConfig(formula: AmountFormula): AmountConfig {
+export function createAmountConfig(
+  formula:
+    | BalanceOfEscrowAmountFormula
+    | TotalSupplyAmountFormula
+    | CirculatingSupplyAmountFormula,
+): AmountConfig {
   switch (formula.type) {
     case 'balanceOfEscrow':
       return {
@@ -225,17 +276,27 @@ export function createPriceConfig(formula: ValueFormula): PriceConfig {
   }
 }
 
-function processFormula(formula: CalculationFormula | ValueFormula): {
+function processFormula(
+  formula: CalculationFormula | ValueFormula | AmountFormula,
+): {
   formulaAmounts: AmountConfig[]
   formulaPrices: PriceConfig[]
 } {
   const formulaAmounts: AmountConfig[] = []
   const formulaPrices: PriceConfig[] = []
 
-  const processFormulaRecursive = (f: CalculationFormula | ValueFormula) => {
+  const processFormulaRecursive = (
+    f: CalculationFormula | ValueFormula | AmountFormula,
+  ) => {
+    if (f.type === 'calculation') {
+      for (const arg of f.arguments) {
+        processFormulaRecursive(arg)
+      }
+      return
+    }
+
     if (f.type === 'value') {
-      const amount = createAmountConfig(f.amount)
-      formulaAmounts.push(amount)
+      processFormulaRecursive(f.amount)
 
       const price = createPriceConfig(f)
       formulaPrices.push(price)
@@ -243,8 +304,9 @@ function processFormula(formula: CalculationFormula | ValueFormula): {
       return
     }
 
-    for (const arg of f.arguments) {
-      processFormulaRecursive(arg)
+    if (f.type !== 'const') {
+      const amount = createAmountConfig(f)
+      formulaAmounts.push(amount)
     }
   }
 
