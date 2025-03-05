@@ -57,6 +57,7 @@ const cmd = command({
       ?.filter((token) => token.value !== 0)
       // TODO replace with amountId matching
       .map((token) => token.tokenConfig)
+      .sort((a, b) => a.id.localeCompare(b.id))
 
     assert(nonZeroTokens, 'No data for timestamp')
 
@@ -100,5 +101,5 @@ function writeToFile(project: string, nonZeroTokens: Token[], logger: Logger) {
     tokens: nonZeroTokens,
   }
 
-  fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2))
+  fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2) + '\n')
 }
