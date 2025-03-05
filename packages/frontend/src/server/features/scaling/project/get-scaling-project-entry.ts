@@ -1,15 +1,12 @@
 import type {
   Badge,
-  Layer2,
-  Layer3,
   Project,
   ReasonForBeingInOther,
   ScalingProjectCategory,
   StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { layer2s, layer3s } from '@l2beat/config'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -20,6 +17,7 @@ import {
 } from '~/server/features/utils/is-chart-data-empty'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
@@ -45,8 +43,6 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
-
-export type ScalingProject = Layer2 | Layer3
 
 export interface ScalingProjectEntry {
   type: 'layer3' | 'layer2'
@@ -122,12 +118,6 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
   >,
 ): Promise<ScalingProjectEntry> {
-  /** @deprecated */
-  const legacy =
-    layer2s.find((x) => x.id === project.id) ??
-    layer3s.find((x) => x.id === project.id)
-  assert(legacy)
-
   const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
     await Promise.all([
       getProjectsChangeReport(),
@@ -550,14 +540,19 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const permissionsSection = getPermissionsSection({
-    id: project.id,
-    type: project.scalingInfo.layer,
-    hostChain: hostChain?.id,
-    isUnderReview: project.statuses.isUnderReview,
-    permissions: project.permissions,
-    daSolution,
-  })
+  const contractUtils = await getContractUtils()
+
+  const permissionsSection = getPermissionsSection(
+    {
+      id: project.id,
+      type: project.scalingInfo.layer,
+      hostChain: hostChain?.id,
+      isUnderReview: project.statuses.isUnderReview,
+      permissions: project.permissions,
+      daSolution,
+    },
+    contractUtils,
+  )
   if (permissionsSection) {
     const permissionedEntities = project.customDa?.dac?.knownMembers
 
@@ -576,15 +571,14 @@ export async function getScalingProjectEntry(
     {
       id: project.id,
       type: project.scalingInfo.layer,
-      hostChainName: project.scalingInfo.hostChain.name,
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: project.statuses.isUnderReview,
-      escrows: legacy.config.escrows,
       architectureImage: project.scalingTechnology.architectureImage,
       daSolution,
     },
+    contractUtils,
     projectsChangeReport,
   )
   if (contractsSection) {

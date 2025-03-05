@@ -88,7 +88,11 @@ describe('bridges', () => {
       describe(bridge.display.name, () => {
         type Key = Exclude<
           keyof BridgeTechnology,
-          'canonical' | 'category' | 'destination' | 'isUnderReview'
+          | 'canonical'
+          | 'category'
+          | 'destination'
+          | 'isUnderReview'
+          | 'detailedDescription'
         >
 
         function check(key: Key) {
