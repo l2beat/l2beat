@@ -120,8 +120,8 @@ function getLowestSyncedUntil(liveness: LivenessProject): UnixTime {
     if (!data) {
       continue
     }
-    const syncedUntil = new UnixTime(data.syncedUntil)
-    if (syncedUntil.lt(lowestSyncedUntil)) {
+    const syncedUntil = UnixTime(data.syncedUntil)
+    if (syncedUntil < lowestSyncedUntil) {
       lowestSyncedUntil = syncedUntil
     }
   }

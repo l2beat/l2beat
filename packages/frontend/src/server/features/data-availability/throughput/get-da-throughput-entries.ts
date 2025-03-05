@@ -91,7 +91,7 @@ function getDaThroughputEntry(
 
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
   const notSyncedStatus = data
-    ? getThroughputSyncWarning(new UnixTime(data.syncedUntil))
+    ? getThroughputSyncWarning(UnixTime(data.syncedUntil))
     : undefined
   const href = `/data-availability/projects/${project.slug}/${bridge ? bridge.slug : 'no-bridge'}`
   return {

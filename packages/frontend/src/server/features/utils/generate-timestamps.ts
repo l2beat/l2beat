@@ -11,14 +11,19 @@ export function generateTimestamps(
   opts?: Options,
 ) {
   const generated = range(
-    Math.floor((to.toNumber() - from.toNumber()) / divider(resolution)) + 1,
+    Math.floor((to - from) / divider(resolution)) + 1,
   ).map((i) => {
-    return from.add(
-      i * (resolution === 'sixHourly' ? 6 : 1),
-      resolution === 'hourly' || resolution === 'sixHourly' ? 'hours' : 'days',
+    return (
+      from +
+      UnixTime(
+        i * (resolution === 'sixHourly' ? 6 : 1),
+        resolution === 'hourly' || resolution === 'sixHourly'
+          ? 'hours'
+          : 'days',
+      )
     )
   })
-  const isLastGeneratedTarget = generated.at(-1)?.equals(to)
+  const isLastGeneratedTarget = generated.at(-1) === to
   if (opts?.addTarget && !isLastGeneratedTarget) {
     generated.push(to)
   }

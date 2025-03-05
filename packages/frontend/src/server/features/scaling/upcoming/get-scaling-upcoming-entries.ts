@@ -36,6 +36,6 @@ function getScalingUpcomingEntry(
     category: project.scalingInfo.type,
     stack: project.scalingInfo.stack,
     purposes: project.scalingInfo.purposes,
-    initialOrder: project.addedAt.toNumber(),
+    initialOrder: project.addedAt,
   }
 }

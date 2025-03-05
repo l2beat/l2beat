@@ -24,8 +24,8 @@ export function getValuesStatus(
       continue
     }
 
-    const excludedHeuristic = UnixTime.max(
-      targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+    const excludedHeuristic = Math.max(
+      targetTimestamp - UnixTime(CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
       minTimestamp,
     )
 
@@ -39,9 +39,8 @@ export function getValuesStatus(
     }
 
     for (
-      let i = targetTimestamp.add(-1, 'hours').toNumber();
-      i >=
-      targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days').toNumber();
+      let i = targetTimestamp - UnixTime(1, 'hours');
+      i >= targetTimestamp - UnixTime(CONSIDER_EXCLUDED_AFTER_DAYS, 'days');
       i -= 3600
     ) {
       const valueAtTimestamp = valuesByTimestamp[i.toString()]?.find(

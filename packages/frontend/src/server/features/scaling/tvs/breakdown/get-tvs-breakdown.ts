@@ -33,7 +33,8 @@ export function getTvsBreakdown(
     const chainConverter = new ChainConverter(chains)
 
     const targetTimestamp =
-      target ?? UnixTime.now().toStartOf('hour').add(-2, 'hours')
+      target ??
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(2, 'hours')
 
     const prices = await getLatestPriceForConfigurations(
       configMapping.prices,
@@ -64,7 +65,7 @@ export function getTvsBreakdown(
         )
       }
 
-      if (config.untilTimestamp?.lt(targetTimestamp)) {
+      if (config.untilTimestamp && config.untilTimestamp < targetTimestamp) {
         continue
       }
 
@@ -171,7 +172,7 @@ export function getTvsBreakdown(
     const breakdownWithTokenInfo = assignTokenMetaToBreakdown(sortedBreakdown)
 
     return {
-      dataTimestamp: targetTimestamp.toNumber(),
+      dataTimestamp: targetTimestamp,
       breakdown: breakdownWithTokenInfo,
     }
   }

@@ -22,7 +22,7 @@ async function getFinalityData(projects: Project<'finalityConfig'>[]) {
     keyBy(records, 'projectId'),
     (record) => {
       const base = {
-        syncedUntil: record.timestamp.toNumber(), // cache serialization, will be coerced to UnixTime
+        syncedUntil: record.timestamp, // cache serialization, will be coerced to UnixTime
         timeToInclusion: {
           minimumInSeconds: record.minimumTimeToInclusion,
           maximumInSeconds: record.maximumTimeToInclusion,
@@ -63,7 +63,7 @@ function getMockFinalityData(
     acc[cur.id.toString()] = {
       timeToInclusion: generateMockData(),
       stateUpdateDelays: generateMockData(),
-      syncedUntil: UnixTime.now().toNumber(),
+      syncedUntil: UnixTime.now(),
     }
     return acc
   }, {})
@@ -72,7 +72,7 @@ function getMockFinalityData(
     ...result,
     optimism: {
       ...result.optimism!,
-      syncedUntil: UnixTime.now().add(-2, 'days').toNumber(),
+      syncedUntil: UnixTime.now() - UnixTime(2, 'days'),
     },
   }
 }

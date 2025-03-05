@@ -3,7 +3,7 @@ import { formatTimestamp } from '~/utils/dates'
 
 export function isFinalitySynced(syncedUntil: number): boolean {
   return (
-    UnixTime.now().add(-1, 'days').add(-1, 'hours').toNumber() <= syncedUntil
+    UnixTime.now() - UnixTime(1, 'days') - UnixTime(1, 'hours') <= syncedUntil
   )
 }
 
