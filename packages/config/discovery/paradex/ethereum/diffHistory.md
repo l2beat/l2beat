@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4896ce229b2ad40e55361da050f6eb0b73004918
+Generated with discovered.json: 0xb9837b88db729002354e910426ae9e545bedbea5
 
-# Diff at Wed, 05 Mar 2025 09:22:30 GMT:
+# Diff at Wed, 05 Mar 2025 09:26:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21973412
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x4896ce229b2ad40e55361da050f6eb0b73004918
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+discodrive.
 
 ## Config/verification related changes
 
@@ -114,7 +114,10 @@ discovery. Values are for block 21973412 (main branch discovery), not current.
 
 ```diff
     contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
-    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      description:
+-        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles."
++        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
       values.governors:
 -        ["0x8Cef438c3e363e15F9619e32D9b5D04ff777D670","0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"]
       fieldMeta.isFinalized.description:
