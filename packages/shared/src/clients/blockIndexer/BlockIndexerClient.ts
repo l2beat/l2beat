@@ -48,7 +48,7 @@ export class BlockIndexerClient {
   // There is a case when there is not enough activity on a given chain
   // so that blocks come in a greater than timestampIndexingInterval intervals
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
-    let current = new UnixTime(timestamp.toNumber())
+    let current = UnixTime(timestamp)
 
     let counter = 1
     while (counter <= this.maximumCallsForBlockTimestamp) {
@@ -71,7 +71,7 @@ export class BlockIndexerClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-this.binTimeWidth, 'minutes')
+        current -= UnixTime(this.binTimeWidth, 'minutes')
       }
       counter++
     }

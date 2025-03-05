@@ -14,7 +14,6 @@ import type {
 } from '../../clients/coingecko/types'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
-const SECONDS_IN_DAY = 24 * 60 * 60
 export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 14
 
 export interface QueryResultPoint {
@@ -107,15 +106,14 @@ export class CoingeckoQueryService {
     let currentTo = adjustedTo
 
     while (true) {
-      let currentFrom = currentTo.add(-MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
-      if (adjustedFrom && currentFrom.lt(adjustedFrom)) {
+      let currentFrom =
+        currentTo - UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+      if (adjustedFrom && currentFrom < adjustedFrom) {
         currentFrom = adjustedFrom
-        const diff = currentTo.toNumber() - currentFrom.toNumber()
-        if (diff < MAX_DAYS_FOR_HOURLY_PRECISION * SECONDS_IN_DAY) {
-          currentTo = new UnixTime(
-            currentFrom.toNumber() +
-              MAX_DAYS_FOR_HOURLY_PRECISION * SECONDS_IN_DAY,
-          )
+        const diff = currentTo - currentFrom
+        if (diff < UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')) {
+          currentTo =
+            currentFrom + UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
         }
       }
 
@@ -127,7 +125,7 @@ export class CoingeckoQueryService {
       )
 
       results.push(data)
-      if (adjustedFrom && currentFrom.equals(adjustedFrom)) {
+      if (adjustedFrom && currentFrom === adjustedFrom) {
         break
       }
 
@@ -150,8 +148,8 @@ export class CoingeckoQueryService {
     ) {
       this.logger.warn('Insufficient data in response', {
         coingeckoId,
-        from: range.from.toNumber(),
-        to: range.to.toNumber(),
+        from: range.from,
+        to: range.to,
         expectedLength,
         prices: prices.length,
         marketCaps: marketCaps.length,
@@ -164,8 +162,8 @@ export class CoingeckoQueryService {
   static calculateAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
-    return to.gt(from.add(maxDaysForOneCall, 'days'))
-      ? from.add(maxDaysForOneCall, 'days')
+    return to > from + UnixTime(maxDaysForOneCall, 'days')
+      ? from + UnixTime(maxDaysForOneCall, 'days')
       : to
   }
 
@@ -218,7 +216,7 @@ export function pickClosestValues(
   const result: QueryResultPoint[] = []
 
   const getDelta = (i: number, j: number) =>
-    points[j].date.getTime() - timestamps[i].toNumber() * 1000
+    points[j].date.getTime() - timestamps[i] * 1000
 
   const nextIsCloser = (i: number, j: number) =>
     j + 1 < points.length &&
@@ -239,8 +237,10 @@ export function pickClosestValues(
 
 function adjust(from: UnixTime, to: UnixTime): [UnixTime, UnixTime] {
   return [
-    from.toEndOf('hour').add(-COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
-    to.toStartOf('hour').add(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+    UnixTime.toEndOf(from, 'hour') -
+      UnixTime(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+    UnixTime.toStartOf(to, 'hour') +
+      UnixTime(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
   ]
 }
 
@@ -248,11 +248,11 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
   const ranges = []
   for (
     let start = from;
-    start.lt(to);
-    start = start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+    start < to;
+    start += UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
   ) {
-    const end = start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
-    ranges.push({ start: start, end: end.gt(to) ? to : end })
+    const end = start + UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+    ranges.push({ start: start, end: end > to ? to : end })
   }
   return ranges
 }
