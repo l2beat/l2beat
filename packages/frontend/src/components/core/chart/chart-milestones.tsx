@@ -150,8 +150,9 @@ function MilestoneDrawerContent({
   milestoneIndex: number
   allMilestones: Milestone[]
 }) {
-  const [selectedMilestoneIndex, setSelectedMilestoneIndex] = useState<number>(milestoneIndex)
-  const tooltipMilestone = allMilestones[openedMilestone]
+  const [selectedMilestoneIndex, setSelectedMilestoneIndex] =
+    useState<number>(milestoneIndex)
+  const tooltipMilestone = allMilestones[selectedMilestoneIndex]
   assert(tooltipMilestone)
 
   const Icon =
@@ -176,22 +177,22 @@ function MilestoneDrawerContent({
         <Button
           size="sm"
           className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
-          onClick={() => setOpenedMilestone((s) => s - 1)}
+          onClick={() => setSelectedMilestoneIndex((s) => s - 1)}
           aria-label="Previous milestone"
-          disabled={openedMilestone === 0}
+          disabled={selectedMilestoneIndex === 0}
         >
           <ChevronIcon className="mr-1 size-3 rotate-90" />
           Previous
         </Button>
         <div className="text-[13px] text-secondary">
-          {openedMilestone + 1} of {allMilestones.length}
+          {selectedMilestoneIndex + 1} of {allMilestones.length}
         </div>
         <Button
           size="sm"
           className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
-          onClick={() => setOpenedMilestone((s) => s + 1)}
+          onClick={() => setSelectedMilestoneIndex((s) => s + 1)}
           aria-label="Next milestone"
-          disabled={openedMilestone === allMilestones.length - 1}
+          disabled={selectedMilestoneIndex === allMilestones.length - 1}
         >
           Next
           <ChevronIcon className="ml-1 size-3 -rotate-90" />
