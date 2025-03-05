@@ -11,6 +11,39 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+// #region shared types
+export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
+export interface WarningWithSentiment {
+  value: string
+  sentiment: 'bad' | 'warning' | 'neutral'
+}
+
+export interface TableReadyValue {
+  value: string
+  secondLine?: string
+  description?: string
+  sentiment?: Sentiment
+  warning?: WarningWithSentiment
+  /** Taken into account when sorting. Defaults to 0. */
+  orderHint?: number
+}
+
+export interface ProjectTechnologyChoice {
+  /** Name of the specific technology choice */
+  name: string
+  /** Description of the specific technology choice. Null means missing information */
+  description: string
+  /** List of references backing up the claim */
+  references: ReferenceLink[]
+  /** List of risks associated with the technology choice */
+  risks: ScalingProjectRisk[]
+  /** The description and research is incomplete */
+  isIncomplete?: boolean
+  /** The description and research is under review */
+  isUnderReview?: boolean
+}
+// #endregion
+
 export interface BaseProject {
   id: ProjectId
   slug: string
@@ -18,28 +51,34 @@ export interface BaseProject {
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
   addedAt: UnixTime
-  // data
+
+  // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
   milestones?: Milestone[]
   chainConfig?: ChainConfig
 
+  // bridge data
   bridgeInfo?: ProjectBridgeInfo
   bridgeRisks?: BridgeRiskView
   bridgeTechnology?: BridgeTechnology
 
+  // scaling data
   scalingInfo?: ProjectScalingInfo
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   scalingTechnology?: ProjectScalingTechnology
 
+  // da data
   daLayer?: DaLayer
   daBridge?: DaBridge
   customDa?: CustomDa
 
+  // zk catalog data
   proofVerification?: ProofVerification
 
+  // feature configs
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
   activityConfig?: ProjectActivityConfig
@@ -51,9 +90,11 @@ export interface BaseProject {
   finalityConfig?: Layer2FinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
 
+  // discovery data
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
   discoveryInfo?: ProjectDiscoveryInfo
+
   // tags
   isBridge?: true
   isScaling?: true
@@ -63,6 +104,8 @@ export interface BaseProject {
   isArchived?: true
   hasActivity?: true
 }
+
+// #region common data
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
@@ -77,25 +120,37 @@ export interface ProjectStatuses {
   }
 }
 
-export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
-
-export interface WarningWithSentiment {
-  value: string
-  sentiment: 'bad' | 'warning' | 'neutral'
+export interface ProjectDisplay {
+  description: string
+  links: ProjectLinks
+  badges: Badge[]
 }
 
-export interface ReasonForBeingInOther {
-  label: string
-  shortDescription: string
+export interface ProjectLinks {
+  /** Links to marketing landing pages. */
+  websites?: string[]
+  /** Links to web apps. */
+  apps?: string[]
+  documentation?: string[]
+  explorers?: string[]
+  repositories?: string[]
+  socialMedia?: string[]
+  rollupCodes?: string
+}
+
+export interface Badge {
+  id: string
+  type: string
+  name: string
   description: string
 }
 
-export interface MulticallContractConfig {
-  address: EthereumAddress
-  sinceBlock: number
-  batchSize: number
-  version: '1' | '2' | '3' | 'optimism'
-  isNativeBalanceSupported?: boolean
+export interface Milestone {
+  title: string
+  url: string
+  date: string
+  description?: string
+  type: 'general' | 'incident'
 }
 
 export interface ChainConfig {
@@ -118,6 +173,14 @@ export interface ChainConfig {
    */
   sinceTimestamp?: UnixTime
   apis: ChainApiConfig[]
+}
+
+export interface MulticallContractConfig {
+  address: EthereumAddress
+  sinceBlock: number
+  batchSize: number
+  version: '1' | '2' | '3' | 'optimism'
+  isNativeBalanceSupported?: boolean
 }
 
 export type ChainApiConfig =
@@ -149,12 +212,60 @@ export interface ChainStarkexApi {
   product: string[]
 }
 
-export interface Milestone {
-  title: string
-  url: string
-  date: string
-  description?: string
-  type: 'general' | 'incident'
+// #endregion
+
+// #region bridge data
+export interface ProjectBridgeInfo {
+  category: BridgeCategory
+  destination: string[]
+  validatedBy: string
+}
+
+export type BridgeCategory = 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+
+export interface BridgeRiskView {
+  validatedBy: TableReadyValue
+  sourceUpgradeability?: TableReadyValue
+  destinationToken?: TableReadyValue
+}
+
+export interface BridgeTechnology {
+  canonical?: boolean
+  destination: string[]
+  principleOfOperation?: ProjectTechnologyChoice
+  validation?: ProjectTechnologyChoice
+  destinationToken?: ProjectTechnologyChoice
+  isUnderReview?: boolean
+  detailedDescription?: string
+}
+// #endregion
+
+// #region scaling data
+export interface ProjectScalingInfo {
+  layer: 'layer2' | 'layer3'
+  type: ScalingProjectCategory
+  capability: ScalingProjectCapability
+  /** In the future this will be reflected as `type === 'Other'` */
+  isOther: boolean
+  reasonsForBeingOther: ReasonForBeingInOther[] | undefined
+  hostChain: {
+    id: ProjectId
+    slug: string
+    name: string
+    shortName: string | undefined
+  }
+  stack: ScalingProjectStack | undefined
+  raas: string | undefined
+  daLayer: string
+  stage: ScalingProjectStage
+  purposes: ScalingProjectPurpose[]
+}
+// #endregion
+
+export interface ReasonForBeingInOther {
+  label: string
+  shortDescription: string
+  description: string
 }
 
 export type ScalingProjectCapability = 'universal' | 'appchain'
@@ -353,16 +464,6 @@ export type ScalingProjectRiskCategory =
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'
 
-export interface TableReadyValue {
-  value: string
-  secondLine?: string
-  description?: string
-  sentiment?: Sentiment
-  warning?: WarningWithSentiment
-  /** Taken into account when sorting. Defaults to 0. */
-  orderHint?: number
-}
-
 export interface ScalingProjectRiskView {
   stateValidation: TableReadyValue
   dataAvailability: TableReadyValue
@@ -424,21 +525,6 @@ export interface ScalingProjectTechnology {
   /** Other considerations */
   otherConsiderations?: ProjectTechnologyChoice[]
   /** Is the technology section under review */
-  isUnderReview?: boolean
-}
-
-export interface ProjectTechnologyChoice {
-  /** Name of the specific technology choice */
-  name: string
-  /** Description of the specific technology choice. Null means missing information */
-  description: string
-  /** List of references backing up the claim */
-  references: ReferenceLink[]
-  /** List of risks associated with the technology choice */
-  risks: ScalingProjectRisk[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
   isUnderReview?: boolean
 }
 
@@ -672,7 +758,7 @@ export interface BridgeDisplay {
   warning?: string
   description: string
   detailedDescription?: string
-  category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+  category: BridgeCategory
   links: ProjectLinks
   architectureImage?: string
 }
@@ -680,22 +766,6 @@ export interface BridgeDisplay {
 export interface BridgeConfig {
   associatedTokens?: string[]
   escrows: ProjectEscrow[]
-}
-
-export interface BridgeRiskView {
-  validatedBy: TableReadyValue
-  sourceUpgradeability?: TableReadyValue
-  destinationToken?: TableReadyValue
-}
-
-export interface BridgeTechnology {
-  canonical?: boolean
-  destination: string[]
-  principleOfOperation?: ProjectTechnologyChoice
-  validation?: ProjectTechnologyChoice
-  destinationToken?: ProjectTechnologyChoice
-  isUnderReview?: boolean
-  detailedDescription?: string
 }
 
 export interface CustomDa {
@@ -799,58 +869,6 @@ interface StageUnderReview {
 
 interface StageNotApplicable {
   stage: 'NotApplicable'
-}
-
-export interface ProjectDisplay {
-  description: string
-  links: ProjectLinks
-  badges: Badge[]
-}
-
-export interface ProjectLinks {
-  /** Links to marketing landing pages. */
-  websites?: string[]
-  /** Links to web apps. */
-  apps?: string[]
-  documentation?: string[]
-  explorers?: string[]
-  repositories?: string[]
-  socialMedia?: string[]
-  rollupCodes?: string
-}
-
-export interface ProjectBridgeInfo {
-  category: BridgeDisplay['category']
-  destination: string[]
-  validatedBy: string
-}
-
-export interface ProjectScalingInfo {
-  layer: 'layer2' | 'layer3'
-  type: ScalingProjectCategory
-  capability: ScalingProjectCapability
-  /** In the future this will be reflected as `type === 'Other'` */
-  isOther: boolean
-  reasonsForBeingOther: ReasonForBeingInOther[] | undefined
-  hostChain: {
-    id: ProjectId
-    slug: string
-    name: string
-    shortName: string | undefined
-  }
-  stack: ScalingProjectStack | undefined
-  raas: string | undefined
-  daLayer: string
-  stage: ScalingProjectStage
-  purposes: ScalingProjectPurpose[]
-  badges: Badge[] | undefined
-}
-
-export interface Badge {
-  id: string
-  type: string
-  name: string
-  description: string
 }
 
 export type ScalingProjectStage =

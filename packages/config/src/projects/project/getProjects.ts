@@ -73,7 +73,7 @@ function layer2Or3ToProject(
     display: {
       description: p.display.description,
       links: p.display.links,
-      badges: p.badges ?? [],
+      badges: (p.badges ?? []).sort(badgesCompareFn),
     },
     contracts: p.contracts,
     permissions: p.permissions,
@@ -95,10 +95,6 @@ function layer2Or3ToProject(
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
-      badges:
-        p.badges && p.badges.length > 0
-          ? p.badges.sort(badgesCompareFn)
-          : undefined,
     },
     scalingStage: p.stage,
     scalingRisks: {
