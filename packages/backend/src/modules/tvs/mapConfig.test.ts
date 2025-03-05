@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
   assert,
@@ -18,7 +19,11 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = mapConfig(arbitrum, arbitrum.chainConfig)
+    const result = await mapConfig(
+      arbitrum,
+      arbitrum.chainConfig,
+      Logger.SILENT,
+    )
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)

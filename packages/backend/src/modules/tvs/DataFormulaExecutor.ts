@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
@@ -48,11 +48,7 @@ export class DataFormulaExecutor {
       assert(blockNumbers)
 
       promises.push(
-        ...this.processTotalSuppliesAndEscrows(
-          amounts,
-          timestamp,
-          blockNumbers,
-        ),
+        ...this.processOnchainAmounts(amounts, timestamp, blockNumbers),
       )
 
       promises.push(
@@ -66,7 +62,7 @@ export class DataFormulaExecutor {
     }
   }
 
-  private processTotalSuppliesAndEscrows(
+  private processOnchainAmounts(
     amounts: AmountConfig[],
     timestamp: UnixTime,
     blockNumbers: Map<string, number>,
@@ -94,6 +90,8 @@ export class DataFormulaExecutor {
             await this.storage.writeAmount(amount.id, timestamp, value)
             break
           }
+          default:
+            assertUnreachable(amount)
         }
       })
   }
