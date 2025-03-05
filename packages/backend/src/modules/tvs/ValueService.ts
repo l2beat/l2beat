@@ -104,10 +104,15 @@ export class ValueService {
             const valueAcc = await acc
             const value = await executeFormulaRecursive(current, timestamp)
 
-            if (formula.operator === 'sum') {
-              return Promise.resolve(valueAcc + value)
-            } else {
-              return Promise.resolve(index === 0 ? value : valueAcc - value)
+            switch (formula.operator) {
+              case 'sum':
+                return valueAcc + value
+              case 'diff':
+                return index === 0 ? value : valueAcc - value
+              case 'max':
+                return Math.max(valueAcc, value)
+              case 'min':
+                return Math.min(valueAcc, value)
             }
           },
           Promise.resolve(0),
