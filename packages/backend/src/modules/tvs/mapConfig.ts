@@ -300,12 +300,6 @@ export function createAmountConfig(
   }
 }
 
-export function createPriceConfig(formula: ValueFormula): PriceConfig {
-  return {
-    priceId: formula.priceId,
-  }
-}
-
 function processFormula(
   formula: CalculationFormula | ValueFormula | AmountFormula,
 ): {
@@ -328,8 +322,7 @@ function processFormula(
     if (f.type === 'value') {
       processFormulaRecursive(f.amount)
 
-      const price = createPriceConfig(f)
-      formulaPrices.push(price)
+      formulaPrices.push({ priceId: f.priceId })
 
       return
     }
