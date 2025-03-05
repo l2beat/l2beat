@@ -23,9 +23,12 @@ import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
+  Layer2TxConfig,
+  ScalingProjectTechnology,
+} from '../../../internalTypes'
+import type {
   Badge,
   ChainConfig,
-  Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectContract,
@@ -39,7 +42,6 @@ import type {
   ScalingProjectCapability,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
-  ScalingProjectTechnology,
   StageConfig,
   TableReadyValue,
 } from '../../../types'

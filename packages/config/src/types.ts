@@ -7,7 +7,6 @@ import type {
   Token,
   TokenBridgedUsing,
   TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -821,164 +820,7 @@ export interface AvailDaTrackingConfig {
 }
 // #endregion
 
-export interface ScalingProjectUpgradeability {
-  proxyType: string
-  immutable?: boolean
-  admins: EthereumAddress[]
-  implementations: EthereumAddress[]
-}
-
-export interface ProjectEscrow {
-  chain: string
-  /** Automatically set in config based on chain name. */
-  chainId?: number
-  /** Address of the escrow. Use etherscan to verify its correctness. */
-  address: EthereumAddress
-  /** Should use name of the contract for escrow name */
-  useContractName?: boolean
-  /** All the data about the escrow contract */
-  contract?: Omit<ProjectContract, 'address'>
-  /** Timestamp of the deployment transaction of the escrow contract. */
-  sinceTimestamp: UnixTime
-  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
-  tokens: string[] | '*'
-  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
-  excludedTokens?: string[]
-  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
-  premintedTokens?: string[]
-  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
-  isHistorical?: boolean
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-  includeInTotal?: boolean
-  source?: ProjectEscrowSource
-  bridgedUsing?: {
-    bridges: {
-      name: string
-      /** Slug is used for the URL of the bridge on L2BEAT */
-      slug?: string
-    }[]
-    warning?: string
-  }
-  sharedEscrow?: SharedEscrow
-}
-
-export interface ScalingProjectTechnology {
-  /** What state correctness mechanism is used in the project */
-  stateCorrectness?: ProjectTechnologyChoice
-  /** What is the new cryptography used in the project */
-  newCryptography?: ProjectTechnologyChoice
-  /** What is the data availability choice for the project */
-  dataAvailability?: ProjectTechnologyChoice
-  /** What are the details about project operator(s) */
-  operator?: ProjectTechnologyChoice
-  /** What are the details about project sequencing */
-  sequencing?: ProjectTechnologyChoice
-  /** What are the details about force transactions (censorship resistance) */
-  forceTransactions?: ProjectTechnologyChoice
-  /** A description of the available exit mechanisms */
-  exitMechanisms?: ProjectTechnologyChoice[]
-  /** What is solution to the mass exit problem */
-  massExit?: ProjectTechnologyChoice
-  /** Other considerations */
-  otherConsiderations?: ProjectTechnologyChoice[]
-  /** Is the technology section under review */
-  isUnderReview?: boolean
-}
-
-export type Layer2TxConfig = {
-  uses: Layer2TrackedTxUse[]
-  query: TrackedTxQuery
-  _hackCostMultiplier?: number
-}
-
-export type Layer2TrackedTxUse = {
-  type: TrackedTxsConfigType
-  subtype: TrackedTxsConfigSubtype
-}
-
-type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
-
-interface FunctionCall {
-  formula: 'functionCall'
-  address: EthereumAddress
-  selector: `0x${string}`
-  functionSignature: `function ${string}`
-  /** Inclusive */
-  sinceTimestamp: UnixTime
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-}
-
-interface Transfer {
-  formula: 'transfer'
-  from: EthereumAddress
-  to: EthereumAddress
-  /** Inclusive */
-  sinceTimestamp: UnixTime
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-}
-
-interface SharpSubmission {
-  formula: 'sharpSubmission'
-  programHashes: string[]
-  /** Inclusive */
-  sinceTimestamp: UnixTime
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-}
-
-interface SharedBridge {
-  formula: 'sharedBridge'
-  chainId: number
-  address: EthereumAddress
-  selector: `0x${string}`
-  functionSignature: `function ${string}`
-  /** Inclusive */
-  sinceTimestamp: UnixTime
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-}
-
-export interface Bridge {
-  type: 'bridge'
-  id: ProjectId
-  /** Date of creation of the file (not the project) */
-  addedAt: UnixTime
-  isArchived?: boolean
-  isUpcoming?: boolean
-  isUnderReview?: boolean
-  display: BridgeDisplay
-  config: BridgeConfig
-  chainConfig?: ChainConfig
-  riskView: BridgeRiskView
-  technology: BridgeTechnology
-  contracts?: ProjectContracts
-  permissions?: Record<string, ProjectPermissions>
-  milestones?: Milestone[]
-  discoveryInfo?: ProjectDiscoveryInfo
-}
-
-export interface BridgeDisplay {
-  name: string
-  shortName?: string
-  slug: string
-  warning?: string
-  description: string
-  detailedDescription?: string
-  category: BridgeCategory
-  links: ProjectLinks
-  architectureImage?: string
-}
-
-export interface BridgeConfig {
-  associatedTokens?: string[]
-  escrows: ProjectEscrow[]
-}
-
+// #region discovery data
 export interface ProjectPermissions {
   /** List of roles */
   roles?: ProjectPermission[]
@@ -1019,19 +861,6 @@ export interface ProjectContracts {
   escrows?: ProjectEscrow[]
 }
 
-export interface ProjectDiscoveryInfo {
-  isDiscoDriven: boolean
-  permissionsDiscoDriven: boolean
-  contractsDiscoDriven: boolean
-}
-
-export interface ProjectUpgradeableActor {
-  /** Actor from permissions that can upgrade */
-  name: string
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  delay: string
-}
-
 export interface ProjectContract {
   /** Address of the contract */
   address: EthereumAddress
@@ -1046,7 +875,7 @@ export interface ProjectContract {
   /** Description of the contract's role in the system */
   description?: string
   /** Details about upgradeability */
-  upgradeability?: ScalingProjectUpgradeability
+  upgradeability?: ProjectContractUpgradeability
   /** Which actors from permissions can upgrade */
   upgradableBy?: ProjectUpgradeableActor[]
   /** Other considerations worth mentioning about the upgrade process */
@@ -1063,3 +892,61 @@ export interface ProjectContract {
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
+
+export interface ProjectContractUpgradeability {
+  proxyType: string
+  immutable?: boolean
+  admins: EthereumAddress[]
+  implementations: EthereumAddress[]
+}
+
+export interface ProjectUpgradeableActor {
+  /** Actor from permissions that can upgrade */
+  name: string
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  delay: string
+}
+
+export interface ProjectEscrow {
+  chain: string
+  /** Automatically set in config based on chain name. */
+  chainId?: number
+  /** Address of the escrow. Use etherscan to verify its correctness. */
+  address: EthereumAddress
+  /** Should use name of the contract for escrow name */
+  useContractName?: boolean
+  /** All the data about the escrow contract */
+  contract?: Omit<ProjectContract, 'address'>
+  /** Timestamp of the deployment transaction of the escrow contract. */
+  sinceTimestamp: UnixTime
+  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
+  tokens: string[] | '*'
+  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
+  excludedTokens?: string[]
+  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
+  premintedTokens?: string[]
+  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
+  isHistorical?: boolean
+  /** Upcoming projects needs upcoming escrows (needed for TVL) */
+  isUpcoming?: boolean
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+  includeInTotal?: boolean
+  source?: ProjectEscrowSource
+  bridgedUsing?: {
+    bridges: {
+      name: string
+      /** Slug is used for the URL of the bridge on L2BEAT */
+      slug?: string
+    }[]
+    warning?: string
+  }
+  sharedEscrow?: SharedEscrow
+}
+
+export interface ProjectDiscoveryInfo {
+  isDiscoDriven: boolean
+  permissionsDiscoDriven: boolean
+  contractsDiscoDriven: boolean
+}
+// #endregion

@@ -24,10 +24,13 @@ import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
+  Layer2TxConfig,
+  ScalingProjectTechnology,
+} from '../../../internalTypes'
+import type {
   Badge,
   ChainConfig,
   CustomDa,
-  Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectContract,
@@ -39,7 +42,6 @@ import type {
   ScalingProjectPurpose,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
-  ScalingProjectTechnology,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'

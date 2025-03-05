@@ -20,13 +20,13 @@ import { isString, sum, uniq } from 'lodash'
 import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   ProjectContract,
+  ProjectContractUpgradeability,
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
   ProjectUpgradeableActor,
   ReferenceLink,
-  ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
 import type { PermissionRegistry } from './PermissionRegistry'
@@ -970,11 +970,11 @@ export class ProjectDiscovery {
 
 function getUpgradeability(
   contract: ContractParameters,
-): ScalingProjectUpgradeability | undefined {
+): ProjectContractUpgradeability | undefined {
   if (!contract.proxyType) {
     return undefined
   }
-  const upgradeability: ScalingProjectUpgradeability = {
+  const upgradeability: ProjectContractUpgradeability = {
     proxyType: contract.proxyType,
     admins: get$Admins(contract.values),
     implementations: get$Implementations(contract.values),

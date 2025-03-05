@@ -32,10 +32,13 @@ import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type { ScalingProject } from '../../../internalTypes'
 import type { ScalingProjectDisplay } from '../../../internalTypes'
 import type {
+  Layer2TxConfig,
+  ScalingProjectTechnology,
+} from '../../../internalTypes'
+import type {
   Badge,
   ChainConfig,
   CustomDa,
-  Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
@@ -54,7 +57,6 @@ import type {
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
-  ScalingProjectTechnology,
   StageConfig,
   TableReadyValue,
 } from '../../../types'

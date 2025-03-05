@@ -10,13 +10,10 @@ import { utils } from 'ethers'
 import { uniq } from 'lodash'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ScalingProjectTechnology } from '../../internalTypes'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
-import type {
-  ProjectTechnologyChoice,
-  ReferenceLink,
-  ScalingProjectTechnology,
-} from '../../types'
+import type { ProjectTechnologyChoice, ReferenceLink } from '../../types'
 import { chains } from '../chains'
 import { layer2s, milestonesLayer2s } from './index'
 

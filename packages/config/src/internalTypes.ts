@@ -1,9 +1,17 @@
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  EthereumAddress,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  TrackedTxsConfigType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import type {
   Badge,
+  BridgeCategory,
+  BridgeRiskView,
+  BridgeTechnology,
   ChainConfig,
   CustomDa,
-  Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectContracts,
@@ -17,6 +25,7 @@ import type {
   ProjectLivenessConfig,
   ProjectLivenessInfo,
   ProjectPermissions,
+  ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectCategory,
@@ -25,7 +34,6 @@ import type {
   ScalingProjectStack,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
-  ScalingProjectTechnology,
   StageConfig,
   WarningWithSentiment,
 } from './types'
@@ -157,4 +165,118 @@ export interface ScalingProjectDisplay {
   upgradesAndGovernanceImage?: string
   /** Name of the sequencing image to show in the sequencing section if present, otherwise use slug */
   sequencingImage?: string
+}
+
+export interface ScalingProjectTechnology {
+  /** What state correctness mechanism is used in the project */
+  stateCorrectness?: ProjectTechnologyChoice
+  /** What is the new cryptography used in the project */
+  newCryptography?: ProjectTechnologyChoice
+  /** What is the data availability choice for the project */
+  dataAvailability?: ProjectTechnologyChoice
+  /** What are the details about project operator(s) */
+  operator?: ProjectTechnologyChoice
+  /** What are the details about project sequencing */
+  sequencing?: ProjectTechnologyChoice
+  /** What are the details about force transactions (censorship resistance) */
+  forceTransactions?: ProjectTechnologyChoice
+  /** A description of the available exit mechanisms */
+  exitMechanisms?: ProjectTechnologyChoice[]
+  /** What is solution to the mass exit problem */
+  massExit?: ProjectTechnologyChoice
+  /** Other considerations */
+  otherConsiderations?: ProjectTechnologyChoice[]
+  /** Is the technology section under review */
+  isUnderReview?: boolean
+}
+
+export interface Layer2TxConfig {
+  uses: Layer2TrackedTxUse[]
+  query: TrackedTxQuery
+  _hackCostMultiplier?: number
+}
+
+export interface Layer2TrackedTxUse {
+  type: TrackedTxsConfigType
+  subtype: TrackedTxsConfigSubtype
+}
+
+type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
+
+interface FunctionCall {
+  formula: 'functionCall'
+  address: EthereumAddress
+  selector: `0x${string}`
+  functionSignature: `function ${string}`
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface Transfer {
+  formula: 'transfer'
+  from: EthereumAddress
+  to: EthereumAddress
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface SharpSubmission {
+  formula: 'sharpSubmission'
+  programHashes: string[]
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface SharedBridge {
+  formula: 'sharedBridge'
+  chainId: number
+  address: EthereumAddress
+  selector: `0x${string}`
+  functionSignature: `function ${string}`
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+export interface Bridge {
+  type: 'bridge'
+  id: ProjectId
+  /** Date of creation of the file (not the project) */
+  addedAt: UnixTime
+  isArchived?: boolean
+  isUpcoming?: boolean
+  isUnderReview?: boolean
+  display: BridgeDisplay
+  config: BridgeConfig
+  chainConfig?: ChainConfig
+  riskView: BridgeRiskView
+  technology: BridgeTechnology
+  contracts?: ProjectContracts
+  permissions?: Record<string, ProjectPermissions>
+  milestones?: Milestone[]
+  discoveryInfo?: ProjectDiscoveryInfo
+}
+
+export interface BridgeDisplay {
+  name: string
+  shortName?: string
+  slug: string
+  warning?: string
+  description: string
+  detailedDescription?: string
+  category: BridgeCategory
+  links: ProjectLinks
+  architectureImage?: string
+}
+
+export interface BridgeConfig {
+  associatedTokens?: string[]
+  escrows: ProjectEscrow[]
 }

@@ -8,11 +8,10 @@ import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type { Layer3 } from '../../internalTypes'
 import type { Layer2 } from '../../internalTypes'
+import type { Bridge, Layer2TxConfig } from '../../internalTypes'
 import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
-  Bridge,
-  Layer2TxConfig,
   ProjectCostsInfo,
   ProjectDiscoveryInfo,
   ProjectEscrow,

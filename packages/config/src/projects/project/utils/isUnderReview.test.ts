@@ -2,10 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type { Layer2Config } from '../../../internalTypes'
+import type { ScalingProjectTechnology } from '../../../internalTypes'
 import type {
   ProjectContracts,
   ScalingProjectRiskView,
-  ScalingProjectTechnology,
   StageConfig,
   TableReadyValue,
 } from '../../../types'

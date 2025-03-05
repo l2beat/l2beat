@@ -8,11 +8,12 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
 import type { Layer3 } from '../internalTypes'
 import type { Layer2 } from '../internalTypes'
+import type { Bridge } from '../internalTypes'
 import { bridges } from '../projects/bridges'
 import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
 import { refactored } from '../projects/refactored'
-import type { BaseProject, Bridge, ProjectContract } from '../types'
+import type { BaseProject, ProjectContract } from '../types'
 import { getChainNames } from '../utils/chains'
 
 describe('verification status', () => {
