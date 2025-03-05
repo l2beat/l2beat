@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc87afc4c9720dc89c5dd316b25bfeff6dc250d7c
+Generated with discovered.json: 0x504ae4df134fe60e0f152d6708a4e38d557d6af0
 
-# Diff at Wed, 05 Mar 2025 11:02:22 GMT:
+# Diff at Wed, 05 Mar 2025 14:07:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21387345
-- current block number: 21979831
+- current block number: 21981175
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+discodrive starkExes.
 
 ## Config/verification related changes
 

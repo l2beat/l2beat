@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa481de5a09aec8baea1b8280361e98218bc78dce
+Generated with discovered.json: 0xb53fb2e7bc77c2fd7775a69ba0588b477507df91
 
-# Diff at Wed, 05 Mar 2025 13:38:36 GMT:
+# Diff at Wed, 05 Mar 2025 14:06:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 19825381
-- current block number: 19825381
+- current block number: 21981156
 
 ## Description
 
@@ -56,8 +56,11 @@ discovery. Values are for block 19825381 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    contract SorareAdminMultisig (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
     +++ description: None
+      name:
+-        "GnosisSafe"
++        "SorareAdminMultisig"
       receivedPermissions.2:
 +        {"permission":"upgrade","from":"0xF5C9F957705bea56a7e806943f98F7777B995826","delay":1209600}
       receivedPermissions.1:

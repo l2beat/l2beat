@@ -1,27 +1,30 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "StarkExchange",
+  "displayName": "StarkPerpetual",
   "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
   "category": "core",
   "ignoreMethods": [
-    "getEthKey",
-    "getQuantum",
-    "isAssetRegistered",
-    "validatedSelectors",
-    "getAssetInfo",
-    "getActionCount",
-    "getActionHashByIndex",
-    "initializerSize",
-    "identify"
-  ],
-  "ignoreInWatchMode": [
-    "getLastBatchId",
-    "getOrderRoot",
-    "getOrderTreeHeight",
-    "getSequenceNumber",
-    "getVaultRoot",
-    "getValidiumVaultRoot"
-  ],
+        "configurationHash",
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "isAssetRegistered",
+        "validatedSelectors",
+        "getAssetInfo",
+        "getActionCount",
+        "getActionHashByIndex"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getRollupTreeHeight",
+        "getRollupVaultRoot",
+        "getSequenceNumber",
+        "getSystemAssetType",
+        "getValidiumTreeHeight",
+        "getValidiumVaultRoot"
+      ],
   "fields": {
     "$admin": {
       "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.",
@@ -83,6 +86,13 @@
           }
         ]
       }
-    }
+    },
+    "escapeVerifier": {
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          }
+        }
   }
 }
