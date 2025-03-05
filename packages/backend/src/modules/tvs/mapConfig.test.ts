@@ -122,12 +122,22 @@ describe(extractPricesAndAmounts.name, () => {
         mockObject<Token>({
           priceId: 'price-ATH',
           amount: {
-            type: 'totalSupply',
-            address: EthereumAddress(
-              '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-            ),
-            chain: 'arbitrum',
-            decimals: 18,
+            type: 'calculation',
+            operator: 'max',
+            arguments: [
+              {
+                type: 'const',
+                value: 100,
+              },
+              {
+                type: 'totalSupply',
+                address: EthereumAddress(
+                  '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+                ),
+                chain: 'arbitrum',
+                decimals: 18,
+              },
+            ],
           },
           valueForProject: undefined,
           valueForTotal: undefined,

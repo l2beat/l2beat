@@ -44,6 +44,7 @@ export const hashkey = opStackL2({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['HSK'],
   },
   finality: {
     type: 'OPStack',
@@ -54,7 +55,6 @@ export const hashkey = opStackL2({
     stateUpdate: 'disabled',
   },
   associatedTokens: ['HSK'],
-  gasTokens: { tracked: ['HSK'] },
   nonTemplateOptimismPortalEscrowTokens: ['HSK'],
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('HASHKEY'),

@@ -90,7 +90,7 @@ export interface ScalingProjectEntry {
       lastDayUops: number
       uopsWeeklyChange: number
     }
-    gasTokens: string[]
+    gasTokens?: string[]
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
@@ -171,10 +171,7 @@ export async function getScalingProjectEntry(
         }
       : undefined,
     badges: project.display.badges,
-    gasTokens:
-      !legacy.config.gasTokens || legacy.config.gasTokens.length === 0
-        ? ['ETH']
-        : legacy.config.gasTokens,
+    gasTokens: project.chainConfig?.gasTokens,
   }
 
   const changes = projectsChangeReport.getChanges(project.id)

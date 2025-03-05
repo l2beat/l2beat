@@ -14,7 +14,6 @@ export const degen: Layer3 = orbitStackL3({
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   additionalPurposes: ['Social'],
-  gasTokens: { tracked: ['DEGEN'] },
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -54,6 +53,7 @@ export const degen: Layer3 = orbitStackL3({
         version: '3',
       },
     ],
+    gasTokens: ['DEGEN'],
     apis: [
       { type: 'rpc', url: 'https://rpc.degen.tips', callsPerMinute: 5000 },
       { type: 'blockscout', url: 'https://explorer.degen.tips/api' },
