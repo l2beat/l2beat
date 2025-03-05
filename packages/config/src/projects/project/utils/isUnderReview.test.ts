@@ -2,13 +2,13 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
-  Layer2Config,
   ProjectContracts,
   ScalingProjectRiskView,
   ScalingProjectTechnology,
   StageConfig,
   TableReadyValue,
 } from '../../../types'
+import type { Layer2Config } from '../../../internalTypes'
 import { isUnderReview } from './isUnderReview'
 
 describe(isUnderReview.name, () => {

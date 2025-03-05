@@ -6,8 +6,8 @@ import type {
   Badge,
   ChainConfig,
   ScalingProjectCapability,
-  ScalingProjectDisplay,
 } from '../../../types'
+import type { ScalingProjectDisplay } from '../../../internalTypes'
 
 export interface UpcomingConfigL2 {
   id: string

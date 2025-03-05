@@ -8,8 +8,8 @@ import type {
   ProjectActivityConfig,
   ProjectEscrow,
   ScalingProjectCapability,
-  ScalingProjectDisplay,
 } from '../../../types'
+import type { ScalingProjectDisplay } from '../../../internalTypes'
 import { getActivityConfig } from './activity'
 
 interface UnderReviewConfigCommon {

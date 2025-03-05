@@ -49,7 +49,6 @@ import type {
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectCategory,
-  ScalingProjectDisplay,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectStateDerivation,
@@ -58,6 +57,7 @@ import type {
   StageConfig,
   TableReadyValue,
 } from '../../../types'
+import type { ScalingProjectDisplay } from '../../../internalTypes'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
