@@ -32,7 +32,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
       projectName: 'project',
       chain: 'ethereum',
       blockNumber: 1,
-      timestamp: new UnixTime(0),
+      timestamp: UnixTime(0),
       message: 'Initial message',
     }
     await repository.upsert(message)
@@ -50,16 +50,16 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
   it('can delete messages before timestamp', async () => {
     const oldMessage = record({
       projectName: 'projectA',
-      timestamp: new UnixTime(100),
+      timestamp: UnixTime(100),
     })
     const newMessage = record({
       projectName: 'projectB',
-      timestamp: new UnixTime(200),
+      timestamp: UnixTime(200),
     })
 
     await repository.upsertMany([oldMessage, newMessage])
 
-    const deleted = await repository.deleteBefore(new UnixTime(150))
+    const deleted = await repository.deleteBefore(UnixTime(150))
     expect(deleted).toEqual(1)
 
     const remaining = await repository.getAll()
@@ -72,7 +72,7 @@ function record(params?: Partial<UpdateMessageRecord>): UpdateMessageRecord {
     projectName: 'project',
     chain: 'ethereum',
     blockNumber: 1,
-    timestamp: new UnixTime(0),
+    timestamp: UnixTime(0),
     message: 'Test message',
     ...params,
   }

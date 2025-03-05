@@ -1,4 +1,4 @@
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedL2CostRecord, toRecord, toRow } from './entity'
 import { selectAggregatedL2Costs } from './select'
@@ -47,7 +47,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
   async deleteAfter(from: UnixTime): Promise<number> {
     const result = await this.db
       .deleteFrom('AggregatedL2Cost')
-      .where('timestamp', '>', from.toDate())
+      .where('timestamp', '>', UnixTime.toDate(from))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
@@ -68,8 +68,8 @@ export class AggregatedL2CostRepository extends BaseRepository {
       .selectFrom('AggregatedL2Cost')
       .select(selectAggregatedL2Costs)
       .where('projectId', '=', projectId.toString())
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
@@ -89,11 +89,11 @@ export class AggregatedL2CostRepository extends BaseRepository {
         'in',
         projectIds.map((p) => p.toString()),
       )
-      .where('timestamp', '<', to.toDate())
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from) {
-      query = query.where('timestamp', '>=', from.toDate())
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
     const rows = await query.execute()

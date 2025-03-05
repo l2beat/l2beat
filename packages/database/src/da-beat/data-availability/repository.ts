@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
   type DataAvailabilityRecord,
@@ -39,8 +39,8 @@ export class DataAvailabilityRepository extends BaseRepository {
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('daLayer', '=', daLayer)
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .execute()
     return rows.map(toRecord)
   }
@@ -54,11 +54,11 @@ export class DataAvailabilityRepository extends BaseRepository {
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from) {
-      query = query.where('timestamp', '>=', from.toDate())
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
     const rows = await query.execute()
@@ -82,11 +82,11 @@ export class DataAvailabilityRepository extends BaseRepository {
       // Exclude the daLayer itself because we only want to sum the projects
       .whereRef('projectId', '!=', 'daLayer')
       .groupBy(['timestamp', 'daLayer'])
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from) {
-      query = query.where('timestamp', '>=', from.toDate())
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
     const rows = await query.execute()
@@ -108,11 +108,11 @@ export class DataAvailabilityRepository extends BaseRepository {
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('daLayer', 'in', daLayers)
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from) {
-      query = query.where('timestamp', '>=', from.toDate())
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
     const rows = await query.execute()

@@ -39,7 +39,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
       projectName,
       chainId: ChainId.ETHEREUM,
       blockNumber: -1,
-      timestamp: new UnixTime(0),
+      timestamp: UnixTime(0),
       discovery: {
         name: projectName,
         chain: 'ethereum',
@@ -67,7 +67,7 @@ function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
     projectName: 'project',
     chainId: ChainId.ETHEREUM,
     blockNumber: -1,
-    timestamp: new UnixTime(0),
+    timestamp: UnixTime(0),
     discovery: {
       name: 'project',
       chain: 'ethereum',

@@ -28,7 +28,7 @@ describe(CoingeckoQueryService.name, () => {
       expect(coingeckoClient.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
         CoingeckoId('weth'),
         'usd',
-        UnixTime.fromDate(new Date('2021-01-01')) + UnixTime(-14, 'days'),
+        UnixTime.fromDate(new Date('2021-01-01')) - UnixTime(14, 'days'),
         UnixTime.fromDate(new Date('2021-01-01')) +
           UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION - 14, 'days'),
       )
@@ -180,7 +180,7 @@ describe(CoingeckoQueryService.name, () => {
         getCoinMarketChartRange: mockFn().returns({
           prices: [
             {
-              date: UnixTime.toDate(START + UnixTime(-2, 'minutes')),
+              date: UnixTime.toDate(START - UnixTime(2, 'minutes')),
               value: 1200,
             },
             {
@@ -365,7 +365,7 @@ describe(pickClosestValues.name, () => {
 
   it('adjusts dates before the first timestamp', () => {
     const prices = [
-      { value: 1000, date: UnixTime.toDate(START + UnixTime(-2, 'minutes')) },
+      { value: 1000, date: UnixTime.toDate(START - UnixTime(2, 'minutes')) },
       { value: 1100, date: UnixTime.toDate(START + UnixTime(1, 'hours')) },
       { value: 1200, date: UnixTime.toDate(START + UnixTime(2, 'hours')) },
     ]
@@ -383,7 +383,7 @@ describe(pickClosestValues.name, () => {
 
   it('discards unnecessary data', () => {
     const prices = [
-      { value: 1100, date: UnixTime.toDate(START + UnixTime(-2, 'minutes')) },
+      { value: 1100, date: UnixTime.toDate(START - UnixTime(2, 'minutes')) },
       { value: 1200, date: UnixTime.toDate(START + UnixTime(1, 'minutes')) },
       { value: 1300, date: UnixTime.toDate(START + UnixTime(1, 'hours')) },
       {
@@ -395,7 +395,7 @@ describe(pickClosestValues.name, () => {
       {
         value: 1500,
         date: UnixTime.toDate(
-          START + UnixTime(2, 'hours') + UnixTime(-1, 'minutes'),
+          START + UnixTime(2, 'hours') - UnixTime(1, 'minutes'),
         ),
       },
       {
@@ -423,7 +423,7 @@ describe(pickClosestValues.name, () => {
       {
         value: 1200,
         date: UnixTime.toDate(
-          START + UnixTime(2, 'hours') + UnixTime(-1, 'minutes'),
+          START + UnixTime(2, 'hours') - UnixTime(1, 'minutes'),
         ),
       },
     ]

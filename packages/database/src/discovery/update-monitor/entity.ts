@@ -17,7 +17,7 @@ export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
     projectName: record.projectName,
     chainId: +record.chainId,
     blockNumber: record.blockNumber,
-    timestamp: record.timestamp ? record.timestamp.toDate() : null,
+    timestamp: record.timestamp ? UnixTime.toDate(record.timestamp) : null,
     discoveryJsonBlob: JSON.stringify(record.discovery),
     configHash: record.configHash.toString(),
   }

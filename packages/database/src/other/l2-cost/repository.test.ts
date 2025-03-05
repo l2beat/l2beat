@@ -33,7 +33,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       blobGasUsed: null,
     },
     {
-      timestamp: START.add(-1, 'hours'),
+      timestamp: START - UnixTime(1, 'hours'),
       txHash: '0x2',
       configurationId: txIdB,
       gasUsed: 200,
@@ -44,7 +44,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       blobGasUsed: 300,
     },
     {
-      timestamp: START.add(-2, 'hours'),
+      timestamp: START - UnixTime(2, 'hours'),
       txHash: '0x3',
       configurationId: txIdC,
       gasUsed: 150,
@@ -63,7 +63,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       DATA.map((d, i) => ({
         indexerId: 'indexer',
         id: d.configurationId,
-        minHeight: START.toNumber(),
+        minHeight: START,
         maxHeight: null,
         currentHeight: null,
         properties: JSON.stringify({ projectId: `project-${i}` }),
@@ -107,8 +107,8 @@ describeDatabase(L2CostRepository.name, (db) => {
   describe(L2CostRepository.prototype.getByTimeRange.name, () => {
     it('should return all rows for given time range', async () => {
       const results = await repository.getByTimeRange([
-        START.add(-2, 'hours'),
-        START.add(-1, 'minutes'),
+        START - UnixTime(2, 'hours'),
+        START - UnixTime(1, 'minutes'),
       ])
 
       expect(results).toEqualUnsorted([DATA[1]!, DATA[2]!])
@@ -116,8 +116,8 @@ describeDatabase(L2CostRepository.name, (db) => {
 
     it('should return empty array', async () => {
       const results = await repository.getByTimeRange([
-        START.add(5, 'hours'),
-        START.add(6, 'hours'),
+        START + UnixTime(5, 'hours'),
+        START + UnixTime(6, 'hours'),
       ])
 
       expect(results).toEqual([])
@@ -130,7 +130,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       // add second record to txIdA
       await repository.insertMany([
         {
-          timestamp: START.add(-1, 'hours'),
+          timestamp: START - UnixTime(1, 'hours'),
           txHash: '0x4',
           configurationId: txIdA,
           gasUsed: 200,
@@ -144,7 +144,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
       const result = await repository.getGasSumByTimeRangeAndConfigId(
         [txIdA, txIdB],
-        START.add(-1, 'hours'),
+        START - UnixTime(1, 'hours'),
         START,
       )
 
@@ -185,7 +185,7 @@ describeDatabase(L2CostRepository.name, (db) => {
 
       const records: L2CostRecord[] = [
         {
-          timestamp: START.add(-1, 'hours'),
+          timestamp: START - UnixTime(1, 'hours'),
           txHash: '0x4',
           configurationId: txIdD,
           gasUsed: 150,
@@ -196,7 +196,7 @@ describeDatabase(L2CostRepository.name, (db) => {
           blobGasUsed: null,
         },
         {
-          timestamp: START.add(1, 'hours'),
+          timestamp: START + UnixTime(1, 'hours'),
           txHash: '0x45',
           configurationId: txIdD,
           gasUsed: 150,
@@ -207,7 +207,7 @@ describeDatabase(L2CostRepository.name, (db) => {
           blobGasUsed: null,
         },
         {
-          timestamp: START.add(2, 'hours'),
+          timestamp: START + UnixTime(2, 'hours'),
           txHash: '0x5',
           configurationId: txIdD,
           gasUsed: 150,
@@ -223,7 +223,7 @@ describeDatabase(L2CostRepository.name, (db) => {
         {
           id: txIdD,
           indexerId: 'indexer',
-          minHeight: START.toNumber(),
+          minHeight: START,
           properties: '',
           currentHeight: null,
           maxHeight: null,

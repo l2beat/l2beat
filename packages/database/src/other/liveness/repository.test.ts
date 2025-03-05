@@ -16,25 +16,25 @@ describeDatabase(LivenessRepository.name, (db) => {
   const START = UnixTime.now()
   const DATA = [
     {
-      timestamp: START.add(-1, 'hours'),
+      timestamp: START - UnixTime(1, 'hours'),
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
       configurationId: txIdA,
     },
     {
-      timestamp: START.add(-2, 'hours'),
+      timestamp: START - UnixTime(2, 'hours'),
       blockNumber: 12340,
       txHash: '0xabcdef1234567890',
       configurationId: txIdA,
     },
     {
-      timestamp: START.add(-3, 'hours'),
+      timestamp: START - UnixTime(3, 'hours'),
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
       configurationId: txIdB,
     },
     {
-      timestamp: START.add(-3, 'hours'),
+      timestamp: START - UnixTime(3, 'hours'),
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
       configurationId: txIdC,
@@ -52,13 +52,13 @@ describeDatabase(LivenessRepository.name, (db) => {
     it('only new rows', async () => {
       const newRows = [
         {
-          timestamp: START.add(-5, 'hours'),
+          timestamp: START - UnixTime(5, 'hours'),
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
           configurationId: txIdA,
         },
         {
-          timestamp: START.add(-6, 'hours'),
+          timestamp: START - UnixTime(6, 'hours'),
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
           configurationId: txIdA,
@@ -83,7 +83,7 @@ describeDatabase(LivenessRepository.name, (db) => {
       const records: LivenessRecord[] = []
       for (let i = 0; i < 15_000; i++) {
         records.push({
-          timestamp: START.add(-i, 'hours'),
+          timestamp: START - UnixTime(i, 'hours'),
           blockNumber: i,
           txHash: `0xabcdef1234567892${i}`,
           configurationId: txIdA,
@@ -109,7 +109,7 @@ describeDatabase(LivenessRepository.name, (db) => {
     it('should return rows since given time', async () => {
       const results = await repository.getByConfigurationIdSince(
         [txIdA, txIdB],
-        START.add(-2, 'hours'),
+        START - UnixTime(2, 'hours'),
       )
 
       expect(results).toEqual([DATA[0]!, DATA[1]!])
@@ -120,7 +120,7 @@ describeDatabase(LivenessRepository.name, (db) => {
     it('should return rows up to given time', async () => {
       const results = await repository.getByConfigurationIdUpTo(
         [txIdA, txIdB],
-        START.add(-1, 'hours'),
+        START - UnixTime(1, 'hours'),
       )
 
       expect(results).toEqual([DATA[1]!, DATA[2]!])
@@ -132,8 +132,8 @@ describeDatabase(LivenessRepository.name, (db) => {
     it('should return rows within given time range', async () => {
       const results = await repository.getByConfigurationIdWithinTimeRange(
         [txIdA, txIdB],
-        START.add(-2, 'hours'),
-        START.add(0, 'hours'),
+        START - UnixTime(2, 'hours'),
+        START + UnixTime(0, 'hours'),
       )
 
       expect(results).toEqual([DATA[0]!, DATA[1]!])
@@ -162,19 +162,19 @@ describeDatabase(LivenessRepository.name, (db) => {
           configurationId: txIdA,
         },
         {
-          timestamp: START.add(1, 'hours'),
+          timestamp: START + UnixTime(1, 'hours'),
           blockNumber: 12345,
           txHash: '0x1234567890abcdef',
           configurationId: txIdA,
         },
         {
-          timestamp: START.add(2, 'hours'),
+          timestamp: START + UnixTime(2, 'hours'),
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
           configurationId: txIdA,
         },
         {
-          timestamp: START.add(2, 'hours'),
+          timestamp: START + UnixTime(2, 'hours'),
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
           configurationId: txIdB,
@@ -182,7 +182,7 @@ describeDatabase(LivenessRepository.name, (db) => {
       ]
       await repository.insertMany(records)
 
-      await repository.deleteFromById(txIdA, START.add(1, 'hours'))
+      await repository.deleteFromById(txIdA, START + UnixTime(1, 'hours'))
 
       const result = await repository.getAll()
 

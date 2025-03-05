@@ -1,4 +1,4 @@
-import { type UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
 import type { QueryBuilder } from '../kysely'
 import type { DB } from '../kysely/generated/types'
@@ -25,8 +25,10 @@ export async function deleteHourlyUntil(
     .where((eb) =>
       eb.and(
         [
-          eb('timestamp', '<', dateRange.to.toDate()),
-          dateRange.from && eb('timestamp', '>=', dateRange.from.toDate()),
+          eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
+          dateRange.from
+            ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
+            : undefined,
           // do not delete six hourly and daily
           eb(sql`extract(hour from "timestamp") % 6`, '!=', 0),
         ].filter(notUndefined),
@@ -49,8 +51,10 @@ export async function deleteSixHourlyUntil(
     .where((eb) =>
       eb.and(
         [
-          eb('timestamp', '<', dateRange.to.toDate()),
-          dateRange.from && eb('timestamp', '>=', dateRange.from.toDate()),
+          eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
+          dateRange.from
+            ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
+            : undefined,
           // do not delete daily
           eb(sql`extract(hour from "timestamp")`, '!=', 0),
           // delete only six hourly
