@@ -143,16 +143,26 @@ export interface TokenValue {
 }
 
 export interface TvsBreakdown {
-  total: number
+  tvs: number
   source: {
-    canonical: number
-    external: number
-    native: number
+    canonical: {
+      value: number
+      tokens: TokenValue[]
+    }
+    external: {
+      value: number
+      tokens: TokenValue[]
+    }
+    native: {
+      value: number
+      tokens: TokenValue[]
+    }
   }
   category: {
     ether: number
     stablecoin: number
     other: number
+    associated: number
   }
 }
 

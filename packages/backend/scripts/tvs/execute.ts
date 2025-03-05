@@ -10,7 +10,6 @@ import { ProjectService } from '@l2beat/config'
 import {} from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
-import { groupBy } from 'cmd-ts/dist/cjs/utils'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import type {
   Token,
@@ -18,8 +17,6 @@ import type {
   TvsBreakdown,
   TvsConfig,
 } from '../../src/modules/tvs/types'
-import { formatCurrency } from './format-currency'
-import { formatNumberWithCommas } from './format-number'
 
 const args = {
   project: positional({
@@ -49,22 +46,15 @@ const cmd = command({
 
     const tvs = await localExecutor.run(config, [timestamp], false)
 
-    const tvsBreakdown = calculateBreakdown(tvs, timestamp)
+    const tvsBreakdown = calculateBreakdown(tvs, timestamp, args.project)
 
-    logger.info(
-      JSON.stringify(
-        tvsBreakdown,
-        (_, v) => {
-          if (typeof v === 'number') {
-            return toDollarString(v)
-          }
-          return v
-        },
-        2,
-      ),
+    logger.info(`TVS: ${tvsBreakdown.tvs}`)
+    logger.info(`see /src/modules/tvs/breakdown.json for more details`)
+
+    fs.writeFileSync(
+      './src/modules/tvs/breakdown.json',
+      JSON.stringify(tvsBreakdown, null, 2),
     )
-
-    saveBreakdownFile(tvs, tvsBreakdown, timestamp, args)
 
     process.exit(0)
   },
@@ -75,21 +65,32 @@ run(cmd, process.argv.slice(2))
 function calculateBreakdown(
   tvs: Map<number, TokenValue[]>,
   timestamp: UnixTime,
+  project: string,
 ) {
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')
 
   const tvsBreakdown: TvsBreakdown = {
-    total: 0,
+    tvs: 0,
     source: {
-      canonical: 0,
-      external: 0,
-      native: 0,
+      canonical: {
+        value: 0,
+        tokens: [],
+      },
+      external: {
+        value: 0,
+        tokens: [],
+      },
+      native: {
+        value: 0,
+        tokens: [],
+      },
     },
     category: {
       ether: 0,
       stablecoin: 0,
       other: 0,
+      associated: 0,
     },
   }
 
@@ -102,7 +103,7 @@ function calculateBreakdown(
   const filteredConfig: Token[] = []
 
   for (const token of tokens) {
-    tvsBreakdown.total += token.valueForProject
+    tvsBreakdown.tvs += token.valueForProject
 
     if (token.amount !== 0) {
       filteredConfig.push(token.tokenConfig)
@@ -121,13 +122,16 @@ function calculateBreakdown(
 
     switch (token.tokenConfig.source) {
       case 'canonical':
-        tvsBreakdown.source.canonical += token.valueForProject
+        tvsBreakdown.source.canonical.value += token.valueForProject
+        tvsBreakdown.source.canonical.tokens.push(token)
         break
       case 'external':
-        tvsBreakdown.source.external += token.valueForProject
+        tvsBreakdown.source.external.value += token.valueForProject
+        tvsBreakdown.source.external.tokens.push(token)
         break
       case 'native':
-        tvsBreakdown.source.native += token.valueForProject
+        tvsBreakdown.source.native.value += token.valueForProject
+        tvsBreakdown.source.native.tokens.push(token)
         break
       default:
         throw new Error(`Unknown source ${token.tokenConfig.source}`)
@@ -141,14 +145,82 @@ function calculateBreakdown(
         tvsBreakdown.category.stablecoin += token.valueForProject
         break
       case 'other':
-        tvsBreakdown.category.other += token.valueForProject
+        if (token.tokenConfig.isAssociated) {
+          tvsBreakdown.category.associated += token.valueForProject
+        } else {
+          tvsBreakdown.category.other += token.valueForProject
+        }
         break
       default:
         throw new Error(`Unknown source ${token.tokenConfig.source}`)
     }
   }
 
-  return tvsBreakdown
+  return {
+    project,
+    timestamp: timestamp.toDate().toISOString(),
+    tvs: toDollarString(tvsBreakdown.tvs),
+    source: {
+      canonical: {
+        value: toDollarString(tvsBreakdown.source.canonical.value),
+        tokens: tvsBreakdown.source.canonical.tokens
+          .sort((a, b) => b.value - a.value)
+          .map((t) => ({
+            symbol: t.tokenConfig.symbol,
+            value: '$' + formatNumberWithCommas(t.value),
+            amount: formatNumberWithCommas(t.amount),
+          })),
+      },
+      external: {
+        value: toDollarString(tvsBreakdown.source.external.value),
+        tokens: tvsBreakdown.source.external.tokens
+          .sort((a, b) => b.value - a.value)
+          .map((t) => ({
+            symbol: t.tokenConfig.symbol,
+            value: '$' + formatNumberWithCommas(t.value),
+            amount: formatNumberWithCommas(t.amount),
+          })),
+      },
+      native: {
+        value: toDollarString(tvsBreakdown.source.native.value),
+        tokens: tvsBreakdown.source.native.tokens
+          .sort((a, b) => b.value - a.value)
+          .map((t) => ({
+            symbol: t.tokenConfig.symbol,
+            value: '$' + formatNumberWithCommas(t.value),
+            amount: formatNumberWithCommas(t.amount),
+          })),
+      },
+    },
+    category: {
+      associated: {
+        value: toDollarString(tvsBreakdown.category.associated),
+        percentage:
+          ((tvsBreakdown.category.associated / tvsBreakdown.tvs) * 100).toFixed(
+            2,
+          ) + '%',
+      },
+      ether: {
+        value: toDollarString(tvsBreakdown.category.ether),
+        percentage:
+          ((tvsBreakdown.category.ether / tvsBreakdown.tvs) * 100).toFixed(2) +
+          '%',
+      },
+      stablecoin: {
+        value: toDollarString(tvsBreakdown.category.stablecoin),
+        percentage:
+          ((tvsBreakdown.category.stablecoin / tvsBreakdown.tvs) * 100).toFixed(
+            2,
+          ) + '%',
+      },
+      other: {
+        value: toDollarString(tvsBreakdown.category.other),
+        percentage:
+          ((tvsBreakdown.category.other / tvsBreakdown.tvs) * 100).toFixed(2) +
+          '%',
+      },
+    },
+  }
 }
 
 function initLogger(env: Env) {
@@ -183,42 +255,11 @@ function readConfig(project: string, logger: Logger) {
   return json.tokens as Token[]
 }
 
-function saveBreakdownFile(
-  tvs: Map<number, TokenValue[]>,
-  tvsBreakdown: TvsBreakdown,
-  timestamp: UnixTime,
-  args: { project: string },
-) {
-  const tvsForTimestamp = tvs.get(timestamp.toNumber())
-  assert(tvsForTimestamp)
+export function formatNumberWithCommas(value: number, precision = 2): string {
+  const formattedNumber = value.toLocaleString('en-US', {
+    minimumFractionDigits: precision,
+    maximumFractionDigits: precision,
+  })
 
-  const bySource = groupBy(tvsForTimestamp, (token) => token.tokenConfig.source)
-
-  type SourceType = 'canonical' | 'external' | 'native'
-  const result: Record<string, unknown> = {
-    project: args.project,
-    timestamp: timestamp.toDate().toISOString(),
-    tvs: formatCurrency(tvsBreakdown.total, 'usd'),
-  }
-
-  // Add each source type if it exists
-  for (const source of ['canonical', 'external', 'native'] as SourceType[]) {
-    if (bySource[source]) {
-      result[source] = {
-        value: formatCurrency(tvsBreakdown.source[source], 'usd'),
-        tokens: bySource[source]
-          .sort((a: TokenValue, b: TokenValue) => b.value - a.value)
-          .map((t) => ({
-            symbol: t.tokenConfig.symbol,
-            value: formatNumberWithCommas(t.value),
-            amount: formatNumberWithCommas(t.amount),
-          })),
-      }
-    }
-  }
-
-  fs.writeFileSync(
-    './src/modules/tvs/breakdown.json',
-    JSON.stringify(result, null, 2),
-  )
+  return formattedNumber
 }
