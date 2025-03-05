@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
   assert,
@@ -18,7 +19,11 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = mapConfig(arbitrum, arbitrum.chainConfig)
+    const result = await mapConfig(
+      arbitrum,
+      arbitrum.chainConfig,
+      Logger.SILENT,
+    )
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
@@ -117,12 +122,22 @@ describe(extractPricesAndAmounts.name, () => {
         mockObject<Token>({
           priceId: 'price-ATH',
           amount: {
-            type: 'totalSupply',
-            address: EthereumAddress(
-              '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-            ),
-            chain: 'arbitrum',
-            decimals: 18,
+            type: 'calculation',
+            operator: 'max',
+            arguments: [
+              {
+                type: 'const',
+                value: 100,
+              },
+              {
+                type: 'totalSupply',
+                address: EthereumAddress(
+                  '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+                ),
+                chain: 'arbitrum',
+                decimals: 18,
+              },
+            ],
           },
           valueForProject: undefined,
           valueForTotal: undefined,

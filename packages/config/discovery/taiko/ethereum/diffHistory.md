@@ -1,14 +1,39 @@
-Generated with discovered.json: 0x38e08ae173ebfb21ce4f9bcb6e2eaf84ba896f49
+Generated with discovered.json: 0x6138560bbdce90a6b4dca0cd2b8a8e81a4ec3bcc
 
-# Diff at Tue, 04 Mar 2025 10:40:06 GMT:
+# Diff at Tue, 04 Mar 2025 13:38:38 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21938094
-- current block number: 21938094
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21938094
+- current block number: 21973872
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Taiko admin multisig signer change.
+
+## Watched changes
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.0:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@21938094/Safe/Safe.sol => /dev/null      | 1088 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   37 -
+ 2 files changed, 1125 deletions(-)
+```
 
 ## Config/verification related changes
 
