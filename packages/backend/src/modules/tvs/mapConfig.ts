@@ -101,23 +101,39 @@ export async function mapConfig(
 }
 
 export function createToken(
-  legacyToken: LegacyToken,
+  legacyToken: LegacyToken & { isPreminted?: boolean },
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
   escrow?: ProjectTvlEscrow,
 ): Token {
-  let amountFormula: AmountFormula
+  let amountFormula: CalculationFormula | AmountFormula
   let sinceTimestamp: UnixTime
   let untilTimestamp: UnixTime | undefined
   let source: 'canonical' | 'external' | 'native'
   let id: TokenId
 
-  switch (legacyToken.supply) {
-    case 'zero':
-      assert(escrow, 'Escrow is required for zero supply tokens')
+  if (escrow) {
+    id = TokenId.create(chain.name, legacyToken.symbol)
 
-      id = TokenId.create(chain.name, legacyToken.symbol)
-
+    if (legacyToken.isPreminted) {
+      amountFormula = {
+        type: 'calculation',
+        operator: 'min',
+        arguments: [
+          {
+            type: 'circulatingSupply',
+            priceId: legacyToken.coingeckoId,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: legacyToken.address ?? 'native',
+            escrowAddress: escrow.address,
+            chain: escrow.chain,
+            decimals: legacyToken.decimals,
+          },
+        ],
+      }
+    } else {
       amountFormula = {
         type: 'balanceOfEscrow',
         address: legacyToken.address ?? 'native',
@@ -125,11 +141,30 @@ export function createToken(
         escrowAddress: escrow.address,
         decimals: legacyToken.decimals,
       } as BalanceOfEscrowAmountFormula
+    }
 
-      sinceTimestamp = escrow.sinceTimestamp
-      untilTimestamp = escrow.untilTimestamp
-      source = escrow.source ?? legacyToken.source
-      break
+    sinceTimestamp = escrow.sinceTimestamp
+    untilTimestamp = escrow.untilTimestamp
+    source = escrow.source ?? 'canonical'
+
+    return {
+      id,
+      // This is a temporary solution
+      priceId: legacyToken.coingeckoId,
+      symbol: legacyToken.symbol,
+      name: legacyToken.name,
+      amount: amountFormula,
+      sinceTimestamp,
+      untilTimestamp,
+      category: legacyToken.category,
+      source: source,
+      isAssociated: !!project.tvlConfig.associatedTokens?.includes(
+        legacyToken.symbol,
+      ),
+    }
+  }
+
+  switch (legacyToken.supply) {
     case 'totalSupply':
       assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
 
