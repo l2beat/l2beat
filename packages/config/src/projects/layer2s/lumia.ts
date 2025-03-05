@@ -79,8 +79,8 @@ export const lumia: Layer2 = polygonCDKStack({
       references: [
         {
           title:
-            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
     },
