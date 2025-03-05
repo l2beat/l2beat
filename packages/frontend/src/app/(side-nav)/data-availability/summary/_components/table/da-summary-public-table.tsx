@@ -93,7 +93,10 @@ function BridgeCells({
           disabledOnMobile
         />
       </TableCell>
-      <TableCell className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]">
+      <TableCell
+        className="pr-[30px] text-sm font-medium md:pr-[42px]"
+        align="right"
+      >
         {formatDollarValueNumber(bridge.tvs.latest)}
       </TableCell>
       <TableCell className="text-sm font-medium">
