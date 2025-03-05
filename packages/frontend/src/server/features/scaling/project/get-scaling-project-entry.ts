@@ -1,7 +1,5 @@
 import type {
   Badge,
-  Layer2,
-  Layer3,
   Project,
   ReasonForBeingInOther,
   ScalingProjectCategory,
@@ -44,8 +42,6 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
-
-export type ScalingProject = Layer2 | Layer3
 
 export interface ScalingProjectEntry {
   type: 'layer3' | 'layer2'
