@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { PrimaryCardHighlighter } from '~/components/highlighters/primary-card-highlighter'
 import { PrimaryCard } from '~/components/primary-card'
 import { env } from '~/env'
 import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
@@ -91,8 +92,8 @@ export default async function Page(props: Props) {
           </PrimaryCard>
         )}
       </div>
-
       <RequestTokenBox />
+      <PrimaryCardHighlighter />
     </>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 import type { ReactNode } from 'react'
 
-import { ProjectSectionHighlighter } from '~/components/highlighters/project-section-highlighter'
+import { PrimaryCardHighlighter } from '~/components/highlighters/primary-card-highlighter'
 import { PrimaryCard } from '~/components/primary-card'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
@@ -52,7 +52,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
         ) : (
           props.children
         )}
-        <ProjectSectionHighlighter />
+        <PrimaryCardHighlighter />
       </Component>
     </PrimaryCard>
   )
