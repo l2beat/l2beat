@@ -22,18 +22,15 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
-import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('paradex')
-const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
 
 const upgradeDelaySeconds = discovery.getContractValue<number>(
   'Paradex',
@@ -305,54 +302,10 @@ export const paradex: Layer2 = {
     exitMechanisms: EXITS.STARKNET,
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('Paradex', {
-          description:
-            'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
-          upgradableBy: [
-            {
-              name: 'Paradex owner',
-              delay: upgradeDelaySeconds
-                ? formatSeconds(upgradeDelaySeconds)
-                : 'no',
-            },
-          ],
-        }),
-        ...getSHARPVerifierContracts(discovery, verifierAddress),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Paradex owner',
-          getProxyGovernance(discovery, 'Paradex'),
-          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
-            delayDescriptionFromSeconds(upgradeDelaySeconds),
-        ),
-        discovery.getPermissionDetails(
-          'Paradex Implementation Governors',
-          discovery.getPermissionedAccounts('Paradex', 'governors'),
-          'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
-        ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getPermissionedAccounts('Paradex', 'operators'),
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
-        ),
-        discovery.getPermissionDetails(
-          'USDC Escrow owner',
-          getProxyGovernance(discovery, 'USDC Bridge'),
-          'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
-        ),
-      ],
-    },
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'Paradex starts using blobs',

@@ -9,7 +9,7 @@ export interface CommitteeResult {
 
 export function getCommittee(
   discovery: ProjectDiscovery,
-  committeeName = 'Committee',
+  committeeName = 'DACommittee',
   name = 'Data Availability Committee',
 ): CommitteeResult {
   const minSigners = Number(

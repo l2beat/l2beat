@@ -1,3 +1,133 @@
+Generated with discovered.json: 0x25d429897ca9f76c0d5917833928571151ceba56
+
+# Diff at Wed, 05 Mar 2025 11:05:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21973412
+- current block number: 21979760
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973412 (main branch discovery), not current.
+
+```diff
+    contract ParadexAdminMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      name:
+-        "ParadexImplementationGovernorMultisig"
++        "ParadexAdminMultisig"
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.5:
++        {"permission":"interact","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x0000000000000000000000000000000000000020","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x0000000000000000000000000000000000000020","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0x0000000000000000000000000000000000000020"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.governors:
+-        ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
+      values.bridgedToken:
++        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
+      values.estimateDepositFeeWei:
++        100000000000000
+      values.estimateEnrollmentFeeWei:
++        500000000000000
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC:
++        ["0x0000000000000000000000000000000000000020","0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
+      values.l2TokenContract:
++        "0x311d3706Ce8A7d337Bcb67Cd53b0ED7b019C6353"
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
+      values.messagingContract:
++        "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+      values.secAdminAC:
++        ["0x0000000000000000000000000000000000000020","0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
+      values.secAgentAC:
++        ["0x0000000000000000000000000000000000000020","0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        "inactive"
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      fieldMeta.maxTotalBalance.severity:
+-        "MEDIUM"
+      fieldMeta.maxTotalBalance.description:
+-        "Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)"
++        "The maximum total balance that can be locked in the bridge."
+      fieldMeta.maxTotalBalance.type:
+-        "RISK_PARAMETER"
+      fieldMeta.$admin:
++        {"severity":"HIGH","description":"NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."}
+      fieldMeta.withdrawalLimitStatus:
++        {"severity":"HIGH","description":"inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."}
+      fieldMeta.depositStatus:
++        {"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."}
+      fieldMeta.withdrawLimitPct:
++        {"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."}
+      fieldMeta.accessControl:
++        {"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."}
+      fieldMeta.govAdminAC:
++        {"description":"This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."}
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}},{"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      description:
+-        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles."
++        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      values.governors:
+-        ["0x8Cef438c3e363e15F9619e32D9b5D04ff777D670","0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"]
+      fieldMeta.isFinalized.description:
+-        "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
++        "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+      displayName:
++        "StarkExchange"
+    }
+```
+
 Generated with discovered.json: 0xe78246ec0e1cf3a12468e99d0ad4f6cdb7bd7406
 
 # Diff at Tue, 04 Mar 2025 12:05:46 GMT:

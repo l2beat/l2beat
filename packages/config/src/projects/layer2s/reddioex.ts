@@ -149,7 +149,7 @@ export const reddioex: Layer2 = {
       [discovery.chain]: [
         discovery.getContractDetails('StarkExchange'),
         discovery.getContractDetails(
-          'Committee',
+          'DACommittee',
           'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
         ),
         ...getSHARPVerifierContracts(discovery, verifierAddress),

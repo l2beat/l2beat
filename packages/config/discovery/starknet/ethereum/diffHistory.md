@@ -1,3 +1,152 @@
+Generated with discovered.json: 0x8552ceb01801c776c6ce581820197452d29dec41
+
+# Diff at Wed, 05 Mar 2025 11:05:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21973410
+- current block number: 21973410
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973410 (main branch discovery), not current.
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      description:
+-        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles."
++        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta.isFinalized.description:
+-        "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
++        "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+      displayName:
++        "StarkExchange"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      description:
+-        "StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually."
++        "Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually."
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
 Generated with discovered.json: 0x0fd63f1d47196c7337ff2bd0b09978386456a0ff
 
 # Diff at Tue, 04 Mar 2025 12:05:30 GMT:

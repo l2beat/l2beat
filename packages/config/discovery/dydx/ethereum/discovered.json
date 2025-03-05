@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0x9d631e0a852b329aa3f91767f14040fec289c62674e521b2b1fbade6d63f0e47",
+  "configHash": "0x30e723c406d00c0e20526a517bdd143ed660f6c53ca4327798d03f296e441597",
   "contracts": [
     {
       "name": "MerkleDistributor",
@@ -1255,9 +1255,12 @@
     {
       "name": "FinalizableGpsFactAdapter",
       "address": "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+      "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
+      "displayName": "GpsFactRegistryAdapter",
+      "description": "Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).",
       "sinceTimestamp": 1681722659,
       "sinceBlock": 17065528,
       "values": {
@@ -1266,7 +1269,8 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": true,
-        "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
+        "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032",
+        "programHashMapped": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
       }
     },
     {
@@ -2444,5 +2448,7 @@
       "function updateRoot()"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "starkex/GpsFactRegistryAdapter": "0x468083ab169d51d66960b7537dc740b631b2dcb51a1ec42fcda36f394bbdba42"
+  }
 }

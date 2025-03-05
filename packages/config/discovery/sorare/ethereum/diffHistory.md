@@ -1,3 +1,122 @@
+Generated with discovered.json: 0xb53fb2e7bc77c2fd7775a69ba0588b477507df91
+
+# Diff at Wed, 05 Mar 2025 14:06:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 19825381
+- current block number: 21981156
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825381 (main branch discovery), not current.
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: Helper contract for registering limit orders from L1.
+      template:
++        "starkex/OrderRegistry"
+      description:
++        "Helper contract for registering limit orders from L1."
+    }
+```
+
+```diff
+    contract DACommittee (0x879cD57975d596004863D30c59d579ef78BBbe32) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+      name:
+-        "Committee"
++        "DACommittee"
+      template:
++        "starkex/Committee"
+      description:
++        "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2."
+      fieldMeta:
++        {"constructorArgs":{"description":"Includes DAC members and threshold."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      values.programHashMapped:
++        "3174901404014912024702042974619036870715605532092680335571201877913899936957"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`)."
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "SorareAdminMultisig"
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0xF5C9F957705bea56a7e806943f98F7777B995826","delay":1209600}
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xF5C9F957705bea56a7e806943f98F7777B995826","description":"manage the token admin role."}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract StarkExchange (0xF5C9F957705bea56a7e806943f98F7777B995826) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.9:
++        {"permission":"upgrade","to":"0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B","delay":1209600,"via":[]}
+      issuedPermissions.8:
++        {"permission":"upgrade","to":"0x5918481F777dBe437De249492B90AffB4e655de4","delay":1209600,"via":[]}
+      issuedPermissions.7:
++        {"permission":"operateStarknet","to":"0x63881ac44293E22F3c3183a0C4113586ABb3e653","via":[]}
+      issuedPermissions.6:
++        {"permission":"operateStarknet","to":"0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6","via":[]}
+      issuedPermissions.5:
++        {"permission":"interact","to":"0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B","description":"manage the token admin role.","via":[]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x5918481F777dBe437De249492B90AffB4e655de4","description":"manage the token admin role.","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "governStarknet"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      values.OPERATORS:
+-        ["0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6","0x63881ac44293E22F3c3183a0C4113586ABb3e653"]
+      values.operators:
++        ["0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6","0x63881ac44293E22F3c3183a0C4113586ABb3e653"]
+      values.tokenAdmins:
++        ["0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815","0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19"]
+      values.UPGRADE_DELAY_SLOT:
++        "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      template:
++        "starkex/StarkExchange"
+      description:
++        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."},"isFinalized":{"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."},"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0x47f3d91bd805df050a6434bd478d9051a72f3720
 
 # Diff at Tue, 04 Mar 2025 10:40:00 GMT:
