@@ -85,7 +85,6 @@ export async function mapConfig(
     }
   }
 
-  // map totalSupply and circulatingSupply tokens
   const nonZeroSupplyTokens = tokenList.filter(
     (t) => t.supply !== 'zero' && t.chainId === chain.chainId,
   )
@@ -240,11 +239,7 @@ export function extractPricesAndAmounts(config: TvsConfig): {
       }
     }
 
-    const price = createPriceConfig({
-      amount: token.amount,
-      priceId: token.priceId,
-    } as ValueFormula)
-    prices.set(price.priceId, price)
+    prices.set(token.priceId, { priceId: token.priceId })
 
     if (token.valueForProject) {
       const { formulaAmounts, formulaPrices } = processFormula(
