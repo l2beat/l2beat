@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
   assert,
@@ -8,7 +9,6 @@ import {
 import { expect, mockObject } from 'earl'
 import { extractPricesAndAmounts, mapConfig } from './mapConfig'
 import { type Token, TokenId, type TvsConfig } from './types'
-import { Logger } from '@l2beat/backend-tools'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
