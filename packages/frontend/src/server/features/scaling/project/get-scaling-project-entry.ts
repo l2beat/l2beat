@@ -394,7 +394,6 @@ export async function getScalingProjectEntry(
       props: {
         id: 'risk-analysis',
         title: 'Risk analysis',
-        rosetteType: 'pizza',
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
