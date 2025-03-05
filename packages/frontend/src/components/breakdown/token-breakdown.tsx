@@ -16,6 +16,7 @@ export interface TokenBreakdownProps {
 
 export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
   associatedTokenSymbols: string[]
+  gasTokens?: string[]
   tvsWarnings: WarningWithSentiment[]
 }
 
@@ -46,16 +47,20 @@ export function TokenBreakdownTooltipContent({
   stablecoin,
   associatedTokenSymbols,
   tvsWarnings,
+  gasTokens,
 }: TokenBreakdownTooltipContentProps) {
   const other = total - associated - ether - stablecoin
+  const associatedTokensWithGas = associatedTokenSymbols.map((symbol) =>
+    gasTokens?.includes(symbol.toUpperCase()) ? `${symbol} (gas)` : symbol,
+  )
   const values = [
     {
-      title: languageJoin(associatedTokenSymbols) ?? 'Associated',
+      title: languageJoin(associatedTokensWithGas) ?? 'Associated',
       value: associated,
       variant: 'associated' as const,
     },
     {
-      title: 'Ether',
+      title: gasTokens?.includes('ETH') ? 'Ether (gas)' : 'Ether',
       value: ether,
       variant: 'ether' as const,
     },
