@@ -150,7 +150,7 @@ function MilestoneDrawerContent({
   milestoneIndex: number
   allMilestones: Milestone[]
 }) {
-  const [openedMilestone, setOpenedMilestone] = useState<number>(milestoneIndex)
+  const [selectedMilestoneIndex, setSelectedMilestoneIndex] = useState<number>(milestoneIndex)
   const tooltipMilestone = allMilestones[openedMilestone]
   assert(tooltipMilestone)
 
