@@ -43,14 +43,14 @@ import {
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
-  private permissionsRegistry: PermissionRegistry
+  private permissionRegistry: PermissionRegistry
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
     configReader = new ConfigReader(join(process.cwd(), '../config')),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
-    this.permissionsRegistry = new PermissionsFromDiscovery(this)
+    this.permissionRegistry = new PermissionsFromDiscovery(this)
     this.discoveries = [
       discovery,
       ...(discovery.sharedModules ?? []).map((module) =>
@@ -740,7 +740,7 @@ export class ProjectDiscovery {
     return [
       contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
-      ...this.permissionsRegistry.describePermissions(
+      ...this.permissionRegistry.describePermissions(
         contractOrEoa,
         includeDirectPermissions,
       ),
@@ -761,9 +761,8 @@ export class ProjectDiscovery {
   }
 
   getDiscoveredPermissions(): ProjectPermissions {
-    const relevantContracts =
-      this.permissionsRegistry.getPermissionedContracts()
-    const eoas = this.permissionsRegistry.getPermissionedEoas()
+    const relevantContracts = this.permissionRegistry.getPermissionedContracts()
+    const eoas = this.permissionRegistry.getPermissionedEoas()
     const allActors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
