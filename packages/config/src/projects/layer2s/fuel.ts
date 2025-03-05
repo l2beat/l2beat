@@ -139,6 +139,7 @@ export const fuel: Layer2 = {
   chainConfig: {
     name: 'fuel',
     chainId: undefined,
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'fuel',
