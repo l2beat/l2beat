@@ -23,7 +23,6 @@ export { bridges } from './projects/bridges'
 export { layer2s } from './projects/layer2s'
 export { layer3s } from './projects/layer3s'
 export { ProjectService, type Project } from './projects/project/ProjectService'
-export { isUnderReview } from './projects/project/utils/isUnderReview'
 export {
   safeGetTokenByAssetId,
   tokenList,
@@ -31,8 +30,6 @@ export {
 export { getTokenData } from './tokens/getTokenData'
 export type * from './types'
 export { getCommonContractsIn } from './utils/commonContracts'
-export { isVerified } from './verification/isVerified'
-
 import { runConfigAdjustments } from './adjustments'
 
 runConfigAdjustments()
