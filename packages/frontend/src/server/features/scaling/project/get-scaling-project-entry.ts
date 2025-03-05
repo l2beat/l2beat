@@ -8,8 +8,7 @@ import type {
   StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { layer2s, layer3s } from '@l2beat/config'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -122,12 +121,6 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
   >,
 ): Promise<ScalingProjectEntry> {
-  /** @deprecated */
-  const legacy =
-    layer2s.find((x) => x.id === project.id) ??
-    layer3s.find((x) => x.id === project.id)
-  assert(legacy)
-
   const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
     await Promise.all([
       getProjectsChangeReport(),
