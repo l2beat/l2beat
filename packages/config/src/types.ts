@@ -468,6 +468,140 @@ export interface ScalingProjectStateValidationCategory {
 }
 // #endregion
 
+// #region da data
+export interface DaLayer {
+  name?: string
+  description?: string
+  type: string
+  systemCategory: 'public' | 'custom'
+  risks: DaLayerRisks
+  technology: DaTechnology
+  usedWithoutBridgeIn: UsedInProject[]
+
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow?: number
+  consensusAlgorithm?: DaConsensusAlgorithm
+  throughput?: DaLayerThroughput[]
+  /** The time it takes to finalize the data. @unit seconds */
+  finality?: number
+  dataAvailabilitySampling?: DataAvailabilitySampling
+  economicSecurity?: DaEconomicSecurity
+}
+
+export interface DaLayerRisks {
+  daLayer?: TableReadyValue
+  economicSecurity?: TableReadyValue
+  fraudDetection?: TableReadyValue
+}
+
+export interface DaTechnology {
+  /** Description of technology used by the data availability layer. [MARKDOWN] */
+  description: string
+  risks?: ProjectRisk[] // scaling risks on purpose
+  references?: ReferenceLink[]
+}
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  slug: string
+}
+
+export interface DaConsensusAlgorithm {
+  name: string
+  description: string
+  /** @unit seconds. */
+  blockTime: number
+  /** Consensus finality time. @unit seconds. */
+  consensusFinality: number
+  /** Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period. @unit seconds. */
+  unbondingPeriod: number
+}
+
+export interface DaLayerThroughput {
+  /**
+   * Batch size for data availability. Together with batchFrequency it determines max throughput.
+   * @unit B - bytes
+   */
+  size: number
+  /**
+   * Desired size of blob data per block. Should be less than or equal to size.
+   * @unit B - bytes
+   */
+  target?: number
+  /**
+   * Batch frequency for data availability. Together with batchSize it determines max throughput.
+   * @unit seconds
+   */
+  frequency: number
+  /**
+   * Inclusive timestamp of when this throughput was introduced.
+   * If more than one throughput is provided, it will be used as the end time of previous one
+   */
+  sinceTimestamp: number
+}
+
+export interface DataAvailabilitySampling {
+  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
+  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
+}
+
+export interface DaEconomicSecurity {
+  name: string
+  token: {
+    symbol: string
+    decimals: number
+    coingeckoId: string
+  }
+}
+
+export interface DaBridge {
+  name: string
+  daLayer: ProjectId
+  technology: DaTechnology
+  risks: DaBridgeRisks
+  usedIn: UsedInProject[]
+  dac?: DacInfo
+}
+
+export interface DaBridgeRisks {
+  isNoBridge?: boolean
+  /** Replaces risk grissini */
+  callout?: string
+  daBridge?: TableReadyValue
+  committeeSecurity?: TableReadyValue
+  upgradeability?: TableReadyValue
+  relayerFailure?: TableReadyValue
+}
+
+export interface DacInfo {
+  membersCount: number
+  knownMembers?: {
+    external: boolean
+    name: string
+    href: string
+    key?: string
+  }[]
+  requiredMembers: number
+  /** TEMP: Members field will turn into N/A badge if this is true */
+  hideMembers?: boolean
+}
+
+export interface CustomDa {
+  /** Will show the project name if not provided. */
+  name?: string
+  description?: string
+  type: string
+  risks: DaLayerRisks & DaBridgeRisks
+  technology: DaTechnology
+  dac?: DacInfo
+  fallback?: TableReadyValue
+  challengeMechanism?: DaChallengeMechanism
+}
+
+export type DaChallengeMechanism = 'DA Challenges' | 'None'
+// #endregion
+
 export interface ScalingProjectUpgradeability {
   proxyType: string
   immutable?: boolean
@@ -790,20 +924,6 @@ export interface BridgeConfig {
   escrows: ProjectEscrow[]
 }
 
-export interface CustomDa {
-  /** Will show the project name if not provided. */
-  name?: string
-  description?: string
-  type: string
-  risks: DaLayerRisks & DaBridgeRisks
-  technology: DaTechnology
-  dac?: DacInfo
-  fallback?: TableReadyValue
-  challengeMechanism?: DaChallengeMechanism
-}
-
-export type DaChallengeMechanism = 'DA Challenges' | 'None'
-
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
   daLayer: ProjectId
@@ -841,126 +961,6 @@ export interface ProjectTvlInfo {
 
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
-}
-
-export interface DaLayer {
-  name?: string
-  description?: string
-  type: string
-  systemCategory: 'public' | 'custom'
-  risks: DaLayerRisks
-  technology: DaTechnology
-  usedWithoutBridgeIn: UsedInProject[]
-
-  /** The period within which full nodes must store and distribute data. @unit seconds */
-  pruningWindow?: number
-  consensusAlgorithm?: DaConsensusAlgorithm
-  throughput?: DaLayerThroughput[]
-  /** The time it takes to finalize the data. @unit seconds */
-  finality?: number
-  dataAvailabilitySampling?: DataAvailabilitySampling
-  economicSecurity?: DaEconomicSecurity
-}
-
-export interface DaBridge {
-  name: string
-  daLayer: ProjectId
-  technology: DaTechnology
-  risks: DaBridgeRisks
-  usedIn: UsedInProject[]
-  dac?: DacInfo
-}
-
-export interface DaTechnology {
-  /** Description of technology used by the data availability layer. [MARKDOWN] */
-  description: string
-  risks?: ProjectRisk[] // scaling risks on purpose
-  references?: ReferenceLink[]
-}
-
-export interface DaConsensusAlgorithm {
-  /** The name of the consensus algorithm. */
-  name: string
-  /** A description of the consensus algorithm. */
-  description: string
-  /** The time it takes to produce a new block. @unit seconds. */
-  blockTime: number
-  /** Consensus finality time. @unit seconds. */
-  consensusFinality: number
-  /** Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period. @unit seconds. */
-  unbondingPeriod: number
-}
-
-export interface DaLayerThroughput {
-  /**
-   * Batch size for data availability. Together with batchFrequency it determines max throughput.
-   * @unit B - bytes
-   */
-  size: number
-  /**
-   * Desired size of blob data per block. Should be less than or equal to size.
-   * @unit B - bytes
-   */
-  target?: number
-  /**
-   * Batch frequency for data availability. Together with batchSize it determines max throughput.
-   * @unit seconds
-   */
-  frequency: number
-  /**
-   * Inclusive timestamp of when this throughput was introduced.
-   * If more than one throughput is provided, it will be used as the end time of previous one
-   */
-  sinceTimestamp: number
-}
-
-export interface DaEconomicSecurity {
-  name: string
-  token: {
-    symbol: string
-    decimals: number
-    coingeckoId: string
-  }
-}
-
-export interface DataAvailabilitySampling {
-  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
-  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
-}
-
-export interface DacInfo {
-  membersCount: number
-  knownMembers?: {
-    external: boolean
-    name: string
-    href: string
-    key?: string
-  }[]
-  requiredMembers: number
-  /** TEMP: Members field will turn into N/A badge if this is true */
-  hideMembers?: boolean
-}
-
-export interface UsedInProject {
-  id: ProjectId
-  name: string
-  slug: string
-}
-
-export interface DaLayerRisks {
-  daLayer?: TableReadyValue
-  economicSecurity?: TableReadyValue
-  fraudDetection?: TableReadyValue
-}
-
-export interface DaBridgeRisks {
-  isNoBridge?: boolean
-  /** Replaces risk grissini */
-  callout?: string
-  daBridge?: TableReadyValue
-  committeeSecurity?: TableReadyValue
-  upgradeability?: TableReadyValue
-  relayerFailure?: TableReadyValue
 }
 
 export interface ProjectPermissions {
