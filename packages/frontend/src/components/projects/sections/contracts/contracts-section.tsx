@@ -16,7 +16,6 @@ export interface ContractsSectionProps {
   title: string
   sectionOrder: string
   nested?: boolean
-  chainName: string
   contracts: Record<string, TechnologyContract[]>
   daSolution?: DaSolutionWith<{
     contracts: TechnologyContract[]

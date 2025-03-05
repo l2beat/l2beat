@@ -107,7 +107,6 @@ export function getContractsSection(
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
 
   return {
-    chainName: projectParams.hostChainName,
     contracts,
     escrows,
     risks,
