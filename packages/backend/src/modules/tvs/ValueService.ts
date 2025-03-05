@@ -10,7 +10,7 @@ import type {
 } from './types'
 
 export class ValueService {
-  constructor(private readonly storage: DataStorage) { }
+  constructor(private readonly storage: DataStorage) {}
 
   async calculate(
     config: TvsConfig,
@@ -77,7 +77,7 @@ export class ValueService {
     const price = await this.storage.getPrice(priceConfig.priceId, timestamp)
     assert(price !== undefined, `Price not found for ${priceConfig.priceId}`)
 
-    const amount = await this.executeAmountFormula(formula.amount, timestamp)
+    const amount = await this.executeFormula(formula.amount, timestamp)
     const value = amount * price
     return value
   }
@@ -115,12 +115,11 @@ export class ValueService {
                 return Math.min(valueAcc, value)
             }
           },
-          Promise.resolve(0),
+          Promise.resolve(formula.operator === 'min' ? Infinity : 0),
         )
       }
 
       return await this.executeAmountFormula(formula, timestamp)
-
     }
 
     return await executeFormulaRecursive(formula, timestamp)

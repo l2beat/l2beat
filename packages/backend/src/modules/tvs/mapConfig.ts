@@ -157,12 +157,9 @@ export function extractPricesAndAmounts(config: TvsConfig): {
 
   for (const token of config.tokens) {
     if (token.amount.type === 'calculation') {
-      const { formulaAmounts, formulaPrices } = processFormula(
-        token.amount,
-      )
+      const { formulaAmounts, formulaPrices } = processFormula(token.amount)
       formulaAmounts.forEach((a) => amounts.set(a.id, a))
       formulaPrices.forEach((p) => prices.set(p.priceId, p))
-
     } else {
       if (token.amount.type !== 'const') {
         const amount = createAmountConfig(token.amount)
@@ -199,9 +196,12 @@ export function extractPricesAndAmounts(config: TvsConfig): {
   }
 }
 
-export function createAmountConfig(formula: BalanceOfEscrowAmountFormula
-  | TotalSupplyAmountFormula
-  | CirculatingSupplyAmountFormula): AmountConfig {
+export function createAmountConfig(
+  formula:
+    | BalanceOfEscrowAmountFormula
+    | TotalSupplyAmountFormula
+    | CirculatingSupplyAmountFormula,
+): AmountConfig {
   switch (formula.type) {
     case 'balanceOfEscrow':
       return {
@@ -238,14 +238,18 @@ export function createPriceConfig(formula: ValueFormula): PriceConfig {
   }
 }
 
-function processFormula(formula: CalculationFormula | ValueFormula | AmountFormula): {
+function processFormula(
+  formula: CalculationFormula | ValueFormula | AmountFormula,
+): {
   formulaAmounts: AmountConfig[]
   formulaPrices: PriceConfig[]
 } {
   const formulaAmounts: AmountConfig[] = []
   const formulaPrices: PriceConfig[] = []
 
-  const processFormulaRecursive = (f: CalculationFormula | ValueFormula | AmountFormula) => {
+  const processFormulaRecursive = (
+    f: CalculationFormula | ValueFormula | AmountFormula,
+  ) => {
     if (f.type === 'calculation') {
       for (const arg of f.arguments) {
         processFormulaRecursive(arg)
@@ -255,8 +259,7 @@ function processFormula(formula: CalculationFormula | ValueFormula | AmountFormu
 
     if (f.type === 'value') {
       if (f.amount.type !== 'const') {
-        const amount = createAmountConfig(f.amount)
-        formulaAmounts.push(amount)
+        processFormulaRecursive(f.amount)
       }
 
       const price = createPriceConfig(f)

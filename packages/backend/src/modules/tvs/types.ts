@@ -15,7 +15,7 @@ export interface CalculationFormula {
 
 export type ValueFormula = {
   type: 'value'
-  amount: AmountFormula
+  amount: AmountFormula | CalculationFormula
   priceId: string
 }
 
