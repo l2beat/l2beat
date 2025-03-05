@@ -1,12 +1,11 @@
 import { createHash } from 'crypto'
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  type AggLayerEscrow,
-  type ChainConfig,
-  type ElasticChainEscrow,
-  type Project,
-  type ProjectTvlEscrow,
-  tokenList,
+import type {
+  AggLayerEscrow,
+  ChainConfig,
+  ElasticChainEscrow,
+  Project,
+  ProjectTvlEscrow,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -85,12 +84,8 @@ export async function mapConfig(
     }
   }
 
-  const nonZeroSupplyTokens = tokenList.filter(
-    (t) => t.supply !== 'zero' && t.chainId === chain.chainId,
-  )
-  for (const legacyToken of nonZeroSupplyTokens) {
-    const token = createToken(legacyToken, project, chain)
-    tokens.push(token)
+  for (const legacyToken of project.tvlConfig.tokens) {
+    tokens.push(createToken(legacyToken, project, chain))
   }
 
   return {
