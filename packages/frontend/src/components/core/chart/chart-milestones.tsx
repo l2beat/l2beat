@@ -134,10 +134,10 @@ function ChartMilestone({
               <CustomLink href={milestone.url}>Learn more</CustomLink>
             </DrawerDescription>
           </DrawerHeader>
-          <DrawerFooter className="flex flex-row items-center justify-between px-0 py-6">
+          <DrawerFooter className="flex flex-row items-center justify-between px-0 pb-8 pt-6">
             <Button
               size="sm"
-              className="h-12 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
+              className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
               onClick={() => setOpenedMilestoneIndex(milestoneIndex - 1)}
               aria-label="Previous milestone"
               disabled={milestoneIndex === 0}
@@ -150,7 +150,7 @@ function ChartMilestone({
             </div>
             <Button
               size="sm"
-              className="h-12 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
+              className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
               onClick={() => setOpenedMilestoneIndex(milestoneIndex + 1)}
               aria-label="Next milestone"
               disabled={milestoneIndex === totalMilestones - 1}
@@ -159,9 +159,6 @@ function ChartMilestone({
               <ChevronIcon className="ml-1 size-3 -rotate-90" />
             </Button>
           </DrawerFooter>
-          <DrawerTrigger className="w-full border-t border-divider py-6 text-center text-sm font-medium leading-[170%] text-secondary underline">
-            Close
-          </DrawerTrigger>
         </DrawerContent>
       </Drawer>
     )
