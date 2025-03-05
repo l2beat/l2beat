@@ -5,7 +5,7 @@ import type {
   ReceivedPermission,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
-import { notUndefined } from '@l2beat/shared-pure'
+import { type EthereumAddress, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
@@ -23,7 +23,7 @@ import {
 export class PermissionsFromDiscovery implements PermissionRegistry {
   constructor(private readonly projectDiscovery: ProjectDiscovery) {}
 
-  getPermissionedContracts(): ContractParameters[] {
+  getPermissionedContracts(): EthereumAddress[] {
     const contracts = this.projectDiscovery.getContracts()
 
     return [
@@ -39,21 +39,16 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           contract.receivedPermissions === undefined &&
           isMultisigLike(contract),
       ),
-    ]
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
+    ].map((e) => e.address)
   }
 
-  getPermissionedEoas(): EoaParameters[] {
+  getPermissionedEoas(): EthereumAddress[] {
     return this.projectDiscovery
       .getEoas()
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
+      .filter((e) => e.receivedPermissions !== undefined)
+      .map((e) => e.address)
   }
+
   describePermissions(
     contractOrEoa: ContractParameters | EoaParameters,
     includeDirectPermissions: boolean = true,
@@ -64,23 +59,6 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
         : []),
       ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
     ].filter(notUndefined)
-  }
-
-  getPermissionPriority(entry: ContractParameters | EoaParameters): number {
-    if (entry.receivedPermissions === undefined) {
-      return 0
-    }
-
-    const permissions = entry.receivedPermissions.map((p) => p.from)
-    const priority = permissions.reduce((acc, permission) => {
-      return (
-        acc +
-        (this.projectDiscovery.getEntryByAddress(permission)?.category
-          ?.priority ?? 0)
-      )
-    }, 0)
-
-    return priority
   }
 
   describeDirectlyReceivedPermissions(

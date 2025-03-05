@@ -80,3 +80,4 @@ export type {
   ContractValue,
 } from './discovery/output/types'
 export { get$Implementations } from './discovery/utils/extractors'
+export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
