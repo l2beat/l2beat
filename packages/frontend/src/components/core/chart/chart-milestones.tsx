@@ -137,7 +137,7 @@ function ChartMilestone({
           <DrawerFooter className="flex flex-row items-center justify-between px-0 py-6">
             <Button
               size="sm"
-              className="h-12 w-[120px] bg-brand px-3 text-sm text-primary-invert"
+              className="h-12 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
               onClick={() => setOpenedMilestoneIndex(milestoneIndex - 1)}
               aria-label="Previous milestone"
               disabled={milestoneIndex === 0}
@@ -150,7 +150,7 @@ function ChartMilestone({
             </div>
             <Button
               size="sm"
-              className="h-12 w-[120px] bg-brand px-3 text-sm text-primary-invert"
+              className="h-12 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
               onClick={() => setOpenedMilestoneIndex(milestoneIndex + 1)}
               aria-label="Next milestone"
               disabled={milestoneIndex === totalMilestones - 1}
