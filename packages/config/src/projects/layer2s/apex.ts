@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -22,15 +17,15 @@ import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
-import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('apex')
 
@@ -42,8 +37,6 @@ const upgradeDelaySecondsUSDT = discovery.getContractValue<number>(
   'StarkExchangeUSDT',
   'StarkWareDiamond_upgradeDelay',
 )
-const upgradeDelayUSDC = formatSeconds(upgradeDelaySecondsUSDC)
-const upgradeDelayUSDT = formatSeconds(upgradeDelaySecondsUSDT)
 
 const upgradeDelaySeconds = Math.min(
   upgradeDelaySecondsUSDC,
@@ -53,16 +46,6 @@ const upgradeDelaySeconds = Math.min(
 const includingSHARPUpgradeDelaySeconds = Math.min(
   upgradeDelaySeconds,
   getSHARPVerifierUpgradeDelay(),
-)
-
-const verifierAddressUSDC = discovery.getAddressFromValue(
-  'FinalizableGpsFactAdapterUSDC',
-  'gpsContract',
-)
-
-const verifierAddressUSDT = discovery.getAddressFromValue(
-  'FinalizableGpsFactAdapterUSDT',
-  'gpsContract',
 )
 
 const freezeGracePeriodUSDC = discovery.getContractValue<number>(
@@ -209,82 +192,14 @@ export const apex: Layer2 = {
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails(
-          'StarkExchangeUSDC',
-          'Main contract of ApeX exchange for USDC collateral. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        ),
-        discovery.getContractDetails(
-          'StarkExchangeUSDT',
-          'Main contract of ApeX exchange for USDT collateral. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        ),
-        discovery.getContractDetails(
-          'CommitteeUSDC',
-          'Data Availability Committee (DAC) contract for USDC StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
-        ),
-        discovery.getContractDetails(
-          'CommitteeUSDT',
-          'Data Availability Committee (DAC) contract for USDT StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
-        ),
-        discovery.getContractDetails('MultiSigPoolUSDC', {
-          description:
-            'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
-        }),
-        discovery.getContractDetails('MultiSigPoolUSDT', {
-          description:
-            'Allows deposits in different tokens and swaps them to USDT. Allows fast withdrawals after the agreement of at least 2 designated signers.',
-        }),
-        discovery.getContractDetails('PerpetualEscapeVerifier', {
-          description:
-            'Contract responsible for validating force withdrawal requests. Used by both USDC and USDT StarkEx instances.',
-        }),
-        ...getSHARPVerifierContracts(discovery, verifierAddressUSDC),
-        ...(verifierAddressUSDT !== verifierAddressUSDC
-          ? getSHARPVerifierContracts(discovery, verifierAddressUSDT)
-          : []),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Governors for USDC StarkEx',
-          getProxyGovernance(discovery, 'StarkExchangeUSDC'),
-          'Allowed to upgrade the implementation of the StarkExchange (USDC) contract, potentially maliciously gaining control over the system or stealing funds.' +
-            delayDescriptionFromString(upgradeDelayUSDC),
-        ),
-        discovery.getPermissionDetails(
-          'Governors for USDT StarkEx',
-          getProxyGovernance(discovery, 'StarkExchangeUSDT'),
-          'Allowed to upgrade the implementation of the StarkExchange (USDT) contract, potentially maliciously gaining control over the system or stealing funds.' +
-            delayDescriptionFromString(upgradeDelayUSDT),
-        ),
-        discovery.getPermissionDetails(
-          'Operators for USDC StarkEx',
-          discovery.getPermissionedAccounts('StarkExchangeUSDC', 'OPERATORS'),
-          'Allowed to update state of the system and verify DA proofs for USDC StarkEx instance. When Operator is down the state cannot be updated.',
-        ),
-        discovery.getPermissionDetails(
-          'Operators for USDT StarkEx',
-          discovery.getPermissionedAccounts('StarkExchangeUSDT', 'OPERATORS'),
-          'Allowed to update state of the system and verify DA proofs for USDT StarkEx instance. When Operator is down the state cannot be updated.',
-        ),
-        usdcCommittee,
-        usdtCommittee,
-        ...getSHARPVerifierGovernors(discovery, verifierAddressUSDC),
-        ...(verifierAddressUSDT !== verifierAddressUSDC
-          ? getSHARPVerifierGovernors(discovery, verifierAddressUSDT)
-          : []),
-      ],
-    },
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'ApeX Pro public beta launched',
