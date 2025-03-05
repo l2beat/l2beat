@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
+  addedAt: UnixTime(1717512064), // 2024-06-04T14:41:04Z
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Interoperability'],
   reasonsForBeingOther: [
@@ -45,7 +45,7 @@ export const everclear: Layer2 = orbitStackL2({
         callsPerMinute: 1500,
       },
     ],
-    sinceTimestamp: new UnixTime(1725539051), // block 1 ts
+    sinceTimestamp: UnixTime(1725539051), // block 1 ts
   },
   discovery,
   bridge: discovery.getContract('Bridge'),

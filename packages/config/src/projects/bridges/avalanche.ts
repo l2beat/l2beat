@@ -7,7 +7,7 @@ const discovery = new ProjectDiscovery('avalanche')
 export const avalanche: Bridge = {
   type: 'bridge',
   id: ProjectId('avalanche'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Avalanche Bridge',
     slug: 'avalanche',
@@ -34,7 +34,7 @@ export const avalanche: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0xE78388b4CE79068e89Bf8aA7f218eF6b9AB0e9d0'), // old
-        sinceTimestamp: new UnixTime(1634135918),
+        sinceTimestamp: UnixTime(1634135918),
         tokens: [
           'ETH',
           'USDC',
@@ -57,7 +57,7 @@ export const avalanche: Bridge = {
       },
       {
         address: EthereumAddress('0x8EB8a3b98659Cce290402893d0123abb75E3ab28'), // new
-        sinceTimestamp: new UnixTime(1657207546),
+        sinceTimestamp: UnixTime(1657207546),
         tokens: [
           'ETH',
           'USDC',

@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const network3: Layer2 = upcomingL2({
   id: 'network3',
   capability: 'universal',
-  addedAt: new UnixTime(1721807029), // 2024-07-24T07:43:49Z
+  addedAt: UnixTime(1721807029), // 2024-07-24T07:43:49Z
   display: {
     name: 'Network3',
     slug: 'network3',

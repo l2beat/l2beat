@@ -51,7 +51,7 @@ const SEQUENCING_WINDOW_SECONDS = 3600 * 12
 export const phala: Layer2 = {
   id: ProjectId('phala'),
   capability: 'universal',
-  addedAt: new UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
+  addedAt: UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
   display: {
     name: 'Phala',
     slug: 'phala',
@@ -100,12 +100,12 @@ export const phala: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521'),
-        sinceTimestamp: new UnixTime(1734388655),
+        sinceTimestamp: UnixTime(1734388655),
         tokens: '*',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A'),
-        sinceTimestamp: new UnixTime(1734388655),
+        sinceTimestamp: UnixTime(1734388655),
         tokens: ['ETH'],
       }),
     ],
@@ -119,7 +119,7 @@ export const phala: Layer2 = {
           formula: 'transfer',
           from: sequencerAddress,
           to: sequencerInbox,
-          sinceTimestamp: new UnixTime(1734388655),
+          sinceTimestamp: UnixTime(1734388655),
         },
       },
       {
@@ -133,7 +133,7 @@ export const phala: Layer2 = {
           selector: '0x9ad84880',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
-          sinceTimestamp: new UnixTime(1734388655),
+          sinceTimestamp: UnixTime(1734388655),
         },
       },
     ],

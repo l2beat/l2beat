@@ -30,7 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const lumia: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1718181773), // 2024-06-12T08:42:53Z
+  addedAt: UnixTime(1718181773), // 2024-06-12T08:42:53Z
   additionalBadges: [BADGES.DA.DAC],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Restaking', 'RWA'],
@@ -92,7 +92,7 @@ export const lumia: Layer2 = polygonCDKStack({
     name: 'lumia',
     chainId: 994873017,
     explorerUrl: 'https://explorer.lumia.org',
-    sinceTimestamp: new UnixTime(1719499031),
+    sinceTimestamp: UnixTime(1719499031),
     apis: [
       {
         type: 'rpc',

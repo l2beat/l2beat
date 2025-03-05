@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const singularityfinance: Layer2 = upcomingL2({
   id: 'singularityfinance',
   capability: 'universal',
-  addedAt: new UnixTime(1732266303), // 2024-11-22T09:05:03Z
+  addedAt: UnixTime(1732266303), // 2024-11-22T09:05:03Z
   display: {
     name: 'Singularity Finance',
     slug: 'singularity-finance',

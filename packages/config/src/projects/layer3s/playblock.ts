@@ -9,7 +9,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('playblock', 'nova')
 
 export const playblock: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Nova, BADGES.RaaS.Gelato],
   additionalPurposes: ['Gaming'],

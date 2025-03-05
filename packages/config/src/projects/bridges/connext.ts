@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('connext')
 export const connext: Bridge = {
   type: 'bridge',
   id: ProjectId('connext'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Connext (Legacy)',
@@ -32,7 +32,7 @@ export const connext: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09'),
-        sinceTimestamp: new UnixTime(1636004546),
+        sinceTimestamp: UnixTime(1636004546),
         tokens: ['USDC', 'USDT', 'DAI', 'WBTC'],
         chain: 'ethereum',
       },

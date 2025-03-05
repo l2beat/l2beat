@@ -138,7 +138,7 @@ export class ProjectDiscovery {
     sharedEscrow?: SharedEscrow
   }): ProjectEscrow {
     const contractRaw = this.getContract(address.toString())
-    const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
+    const timestamp = sinceTimestamp ?? contractRaw.sinceTimestamp
     assert(
       timestamp,
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
@@ -154,7 +154,7 @@ export class ProjectDiscovery {
 
     return {
       address,
-      sinceTimestamp: new UnixTime(timestamp),
+      sinceTimestamp: UnixTime(timestamp),
       tokens,
       excludedTokens,
       premintedTokens,

@@ -8,7 +8,7 @@ import { opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('lambda')
 
 export const lambda: Layer2 = opStackL2({
-  addedAt: new UnixTime(1718703383), // 2024-06-18T09:36:23Z
+  addedAt: UnixTime(1718703383), // 2024-06-18T09:36:23Z
   discovery,
   additionalPurposes: ['Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -34,7 +34,7 @@ export const lambda: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['LAMB'],
-  genesisTimestamp: new UnixTime(1713345623),
+  genesisTimestamp: UnixTime(1713345623),
   isNodeAvailable: true,
   milestones: [
     {
@@ -49,7 +49,7 @@ export const lambda: Layer2 = opStackL2({
     name: 'lambda',
     chainId: 56026,
     explorerUrl: 'https://scan.lambda.im',
-    sinceTimestamp: new UnixTime(1713345623),
+    sinceTimestamp: UnixTime(1713345623),
     multicallContracts: [
       // fails the tests since the address is not the usual one
       // {

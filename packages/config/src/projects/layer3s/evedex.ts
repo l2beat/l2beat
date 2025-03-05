@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const evedex: Layer3 = upcomingL3({
   id: 'evedex',
   capability: 'universal',
-  addedAt: new UnixTime(1739503948),
+  addedAt: UnixTime(1739503948),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'EVEDEX',

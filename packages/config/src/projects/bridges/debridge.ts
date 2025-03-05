@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('debridge')
 export const debridge: Bridge = {
   type: 'bridge',
   id: ProjectId('debridge'),
-  addedAt: new UnixTime(1673362295), // 2023-01-10T14:51:35Z
+  addedAt: UnixTime(1673362295), // 2023-01-10T14:51:35Z
   display: {
     name: 'deBridge',
     slug: 'debridge',
@@ -36,7 +36,7 @@ export const debridge: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x43dE2d77BF8027e25dBD179B491e8d64f38398aA'),
-        sinceTimestamp: new UnixTime(1637595390),
+        sinceTimestamp: UnixTime(1637595390),
         tokens: [
           'USDC',
           'WETH',

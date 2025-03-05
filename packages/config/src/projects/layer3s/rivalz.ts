@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const rivalz: Layer3 = upcomingL3({
   id: 'rivalz',
   capability: 'universal',
-  addedAt: new UnixTime(1739605172),
+  addedAt: UnixTime(1739605172),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Rivalz',

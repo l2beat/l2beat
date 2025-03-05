@@ -14,7 +14,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 )
 
 export const facet: Layer2 = opStackL2({
-  addedAt: new UnixTime(1735889012), // 2025-01-03T01:36:52Z
+  addedAt: UnixTime(1735889012), // 2025-01-03T01:36:52Z
   discovery,
   additionalBadges: [BADGES.Other.BasedSequencing],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -91,7 +91,7 @@ export const facet: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1733855495),
+  genesisTimestamp: UnixTime(1733855495),
   milestones: [
     {
       title: 'Facet Mainnet Launch',

@@ -30,7 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const automata: Layer2 = opStackL2({
-  addedAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
+  addedAt: UnixTime(1729359609), // 2024-10-19T17:40:09Z
   additionalBadges: [BADGES.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -70,7 +70,7 @@ export const automata: Layer2 = opStackL2({
     ],
   },
   discovery,
-  genesisTimestamp: new UnixTime(1721183063),
+  genesisTimestamp: UnixTime(1721183063),
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
     daResolveWindow,

@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const millicent: Layer2 = upcomingL2({
   id: 'millicent',
   capability: 'universal',
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   display: {
     name: 'Millicent One',
     slug: 'millicent',

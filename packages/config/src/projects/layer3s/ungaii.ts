@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const ungaii: Layer3 = upcomingL3({
   id: 'ungaii',
   capability: 'universal',
-  addedAt: new UnixTime(1739539175),
+  addedAt: UnixTime(1739539175),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Ungaii',

@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('symbiosis')
 export const symbiosis: Bridge = {
   type: 'bridge',
   id: ProjectId('symbiosis'),
-  addedAt: new UnixTime(1688541556), // 2023-07-05T07:19:16Z
+  addedAt: UnixTime(1688541556), // 2023-07-05T07:19:16Z
   display: {
     name: 'Symbiosis',
     slug: 'symbiosis',
@@ -109,7 +109,7 @@ export const symbiosis: Bridge = {
     escrows: [
       {
         address: discovery.getContract('Portal').address, // Portal v2
-        sinceTimestamp: new UnixTime(1668373200),
+        sinceTimestamp: UnixTime(1668373200),
         tokens: '*',
         chain: 'ethereum',
       },

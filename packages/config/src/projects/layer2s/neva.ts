@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const neva: Layer2 = upcomingL2({
   id: 'neva',
   capability: 'universal',
-  addedAt: new UnixTime(1727445360), // 2024-09-27T17:09:00Z
+  addedAt: UnixTime(1727445360), // 2024-09-27T17:09:00Z
   display: {
     name: 'Neva',
     slug: 'neva',

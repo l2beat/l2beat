@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const ozean: Layer2 = upcomingL2({
   id: 'ozean',
   capability: 'universal',
-  addedAt: new UnixTime(1739946099),
+  addedAt: UnixTime(1739946099),
   display: {
     name: 'Ozean',
     slug: 'ozean',

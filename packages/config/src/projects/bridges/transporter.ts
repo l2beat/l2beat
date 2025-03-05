@@ -26,7 +26,7 @@ const tokenPools = [...new Set(allTokenPools)]
 export const transporter: Bridge = {
   type: 'bridge',
   id: ProjectId('transporter'),
-  addedAt: new UnixTime(1718781548), // 2024-06-19T07:19:08Z
+  addedAt: UnixTime(1718781548), // 2024-06-19T07:19:08Z
   display: {
     name: 'Transporter',
     slug: 'transporter',
