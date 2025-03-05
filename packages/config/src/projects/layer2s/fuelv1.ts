@@ -34,7 +34,7 @@ export const fuelv1: Layer2 = {
 
     links: {
       websites: ['https://fuel.sh/'],
-      documentation: ['https://docs.fuel.sh/'],
+      documentation: ['https://docs.fuel.network/'],
       explorers: ['https://mainnet.fuel.sh/network/'],
       repositories: [
         'https://github.com/FuelLabs/fuel-core',
