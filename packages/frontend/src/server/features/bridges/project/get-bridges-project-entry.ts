@@ -4,10 +4,10 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { bridges, isVerified } from '@l2beat/config'
+import { bridges } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { ProjectLink } from '~/components/projects/links/types'
+import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { isTvsChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
@@ -17,10 +17,8 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
 import { getBridgeTechnologySection } from '~/utils/project/technology/get-technology-section'
-import {
-  UnderReviewStatus,
-  getUnderReviewStatus,
-} from '~/utils/project/under-review'
+import type { UnderReviewStatus } from '~/utils/project/under-review'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getTvsProjectStats } from '../../scaling/tvs/get-tvs-project-stats'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
@@ -60,7 +58,17 @@ export interface BridgesProjectEntry {
 }
 
 export async function getBridgesProjectEntry(
-  project: Project<'tvlConfig' | 'bridgeInfo' | 'display', 'chainConfig'>,
+  project: Project<
+    | 'statuses'
+    | 'tvlInfo'
+    | 'tvlConfig'
+    | 'bridgeInfo'
+    | 'bridgeRisks'
+    | 'bridgeTechnology'
+    | 'display',
+    // optional
+    'chainConfig' | 'isArchived' | 'isUpcoming' | 'milestones'
+  >,
 ): Promise<BridgesProjectEntry> {
   /** @deprecated */
   const legacy = bridges.find((x) => x.id === project.id)
@@ -70,23 +78,21 @@ export async function getBridgesProjectEntry(
     getTvsProjectStats(project),
   ])
 
-  const isProjectVerified = isVerified(legacy)
   const changes = projectsChangeReport.getChanges(project.id)
-  const associatedTokens = legacy.config.associatedTokens ?? []
 
   const common: Omit<BridgesProjectEntry, 'sections'> = {
     name: project.name,
     slug: project.slug,
     underReviewStatus: getUnderReviewStatus({
-      isUnderReview: !!legacy.isUnderReview,
+      isUnderReview: project.statuses.isUnderReview,
       ...changes,
     }),
-    isArchived: !!legacy.isArchived,
-    isUpcoming: !!legacy.isUpcoming,
+    isArchived: !!project.isArchived,
+    isUpcoming: !!project.isUpcoming,
     header: {
       description: project.display.description,
-      warning: legacy.display.warning,
-      links: getProjectLinks(legacy.display.links),
+      warning: project.statuses.yellowWarning,
+      links: getProjectLinks(project.display.links),
       tvs: tvsProjectStats
         ? {
             tokenBreakdown: {
@@ -98,52 +104,52 @@ export async function getBridgesProjectEntry(
                       tvsProjectStats.tokenBreakdown.associated /
                       tvsProjectStats.tokenBreakdown.total,
                     name: project.name,
-                    associatedTokens,
+                    associatedTokens: project.tvlInfo.associatedTokens,
                   }),
               ]),
-              associatedTokens,
+              associatedTokens: project.tvlInfo.associatedTokens,
             },
             tvsBreakdown: tvsProjectStats.tvsBreakdown,
           }
         : undefined,
-      destination: getDestination(legacy.technology.destination),
+      destination: getDestination(project.bridgeInfo.destination),
       category: project.bridgeInfo.category,
-      validatedBy: legacy.riskView?.validatedBy,
+      validatedBy: project.bridgeRisks.validatedBy,
     },
   }
 
   await api.tvs.chart.prefetch({
     range: '1y',
-    filter: { type: 'projects', projectIds: [legacy.id] },
+    filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
   })
   const [tvsChartData, tokens] = await Promise.all([
     api.tvs.chart({
       range: '1y',
-      filter: { type: 'projects', projectIds: [legacy.id] },
+      filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
-    getTokensForProject(legacy.id),
+    getTokensForProject(project.id),
   ])
 
   const sections: ProjectDetailsSection[] = []
 
-  if (!legacy.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     sections.push({
       type: 'ChartSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        projectId: legacy.id,
+        projectId: project.id,
         tokens: tokens,
         isBridge: true,
-        milestones: legacy.milestones ?? [],
+        milestones: project.milestones ?? [],
       },
     })
   }
 
-  if (legacy.milestones && legacy.milestones.length > 0) {
-    const sortedMilestones = legacy.milestones.sort(
+  if (project.milestones && project.milestones.length > 0) {
+    const sortedMilestones = project.milestones.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     )
     sections.push({
@@ -162,13 +168,16 @@ export async function getBridgesProjectEntry(
       props: {
         id: 'detailed-description',
         title: 'Detailed description',
-        description: legacy.display.description,
+        description: project.display.description,
         detailedDescription: legacy.display.detailedDescription,
       },
     })
   }
 
-  const riskSummary = getBridgesRiskSummarySection(legacy, isProjectVerified)
+  const riskSummary = getBridgesRiskSummarySection(
+    legacy,
+    !project.statuses.isUnverified,
+  )
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -176,7 +185,7 @@ export async function getBridgesProjectEntry(
         id: 'risk-analysis',
         title: 'Risk summary',
         ...riskSummary,
-        isUnderReview: legacy.isUnderReview,
+        isUnderReview: project.statuses.isUnderReview,
       },
     })
   }
@@ -195,8 +204,8 @@ export async function getBridgesProjectEntry(
 
   const permissionsSection = getPermissionsSection({
     type: 'bridge',
-    id: legacy.id,
-    isUnderReview: !!legacy.isUnderReview,
+    id: project.id,
+    isUnderReview: project.statuses.isUnderReview,
     permissions: legacy.permissions,
   })
   if (permissionsSection) {
@@ -213,11 +222,11 @@ export async function getBridgesProjectEntry(
   const contractsSection = getContractsSection(
     {
       type: 'bridge',
-      id: legacy.id,
-      isVerified: isProjectVerified,
-      slug: legacy.display.slug,
+      id: project.id,
+      isVerified: !project.statuses.isUnverified,
+      slug: project.slug,
       contracts: legacy.contracts,
-      isUnderReview: legacy.isUnderReview,
+      isUnderReview: project.statuses.isUnderReview,
       escrows: legacy.config.escrows,
       hostChainName: 'Ethereum',
     },

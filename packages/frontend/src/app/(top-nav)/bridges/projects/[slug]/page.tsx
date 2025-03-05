@@ -51,9 +51,18 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = await ps.getProject({
     slug: params.slug,
-    select: ['display', 'tvlConfig', 'bridgeInfo', 'display'],
+    select: [
+      'display',
+      'statuses',
+      'tvlInfo',
+      'tvlConfig',
+      'bridgeInfo',
+      'bridgeRisks',
+      'bridgeTechnology',
+      'display',
+    ],
     where: ['isBridge'],
-    optional: ['chainConfig'],
+    optional: ['chainConfig', 'isArchived', 'isUpcoming', 'milestones'],
   })
 
   if (!project) {
