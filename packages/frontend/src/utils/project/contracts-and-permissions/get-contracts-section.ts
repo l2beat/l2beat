@@ -10,10 +10,10 @@ import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
-import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
+import { ContractUtils } from './get-contract-utils'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
@@ -35,6 +35,7 @@ type ContractsSection = Omit<
 
 export function getContractsSection(
   projectParams: ProjectParams,
+  contractUtils: ContractUtils,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
   if (!projectParams.contracts) {
@@ -54,7 +55,7 @@ export function getContractsSection(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
       ([chainName, contracts]) => {
         return [
-          slugToDisplayName(chainName),
+          contractUtils.getChainName(chainName),
           contracts.map((contract) => {
             return makeTechnologyContract(
               contract,

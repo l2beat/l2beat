@@ -1,13 +1,13 @@
 import type { ProjectPermission, ProjectPermissions } from '@l2beat/config'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
-import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
 import type { UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
+import { ContractUtils } from './get-contract-utils'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
@@ -46,6 +46,7 @@ function permissionsAreEmpty(
 
 export function getPermissionsSection(
   projectParams: ProjectParams,
+  contractUtils: ContractUtils,
 ): PermissionSection | undefined {
   if (!projectParams.permissions) {
     return undefined
@@ -78,7 +79,7 @@ export function getPermissionsSection(
       Object.entries(projectParams.permissions ?? {}).map(
         ([slug, permissions]) => {
           return [
-            slugToDisplayName(slug),
+            contractUtils.getChainName(slug),
             getGroupedTechnologyContracts(projectParams, permissions),
           ]
         },

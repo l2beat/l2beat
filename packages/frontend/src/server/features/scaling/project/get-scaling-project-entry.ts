@@ -42,6 +42,7 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 
 export interface ScalingProjectEntry {
   type: 'layer3' | 'layer2'
@@ -540,14 +541,19 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const permissionsSection = getPermissionsSection({
-    id: project.id,
-    type: project.scalingInfo.layer,
-    hostChain: hostChain?.id,
-    isUnderReview: project.statuses.isUnderReview,
-    permissions: project.permissions,
-    daSolution,
-  })
+  const contractUtils = await getContractUtils()
+
+  const permissionsSection = getPermissionsSection(
+    {
+      id: project.id,
+      type: project.scalingInfo.layer,
+      hostChain: hostChain?.id,
+      isUnderReview: project.statuses.isUnderReview,
+      permissions: project.permissions,
+      daSolution,
+    },
+    contractUtils,
+  )
   if (permissionsSection) {
     const permissionedEntities = project.customDa?.dac?.knownMembers
 
@@ -573,6 +579,7 @@ export async function getScalingProjectEntry(
       architectureImage: project.scalingTechnology.architectureImage,
       daSolution,
     },
+    contractUtils,
     projectsChangeReport,
   )
   if (contractsSection) {

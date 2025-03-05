@@ -20,6 +20,7 @@ import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getTvsProjectStats } from '../../scaling/tvs/get-tvs-project-stats'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 
 export interface BridgesProjectEntry {
   name: string
@@ -202,12 +203,17 @@ export async function getBridgesProjectEntry(
     })
   }
 
-  const permissionsSection = getPermissionsSection({
-    type: 'bridge',
-    id: project.id,
-    isUnderReview: project.statuses.isUnderReview,
-    permissions: project.permissions,
-  })
+  const contractUtils = await getContractUtils()
+
+  const permissionsSection = getPermissionsSection(
+    {
+      type: 'bridge',
+      id: project.id,
+      isUnderReview: project.statuses.isUnderReview,
+      permissions: project.permissions,
+    },
+    contractUtils,
+  )
   if (permissionsSection) {
     sections.push({
       type: 'PermissionsSection',
@@ -228,6 +234,7 @@ export async function getBridgesProjectEntry(
       isUnderReview: project.statuses.isUnderReview,
       contracts: project.contracts,
     },
+    contractUtils,
     projectsChangeReport,
   )
   if (contractsSection)

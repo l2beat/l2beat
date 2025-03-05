@@ -7,6 +7,7 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getDaThroughputSection } from './get-da-throughput-section'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 
 type RegularDetailsParams = {
   layer: Project<
@@ -30,14 +31,19 @@ export async function getRegularDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
+  const contractUtils = await getContractUtils()
+
   const permissionsSection =
     bridge?.permissions &&
-    getPermissionsSection({
-      type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-      id: layer.id,
-      isUnderReview: layer.statuses.isUnderReview,
-      permissions: bridge.permissions,
-    })
+    getPermissionsSection(
+      {
+        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
+        id: layer.id,
+        isUnderReview: layer.statuses.isUnderReview,
+        permissions: bridge.permissions,
+      },
+      contractUtils,
+    )
 
   const contractsSection =
     bridge?.contracts &&
@@ -50,6 +56,7 @@ export async function getRegularDaProjectSections({
         contracts: bridge.contracts ?? {},
         isUnderReview: layer.statuses.isUnderReview,
       },
+      contractUtils,
       projectsChangeReport,
     )
 
