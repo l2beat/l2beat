@@ -1099,6 +1099,7 @@ export interface ProjectContracts {
   addresses: Record<string, ProjectContract[]>
   /** List of risks associated with the contracts */
   risks: ScalingProjectRisk[]
+  escrows?: ProjectEscrow[]
 }
 
 export interface ProjectDiscoveryInfo {

@@ -582,7 +582,7 @@ export async function getScalingProjectEntry(
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: project.statuses.isUnderReview,
-      escrows: legacy.config.escrows,
+      escrows: project.contracts.escrows,
       architectureImage: project.scalingTechnology.architectureImage,
       daSolution,
     },

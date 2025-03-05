@@ -53,6 +53,7 @@ function adjustLegacy(
     }
   }
   adjustContracts(project, chains)
+  adjustEscrows(project)
 
   project.discoveryInfo = getDiscoveryInfo(project)
 }
@@ -98,5 +99,11 @@ function adjustBadges(project: Layer2, l3s: Layer3[]) {
     project.badges = mergeBadges(project.badges ?? [], [
       BADGES.Other.L3HostChain,
     ])
+  }
+}
+
+function adjustEscrows(project: Layer2 | Layer3 | Bridge) {
+  if (project.contracts) {
+    project.contracts.escrows = project.config.escrows
   }
 }
