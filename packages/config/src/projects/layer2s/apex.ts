@@ -30,11 +30,11 @@ import {
 const discovery = new ProjectDiscovery('apex')
 
 const upgradeDelaySecondsUSDC = discovery.getContractValue<number>(
-  'StarkExchangeUSDC',
+  'StarkPerpetualUSDC',
   'StarkWareDiamond_upgradeDelay',
 )
 const upgradeDelaySecondsUSDT = discovery.getContractValue<number>(
-  'StarkExchangeUSDT',
+  'StarkPerpetualUSDT',
   'StarkWareDiamond_upgradeDelay',
 )
 
@@ -49,12 +49,12 @@ const includingSHARPUpgradeDelaySeconds = Math.min(
 )
 
 const freezeGracePeriodUSDC = discovery.getContractValue<number>(
-  'StarkExchangeUSDC',
+  'StarkPerpetualUSDC',
   'FREEZE_GRACE_PERIOD',
 )
 
 const freezeGracePeriodUSDT = discovery.getContractValue<number>(
-  'StarkExchangeUSDT',
+  'StarkPerpetualUSDT',
   'FREEZE_GRACE_PERIOD',
 )
 

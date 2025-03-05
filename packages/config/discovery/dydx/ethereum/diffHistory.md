@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xb844bd6d912312c4ed9b9b2cba006df5f01d5c34
+
+# Diff at Wed, 05 Mar 2025 14:58:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21343041
+- current block number: 21343041
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).
+      values.programHashMapped:
++        "3022993219738828102988654230098311570191704199468817569337520096526584973032"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      displayName:
++        "GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`)."
+    }
+```
+
 Generated with discovered.json: 0xca660cc957c983c4624df9c0a50391be04f085a2
 
 # Diff at Tue, 04 Mar 2025 10:39:05 GMT:

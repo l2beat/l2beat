@@ -96,7 +96,7 @@ export const layer2financezk: Layer2 = {
   contracts: {
     addresses: {
       [discovery.chain]: [
-        discovery.getContractDetails('Proxy', {
+        discovery.getContractDetails('StarkExchange', {
           name: 'StarkExchange',
         }),
         discovery.getContractDetails('Committee'),
