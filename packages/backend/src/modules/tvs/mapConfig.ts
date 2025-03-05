@@ -1,12 +1,18 @@
 import { createHash } from 'crypto'
+import type { Logger } from '@l2beat/backend-tools'
 import {
+  type AggLayerEscrow,
   type ChainConfig,
+  type ElasticChainEscrow,
   type Project,
   type ProjectTvlEscrow,
   tokenList,
 } from '@l2beat/config'
+import type { RpcClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { getAggLayerTokens } from './providers/aggLayer'
+import { getElasticChainTokens } from './providers/elasticChain'
 import {
   type AmountConfig,
   type AmountFormula,
@@ -21,29 +27,61 @@ import {
   type ValueFormula,
 } from './types'
 
-export function mapConfig(
+export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
-): TvsConfig {
+  logger: Logger,
+  rpcClient?: RpcClient,
+): Promise<TvsConfig> {
   const tokens: Token[] = []
 
-  // map escrows to tokens
   for (const escrow of project.tvlConfig.escrows) {
-    // TODO - implement support for shared escrows
     if (escrow.sharedEscrow) {
-      continue
-    }
-
-    for (const legacyToken of escrow.tokens) {
-      if (!legacyToken.id.endsWith('native')) {
-        assert(
-          legacyToken.address,
-          `Token address is required ${legacyToken.id}`,
-        )
+      if (rpcClient === undefined) {
+        logger.warn(`No Multicall passed, sharedEscrow support is not enabled`)
+        continue
       }
 
-      const token = createToken(legacyToken, project, chain, escrow)
-      tokens.push(token)
+      if (escrow.sharedEscrow.type === 'AggLayer') {
+        logger.info(`Querying for AggLayer L2 tokens addresses`)
+        const aggLayerL2Tokens = await getAggLayerTokens(
+          project,
+          chain,
+          // TODO: fix types
+          escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+          rpcClient,
+        )
+
+        // TODO: add support for L1 assets
+        // add support for native token
+        tokens.push(...aggLayerL2Tokens)
+      }
+
+      if (escrow.sharedEscrow.type === 'ElasticChain') {
+        logger.info(`Querying for ElasticChain L2 tokens addresses`)
+
+        const elasticChainTokens = await getElasticChainTokens(
+          project,
+          chain,
+          // TODO: fix types
+          escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+          rpcClient,
+        )
+
+        tokens.push(...elasticChainTokens)
+      }
+    } else {
+      for (const legacyToken of escrow.tokens) {
+        if (!legacyToken.id.endsWith('native')) {
+          assert(
+            legacyToken.address,
+            `Token address is required ${legacyToken.id}`,
+          )
+        }
+
+        const token = createToken(legacyToken, project, chain, escrow)
+        tokens.push(token)
+      }
     }
   }
 
@@ -62,7 +100,7 @@ export function mapConfig(
   }
 }
 
-function createToken(
+export function createToken(
   legacyToken: LegacyToken,
   project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,

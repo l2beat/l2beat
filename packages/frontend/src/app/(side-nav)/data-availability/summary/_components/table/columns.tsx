@@ -42,12 +42,7 @@ const daBridgeRisksColumn = columnHelper.display({
     if (!bridge) {
       return EM_DASH
     }
-    return (
-      <GrissiniCell
-        values={bridge.risks.values}
-        hasNoBridge={bridge.risks.isNoBridge}
-      />
-    )
+    return <GrissiniCell values={bridge.risks} />
   },
   meta: {
     align: 'center',
