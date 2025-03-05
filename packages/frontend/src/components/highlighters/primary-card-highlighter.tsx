@@ -6,6 +6,11 @@ export function PrimaryCardHighlighter() {
   const handleHashChange = () => {
     const hash = window.location.hash
     if (hash) {
+      document
+        .querySelectorAll(`.primary-card[data-highlighted]`)
+        .forEach((el) => {
+          el.removeAttribute('data-highlighted')
+        })
       const element = document.querySelector(hash)
 
       if (element) {
