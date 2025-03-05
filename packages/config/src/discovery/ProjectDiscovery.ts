@@ -1,3 +1,4 @@
+import { existsSync } from 'fs'
 import { join } from 'path'
 import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import type {
@@ -31,6 +32,7 @@ import type {
 } from '../types'
 import type { PermissionRegistry } from './PermissionRegistry'
 import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
+import { PermissionsFromModel } from './PermissionsFromModel'
 import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 import {
@@ -47,16 +49,22 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    configReader = new ConfigReader(join(process.cwd(), '../config')),
+    public readonly configReader = new ConfigReader(
+      join(process.cwd(), '../config'),
+    ),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
-    this.permissionRegistry = new PermissionsFromDiscovery(this)
     this.discoveries = [
       discovery,
       ...(discovery.sharedModules ?? []).map((module) =>
         configReader.readDiscovery(module, chain),
       ),
     ]
+    const projectPath = configReader.getProjectPath(projectName)
+    const projectPageFactsPath = join(projectPath, 'projectPageFacts.json')
+    this.permissionRegistry = existsSync(projectPageFactsPath)
+      ? new PermissionsFromModel(this)
+      : new PermissionsFromDiscovery(this)
   }
 
   getEOAName(address: EthereumAddress): string {
