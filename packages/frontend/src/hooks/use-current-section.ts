@@ -31,30 +31,15 @@ export function useCurrentSection(threshold?: Threshold) {
       return
     }
 
-    const current = sections
-      .map((section) => {
-        const sectionTop = section.offsetTop
-        const sectionHeight = section.offsetHeight
-        const sectionBottom = sectionTop + sectionHeight
-
-        const scrollPos =
-          window.scrollY + getViewportHeightOffset(threshold, isMobile)
-
-        return {
-          section,
-          offset:
-            scrollPos < sectionTop
-              ? sectionTop - scrollPos
-              : scrollPos > sectionBottom
-                ? scrollPos - sectionBottom
-                : 0,
-        }
-      })
-      .sort((a, b) => a.offset - b.offset)[0]
-
+    const current = sections.findLast((section) => {
+      return (
+        section.getBoundingClientRect().top <
+        getViewportHeightOffset(threshold, isMobile)
+      )
+    })
     if (!current) return
 
-    setCurrentSection(current.section)
+    setCurrentSection(current)
   }, [isMobile, threshold])
 
   useEffect(() => {

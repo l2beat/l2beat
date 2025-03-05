@@ -109,7 +109,9 @@ export function ScalingProjectStats({ project, className }: Props) {
 
         return (
           <Fragment key={i}>
-            {statGroup.map((stat) => stat)}
+            {statGroup.map((stat, j) => (
+              <Fragment key={`${i}-${j}`}>{stat}</Fragment>
+            ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
             )}
@@ -130,6 +132,7 @@ interface ProjectStat {
 function ProjectStat(props: ProjectStat) {
   return (
     <li
+      key={props.title}
       className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,

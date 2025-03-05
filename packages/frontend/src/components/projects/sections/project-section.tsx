@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react'
 
 import { ProjectSectionHighlighter } from '~/components/highlighters/project-section-highlighter'
+import { PrimaryCard } from '~/components/primary-card'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import type { ProjectSectionId } from './types'
@@ -21,36 +22,39 @@ export interface ExtendedProjectSectionProps {
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   return (
-    <Component
+    <PrimaryCard
       id={props.id}
       className={cn(
-        'relative bg-surface-primary p-4 primary-card md:mt-10 md:rounded-lg md:p-8',
+        'relative md:mt-10 md:rounded-lg md:p-8',
         'data-[highlighted]:before:absolute data-[highlighted]:before:inset-0 data-[highlighted]:before:rounded-lg data-[highlighted]:before:border-2 data-[highlighted]:before:border-brand data-[highlighted]:before:shadow-[0px_4px_12px_10px] data-[highlighted]:before:shadow-[#FF5FFB40]',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
+      asChild
     >
-      <ProjectDetailsSectionHeader
-        title={props.title}
-        id={props.id}
-        sectionOrder={props.sectionOrder}
-        nested={props.nested}
-        className="mb-4"
-      />
-      {props.isUnderReview ? (
-        !props.hideChildrenIfUnderReview ? (
-          <>
-            <UnderReviewCallout className="mb-4" />
-            {props.children}
-          </>
+      <Component>
+        <ProjectDetailsSectionHeader
+          title={props.title}
+          id={props.id}
+          sectionOrder={props.sectionOrder}
+          nested={props.nested}
+          className="mb-4"
+        />
+        {props.isUnderReview ? (
+          !props.hideChildrenIfUnderReview ? (
+            <>
+              <UnderReviewCallout className="mb-4" />
+              {props.children}
+            </>
+          ) : (
+            <UnderReviewCallout />
+          )
         ) : (
-          <UnderReviewCallout />
-        )
-      ) : (
-        props.children
-      )}
-      <ProjectSectionHighlighter />
-    </Component>
+          props.children
+        )}
+        <ProjectSectionHighlighter />
+      </Component>
+    </PrimaryCard>
   )
 }
 
