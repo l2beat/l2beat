@@ -25,6 +25,3 @@ export {
 } from './tokens/tokens'
 export type * from './types'
 export { getCommonContractsIn } from './utils/commonContracts'
-import { runConfigAdjustments } from './adjustments'
-
-runConfigAdjustments()

@@ -33,8 +33,11 @@ import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
+import { runConfigAdjustments } from '../../adjustments'
 
 export function getProjects(): BaseProject[] {
+  runConfigAdjustments()
+
   return refactored
     .concat(layer2s.map((p) => layer2Or3ToProject(p, [])))
     .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s)))
