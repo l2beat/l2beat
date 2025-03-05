@@ -1,4 +1,4 @@
-import { existsSync } from 'fs'
+
 import { join } from 'path'
 import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import type {
@@ -60,11 +60,10 @@ export class ProjectDiscovery {
         configReader.readDiscovery(module, chain),
       ),
     ]
-    const projectPath = configReader.getProjectPath(projectName)
-    const projectPageFactsPath = join(projectPath, 'projectPageFacts.json')
-    this.permissionRegistry = existsSync(projectPageFactsPath)
-      ? new PermissionsFromModel(this)
-      : new PermissionsFromDiscovery(this)
+    this.permissionRegistry =
+      configReader.getDisplayMode(projectName) === 'fromModel'
+        ? new PermissionsFromModel(this)
+        : new PermissionsFromDiscovery(this)
   }
 
   getEOAName(address: EthereumAddress): string {
