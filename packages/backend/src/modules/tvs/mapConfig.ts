@@ -258,9 +258,7 @@ function processFormula(
     }
 
     if (f.type === 'value') {
-      if (f.amount.type !== 'const') {
-        processFormulaRecursive(f.amount)
-      }
+      processFormulaRecursive(f.amount)
 
       const price = createPriceConfig(f)
       formulaPrices.push(price)
