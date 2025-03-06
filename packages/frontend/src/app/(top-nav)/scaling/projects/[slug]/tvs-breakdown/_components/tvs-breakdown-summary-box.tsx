@@ -45,20 +45,20 @@ export function TvsBreakdownSummaryBox(props: Props) {
         change={props.canonical.change}
       />
       <StatsItem
-        title="Externally Bridged"
-        tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Externally Bridged Value"
-        smallMobileTitle="External"
-        value={props.external.value}
-        change={props.external.change}
-      />
-      <StatsItem
         title="Natively Minted"
         tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
         mobileTitle="Natively Minted Tokens"
         smallMobileTitle="Native"
         value={props.native.value}
         change={props.native.change}
+      />
+      <StatsItem
+        title="Externally Bridged"
+        tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
+        mobileTitle="Externally Bridged Value"
+        smallMobileTitle="External"
+        value={props.external.value}
+        change={props.external.change}
       />
     </div>
   )

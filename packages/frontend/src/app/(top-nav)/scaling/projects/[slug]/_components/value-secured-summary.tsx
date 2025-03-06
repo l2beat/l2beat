@@ -43,18 +43,18 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
       icon: <Square variant="canonical" size="small" />,
     },
     {
-      label: 'Externally Bridged',
-      shortLabel: 'External',
-      value: formatCurrency(params.breakdown.external, 'usd'),
-      usage: params.usage.external,
-      icon: <Square variant="external" size="small" />,
-    },
-    {
       label: 'Natively Minted',
       shortLabel: 'Native',
       value: formatCurrency(params.breakdown.native, 'usd'),
       usage: params.usage.native,
       icon: <Square variant="native" size="small" />,
+    },
+    {
+      label: 'Externally Bridged',
+      shortLabel: 'External',
+      value: formatCurrency(params.breakdown.external, 'usd'),
+      usage: params.usage.external,
+      icon: <Square variant="external" size="small" />,
     },
   ]
 
