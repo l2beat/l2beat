@@ -1,8 +1,8 @@
 import { unlinkSync } from 'fs'
-import { ProjectDatabase } from './ProjectDatabase'
-import type { BaseProject } from './types'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { ProjectDatabase } from './ProjectDatabase'
+import type { BaseProject } from './types'
 
 describe(ProjectDatabase.name, () => {
   let db: ProjectDatabase

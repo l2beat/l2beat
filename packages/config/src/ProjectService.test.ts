@@ -1,9 +1,9 @@
+import { unlinkSync } from 'fs'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { BaseProject } from './types'
-import { ProjectService } from './ProjectService'
 import { ProjectDatabase } from './ProjectDatabase'
-import { unlinkSync } from 'fs'
+import { ProjectService } from './ProjectService'
+import type { BaseProject } from './types'
 
 describe(ProjectService.name, () => {
   const projects: BaseProject[] = [

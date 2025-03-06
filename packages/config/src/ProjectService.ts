@@ -1,5 +1,5 @@
-import type { ProjectId } from '@l2beat/shared-pure'
 import { join } from 'path'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject } from './types'
 

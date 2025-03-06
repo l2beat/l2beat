@@ -1,6 +1,6 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
 import sqlite3 from 'sqlite3'
 import type { BaseProject } from './types'
-import { assertUnreachable } from '@l2beat/shared-pure'
 
 type SqliteType =
   | 'TEXT PRIMARY KEY'

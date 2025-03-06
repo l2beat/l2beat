@@ -1,9 +1,9 @@
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
+import { chains } from '../projects/chains'
 import type { GeneratedToken } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
-import { chains } from '../projects/chains'
 
 const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/generated.json'
