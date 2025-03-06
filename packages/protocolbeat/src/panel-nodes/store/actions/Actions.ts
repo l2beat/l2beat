@@ -9,11 +9,7 @@ export interface Actions {
   onMouseUp: (event: MouseEvent) => void
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
-  loadNodes: (
-    projectId: string,
-    nodes: Node[],
-    opts?: { hideUnknowns?: boolean },
-  ) => void
+  loadNodes: (projectId: string, nodes: Node[]) => void
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
   hideSelected: () => void
