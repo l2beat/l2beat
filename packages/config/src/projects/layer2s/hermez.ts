@@ -20,7 +20,7 @@ export const hermez: Layer2 = {
   type: 'layer2',
   id: ProjectId('hermez'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {
     name: 'Polygon Hermez',
@@ -58,7 +58,7 @@ export const hermez: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0xA68D85dF56E733A06443306A095646317B5Fa633'),
-        sinceTimestamp: new UnixTime(1616482490),
+        sinceTimestamp: UnixTime(1616482490),
         tokens: '*',
         chain: 'ethereum',
       },

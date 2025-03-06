@@ -8,7 +8,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
 export const rari: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
+  addedAt: UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   discovery,
@@ -56,7 +56,7 @@ export const rari: Layer3 = orbitStackL3({
     name: 'rari',
     chainId: 1380012617,
     explorerUrl: 'https://mainnet.explorer.rarichain.org',
-    sinceTimestamp: new UnixTime(1705716145),
+    sinceTimestamp: UnixTime(1705716145),
     apis: [
       {
         type: 'rpc',

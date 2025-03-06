@@ -8,7 +8,7 @@ import { opStackL3 } from '../layer2s/templates/opStack'
 const discovery = new ProjectDiscovery('ham', 'base')
 
 export const ham: Layer3 = opStackL3({
-  addedAt: new UnixTime(1722499160), // 2024-08-01T07:59:20Z
+  addedAt: UnixTime(1722499160), // 2024-08-01T07:59:20Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],
@@ -41,7 +41,7 @@ export const ham: Layer3 = opStackL3({
       ],
     },
   },
-  genesisTimestamp: new UnixTime(1716590734),
+  genesisTimestamp: UnixTime(1716590734),
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k=',

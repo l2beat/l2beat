@@ -8,7 +8,7 @@ import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('orderly')
 
 export const orderly: Layer2 = opStackL2({
-  addedAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
+  addedAt: UnixTime(1707309065), // 2024-02-07T12:31:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
@@ -45,7 +45,7 @@ export const orderly: Layer2 = opStackL2({
       chain: 'arbitrum',
       includeInTotal: false,
       address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
-      sinceTimestamp: new UnixTime(1697682598),
+      sinceTimestamp: UnixTime(1697682598),
       tokens: ['USDC'],
       source: 'external',
       bridgedUsing: {
@@ -60,7 +60,7 @@ export const orderly: Layer2 = opStackL2({
       chain: 'optimism',
       includeInTotal: false,
       address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
-      sinceTimestamp: new UnixTime(1701153879),
+      sinceTimestamp: UnixTime(1701153879),
       tokens: ['USDC'],
       source: 'external',
       bridgedUsing: {
@@ -75,7 +75,7 @@ export const orderly: Layer2 = opStackL2({
       chain: 'base',
       includeInTotal: false,
       address: EthereumAddress('0x816f722424b49cf1275cc86da9840fbd5a6167e9'),
-      sinceTimestamp: new UnixTime(1712584295),
+      sinceTimestamp: UnixTime(1712584295),
       tokens: ['USDC'],
       source: 'external',
       bridgedUsing: {
@@ -90,7 +90,7 @@ export const orderly: Layer2 = opStackL2({
       chain: 'mantle',
       includeInTotal: false,
       address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
-      sinceTimestamp: new UnixTime(1705831672),
+      sinceTimestamp: UnixTime(1705831672),
       tokens: ['USDC'],
       source: 'external',
       bridgedUsing: {
@@ -104,7 +104,7 @@ export const orderly: Layer2 = opStackL2({
     {
       chain: 'ethereum',
       address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
-      sinceTimestamp: new UnixTime(1705702751),
+      sinceTimestamp: UnixTime(1705702751),
       tokens: ['USDC'],
       source: 'external',
       bridgedUsing: {
@@ -127,7 +127,7 @@ export const orderly: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1696566432),
+  genesisTimestamp: UnixTime(1696566432),
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',

@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const wonderfi: Layer2 = upcomingL2({
   id: 'wonderfi',
   capability: 'universal',
-  addedAt: new UnixTime(1740073109), // 2025-01-20T17:38:29Z
+  addedAt: UnixTime(1740073109), // 2025-01-20T17:38:29Z
   display: {
     name: 'WonderFi',
     slug: 'wonderfi',

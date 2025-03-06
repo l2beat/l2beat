@@ -61,7 +61,7 @@ export const myria: Layer2 = {
   type: 'layer2',
   id: ProjectId('myria'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -104,13 +104,13 @@ export const myria: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
-        sinceTimestamp: new UnixTime(1659542607),
+        sinceTimestamp: UnixTime(1659542607),
         tokens: ['ETH'],
       }),
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1659542607),
+      sinceTimestamp: UnixTime(1659542607),
       resyncLastDays: 7,
     },
   },

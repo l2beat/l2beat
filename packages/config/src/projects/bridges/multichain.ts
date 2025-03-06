@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('multichain')
 export const multichain: Bridge = {
   type: 'bridge',
   id: ProjectId('multichain'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Multichain',
     slug: 'multichain',
@@ -26,7 +26,7 @@ export const multichain: Bridge = {
   config: {
     escrows: config.escrows.map((escrow) => ({
       address: EthereumAddress(escrow.address),
-      sinceTimestamp: new UnixTime(escrow.sinceTimestamp),
+      sinceTimestamp: UnixTime(escrow.sinceTimestamp),
       tokens: escrow.tokens,
       chain: 'ethereum',
     })),

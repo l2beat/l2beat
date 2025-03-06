@@ -29,7 +29,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const gpt: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['AI'],
   isArchived: true,
@@ -92,7 +92,7 @@ export const gpt: Layer2 = polygonCDKStack({
   },
   chainConfig: {
     chainId: 1511670449,
-    sinceTimestamp: new UnixTime(1716807971),
+    sinceTimestamp: UnixTime(1716807971),
     name: 'gpt',
     apis: [
       {

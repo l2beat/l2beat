@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const intmax: Layer2 = upcomingL2({
   id: 'intmax',
   capability: 'universal',
-  addedAt: new UnixTime(1722256071), // 2024-07-29T12:27:51Z
+  addedAt: UnixTime(1722256071), // 2024-07-29T12:27:51Z
   display: {
     name: 'INTMAX',
     slug: 'intmax',

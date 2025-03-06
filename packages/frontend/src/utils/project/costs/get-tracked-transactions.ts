@@ -19,7 +19,7 @@ export function getTrackedTransactions(
     return undefined
   }
 
-  const now = UnixTime.now().toNumber()
+  const now = UnixTime.now()
   const txs = project.trackedTxsConfig
     .filter((x): x is TrackedTxCostsConfig => x.type === 'l2costs')
     .map(

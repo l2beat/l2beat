@@ -6,7 +6,7 @@ import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('form')
-const genesisTimestamp = new UnixTime(1733419991)
+const genesisTimestamp = UnixTime(1733419991)
 
 export const form: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
@@ -15,7 +15,7 @@ export const form: Layer2 = opStackL2({
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0=',
   },
   capability: 'universal',
-  addedAt: new UnixTime(1717490033), // 2024-06-04T08:33:53Z
+  addedAt: UnixTime(1717490033), // 2024-06-04T08:33:53Z
   additionalPurposes: ['Social'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [

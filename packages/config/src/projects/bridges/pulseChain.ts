@@ -20,7 +20,7 @@ const numOfValidators = discovery.getContractValue<number>(
 export const pulseChain: Bridge = {
   type: 'bridge',
   id: ProjectId('pulseChain'),
-  addedAt: new UnixTime(1684347955), // 2023-05-17T18:25:55Z
+  addedAt: UnixTime(1684347955), // 2023-05-17T18:25:55Z
   display: {
     name: 'PulseChain',
     slug: 'pulsechain',
@@ -43,7 +43,7 @@ export const pulseChain: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x1715a3E4A142d8b698131108995174F37aEBA10D'),
-        sinceTimestamp: new UnixTime(1684137600),
+        sinceTimestamp: UnixTime(1684137600),
         tokens: '*',
       }),
     ],

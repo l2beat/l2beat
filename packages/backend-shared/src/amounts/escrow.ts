@@ -4,7 +4,6 @@ import {
   AssetId,
   type EscrowEntry,
   type Token,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { getEscrowUntilTimestamp } from '../getEscrowUntilTimestamp'
 
@@ -25,8 +24,8 @@ export function getEscrowEntry(
   const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
     token.symbol,
   )
-  const sinceTimestamp = UnixTime.max(
-    UnixTime.max(chain.sinceTimestamp, token.sinceTimestamp),
+  const sinceTimestamp = Math.max(
+    Math.max(chain.sinceTimestamp, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
   const source = escrow.source ?? 'canonical'

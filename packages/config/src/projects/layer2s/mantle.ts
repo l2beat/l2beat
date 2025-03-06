@@ -81,7 +81,7 @@ The confirmDataStore() function verify the signatures and if the quorum is reach
 }
 
 export const mantle: Layer2 = opStackL2({
-  addedAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
+  addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   daProvider: {
     layer: DA_LAYERS.MANTLE_DA,
     bridge: DA_BRIDGES.STAKED_OPERATORS({
@@ -147,12 +147,12 @@ export const mantle: Layer2 = opStackL2({
       ],
     },
   },
-  genesisTimestamp: new UnixTime(1688428800),
+  genesisTimestamp: UnixTime(1688428800),
   chainConfig: {
     name: 'mantle',
     chainId: 5000,
     explorerUrl: 'https://explorer.mantle.xyz',
-    sinceTimestamp: new UnixTime(1688314886),
+    sinceTimestamp: UnixTime(1688314886),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

@@ -35,7 +35,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
         start,
         end,
       }) => {
-        const currentRecord = currentMap.get(timestamp.toNumber())
+        const currentRecord = currentMap.get(timestamp)
         const count = (currentRecord?.count ?? 0) + countValue
         const uopsCount =
           uopsCountValue !== null
@@ -65,20 +65,20 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
   ): Promise<Map<number, ActivityRecord>> {
     if (activityRecords.length === 0) return new Map()
 
-    let min = activityRecords[0].timestamp.toNumber()
+    let min = activityRecords[0].timestamp
     let max = min
 
     for (const record of activityRecords) {
-      const timestamp = record.timestamp.toNumber()
+      const timestamp = record.timestamp
       if (timestamp < min) min = timestamp
       if (timestamp > max) max = timestamp
     }
 
     const currentValues = await this.$.db.activity.getByProjectAndTimeRange(
       this.$.projectId,
-      [new UnixTime(min), new UnixTime(max)],
+      [UnixTime(min), UnixTime(max)],
     )
-    return new Map(currentValues.map((v) => [v.timestamp.toNumber(), v]))
+    return new Map(currentValues.map((v) => [v.timestamp, v]))
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

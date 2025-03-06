@@ -8,7 +8,7 @@ export const reddiozkvm: Layer2 = {
   type: 'layer2',
   id: ProjectId('reddiozkvm'),
   capability: 'universal',
-  addedAt: new UnixTime(1704460390), // 2024-01-05T13:13:10Z
+  addedAt: UnixTime(1704460390), // 2024-01-05T13:13:10Z
   display: {
     name: 'Reddio zkVM',
     slug: 'reddiozkvm',

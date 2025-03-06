@@ -1237,9 +1237,8 @@ function getTrackedTxs(
               selector: '0x9aaab648',
               functionSignature:
                 'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-              sinceTimestamp: new UnixTime(
-                l2OutputOracle.sinceTimestamp ??
-                  templateVars.genesisTimestamp.toNumber(),
+              sinceTimestamp: UnixTime(
+                l2OutputOracle.sinceTimestamp ?? templateVars.genesisTimestamp,
               ),
             },
           },

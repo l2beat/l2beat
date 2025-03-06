@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
   isArchived: true,
-  addedAt: new UnixTime(1690446197), // 2023-07-27T08:23:17Z
+  addedAt: UnixTime(1690446197), // 2023-07-27T08:23:17Z
   additionalBadges: [BADGES.Infra.Superchain, BADGES.RaaS.Conduit],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
@@ -42,7 +42,7 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       socialMedia: ['https://twitter.com/pgn_eth'],
     },
   },
-  genesisTimestamp: new UnixTime(1689108083),
+  genesisTimestamp: UnixTime(1689108083),
   stateDerivation: DERIVATION.OPSTACK('PGN'),
   isNodeAvailable: true,
   milestones: [

@@ -6,7 +6,7 @@ import { underReviewL3 } from '../layer2s/templates/underReview'
 export const xrone: Layer3 = underReviewL3({
   id: 'xrone',
   capability: 'universal',
-  addedAt: new UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
+  addedAt: UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     BADGES.RaaS.Caldera,
@@ -52,13 +52,13 @@ export const xrone: Layer3 = underReviewL3({
   escrows: [
     {
       address: EthereumAddress('0xcf28946c814356A2A9df19c57937917f7Ef9D3Cf'), // bridge (native token: XR)
-      sinceTimestamp: new UnixTime(1733960896),
+      sinceTimestamp: UnixTime(1733960896),
       tokens: ['ETH'],
       chain: 'arbitrum',
     },
     {
       address: EthereumAddress('0x3d450f3C54C3Fe0FA5ec1Eaf6Dd30F5eb88f5309'), // standardGW
-      sinceTimestamp: new UnixTime(1733960913),
+      sinceTimestamp: UnixTime(1733960913),
       tokens: '*',
       chain: 'arbitrum',
     },

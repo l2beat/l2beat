@@ -8,7 +8,7 @@ import { opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('thebinaryholdings')
 
 export const thebinaryholdings: Layer2 = opStackL2({
-  addedAt: new UnixTime(1726668186), // 2024-09-18T14:03:06Z
+  addedAt: UnixTime(1726668186), // 2024-09-18T14:03:06Z
   discovery,
   additionalBadges: [BADGES.RaaS.Zeeve],
   associatedTokens: ['BNRY'],
@@ -44,11 +44,11 @@ export const thebinaryholdings: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1719397465),
+  genesisTimestamp: UnixTime(1719397465),
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1719397463),
-    minTimestamp: new UnixTime(1719397465),
+    genesisTimestamp: UnixTime(1719397463),
+    minTimestamp: UnixTime(1719397465),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',

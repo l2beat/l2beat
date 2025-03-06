@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('hop')
 export const hop: Bridge = {
   type: 'bridge',
   id: ProjectId('hop'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Hop',
     slug: 'hop',
@@ -28,43 +28,43 @@ export const hop: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a'),
-        sinceTimestamp: new UnixTime(1623907245),
+        sinceTimestamp: UnixTime(1623907245),
         tokens: ['USDC'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1'),
-        sinceTimestamp: new UnixTime(1631654328),
+        sinceTimestamp: UnixTime(1631654328),
         tokens: ['DAI'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x3E4a3a4796d16c0Cd582C382691998f7c06420B6'),
-        sinceTimestamp: new UnixTime(1626739308),
+        sinceTimestamp: UnixTime(1626739308),
         tokens: ['USDT'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xb8901acB165ed027E32754E0FFe830802919727f'),
-        sinceTimestamp: new UnixTime(1633066189),
+        sinceTimestamp: UnixTime(1633066189),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2'),
-        sinceTimestamp: new UnixTime(1628225875),
+        sinceTimestamp: UnixTime(1628225875),
         tokens: ['MATIC'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x914f986a44AcB623A277d6Bd17368171FCbe4273'),
-        sinceTimestamp: new UnixTime(1663897247),
+        sinceTimestamp: UnixTime(1663897247),
         tokens: ['HOP'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x893246FACF345c99e4235E5A7bbEE7404c988b96'),
-        sinceTimestamp: new UnixTime(1664398079),
+        sinceTimestamp: UnixTime(1664398079),
         tokens: ['SNX'],
         chain: 'ethereum',
       },

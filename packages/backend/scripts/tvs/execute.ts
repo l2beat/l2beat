@@ -36,7 +36,8 @@ const cmd = command({
     const ps = new ProjectService()
     const localExecutor = new LocalExecutor(ps, env, logger)
 
-    const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+    const timestamp =
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     const tokens = readConfig(args.project, logger)
     const config = {
@@ -67,7 +68,7 @@ function calculateBreakdown(
   timestamp: UnixTime,
   project: string,
 ) {
-  const tokens = tvs.get(timestamp.toNumber())
+  const tokens = tvs.get(timestamp)
   assert(tokens, 'No data for timestamp')
 
   const tvsBreakdown: TvsBreakdown = {
@@ -158,7 +159,7 @@ function calculateBreakdown(
 
   return {
     project,
-    timestamp: timestamp.toDate().toISOString(),
+    timestamp: UnixTime.toDate(timestamp).toISOString(),
     tvs: toDollarString(tvsBreakdown.tvs),
     source: {
       canonical: {

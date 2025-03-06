@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const align: Layer2 = upcomingL2({
   id: 'align',
   capability: 'universal',
-  addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
+  addedAt: UnixTime(1719931843), // 2024-07-02T14:50:43Z
   display: {
     name: 'Align Network',
     slug: 'align',

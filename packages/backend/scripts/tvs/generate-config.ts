@@ -50,12 +50,13 @@ const cmd = command({
     const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 
     logger.info('Executing TVS to exclude zero-valued tokens')
-    const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+    const timestamp =
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
     const localExecutor = new LocalExecutor(ps, env, logger)
     const tvs = await localExecutor.run(tvsConfig, [timestamp], true)
 
     const nonZeroTokens = tvs
-      .get(timestamp.toNumber())
+      .get(timestamp)
       ?.filter((token) => token.value !== 0)
       // TODO replace with amountId matching
       .map((token) => token.tokenConfig)

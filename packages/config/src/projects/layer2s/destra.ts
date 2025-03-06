@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const destra: Layer2 = upcomingL2({
   id: 'destra',
   capability: 'universal',
-  addedAt: new UnixTime(1738496763), // 2025-02-02T15:23:30Z
+  addedAt: UnixTime(1738496763), // 2025-02-02T15:23:30Z
   display: {
     name: 'Destra',
     slug: 'destra',
