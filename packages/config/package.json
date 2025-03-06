@@ -5,7 +5,7 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && rm build/db.sqlite && node build/src/build.js",
+    "build": "tsc -p tsconfig.build.json && rm -f build/db.sqlite && node build/src/build.js",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "clean": "rm -rf build",
     "format:fix": "biome format --write .",
