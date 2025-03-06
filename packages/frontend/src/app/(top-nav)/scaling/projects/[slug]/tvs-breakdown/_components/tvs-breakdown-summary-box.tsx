@@ -1,4 +1,5 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import { ChartStats } from '~/components/core/chart/chart-stats'
 import {
   Tooltip,
   TooltipContent,
@@ -25,7 +26,7 @@ type Props = {
 
 export function TvsBreakdownSummaryBox(props: Props) {
   return (
-    <div className="flex flex-col justify-between gap-[7px] py-5 md:flex-row md:gap-2 md:rounded-lg md:bg-surface-primary md:p-6">
+    <ChartStats>
       <StatsItem
         title="Total value secured"
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
@@ -60,7 +61,7 @@ export function TvsBreakdownSummaryBox(props: Props) {
         value={props.external.value}
         change={props.external.change}
       />
-    </div>
+    </ChartStats>
   )
 }
 
