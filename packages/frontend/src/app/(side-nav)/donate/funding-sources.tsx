@@ -4,19 +4,40 @@ export const fundingSources = [
   {
     source: 'Ethereum Foundation',
     tier: 'Significant',
-    description: 'Different grants in years 2021-2024',
-  },
-  {
-    source: 'Optimism RPGF',
-    tier: 'Significant',
-    description: 'March 2023, January 2024',
+    description: 'Different grants in years 2021-2025',
   },
   {
     source:
       'Rewards & compensation for participating in L2 governance frameworks',
     tier: 'Medium',
     description:
-      'We are participating in the governance of Arbitrum, Optimism, Hop, Polygon, Uniswap and Connext, and more',
+      'We are participating in the governance of Arbitrum, Optimism, Hop, Polygon, Uniswap, Scroll and Connext, and more',
+  },
+  {
+    source:
+      'Processes and tooling around independent verification of ZK circuits',
+    tier: 'Medium',
+    description:
+      'Grant from Worldcoin Foundation',
+  },
+  {
+    source:
+      'DA solutions risk framework & dashboard',
+    tier: 'Medium',
+    description:
+      'Grant from Celestia',
+  },
+  {
+    source:
+      'Building infrastructure to count UOPS alongside TPS',
+    tier: 'Medium',
+    description:
+      'Grant from Starknet Foundation',
+  },
+  {
+    source: 'Optimism RPGF',
+    tier: 'Significant',
+    description: 'March 2023, January 2024',
   },
   {
     source: 'Gitcoin',
@@ -76,9 +97,9 @@ export const fundingSources = [
     ),
   },
   {
-    source: 'LayerZero transparency dashboard',
+    source: 'Exploratory work around LayerZero transparency dashboard',
     tier: 'Medium',
-    description: 'Project in progress. Funded by LayerZero',
+    description: 'Funded by LayerZero',
   },
   {
     source: 'DAC memberships',
