@@ -49,7 +49,7 @@ export default async function Page(props: Props) {
   const project = await ps.getProject({
     slug: params.slug,
     select: ['tvlConfig', 'tvlInfo'],
-    optional: ['chainConfig'],
+    optional: ['chainConfig', 'milestones'],
     where: ['isScaling'],
   })
 
@@ -93,7 +93,7 @@ export default async function Page(props: Props) {
         <PrimaryCard>
           <ProjectStackedTvsChart
             projectId={project.id}
-            milestones={[]}
+            milestones={project.milestones ?? []}
             tokens={tokens}
             isBridge={false}
           />
