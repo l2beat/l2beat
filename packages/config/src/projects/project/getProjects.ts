@@ -335,7 +335,7 @@ function toProjectEscrow(escrow: ProjectEscrow): ProjectTvlEscrow {
           (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
           !escrow.excludedTokens?.includes(token.symbol) &&
           (!token.untilTimestamp ||
-            token.untilTimestamp < escrow.sinceTimestamp),
+            token.untilTimestamp > escrow.sinceTimestamp),
       )
       .map((token) => ({
         ...token,
