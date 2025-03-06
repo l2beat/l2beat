@@ -1,5 +1,4 @@
 import type {
-  ChainConfig,
   ElasticChainEscrow,
   Project,
   ProjectTvlEscrow,
@@ -19,10 +18,10 @@ export const bridgeInterface = new utils.Interface([
 
 export async function getElasticChainTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig | undefined,
   escrow: ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
   rpcClient: RpcClient,
 ): Promise<Token[]> {
+  const chain = project.chainConfig
   assert(chain, `${project.id}: chain should be defined`)
   const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
     toMulticallConfigEntry(m),

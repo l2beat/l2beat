@@ -19,11 +19,7 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = await mapConfig(
-      arbitrum,
-      arbitrum.chainConfig,
-      Logger.SILENT,
-    )
+    const result = await mapConfig(arbitrum, Logger.SILENT)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)

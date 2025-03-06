@@ -102,7 +102,7 @@ async function generateConfigForProject(
     : undefined
 
   assert(project, `${projectId} project not found`)
-  return mapConfig(project, project.chainConfig, logger, rpc)
+  return mapConfig(project, logger, rpc)
 }
 
 function initLogger(env: Env) {

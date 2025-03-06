@@ -3,7 +3,6 @@ import { getEscrowUntilTimestamp } from '@l2beat/backend-shared'
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggLayerEscrow,
-  ChainConfig,
   ElasticChainEscrow,
   Project,
   ProjectTvlEscrow,
@@ -29,7 +28,6 @@ import {
 
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig | undefined,
   logger: Logger,
   rpcClient?: RpcClient,
 ): Promise<TvsConfig> {
@@ -46,7 +44,6 @@ export async function mapConfig(
         logger.info(`Querying for AggLayer L2 tokens addresses`)
         const aggLayerL2Tokens = await getAggLayerTokens(
           project,
-          chain,
           // TODO: fix types
           escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
           rpcClient,
@@ -62,7 +59,6 @@ export async function mapConfig(
 
         const elasticChainTokens = await getElasticChainTokens(
           project,
-          chain,
           // TODO: fix types
           escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
           rpcClient,

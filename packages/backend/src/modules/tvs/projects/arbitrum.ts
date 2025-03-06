@@ -13,7 +13,7 @@ export async function getArbitrumConfig(regenerate: boolean = false) {
       select: ['tvlConfig', 'chainConfig'],
     })
     assert(arbitrum, 'Arbitrum project not found')
-    return mapConfig(arbitrum, arbitrum.chainConfig, Logger.INFO)
+    return mapConfig(arbitrum, Logger.INFO)
   }
 
   const filePath = path.join(__dirname, 'arbitrum-config.json')

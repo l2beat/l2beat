@@ -1,10 +1,5 @@
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
-import type {
-  AggLayerEscrow,
-  ChainConfig,
-  Project,
-  ProjectTvlEscrow,
-} from '@l2beat/config'
+import type { AggLayerEscrow, Project, ProjectTvlEscrow } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
 import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -22,10 +17,10 @@ const ORIGIN_NETWORK = 0
 
 export async function getAggLayerTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig | undefined,
   escrow: ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
   rpcClient: RpcClient,
 ): Promise<Token[]> {
+  const chain = project.chainConfig
   assert(chain, `${project.id}: chain should be defined`)
   const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
     toMulticallConfigEntry(m),
