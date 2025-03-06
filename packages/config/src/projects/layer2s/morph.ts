@@ -184,6 +184,7 @@ export const morph: Layer2 = {
     // explorerUrl: 'https://explorer.morphl2.io/', // needed?
     coingeckoPlatform: 'morph-l2',
     sinceTimestamp: UnixTime(1729490400), // morph block 0
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

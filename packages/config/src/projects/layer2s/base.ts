@@ -264,6 +264,7 @@ export const base: Layer2 = {
     // ~ Timestamp of block number 0 on Base
     // https://basescan.org/block/0
     sinceTimestamp: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

@@ -160,6 +160,7 @@ export const scroll: Layer2 = {
         version: '3',
       },
     ],
+    gasTokens: ['ETH'],
     coingeckoPlatform: 'scroll',
     apis: [
       { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },

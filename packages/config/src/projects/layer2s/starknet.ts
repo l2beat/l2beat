@@ -283,6 +283,7 @@ export const starknet: Layer2 = {
   chainConfig: {
     name: 'starknet',
     chainId: undefined,
+    gasTokens: ['ETH', 'STRK'],
     apis: [
       {
         type: 'starknet',

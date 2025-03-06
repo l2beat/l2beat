@@ -378,6 +378,7 @@ export const linea: Layer2 = {
     chainId: 59144,
     explorerUrl: 'https://lineascan.build',
     sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
