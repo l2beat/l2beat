@@ -533,7 +533,7 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.sequencing ??
         (() => {
           const commonDescription = `To force transactions from the host chain, users must enqueue "delayed" messages in the "delayed" inbox of the Bridge contract. Only authorized Inboxes are allowed to enqueue delayed messages, and the so-called Inbox contract is the one usually used as the entry point by calling the \`sendMessage\` or \`sendMessageFromOrigin\` functions. If the centralized sequencer doesn't process the request within some time bound, users can call the \`forceInclusion\` function on the SequencerInbox contract to move the message to the canonical chain.`
-          if (isPostBoLD) {
+          if (!isPostBoLD) {
             return {
               name: 'Delayed forced transactions',
               description:
