@@ -29,6 +29,7 @@ import type {
   ProjectScalingDa,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStack,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -82,6 +83,7 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers */
   discoveryInfo?: ProjectDiscoveryInfo
 }
