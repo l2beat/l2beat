@@ -74,7 +74,6 @@ export default async function Page(props: Props) {
       dataTimestamp,
       breakdown: { canonical, native, external },
     },
-    _,
   ] = await Promise.all([
     getTvsBreakdownForProject(project),
     api.tvs.chart.prefetch({
