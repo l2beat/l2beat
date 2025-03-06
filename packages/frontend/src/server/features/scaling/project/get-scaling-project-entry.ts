@@ -409,6 +409,7 @@ export async function getScalingProjectEntry(
           project.scalingStage.stage !== 'UnderReview'
             ? project.scalingStage.additionalConsiderations
             : undefined,
+        scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
       },
     })
   }

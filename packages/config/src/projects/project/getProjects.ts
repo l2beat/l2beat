@@ -94,6 +94,7 @@ function layer2Or3ToProject(
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
+      scopeOfAssessment: p.scopeOfAssessment,
     },
     scalingStage: p.stage,
     scalingRisks: {
