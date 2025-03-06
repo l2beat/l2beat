@@ -137,7 +137,6 @@ interface ProjectStat {
 function ProjectStat(props: ProjectStat) {
   return (
     <li
-      key={props.title}
       className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,

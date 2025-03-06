@@ -76,16 +76,17 @@ export const scalingTvsColumns = [
           change={data.change.canonical}
         />
       )
-      if (data.breakdown.canonical > 0) {
-        return (
-          <TableLink
-            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`}
-          >
-            {children}
-          </TableLink>
-        )
-      }
-      return children
+      return (
+        <TableLink
+          href={
+            data.breakdown.canonical > 0
+              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`
+              : undefined
+          }
+        >
+          {children}
+        </TableLink>
+      )
     },
     sortUndefined: 'last',
     meta: {
@@ -109,16 +110,17 @@ export const scalingTvsColumns = [
           change={data.change.external}
         />
       )
-      if (data.breakdown.external > 0) {
-        return (
-          <TableLink
-            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`}
-          >
-            {children}
-          </TableLink>
-        )
-      }
-      return children
+      return (
+        <TableLink
+          href={
+            data.breakdown.external > 0
+              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`
+              : undefined
+          }
+        >
+          {children}
+        </TableLink>
+      )
     },
     sortUndefined: 'last',
     meta: {
@@ -142,16 +144,17 @@ export const scalingTvsColumns = [
           change={data.change.native}
         />
       )
-      if (data.breakdown.native > 0) {
-        return (
-          <TableLink
-            href={`/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`}
-          >
-            {children}
-          </TableLink>
-        )
-      }
-      return children
+      return (
+        <TableLink
+          href={
+            data.breakdown.native > 0
+              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`
+              : undefined
+          }
+        >
+          {children}
+        </TableLink>
+      )
     },
     sortUndefined: 'last',
     meta: {
