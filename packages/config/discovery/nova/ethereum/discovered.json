@@ -933,7 +933,35 @@
             ["0x1066CEcC8880948FE55e427E94F1FF221d626591"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 2,
+        "inboxHistory": [
+          "0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
+          "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
+          "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+        ],
+        "outboxHistory": [
+          "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+          "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+          "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+        ]
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1293,10 +1321,33 @@
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "delayedMessageCount": 429694,
+        "inboxHistory": [
+          "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+          "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+        ],
+        "outboxHistory": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
         "sequencerMessageCount": 184229,
         "sequencerReportedSubMessageCount": 82160093
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -4992,8 +5043,8 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/ArbitrumBridge": "0xa389f58c81ceedd7f7dcca6d42f2fa79a37a4350097d720b035af484260f414e",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/ArbitrumBridge": "0x4cca19b26c5182ada1edeab46aff2ab90b7b30a62c02c903fb921615df42d5e8",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/CustomGateway": "0xe610ed6acda2c607b2801da142ad354c7f16661baeaf0a026c2618b04da0f018",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
