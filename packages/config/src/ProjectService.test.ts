@@ -2,6 +2,8 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { BaseProject } from './types'
 import { ProjectService } from './ProjectService'
+import { ProjectDatabase } from './ProjectDatabase'
+import { unlinkSync } from 'fs'
 
 describe(ProjectService.name, () => {
   const projects: BaseProject[] = [
@@ -23,10 +25,26 @@ describe(ProjectService.name, () => {
       isScaling: true,
     },
   ]
-  const getProjects = () => projects
+
+  let db: ProjectDatabase
+  const TEMP_PATH = '/tmp/projectdb.sqlite'
+  before(async () => {
+    try {
+      unlinkSync(TEMP_PATH)
+    } catch {}
+
+    db = new ProjectDatabase(TEMP_PATH)
+    await db.init()
+    for (const project of projects) {
+      await db.saveProject(project)
+    }
+  })
+  after(() => {
+    unlinkSync(TEMP_PATH)
+  })
 
   it('selects a single project by id', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(db)
     const result = await ps.getProject({
       id: ProjectId('foo'),
     })
@@ -40,7 +58,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns undefined for non-existent project', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(db)
     const result = await ps.getProject({
       id: ProjectId('baz'),
     })
@@ -48,7 +66,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns selected items', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(db)
     const result = await ps.getProject({
       id: ProjectId('foo'),
       select: ['isScaling'],
@@ -67,7 +85,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns multiple projects', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(db)
     const result = await ps.getProjects({
       select: ['isScaling'],
       optional: ['isBridge', 'isArchived'],
