@@ -8,8 +8,8 @@ import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import type { RosetteValue } from '~/components/rosette/types'
 import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
+import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
