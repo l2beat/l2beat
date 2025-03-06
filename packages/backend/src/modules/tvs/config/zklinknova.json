@@ -116,7 +116,7 @@
         "escrowAddress": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
         "decimals": 18
       },
-      "sinceTimestamp": 1709273393,
+      "sinceTimestamp": 1709218085,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -167,7 +167,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 6
       },
-      "sinceTimestamp": 1709273393,
+      "sinceTimestamp": 1709218113,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -184,7 +184,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 6
       },
-      "sinceTimestamp": 1709273393,
+      "sinceTimestamp": 1709218113,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -201,7 +201,7 @@
         "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
         "decimals": 8
       },
-      "sinceTimestamp": 1709273393,
+      "sinceTimestamp": 1709218113,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -600,7 +600,7 @@
         "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
         "chain": "mantapacific",
         "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-        "decimals": 18
+        "decimals": 0
       },
       "sinceTimestamp": 1709295839,
       "category": "other",
