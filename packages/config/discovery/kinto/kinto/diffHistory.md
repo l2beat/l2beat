@@ -1,14 +1,14 @@
 Generated with discovered.json: 0x414b6e226a53cd896a29ba6c93384bec6f49478c
 
-# Diff at Wed, 05 Mar 2025 15:13:48 GMT:
+# Diff at Thu, 06 Mar 2025 15:34:47 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5d3e3b01c9c6f1ecd34ee849b404794d8c094024 block: 762641
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 762641
 - current block number: 763116
 
 ## Description
 
-Access manager changes: Add AdminMultisig to NioGovernor Role (NioGovernor can access the treasury).
+config: updates timelock templates, added starknet proghashes to global config.
 
 ## Watched changes
 

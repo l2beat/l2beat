@@ -8,8 +8,8 @@
         "type": "call",
         "method": "programHash",
         "args": []
-      }
-      // "returnType": "(starknetProgramHashes)" // TODO
+      },
+      "returnType": "(StarknetProgramHash)"
     }
   }
 }

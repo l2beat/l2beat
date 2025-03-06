@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "blockNumber": 19531527,
-  "configHash": "0x551edfa7b80d9a2027ea14255924f03bbe0d279eb872e909430d3f7fe5760824",
+  "configHash": "0x10835f1b6a0072eaa79bce15c5be601de80d65bdaf9423255f39cd17056208b0",
   "contracts": [
     {
       "name": "DeBridgeGate",

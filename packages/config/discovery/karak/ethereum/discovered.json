@@ -2,7 +2,7 @@
   "name": "karak",
   "chain": "ethereum",
   "blockNumber": 20920155,
-  "configHash": "0x6daebbcb197e5b566f2c8af27cb6c85bd237bf124965a504cf11704c6c73fc3e",
+  "configHash": "0xc1a03e121d4f9b29f6e2356530935cae3ad8b1fee911e99fe03432c35e911c93",
   "contracts": [
     {
       "name": "L2OutputOracle",
