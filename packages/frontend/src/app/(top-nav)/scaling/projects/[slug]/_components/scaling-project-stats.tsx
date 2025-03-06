@@ -12,17 +12,17 @@ import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TypeInfo } from '~/components/table/cells/type-info'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
-  project: ScalingProjectEntry
+  project: ProjectScalingEntry
   className?: string
 }
 
-export function ScalingProjectStats({ project, className }: Props) {
+export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
     <ProjectStat
       key="tokens"

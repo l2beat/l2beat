@@ -1,7 +1,7 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
   TableReadyValue,
 } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
@@ -46,8 +46,8 @@ export async function getScalingLivenessEntries() {
 }
 
 export interface ScalingLivenessEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  stack: ProjectScalingStack | undefined
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]

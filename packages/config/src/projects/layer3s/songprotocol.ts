@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
 export const songprotocol: Layer3 = upcomingL3({

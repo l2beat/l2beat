@@ -4,14 +4,14 @@ import {
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+import type { Layer3 } from '../../internalTypes'
+import type { Layer2 } from '../../internalTypes'
+import type { Bridge, Layer2TxConfig } from '../../internalTypes'
 import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
-  Bridge,
-  Layer2,
-  Layer2TxConfig,
-  Layer3,
   ProjectCostsInfo,
   ProjectDiscoveryInfo,
   ProjectEscrow,
@@ -35,6 +35,8 @@ import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
+  runConfigAdjustments()
+
   return refactored
     .concat(layer2s.map((p) => layer2Or3ToProject(p, [])))
     .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s)))
@@ -70,7 +72,7 @@ function layer2Or3ToProject(
     display: {
       description: p.display.description,
       links: p.display.links,
-      badges: p.badges ?? [],
+      badges: (p.badges ?? []).sort(badgesCompareFn),
     },
     contracts: p.contracts,
     permissions: p.permissions,
@@ -92,10 +94,6 @@ function layer2Or3ToProject(
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
-      badges:
-        p.badges && p.badges.length > 0
-          ? p.badges.sort(badgesCompareFn)
-          : undefined,
     },
     scalingStage: p.stage,
     scalingRisks: {
@@ -208,6 +206,10 @@ function bridgeToProject(p: Bridge): BaseProject {
       category: p.display.category,
       destination: p.technology.destination,
       validatedBy: p.riskView.validatedBy.value,
+    },
+    bridgeTechnology: {
+      ...p.technology,
+      detailedDescription: p.display.detailedDescription,
     },
     contracts: p.contracts,
     permissions: p.permissions,

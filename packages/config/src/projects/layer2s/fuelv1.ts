@@ -12,7 +12,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -34,7 +34,7 @@ export const fuelv1: Layer2 = {
 
     links: {
       websites: ['https://fuel.sh/'],
-      documentation: ['https://docs.fuel.sh/'],
+      documentation: ['https://docs.fuel.network/'],
       explorers: ['https://mainnet.fuel.sh/network/'],
       repositories: [
         'https://github.com/FuelLabs/fuel-core',

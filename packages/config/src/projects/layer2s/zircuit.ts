@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../internalTypes'
 import type { ProjectTechnologyChoice } from '../../types'
-import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('zircuit')

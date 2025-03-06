@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
@@ -30,28 +31,32 @@ export async function getRegularDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
+  const contractUtils = await getContractUtils()
+
   const permissionsSection =
     bridge?.permissions &&
-    getPermissionsSection({
-      type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-      id: layer.id,
-      isUnderReview: layer.statuses.isUnderReview,
-      permissions: bridge.permissions,
-    })
+    getPermissionsSection(
+      {
+        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
+        id: layer.id,
+        isUnderReview: layer.statuses.isUnderReview,
+        permissions: bridge.permissions,
+      },
+      contractUtils,
+    )
 
   const contractsSection =
     bridge?.contracts &&
     getContractsSection(
       {
         type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-        hostChainName: 'Ethereum', // TODO: Something is clearly wrong here
         id: bridge.id,
         isVerified,
         slug: bridge.slug,
         contracts: bridge.contracts ?? {},
-        escrows: undefined,
         isUnderReview: layer.statuses.isUnderReview,
       },
+      contractUtils,
       projectsChangeReport,
     )
 

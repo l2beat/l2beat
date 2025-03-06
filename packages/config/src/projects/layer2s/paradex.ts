@@ -27,7 +27,7 @@ import {
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
