@@ -14,7 +14,7 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/mapConfig'
-import type { Token } from '../../src/modules/tvs/types'
+import type { Token, TokenValue } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
@@ -34,7 +34,7 @@ const cmd = command({
 
     logger.info(
       'Generating TVS config ' +
-        (args.project ? `for project '${args.project}'` : ''),
+      (args.project ? `for project '${args.project}'` : ''),
     )
 
     // get token data
@@ -53,28 +53,15 @@ const cmd = command({
     const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
     const localExecutor = new LocalExecutor(ps, env, logger)
     const tvs = await localExecutor.run(tvsConfig, [timestamp], true)
-
-    const nonZeroTokens = tvs
+    const currentTvs = tvs
       .get(timestamp.toNumber())
       ?.filter((token) => token.value !== 0)
-      // TODO replace with amountId matching
-      .map((token) => token.tokenConfig)
-      .sort((a, b) => a.id.localeCompare(b.id))
 
-    assert(nonZeroTokens, 'No data for timestamp')
+    assert(currentTvs, 'No data for timestamp')
 
     const filePath = `./src/modules/tvs/config/${args.project}.json`
     const currentConfig = readFromFile(filePath)
-
-    const mergedTokens = nonZeroTokens.map((token) => {
-      const customToken = currentConfig.find(
-        (t) => t.id === token.id && t.mode === 'custom',
-      )
-      if (customToken) {
-        return customToken
-      }
-      return token
-    })
+    const mergedTokens = mergeWithExistingConfig(currentTvs, currentConfig)
 
     logger.info(`Writing results to file: ${filePath}`)
     writeToFile(filePath, args.project, mergedTokens)
@@ -150,4 +137,25 @@ function readFromFile(filePath: string) {
 
   const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
   return json.tokens as Token[]
+}
+
+function mergeWithExistingConfig(
+  tokenValues: TokenValue[],
+  currentConfig: Token[],
+) {
+  const nonZeroTokens = tokenValues.map((token) => token.tokenConfig)
+
+  assert(nonZeroTokens, 'No data for timestamp')
+
+  const resultMap = new Map<string, Token>()
+  nonZeroTokens.forEach((token) => {
+    resultMap.set(token.id, token)
+  })
+
+  const customTokens = currentConfig.filter((t) => t.mode === 'custom')
+  customTokens.forEach((token) => {
+    resultMap.set(token.id, token)
+  })
+
+  return Array.from(resultMap.values()).sort((a, b) => a.id.localeCompare(b.id))
 }
