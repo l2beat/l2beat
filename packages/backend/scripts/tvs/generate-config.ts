@@ -57,7 +57,11 @@ const cmd = command({
 
     const filePath = `./src/modules/tvs/config/${args.project}.json`
     const currentConfig = readFromFile(filePath)
-    const mergedTokens = mergeWithExistingConfig(currentTvs, currentConfig)
+    const mergedTokens = mergeWithExistingConfig(
+      currentTvs,
+      currentConfig,
+      logger,
+    )
 
     logger.info(`Writing results to file: ${filePath}`)
     writeToFile(filePath, args.project, mergedTokens)
@@ -141,6 +145,7 @@ function readFromFile(filePath: string) {
 function mergeWithExistingConfig(
   tokenValues: TokenValue[],
   currentConfig: Token[],
+  logger: Logger,
 ) {
   const nonZeroTokens = tokenValues.map((token) => token.tokenConfig)
 
@@ -148,6 +153,9 @@ function mergeWithExistingConfig(
 
   const resultMap = new Map<string, Token>()
   nonZeroTokens.forEach((token) => {
+    if (resultMap.has(token.id)) {
+      logger.warn(`Duplicate detected: ${token.id}`)
+    }
     resultMap.set(token.id, token)
   })
 
