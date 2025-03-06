@@ -205,6 +205,7 @@ export function createToken(
   )
 
   return {
+    mode: 'auto',
     id,
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,

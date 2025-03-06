@@ -70,6 +70,7 @@ export async function getElasticChainTokens(
       )
 
       return {
+        mode: 'auto' as const,
         id: TokenId.create(project.id, token.symbol),
         priceId: token.coingeckoId,
         symbol: token.symbol,
@@ -95,6 +96,7 @@ export async function getElasticChainTokens(
   const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
 
   const etherOnL2 = {
+    mode: 'auto' as const,
     id: TokenId.create(project.id, 'ETH'),
     priceId: 'ethereum',
     symbol: 'ETH',

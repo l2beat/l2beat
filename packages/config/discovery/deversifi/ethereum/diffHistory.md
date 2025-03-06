@@ -1,3 +1,121 @@
+Generated with discovered.json: 0xe953c279913af902a7ef54acde5c3400ad4ef411
+
+# Diff at Wed, 05 Mar 2025 14:40:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 20640703
+- current block number: 21981331
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640703 (main branch discovery), not current.
+
+```diff
+    contract DACommittee (0x28780349A33eEE56bb92241bAAB8095449e24306) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 4.
+      name:
+-        "Committee"
++        "DACommittee"
+      template:
++        "starkex/Committee"
+      description:
++        "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 4."
+      fieldMeta:
++        {"constructorArgs":{"description":"Includes DAC members and threshold."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      values.programHashMapped:
++        "3174901404014912024702042974619036870715605532092680335571201877913899936957"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`)."
+    }
+```
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: Helper contract for registering limit orders from L1.
+      template:
++        "starkex/OrderRegistry"
+      description:
++        "Helper contract for registering limit orders from L1."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeversiFiTreasuryMultisig (0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a)
+    +++ description: None
+```
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","delay":259200,"via":[]}
+      issuedPermissions.4:
++        {"permission":"operateStarknet","to":"0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","description":"manage the token admin role.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x8fDEC5EE435501571034A78a7F3AA167185969b3","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      values.OPERATORS:
+-        ["0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5"]
+      values.operators:
++        ["0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5"]
+      values.tokenAdmins:
++        ["0x8fDEC5EE435501571034A78a7F3AA167185969b3","0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4"]
+      template:
++        "starkex/StarkExchangeOld"
+      description:
++        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."},"isFinalized":{"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."},"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RhinofiAdminMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: None
+      name:
+-        "GovernanceMultisig"
++        "RhinofiAdminMultisig"
+      description:
+-        "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","delay":259200}
+      receivedPermissions.1:
++        {"permission":"interact","from":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","description":"manage the token admin role."}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      fieldMeta:
+-        {"getOwners":{"severity":"LOW","description":"Signers of the Multisig","type":"PERMISSION"},"getThreshold":{"severity":"HIGH","description":"Threshold of the Multisig","type":"PERMISSION"}}
+      severity:
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x096f62ec82f5b2c114ca38e4c1eb89268c0faf3f
 
 # Diff at Tue, 04 Mar 2025 10:39:05 GMT:

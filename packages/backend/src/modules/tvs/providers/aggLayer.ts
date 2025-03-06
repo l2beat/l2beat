@@ -77,6 +77,7 @@ export async function getAggLayerTokens(
       )
 
       return {
+        mode: 'auto' as const,
         id: TokenId.create(project.id, token.symbol),
         priceId: token.coingeckoId,
         symbol: token.symbol,
@@ -109,6 +110,7 @@ export async function getAggLayerTokens(
     const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
 
     etherOnL2 = {
+      mode: 'auto' as const,
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
@@ -133,6 +135,7 @@ export async function getAggLayerTokens(
     const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
 
     etherOnL2 = {
+      mode: 'auto' as const,
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',

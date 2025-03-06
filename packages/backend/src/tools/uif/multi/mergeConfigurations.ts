@@ -158,7 +158,7 @@ function getConfigurationsAsMaps<T>(
     assert(!actualMap.has(c.id), `Configuration ${c.id} is duplicated!`)
     assert(
       c.maxHeight === null || c.minHeight <= c.maxHeight,
-      `Configuration ${c.id} has minHeight greater than maxHeight! ${JSON.stringify(c)}`,
+      `Configuration ${c.id} has minHeight greater than maxHeight!`,
     )
     actualMap.set(c.id, c)
   }

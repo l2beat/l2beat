@@ -3,77 +3,9 @@
   "chain": "ethereum",
   "name": "deversifi",
   "import": ["../../ethereumConfig.jsonc"],
-  "initialAddresses": [
-    "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
-    "0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a"
-  ],
+  "initialAddresses": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"],
   "names": {
-    "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": "StarkExchange",
-    "0x28780349A33eEE56bb92241bAAB8095449e24306": "Committee",
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "VerifierGovernorMultisig",
-    "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "GovernanceMultisig",
-    "0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a": "DeversiFiTreasuryMultisig"
+    "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "RhinofiAdminMultisig"
   },
-  "sharedModules": ["shared-sharp-verifier"],
-  "overrides": {
-    "StarkExchange": {
-      "ignoreMethods": [
-        "configurationHash",
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "isAssetRegistered",
-        "validatedSelectors",
-        "getAssetInfo",
-        "getActionCount",
-        "getActionHashByIndex",
-        "initializerSize",
-        "UPGRADE_DELAY_SLOT",
-        "isBlockListed",
-        "readyForClearance"
-      ],
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getValidiumVaultRoot"
-      ],
-      "fields": {
-        "OPERATORS": {
-          "handler": {
-            "type": "event",
-            "select": "operator",
-            "add": { "event": "event LogOperatorAdded(address operator)" },
-            "remove": { "event": "event LogOperatorRemoved(address operator)" }
-          }
-        }
-      }
-    },
-    "Committee": {
-      "fields": {
-        "constructorArgs": {
-          "handler": {
-            "type": "constructorArgs"
-          }
-        }
-      }
-    },
-    "GovernanceMultisig": {
-      "description": "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.",
-      "ignoreInWatchMode": ["nonce"],
-      "fields": {
-        "getOwners": {
-          "description": "Signers of the Multisig",
-          "severity": "LOW",
-          "type": "PERMISSION"
-        },
-        "getThreshold": {
-          "description": "Threshold of the Multisig",
-          "severity": "HIGH",
-          "type": "PERMISSION"
-        }
-      }
-    }
-  }
+  "sharedModules": ["shared-sharp-verifier"]
 }
