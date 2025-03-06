@@ -9,7 +9,6 @@ import type {
   ProjectToken,
   ProjectTokens,
 } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
@@ -78,7 +77,6 @@ export default async function Page(props: Props) {
     _,
   ] = await Promise.all([
     getTvsBreakdownForProject(project),
-    getTokensForProject(project.id),
     api.tvs.chart.prefetch({
       filter: { type: 'projects', projectIds: [project.id.toString()] },
       excludeAssociatedTokens: false,
