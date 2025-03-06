@@ -347,8 +347,14 @@
         ],
         "allowedOutboxList": ["0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d"],
         "delayedMessageCount": 14,
+        "inboxHistory": [
+          "0x37693F11f3D724E55D0B03D5F328D8202C913243",
+          "0x6282197777e7c318C7209bd7059110886aa429C6",
+          "0xde43165ED9d31CcF94747227aA1F3B98B3adf6d2"
+        ],
         "nativeToken": "0x386E7A3a0c0919c9d53c3b04FF67E73Ff9e45Fb6",
         "nativeTokenDecimals": 18,
+        "outboxHistory": ["0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d"],
         "rollup": "0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
         "sequencerInbox": "0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
         "sequencerMessageCount": 289,
@@ -359,9 +365,17 @@
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
         },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
         "allowedDelayedInboxList": {
           "severity": "HIGH",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
       "derivedName": "ERC20Bridge",
@@ -1563,7 +1577,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x9c11662752dda8c1500703d5a853c825031e56898f9ac9e9a1d4c1fca21b2fad",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",

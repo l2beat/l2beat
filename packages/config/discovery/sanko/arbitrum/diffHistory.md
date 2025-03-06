@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6aadfb96862d585fd8f4418b95e8c553a6323b73
+Generated with discovered.json: 0x19a84e8ae8cf7000661cb195320160e590e23789
 
-# Diff at Thu, 06 Mar 2025 09:28:37 GMT:
+# Diff at Thu, 06 Mar 2025 09:38:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 287773244
-- current block number: 287773244
+- current block number: 312801994
 
 ## Description
 
@@ -19,8 +19,16 @@ discovery. Values are for block 287773244 (main branch discovery), not current.
 ```diff
     contract Bridge (0x2f285781B8d58678a3483de52D618198E4d27532) {
     +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory:
++        ["0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD","0x365ce7234CE515c2e0139f3578b6c5989da1a863","0xb29Eb9859E5eac993EDD1ABE2c3AF6A12A4D4cbF"]
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory:
++        ["0x575d32f7ff0C72921645e302cb14d2757E300786","0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"]
       fieldMeta:
-+        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."}}
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
     }
 ```
 

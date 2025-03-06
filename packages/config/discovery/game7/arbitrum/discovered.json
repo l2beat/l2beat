@@ -110,8 +110,13 @@
         ],
         "allowedOutboxList": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "delayedMessageCount": 260,
+        "inboxHistory": [
+          "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
+          "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
+        ],
         "nativeToken": "0xF18e4466F26B4cA55bbAb890b314a54976E45B17",
         "nativeTokenDecimals": 18,
+        "outboxHistory": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
         "sequencerMessageCount": 536,
@@ -122,9 +127,17 @@
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
         },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
         "allowedDelayedInboxList": {
           "severity": "HIGH",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
       "derivedName": "ERC20Bridge",
@@ -1867,7 +1880,7 @@
     "circle/L1OrbitUSDCGateway": "0xfadb184ab15a78d5aa2a9b75bcab34fb46021bea30ab93ceef86b4809e710903",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x9c11662752dda8c1500703d5a853c825031e56898f9ac9e9a1d4c1fca21b2fad",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
     "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",

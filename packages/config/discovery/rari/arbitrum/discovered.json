@@ -198,6 +198,11 @@
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
         "delayedMessageCount": 192374,
+        "inboxHistory": [
+          "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
+          "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
+        ],
+        "outboxHistory": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
         "sequencerMessageCount": 10322,
@@ -208,9 +213,17 @@
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
         },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
         "allowedDelayedInboxList": {
           "severity": "HIGH",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1840,7 +1853,7 @@
     "espresso/Sequencing/QuoteVerifier": "0xef7ab1615baea337f231b2d3ae609496b77f1c2d3959895f1133e867a6c020a0",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x9c11662752dda8c1500703d5a853c825031e56898f9ac9e9a1d4c1fca21b2fad",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/CustomGateway": "0xe610ed6acda2c607b2801da142ad354c7f16661baeaf0a026c2618b04da0f018",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",

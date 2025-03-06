@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 287773244,
+  "blockNumber": 312801994,
   "configHash": "0x23120f58178e3b79dfa4b1ff15589b49cf4169249c9c42a72a4a2be91132e9bf",
   "contracts": [
     {
@@ -138,7 +138,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 4674,
+        "batchCount": 6005,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
@@ -170,7 +170,7 @@
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 100573,
+        "totalDelayedMessagesRead": 101412,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -252,21 +252,38 @@
           "0x575d32f7ff0C72921645e302cb14d2757E300786",
           "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
         ],
-        "delayedMessageCount": 100575,
+        "delayedMessageCount": 101413,
+        "inboxHistory": [
+          "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
+          "0x365ce7234CE515c2e0139f3578b6c5989da1a863",
+          "0xb29Eb9859E5eac993EDD1ABE2c3AF6A12A4D4cbF"
+        ],
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
+        "outboxHistory": [
+          "0x575d32f7ff0C72921645e302cb14d2757E300786",
+          "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29"
+        ],
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 4674,
-        "sequencerReportedSubMessageCount": 2535676
+        "sequencerMessageCount": 6005,
+        "sequencerReportedSubMessageCount": 3459950
       },
       "fieldMeta": {
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
         },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
         "allowedDelayedInboxList": {
           "severity": "HIGH",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
       "derivedName": "ERC20Bridge",
@@ -750,12 +767,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1372,
+        "firstUnresolvedNode": 1663,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 1371,
-        "latestNodeCreated": 1397,
+        "latestConfirmed": 1662,
+        "latestNodeCreated": 1688,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",
@@ -1805,7 +1822,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x9c11662752dda8c1500703d5a853c825031e56898f9ac9e9a1d4c1fca21b2fad",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
     "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",

@@ -800,8 +800,13 @@
         ],
         "allowedOutboxList": ["0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"],
         "delayedMessageCount": 5331,
+        "inboxHistory": [
+          "0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f",
+          "0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"
+        ],
         "nativeToken": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
         "nativeTokenDecimals": 18,
+        "outboxHistory": ["0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"],
         "rollup": "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09",
         "sequencerInbox": "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5",
         "sequencerMessageCount": 6965,
@@ -812,9 +817,17 @@
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
         },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
         "allowedDelayedInboxList": {
           "severity": "HIGH",
           "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
       "derivedName": "ERC20Bridge",
@@ -1686,7 +1699,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x9c11662752dda8c1500703d5a853c825031e56898f9ac9e9a1d4c1fca21b2fad",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",

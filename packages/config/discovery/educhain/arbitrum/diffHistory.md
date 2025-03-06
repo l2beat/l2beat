@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x799dfd8c2a2a0880ff9b901ba7edba039a4228a6
+Generated with discovered.json: 0x35525af947c23011943a96d4641b176dcc0298a3
 
-# Diff at Thu, 06 Mar 2025 09:28:33 GMT:
+# Diff at Thu, 06 Mar 2025 09:39:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 308396879
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x799dfd8c2a2a0880ff9b901ba7edba039a4228a6
 
 ## Description
 
-Config related: set severity for arbitrum inbox/outbox changes to high.
+Config related: set severity for arbitrum inbox/outbox changes to high and add historical In- and Outboxes via events.
 
 ## Config/verification related changes
 
@@ -19,8 +19,16 @@ discovery. Values are for block 308396879 (main branch discovery), not current.
 ```diff
     contract Bridge (0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8) {
     +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory:
++        ["0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8","0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"]
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory:
++        ["0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"]
       fieldMeta:
-+        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."}}
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
     }
 ```
 
