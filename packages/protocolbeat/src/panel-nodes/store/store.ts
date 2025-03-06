@@ -73,14 +73,6 @@ export const useStore = create<State & Actions>()(
     {
       // You can update the key if changes are backwards incompatible
       name: 'store-v3',
-      onRehydrateStorage: () => {
-        // Function to operate on state after the storage is hydrated
-        return (state) => {
-          if (state?.userPreferences?.hideUnknownOnLoad) {
-            state.hideUnknowns()
-          }
-        }
-      },
       partialize: (state) => {
         return {
           projectId: state.projectId,

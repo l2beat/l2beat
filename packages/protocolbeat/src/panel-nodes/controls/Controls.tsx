@@ -19,7 +19,7 @@ export function Controls(props: ControlsProps) {
       <span className="text-coffee-600">|</span>
       <ShowButton />
       <HideUnknownsButton />
-      <Settings />
+      {props.panelMode && <Settings />}
       <span className="text-coffee-600">|</span>
       <HideButton />
       <ColorButton />

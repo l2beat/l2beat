@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useStore } from '../store/store'
 import { ControlButton } from './ControlButton'
 
@@ -22,18 +22,24 @@ export function SettingsTray() {
   const preferences = useStore((state) => state.userPreferences)
   const setPreferences = useStore((state) => state.setPreferences)
 
+  const toggleHideUnknowns = useCallback(() => {
+    setPreferences({
+      hideUnknownOnLoad: !preferences.hideUnknownOnLoad,
+    })
+  }, [preferences.hideUnknownOnLoad, setPreferences])
+
   return (
     <div className="-translate-x-1/2 absolute bottom-8 left-2/3 flex items-center gap-1 rounded bg-black p-2 shadow-[0_10px_20px_-10px_#00000088]">
       <div className="flex flex-col gap-1">
         <ControlButton
-          onClick={() =>
-            setPreferences({
-              hideUnknownOnLoad: !preferences.hideUnknownOnLoad,
-            })
-          }
+          onClick={toggleHideUnknowns}
           className="flex items-center gap-1"
         >
-          <input type="checkbox" checked={preferences.hideUnknownOnLoad} />
+          <input
+            type="checkbox"
+            checked={preferences.hideUnknownOnLoad}
+            onChange={toggleHideUnknowns}
+          />
           <span>Hide unknowns on load</span>
         </ControlButton>
       </div>
@@ -57,9 +63,9 @@ function GearIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
       <circle cx="12" cy="12" r="3" />

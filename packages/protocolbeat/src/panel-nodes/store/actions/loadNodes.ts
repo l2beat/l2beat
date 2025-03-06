@@ -38,9 +38,18 @@ export function loadNodes(
 
   const allNodes = existing.concat(added)
 
+  const unknownNodeIds = state.userPreferences.hideUnknownOnLoad
+    ? allNodes
+        .filter((node) => node.addressType === 'Unknown')
+        .map((node) => node.id)
+    : []
+
+  const hiddenNodes = [...new Set([...state.hidden, ...unknownNodeIds])]
+
   return layout(
     {
       ...state,
+      hidden: hiddenNodes,
       nodes: allNodes,
       projectId,
     },
