@@ -44,7 +44,7 @@ describe(ProjectService.name, () => {
   })
 
   it('selects a single project by id', async () => {
-    const ps = new ProjectService(db)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProject({
       id: ProjectId('foo'),
     })
@@ -58,7 +58,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns undefined for non-existent project', async () => {
-    const ps = new ProjectService(db)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProject({
       id: ProjectId('baz'),
     })
@@ -66,7 +66,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns selected items', async () => {
-    const ps = new ProjectService(db)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProject({
       id: ProjectId('foo'),
       select: ['isScaling'],
@@ -85,7 +85,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns multiple projects', async () => {
-    const ps = new ProjectService(db)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProjects({
       select: ['isScaling'],
       optional: ['isBridge', 'isArchived'],

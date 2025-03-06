@@ -18,8 +18,11 @@ export type Project<K extends Key = never, O extends Key = never> = Simplify<
 const DEFAULT_DB_LOCATION = join(__dirname, '../db.sqlite')
 
 export class ProjectService {
-  /** There should only be a single instance of ProjectService. */
-  constructor(private db = new ProjectDatabase(DEFAULT_DB_LOCATION)) {}
+  db: ProjectDatabase
+
+  constructor(location = DEFAULT_DB_LOCATION) {
+    this.db = new ProjectDatabase(location)
+  }
 
   async getProject<K extends Key = never, O extends Key = never>(query: {
     id?: ProjectId
