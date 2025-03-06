@@ -24,20 +24,53 @@ describe(mapConfig.name, () => {
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
-    expect(result.tokens[0]).toEqual({
+    expect(result.tokens.find((t) => t.id === 'arbitrum-ETH')).toEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ether',
       amount: {
-        type: 'balanceOfEscrow',
-        address: 'native',
-        chain: 'ethereum',
-        escrowAddress: EthereumAddress(
-          '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
-        ),
-        decimals: 18,
+        type: 'calculation',
+        operator: 'sum',
+        arguments: [
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0xcEe284F754E854890e311e3280b767F80797180d',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
+            ),
+            decimals: 18,
+          },
+        ],
       },
       sinceTimestamp: UnixTime(1661457944),
       category: 'ether',
