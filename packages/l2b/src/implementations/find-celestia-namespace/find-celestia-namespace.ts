@@ -31,9 +31,13 @@ export async function findCelestiaNamespace(url: string, commitment: string) {
   `)
 
   for (const namespace of possibleNamespaces) {
-    const blob = await client.getBlob(blockHeight, namespace, blobCommitment)
+    const blobExists = await client.blobExists(
+      blockHeight,
+      namespace,
+      blobCommitment,
+    )
 
-    if (blob) {
+    if (blobExists) {
       console.log(`Namespace has been found: ${namespace} 🎉 🎊 ✨`)
       return
     }
