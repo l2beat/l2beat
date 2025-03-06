@@ -539,6 +539,8 @@ function orbitStackCommon(
               description:
                 commonDescription +
                 ` The time bound is hardcoded to be ${formatSeconds(selfSequencingDelaySeconds)}.`,
+              references: [],
+              risks: [],
             } as ProjectTechnologyChoice
           } else {
             return {
@@ -546,6 +548,8 @@ function orbitStackCommon(
               description:
                 commonDescription +
                 ` The time bound is defined to be the minimum between ${formatSeconds(selfSequencingDelaySeconds)} and the time left in the delay buffer. The delay buffer gets replenished over time and gets consumed every time the sequencer doesn't timely process a message.`,
+              references: [],
+              risks: [],
             } as ProjectTechnologyChoice
           }
         })(),
