@@ -894,14 +894,6 @@ export interface ProjectContract {
   discoveryDrivenData?: boolean
 }
 
-/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
-export interface ProjectTvlConfig {
-  escrows: ProjectTvlEscrow[]
-  /** Tokens minted on this network */
-  tokens: Token[]
-  associatedTokens: string[]
-}
-
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
