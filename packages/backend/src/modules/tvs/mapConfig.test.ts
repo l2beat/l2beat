@@ -19,11 +19,7 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = await mapConfig(
-      arbitrum,
-      arbitrum.chainConfig,
-      Logger.SILENT,
-    )
+    const result = await mapConfig(arbitrum, Logger.SILENT)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
@@ -44,7 +40,6 @@ describe(mapConfig.name, () => {
         decimals: 18,
       },
       sinceTimestamp: UnixTime(1661457944),
-      untilTimestamp: undefined,
       category: 'ether',
       source: 'canonical',
       isAssociated: false,
@@ -65,7 +60,6 @@ describe(mapConfig.name, () => {
         priceId: 'arbitrum',
       },
       sinceTimestamp: UnixTime(1679529600),
-      untilTimestamp: undefined,
       category: 'other',
       source: 'native',
       isAssociated: true,
@@ -84,7 +78,6 @@ describe(mapConfig.name, () => {
         decimals: 18,
       },
       sinceTimestamp: UnixTime(1718150400),
-      untilTimestamp: undefined,
       category: 'other',
       source: 'external',
       isAssociated: false,

@@ -187,6 +187,7 @@ export interface ChainConfig {
    * January 2021 but the block 1 on November 2021.
    */
   sinceTimestamp?: UnixTime
+  untilTimestamp?: UnixTime
   apis: ChainApiConfig[]
 }
 
@@ -660,6 +661,7 @@ export interface ProjectTvlInfo {
 /** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
 export interface ProjectTvlConfig {
   escrows: ProjectTvlEscrow[]
+  tokens: Token[]
   associatedTokens: string[]
 }
 
