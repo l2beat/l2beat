@@ -1,5 +1,4 @@
-import { type UsableStageConfig } from '@l2beat/config'
-
+import type { StageConfigured, StageUnderReview } from '@l2beat/config'
 import Image from 'next/image'
 import {
   Accordion,
@@ -32,7 +31,7 @@ export interface StageSectionProps extends ProjectSectionProps {
   icon: string
   name: string
   type: string
-  stageConfig: UsableStageConfig
+  stageConfig: StageUnderReview | StageConfigured
   isAppchain: boolean
   additionalConsiderations:
     | {

@@ -1,19 +1,19 @@
 import type { ProjectPermission, ProjectPermissions } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
-import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
 import type { UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
-import { getUsedInProjects } from './get-used-in-projects'
+import type { ContractUtils } from './get-contract-utils'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   type: 'layer2' | 'layer3' | 'bridge'
-  id: string
+  id: ProjectId
   permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   daSolution?: DaSolution
   isUnderReview: boolean
@@ -46,6 +46,7 @@ function permissionsAreEmpty(
 
 export function getPermissionsSection(
   projectParams: ProjectParams,
+  contractUtils: ContractUtils,
 ): PermissionSection | undefined {
   if (!projectParams.permissions) {
     return undefined
@@ -78,8 +79,12 @@ export function getPermissionsSection(
       Object.entries(projectParams.permissions ?? {}).map(
         ([slug, permissions]) => {
           return [
-            slugToDisplayName(slug),
-            getGroupedTechnologyContracts(projectParams, permissions),
+            contractUtils.getChainName(slug),
+            getGroupedTechnologyContracts(
+              projectParams,
+              permissions,
+              contractUtils,
+            ),
           ]
         },
       ),
@@ -89,28 +94,30 @@ export function getPermissionsSection(
   return {
     ...section,
     permissionsByChain,
-    daSolution: getDaSolution(projectParams),
+    daSolution: getDaSolution(projectParams, contractUtils),
   }
 }
 
 function getGroupedTechnologyContracts(
   projectParams: ProjectParams,
   permissions: ProjectPermissions,
+  contractUtils: ContractUtils,
 ): PermissionSection['permissionsByChain'][string] {
   return {
     roles:
       permissions.roles?.flatMap((permission) =>
-        toTechnologyContract(projectParams, permission),
+        toTechnologyContract(projectParams, permission, contractUtils),
       ) ?? [],
     actors:
       permissions.actors?.flatMap((permission) =>
-        toTechnologyContract(projectParams, permission),
+        toTechnologyContract(projectParams, permission, contractUtils),
       ) ?? [],
   }
 }
 
 function getDaSolution(
   projectParams: ProjectParams,
+  contractUtils: ContractUtils,
 ): PermissionSection['daSolution'] {
   return projectParams.daSolution
     ? {
@@ -120,11 +127,12 @@ function getDaSolution(
         permissions: {
           roles:
             projectParams.daSolution.permissions?.roles?.flatMap((permission) =>
-              toTechnologyContract(projectParams, permission),
+              toTechnologyContract(projectParams, permission, contractUtils),
             ) ?? [],
           actors:
             projectParams.daSolution.permissions?.actors?.flatMap(
-              (permission) => toTechnologyContract(projectParams, permission),
+              (permission) =>
+                toTechnologyContract(projectParams, permission, contractUtils),
             ) ?? [],
         },
       }
@@ -134,6 +142,7 @@ function getDaSolution(
 function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ProjectPermission,
+  contractUtils: ContractUtils,
 ): TechnologyContract[] {
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => ({
@@ -146,7 +155,9 @@ function toTechnologyContract(
 
   let usedInProjects: UsedInProject[] | undefined
   if (permission.accounts.length === 1) {
-    usedInProjects = getUsedInProjects(projectParams, [], addresses)
+    usedInProjects = permission.accounts.flatMap((a) =>
+      contractUtils.getUsedIn(projectParams.id, permission.chain, a.address),
+    )
     if (usedInProjects !== undefined) {
       usedInProjects = usedInProjects.map((p) => ({
         ...p,

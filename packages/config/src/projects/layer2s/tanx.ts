@@ -27,7 +27,7 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
@@ -60,7 +60,7 @@ export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
   capability: 'appchain',
-  addedAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
+  addedAt: UnixTime(1690545663), // 2023-07-28T12:01:03Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -99,14 +99,14 @@ export const tanx: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x1390f521A79BaBE99b69B37154D63D431da27A07'),
-        sinceTimestamp: new UnixTime(1657453320),
+        sinceTimestamp: UnixTime(1657453320),
         tokens: '*',
         description: "Main entry point for users' deposits.",
       }),
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1657453320),
+      sinceTimestamp: UnixTime(1657453320),
       resyncLastDays: 7,
     },
   },

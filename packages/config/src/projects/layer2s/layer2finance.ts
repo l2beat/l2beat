@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('layer2finance')
 
@@ -11,7 +11,7 @@ export const layer2finance: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2finance'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
     name: 'Layer2.Finance',
     slug: 'layer2finance',
@@ -39,7 +39,7 @@ export const layer2finance: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05'),
-        sinceTimestamp: new UnixTime(1619011215),
+        sinceTimestamp: UnixTime(1619011215),
         tokens: ['BUSD', 'DAI', 'USDC', 'USDT', 'WETH'],
         chain: 'ethereum',
       },

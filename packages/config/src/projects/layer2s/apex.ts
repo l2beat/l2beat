@@ -27,7 +27,7 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
@@ -118,7 +118,7 @@ const dacConfig =
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
-  addedAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
+  addedAt: UnixTime(1663927910), // 2022-09-23T10:11:50Z
   capability: 'appchain',
   badges: [
     BADGES.VM.AppChain,
@@ -165,7 +165,7 @@ export const apex: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
-        sinceTimestamp: new UnixTime(1660252039),
+        sinceTimestamp: UnixTime(1660252039),
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
@@ -175,7 +175,7 @@ export const apex: Layer2 = {
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1660252039),
+      sinceTimestamp: UnixTime(1660252039),
       resyncLastDays: 7,
     },
   },

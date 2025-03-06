@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const happychain: Layer2 = upcomingL2({
   id: 'happy-chain',
   capability: 'universal',
-  addedAt: new UnixTime(1727519160), // 2024-09-27T17:09:00Z
+  addedAt: UnixTime(1727519160), // 2024-09-27T17:09:00Z
   display: {
     name: 'Happy chain',
     slug: 'happy-chain',

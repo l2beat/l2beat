@@ -1,11 +1,11 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { underReviewL2 } from './templates/underReview'
 
 export const funki: Layer2 = underReviewL2({
   id: 'funki',
   capability: 'universal',
-  addedAt: new UnixTime(1728289959), // 2024-10-07T08:32:39Z
+  addedAt: UnixTime(1728289959), // 2024-10-07T08:32:39Z
   display: {
     name: 'Funki',
     slug: 'funki',
@@ -32,13 +32,13 @@ export const funki: Layer2 = underReviewL2({
     {
       chain: 'ethereum',
       address: EthereumAddress('0x5C9C7f98eD153a2deAA981eB5C97B31744AccF22'), // OptiPortal
-      sinceTimestamp: new UnixTime(1721212775),
+      sinceTimestamp: UnixTime(1721212775),
       tokens: ['ETH'],
     },
     {
       chain: 'ethereum',
       address: EthereumAddress('0xA2C1C1A473250094a6244F2bcf6Cb51F670Ad3aC'), // L1StandardBridge
-      sinceTimestamp: new UnixTime(1721212799),
+      sinceTimestamp: UnixTime(1721212799),
       tokens: '*',
     },
   ],

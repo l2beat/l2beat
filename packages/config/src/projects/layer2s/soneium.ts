@@ -4,10 +4,10 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('soneium')
-const genesisTimestamp = new UnixTime(1733498411)
+const genesisTimestamp = UnixTime(1733498411)
 
 export const soneium = opStackL2({
-  addedAt: new UnixTime(1724842746),
+  addedAt: UnixTime(1724842746),
   discovery,
   genesisTimestamp,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -37,8 +37,8 @@ export const soneium = opStackL2({
   },
   finality: {
     type: 'OPStack',
-    minTimestamp: new UnixTime(1733134753),
-    genesisTimestamp: new UnixTime(1733134753),
+    minTimestamp: UnixTime(1733134753),
+    genesisTimestamp: UnixTime(1733134753),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -50,7 +50,7 @@ export const soneium = opStackL2({
     chainId: 1868,
     explorerUrl: 'https://soneium.blockscout.com',
     coingeckoPlatform: 'soneium',
-    sinceTimestamp: new UnixTime(1733134751),
+    sinceTimestamp: UnixTime(1733134751),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

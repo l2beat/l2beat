@@ -9,7 +9,7 @@ import { CONTRACTS, DA_MODES } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('polygon-pos')
@@ -41,7 +41,7 @@ export const polygonpos: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
   capability: 'universal',
-  addedAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
+  addedAt: UnixTime(1664808578), // 2022-10-03T14:49:38Z
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

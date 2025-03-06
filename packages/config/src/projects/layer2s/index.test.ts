@@ -10,13 +10,10 @@ import { utils } from 'ethers'
 import { uniq } from 'lodash'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ProjectScalingTechnology } from '../../internalTypes'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
-import type {
-  ProjectTechnologyChoice,
-  ReferenceLink,
-  ScalingProjectTechnology,
-} from '../../types'
+import type { ProjectTechnologyChoice, ReferenceLink } from '../../types'
 import { chains } from '../chains'
 import { layer2s, milestonesLayer2s } from './index'
 
@@ -105,8 +102,8 @@ describe('layer2s', () => {
               }`,
             )
 
-            expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-              chain.sinceTimestamp.toNumber(),
+            expect(escrow.sinceTimestamp).toBeGreaterThanOrEqual(
+              chain.sinceTimestamp,
             )
           })
         }
@@ -338,7 +335,7 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         describe(layer2.display.name, () => {
           type Key = Exclude<
-            keyof ScalingProjectTechnology,
+            keyof ProjectScalingTechnology,
             'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 
@@ -462,7 +459,10 @@ describe('layer2s', () => {
         for (const milestone of project.milestones) {
           it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
-              UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+              UnixTime.isFull(
+                UnixTime.fromDate(new Date(milestone.date)),
+                'day',
+              ),
             ).toEqual(true)
           })
         }
@@ -470,7 +470,7 @@ describe('layer2s', () => {
       for (const milestone of milestonesLayer2s) {
         it(`Milestone: ${milestone.title} (main page) date is full day`, () => {
           expect(
-            UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+            UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
           ).toEqual(true)
         })
       }

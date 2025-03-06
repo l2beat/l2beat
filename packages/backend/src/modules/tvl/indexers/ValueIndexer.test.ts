@@ -84,7 +84,7 @@ describe(ValueIndexer.name, () => {
     })
 
     it('calculates and saves to DB', async () => {
-      const timestamps = [new UnixTime(100), new UnixTime(200)]
+      const timestamps = [UnixTime(100), UnixTime(200)]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampsToSync: () => timestamps,
@@ -123,7 +123,7 @@ describe(ValueIndexer.name, () => {
       const to = 1000
       const safeHeight = await indexer.update(from, to)
 
-      expect(safeHeight).toEqual(timestamps[1].toNumber())
+      expect(safeHeight).toEqual(timestamps[1])
       expect(syncOptimizer.getTimestampsToSync).toHaveBeenOnlyCalledWith(
         from,
         to,

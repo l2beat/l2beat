@@ -237,10 +237,33 @@
         ],
         "allowedOutboxList": ["0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
         "delayedMessageCount": 369,
+        "inboxHistory": [
+          "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
+          "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
+        ],
+        "outboxHistory": ["0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
         "sequencerMessageCount": 333,
         "sequencerReportedSubMessageCount": 814430
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1859,7 +1882,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
     "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",

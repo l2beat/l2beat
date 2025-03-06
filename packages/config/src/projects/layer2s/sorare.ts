@@ -28,7 +28,7 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
@@ -59,7 +59,7 @@ export const sorare: Layer2 = {
   type: 'layer2',
   id: ProjectId('sorare'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -99,13 +99,13 @@ export const sorare: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
-        sinceTimestamp: new UnixTime(1626352527),
+        sinceTimestamp: UnixTime(1626352527),
         tokens: ['ETH'],
       }),
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1626352527),
+      sinceTimestamp: UnixTime(1626352527),
       resyncLastDays: 7,
     },
   },

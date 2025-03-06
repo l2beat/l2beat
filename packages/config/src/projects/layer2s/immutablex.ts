@@ -27,7 +27,7 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import {
@@ -69,7 +69,7 @@ export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -112,14 +112,14 @@ export const immutablex: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
-        sinceTimestamp: new UnixTime(1615389188),
+        sinceTimestamp: UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
         description: 'Main StarkEx contract, used also as an escrow.',
       }),
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1615389188),
+      sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
     },
   },

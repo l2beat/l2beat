@@ -167,7 +167,7 @@ export class LowLevelProvider {
           transactionHash,
           deployer: EthereumAddress.ZERO,
           blockNumber: 0,
-          timestamp: new UnixTime((await this.getBlock(1)).timestamp),
+          timestamp: UnixTime((await this.getBlock(1)).timestamp),
         }
       }
 
@@ -180,7 +180,7 @@ export class LowLevelProvider {
       const deployer = EthereumAddress(tx.from)
       const blockNumber = tx.blockNumber
       const block = await this.getBlock(blockNumber)
-      const timestamp = new UnixTime(block.timestamp)
+      const timestamp = UnixTime(block.timestamp)
 
       return {
         transactionHash,

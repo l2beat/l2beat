@@ -9,7 +9,7 @@ import type {
   ProjectTvlEscrow,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { getAggLayerTokens } from './providers/aggLayer'
 import { getElasticChainTokens } from './providers/elasticChain'

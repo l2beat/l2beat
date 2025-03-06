@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -10,7 +10,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('degen', 'base')
 
 export const degen: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
+  addedAt: UnixTime(1712135735), // 2024-04-03T09:15:35Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   additionalPurposes: ['Social'],
@@ -44,7 +44,7 @@ export const degen: Layer3 = orbitStackL3({
     name: 'degen',
     chainId: 666666666,
     explorerUrl: 'https://explorer.degen.tips',
-    sinceTimestamp: new UnixTime(1710087539),
+    sinceTimestamp: UnixTime(1710087539),
     multicallContracts: [
       {
         address: EthereumAddress('0x79035Dc4436bA9C95016D3bF6304e5bA78B1066A'),

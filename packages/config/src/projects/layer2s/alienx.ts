@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('alienx')
 
 export const alienx: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1719847684), // 2024-07-01T15:28:04Z
+  addedAt: UnixTime(1719847684), // 2024-07-01T15:28:04Z
   additionalPurposes: ['Gaming', 'AI', 'NFT'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [

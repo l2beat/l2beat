@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('synapse')
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('synapse')
 export const synapse: Bridge = {
   type: 'bridge',
   id: ProjectId('synapse'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Synapse',
     slug: 'synapse',
@@ -35,14 +35,14 @@ export const synapse: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x2796317b0fF8538F253012862c06787Adfb8cEb6'),
-        sinceTimestamp: new UnixTime(1629082107),
+        sinceTimestamp: UnixTime(1629082107),
         tokens: ['ETH', 'WETH', 'FRAX', 'USDT', 'USDC', 'WBTC', 'DAI', 'gOHM'],
         chain: 'ethereum',
       },
       // address of the Synapse AMM pool used for swaps to canonical tokens
       {
         address: EthereumAddress('0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8'),
-        sinceTimestamp: new UnixTime(1629082839),
+        sinceTimestamp: UnixTime(1629082839),
         tokens: ['USDT', 'DAI', 'USDC'],
         chain: 'ethereum',
       },

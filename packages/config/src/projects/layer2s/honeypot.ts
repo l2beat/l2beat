@@ -12,7 +12,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
@@ -23,7 +23,7 @@ export const honeypot: Layer2 = {
   type: 'layer2',
   id: ProjectId('honeypot'),
   capability: 'appchain',
-  addedAt: new UnixTime(1683905088), // 2023-05-12T15:24:48Z
+  addedAt: UnixTime(1683905088), // 2023-05-12T15:24:48Z
   badges: [
     BADGES.VM.CartesiVM,
     BADGES.VM.AppChain,
@@ -117,7 +117,7 @@ export const honeypot: Layer2 = {
           selector: '0xddfdfbb0',
           functionSignature:
             'function submitClaim(bytes calldata _claimData) external onlyOwner',
-          sinceTimestamp: new UnixTime(1694467715),
+          sinceTimestamp: UnixTime(1694467715),
         },
       },
     ],

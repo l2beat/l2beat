@@ -26,7 +26,7 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 
@@ -58,7 +58,7 @@ export const reddioex: Layer2 = {
   type: 'layer2',
   id: ProjectId('reddioex'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -110,7 +110,7 @@ export const reddioex: Layer2 = {
     transactionApi: {
       type: 'starkex',
       product: ['reddio'],
-      sinceTimestamp: new UnixTime(1615389188),
+      sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
     },
     */

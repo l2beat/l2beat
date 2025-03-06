@@ -6,7 +6,9 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import { ProjectService, getTokenData } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
+// TODO: This script should probably be part of config
+import { getTokenData } from '@l2beat/config/src/tokens/getTokenData'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
@@ -48,12 +50,13 @@ const cmd = command({
     const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 
     logger.info('Executing TVS to exclude zero-valued tokens')
-    const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+    const timestamp =
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
     const localExecutor = new LocalExecutor(ps, env, logger)
     const tvs = await localExecutor.run(tvsConfig, [timestamp], true)
 
     const nonZeroTokens = tvs
-      .get(timestamp.toNumber())
+      .get(timestamp)
       ?.filter((token) => token.value !== 0)
       // TODO replace with amountId matching
       .map((token) => token.tokenConfig)

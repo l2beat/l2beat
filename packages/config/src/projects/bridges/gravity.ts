@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('gravity')
@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('gravity')
 export const gravity: Bridge = {
   type: 'bridge',
   id: ProjectId('gravity'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Gravity',
     slug: 'gravity',
@@ -38,7 +38,7 @@ export const gravity: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906'),
-        sinceTimestamp: new UnixTime(1639416372),
+        sinceTimestamp: UnixTime(1639416372),
         tokens: ['USDC', 'WETH', 'DAI', 'USDT', 'WBTC'],
         chain: 'ethereum',
       },

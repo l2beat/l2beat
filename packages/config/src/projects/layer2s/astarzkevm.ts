@@ -7,7 +7,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -30,7 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const astarzkevm: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -87,7 +87,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     name: 'astarzkevm',
     chainId: 3776,
     explorerUrl: 'https://astar-zkevm.explorer.startale.com',
-    sinceTimestamp: new UnixTime(1708632059),
+    sinceTimestamp: UnixTime(1708632059),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

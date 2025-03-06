@@ -22,7 +22,7 @@ import {
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
@@ -62,7 +62,7 @@ export const scroll: Layer2 = {
   type: 'layer2',
   id: ProjectId('scroll'),
   capability: 'universal',
-  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   display: {
     name: 'Scroll',
@@ -151,7 +151,7 @@ export const scroll: Layer2 = {
     name: 'scroll',
     chainId: 534352,
     explorerUrl: 'https://scrollscan.com',
-    sinceTimestamp: new UnixTime(1696917600),
+    sinceTimestamp: UnixTime(1696917600),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -160,6 +160,7 @@ export const scroll: Layer2 = {
         version: '3',
       },
     ],
+    gasTokens: ['ETH'],
     coingeckoPlatform: 'scroll',
     apis: [
       { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },
@@ -249,8 +250,8 @@ export const scroll: Layer2 = {
           selector: '0x31fa742d',
           functionSignature:
             'function finalizeBatchWithProof(bytes _batchHeader,bytes32 _prevStateRoot,bytes32 _postStateRoot,bytes32 _withdrawRoot,bytes _aggrProof)',
-          sinceTimestamp: new UnixTime(1696782323),
-          untilTimestamp: new UnixTime(1724227415),
+          sinceTimestamp: UnixTime(1696782323),
+          untilTimestamp: UnixTime(1724227415),
         },
       },
       {
@@ -272,7 +273,7 @@ export const scroll: Layer2 = {
           selector: '0x00b0f4d7',
           functionSignature:
             'function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)',
-          sinceTimestamp: new UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
+          sinceTimestamp: UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
         },
       },
       {
@@ -288,7 +289,7 @@ export const scroll: Layer2 = {
           selector: '0x4f099e3d',
           functionSignature:
             'function finalizeBundleWithProof(bytes,bytes32,bytes32,bytes)',
-          sinceTimestamp: new UnixTime(1724227415),
+          sinceTimestamp: UnixTime(1724227415),
         },
       },
       {
@@ -304,8 +305,8 @@ export const scroll: Layer2 = {
           selector: '0x1325aca0',
           functionSignature:
             'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
-          sinceTimestamp: new UnixTime(1696782323),
-          untilTimestamp: new UnixTime(1724227247),
+          sinceTimestamp: UnixTime(1696782323),
+          untilTimestamp: UnixTime(1724227247),
         },
       },
       {
@@ -321,7 +322,7 @@ export const scroll: Layer2 = {
           selector: '0x86b053a9',
           functionSignature:
             'function commitBatchWithBlobProof(uint8,bytes,bytes[],bytes,bytes)',
-          sinceTimestamp: new UnixTime(1724227415),
+          sinceTimestamp: UnixTime(1724227415),
         },
       },
     ],
@@ -335,7 +336,7 @@ export const scroll: Layer2 = {
       lag: 0,
       type: 'Scroll',
       // Scroll L1 Chain Proxy deployment
-      minTimestamp: new UnixTime(1696775129),
+      minTimestamp: UnixTime(1696775129),
       stateUpdate: 'disabled',
     },
   },

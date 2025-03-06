@@ -49,7 +49,7 @@ export class UpdateMonitorController {
 
     return entries.map((entry) => ({
       ...entry,
-      timestamp: entry.timestamp.toNumber(),
+      timestamp: entry.timestamp,
     }))
   }
 }

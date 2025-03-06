@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('corn')
 
 export const corn: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1733880840),
+  addedAt: UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
@@ -82,7 +82,7 @@ export const corn: Layer2 = orbitStackL2({
     name: 'corn',
     chainId: 21000000,
     explorerUrl: 'https://maizenet-explorer.usecorn.com',
-    sinceTimestamp: new UnixTime(1732012151),
+    sinceTimestamp: UnixTime(1732012151),
     gasTokens: ['BTCN'],
     multicallContracts: [
       {

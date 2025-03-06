@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -23,7 +23,7 @@ const multisigIsmThresholdString =
 export const hyperlane: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
-  addedAt: new UnixTime(1738918243), // 2025-02-07T
+  addedAt: UnixTime(1738918243), // 2025-02-07T
   display: {
     name: 'Hyperlane Nexus',
     slug: 'hyperlane',

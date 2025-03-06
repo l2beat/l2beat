@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const penchain: Layer2 = upcomingL2({
   id: 'penchain',
   capability: 'universal',
-  addedAt: new UnixTime(1740706975),
+  addedAt: UnixTime(1740706975),
   display: {
     name: 'Pen chain',
     slug: 'penchain',
