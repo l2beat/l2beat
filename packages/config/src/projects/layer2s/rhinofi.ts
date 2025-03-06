@@ -20,7 +20,7 @@ import {
   getCommittee,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import {
@@ -49,7 +49,7 @@ export const rhinofi: Layer2 = {
   type: 'layer2',
   id: ProjectId('deversifi'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -97,14 +97,14 @@ export const rhinofi: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
-        sinceTimestamp: new UnixTime(1590491810),
+        sinceTimestamp: UnixTime(1590491810),
         tokens: '*',
         chain: 'ethereum',
       },
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1590491810),
+      sinceTimestamp: UnixTime(1590491810),
       resyncLastDays: 7,
     },
     // trackedTxs: [
@@ -121,7 +121,7 @@ export const rhinofi: Layer2 = {
     //       selector: '0x538f9406',
     //       functionSignature:
     //         'function updateState(uint256[] publicInput, uint256[] applicationData)',
-    //       sinceTimestampInclusive: new UnixTime(1590491810),
+    //       sinceTimestampInclusive: UnixTime(1590491810),
     //     },
     //   },
     // ],

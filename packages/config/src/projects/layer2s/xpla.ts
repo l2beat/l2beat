@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const xpla: Layer2 = upcomingL2({
   id: 'xpla',
   capability: 'universal',
-  addedAt: new UnixTime(1716818766), // 2024-05-27T14:06:06Z
+  addedAt: UnixTime(1716818766), // 2024-05-27T14:06:06Z
   display: {
     name: 'zkXPLA',
     slug: 'xpla',

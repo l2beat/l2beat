@@ -34,7 +34,10 @@ export const getCachedTvsBreakdownForProjectData = cache(
     )
 
     const configMapping = getConfigMapping(project, chains)
-    return getTvsBreakdown(configMapping, chains)(project.id)
+    return getTvsBreakdown(configMapping, chains)(
+      project.id,
+      project.chainConfig?.gasTokens,
+    )
   },
   ['getCachedTvsBreakdownForProject'],
   {
@@ -45,7 +48,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
 
 function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
   return {
-    dataTimestamp: UnixTime.now().toNumber(),
+    dataTimestamp: UnixTime.now(),
     breakdown: {
       canonical: [
         {

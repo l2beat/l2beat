@@ -1,3 +1,5 @@
+import type { ReasonForBeingInOther } from '../types'
+
 export const REASON_FOR_BEING_OTHER = {
   NO_PROOFS: {
     label: 'No proofs',
@@ -31,4 +33,4 @@ export const REASON_FOR_BEING_OTHER = {
     description:
       'Projects with a low DAC threshold rely on the honesty of few entities to safely attest data availability on Ethereum. These entities can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
   },
-} as const
+} satisfies Record<string, ReasonForBeingInOther>

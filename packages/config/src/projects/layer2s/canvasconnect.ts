@@ -17,7 +17,7 @@ import {
   getCommittee,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -44,7 +44,7 @@ export const canvasconnect: Layer2 = {
   type: 'layer2',
   id: ProjectId('canvasconnect'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {
     name: 'Canvas Connect',
@@ -76,7 +76,7 @@ export const canvasconnect: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d'),
-        sinceTimestamp: new UnixTime(1675209600),
+        sinceTimestamp: UnixTime(1675209600),
         tokens: ['ETH', 'USDC'],
       }),
     ],

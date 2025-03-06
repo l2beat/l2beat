@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const hemi: Layer2 = upcomingL2({
   id: 'hemi',
   capability: 'universal',
-  addedAt: new UnixTime(1727449740), // 2024-09-27T17:09:00Z
+  addedAt: UnixTime(1727449740), // 2024-09-27T17:09:00Z
   display: {
     name: 'Hemi',
     slug: 'hemi',

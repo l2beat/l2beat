@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type UpdateMessageRecord, toRecord, toRow } from './entity'
 import { selectUpdateMessage } from './select'
@@ -30,7 +30,7 @@ export class UpdateMessageRepository extends BaseRepository {
   async deleteBefore(timestamp: UnixTime): Promise<number> {
     const result = await this.db
       .deleteFrom('UpdateMessage')
-      .where('timestamp', '<', timestamp.toDate())
+      .where('timestamp', '<', UnixTime.toDate(timestamp))
       .executeTakeFirst()
 
     return Number(result.numDeletedRows)

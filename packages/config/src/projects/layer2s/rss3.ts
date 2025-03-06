@@ -3,14 +3,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('rss3')
 
 export const rss3: Layer2 = opStackL2({
-  addedAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
+  addedAt: UnixTime(1705391231), // 2024-01-16T07:47:11Z
   daProvider: {
     layer: DA_LAYERS.NEAR_DA,
     riskView: {
@@ -101,7 +101,7 @@ export const rss3: Layer2 = opStackL2({
       { type: 'blockscout', url: 'https://scan.rss3.io/api' },
     ],
   },
-  genesisTimestamp: new UnixTime(1709858519),
+  genesisTimestamp: UnixTime(1709858519),
   isNodeAvailable: false,
   milestones: [
     {

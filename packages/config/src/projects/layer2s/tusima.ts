@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const tusima: Layer2 = upcomingL2({
   id: 'tusima',
   capability: 'universal',
-  addedAt: new UnixTime(1738142567), // 2025-01-29T15:22:47Z
+  addedAt: UnixTime(1738142567), // 2025-01-29T15:22:47Z
   display: {
     name: 'Tusima',
     slug: 'tusima',

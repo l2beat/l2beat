@@ -3,14 +3,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('zora')
 
 export const zora: Layer2 = opStackL2({
-  addedAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
+  addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
@@ -37,8 +37,8 @@ export const zora: Layer2 = opStackL2({
   },
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1686693839),
-    minTimestamp: new UnixTime(1710386579),
+    genesisTimestamp: UnixTime(1686693839),
+    minTimestamp: UnixTime(1710386579),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',
@@ -65,7 +65,7 @@ export const zora: Layer2 = opStackL2({
       { type: 'blockscout', url: 'https://explorer.zora.energy/api' },
     ],
   },
-  genesisTimestamp: new UnixTime(1686695915),
+  genesisTimestamp: UnixTime(1686695915),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),
   isNodeAvailable: true,
   milestones: [

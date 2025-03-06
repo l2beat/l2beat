@@ -54,8 +54,8 @@ const cmd = command({
     )
     const costsConfigs = projectConfig?.configurations.filter(
       (c): c is TrackedTxCostsConfig =>
-        c.sinceTimestamp < endDate.toNumber() &&
-        (!c.untilTimestamp || c.untilTimestamp > startDate.toNumber()) &&
+        c.sinceTimestamp < endDate &&
+        (!c.untilTimestamp || c.untilTimestamp > startDate) &&
         c.type === 'l2costs',
     )
 
@@ -133,7 +133,7 @@ async function fetchStarkwareApi(
   const http = new HttpClient()
 
   const data = await http.fetch(
-    `http://sharp-bi.provingservice.io/sharp_bi/aggregations/cost?day_start=${startDate.toYYYYMMDD()}&day_end=${endDate.toYYYYMMDD()}&customer_id=${customerId}`,
+    `http://sharp-bi.provingservice.io/sharp_bi/aggregations/cost?day_start=${UnixTime.toYYYYMMDD(startDate)}&day_end=${UnixTime.toYYYYMMDD(endDate)}&customer_id=${customerId}`,
     {
       timeout: 10000,
     },
@@ -161,10 +161,10 @@ function getDates(startDate: string | undefined, endDate: string | undefined) {
   }
   const start = startDate
     ? UnixTime.fromDate(getDateFromString(startDate))
-    : UnixTime.now().toStartOf('day').add(-1, 'days')
+    : UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
   const end = endDate
     ? UnixTime.fromDate(getDateFromString(endDate))
-    : UnixTime.now().toStartOf('day')
+    : UnixTime.toStartOf(UnixTime.now(), 'day')
   return [start, end]
 }
 

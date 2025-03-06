@@ -1,12 +1,12 @@
 import type {
   Project,
-  ProjectDataAvailability,
+  ProjectScalingCapability,
+  ProjectScalingCategory,
+  ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingStack,
+  ProjectScalingStage,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectCategory,
-  ScalingProjectPurpose,
-  ScalingProjectStack,
-  StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
 import { compact } from 'lodash'
@@ -29,7 +29,7 @@ import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-    optional: ['tvlInfo', 'scalingDa', 'scalingStage'],
+    optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -55,12 +55,12 @@ export async function getScalingSummaryEntries() {
 }
 
 export interface ScalingSummaryEntry extends CommonScalingEntry {
-  capability: ScalingProjectCapability
-  stage: StageConfig
-  category: ScalingProjectCategory
-  purposes: ScalingProjectPurpose[]
-  stack: ScalingProjectStack | undefined
-  dataAvailability: ProjectDataAvailability | undefined
+  capability: ProjectScalingCapability
+  stage: ProjectScalingStage
+  category: ProjectScalingCategory
+  purposes: ProjectScalingPurpose[]
+  stack: ProjectScalingStack | undefined
+  dataAvailability: ProjectScalingDa | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
     breakdown:
@@ -87,12 +87,13 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   tvsOrder: number
   risks: RosetteValue[]
   baseLayerRisks: RosetteValue[] | undefined
+  gasTokens: string[] | undefined
 }
 
 function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
-    'tvlInfo' | 'scalingDa' | 'scalingStage'
+    'tvlInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'
   >,
   changes: ProjectChanges,
   latestTvs: LatestTvs['projects'][string] | undefined,
@@ -151,5 +152,6 @@ function getScalingSummaryEntry(
     baseLayerRisks: project.scalingRisks.host
       ? getL2Risks(project.scalingRisks.host)
       : undefined,
+    gasTokens: project.chainConfig?.gasTokens,
   }
 }

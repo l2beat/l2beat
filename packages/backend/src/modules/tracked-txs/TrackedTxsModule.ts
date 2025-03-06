@@ -60,7 +60,7 @@ export function createTrackedTxsModule(
     (x) => x !== undefined,
   )
 
-  const minTimestamp = config.trackedTxsConfig.minTimestamp.toNumber()
+  const minTimestamp = config.trackedTxsConfig.minTimestamp
 
   const trackedTxsIndexer = new TrackedTxsIndexer({
     logger,
@@ -97,7 +97,7 @@ export function createTrackedTxsModule(
       db: peripherals.database,
       parents: [hourlyIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'costs' }),
     })
 
@@ -105,7 +105,7 @@ export function createTrackedTxsModule(
       db: peripherals.database,
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'costs' }),
       projects: config.trackedTxsConfig.projects,
     })
@@ -120,7 +120,7 @@ export function createTrackedTxsModule(
       projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'liveness' }),
     })
 
@@ -129,7 +129,7 @@ export function createTrackedTxsModule(
       projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'liveness' }),
     })
   }

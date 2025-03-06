@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('xdai')
 
@@ -19,7 +19,7 @@ const validatorThresholdstring = `${validatorThreshold} / ${validatorCount}`
 export const xdai: Bridge = {
   type: 'bridge',
   id: ProjectId('xdai'),
-  addedAt: new UnixTime(1665411755), // 2022-10-10T14:22:35Z
+  addedAt: UnixTime(1665411755), // 2022-10-10T14:22:35Z
   display: {
     name: 'xDai Bridge',
     slug: 'xdai',
@@ -53,7 +53,7 @@ export const xdai: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'),
-        sinceTimestamp: new UnixTime(1573776000),
+        sinceTimestamp: UnixTime(1573776000),
         tokens: ['cDAI', 'DAI', 'sDAI'],
         chain: 'ethereum',
       },

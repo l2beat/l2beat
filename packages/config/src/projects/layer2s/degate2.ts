@@ -20,7 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('degate2')
@@ -63,7 +63,7 @@ export const degate2: Layer2 = {
   type: 'layer2',
   id: ProjectId('degate2'),
   capability: 'appchain',
-  addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  addedAt: UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.EthereumCalldata,
@@ -98,7 +98,7 @@ export const degate2: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xF13e21653AEB763595D5E4baA1dC115689Da49b9'),
-        sinceTimestamp: new UnixTime(1693304807),
+        sinceTimestamp: UnixTime(1693304807),
         tokens: '*',
       }),
     ],
@@ -116,8 +116,8 @@ export const degate2: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1693304819),
-          untilTimestamp: new UnixTime(1699766508),
+          sinceTimestamp: UnixTime(1693304819),
+          untilTimestamp: UnixTime(1699766508),
         },
       },
     ],

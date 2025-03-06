@@ -22,7 +22,7 @@ export class ValueService {
       const values: TokenValue[] = []
 
       for (const token of config.tokens) {
-        const amount = await this.executeAmountFormula(token.amount, timestamp)
+        const amount = await this.executeFormula(token.amount, timestamp)
         const value = await this.executeValueFormula(
           {
             amount: token.amount,
@@ -49,7 +49,7 @@ export class ValueService {
         })
       }
 
-      result.set(timestamp.toNumber(), values)
+      result.set(timestamp, values)
     }
 
     return await Promise.resolve(result)
@@ -59,6 +59,10 @@ export class ValueService {
     formula: AmountFormula,
     timestamp: UnixTime,
   ): Promise<number> {
+    if (formula.type === 'const') {
+      return formula.value
+    }
+
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
     assert(amount !== undefined, `${formula.type} ${config.id}`)
@@ -73,40 +77,49 @@ export class ValueService {
     const price = await this.storage.getPrice(priceConfig.priceId, timestamp)
     assert(price !== undefined, `Price not found for ${priceConfig.priceId}`)
 
-    const amount = await this.executeAmountFormula(formula.amount, timestamp)
+    const amount = await this.executeFormula(formula.amount, timestamp)
     const value = amount * price
     return value
   }
 
   private async executeFormula(
-    formula: CalculationFormula | ValueFormula,
+    formula: CalculationFormula | ValueFormula | AmountFormula,
     timestamp: UnixTime,
   ): Promise<number> {
     const executeFormulaRecursive = async (
-      formula: CalculationFormula | ValueFormula,
+      formula: CalculationFormula | ValueFormula | AmountFormula,
       timestamp: UnixTime,
     ): Promise<number> => {
       if (formula.type === 'value') {
         return await this.executeValueFormula(formula, timestamp)
       }
 
-      return await formula.arguments.reduce(
-        async (
-          acc: Promise<number>,
-          current: CalculationFormula | ValueFormula,
-          index: number,
-        ) => {
-          const valueAcc = await acc
-          const value = await executeFormulaRecursive(current, timestamp)
+      if (formula.type === 'calculation') {
+        return await formula.arguments.reduce(
+          async (
+            acc: Promise<number>,
+            current: CalculationFormula | ValueFormula | AmountFormula,
+            index: number,
+          ) => {
+            const valueAcc = await acc
+            const value = await executeFormulaRecursive(current, timestamp)
 
-          if (formula.operator === 'sum') {
-            return Promise.resolve(valueAcc + value)
-          } else {
-            return Promise.resolve(index === 0 ? value : valueAcc - value)
-          }
-        },
-        Promise.resolve(0),
-      )
+            switch (formula.operator) {
+              case 'sum':
+                return valueAcc + value
+              case 'diff':
+                return index === 0 ? value : valueAcc - value
+              case 'max':
+                return Math.max(valueAcc, value)
+              case 'min':
+                return Math.min(valueAcc, value)
+            }
+          },
+          Promise.resolve(formula.operator === 'min' ? Infinity : 0),
+        )
+      }
+
+      return await this.executeAmountFormula(formula, timestamp)
     }
 
     return await executeFormulaRecursive(formula, timestamp)

@@ -3,7 +3,6 @@ import {
   assert,
   type AggLayerNativeEtherPreminted,
   AssetId,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '../aggLayer'
 
@@ -28,10 +27,7 @@ export function getAggLayerNativeEtherPremintedEntry(
   const includeInTotal = true
   const isAssociated = false
   const symbol = 'ETH'
-  const sinceTimestamp = UnixTime.max(
-    chain.sinceTimestamp,
-    escrow.sinceTimestamp,
-  )
+  const sinceTimestamp = Math.max(chain.sinceTimestamp, escrow.sinceTimestamp)
   const untilTimestamp = escrow.untilTimestamp
 
   return {

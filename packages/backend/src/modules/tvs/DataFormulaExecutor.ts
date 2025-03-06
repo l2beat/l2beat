@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
@@ -44,15 +44,11 @@ export class DataFormulaExecutor {
     const promises: Promise<void>[] = []
 
     for (const timestamp of timestamps) {
-      const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
+      const blockNumbers = blockNumbersToTimestamps.get(timestamp)
       assert(blockNumbers)
 
       promises.push(
-        ...this.processTotalSuppliesAndEscrows(
-          amounts,
-          timestamp,
-          blockNumbers,
-        ),
+        ...this.processOnchainAmounts(amounts, timestamp, blockNumbers),
       )
 
       promises.push(
@@ -66,7 +62,7 @@ export class DataFormulaExecutor {
     }
   }
 
-  private processTotalSuppliesAndEscrows(
+  private processOnchainAmounts(
     amounts: AmountConfig[],
     timestamp: UnixTime,
     blockNumbers: Map<string, number>,
@@ -94,6 +90,8 @@ export class DataFormulaExecutor {
             await this.storage.writeAmount(amount.id, timestamp, value)
             break
           }
+          default:
+            assertUnreachable(amount)
         }
       })
   }
@@ -260,13 +258,13 @@ export class DataFormulaExecutor {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.debug(
-        `Fetching latest block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching latest block number for timestamp ${timestamp} on ${chain}`,
       )
       const latestBlock = await block.getLatestBlockNumber()
       result.set(chain, latestBlock)
     }
 
-    return new Map([[timestamp.toNumber(), result]])
+    return new Map([[timestamp, result]])
   }
 
   async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
@@ -274,7 +272,7 @@ export class DataFormulaExecutor {
 
     for (const timestamp of timestamps) {
       result.set(
-        timestamp.toNumber(),
+        timestamp,
         await this.getTimestampToBlockNumbersMapping(chains, timestamp),
       )
     }
@@ -297,7 +295,7 @@ export class DataFormulaExecutor {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.info(
-        `Fetching block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching block number for timestamp ${timestamp} on ${chain}`,
       )
       const blockNumber = await block.getBlockNumberAtOrBefore(timestamp)
       result.set(chain, blockNumber)

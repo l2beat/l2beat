@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const plumenetwork: Layer2 = upcomingL2({
   id: 'plumenetwork',
   capability: 'universal',
-  addedAt: new UnixTime(1719224239), // 2024-06-24T10:17:19Z
+  addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z
   display: {
     name: 'Plume Network',
     slug: 'plumenetwork',

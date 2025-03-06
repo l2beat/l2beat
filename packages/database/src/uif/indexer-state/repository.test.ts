@@ -94,7 +94,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       const record = {
         indexerId: 'indexer1',
         safeHeight: 1,
-        minTimestamp: UnixTime.ZERO,
+        minTimestamp: 0,
       }
       await repository.upsert(record)
 

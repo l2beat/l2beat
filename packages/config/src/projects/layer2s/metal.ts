@@ -2,14 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('metal')
 
 export const metal: Layer2 = opStackL2({
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   associatedTokens: ['MTL'],
   additionalBadges: [BADGES.RaaS.Conduit],
@@ -49,11 +49,11 @@ export const metal: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1711567115),
+  genesisTimestamp: UnixTime(1711567115),
   // finality: {
   //   type: 'OPStack-blob',
-  //   genesisTimestamp: new UnixTime(1711567115),
-  //   minTimestamp: new UnixTime(1711565399), //first blob: https://etherscan.io/tx/0x24a3a82c9030b664159be27407ba980c663ccb9bc12b1e448b97b1741d8cefc0
+  //   genesisTimestamp: UnixTime(1711567115),
+  //   minTimestamp: UnixTime(1711565399), //first blob: https://etherscan.io/tx/0x24a3a82c9030b664159be27407ba980c663ccb9bc12b1e448b97b1741d8cefc0
   //   l2BlockTimeSeconds: 2,
   //   lag: 0,
   //   stateUpdate: 'disabled',

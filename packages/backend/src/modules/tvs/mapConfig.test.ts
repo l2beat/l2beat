@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
   assert,
@@ -18,7 +19,11 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = mapConfig(arbitrum, arbitrum.chainConfig)
+    const result = await mapConfig(
+      arbitrum,
+      arbitrum.chainConfig,
+      Logger.SILENT,
+    )
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
@@ -37,7 +42,7 @@ describe(mapConfig.name, () => {
         ),
         decimals: 18,
       },
-      sinceTimestamp: new UnixTime(1661457944),
+      sinceTimestamp: UnixTime(1661457944),
       untilTimestamp: undefined,
       category: 'ether',
       source: 'canonical',
@@ -57,7 +62,7 @@ describe(mapConfig.name, () => {
         type: 'circulatingSupply',
         priceId: 'arbitrum',
       },
-      sinceTimestamp: new UnixTime(1679529600),
+      sinceTimestamp: UnixTime(1679529600),
       untilTimestamp: undefined,
       category: 'other',
       source: 'native',
@@ -75,7 +80,7 @@ describe(mapConfig.name, () => {
         chain: 'arbitrum',
         decimals: 18,
       },
-      sinceTimestamp: new UnixTime(1718150400),
+      sinceTimestamp: UnixTime(1718150400),
       untilTimestamp: undefined,
       category: 'other',
       source: 'external',
@@ -117,12 +122,22 @@ describe(extractPricesAndAmounts.name, () => {
         mockObject<Token>({
           priceId: 'price-ATH',
           amount: {
-            type: 'totalSupply',
-            address: EthereumAddress(
-              '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-            ),
-            chain: 'arbitrum',
-            decimals: 18,
+            type: 'calculation',
+            operator: 'max',
+            arguments: [
+              {
+                type: 'const',
+                value: 100,
+              },
+              {
+                type: 'totalSupply',
+                address: EthereumAddress(
+                  '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+                ),
+                chain: 'arbitrum',
+                decimals: 18,
+              },
+            ],
           },
           valueForProject: undefined,
           valueForTotal: undefined,

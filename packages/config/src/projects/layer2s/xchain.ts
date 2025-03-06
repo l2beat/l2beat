@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('xchain')
 
 export const xchain: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
+  addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('sollet')
@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('sollet')
 export const sollet: Bridge = {
   type: 'bridge',
   id: ProjectId('sollet'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Sollet',
@@ -31,7 +31,7 @@ export const sollet: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0xeae57ce9cc1984F202e15e038B964bb8bdF7229a'),
-        sinceTimestamp: new UnixTime(1599794859),
+        sinceTimestamp: UnixTime(1599794859),
         tokens: ['SRM', 'ETH', 'ALEPH', 'USDT', 'USDC', 'UNI', 'KEEP', 'LINK'],
         chain: 'ethereum',
       },

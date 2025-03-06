@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const patex: Layer2 = upcomingL2({
   id: 'patex',
   capability: 'universal',
-  addedAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
+  addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   display: {
     category: 'Optimistic Rollup',
     name: 'Patex Network',
@@ -34,6 +34,6 @@ export const patex: Layer2 = upcomingL2({
 //   {
 //      chain: 'ethereum',
 //      address: EthereumAddress('0x0d6e11E2A3B2B3a245bf839c07D775983aCB787d'), // unverified
-//      sinceTimestamp: new UnixTime(1686211235),
+//      sinceTimestamp: UnixTime(1686211235),
 //      tokens: ['ETH'],
 //    },
