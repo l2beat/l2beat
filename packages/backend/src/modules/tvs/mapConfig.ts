@@ -9,10 +9,11 @@ import {
   type ProjectTvlEscrow,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, notUndefined } from '@l2beat/shared-pure'
-import type { Token as LegacyToken, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
+import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { getAggLayerTokens } from './providers/aggLayer'
 import { getElasticChainTokens } from './providers/elasticChain'
+import { getTimestampsRange } from './tools/timestamps'
 import {
   type AmountConfig,
   type AmountFormula,
@@ -140,17 +141,12 @@ export function createEscrowToken(
     } as BalanceOfEscrowAmountFormula
   }
 
-  assert(chain.sinceTimestamp, `${chain.name}: missing sinceTimestamp`)
-  const sinceTimestamp = Math.max(
-    legacyToken.sinceTimestamp,
-    escrow.sinceTimestamp,
-    chain.sinceTimestamp,
+  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+    legacyToken,
+    escrow,
+    chain,
   )
-  const untilTimestamp = getEscrowUntilTimestamp(
-    legacyToken.untilTimestamp,
-    escrow.untilTimestamp,
-    chain.untilTimestamp,
-  )
+
   const source = escrow.source ?? 'canonical'
 
   return {
@@ -160,7 +156,7 @@ export function createEscrowToken(
     name: legacyToken.name,
     amount: amountFormula,
     sinceTimestamp,
-    untilTimestamp,
+    ...(untilTimestamp ? { untilTimestamp } : {}),
     category: legacyToken.category,
     source: source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -198,14 +194,9 @@ export function createToken(
       throw new Error(`Unsupported supply type ${legacyToken.supply}`)
   }
 
-  assert(chain.sinceTimestamp, `${chain.name}: missing sinceTimestamp`)
-  const sinceTimestamp = Math.max(
-    legacyToken.sinceTimestamp,
-    chain.sinceTimestamp,
-  )
-  const untilTimestamp = getEscrowUntilTimestamp(
-    legacyToken.untilTimestamp,
-    chain.untilTimestamp,
+  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+    legacyToken,
+    chain,
   )
 
   return {
@@ -215,7 +206,7 @@ export function createToken(
     name: legacyToken.name,
     amount: amountFormula,
     sinceTimestamp,
-    untilTimestamp,
+    ...(untilTimestamp ? { untilTimestamp } : {}),
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -345,18 +336,6 @@ function processFormula(
 export function hash(input: string[]): string {
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
-}
-
-export function getEscrowUntilTimestamp(
-  ...timestamps: (UnixTime | undefined)[]
-): UnixTime | undefined {
-  const definedTimestamps = timestamps.filter(notUndefined)
-
-  if (definedTimestamps.length === 0) {
-    return undefined
-  }
-
-  return Math.min(...definedTimestamps)
 }
 
 async function getChains() {

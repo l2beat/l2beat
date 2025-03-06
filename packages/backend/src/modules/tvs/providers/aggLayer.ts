@@ -13,6 +13,7 @@ import { toMulticallConfigEntry } from '../../../peripherals/multicall/Multicall
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { bigIntToNumber } from '../bigIntToNumber'
 import { createEscrowToken } from '../mapConfig'
+import { getTimestampsRange } from '../tools/timestamps'
 import { type Token, TokenId } from '../types'
 
 export const bridgeInterface = new utils.Interface([
@@ -69,15 +70,19 @@ export async function getAggLayerTokens(
         response.data.toString(),
       )
 
-      assert(chain.sinceTimestamp)
+      const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+        escrow,
+        chain,
+        token,
+      )
 
       return {
         id: TokenId.create(project.id, token.symbol),
         priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
-        // TODO: get token deployment timestamp on chain
-        sinceTimestamp: chain.sinceTimestamp,
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
         category: token.category,
         source: 'canonical' as const,
         isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -101,12 +106,15 @@ export async function getAggLayerTokens(
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
     assert(escrow.sharedEscrow.wethAddress)
 
+    const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
+
     etherOnL2 = {
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',
-      sinceTimestamp: chain.sinceTimestamp,
+      sinceTimestamp,
+      ...(untilTimestamp ? { untilTimestamp } : {}),
       category: 'ether' as const,
       source: 'canonical' as const,
       amount: {
@@ -122,12 +130,15 @@ export async function getAggLayerTokens(
   if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
     assert(escrow.sharedEscrow.premintedAmount)
 
+    const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
+
     etherOnL2 = {
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',
-      sinceTimestamp: chain.sinceTimestamp,
+      sinceTimestamp,
+      ...(untilTimestamp ? { untilTimestamp } : {}),
       category: 'ether' as const,
       source: 'canonical' as const,
       amount: {
