@@ -17,8 +17,6 @@ export function ScopeOfAssessment({
   scopeOfAssessment: ProjectScalingScopeOfAssessment
   className?: string
 }) {
-  if (!scopeOfAssessment) return null
-
   return (
     <Collapsible
       className={cn('group rounded-lg border border-divider', className)}
@@ -41,7 +39,7 @@ export function ScopeOfAssessment({
 }
 
 function Section({
-  checked = true,
+  checked,
   items,
 }: {
   checked: boolean
