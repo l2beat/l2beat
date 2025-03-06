@@ -54,7 +54,7 @@ export const morph: Layer2 = {
   type: 'layer2',
   id: ProjectId('morph'),
   capability: 'universal',
-  addedAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
+  addedAt: UnixTime(1702295992), // 2023-12-11T11:59:52Z
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
@@ -109,33 +109,33 @@ export const morph: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304'),
-        sinceTimestamp: new UnixTime(1729307111),
+        sinceTimestamp: UnixTime(1729307111),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8'),
-        sinceTimestamp: new UnixTime(1729307651),
+        sinceTimestamp: UnixTime(1729307651),
         tokens: '*',
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1'),
-        sinceTimestamp: new UnixTime(1729307783),
+        sinceTimestamp: UnixTime(1729307783),
         tokens: '*',
         ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535'),
-        sinceTimestamp: new UnixTime(1729308239),
+        sinceTimestamp: UnixTime(1729308239),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
-        sinceTimestamp: new UnixTime(1729308239),
+        sinceTimestamp: UnixTime(1729308239),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
@@ -183,7 +183,8 @@ export const morph: Layer2 = {
     chainId: 2818,
     // explorerUrl: 'https://explorer.morphl2.io/', // needed?
     coingeckoPlatform: 'morph-l2',
-    sinceTimestamp: new UnixTime(1729490400), // morph block 0
+    sinceTimestamp: UnixTime(1729490400), // morph block 0
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

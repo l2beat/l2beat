@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const union: Layer2 = upcomingL2({
   id: 'union',
   capability: 'universal',
-  addedAt: new UnixTime(1740072951), // 2025-01-20T17:35:51Z
+  addedAt: UnixTime(1740072951), // 2025-01-20T17:35:51Z
   display: {
     name: 'Union Chain',
     slug: 'union',

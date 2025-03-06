@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const polygonmiden: Layer2 = upcomingL2({
   id: 'polygon-miden',
   capability: 'universal',
-  addedAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
+  addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z
   display: {
     name: 'Polygon Miden',
     slug: 'polygon-miden',

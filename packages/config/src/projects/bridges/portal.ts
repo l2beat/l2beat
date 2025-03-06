@@ -15,7 +15,7 @@ const guardians = discovery.getContractValue<[string[], number]>(
 export const portal: Bridge = {
   type: 'bridge',
   id: ProjectId('portal'),
-  addedAt: new UnixTime(1665415357), // 2022-10-10T15:22:37Z
+  addedAt: UnixTime(1665415357), // 2022-10-10T15:22:37Z
   display: {
     name: 'Portal (Wormhole)',
     slug: 'portal',
@@ -45,7 +45,7 @@ export const portal: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'), // Escrows to various chains
-        sinceTimestamp: new UnixTime(1631535967),
+        sinceTimestamp: UnixTime(1631535967),
         tokens: '*',
         chain: 'ethereum',
       },

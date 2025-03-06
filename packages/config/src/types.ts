@@ -274,6 +274,7 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
+  scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
 }
 
 export type ProjectScalingCategory =
@@ -285,6 +286,11 @@ export type ProjectScalingCategory =
   | 'Other'
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
+
+export type ProjectScalingScopeOfAssessment = {
+  checked: string[]
+  notChecked: string[]
+}
 
 export interface ReasonForBeingInOther {
   label: string

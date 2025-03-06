@@ -7,7 +7,7 @@ import { opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
-  addedAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
+  addedAt: UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -38,15 +38,15 @@ export const bobanetwork: Layer2 = opStackL2({
   },
   // finality: {
   //   type: 'OPStack-blob',
-  //   minTimestamp: new UnixTime(1713303530),
-  //   genesisTimestamp: new UnixTime(1635393439),
+  //   minTimestamp: UnixTime(1713303530),
+  //   genesisTimestamp: UnixTime(1635393439),
   //   l2BlockTimeSeconds: 2,
   //   lag: 0,
   //   stateUpdate: 'disabled',
   // },
   // Explicitly set since we are getting weird results from the finality calculation
   finality: undefined,
-  genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
+  genesisTimestamp: UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA'],
   isNodeAvailable: 'UnderReview',
   nonTemplateTrackedTxs: [
@@ -60,8 +60,8 @@ export const bobanetwork: Layer2 = opStackL2({
         address: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
         selector: '0xd0f89344',
         functionSignature: 'function appendSequencerBatch()',
-        sinceTimestamp: new UnixTime(1635386025),
-        untilTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1635386025),
+        untilTimestamp: UnixTime(1713303530),
       },
     },
     {
@@ -73,7 +73,7 @@ export const bobanetwork: Layer2 = opStackL2({
         formula: 'transfer',
         from: EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
         to: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
-        sinceTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1713303530),
       },
     },
     {
@@ -87,8 +87,8 @@ export const bobanetwork: Layer2 = opStackL2({
         selector: '0x8ca5cbb9',
         functionSignature:
           'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
-        sinceTimestamp: new UnixTime(1635386294),
-        untilTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1635386294),
+        untilTimestamp: UnixTime(1713303530),
       },
     },
     {
@@ -102,7 +102,7 @@ export const bobanetwork: Layer2 = opStackL2({
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-        sinceTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1713303530),
       },
     },
   ],

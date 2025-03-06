@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const celo: Layer2 = upcomingL2({
   id: 'celo',
   capability: 'universal',
-  addedAt: new UnixTime(1718876598), // '2024-06-20T09:43:18Z'
+  addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   display: {
     name: 'Celo',
     slug: 'celo',

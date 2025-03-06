@@ -25,7 +25,7 @@ export function toRecord(row: Selectable<Activity>): ActivityRecord {
 export function toRow(record: ActivityRecord): Insertable<Activity> {
   return {
     projectId: record.projectId.toString(),
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
     count: record.count,
     uopsCount: record.uopsCount,
     start: record.start,

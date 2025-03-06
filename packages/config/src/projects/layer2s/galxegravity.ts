@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 
 export const galxegravity: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
+  addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
@@ -49,7 +49,7 @@ export const galxegravity: Layer2 = orbitStackL2({
     coingeckoPlatform: 'gravity-alpha',
     chainId: 1625,
     explorerUrl: 'https://gscan.xyz',
-    sinceTimestamp: new UnixTime(1716054191), // block 1 TS
+    sinceTimestamp: UnixTime(1716054191), // block 1 TS
     multicallContracts: [
       {
         sinceBlock: 52682,

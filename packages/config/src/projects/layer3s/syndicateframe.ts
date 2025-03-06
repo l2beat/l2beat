@@ -9,7 +9,7 @@ import { opStackL3 } from '../layer2s/templates/opStack'
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
 
 export const syndicateframe: Layer3 = opStackL3({
-  addedAt: new UnixTime(1711471599), // 2024-03-26T16:46:39Z
+  addedAt: UnixTime(1711471599), // 2024-03-26T16:46:39Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],
@@ -48,6 +48,6 @@ export const syndicateframe: Layer3 = opStackL3({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1707371473),
+  genesisTimestamp: UnixTime(1707371473),
   isNodeAvailable: 'UnderReview',
 })

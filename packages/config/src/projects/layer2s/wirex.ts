@@ -30,7 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const wirex: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
@@ -55,7 +55,7 @@ export const wirex: Layer2 = polygonCDKStack({
     name: 'wirex',
     chainId: 31415,
     explorerUrl: 'https://pay-chain-blockscout.wirexpaychain.com',
-    sinceTimestamp: new UnixTime(1720093223),
+    sinceTimestamp: UnixTime(1720093223),
     apis: [
       {
         type: 'rpc',

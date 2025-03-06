@@ -30,7 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const ternoa: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
+  addedAt: UnixTime(1727455020), // 2024-09-27T17:09:00Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
@@ -93,7 +93,7 @@ export const ternoa: Layer2 = polygonCDKStack({
     name: 'ternoa',
     chainId: 752025,
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
-    sinceTimestamp: new UnixTime(1735650935),
+    sinceTimestamp: UnixTime(1735650935),
     apis: [
       {
         type: 'rpc',

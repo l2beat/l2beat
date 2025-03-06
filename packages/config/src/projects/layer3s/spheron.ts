@@ -5,7 +5,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 export const spheron: Layer3 = upcomingL3({
   id: 'spheron',
   capability: 'universal',
-  addedAt: new UnixTime(1738898515), // 2025-02-05T14:15:15Z
+  addedAt: UnixTime(1738898515), // 2025-02-05T14:15:15Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Spheron',

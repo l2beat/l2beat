@@ -50,7 +50,7 @@ export const hyperliquid: Layer3 = {
   id: ProjectId('hyperliquid'),
   capability: 'appchain',
   hostChain: ProjectId('arbitrum'),
-  addedAt: new UnixTime(1734956888), // 2024-12-23T13:28:48Z
+  addedAt: UnixTime(1734956888), // 2024-12-23T13:28:48Z
   badges: [BADGES.VM.AppChain, BADGES.DA.CustomDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -77,7 +77,7 @@ export const hyperliquid: Layer3 = {
         chain: 'arbitrum',
         includeInTotal: false,
         address: EthereumAddress('0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7'),
-        sinceTimestamp: new UnixTime(1701389130),
+        sinceTimestamp: UnixTime(1701389130),
         tokens: ['USDC'],
       },
     ],

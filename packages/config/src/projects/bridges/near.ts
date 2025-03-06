@@ -36,7 +36,7 @@ const lockRequirementInWei = discovery.getContractValue<number>(
 export const near: Bridge = {
   type: 'bridge',
   id: ProjectId('near'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',
@@ -56,13 +56,13 @@ export const near: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x23Ddd3e3692d1861Ed57EDE224608875809e127f'),
-        sinceTimestamp: new UnixTime(1615826693),
+        sinceTimestamp: UnixTime(1615826693),
         tokens: '*',
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52'),
-        sinceTimestamp: new UnixTime(1624579200),
+        sinceTimestamp: UnixTime(1624579200),
         tokens: ['ETH'],
         chain: 'ethereum',
       },

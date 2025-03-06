@@ -11,7 +11,7 @@ import { opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
-  addedAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
+  addedAt: UnixTime(1708511622), // 2024-02-21T10:33:42Z
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {
@@ -74,14 +74,14 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
   },
-  genesisTimestamp: new UnixTime(1706811599),
+  genesisTimestamp: UnixTime(1706811599),
   isNodeAvailable: true,
   chainConfig: {
     name: 'fraxtal',
     chainId: 252,
     explorerUrl: 'https://fraxscan.com',
     // ~ Timestamp of block number 1
-    sinceTimestamp: new UnixTime(1706810713),
+    sinceTimestamp: UnixTime(1706810713),
     coingeckoPlatform: 'fraxtal',
     apis: [
       {

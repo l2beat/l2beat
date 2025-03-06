@@ -6,7 +6,7 @@ import { underReviewL3 } from '../layer2s/templates/underReview'
 export const bitlazer: Layer3 = underReviewL3({
   id: 'bitlazer',
   capability: 'universal',
-  addedAt: new UnixTime(1737636289), // 2025-01-21T14:24:03+00:00
+  addedAt: UnixTime(1737636289), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     BADGES.RaaS.Caldera,
@@ -53,13 +53,13 @@ export const bitlazer: Layer3 = underReviewL3({
   escrows: [
     {
       address: EthereumAddress('0x31623A545B431095C6F4552919FEe4fE7508Eb59'), // bridge (lzrBTC gastoken, not on CG)
-      sinceTimestamp: new UnixTime(1734198985),
+      sinceTimestamp: UnixTime(1734198985),
       tokens: ['ETH'],
       chain: 'arbitrum',
     },
     {
       address: EthereumAddress('0xa342a19e4029D7811317862d7E69DACB6d92181b'), // standardGW
-      sinceTimestamp: new UnixTime(1734198995),
+      sinceTimestamp: UnixTime(1734198995),
       tokens: '*',
       chain: 'arbitrum',
     },

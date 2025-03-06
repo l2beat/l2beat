@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const openzk: Layer2 = upcomingL2({
   id: 'openzk',
   capability: 'universal',
-  addedAt: new UnixTime(1739874850),
+  addedAt: UnixTime(1739874850),
   display: {
     name: 'OpenZK',
     slug: 'openzk',

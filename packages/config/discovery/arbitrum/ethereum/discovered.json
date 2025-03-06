@@ -1377,11 +1377,39 @@
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
         "delayedMessageCount": 1878059,
+        "inboxHistory": [
+          "0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
+          "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
+          "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+        ],
         "mainOutboxAddress": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+        "outboxHistory": [
+          "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+          "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+          "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+        ],
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
         "sequencerMessageCount": 820924,
         "sequencerReportedSubMessageCount": 286067940
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -4943,7 +4971,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/CustomGateway2": "0x7550ee1c0d2705680fa69a70d484659b59ce3cd21b3b4ba9caa296c331ee1618",
     "orbitstack/EdgeChallengeManager": "0xc5afdfa99694cf973cda74f39febe3e32d24b5d30c2b22f9d475a8a8d3d6e89c",
     "orbitstack/ERC20Gateway2": "0xf15e12992ee81c6b09134178d6a1b4b28eca7d8ceef6c31cde98b60d793a280d",

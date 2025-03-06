@@ -6,7 +6,7 @@ import { underReviewL3 } from '../layer2s/templates/underReview'
 export const huddle01: Layer3 = underReviewL3({
   id: 'huddle01',
   capability: 'universal',
-  addedAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
+  addedAt: UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     BADGES.RaaS.Caldera,
@@ -52,13 +52,13 @@ export const huddle01: Layer3 = underReviewL3({
   escrows: [
     {
       address: EthereumAddress('0x4A346da02EA2Fa6E49834C409165c6D6527ae522'), // bridge
-      sinceTimestamp: new UnixTime(1733189165),
+      sinceTimestamp: UnixTime(1733189165),
       tokens: ['ETH'],
       chain: 'arbitrum',
     },
     {
       address: EthereumAddress('0xD027882355d26e1891bD9D0B0953536b59e3B263'), // standardGW
-      sinceTimestamp: new UnixTime(1733189169),
+      sinceTimestamp: UnixTime(1733189169),
       tokens: '*',
       chain: 'arbitrum',
     },

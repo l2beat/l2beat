@@ -9,7 +9,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('alephzero')
 
 export const alephzero: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Privacy'],

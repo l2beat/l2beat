@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const genlayer: Layer2 = upcomingL2({
   id: 'genlayer',
   capability: 'universal',
-  addedAt: new UnixTime(1740073213), // 2025-01-20T17:40:13Z
+  addedAt: UnixTime(1740073213), // 2025-01-20T17:40:13Z
   display: {
     name: 'GenLayer',
     slug: 'genlayer',

@@ -6,7 +6,7 @@ import { underReviewL2 } from './templates/underReview'
 export const r0ar: Layer2 = underReviewL2({
   id: 'r0ar',
   capability: 'universal',
-  addedAt: new UnixTime(1739282637), // 2025-02-11T14:03:57Z
+  addedAt: UnixTime(1739282637), // 2025-02-11T14:03:57Z
   badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'R0ar',
@@ -36,7 +36,7 @@ export const r0ar: Layer2 = underReviewL2({
   escrows: [
     {
       address: EthereumAddress('0x2c6af306f8d0cd6d9e76d43b2dc9a4e60a7f446e'),
-      sinceTimestamp: new UnixTime(1726179731),
+      sinceTimestamp: UnixTime(1726179731),
       tokens: ['ETH'],
       chain: 'ethereum',
     },

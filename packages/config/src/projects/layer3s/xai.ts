@@ -10,7 +10,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
 export const xai: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
+  addedAt: UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],

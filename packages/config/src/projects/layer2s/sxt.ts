@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const sxt: Layer2 = upcomingL2({
   id: 'sxt',
   capability: 'universal',
-  addedAt: new UnixTime(1716819511), // 2024-05-27T14:18:31Z
+  addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
   display: {
     name: 'Space and Time',
     slug: 'sxt',

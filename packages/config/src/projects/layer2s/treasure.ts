@@ -17,7 +17,7 @@ export const treasure: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],
-  addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
+  addedAt: UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
@@ -49,7 +49,7 @@ export const treasure: Layer2 = zkStackL2({
     name: 'treasure',
     chainId: 61166,
     explorerUrl: 'https://treasurescan.io',
-    sinceTimestamp: new UnixTime(1732617294),
+    sinceTimestamp: UnixTime(1732617294),
     apis: [
       {
         type: 'rpc',

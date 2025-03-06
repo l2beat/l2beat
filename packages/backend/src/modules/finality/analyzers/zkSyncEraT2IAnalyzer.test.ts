@@ -19,7 +19,7 @@ describe(zkSyncEraT2IAnalyzer.name, () => {
         mockObject<Database>(),
         ProjectId('zksync2'),
       )
-      const tx = { txHash: '0x121', timestamp: new UnixTime(l1Timestamp) }
+      const tx = { txHash: '0x121', timestamp: UnixTime(l1Timestamp) }
       const previousTx = tx // not used
       const result = await analyzer.analyze(previousTx, tx)
 

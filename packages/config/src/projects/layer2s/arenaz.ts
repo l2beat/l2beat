@@ -5,10 +5,10 @@ import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('arenaz')
-const genesisTimestamp = new UnixTime(1731366083)
+const genesisTimestamp = UnixTime(1731366083)
 
 export const arenaz = opStackL2({
-  addedAt: new UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
+  addedAt: UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Gaming'],

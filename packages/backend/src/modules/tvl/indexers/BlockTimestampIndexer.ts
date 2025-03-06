@@ -22,11 +22,11 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
-    if (timestamp.toNumber() > to) {
+    if (timestamp > to) {
       this.logger.info('Skipping update due to sync optimization', {
         from,
         to,
-        optimizedTimestamp: timestamp.toNumber(),
+        optimizedTimestamp: timestamp,
       })
       return to
     }
@@ -35,7 +35,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
       await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
     this.logger.info('Fetched block number for timestamp', {
-      timestamp: timestamp.toNumber(),
+      timestamp: timestamp,
       blockNumber,
     })
 
@@ -51,18 +51,18 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     })
 
     this.logger.info('Saved block number for timestamp into DB', {
-      timestamp: timestamp.toNumber(),
+      timestamp: timestamp,
       blockNumber,
     })
 
     this.blockHeight = blockNumber
-    return timestamp.toNumber()
+    return timestamp
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     const deletedRecords = await this.$.db.blockTimestamp.deleteAfterExclusive(
       this.$.chain,
-      new UnixTime(targetHeight),
+      UnixTime(targetHeight),
     )
 
     if (deletedRecords > 0) {
