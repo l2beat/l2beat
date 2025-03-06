@@ -286,7 +286,7 @@ function BasicTableColumnFiller({
 }: {
   as: 'th' | 'colgroup' | 'td'
 }) {
-  return <Comp className="w-4" />
+  return <Comp className="h-full w-4 min-w-4" />
 }
 
 export function getBasicTableGroupParams<T>(column: Column<T>) {
