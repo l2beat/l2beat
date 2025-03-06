@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xa14af5eb568590ab2c569622e9c1ee56eec20473
+
+# Diff at Thu, 06 Mar 2025 09:28:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 21786859
+- current block number: 21786859
+
+## Description
+
+Config related: set severity for arbitrum inbox/outbox changes to high.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786859 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumBridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Contract used to relay governance action messages from Arbitrum One to Ethereum. It is also an escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta:
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."}}
+    }
+```
+
+```diff
+    contract Bridge (0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta:
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."}}
+    }
+```
+
 Generated with discovered.json: 0x2d98723e9bf8735cbf8749d49e597fa654e1ec1a
 
 # Diff at Tue, 04 Mar 2025 10:39:29 GMT:

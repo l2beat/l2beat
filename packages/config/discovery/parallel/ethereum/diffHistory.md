@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x68516cdef2f4d94396a050aa288031aafb1cf7db
+
+# Diff at Thu, 06 Mar 2025 09:28:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 21465432
+- current block number: 21465432
+
+## Description
+
+Config related: set severity for arbitrum inbox/outbox changes to high.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465432 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x5a961c7D162195a9Dc5a357Cc168b0694283382E) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta:
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."}}
+    }
+```
+
 Generated with discovered.json: 0x3de7456d9e449ff69c3f06c78eb85dcab66b5568
 
 # Diff at Tue, 04 Mar 2025 10:39:36 GMT:
