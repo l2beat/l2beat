@@ -1,19 +1,19 @@
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
-import {
-  type AggLayerEscrow,
-  type ChainConfig,
-  type Project,
-  ProjectService,
-  type ProjectTvlEscrow,
+import type {
+  AggLayerEscrow,
+  ChainConfig,
+  Project,
+  ProjectTvlEscrow,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, Bytes, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { bigIntToNumber } from '../bigIntToNumber'
-import { createToken } from '../mapConfig'
+import { createEscrowToken } from '../mapConfig'
+import { getTimestampsRange } from '../tools/timestamps'
 import { type Token, TokenId } from '../types'
 
 export const bridgeInterface = new utils.Interface([
@@ -23,10 +23,12 @@ const ORIGIN_NETWORK = 0
 
 export async function getAggLayerTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig,
   escrow: ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+  chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
 ): Promise<Token[]> {
+  const chain = project.chainConfig
+  assert(chain, `${project.id}: chain should be defined`)
   const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
     toMulticallConfigEntry(m),
   )
@@ -68,7 +70,11 @@ export async function getAggLayerTokens(
         response.data.toString(),
       )
 
-      assert(chain.sinceTimestamp)
+      const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+        escrow,
+        chain,
+        token,
+      )
 
       return {
         mode: 'auto' as const,
@@ -76,8 +82,8 @@ export async function getAggLayerTokens(
         priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
-        // TODO: get token deployment timestamp on chain
-        sinceTimestamp: chain.sinceTimestamp,
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
         category: token.category,
         source: 'canonical' as const,
         isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -101,13 +107,16 @@ export async function getAggLayerTokens(
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
     assert(escrow.sharedEscrow.wethAddress)
 
+    const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
+
     etherOnL2 = {
       mode: 'auto' as const,
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',
-      sinceTimestamp: chain.sinceTimestamp,
+      sinceTimestamp,
+      ...(untilTimestamp ? { untilTimestamp } : {}),
       category: 'ether' as const,
       source: 'canonical' as const,
       amount: {
@@ -123,13 +132,16 @@ export async function getAggLayerTokens(
   if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
     assert(escrow.sharedEscrow.premintedAmount)
 
+    const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
+
     etherOnL2 = {
       mode: 'auto' as const,
       id: TokenId.create(project.id, 'ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',
-      sinceTimestamp: chain.sinceTimestamp,
+      sinceTimestamp,
+      ...(untilTimestamp ? { untilTimestamp } : {}),
       category: 'ether' as const,
       source: 'canonical' as const,
       amount: {
@@ -158,16 +170,11 @@ export async function getAggLayerTokens(
   const tokensToAssignFromL1: Token[] = []
 
   if (escrow.sharedEscrow.tokensToAssignFromL1) {
-    const ethereum = await new ProjectService().getProject({
-      id: ProjectId('ethereum'),
-      select: ['chainConfig'],
-    })
-    assert(ethereum)
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
       tokensToAssignFromL1.push(
-        createToken(token, project, ethereum.chainConfig, escrow),
+        createEscrowToken(project, escrow, chainOfL1Escrow, token),
       )
     }
   }

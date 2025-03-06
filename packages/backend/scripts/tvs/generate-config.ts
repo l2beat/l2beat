@@ -11,14 +11,14 @@ import { ProjectService } from '@l2beat/config'
 import { getTokenData } from '@l2beat/config/src/tokens/getTokenData'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { command, optional, positional, run, string } from 'cmd-ts'
+import { command, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/mapConfig'
 import type { Token, TokenValue } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
-    type: optional(string),
+    type: string,
     displayName: 'projectId',
     description: 'Project for which tvs will be executed',
   }),
@@ -43,10 +43,6 @@ const cmd = command({
     const outputFilePath = '../../packages/config/src/tokens/generated.json'
     await getTokenData(sourceFilePath, outputFilePath)
 
-    if (!args.project) {
-      return
-    }
-
     const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 
     logger.info('Executing TVS to exclude zero-valued tokens')
@@ -61,7 +57,11 @@ const cmd = command({
 
     const filePath = `./src/modules/tvs/config/${args.project}.json`
     const currentConfig = readFromFile(filePath)
-    const mergedTokens = mergeWithExistingConfig(currentTvs, currentConfig)
+    const mergedTokens = mergeWithExistingConfig(
+      currentTvs,
+      currentConfig,
+      logger,
+    )
 
     logger.info(`Writing results to file: ${filePath}`)
     writeToFile(filePath, args.project, mergedTokens)
@@ -78,28 +78,31 @@ async function generateConfigForProject(
 ) {
   const project = await ps.getProject({
     id: ProjectId(projectId),
-    select: ['tvlConfig', 'chainConfig'],
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
   })
   assert(project, `${projectId}: No project found`)
 
   const env = getEnv()
-  const rpc = new RpcClient({
-    http: new HttpClient(),
-    callsPerMinute: env.integer(
-      `${projectId.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-      120,
-    ),
-    retryStrategy: 'RELIABLE',
-    logger,
-    url: env.string(
-      `${projectId.toUpperCase()}_RPC_URL`,
-      project.chainConfig.apis.find((a) => a.type === 'rpc')?.url,
-    ),
-    sourceName: projectId,
-  })
+  const rpc = project.chainConfig
+    ? new RpcClient({
+        http: new HttpClient(),
+        callsPerMinute: env.integer(
+          `${projectId.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+          120,
+        ),
+        retryStrategy: 'RELIABLE',
+        logger,
+        url: env.string(
+          `${projectId.toUpperCase()}_RPC_URL`,
+          project.chainConfig.apis.find((a) => a.type === 'rpc')?.url,
+        ),
+        sourceName: projectId,
+      })
+    : undefined
 
   assert(project, `${projectId} project not found`)
-  return mapConfig(project, project.chainConfig, logger, rpc)
+  return mapConfig(project, logger, rpc)
 }
 
 function initLogger(env: Env) {
@@ -142,6 +145,7 @@ function readFromFile(filePath: string) {
 function mergeWithExistingConfig(
   tokenValues: TokenValue[],
   currentConfig: Token[],
+  logger: Logger,
 ) {
   const nonZeroTokens = tokenValues.map((token) => token.tokenConfig)
 
@@ -149,6 +153,9 @@ function mergeWithExistingConfig(
 
   const resultMap = new Map<string, Token>()
   nonZeroTokens.forEach((token) => {
+    if (resultMap.has(token.id)) {
+      logger.warn(`Duplicate detected: ${token.id}`)
+    }
     resultMap.set(token.id, token)
   })
 

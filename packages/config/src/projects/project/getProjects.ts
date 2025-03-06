@@ -299,8 +299,16 @@ function toBackendTrackedTxsConfig(
 }
 
 function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
+  const tokens = project.chainConfig
+    ? tokenList.filter(
+        (t) =>
+          t.supply !== 'zero' && t.chainId === project.chainConfig?.chainId,
+      )
+    : []
+
   return {
     escrows: project.config.escrows.map(toProjectEscrow),
+    tokens,
     associatedTokens: project.config.associatedTokens ?? [],
   }
 }
