@@ -11,14 +11,14 @@ import { ProjectService } from '@l2beat/config'
 import { getTokenData } from '@l2beat/config/src/tokens/getTokenData'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { command, optional, positional, run, string } from 'cmd-ts'
+import { command, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/mapConfig'
 import type { Token } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
-    type: optional(string),
+    type: string,
     displayName: 'projectId',
     description: 'Project for which tvs will be executed',
   }),
@@ -42,10 +42,6 @@ const cmd = command({
     const sourceFilePath = '../../packages/config/src/tokens/tokens.jsonc'
     const outputFilePath = '../../packages/config/src/tokens/generated.json'
     await getTokenData(sourceFilePath, outputFilePath)
-
-    if (!args.project) {
-      return
-    }
 
     const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 
