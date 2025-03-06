@@ -94,9 +94,19 @@ export const phala: Layer2 = {
         type: 'blockscout',
         url: 'https://explorer.phala.network/api',
       },
+      {
+        type: 'rpc',
+        url: 'https://rpc.phala.network/',
+        callsPerMinute: 1500,
+      },
     ],
   },
   config: {
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521'),
