@@ -9,5 +9,15 @@
     "sequencerReportedSubMessageCount"
   ],
   "ignoreRelatives": ["nativeToken"],
-  "category": "core"
+  "category": "core",
+  "fields": {
+    "allowedOutboxList": {
+      "description": "Can make calls as the bridge, steal all funds.",
+      "severity": "HIGH"
+    },
+    "allowedDelayedInboxList": {
+      "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge.",
+      "severity": "HIGH"
+    }
+  }
 }
