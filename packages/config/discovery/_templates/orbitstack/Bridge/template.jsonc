@@ -8,16 +8,40 @@
     "sequencerMessageCount",
     "sequencerReportedSubMessageCount"
   ],
-  "ignoreRelatives": ["nativeToken"],
+  "ignoreRelatives": ["nativeToken", "outboxHistory", "inboxHistory"],
   "category": "core",
   "fields": {
     "allowedOutboxList": {
       "description": "Can make calls as the bridge, steal all funds.",
       "severity": "HIGH"
     },
+    "outboxHistory": {
+      "description": "All Outboxes that were ever set as allowed in the bridge.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "outbox",
+        "add": {
+          "event": "OutboxToggle",
+          "where": ["=", "#enabled", true]
+        }
+      }
+    },
     "allowedDelayedInboxList": {
       "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge.",
       "severity": "HIGH"
+    },
+    "inboxHistory": {
+      "description": "All Inboxes that were ever set as allowed in the bridge.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "inbox",
+        "add": {
+          "event": "InboxToggle",
+          "where": ["=", "#enabled", true]
+        }
+      }
     }
   }
 }
