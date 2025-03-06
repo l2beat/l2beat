@@ -192,11 +192,11 @@ function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
   // some orbit chains represent maxTimeVariation as an array, others an object
   const result = discovery.getContractValue<
     | {
-      delayBlocks: number
-      futureBlocks: number
-      delaySeconds: number
-      futureSeconds: number
-    }
+        delayBlocks: number
+        futureBlocks: number
+        delaySeconds: number
+        futureSeconds: number
+      }
     | number[]
   >('SequencerInbox', 'maxTimeVariation')
 
@@ -550,7 +550,7 @@ function orbitStackCommon(
               prevBlockNumber: number
               replenishRateInBasis: number
               prevSequencedBlockNumber: number
-            }>('RollupProxy', 'buffer')
+            }>('SequencerInbox', 'buffer')
 
             const basis = 10000 // hardcoded in SequencerInbox
 
@@ -744,12 +744,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           warnings: {
             stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
           },
-          explanation: `${templateVars.display.name
-            } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
-              selfSequencingDelaySeconds,
-            )}. The state root gets finalized ${formatSeconds(
-              challengePeriodSeconds,
-            )} after it has been posted.`,
+          explanation: `${
+            templateVars.display.name
+          } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+            selfSequencingDelaySeconds,
+          )}. The state root gets finalized ${formatSeconds(
+            challengePeriodSeconds,
+          )} after it has been posted.`,
         },
       ),
     },
@@ -787,34 +788,34 @@ function getDaTracking(
 
   return usesBlobs
     ? [
-      {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxDeploymentBlockNumber,
-        inbox: templateVars.sequencerInbox.address,
-        sequencers: batchPosters,
-      },
-    ]
-    : templateVars.celestiaDa
-      ? [
         {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          // TODO: update to value from discovery
-          sinceBlock: templateVars.celestiaDa.sinceBlock,
-          namespace: templateVars.celestiaDa.namespace,
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: templateVars.sequencerInbox.address,
+          sequencers: batchPosters,
         },
       ]
-      : templateVars.availDa
-        ? [
+    : templateVars.celestiaDa
+      ? [
           {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
             // TODO: update to value from discovery
-            sinceBlock: templateVars.availDa.sinceBlock,
-            appId: templateVars.availDa.appId,
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
           },
         ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
         : undefined
 }
 
