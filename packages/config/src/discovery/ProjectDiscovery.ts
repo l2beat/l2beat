@@ -5,8 +5,6 @@ import type {
   ContractValue,
   DiscoveryOutput,
   EoaParameters,
-  Permission,
-  ReceivedPermission,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
 import {
@@ -18,30 +16,41 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { groupBy, isString, sum, uniq } from 'lodash'
+import { isString, sum, uniq } from 'lodash'
 import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   ProjectContract,
+  ProjectContractUpgradeability,
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
   ProjectUpgradeableActor,
   ReferenceLink,
-  ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
+import type { PermissionRegistry } from './PermissionRegistry'
+import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
+import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
+import {
+  formatPermissionCondition,
+  formatPermissionDelay,
+  isMultisigLike,
+  trimTrailingDots,
+} from './utils'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
+  private permissionRegistry: PermissionRegistry
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
     configReader = new ConfigReader(join(process.cwd(), '../config')),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
+    this.permissionRegistry = new PermissionsFromDiscovery(this)
     this.discoveries = [
       discovery,
       ...(discovery.sharedModules ?? []).map((module) =>
@@ -592,12 +601,16 @@ export class ProjectDiscovery {
     return eoas.filter((eoa) => eoa.name === name)
   }
 
+  getContracts(): ContractParameters[] {
+    return this.discoveries.flatMap((discovery) => discovery.contracts)
+  }
+
+  getEoas(): EoaParameters[] {
+    return this.discoveries.flatMap((discovery) => discovery.eoas)
+  }
+
   getContractsAndEoas(): (ContractParameters | EoaParameters)[] {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
-    return [...contracts, ...eoas]
+    return [...this.getContracts(), ...this.getEoas()]
   }
 
   getPermissionsByRole(
@@ -659,7 +672,7 @@ export class ProjectDiscovery {
       )
 
       const finalDescription = [
-        descriptions[0] ?? roleDescriptions[role].description,
+        descriptions[0] ?? RoleDescriptions[role].description,
       ]
 
       for (const c of matching) {
@@ -693,7 +706,7 @@ export class ProjectDiscovery {
       }
 
       result.push({
-        ...roleDescriptions[role],
+        ...RoleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts: this.formatPermissionedAccounts(addresses),
         chain: this.chain,
@@ -720,152 +733,6 @@ export class ProjectDiscovery {
     return result.join(' ')
   }
 
-  describeUltimatelyReceivedPermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
-  ): string[] {
-    const ultimatePermissionToPrefix: {
-      [key in Permission]: string | undefined
-    } = {
-      interact: 'Is allowed to interact with',
-      upgrade: 'Can upgrade the implementation of',
-      act: undefined,
-      guard: 'A Guardian',
-      challenge: 'A Challenger',
-      propose: 'A Proposer',
-      sequence: 'A Sequencer',
-      validate: 'A Validator',
-      operateLinea: 'An Operator',
-      fastconfirm: 'A FastConfirmer',
-      validateZkStack: 'A Validator',
-      relay: 'A Relayer',
-      validateBridge: 'A Validator',
-      validateBridge2: 'A Validator',
-      aggregatePolygon: 'A trusted Aggregator',
-      operateStarknet: 'An Operator',
-      governStarknet: 'A Governor',
-      member: 'Is a member of',
-    }
-
-    const formatVia = (via: ResolvedPermissionPath[]) =>
-      `- acting via ${via.map((p) => this.formatViaPath(p)).join(', ')}`
-
-    return Object.entries(
-      groupBy(
-        contractOrEoa.receivedPermissions ?? [],
-        (value: ReceivedPermission) => {
-          return [
-            value.permission,
-            value.via !== undefined ? formatVia(value.via) : '',
-            value.description ?? '',
-            value.condition ?? '',
-            value.delay?.toString() ?? '',
-          ].join('►')
-        },
-      ),
-    ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as Permission
-      const via = key.split('►')[1] ?? ''
-      const description = key.split('►')[2] ?? ''
-      const condition = key.split('►')[3] ?? ''
-      const delay = key.split('►')[4] ?? ''
-      const prefix = ultimatePermissionToPrefix[permission]
-      if (prefix === undefined) {
-        return ''
-      }
-
-      const permissionsRequiringTarget: Permission[] = [
-        'interact',
-        'upgrade',
-        'act',
-      ]
-      const showTargets = permissionsRequiringTarget.includes(permission)
-      const addressesString = showTargets
-        ? entries
-            .map((entry) => this.getContract(entry.from.toString()).name)
-            .join(', ')
-        : ''
-
-      return `${[
-        ultimatePermissionToPrefix[permission as Permission],
-        addressesString,
-        formatPermissionDescription(description),
-        formatPermissionCondition(condition),
-        delay === '' ? '' : formatPermissionDelay(Number(delay)),
-        via,
-      ]
-        .filter((s) => s !== '')
-        .join(' ')
-        .trim()}.`
-    })
-  }
-
-  describeDirectlyReceivedPermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
-  ): string[] {
-    const directPermissionToPrefix: {
-      [key in Permission]: string | undefined
-    } = {
-      interact: 'Can be used to interact with',
-      upgrade: 'Can be used to upgrade implementation of',
-      act: 'Can act on behalf of',
-      guard: 'Can act as a Guardian',
-      challenge: 'Can act as a Challenger',
-      propose: 'Can act as a Proposer',
-      sequence: 'Can act as a Sequencer',
-      validate: 'Can act as a Validator',
-      operateLinea: 'Can act as an Operator',
-      fastconfirm: 'Can act as a FastConfirmer',
-      validateZkStack: 'Can act as a Validator',
-      relay: 'Can act as a Relayer',
-      validateBridge: 'Can act as a Validator',
-      validateBridge2: 'Can act as a Validator',
-      aggregatePolygon: 'Can act as a trusted Aggregator',
-      operateStarknet: 'Can act as an Operator',
-      governStarknet: 'Can act as a Governor',
-      member: 'Is a member of',
-    }
-
-    return Object.entries(
-      groupBy(
-        contractOrEoa.directlyReceivedPermissions ?? [],
-        (value: ReceivedPermission) =>
-          [
-            value.permission,
-            value.description ?? '',
-            value.condition ?? '',
-            value.delay?.toString() ?? '',
-          ].join('►'),
-      ),
-    ).map(([key, entries]) => {
-      const permission = key.split('►')[0] as Permission
-      const description = key.split('►')[1] ?? ''
-      const condition = key.split('►')[2] ?? ''
-      const delay = key.split('►')[3] ?? ''
-      const permissionsRequiringTarget: Permission[] = [
-        'interact',
-        'upgrade',
-        'act',
-      ]
-      const showTargets = permissionsRequiringTarget.includes(permission)
-      const addressesString = showTargets
-        ? entries
-            .map((entry) => this.getContract(entry.from.toString()).name)
-            .join(', ')
-        : ''
-
-      return `${[
-        directPermissionToPrefix[permission],
-        addressesString,
-        formatPermissionDescription(description),
-        formatPermissionCondition(condition),
-        delay === '' ? '' : formatPermissionDelay(Number(delay)),
-      ]
-        .filter((s) => s !== '')
-        .join(' ')
-        .trim()}.`
-    })
-  }
-
   describeContractOrEoa(
     contractOrEoa: ContractParameters | EoaParameters,
     includeDirectPermissions: boolean = true,
@@ -873,10 +740,10 @@ export class ProjectDiscovery {
     return [
       contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
-      ...(includeDirectPermissions
-        ? this.describeDirectlyReceivedPermissions(contractOrEoa)
-        : []),
-      ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
+      ...this.permissionRegistry.describePermissions(
+        contractOrEoa,
+        includeDirectPermissions,
+      ),
     ].filter(notUndefined)
   }
 
@@ -893,50 +760,9 @@ export class ProjectDiscovery {
     return s
   }
 
-  getPermissionPriority(entry: ContractParameters | EoaParameters): number {
-    if (entry.receivedPermissions === undefined) {
-      return 0
-    }
-
-    const permissions = entry.receivedPermissions.map((p) => p.from)
-    const priority = permissions.reduce((acc, permission) => {
-      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
-    }, 0)
-
-    return priority
-  }
-
   getDiscoveredPermissions(): ProjectPermissions {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
-
-    const relevantContracts = [
-      ...contracts.filter(
-        (contract) => contract.receivedPermissions !== undefined,
-      ),
-      // We show multisigs even without ultimate permissions,
-      // because they can be members of msigs with permissions.
-      // We can also assume that msigs are always permissioned.
-      // But we show them last.
-      ...contracts.filter(
-        (contract) =>
-          contract.receivedPermissions === undefined &&
-          isMultisigLike(contract),
-      ),
-    ]
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
-
-    const eoas = this.discoveries
-      .flatMap((discovery) => discovery.eoas)
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
-
+    const relevantContracts = this.permissionRegistry.getPermissionedContracts()
+    const eoas = this.permissionRegistry.getPermissionedEoas()
     const allActors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
@@ -1144,11 +970,11 @@ export class ProjectDiscovery {
 
 function getUpgradeability(
   contract: ContractParameters,
-): ScalingProjectUpgradeability | undefined {
+): ProjectContractUpgradeability | undefined {
   if (!contract.proxyType) {
     return undefined
   }
-  const upgradeability: ScalingProjectUpgradeability = {
+  const upgradeability: ProjectContractUpgradeability = {
     proxyType: contract.proxyType,
     admins: get$Admins(contract.values),
     implementations: get$Implementations(contract.values),
@@ -1165,117 +991,10 @@ function isNonNullable<T>(
   return value !== null && value !== undefined
 }
 
-const roleDescriptions: {
-  [key in (typeof RolePermissionEntries)[number]]: {
-    name: string
-    description: string
-  }
-} = {
-  sequence: {
-    name: 'Sequencer',
-    description:
-      'Allowed to commit transactions from the current layer to the host chain.',
-  },
-  propose: {
-    name: 'Proposer',
-    description:
-      'Allowed to post new state roots of the current layer to the host chain.',
-  },
-  challenge: {
-    name: 'Challenger',
-    description:
-      'Allowed to challenge or delete state roots proposed by a Proposer.',
-  },
-  guard: {
-    name: 'Guardian',
-    description: 'Allowed to pause deposits and withdrawals.',
-  },
-  validate: {
-    // ORBIT specific
-    name: 'Validator',
-    description:
-      'Orbit stack specific Proposer and Challenger role. Can propose new state roots (called nodes) and challenge state roots on the host chain.',
-  },
-  operateLinea: {
-    // LINEA specific
-    name: 'Operator',
-    description:
-      'Allowed to prove blocks and post the corresponding transaction data.',
-  },
-  fastconfirm: {
-    name: 'AnyTrust FastConfirmer',
-    description:
-      'Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.',
-  },
-  validateZkStack: {
-    // ZK stack specific
-    name: 'Validator',
-    description:
-      'Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.',
-  },
-  validateBridge: {
-    name: 'Validator',
-    description:
-      'Permissoned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
-  },
-  validateBridge2: {
-    name: 'Validator',
-    description:
-      'Permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks. The validators listed here are the default validators for Ethereum and can be overridden by a custom configuration.',
-  },
-  relay: {
-    name: 'Relayer',
-    description:
-      'Permissioned to relay messages that are then verified onchain.',
-  },
-  aggregatePolygon: {
-    name: 'Trusted Aggregator (Proposer)',
-    description:
-      'Permissioned to post new state roots and global exit roots accompanied by ZK proofs.', // and accounting proofs for CDK sovereign (others) chains
-  },
-  operateStarknet: {
-    name: 'Operator',
-    description:
-      'Permissioned to regularly update and prove the state of the L2 on L1.',
-  },
-  governStarknet: {
-    name: 'Governor',
-    description:
-      'Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
-  },
-}
-
 export function formatAsBulletPoints(description: string[]): string {
   return description.length > 1
     ? description.map((s) => `* ${s}\n`).join('')
     : description.join(' ')
-}
-
-export function trimTrailingDots(s: string): string {
-  return s.replace(/\.*$/, '')
-}
-
-function formatPermissionDescription(description: string): string {
-  return description !== '' ? `- ${trimTrailingDots(description)}` : ''
-}
-
-function formatPermissionCondition(condition: string): string {
-  return condition !== '' ? `if ${trimTrailingDots(condition)}` : ''
-}
-
-function formatPermissionDelay(delay: number): string {
-  return ` with ${formatSeconds(delay)} delay`
-}
-
-function isMultisigLike(contract: ContractParameters | undefined): boolean {
-  if (contract === undefined) {
-    return false
-  }
-
-  const hasMembers = contract.values?.['$members'] !== undefined
-  const hasThreshold = contract.values?.['$threshold'] !== undefined
-
-  return hasMembers && hasThreshold
 }
 
 function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {

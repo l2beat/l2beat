@@ -12,6 +12,7 @@ type BaseAssetBreakdownData = {
   usdValue: number
   usdPrice: string
   tokenAddress?: EthereumAddress
+  isGasToken?: boolean
 }
 
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {

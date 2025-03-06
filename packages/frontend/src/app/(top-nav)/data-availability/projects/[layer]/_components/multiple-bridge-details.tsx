@@ -79,10 +79,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                   {bridge.name}
                 </div>
                 <div className="flex flex-1 items-center justify-center">
-                  <GrissiniCell
-                    values={bridge.grissiniValues}
-                    hasNoBridge={bridge.isNoBridge}
-                  />
+                  <GrissiniCell values={bridge.grissiniValues} />
                 </div>
                 <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
                   {formatCurrency(bridge.tvs, 'usd')}
@@ -149,10 +146,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                           {bridge.name}
                         </div>
                         <div>
-                          <GrissiniIcon
-                            values={bridge.grissiniValues}
-                            hasNoBridge={bridge.isNoBridge}
-                          />
+                          <GrissiniIcon values={bridge.grissiniValues} />
                         </div>
                       </label>
                     ))}

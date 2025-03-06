@@ -1,7 +1,7 @@
 import type {
   Project,
+  ProjectScalingCategory,
   ReasonForBeingInOther,
-  ScalingProjectCategory,
 } from '@l2beat/config'
 import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 
@@ -9,7 +9,7 @@ export interface ProjectCountdownsWithContext {
   otherMigration:
     | {
         expiresAt: number
-        pretendingToBe: ScalingProjectCategory
+        pretendingToBe: ProjectScalingCategory
         reasons: ReasonForBeingInOther[]
       }
     | undefined

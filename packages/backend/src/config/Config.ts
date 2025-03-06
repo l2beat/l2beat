@@ -1,10 +1,10 @@
 import type {
   ChainConfig,
-  Layer2FinalityConfig,
   OnchainVerifier,
   Project,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
+  ProjectFinalityConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
@@ -122,7 +122,7 @@ export interface FinalityConfig {
   readonly configurations: FinalityConfigProject[]
 }
 
-export type FinalityConfigProject = Layer2FinalityConfig & {
+export type FinalityConfigProject = ProjectFinalityConfig & {
   projectId: ProjectId
   url?: string
   callsPerMinute?: number

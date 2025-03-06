@@ -22,7 +22,7 @@ import {
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
@@ -160,6 +160,7 @@ export const scroll: Layer2 = {
         version: '3',
       },
     ],
+    gasTokens: ['ETH'],
     coingeckoPlatform: 'scroll',
     apis: [
       { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },

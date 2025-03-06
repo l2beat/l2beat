@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const PROJECT_ID = ProjectId('across-v3')

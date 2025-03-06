@@ -20,7 +20,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
@@ -184,6 +184,7 @@ export const morph: Layer2 = {
     // explorerUrl: 'https://explorer.morphl2.io/', // needed?
     coingeckoPlatform: 'morph-l2',
     sinceTimestamp: new UnixTime(1729490400), // morph block 0
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

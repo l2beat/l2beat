@@ -21,7 +21,7 @@ import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
@@ -296,6 +296,7 @@ export const optimism: Layer2 = {
     // The first full hour timestamp that will return the block number
     // https://optimistic.etherscan.io/block/138
     sinceTimestamp: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

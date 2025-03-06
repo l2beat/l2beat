@@ -1,8 +1,8 @@
 import type {
   Project,
-  ProjectDataAvailability,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingDa,
+  ProjectScalingStack,
 } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
@@ -53,9 +53,9 @@ export async function getScalingDaEntries() {
 }
 
 export interface ScalingDaEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
-  dataAvailability: ProjectDataAvailability
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  dataAvailability: ProjectScalingDa
+  stack: ProjectScalingStack | undefined
   tvsOrder: number
   risks: EntryRisks | undefined
 }

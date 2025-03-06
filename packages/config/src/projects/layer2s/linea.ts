@@ -24,7 +24,8 @@ import {
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2, ProjectPermissionedAccount } from '../../types'
+import type { Layer2 } from '../../internalTypes'
+import type { ProjectPermissionedAccount } from '../../types'
 import { BADGES } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
@@ -377,6 +378,7 @@ export const linea: Layer2 = {
     chainId: 59144,
     explorerUrl: 'https://lineascan.build',
     sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

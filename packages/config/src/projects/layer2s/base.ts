@@ -21,7 +21,7 @@ import { ESCROW } from '../../common'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
@@ -264,6 +264,7 @@ export const base: Layer2 = {
     // ~ Timestamp of block number 0 on Base
     // https://basescan.org/block/0
     sinceTimestamp: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

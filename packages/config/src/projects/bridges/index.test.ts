@@ -2,7 +2,10 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
-import type { BridgeTechnology, ProjectTechnologyChoice } from '../../types'
+import type {
+  ProjectBridgeTechnology,
+  ProjectTechnologyChoice,
+} from '../../types'
 import { chains } from '../chains'
 import { bridges } from './index'
 
@@ -87,8 +90,12 @@ describe('bridges', () => {
     for (const bridge of bridges) {
       describe(bridge.display.name, () => {
         type Key = Exclude<
-          keyof BridgeTechnology,
-          'canonical' | 'category' | 'destination' | 'isUnderReview'
+          keyof ProjectBridgeTechnology,
+          | 'canonical'
+          | 'category'
+          | 'destination'
+          | 'isUnderReview'
+          | 'detailedDescription'
         >
 
         function check(key: Key) {
