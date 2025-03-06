@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x55f5f02a21dd751708e1ca494d116991e8fea317
 
-# Diff at Thu, 06 Mar 2025 14:52:01 GMT:
+# Diff at Thu, 06 Mar 2025 15:34:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 308283361
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x55f5f02a21dd751708e1ca494d116991e8fea317
 
 ## Description
 
-change timelock descriptions, add delay.
+config: updates timelock templates, added starknet proghashes to global config.
 
 ## Config/verification related changes
 

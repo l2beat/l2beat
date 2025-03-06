@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xee666f31d1d084451de93bc5ee83dedc9c173c7d
+Generated with discovered.json: 0x7f7fc1282016dd973d5f75a9e870d66e72093468
 
-# Diff at Wed, 05 Mar 2025 16:28:13 GMT:
+# Diff at Thu, 06 Mar 2025 15:19:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5d3e3b01c9c6f1ecd34ee849b404794d8c094024 block: 21744158
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21744158
 - current block number: 21981875
 
 ## Description
 
-New adapters. (HashiManager is an optional oracle)
+config: updates timelock templates, added starknet proghashes to global config.
 
 ## Watched changes
 

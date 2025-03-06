@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x539ace82f003254b87d7d1e81c40544b6c098318
+Generated with discovered.json: 0xeef87092de98a2f44deccf27e9b73f2e148439ea
 
-# Diff at Wed, 05 Mar 2025 15:48:05 GMT:
+# Diff at Thu, 06 Mar 2025 15:18:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5d3e3b01c9c6f1ecd34ee849b404794d8c094024 block: 21764836
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21764836
 - current block number: 21981677
 
 ## Description
 
-Lumia upgraded to known validium contract.
+config: updates timelock templates, added starknet proghashes to global config.
 
 ## Watched changes
 

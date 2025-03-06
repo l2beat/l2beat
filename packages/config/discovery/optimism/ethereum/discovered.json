@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 21829671,
-  "configHash": "0x6c53ba9c83a5f645191592eda624819a1d1aab299f1e0ab79323938b50d09d83",
+  "configHash": "0x1469baac24c6a05142005c8b391aca9e12a166e3c1b2de2b55d8a7eea37bafa2",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -345,7 +345,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "21d 20h",
+        "timeSinceLastL2beatInteraction": "24d",
         "version": "1.0.0"
       }
     },

@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 21895014,
-  "configHash": "0x74f235beb7fbbe594bc3314a65f6ccdf2ff61bc6f087a1f74d69d42598c0705f",
+  "configHash": "0x26d771e2ec387419e1fe6c0cd6d6b696a1ef93b6072a5a791f0e4239dc261a09",
   "contracts": [
     {
       "name": "LivenessModule",
