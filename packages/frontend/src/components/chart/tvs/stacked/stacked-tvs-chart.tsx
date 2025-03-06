@@ -35,6 +35,11 @@ interface Props {
 }
 
 const chartMeta = {
+  canonical: {
+    label: 'Canonical',
+    color: 'hsl(var(--chart-tvs-canonical))',
+    indicatorType: { shape: 'square' },
+  },
   native: {
     label: 'Native',
     color: 'hsl(var(--chart-tvs-native))',
@@ -43,11 +48,6 @@ const chartMeta = {
   external: {
     label: 'External',
     color: 'hsl(var(--chart-tvs-external))',
-    indicatorType: { shape: 'square' },
-  },
-  canonical: {
-    label: 'Canonical',
-    color: 'hsl(var(--chart-tvs-canonical))',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
@@ -70,8 +70,8 @@ export function StackedTvsChart({
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
-          dataKey="native"
-          fill={chartMeta.native.color}
+          dataKey="external"
+          fill={chartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -79,8 +79,8 @@ export function StackedTvsChart({
           activeDot={false}
         />
         <Area
-          dataKey="external"
-          fill={chartMeta.external.color}
+          dataKey="native"
+          fill={chartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
