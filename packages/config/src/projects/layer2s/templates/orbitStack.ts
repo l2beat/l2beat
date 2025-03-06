@@ -192,11 +192,11 @@ function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
   // some orbit chains represent maxTimeVariation as an array, others an object
   const result = discovery.getContractValue<
     | {
-      delayBlocks: number
-      futureBlocks: number
-      delaySeconds: number
-      futureSeconds: number
-    }
+        delayBlocks: number
+        futureBlocks: number
+        delaySeconds: number
+        futureSeconds: number
+      }
     | number[]
   >('SequencerInbox', 'maxTimeVariation')
 
@@ -559,7 +559,13 @@ function orbitStackCommon(
               description:
                 commonDescription +
                 ` The time bound is defined to be the minimum between ${formatSeconds(selfSequencingDelaySeconds)} and the time left in the delay buffer. The delay buffer gets replenished over time and gets consumed every time the sequencer doesn't timely process a message. Only messages processed with a delay of ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)} or more consume the buffer. The buffer is capped at ${formatSeconds(buffer.max * blockNumberOpcodeTimeSeconds)}. The replenish rate is currently set at ${formatSeconds((buffer.replenishRateInBasis / basis) * 1200)} every ${formatSeconds(1200)}. Even if the buffer is fully consumed, messages are still allowed to be delayed up to ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)}.`,
-              references: [],
+              references: [
+                {
+                  title:
+                    'Sequencer and censorship resistance - Arbitrum documentation',
+                  url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer',
+                },
+              ],
               risks: [],
             } as ProjectTechnologyChoice
           }
@@ -744,12 +750,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           warnings: {
             stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
           },
-          explanation: `${templateVars.display.name
-            } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
-              selfSequencingDelaySeconds,
-            )}. The state root gets finalized ${formatSeconds(
-              challengePeriodSeconds,
-            )} after it has been posted.`,
+          explanation: `${
+            templateVars.display.name
+          } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+            selfSequencingDelaySeconds,
+          )}. The state root gets finalized ${formatSeconds(
+            challengePeriodSeconds,
+          )} after it has been posted.`,
         },
       ),
     },
@@ -787,34 +794,34 @@ function getDaTracking(
 
   return usesBlobs
     ? [
-      {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxDeploymentBlockNumber,
-        inbox: templateVars.sequencerInbox.address,
-        sequencers: batchPosters,
-      },
-    ]
-    : templateVars.celestiaDa
-      ? [
         {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          // TODO: update to value from discovery
-          sinceBlock: templateVars.celestiaDa.sinceBlock,
-          namespace: templateVars.celestiaDa.namespace,
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: templateVars.sequencerInbox.address,
+          sequencers: batchPosters,
         },
       ]
-      : templateVars.availDa
-        ? [
+    : templateVars.celestiaDa
+      ? [
           {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
             // TODO: update to value from discovery
-            sinceBlock: templateVars.availDa.sinceBlock,
-            appId: templateVars.availDa.appId,
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
           },
         ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
         : undefined
 }
 
