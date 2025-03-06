@@ -58,10 +58,9 @@ const TableRow = ({
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
-    // eslint-disable-next-line tailwindcss/no-custom-classname
     className={cn(
       'group/row border-b border-b-divider',
-      'data-[highlighted]:!mask-none data-[highlighted]:animate-row-highlight',
+      'data-[highlighted]:animate-row-highlight',
       className,
     )}
     {...props}

@@ -257,12 +257,14 @@ const config: Config = {
         },
         'row-highlight': {
           '0%': { backgroundColor: 'transparent' },
-          '50%': { backgroundColor: 'hsl(var(--brand) / 0.15)' },
+          '50%': { backgroundColor: 'hsl(var(--row-highlight))' },
           '100%': { backgroundColor: 'transparent' },
         },
         'row-highlight-no-opacity': {
           '0%': { backgroundColor: 'hsl(var(--surface-primary))' },
-          '50%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '50%': {
+            backgroundColor: 'hsl(var(--row-highlight-no-opacity))',
+          },
           '100%': { backgroundColor: 'hsl(var(--surface-primary))' },
         },
       },
