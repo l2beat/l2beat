@@ -288,8 +288,8 @@ export type ProjectScalingCategory =
 export type ProjectScalingCapability = 'universal' | 'appchain'
 
 export type ProjectScalingScopeOfAssessment = {
-  checked?: string[]
-  notChecked?: string[]
+  checked: string[]
+  notChecked: string[]
 }
 
 export interface ReasonForBeingInOther {
