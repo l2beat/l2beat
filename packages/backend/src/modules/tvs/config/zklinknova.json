@@ -3,108 +3,79 @@
   "projectId": "zklinknova",
   "tokens": [
     {
-      "id": "zklinknova-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ether",
+      "mode": "auto",
+      "id": "zklinknova-ARB",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "optimism",
-        "escrowAddress": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18
       },
-      "sinceTimestamp": 1711092485,
-      "category": "ether",
+      "sinceTimestamp": 1709296973,
+      "category": "other",
       "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-BRETT",
+      "priceId": "based-brett",
+      "symbol": "BRETT",
+      "name": "Brett",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1711098033,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-DAI",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
-        "chain": "optimism",
-        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
         "decimals": 18
       },
-      "sinceTimestamp": 1711095511,
+      "sinceTimestamp": 1711098033,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
     },
     {
-      "id": "zklinknova-OP",
-      "priceId": "optimism",
-      "symbol": "OP",
-      "name": "Optimism",
+      "mode": "auto",
+      "id": "zklinknova-DEGEN",
+      "priceId": "degen-base",
+      "symbol": "DEGEN",
+      "name": "Degen",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x4200000000000000000000000000000000000042",
-        "chain": "optimism",
-        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
         "decimals": 18
       },
-      "sinceTimestamp": 1711095511,
+      "sinceTimestamp": 1711098033,
       "category": "other",
       "source": "external",
       "isAssociated": false
     },
     {
-      "id": "zklinknova-USDT",
-      "priceId": "bridged-usdt",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-        "chain": "optimism",
-        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1711095511,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-        "chain": "optimism",
-        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1711095511,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC.e",
-      "priceId": "bridged-usd-coin-optimism",
-      "symbol": "USDC.e",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
-        "chain": "optimism",
-        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1711095511,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
+      "mode": "auto",
       "id": "zklinknova-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -112,16 +83,35 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "native",
-        "chain": "linea",
-        "escrowAddress": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
+        "chain": "base",
+        "escrowAddress": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
         "decimals": 18
       },
-      "sinceTimestamp": 1709218085,
+      "sinceTimestamp": 1711095697,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-ezETH",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "blast",
+        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1710427013,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-FOXY",
       "priceId": "foxy",
       "symbol": "FOXY",
@@ -139,142 +129,115 @@
       "isAssociated": false
     },
     {
-      "id": "zklinknova-ezETH",
-      "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH",
-      "name": "Renzo Restaked ETH",
+      "mode": "auto",
+      "id": "zklinknova-GNS",
+      "priceId": "gains-network",
+      "symbol": "GNS",
+      "name": "Gains Network",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
-        "chain": "linea",
-        "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+        "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18
       },
-      "sinceTimestamp": 1710337050,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDT",
-      "priceId": "bridged-tether-linea",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
-        "chain": "linea",
-        "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709218113,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC.e",
-      "priceId": "bridged-usd-coin-linea",
-      "symbol": "USDC.e",
-      "name": "USDC",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
-        "chain": "linea",
-        "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709218113,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-wBTC",
-      "priceId": "wrapped-bitcoin",
-      "symbol": "wBTC",
-      "name": "Wrapped BTC",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
-        "chain": "linea",
-        "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
-        "decimals": 8
-      },
-      "sinceTimestamp": 1709218113,
+      "sinceTimestamp": 1709296973,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
-      "id": "zklinknova-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ether",
+      "mode": "auto",
+      "id": "zklinknova-MANTA",
+      "priceId": "manta-network",
+      "symbol": "MANTA",
+      "name": "Manta",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "ethereum",
-        "escrowAddress": "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf",
+        "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
+        "chain": "mantapacific",
+        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
         "decimals": 18
       },
-      "sinceTimestamp": 1709278799,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ARB",
-      "priceId": "arbitrum",
-      "symbol": "ARB",
-      "name": "Arbitrum",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1709295839,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
-      "id": "zklinknova-MNT",
-      "priceId": "mantle",
-      "symbol": "MNT",
-      "name": "Mantle",
+      "mode": "auto",
+      "id": "zklinknova-MEOW",
+      "priceId": "zeek-coin",
+      "symbol": "MEOW",
+      "name": "Zeek Coin",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0x79db8c67d0c33203da4Efb58F7D325E1e0d4d692",
+        "chain": "zksync2",
+        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1709297040,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "zklinknova-mETH",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1709296907,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-MNT",
+      "priceId": "mantle",
+      "symbol": "MNT",
+      "name": "Mantle",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "mantle",
+        "escrowAddress": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709279309,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-MOZ",
+      "priceId": "mozaic",
+      "symbol": "MOZ",
+      "name": "Mozaic Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709296973,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-mswETH",
       "priceId": "eigenpie-sweth",
       "symbol": "mswETH",
@@ -292,6 +255,25 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-OP",
+      "priceId": "optimism",
+      "symbol": "OP",
+      "name": "Optimism",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4200000000000000000000000000000000000042",
+        "chain": "optimism",
+        "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1711095511,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-pufETH",
       "priceId": "pufeth",
       "symbol": "pufETH",
@@ -309,40 +291,43 @@
       "isAssociated": false
     },
     {
-      "id": "zklinknova-ezETH",
-      "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH",
-      "name": "Renzo Restaked ETH",
+      "mode": "auto",
+      "id": "zklinknova-RDNT",
+      "priceId": "radiant-capital",
+      "symbol": "RDNT",
+      "name": "Radiant",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
-      "category": "ether",
-      "source": "canonical",
+      "sinceTimestamp": 1709296973,
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "zklinknova-rsETH",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
-      "name": "rsETH",
+      "name": "KelpDao Restaked ETH",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1709296973,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "zklinknova-rswETH",
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
@@ -360,6 +345,60 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-SolvBTC",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1712448000,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-SolvBTC.m",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC.m",
+      "name": "Free Bridged SolvBTC",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
+        "chain": "zklinknova",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1715238151,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-STONE",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
+        "chain": "mantapacific",
+        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709295839,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-sUSDe",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
@@ -377,40 +416,7 @@
       "isAssociated": false
     },
     {
-      "id": "zklinknova-STONE",
-      "priceId": "stakestone-ether",
-      "symbol": "STONE",
-      "name": "StakeStone Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709295323,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDT",
-      "priceId": "tether",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709295323,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
+      "mode": "auto",
       "id": "zklinknova-uniETH",
       "priceId": "universal-eth",
       "symbol": "uniETH",
@@ -428,23 +434,43 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "zklinknova-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
         "decimals": 6
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1711098033,
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "USD Coin (Arb1)",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1709296973,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-USDe",
       "priceId": "ethena-usde",
       "symbol": "USDe",
@@ -462,6 +488,43 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1709296973,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-wBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "wBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+        "chain": "zksync2",
+        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1709297040,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
@@ -479,57 +542,97 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "zklinknova-weETH",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1709296973,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "zklinknova-WETH",
-      "priceId": "weth",
+      "priceId": "wrapped-ether-mantle-bridge",
       "symbol": "WETH",
-      "name": "Wrapped Ether",
+      "name": "Ether",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1709296907,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-wMNT",
+      "priceId": "wrapped-mantle",
+      "symbol": "wMNT",
+      "name": "Wrapped Mantle",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
+        "chain": "mantle",
+        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709296907,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+        "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18
       },
-      "sinceTimestamp": 1709295323,
+      "sinceTimestamp": 1709296973,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "zklinknova-ZK",
+      "priceId": "zksync",
+      "symbol": "ZK",
+      "name": "ZKsync",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "chain": "zksync2",
+        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1718668800,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-ZKL",
       "priceId": "zklink",
       "symbol": "ZKL",
@@ -555,719 +658,6 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": true
-    },
-    {
-      "id": "zklinknova-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "mantapacific",
-        "escrowAddress": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709279099,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-MANTA",
-      "priceId": "manta-network",
-      "symbol": "MANTA",
-      "name": "Manta",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
-        "chain": "mantapacific",
-        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709295839,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-STONE",
-      "priceId": "stakestone-ether",
-      "symbol": "STONE",
-      "name": "StakeStone Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
-        "chain": "mantapacific",
-        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709295839,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDT",
-      "priceId": "bridged-tether-manta-pacific",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
-        "chain": "mantapacific",
-        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709295839,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC",
-      "priceId": "bridged-usd-coin-manta-pacific",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
-        "chain": "mantapacific",
-        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709295839,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-wBTC",
-      "priceId": "bridged-wrapped-bitcoin-manta-pacific",
-      "symbol": "wBTC",
-      "name": "Wrapped BTC",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
-        "chain": "mantapacific",
-        "escrowAddress": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-        "decimals": 8
-      },
-      "sinceTimestamp": 1709295839,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-MNT",
-      "priceId": "mantle",
-      "symbol": "MNT",
-      "name": "Mantle",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "mantle",
-        "escrowAddress": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709279309,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-WETH",
-      "priceId": "wrapped-ether-mantle-bridge",
-      "symbol": "WETH",
-      "name": "Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-        "chain": "mantle",
-        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296907,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-mETH",
-      "priceId": "mantle-staked-ether",
-      "symbol": "mETH",
-      "name": "mETH",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
-        "chain": "mantle",
-        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296907,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDT",
-      "priceId": "mantle-bridged-usdt-mantle",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-        "chain": "mantle",
-        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709296907,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC",
-      "priceId": "mantle-bridged-usdc-mantle",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-        "chain": "mantle",
-        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709296907,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-wMNT",
-      "priceId": "wrapped-mantle",
-      "symbol": "wMNT",
-      "name": "Wrapped Mantle",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
-        "chain": "mantle",
-        "escrowAddress": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296907,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "zksync2",
-        "escrowAddress": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709280600,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC.e",
-      "priceId": "zksync-bridged-usdc-zksync",
-      "symbol": "USDC.e",
-      "name": "Bridged USDC (zkSync)",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
-        "chain": "zksync2",
-        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709297040,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-DAI",
-      "priceId": "dai",
-      "symbol": "DAI",
-      "name": "Dai Stablecoin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
-        "chain": "zksync2",
-        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709297040,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDT",
-      "priceId": "bridged-usdt",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
-        "chain": "zksync2",
-        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709297040,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USDC",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
-        "chain": "zksync2",
-        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709297040,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-wBTC",
-      "priceId": "wrapped-bitcoin",
-      "symbol": "wBTC",
-      "name": "Wrapped BTC",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
-        "chain": "zksync2",
-        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-        "decimals": 8
-      },
-      "sinceTimestamp": 1709297040,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-MEOW",
-      "priceId": "zeek-coin",
-      "symbol": "MEOW",
-      "name": "Zeek Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x79db8c67d0c33203da4Efb58F7D325E1e0d4d692",
-        "chain": "zksync2",
-        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709297040,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ZK",
-      "priceId": "zksync",
-      "symbol": "ZK",
-      "name": "ZKsync",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-        "chain": "zksync2",
-        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1718668800,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "arbitrum",
-        "escrowAddress": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709280428,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ARB",
-      "priceId": "arbitrum",
-      "symbol": "ARB",
-      "name": "Arbitrum",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-DAI",
-      "priceId": "dai",
-      "symbol": "DAI",
-      "name": "Dai Stablecoin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-GNS",
-      "priceId": "gains-network",
-      "symbol": "GNS",
-      "name": "Gains Network",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-rsETH",
-      "priceId": "kelp-dao-restaked-eth",
-      "symbol": "rsETH",
-      "name": "KelpDao Restaked ETH",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-MOZ",
-      "priceId": "mozaic",
-      "symbol": "MOZ",
-      "name": "Mozaic Token",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-RDNT",
-      "priceId": "radiant-capital",
-      "symbol": "RDNT",
-      "name": "Radiant",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ezETH",
-      "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH",
-      "name": "Renzo Restaked ETH",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-SolvBTC",
-      "priceId": "solv-btc",
-      "symbol": "SolvBTC",
-      "name": "Solv BTC",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1712448000,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDT",
-      "priceId": "tether",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC.e",
-      "priceId": "usd-coin",
-      "symbol": "USDC.e",
-      "name": "USD Coin (Arb1)",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-weETH",
-      "priceId": "wrapped-eeth",
-      "symbol": "weETH",
-      "name": "Wrapped eETH",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-wstETH",
-      "priceId": "wrapped-steth",
-      "symbol": "wstETH",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709296973,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "blast",
-        "escrowAddress": "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1710417729,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ezETH",
-      "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH",
-      "name": "Renzo Restaked ETH",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
-        "chain": "blast",
-        "escrowAddress": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1710427013,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "base",
-        "escrowAddress": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1711095697,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-BRETT",
-      "priceId": "based-brett",
-      "symbol": "BRETT",
-      "name": "Brett",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
-        "chain": "base",
-        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1711098033,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-DAI",
-      "priceId": "dai",
-      "symbol": "DAI",
-      "name": "Dai Stablecoin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-        "chain": "base",
-        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1711098033,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-DEGEN",
-      "priceId": "degen-base",
-      "symbol": "DEGEN",
-      "name": "Degen",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
-        "chain": "base",
-        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1711098033,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-        "chain": "base",
-        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1711098033,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "zklinknova-SolvBTC.m",
-      "priceId": "solv-btc",
-      "symbol": "SolvBTC.m",
-      "name": "Free Bridged SolvBTC",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
-        "chain": "zklinknova",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1715238151,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
     }
   ]
 }
