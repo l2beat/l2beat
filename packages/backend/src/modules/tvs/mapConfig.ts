@@ -99,9 +99,7 @@ export function createEscrowToken(
   escrow: ProjectTvlEscrow,
   legacyToken: LegacyToken & { isPreminted?: boolean },
 ): Token {
-  const id = project.isBridge
-    ? TokenId.createForBridge(project.id, escrow.chain, legacyToken.symbol)
-    : TokenId.create(project.id, legacyToken.symbol)
+  const id = TokenId.create(project.id, legacyToken.symbol)
 
   let amountFormula: CalculationFormula | AmountFormula
 
