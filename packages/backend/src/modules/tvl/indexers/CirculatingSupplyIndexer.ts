@@ -66,7 +66,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   private getAdjustedTo(from: number, to: number) {
     const adjustedTo = this.$.circulatingSupplyService.getAdjustedTo(from, to)
 
-    return this.maxHeight && this.maxHeight < adjustedTo
+    return this.maxHeight !== undefined && this.maxHeight < adjustedTo
       ? UnixTime(this.maxHeight)
       : adjustedTo
   }
