@@ -654,6 +654,7 @@ export interface ProjectTvlInfo {
 /** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
 export interface ProjectTvlConfig {
   escrows: ProjectTvlEscrow[]
+  tokens: Token[]
   associatedTokens: string[]
 }
 
@@ -899,6 +900,8 @@ export interface ProjectTvlConfig {
   /** Tokens minted on this network */
   tokens: Token[]
   associatedTokens: string[]
+}
+
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
