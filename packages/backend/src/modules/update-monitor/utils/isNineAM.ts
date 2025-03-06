@@ -6,6 +6,6 @@ export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
 
   return (
     UnixTime.toStartOf(timestamp, 'hour') ===
-    UnixTime.toStartOf(timestamp, 'day') + UnixTime(hour, 'hours')
+    UnixTime.toStartOf(timestamp, 'day') + hour * UnixTime.HOUR
   )
 }

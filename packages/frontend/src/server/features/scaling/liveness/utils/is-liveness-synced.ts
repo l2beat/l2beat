@@ -3,7 +3,7 @@ import { formatTimestamp } from '~/utils/dates'
 
 export function isLivenessSynced(syncedUntil: UnixTime): boolean {
   const syncTarget = UnixTime.toStartOf(
-    UnixTime.now() - UnixTime(6, 'hours'),
+    UnixTime.now() - 6 * UnixTime.HOUR,
     'hour',
   )
   return syncTarget <= syncedUntil

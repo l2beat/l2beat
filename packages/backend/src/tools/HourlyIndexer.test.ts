@@ -5,7 +5,7 @@ import { expect, mockObject } from 'earl'
 import type { Clock } from './Clock'
 import { HourlyIndexer } from './HourlyIndexer'
 
-const LAST_HOUR = UnixTime.now() - UnixTime(1, 'hours')
+const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
 
 describe(HourlyIndexer.name, () => {
   describe(HourlyIndexer.prototype.start.name, () => {

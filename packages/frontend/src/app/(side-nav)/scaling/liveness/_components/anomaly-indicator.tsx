@@ -76,8 +76,7 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
         {anomalies.slice(0, SHOWN_ANOMALIES).map((anomaly) => {
           const endDate = anomaly.timestamp + anomaly.durationInSeconds
           const endDateUnixTime = UnixTime(endDate)
-          const isLive =
-            UnixTime.now() - UnixTime(4, 'hours') <= endDateUnixTime
+          const isLive = UnixTime.now() - 4 * UnixTime.HOUR <= endDateUnixTime
           return (
             <div
               className="space-y-0.5 border-t border-divider px-4 py-2"
@@ -167,14 +166,14 @@ function typeToLabel(type: LivenessAnomaly['type']) {
 function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {
   const now = UnixTime.now()
   // We want to show last 30 days with today included so we start 29 days ago
-  const thirtyDaysAgo = now - UnixTime(29, 'days')
+  const thirtyDaysAgo = now - 29 * UnixTime.DAY
   let dayInLoop = thirtyDaysAgo
   const result: boolean[] = []
 
   while (dayInLoop <= now) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
       const startDate = UnixTime(a.timestamp)
-      const endDate = startDate + UnixTime(a.durationInSeconds, 'seconds')
+      const endDate = startDate + a.durationInSeconds
       return (
         dayInLoop >= UnixTime.toStartOf(startDate, 'day') &&
         dayInLoop <= UnixTime.toEndOf(endDate, 'day')
@@ -187,7 +186,7 @@ function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {
       result.push(true)
     }
 
-    dayInLoop = dayInLoop + UnixTime(1, 'days')
+    dayInLoop = dayInLoop + 1 * UnixTime.DAY
   }
   return result
 }

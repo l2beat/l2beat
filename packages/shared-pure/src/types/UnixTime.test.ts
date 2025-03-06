@@ -11,20 +11,6 @@ describe(UnixTime.name, () => {
     expect(time).toEqual(seconds)
   })
 
-  it('can be constructed from units', () => {
-    const fiftySeconds = UnixTime(50, 'seconds')
-    expect(fiftySeconds).toEqual(50)
-
-    const fiftyMinutes = UnixTime(50, 'minutes')
-    expect(fiftyMinutes).toEqual(50 * 60)
-
-    const fiftyHours = UnixTime(50, 'hours')
-    expect(fiftyHours).toEqual(50 * 60 * 60)
-
-    const fiftyDays = UnixTime(50, 'days')
-    expect(fiftyDays).toEqual(50 * 60 * 60 * 24)
-  })
-
   it('cannot be constructed from milliseconds', () => {
     expect(() => UnixTime(Date.now())).toThrow(
       TypeError,
@@ -49,25 +35,25 @@ describe(UnixTime.name, () => {
   describe('maths', () => {
     it('can add days', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-      const later = time + UnixTime(3, 'days')
+      const later = time + 3 * UnixTime.DAY
       expect(UnixTime.toDate(later)).toEqual(new Date('2021-09-10T00:00:00Z'))
     })
 
     it('can add hours', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-      const later = time + UnixTime(5, 'hours')
+      const later = time + 5 * UnixTime.HOUR
       expect(UnixTime.toDate(later)).toEqual(new Date('2021-09-07T05:00:00Z'))
     })
 
     it('can add minutes', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-      const later = time + UnixTime(4, 'minutes')
+      const later = time + 4 * UnixTime.MINUTE
       expect(UnixTime.toDate(later)).toEqual(new Date('2021-09-07T00:04:00Z'))
     })
 
     it('can add seconds', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
-      const later = time + UnixTime(6, 'seconds')
+      const later = time + 6
       expect(UnixTime.toDate(later)).toEqual(new Date('2021-09-07T00:00:06Z'))
     })
   })

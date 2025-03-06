@@ -19,7 +19,7 @@ export class UpdateMessagesService {
 
   private prune(reference: UnixTime) {
     const cutoff =
-      reference - UnixTime(this.updateMessagesRetentionPeriodDays, 'days')
+      reference - this.updateMessagesRetentionPeriodDays * UnixTime.DAY
 
     return this.db.updateMessage.deleteBefore(cutoff)
   }

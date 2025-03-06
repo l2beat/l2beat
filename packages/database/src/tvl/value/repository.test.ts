@@ -17,12 +17,12 @@ describeDatabase(ValueRepository.name, (database) => {
       await repository.upsertMany([
         saved('Project-A', 0, 'sourceA', 1, 2, 3),
         saved('Project-A', 0, 'sourceB', 1, 2, 3),
-        saved('Project-A', 0 + UnixTime(1, 'days'), 'sourceC', 1, 2, 3),
+        saved('Project-A', 0 + 1 * UnixTime.DAY, 'sourceC', 1, 2, 3),
         saved('Project-A', 0, 'sourceC', 1, 2, 3), // Should be discarded
 
-        saved('Project-B', 0 + UnixTime(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-B', 0 + 1 * UnixTime.DAY, 'sourceA', 1, 2, 3),
         saved('Project-B', 0, 'sourceA', 1, 2, 3), // Should be discarded
-        saved('Project-C', 0 + UnixTime(1, 'days'), 'sourceA', 1, 2, 3), // Should be discarded,
+        saved('Project-C', 0 + 1 * UnixTime.DAY, 'sourceA', 1, 2, 3), // Should be discarded,
       ])
 
       const latestForProjects = await repository.getLatestValues([
@@ -34,8 +34,8 @@ describeDatabase(ValueRepository.name, (database) => {
       expect(latestForProjects).toEqualUnsorted([
         saved('Project-A', 0, 'sourceA', 1, 2, 3),
         saved('Project-A', 0, 'sourceB', 1, 2, 3),
-        saved('Project-A', 0 + UnixTime(1, 'days'), 'sourceC', 1, 2, 3),
-        saved('Project-B', 0 + UnixTime(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-A', 0 + 1 * UnixTime.DAY, 'sourceC', 1, 2, 3),
+        saved('Project-B', 0 + 1 * UnixTime.DAY, 'sourceA', 1, 2, 3),
       ])
     })
 
@@ -43,12 +43,12 @@ describeDatabase(ValueRepository.name, (database) => {
       await repository.upsertMany([
         saved('Project-A', 0, 'sourceA', 1, 2, 3),
         saved('Project-A', 0, 'sourceB', 1, 2, 3),
-        saved('Project-A', 0 + UnixTime(1, 'days'), 'sourceC', 1, 2, 3),
+        saved('Project-A', 0 + 1 * UnixTime.DAY, 'sourceC', 1, 2, 3),
         saved('Project-A', 0, 'sourceC', 1, 2, 3), // Should be discarded
 
-        saved('Project-B', 0 + UnixTime(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-B', 0 + 1 * UnixTime.DAY, 'sourceA', 1, 2, 3),
         saved('Project-B', 0, 'sourceA', 1, 2, 3), // Should be discarded
-        saved('Project-C', 0 + UnixTime(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-C', 0 + 1 * UnixTime.DAY, 'sourceA', 1, 2, 3),
       ])
 
       const latestForProjects = await repository.getLatestValues()
@@ -57,9 +57,9 @@ describeDatabase(ValueRepository.name, (database) => {
       expect(latestForProjects).toEqualUnsorted([
         saved('Project-A', 0, 'sourceA', 1, 2, 3),
         saved('Project-A', 0, 'sourceB', 1, 2, 3),
-        saved('Project-A', 0 + UnixTime(1, 'days'), 'sourceC', 1, 2, 3),
-        saved('Project-B', 0 + UnixTime(1, 'days'), 'sourceA', 1, 2, 3),
-        saved('Project-C', 0 + UnixTime(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-A', 0 + 1 * UnixTime.DAY, 'sourceC', 1, 2, 3),
+        saved('Project-B', 0 + 1 * UnixTime.DAY, 'sourceA', 1, 2, 3),
+        saved('Project-C', 0 + 1 * UnixTime.DAY, 'sourceA', 1, 2, 3),
       ])
     })
   })
@@ -112,7 +112,7 @@ describeDatabase(ValueRepository.name, (database) => {
   describe(ValueRepository.prototype.getValuesByProjectIdsAndTimeRange
     .name, () => {
     const to = UnixTime.toStartOf(UnixTime.now(), 'hour')
-    const from = to - UnixTime(7, 'days')
+    const from = to - 7 * UnixTime.DAY
     it('returns empty array when no projectIds', async () => {
       const result = await repository.getValuesByProjectIdsAndTimeRange(
         [],
@@ -128,8 +128,8 @@ describeDatabase(ValueRepository.name, (database) => {
         saved(projectId, from, 'ds1', 100, 200, 300),
         saved(projectId, to, 'ds2', 150, 250, 350),
         // outside range
-        saved(projectId, from - UnixTime(1, 'hours'), 'ds1', 150, 250, 350),
-        saved(projectId, to + UnixTime(1, 'hours'), 'ds2', 150, 250, 350),
+        saved(projectId, from - 1 * UnixTime.HOUR, 'ds1', 150, 250, 350),
+        saved(projectId, to + 1 * UnixTime.HOUR, 'ds2', 150, 250, 350),
       ])
 
       const result = await repository.getValuesByProjectIdsAndTimeRange(
@@ -149,11 +149,11 @@ describeDatabase(ValueRepository.name, (database) => {
       const otherProject = ProjectId('other-project')
 
       const targetRecords = [
-        saved(targetProject, from + UnixTime(1, 'hours'), 'ds1', 100, 200, 300),
-        saved(targetProject, to - UnixTime(1, 'hours'), 'ds2', 150, 250, 350),
+        saved(targetProject, from + 1 * UnixTime.HOUR, 'ds1', 100, 200, 300),
+        saved(targetProject, to - 1 * UnixTime.HOUR, 'ds2', 150, 250, 350),
       ]
       const otherRecords = [
-        saved(otherProject, from + UnixTime(1, 'hours'), 'ds1', 200, 300, 400),
+        saved(otherProject, from + 1 * UnixTime.HOUR, 'ds1', 200, 300, 400),
       ]
 
       await repository.insertMany([...targetRecords, ...otherRecords])
@@ -173,8 +173,8 @@ describeDatabase(ValueRepository.name, (database) => {
         saved(projectId, to, 'ds2', 200, 300, 400),
       ]
       const outsideCases = [
-        saved(projectId, from - UnixTime(1, 'seconds'), 'ds1', 50, 150, 250),
-        saved(projectId, to + UnixTime(1, 'seconds'), 'ds1', 250, 350, 450),
+        saved(projectId, from - 1, 'ds1', 50, 150, 250),
+        saved(projectId, to + 1, 'ds1', 250, 350, 450),
       ]
 
       await repository.insertMany([...edgeCases, ...outsideCases])
@@ -190,7 +190,7 @@ describeDatabase(ValueRepository.name, (database) => {
     it('returns empty array when no matching records', async () => {
       const projectId = ProjectId('no-data-project')
       await repository.insertMany([
-        saved(projectId, to + UnixTime(1, 'hours'), 'ds1', 100, 200, 300),
+        saved(projectId, to + 1 * UnixTime.HOUR, 'ds1', 100, 200, 300),
       ])
 
       const result = await repository.getValuesByProjectIdsAndTimeRange(

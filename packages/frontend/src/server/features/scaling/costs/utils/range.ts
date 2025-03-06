@@ -27,8 +27,7 @@ export function getFullySyncedCostsRange(
   const startOfDay = UnixTime.toStartOf(UnixTime.now(), 'day')
 
   const end = startOfDay
-  const start =
-    days !== null ? end - UnixTime(days, 'days') : MIN_TIMESTAMPS.costs
+  const start = days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.costs
   return [start, end]
 }
 

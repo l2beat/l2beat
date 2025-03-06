@@ -2,9 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 
 export function isFinalitySynced(syncedUntil: number): boolean {
-  return (
-    UnixTime.now() - UnixTime(1, 'days') - UnixTime(1, 'hours') <= syncedUntil
-  )
+  return UnixTime.now() - 1 * UnixTime.DAY - 1 * UnixTime.HOUR <= syncedUntil
 }
 
 export function getFinalitySyncWarning(

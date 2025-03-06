@@ -72,7 +72,7 @@ export abstract class BaseAnalyzer {
     // get ability to look back a single tx we need to query more. We're going
     // to assume that we will find at least one entry before our interval at
     // least one before.
-    const fromSafe = from - UnixTime(1, 'days')
+    const fromSafe = from - 1 * UnixTime.DAY
     const safeTransactions = await livenessWithConfig.getWithinTimeRange(
       fromSafe,
       to,

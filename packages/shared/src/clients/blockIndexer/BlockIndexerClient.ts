@@ -71,7 +71,7 @@ export class BlockIndexerClient {
           throw new Error(errorObject.message)
         }
 
-        current -= UnixTime(this.binTimeWidth, 'minutes')
+        current -= this.binTimeWidth * UnixTime.MINUTE
       }
       counter++
     }

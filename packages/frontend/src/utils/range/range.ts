@@ -19,7 +19,7 @@ export function getRange(
     resolution === 'hourly' ? 'hour' : 'day',
   )
 
-  const start = roundedNow - UnixTime(days, 'days')
+  const start = roundedNow - days * UnixTime.DAY
   const end = roundedNow
 
   return [start, end]
@@ -39,7 +39,7 @@ export function getRangeWithMax(
     resolution === 'hourly' ? 'hour' : 'day',
   )
 
-  const start = days !== null ? roundedNow - UnixTime(days, 'days') : null
+  const start = days !== null ? roundedNow - days * UnixTime.DAY : null
   const end = roundedNow
 
   return [start, end]

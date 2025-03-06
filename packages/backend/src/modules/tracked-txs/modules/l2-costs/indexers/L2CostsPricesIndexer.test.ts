@@ -15,7 +15,7 @@ const NOW = UnixTime(1714662000)
 describe(L2CostsPricesIndexer.name, () => {
   describe(L2CostsPricesIndexer.prototype.update.name, () => {
     it('updates correctly', async () => {
-      const from = NOW - UnixTime(1, 'hours')
+      const from = NOW - 1 * UnixTime.HOUR
       const to = NOW
 
       const repository = mockObject<Database['l2CostPrice']>({
@@ -42,7 +42,7 @@ describe(L2CostsPricesIndexer.name, () => {
     })
 
     it('does nothing if no prices to save', async () => {
-      const from = NOW - UnixTime(1, 'hours')
+      const from = NOW - 1 * UnixTime.HOUR
       const to = NOW
 
       const repository = mockObject<Database['l2CostPrice']>({
@@ -71,11 +71,11 @@ describe(L2CostsPricesIndexer.name, () => {
     it('shifts from if time range greather than MAX_DAYS_FOR_ONE_CALL', async () => {
       const from =
         NOW -
-        UnixTime(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days') -
-        UnixTime(1, 'hours')
+        CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY -
+        1 * UnixTime.HOUR
       const to = NOW
       const shiftedTo =
-        from + UnixTime(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days')
+        from + CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY
 
       const repository = mockObject<Database['l2CostPrice']>({
         insertMany: mockFn().resolvesTo(1),
@@ -102,7 +102,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
   describe(L2CostsPricesIndexer.prototype.fetchPrices.name, () => {
     it('fetches prices', async () => {
-      const from = NOW - UnixTime(1, 'hours')
+      const from = NOW - 1 * UnixTime.HOUR
       const to = NOW
 
       const prices = [{ timestamp: from, value: 3000 }]

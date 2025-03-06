@@ -53,7 +53,7 @@ async function getTokensDataForProject(
   )
   const configMapping = getConfigMapping(project, chains)
   const targetTimestamp =
-    UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(2, 'hours')
+    UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
   const [priceConfigs, amountConfigs] = await Promise.all([
     getLatestPriceForConfigurations(configMapping.prices, targetTimestamp),

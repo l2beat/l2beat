@@ -13,19 +13,19 @@ describeDatabase(AnomaliesRepository.name, (db) => {
   const START = UnixTime.now()
   const DATA: AnomalyRecord[] = [
     {
-      timestamp: START - UnixTime(1, 'hours'),
+      timestamp: START - 1 * UnixTime.HOUR,
       projectId: PROJECT_A,
       subtype: 'batchSubmissions',
       duration: 100,
     },
     {
-      timestamp: START - UnixTime(2, 'hours'),
+      timestamp: START - 2 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
       duration: 100,
     },
     {
-      timestamp: START - UnixTime(3, 'hours'),
+      timestamp: START - 3 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
       duration: 100,
@@ -43,14 +43,14 @@ describeDatabase(AnomaliesRepository.name, (db) => {
       const newRows: AnomalyRecord[] = [
         // to update
         {
-          timestamp: START - UnixTime(1, 'hours'),
+          timestamp: START - 1 * UnixTime.HOUR,
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
           duration: 200,
         },
         //to add
         {
-          timestamp: START - UnixTime(4, 'hours'),
+          timestamp: START - 4 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           duration: 100,
@@ -63,13 +63,13 @@ describeDatabase(AnomaliesRepository.name, (db) => {
       expect(results).toEqualUnsorted([
         newRows[0]!,
         {
-          timestamp: START - UnixTime(2, 'hours'),
+          timestamp: START - 2 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           duration: 100,
         },
         {
-          timestamp: START - UnixTime(3, 'hours'),
+          timestamp: START - 3 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           duration: 100,
@@ -99,7 +99,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     it('should return all rows for project from timestamp', async () => {
       const results = await repository.getByProjectIdFrom(
         PROJECT_B,
-        START - UnixTime(2, 'hours'),
+        START - 2 * UnixTime.HOUR,
       )
 
       expect(results).toEqualUnsorted(DATA.slice(1, 2))
@@ -110,7 +110,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     it('should return all rows for projects from timestamp', async () => {
       const results = await repository.getByProjectIdsFrom(
         [PROJECT_B],
-        START - UnixTime(2, 'hours'),
+        START - 2 * UnixTime.HOUR,
       )
 
       expect(results).toEqualUnsorted(DATA.slice(1, 2))

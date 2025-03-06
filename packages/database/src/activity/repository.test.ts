@@ -14,29 +14,29 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('adds new rows', async () => {
       await repository.upsertMany([
         record('a', START, 1, 2, 1, 2),
-        record('a', START + UnixTime(1, 'days'), 2, 2, 3, 4),
-        record('a', START + UnixTime(2, 'days'), 4, 5, 5, 6),
+        record('a', START + 1 * UnixTime.DAY, 2, 2, 3, 4),
+        record('a', START + 2 * UnixTime.DAY, 4, 5, 5, 6),
       ])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
         record('a', START, 1, 2, 1, 2),
-        record('a', START + UnixTime(1, 'days'), 2, 2, 3, 4),
-        record('a', START + UnixTime(2, 'days'), 4, 5, 5, 6),
+        record('a', START + 1 * UnixTime.DAY, 2, 2, 3, 4),
+        record('a', START + 2 * UnixTime.DAY, 4, 5, 5, 6),
       ])
     })
 
     it('merges on conflict', async () => {
       await repository.upsertMany([
         record('a', START, 1, 2, 1, 2),
-        record('a', START + UnixTime(1, 'days'), 2, 2, 4, 5),
+        record('a', START + 1 * UnixTime.DAY, 2, 2, 4, 5),
       ])
       await repository.upsertMany([record('a', START, 3, 3, 1, 3)])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
         record('a', START, 3, 3, 1, 3),
-        record('a', START + UnixTime(1, 'days'), 2, 2, 4, 5),
+        record('a', START + 1 * UnixTime.DAY, 2, 2, 4, 5),
       ])
     })
   })
@@ -55,21 +55,21 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('should delete all rows after a given timestamp and projectId', async () => {
       await repository.upsertMany([
         record('a', START),
-        record('a', START + UnixTime(1, 'days')),
-        record('a', START + UnixTime(2, 'days')),
-        record('a', START + UnixTime(3, 'days')),
+        record('a', START + 1 * UnixTime.DAY),
+        record('a', START + 2 * UnixTime.DAY),
+        record('a', START + 3 * UnixTime.DAY),
       ])
 
       await repository.deleteByProjectIdFrom(
         ProjectId('a'),
-        START + UnixTime(2, 'days'),
+        START + 2 * UnixTime.DAY,
       )
 
       const results = await repository.getAll()
 
       expect(results).toEqualUnsorted([
         record('a', START),
-        record('a', START + UnixTime(1, 'days')),
+        record('a', START + 1 * UnixTime.DAY),
       ])
     })
   })
@@ -78,16 +78,16 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('should return all rows in a given time range for a project', async () => {
       const records = [
         record('a', START),
-        record('a', START + UnixTime(1, 'days')),
-        record('a', START + UnixTime(2, 'days')),
-        record('a', START + UnixTime(3, 'days')),
+        record('a', START + 1 * UnixTime.DAY),
+        record('a', START + 2 * UnixTime.DAY),
+        record('a', START + 3 * UnixTime.DAY),
       ]
 
       await repository.upsertMany(records)
 
       const results = await repository.getByProjectAndTimeRange(
         ProjectId('a'),
-        [START + UnixTime(1, 'days'), START + UnixTime(2, 'days')],
+        [START + 1 * UnixTime.DAY, START + 2 * UnixTime.DAY],
       )
 
       expect(results).toEqual(records.slice(1, 3))
@@ -98,10 +98,10 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('should return max UOPS count for each project', async () => {
       await repository.upsertMany([
         record('a', START, 1),
-        record('a', START + UnixTime(1, 'days'), 3, 4),
-        record('a', START + UnixTime(2, 'days'), 4, 7),
-        record('b', START + UnixTime(1, 'days'), 6, 6),
-        record('b', START + UnixTime(2, 'days'), 5, 8),
+        record('a', START + 1 * UnixTime.DAY, 3, 4),
+        record('a', START + 2 * UnixTime.DAY, 4, 7),
+        record('b', START + 1 * UnixTime.DAY, 6, 6),
+        record('b', START + 2 * UnixTime.DAY, 5, 8),
       ])
 
       const result = await repository.getMaxCountsForProjects()
@@ -109,15 +109,15 @@ describeDatabase(ActivityRepository.name, (db) => {
       expect(result).toEqual({
         [ProjectId('a')]: {
           uopsCount: 7,
-          uopsTimestamp: START + UnixTime(2, 'days'),
+          uopsTimestamp: START + 2 * UnixTime.DAY,
           count: 4,
-          countTimestamp: START + UnixTime(2, 'days'),
+          countTimestamp: START + 2 * UnixTime.DAY,
         },
         [ProjectId('b')]: {
           uopsCount: 8,
-          uopsTimestamp: START + UnixTime(2, 'days'),
+          uopsTimestamp: START + 2 * UnixTime.DAY,
           count: 6,
-          countTimestamp: START + UnixTime(1, 'days'),
+          countTimestamp: START + 1 * UnixTime.DAY,
         },
       })
     })
@@ -126,14 +126,14 @@ describeDatabase(ActivityRepository.name, (db) => {
       await repository.upsertMany([
         // uopsCount is null
         record('a', START, 1),
-        record('a', START + UnixTime(1, 'days'), 5),
-        record('a', START + UnixTime(2, 'days'), 4),
+        record('a', START + 1 * UnixTime.DAY, 5),
+        record('a', START + 2 * UnixTime.DAY, 4),
         // normal count bigger then uopsCount
-        record('b', START + UnixTime(1, 'days'), 2, 6),
-        record('b', START + UnixTime(2, 'days'), 8),
+        record('b', START + 1 * UnixTime.DAY, 2, 6),
+        record('b', START + 2 * UnixTime.DAY, 8),
         // uopsCount was null in the past
-        record('c', START + UnixTime(1, 'days'), 4),
-        record('c', START + UnixTime(2, 'days'), 5, 9),
+        record('c', START + 1 * UnixTime.DAY, 4),
+        record('c', START + 2 * UnixTime.DAY, 5, 9),
       ])
 
       const result = await repository.getMaxCountsForProjects()
@@ -141,21 +141,21 @@ describeDatabase(ActivityRepository.name, (db) => {
       expect(result).toEqual({
         [ProjectId('a')]: {
           uopsCount: 5,
-          uopsTimestamp: START + UnixTime(1, 'days'),
+          uopsTimestamp: START + 1 * UnixTime.DAY,
           count: 5,
-          countTimestamp: START + UnixTime(1, 'days'),
+          countTimestamp: START + 1 * UnixTime.DAY,
         },
         [ProjectId('b')]: {
           uopsCount: 8,
-          uopsTimestamp: START + UnixTime(2, 'days'),
+          uopsTimestamp: START + 2 * UnixTime.DAY,
           count: 8,
-          countTimestamp: START + UnixTime(2, 'days'),
+          countTimestamp: START + 2 * UnixTime.DAY,
         },
         [ProjectId('c')]: {
           uopsCount: 9,
-          uopsTimestamp: START + UnixTime(2, 'days'),
+          uopsTimestamp: START + 2 * UnixTime.DAY,
           count: 5,
-          countTimestamp: START + UnixTime(2, 'days'),
+          countTimestamp: START + 2 * UnixTime.DAY,
         },
       })
     })
@@ -166,16 +166,16 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('should return summed count grouped by projectId for given time range', async () => {
       await repository.upsertMany([
         record('a', START, 1),
-        record('a', START + UnixTime(1, 'days'), 3, 4),
-        record('a', START + UnixTime(2, 'days'), 4, 6),
+        record('a', START + 1 * UnixTime.DAY, 3, 4),
+        record('a', START + 2 * UnixTime.DAY, 4, 6),
         // project without any uopsCount
-        record('b', START + UnixTime(1, 'days'), 2),
-        record('b', START + UnixTime(2, 'days'), 5),
+        record('b', START + 1 * UnixTime.DAY, 2),
+        record('b', START + 2 * UnixTime.DAY, 5),
       ])
 
       const result = await repository.getSummedUopsCountForProjectsAndTimeRange(
         [ProjectId('a'), ProjectId('b')],
-        [START, START + UnixTime(2, 'days')],
+        [START, START + 2 * UnixTime.DAY],
       )
 
       expect(result).toEqualUnsorted([
@@ -189,18 +189,18 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('should return all rows in a given time range', async () => {
       await repository.upsertMany([
         record('a', START),
-        record('a', START + UnixTime(1, 'days')),
-        record('a', START + UnixTime(2, 'days')),
+        record('a', START + 1 * UnixTime.DAY),
+        record('a', START + 2 * UnixTime.DAY),
       ])
 
       const results = await repository.getByProjectAndTimeRange(
         ProjectId('a'),
-        [START, START + UnixTime(1, 'days')],
+        [START, START + 1 * UnixTime.DAY],
       )
 
       expect(results).toEqual([
         record('a', START),
-        record('a', START + UnixTime(1, 'days')),
+        record('a', START + 1 * UnixTime.DAY),
       ])
     })
   })
@@ -210,8 +210,8 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('should return all rows including data point', async () => {
       await repository.upsertMany([
         record('a', START, 1, 1, 0, 10),
-        record('a', START + UnixTime(1, 'days'), 1, 2, 11, 20),
-        record('a', START + UnixTime(2, 'days'), 1, 1, 21, 30),
+        record('a', START + 1 * UnixTime.DAY, 1, 2, 11, 20),
+        record('a', START + 2 * UnixTime.DAY, 1, 1, 21, 30),
       ])
 
       const results = await repository.getByProjectIncludingDataPoint(
@@ -220,7 +220,7 @@ describeDatabase(ActivityRepository.name, (db) => {
       )
 
       expect(results).toEqual([
-        record('a', START + UnixTime(1, 'days'), 1, 2, 11, 20),
+        record('a', START + 1 * UnixTime.DAY, 1, 2, 11, 20),
       ])
     })
   })
@@ -229,15 +229,15 @@ describeDatabase(ActivityRepository.name, (db) => {
     it('should return correct response for single project', async () => {
       await repository.upsertMany([
         record('a', START, 1),
-        record('a', START + UnixTime(1, 'days'), 1),
-        record('a', START + UnixTime(2, 'days'), 1),
+        record('a', START + 1 * UnixTime.DAY, 1),
+        record('a', START + 2 * UnixTime.DAY, 1),
       ])
 
       const result = await repository.getDailyCounts()
       expect(result).toEqual([
         record('a', START, 1),
-        record('a', START + UnixTime(1, 'days'), 1),
-        record('a', START + UnixTime(2, 'days'), 1),
+        record('a', START + 1 * UnixTime.DAY, 1),
+        record('a', START + 2 * UnixTime.DAY, 1),
       ])
     })
 
@@ -245,8 +245,8 @@ describeDatabase(ActivityRepository.name, (db) => {
       await repository.upsertMany([
         record('a', START, 1),
         record('b', START, 3),
-        record('a', START + UnixTime(1, 'days'), 1),
-        record('b', START + UnixTime(1, 'days'), 2),
+        record('a', START + 1 * UnixTime.DAY, 1),
+        record('b', START + 1 * UnixTime.DAY, 2),
       ])
 
       const result = await repository.getDailyCounts()
@@ -254,8 +254,8 @@ describeDatabase(ActivityRepository.name, (db) => {
       expect(result).toEqual([
         record('a', START, 1),
         record('b', START, 3),
-        record('a', START + UnixTime(1, 'days'), 1),
-        record('b', START + UnixTime(1, 'days'), 2),
+        record('a', START + 1 * UnixTime.DAY, 1),
+        record('b', START + 1 * UnixTime.DAY, 2),
       ])
     })
   })
@@ -265,13 +265,13 @@ describeDatabase(ActivityRepository.name, (db) => {
       await repository.upsertMany([
         record('a', START, 1),
         record('b', START, 3),
-        record('a', START + UnixTime(1, 'days'), 1),
+        record('a', START + 1 * UnixTime.DAY, 1),
       ])
 
       const result = await repository.getDailyCountsPerProject(ProjectId('a'))
       expect(result).toEqual([
         record('a', START, 1),
-        record('a', START + UnixTime(1, 'days'), 1),
+        record('a', START + 1 * UnixTime.DAY, 1),
       ])
     })
   })
@@ -282,17 +282,16 @@ describeDatabase(ActivityRepository.name, (db) => {
       await repository.upsertMany([
         record('a', START, 1),
         record('b', START, 3),
-        record('a', START + UnixTime(1, 'days'), 1),
+        record('a', START + 1 * UnixTime.DAY, 1),
       ])
 
       const result = await repository.getProjectsAggregatedDailyCount([
         ProjectId('a'),
       ])
       expect(result).toEqual(
-        [
-          record('a', START, 1),
-          record('a', START + UnixTime(1, 'days'), 1),
-        ].map((i) => omit(i, ['projectId', 'start', 'end', 'uopsCount'])),
+        [record('a', START, 1), record('a', START + 1 * UnixTime.DAY, 1)].map(
+          (i) => omit(i, ['projectId', 'start', 'end', 'uopsCount']),
+        ),
       )
     })
 
@@ -300,10 +299,10 @@ describeDatabase(ActivityRepository.name, (db) => {
       await repository.upsertMany([
         record('a', START, 1),
         record('b', START, 3),
-        record('a', START + UnixTime(1, 'days'), 1),
-        record('b', START + UnixTime(1, 'days'), 3),
-        record('c', START + UnixTime(1, 'days'), 4),
-        record('c', START + UnixTime(2, 'days'), 2),
+        record('a', START + 1 * UnixTime.DAY, 1),
+        record('b', START + 1 * UnixTime.DAY, 3),
+        record('c', START + 1 * UnixTime.DAY, 4),
+        record('c', START + 2 * UnixTime.DAY, 2),
       ])
 
       const result = await repository.getProjectsAggregatedDailyCount([
@@ -313,8 +312,8 @@ describeDatabase(ActivityRepository.name, (db) => {
       ])
       expect(result).toEqual([
         { timestamp: START, count: 4 },
-        { timestamp: START + UnixTime(1, 'days'), count: 8 },
-        { timestamp: START + UnixTime(2, 'days'), count: 2 },
+        { timestamp: START + 1 * UnixTime.DAY, count: 8 },
+        { timestamp: START + 2 * UnixTime.DAY, count: 2 },
       ])
     })
   })
@@ -328,7 +327,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         record(projectId.toString(), timestamp, 1, null, 1, 100),
         record(
           projectId.toString(),
-          timestamp + UnixTime(1, 'days'),
+          timestamp + 1 * UnixTime.DAY,
           2,
           null,
           101,
@@ -336,7 +335,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         ),
         record(
           projectId.toString(),
-          timestamp + UnixTime(2, 'days'),
+          timestamp + 2 * UnixTime.DAY,
           3,
           null,
           201,
@@ -344,7 +343,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         ),
         record(
           ProjectId('other'),
-          timestamp + UnixTime(3, 'days'),
+          timestamp + 3 * UnixTime.DAY,
           4,
           null,
           301,

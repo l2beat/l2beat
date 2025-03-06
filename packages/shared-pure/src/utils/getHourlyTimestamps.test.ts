@@ -27,8 +27,8 @@ describe(getHourlyTimestamps.name, () => {
     it('13:01 to 15:01', () => {
       expect(
         getHourlyTimestamps(
-          FROM + UnixTime(1, 'minutes'),
-          TO + UnixTime(1, 'minutes'),
+          FROM + 1 * UnixTime.MINUTE,
+          TO + 1 * UnixTime.MINUTE,
         ),
       ).toEqual([
         UnixTime.fromDate(new Date('2021-09-07T14:00:00Z')),

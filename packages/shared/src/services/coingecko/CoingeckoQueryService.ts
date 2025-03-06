@@ -106,14 +106,12 @@ export class CoingeckoQueryService {
     let currentTo = adjustedTo
 
     while (true) {
-      let currentFrom =
-        currentTo - UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+      let currentFrom = currentTo - MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY
       if (adjustedFrom && currentFrom < adjustedFrom) {
         currentFrom = adjustedFrom
         const diff = currentTo - currentFrom
-        if (diff < UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')) {
-          currentTo =
-            currentFrom + UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+        if (diff < MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY) {
+          currentTo = currentFrom + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY
         }
       }
 
@@ -162,8 +160,8 @@ export class CoingeckoQueryService {
   static calculateAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
-    return to > from + UnixTime(maxDaysForOneCall, 'days')
-      ? from + UnixTime(maxDaysForOneCall, 'days')
+    return to > from + maxDaysForOneCall * UnixTime.DAY
+      ? from + maxDaysForOneCall * UnixTime.DAY
       : to
   }
 
@@ -238,9 +236,9 @@ export function pickClosestValues(
 function adjust(from: UnixTime, to: UnixTime): [UnixTime, UnixTime] {
   return [
     UnixTime.toEndOf(from, 'hour') -
-      UnixTime(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+      COINGECKO_INTERPOLATION_WINDOW_DAYS * UnixTime.DAY,
     UnixTime.toStartOf(to, 'hour') +
-      UnixTime(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+      COINGECKO_INTERPOLATION_WINDOW_DAYS * UnixTime.DAY,
   ]
 }
 
@@ -249,9 +247,9 @@ export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {
   for (
     let start = from;
     start < to;
-    start += UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+    start += MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY
   ) {
-    const end = start + UnixTime(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+    const end = start + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY
     ranges.push({ start: start, end: end > to ? to : end })
   }
   return ranges

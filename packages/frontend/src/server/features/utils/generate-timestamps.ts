@@ -15,12 +15,10 @@ export function generateTimestamps(
   ).map((i) => {
     return (
       from +
-      UnixTime(
-        i * (resolution === 'sixHourly' ? 6 : 1),
-        resolution === 'hourly' || resolution === 'sixHourly'
-          ? 'hours'
-          : 'days',
-      )
+      UnixTime(i * (resolution === 'sixHourly' ? 6 : 1)) *
+        (resolution === 'hourly' || resolution === 'sixHourly'
+          ? UnixTime.HOUR
+          : UnixTime.DAY)
     )
   })
   const isLastGeneratedTarget = generated.at(-1) === to

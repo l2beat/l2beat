@@ -105,7 +105,7 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           summedCount: 1550,
           maxCount: {
             value: 30,
-            timestamp: UnixTime.now() - UnixTime(1, 'days'),
+            timestamp: UnixTime.now() - 1 * UnixTime.DAY,
           },
         },
         ratio: 1.1,

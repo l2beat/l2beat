@@ -64,7 +64,7 @@ export class UpdateNotifier {
       chainId: chainId,
     })
 
-    const timeFence = UnixTime.now() - UnixTime(HOUR_RANGE, 'hours')
+    const timeFence = UnixTime.now() - HOUR_RANGE * UnixTime.HOUR
     const previousRecords = await this.db.updateNotifier.getNewerThan(
       timeFence,
       name,

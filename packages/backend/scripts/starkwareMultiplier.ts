@@ -161,7 +161,7 @@ function getDates(startDate: string | undefined, endDate: string | undefined) {
   }
   const start = startDate
     ? UnixTime.fromDate(getDateFromString(startDate))
-    : UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime(1, 'days')
+    : UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
   const end = endDate
     ? UnixTime.fromDate(getDateFromString(endDate))
     : UnixTime.toStartOf(UnixTime.now(), 'day')

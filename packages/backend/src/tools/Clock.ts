@@ -84,7 +84,7 @@ export class Clock {
     },
   ): UnixTime {
     const cutoff = UnixTime.toEndOf(
-      targetTimestamp - UnixTime(this.sixHourlyCutoffDays, 'days'),
+      targetTimestamp - this.sixHourlyCutoffDays * UnixTime.DAY,
       'six hours',
     )
 
@@ -101,7 +101,7 @@ export class Clock {
     },
   ): UnixTime {
     const cutoff = UnixTime.toEndOf(
-      targetTimestamp - UnixTime(this.hourlyCutoffDays, 'days'),
+      targetTimestamp - this.hourlyCutoffDays * UnixTime.DAY,
       'hour',
     )
 
@@ -116,7 +116,7 @@ export class Clock {
     const onNewTimestamps = () => {
       const last = this.getLastHour()
       while (current < last) {
-        current = current + UnixTime(1, 'hours')
+        current = current + 1 * UnixTime.HOUR
         callback(current)
       }
     }
@@ -131,7 +131,7 @@ export class Clock {
     const onNewTimestamps = () => {
       const last = this.getLastDay()
       while (current < last) {
-        current = current + UnixTime(1, 'days')
+        current = current + 1 * UnixTime.DAY
         callback(current)
       }
     }

@@ -64,8 +64,8 @@ describe(CirculatingSupplyService.name, () => {
 
     it('returns DB record when CirculatingSupplyProvider fails', async () => {
       const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const from = to - UnixTime(1, 'hours') + UnixTime(1, 'seconds') // indexer ticks
-      const lastFetched = to - UnixTime(1, 'hours')
+      const from = to - 1 * UnixTime.HOUR + 1 // indexer ticks
+      const lastFetched = to - 1 * UnixTime.HOUR
 
       const coingeckoId = CoingeckoId('coingecko-id')
       const config = mockObject<CirculatingSupplyEntry>({
@@ -122,7 +122,7 @@ describe(CirculatingSupplyService.name, () => {
     it('works only for latest hour', async () => {
       const coingeckoId = CoingeckoId('coingecko-id')
       const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const from = to - UnixTime(365, 'days')
+      const from = to - 365 * UnixTime.DAY
 
       const config = mockObject<CirculatingSupplyEntry>({
         chain: 'chain',

@@ -7,7 +7,7 @@ describe(clampRangeToDay.name, () => {
   it('the same day', () => {
     const from = UnixTime.fromDate(new Date('2022-01-01T12:00:00Z'))
 
-    const result = clampRangeToDay(from, from + UnixTime(1, 'hours'))
+    const result = clampRangeToDay(from, from + 1 * UnixTime.HOUR)
 
     expect(result).toEqual({
       from,

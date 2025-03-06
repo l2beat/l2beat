@@ -13,7 +13,7 @@ import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
 
 const NOW = UnixTime.now()
-const MIN = NOW - UnixTime(100, 'days')
+const MIN = NOW - 100 * UnixTime.DAY
 
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
@@ -44,15 +44,15 @@ const MOCK_CONFIGURATIONS = [
 const MOCK_LIVENESS: LivenessRecord[] = [
   mockObject<LivenessRecord>({
     configurationId: MOCK_CONFIGURATION_ID,
-    timestamp: NOW - UnixTime(1, 'hours'),
+    timestamp: NOW - 1 * UnixTime.HOUR,
   }),
   mockObject<LivenessRecord>({
     configurationId: MOCK_CONFIGURATION_ID,
-    timestamp: NOW - UnixTime(3, 'hours'),
+    timestamp: NOW - 3 * UnixTime.HOUR,
   }),
   mockObject<LivenessRecord>({
     configurationId: MOCK_CONFIGURATION_ID,
-    timestamp: NOW - UnixTime(7, 'hours'),
+    timestamp: NOW - 7 * UnixTime.HOUR,
   }),
 ]
 
@@ -64,7 +64,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       indexer.generateLiveness = mockGenerateLiveness
 
       const safeHeigh = MIN
-      const parentSafeHeight = NOW - UnixTime(2, 'days')
+      const parentSafeHeight = NOW - 2 * UnixTime.DAY
 
       const result = await indexer.update(safeHeigh, parentSafeHeight)
 
@@ -78,8 +78,8 @@ describe(LivenessAggregatingIndexer.name, () => {
       const mockGenerateLiveness = mockFn().resolvesTo([])
       indexer.generateLiveness = mockGenerateLiveness
 
-      const safeHeight = NOW - UnixTime(2, 'hours')
-      const parentSafeHeight = NOW - UnixTime(1, 'hours')
+      const safeHeight = NOW - 2 * UnixTime.HOUR
+      const parentSafeHeight = NOW - 1 * UnixTime.HOUR
 
       const result = await indexer.update(safeHeight, parentSafeHeight)
 
@@ -114,13 +114,13 @@ describe(LivenessAggregatingIndexer.name, () => {
       const mockGenerateLiveness = mockFn().resolvesTo(mockLiveness)
       indexer.generateLiveness = mockGenerateLiveness
 
-      const safeHeight = NOW - UnixTime(4, 'days')
-      const parentSafeHeight = NOW - UnixTime(1, 'hours')
+      const safeHeight = NOW - 4 * UnixTime.DAY
+      const parentSafeHeight = NOW - 1 * UnixTime.HOUR
 
       const result = await indexer.update(safeHeight, parentSafeHeight)
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
-        UnixTime.toStartOf(NOW, 'day') - UnixTime(1, 'seconds'),
+        UnixTime.toStartOf(NOW, 'day') - 1,
       )
 
       expect(mockLivenessRepository.upsertMany).toHaveBeenCalledWith(

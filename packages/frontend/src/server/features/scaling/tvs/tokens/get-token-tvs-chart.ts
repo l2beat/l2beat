@@ -49,7 +49,7 @@ type TokenTvsChart = Awaited<ReturnType<typeof getCachedTokenTvsChartData>>
 export const getCachedTokenTvsChartData = cache(
   async ({ token, range }: TokenTvsChartParams) => {
     const targetTimestamp =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(2, 'hours')
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
     const resolution = rangeToResolution(range)
 
     const project = await ps.getProject({
@@ -120,7 +120,7 @@ function getMockTokenTvsChartData(params: TokenTvsChartParams): TokenTvsChart {
   const resolution = rangeToResolution(params.range)
   const [from, to] = getRangeWithMax(params.range, 'hourly')
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? to - UnixTime(730, 'days'),
+    from ?? to - 730 * UnixTime.DAY,
     to,
   ]
   const timestamps = generateTimestamps(adjustedRange, resolution)

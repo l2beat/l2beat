@@ -21,7 +21,7 @@ export async function getTvsValuesForProjects(
   const from =
     days !== null &&
     UnixTime.toStartOf(target, resolution === 'hourly' ? 'hour' : 'day') -
-      UnixTime(days, 'days')
+      days * UnixTime.DAY
 
   // NOTE: This cannot be optimized using from because the values need to be interpolated
   const valueRecords = await db.value.getForProjects(

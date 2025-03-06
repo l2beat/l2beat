@@ -23,11 +23,10 @@ export type ThroughputTableData = Awaited<
 const getCachedDaThroughputTableData = cache(
   async (daLayerIds: string[]) => {
     const db = getDb()
-    const lastDay =
-      UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime(1, 'days')
+    const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
     const [values, daLayers] = await Promise.all([
       db.dataAvailability.getByDaLayersAndTimeRange(daLayerIds, [
-        lastDay - UnixTime(7, 'days'),
+        lastDay - 7 * UnixTime.DAY,
         lastDay,
       ]),
       ps.getProjects({
@@ -134,10 +133,9 @@ function getMockDaThroughputTableData(
               totalSize: 101312,
               syncedUntil:
                 daLayerId === 'avail'
-                  ? UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    UnixTime(2, 'days')
+                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    UnixTime(1, 'days'),
+                    1 * UnixTime.DAY,
               pastDayAvgThroughputPerSecond: 1.5,
               maxThroughputPerSecond: 4.3,
               largestPoster: {
@@ -161,10 +159,9 @@ function getMockDaThroughputTableData(
               totalSize: 601312,
               syncedUntil:
                 daLayerId === 'avail'
-                  ? UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    UnixTime(2, 'days')
+                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
-                    UnixTime(1, 'days'),
+                    1 * UnixTime.DAY,
               pastDayAvgThroughputPerSecond: 1.0,
               maxThroughputPerSecond: 4.3,
               largestPoster: {

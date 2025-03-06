@@ -10,7 +10,7 @@ import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigSer
 import { AnomaliesIndexer } from './AnomaliesIndexer'
 
 const NOW = UnixTime.now()
-const MIN = NOW - UnixTime(100, 'days')
+const MIN = NOW - 100 * UnixTime.DAY
 
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
@@ -49,7 +49,7 @@ describe(AnomaliesIndexer.name, () => {
       indexer.getAnomalies = mockCalculateAnomalies
 
       const from = MIN
-      const to = NOW - UnixTime(2, 'days')
+      const to = NOW - 2 * UnixTime.DAY
 
       const result = await indexer.update(from, to)
 
@@ -71,7 +71,7 @@ describe(AnomaliesIndexer.name, () => {
 
       const mockAnomalies: AnomalyRecord[] = [
         {
-          timestamp: NOW - UnixTime(1, 'days'),
+          timestamp: NOW - 1 * UnixTime.DAY,
           projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           duration: 100,
@@ -81,7 +81,7 @@ describe(AnomaliesIndexer.name, () => {
       const mockCalculateAnomalies = mockFn().resolvesTo(mockAnomalies)
       indexer.getAnomalies = mockCalculateAnomalies
 
-      const from = NOW - UnixTime(1, 'days') - UnixTime(1, 'hours')
+      const from = NOW - 1 * UnixTime.DAY - 1 * UnixTime.HOUR
       const to = NOW
 
       const result = await indexer.update(from, to)
@@ -112,7 +112,7 @@ describe(AnomaliesIndexer.name, () => {
 
       const mockAnomalies: AnomalyRecord[] = [
         {
-          timestamp: NOW - UnixTime(1, 'days'),
+          timestamp: NOW - 1 * UnixTime.DAY,
           projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           duration: 100,
@@ -167,15 +167,15 @@ describe(AnomaliesIndexer.name, () => {
       const mockLivenessRecords = [
         mockObject<LivenessRecord>({
           configurationId: MOCK_CONFIGURATION_ID,
-          timestamp: NOW - UnixTime(1, 'hours'),
+          timestamp: NOW - 1 * UnixTime.HOUR,
         }),
         mockObject<LivenessRecord>({
           configurationId: MOCK_CONFIGURATION_ID,
-          timestamp: NOW - UnixTime(3, 'hours'),
+          timestamp: NOW - 3 * UnixTime.HOUR,
         }),
         mockObject<LivenessRecord>({
           configurationId: MOCK_CONFIGURATION_ID,
-          timestamp: NOW - UnixTime(7, 'hours'),
+          timestamp: NOW - 7 * UnixTime.HOUR,
         }),
       ]
 
@@ -231,7 +231,7 @@ describe(AnomaliesIndexer.name, () => {
         mockLivenessRepository.getByConfigurationIdWithinTimeRange,
       ).toHaveBeenCalledWith(
         [MOCK_CONFIGURATION_ID],
-        NOW - UnixTime(60, 'days'),
+        NOW - 60 * UnixTime.DAY,
         NOW,
       )
 
@@ -288,7 +288,7 @@ describe(AnomaliesIndexer.name, () => {
         length: 1000,
       }).map((_, i) =>
         mockObject<LivenessRecordWithConfig>({
-          timestamp: lastHour - UnixTime(i, 'hours'),
+          timestamp: lastHour - i * UnixTime.HOUR,
           subtype: 'batchSubmissions' as const,
         }),
       )
@@ -311,7 +311,7 @@ describe(AnomaliesIndexer.name, () => {
         length: 2000,
       }).map((_, i) =>
         mockObject<LivenessRecordWithConfig>({
-          timestamp: lastHour - UnixTime(i, 'hours'),
+          timestamp: lastHour - i * UnixTime.HOUR,
           subtype: 'batchSubmissions' as const,
         }),
       )
@@ -335,7 +335,7 @@ describe(AnomaliesIndexer.name, () => {
         length: 2000,
       }).map((_, i) =>
         mockObject<LivenessRecordWithConfig>({
-          timestamp: lastHour + UnixTime(-i - anomalyDuration, 'hours'),
+          timestamp: lastHour + (-i - anomalyDuration) * UnixTime.HOUR,
           subtype: 'batchSubmissions' as const,
         }),
       )
@@ -351,7 +351,7 @@ describe(AnomaliesIndexer.name, () => {
         {
           projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
-          timestamp: lastHour - UnixTime(1 * anomalyDuration, 'hours'),
+          timestamp: lastHour - 1 * anomalyDuration * UnixTime.HOUR,
           duration: anomalyDuration * 3600,
         },
       ])

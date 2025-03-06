@@ -25,7 +25,7 @@ describe(FinalityIndexer.name, () => {
       finalityIndexer.isConfigurationSynced = mockIsConfigurationSynced
 
       const from = MIN_TIMESTAMP
-      const to = MIN_TIMESTAMP - UnixTime(1, 'days')
+      const to = MIN_TIMESTAMP - 1 * UnixTime.DAY
 
       // TODO: refactor tests after uif update
       const result = await finalityIndexer.update(from + 1, to)
@@ -46,7 +46,7 @@ describe(FinalityIndexer.name, () => {
       finalityIndexer.isConfigurationSynced = mockIsConfigurationSynced
 
       const from = MIN_TIMESTAMP
-      const to = MIN_TIMESTAMP + UnixTime(1, 'days')
+      const to = MIN_TIMESTAMP + 1 * UnixTime.DAY
 
       // TODO: refactor tests after uif update
       const result = await finalityIndexer.update(from + 1, to)
@@ -70,7 +70,7 @@ describe(FinalityIndexer.name, () => {
       finalityIndexer.getFinalityData = mockFn().resolvesToOnce(undefined)
 
       const from = MIN_TIMESTAMP
-      const to = MIN_TIMESTAMP + UnixTime(1, 'days')
+      const to = MIN_TIMESTAMP + 1 * UnixTime.DAY
 
       // TODO: refactor tests after uif update
       const result = await finalityIndexer.update(from + 1, to)
@@ -89,10 +89,10 @@ describe(FinalityIndexer.name, () => {
       })
       finalityIndexer.isConfigurationSynced = mockFn().resolvesToOnce(false)
 
-      const start = UnixTime.now() - UnixTime(3, 'days')
+      const start = UnixTime.now() - 3 * UnixTime.DAY
 
       const from = start
-      const to = start + UnixTime(1, 'days')
+      const to = start + 1 * UnixTime.DAY
 
       // https://linear.app/l2beat/issue/L2B-4752/refactor-finalityindexer-logic-to-allow-analyzers-different
       // TODO: refactor tests after uif update
@@ -103,7 +103,7 @@ describe(FinalityIndexer.name, () => {
     it('correctly syncs not synced project', async () => {
       const start = UnixTime.toStartOf(UnixTime.now(), 'day')
       const from = start
-      const to = start + UnixTime(1, 'days')
+      const to = start + 1 * UnixTime.DAY
 
       const finalityRepository = mockObject<Database['finality']>({
         insert: mockFn().resolvesToOnce(1),
@@ -132,7 +132,7 @@ describe(FinalityIndexer.name, () => {
       await finalityIndexer.update(from + 1, to)
       expect(finalityRepository.insert).toHaveBeenCalledWith({
         projectId: ProjectId('project'),
-        timestamp: start + UnixTime(1, 'days'),
+        timestamp: start + 1 * UnixTime.DAY,
         averageTimeToInclusion: 3,
         minimumTimeToInclusion: 2,
         maximumTimeToInclusion: 4,
@@ -143,12 +143,12 @@ describe(FinalityIndexer.name, () => {
     it('throws an error if data is negative', async () => {
       const start = UnixTime.toStartOf(UnixTime.now(), 'day')
       const from = start
-      const to = start + UnixTime(1, 'days')
+      const to = start + 1 * UnixTime.DAY
       const finalityIndexer = getMockFinalityIndexer({})
       finalityIndexer.isConfigurationSynced = mockFn().resolvesToOnce(false)
       finalityIndexer.getFinalityData = mockFn().resolvesToOnce({
         projectId: ProjectId('project'),
-        timestamp: start + UnixTime(1, 'days'),
+        timestamp: start + 1 * UnixTime.DAY,
         averageTimeToInclusion: -1,
         minimumTimeToInclusion: -2,
         maximumTimeToInclusion: 4,
@@ -186,7 +186,7 @@ describe(FinalityIndexer.name, () => {
       const finalityRepository = mockObject<Database['finality']>({
         findLatestByProjectId: mockFn().resolvesToOnce({
           projectId: ProjectId('project'),
-          timestamp: syncedTimestamp - UnixTime(1, 'seconds'),
+          timestamp: syncedTimestamp - 1,
         }),
       })
 
@@ -252,7 +252,7 @@ describe(FinalityIndexer.name, () => {
     it('calls for a state update if stateUpdateMode is set to analyze', async () => {
       const start = UnixTime.toStartOf(UnixTime.now(), 'day')
       const from = start
-      const to = start + UnixTime(1, 'days')
+      const to = start + 1 * UnixTime.DAY
 
       const runtimeConfiguration = getMockFinalityRuntimeConfiguration(
         [
@@ -281,7 +281,7 @@ describe(FinalityIndexer.name, () => {
       await finalityIndexer.update(from + 1, to)
       expect(finalityRepository.insert).toHaveBeenCalledWith({
         projectId: ProjectId('project'),
-        timestamp: start + UnixTime(1, 'days'),
+        timestamp: start + 1 * UnixTime.DAY,
         averageTimeToInclusion: 3,
         minimumTimeToInclusion: 2,
         maximumTimeToInclusion: 4,
@@ -299,7 +299,7 @@ describe(FinalityIndexer.name, () => {
       for (const mode of modes) {
         const start = UnixTime.toStartOf(UnixTime.now(), 'day')
         const from = start
-        const to = start + UnixTime(1, 'days')
+        const to = start + 1 * UnixTime.DAY
 
         const finalityRepository = mockObject<Database['finality']>({
           insert: mockFn().resolvesToOnce(1),
@@ -328,7 +328,7 @@ describe(FinalityIndexer.name, () => {
         await finalityIndexer.update(from + 1, to)
         expect(finalityRepository.insert).toHaveBeenCalledWith({
           projectId: ProjectId('project'),
-          timestamp: start + UnixTime(1, 'days'),
+          timestamp: start + 1 * UnixTime.DAY,
           averageTimeToInclusion: 3,
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
@@ -344,7 +344,7 @@ describe(FinalityIndexer.name, () => {
 
   describe(FinalityIndexer.prototype.initialize.name, () => {
     it('initializes indexer state', async () => {
-      const safeHeight = MIN_TIMESTAMP + UnixTime(1, 'days')
+      const safeHeight = MIN_TIMESTAMP + 1 * UnixTime.DAY
 
       const stateRepository = getMockStateRepository({
         indexerId: 'finality_indexer',
@@ -425,7 +425,7 @@ describe(FinalityIndexer.name, () => {
       })
       const finalityIndexer = getMockFinalityIndexer({ stateRepository })
 
-      const safeHeight = MIN_TIMESTAMP + UnixTime(1, 'hours')
+      const safeHeight = MIN_TIMESTAMP + 1 * UnixTime.HOUR
       await finalityIndexer.setSafeHeight(safeHeight)
 
       expect(stateRepository.updateSafeHeight).toHaveBeenOnlyCalledWith(

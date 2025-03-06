@@ -33,8 +33,7 @@ export function getTvsBreakdown(
     const chainConverter = new ChainConverter(chains)
 
     const targetTimestamp =
-      target ??
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(2, 'hours')
+      target ?? UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
     const prices = await getLatestPriceForConfigurations(
       configMapping.prices,

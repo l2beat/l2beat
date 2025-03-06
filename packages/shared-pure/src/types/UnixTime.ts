@@ -6,25 +6,13 @@ const YEAR_3000_TIMESTAMP = Math.floor(
 // Because it's not branded it's less about safety and more about utilities for working with time
 export type UnixTime = number
 
-export function UnixTime(
-  timestamp: number,
-  unit: 'seconds' | 'minutes' | 'hours' | 'days' = 'seconds',
-): UnixTime {
+export function UnixTime(timestamp: number): UnixTime {
   if (!Number.isInteger(timestamp)) {
     throw new TypeError('timestamp must be an integer')
   } else if (timestamp > YEAR_3000_TIMESTAMP) {
     throw new TypeError('timestamp too large!')
   }
-  switch (unit) {
-    case 'seconds':
-      return timestamp
-    case 'minutes':
-      return timestamp * UnixTime.MINUTE
-    case 'hours':
-      return timestamp * UnixTime.HOUR
-    case 'days':
-      return timestamp * UnixTime.DAY
-  }
+  return timestamp
 }
 
 UnixTime.DAY = 86_400 as const

@@ -38,8 +38,8 @@ const getCachedProjectDaThroughputChartData = cache(
   > => {
     const db = getDb()
     const days = rangeToDays(range)
-    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime(1, 'days')
-    const from = days ? to - UnixTime(days, 'days') : null
+    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
+    const from = days ? to - days * UnixTime.DAY : null
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
       [projectId],
       [from, to],
@@ -84,7 +84,7 @@ function getMockProjectDaThroughputChartData({
 }: ProjectDaThroughputChartParams): ProjectDaThroughputDataPoint[] {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - UnixTime(days, 'days')
+  const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
   return timestamps.map((timestamp) => {

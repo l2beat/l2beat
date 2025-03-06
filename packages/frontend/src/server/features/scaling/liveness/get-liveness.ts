@@ -54,7 +54,7 @@ async function getLivenessData() {
   const recordsByProjectId = groupBy(records, (r) => r.projectId)
 
   const last30Days = UnixTime.toStartOf(
-    UnixTime.now() - UnixTime(30, 'days'),
+    UnixTime.now() - 30 * UnixTime.DAY,
     'day',
   )
   const anomalyRecords = await db.anomalies.getByProjectIdsFrom(
@@ -204,7 +204,7 @@ function getMockLivenessData(): LivenessResponse {
         '90d': generateDataPoint(),
         max: generateDataPoint(),
         syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - UnixTime(2, 'hours'),
+          UnixTime.now() - 2 * UnixTime.HOUR,
           'hour',
         ),
       },
@@ -222,7 +222,7 @@ function getMockLivenessData(): LivenessResponse {
         '90d': generateDataPoint(),
         max: generateDataPoint(),
         syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - UnixTime(2, 'hours'),
+          UnixTime.now() - 2 * UnixTime.HOUR,
           'hour',
         ),
       },
@@ -231,7 +231,7 @@ function getMockLivenessData(): LivenessResponse {
         '90d': generateDataPoint(),
         max: generateDataPoint(),
         syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - UnixTime(4, 'hours'),
+          UnixTime.now() - 4 * UnixTime.HOUR,
           'hour',
         ),
       },
@@ -279,12 +279,9 @@ function generateAnomalies(): LivenessAnomaly[] {
 
             timestamp:
               UnixTime.now() +
-              UnixTime(
-                // TODO: (liveness) should we include current day
-                Math.round(Math.random() * -29) - 1,
-                'days',
-              ) +
-              UnixTime(Math.round(Math.random() * 172800), 'seconds'),
+              // TODO: (liveness) should we include current day
+              UnixTime(Math.round(Math.random() * -29) - 1) * UnixTime.DAY +
+              UnixTime(Math.round(Math.random() * 172800)),
 
             durationInSeconds: generateRandomTime(),
           }) as const,

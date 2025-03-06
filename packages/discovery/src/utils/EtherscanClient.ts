@@ -95,7 +95,7 @@ export class EtherscanClient implements IEtherscanClient {
           throw new Error(errorObject.message)
         }
 
-        current = current - UnixTime(10, 'minutes')
+        current = current - 10 * UnixTime.MINUTE
       }
     }
 

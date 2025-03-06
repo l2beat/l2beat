@@ -11,21 +11,21 @@ describe(filterIntervalsByRange.name, () => {
       {
         record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
-          timestamp: NOW - UnixTime(1, 'days'),
+          timestamp: NOW - 1 * UnixTime.DAY,
         }),
         duration: 10,
       },
       {
         record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
-          timestamp: NOW - UnixTime(10, 'days'),
+          timestamp: NOW - 10 * UnixTime.DAY,
         }),
         duration: 20,
       },
       {
         record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
-          timestamp: NOW - UnixTime(40, 'days'),
+          timestamp: NOW - 40 * UnixTime.DAY,
         }),
         duration: 30,
       },

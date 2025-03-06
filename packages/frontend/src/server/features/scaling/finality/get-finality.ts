@@ -72,7 +72,7 @@ function getMockFinalityData(
     ...result,
     optimism: {
       ...result.optimism!,
-      syncedUntil: UnixTime.now() - UnixTime(2, 'days'),
+      syncedUntil: UnixTime.now() - 2 * UnixTime.DAY,
     },
   }
 }

@@ -10,10 +10,7 @@ export class SyncOptimizer {
   get sixHourlyCutOffWithGracePeriod() {
     return UnixTime.toEndOf(
       this.clock.getLastHour() +
-        UnixTime(
-          -this.clock.sixHourlyCutoffDays - this.gracePeriodDays,
-          'days',
-        ),
+        (-this.clock.sixHourlyCutoffDays - this.gracePeriodDays) * UnixTime.DAY,
       'six hours',
     )
   }
@@ -21,7 +18,7 @@ export class SyncOptimizer {
   get hourlyCutOffWithGracePeriod() {
     return UnixTime.toEndOf(
       this.clock.getLastHour() +
-        UnixTime(-this.clock.hourlyCutoffDays - this.gracePeriodDays, 'days'),
+        (-this.clock.hourlyCutoffDays - this.gracePeriodDays) * UnixTime.DAY,
       'hour',
     )
   }

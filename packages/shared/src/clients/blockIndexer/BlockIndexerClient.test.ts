@@ -68,7 +68,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
-          timestamp - UnixTime(10, 'minutes')
+          timestamp - (10) * UnixTime.MINUTE
         }&closest=before&apikey=key`,
         {},
       )
@@ -109,7 +109,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
-          timestamp - UnixTime(10, 'minutes')
+          timestamp - (10) * UnixTime.MINUTE
         }&closest=before&apikey=key`,
         {},
       )
@@ -144,7 +144,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
-          timestamp - UnixTime(10, 'minutes')
+          timestamp - (10) * UnixTime.MINUTE
         }&closest=before&apikey=key`,
         {},
       )
@@ -178,7 +178,7 @@ describe(BlockIndexerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${
-          timestamp - UnixTime(10, 'minutes')
+          timestamp - (10) * UnixTime.MINUTE
         }&closest=before&apikey=key`,
         {},
       )

@@ -15,7 +15,7 @@ export async function GET(
     searchParams.get('subtype'),
   )
   const to = UnixTime.toStartOf(UnixTime.now(), 'hour')
-  const from = to - UnixTime(30, 'days')
+  const from = to - 30 * UnixTime.DAY
 
   const response = await getCachedResponse(params.projectId, subtype, from, to)
   return NextResponse.json(response)

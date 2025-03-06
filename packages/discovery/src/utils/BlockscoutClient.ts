@@ -83,7 +83,7 @@ export class BlockscoutClient implements IEtherscanClient {
           throw new Error(errorObject.message)
         }
 
-        current = current - UnixTime(1, 'minutes')
+        current = current - 1 * UnixTime.MINUTE
       }
 
       counter++

@@ -37,7 +37,7 @@ const cmd = command({
     const localExecutor = new LocalExecutor(ps, env, logger)
 
     const timestamp =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(3, 'hours')
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     const tokens = readConfig(args.project, logger)
     const config = {

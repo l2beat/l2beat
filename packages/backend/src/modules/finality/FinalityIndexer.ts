@@ -57,7 +57,7 @@ export class FinalityIndexer extends ChildIndexer {
     }
 
     const now = UnixTime.toStartOf(UnixTime.now(), 'day')
-    if (targetTimestamp < now - UnixTime(1, 'days')) {
+    if (targetTimestamp < now - 1 * UnixTime.DAY) {
       this.logger.debug('Update skipped: target in the past', {
         from,
         to,
@@ -114,7 +114,7 @@ export class FinalityIndexer extends ChildIndexer {
     const { timeToInclusion, stateUpdate } = configuration.analyzers
     const { stateUpdateMode } = configuration
 
-    const from = to - UnixTime(1, 'days')
+    const from = to - 1 * UnixTime.DAY
 
     const t2iBatches = await timeToInclusion.analyzeInterval(from, to)
     if (!t2iBatches) {

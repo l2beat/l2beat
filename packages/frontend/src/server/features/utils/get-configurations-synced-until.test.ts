@@ -39,7 +39,7 @@ describe(getConfigurationsSyncedUntil.name, () => {
         maxHeight: null,
       }),
       mockObject<Configuration>({
-        currentHeight: FROM + UnixTime(2, 'hours'),
+        currentHeight: FROM + 2 * UnixTime.HOUR,
         maxHeight: null,
       }),
     ])
@@ -54,19 +54,19 @@ describe(getConfigurationsSyncedUntil.name, () => {
         maxHeight: null,
       }),
       mockObject<Configuration>({
-        currentHeight: FROM + UnixTime(1, 'hours'),
-        maxHeight: FROM + UnixTime(5, 'hours'),
+        currentHeight: FROM + 1 * UnixTime.HOUR,
+        maxHeight: FROM + 5 * UnixTime.HOUR,
       }),
       mockObject<Configuration>({
-        currentHeight: FROM + UnixTime(2, 'hours'),
-        maxHeight: FROM + UnixTime(6, 'hours'),
+        currentHeight: FROM + 2 * UnixTime.HOUR,
+        maxHeight: FROM + 6 * UnixTime.HOUR,
       }),
       mockObject<Configuration>({
-        currentHeight: FROM + UnixTime(4, 'hours'),
-        maxHeight: FROM + UnixTime(6, 'hours'),
+        currentHeight: FROM + 4 * UnixTime.HOUR,
+        maxHeight: FROM + 6 * UnixTime.HOUR,
       }),
     ])
 
-    expect(result).toEqual(FROM + UnixTime(1, 'hours'))
+    expect(result).toEqual(FROM + 1 * UnixTime.HOUR)
   })
 })

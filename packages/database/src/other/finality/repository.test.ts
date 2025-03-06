@@ -8,8 +8,8 @@ import { FinalityRepository } from './repository'
 describeDatabase(FinalityRepository.name, (db) => {
   const repository = db.finality
 
-  const START = UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime(1, 'days')
-  const BASE = START - UnixTime(30, 'days')
+  const START = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
+  const BASE = START - 30 * UnixTime.DAY
 
   const DATA: FinalityRecord[] = [
     {
@@ -22,7 +22,7 @@ describeDatabase(FinalityRepository.name, (db) => {
     },
     {
       projectId: ProjectId('project-a'),
-      timestamp: BASE + UnixTime(1, 'days'),
+      timestamp: BASE + 1 * UnixTime.DAY,
       minimumTimeToInclusion: 2,
       maximumTimeToInclusion: 4,
       averageTimeToInclusion: 3,
@@ -30,7 +30,7 @@ describeDatabase(FinalityRepository.name, (db) => {
     },
     {
       projectId: ProjectId('project-a'),
-      timestamp: BASE + UnixTime(2, 'days'),
+      timestamp: BASE + 2 * UnixTime.DAY,
       minimumTimeToInclusion: 4,
       maximumTimeToInclusion: 8,
       averageTimeToInclusion: 6,
@@ -67,7 +67,7 @@ describeDatabase(FinalityRepository.name, (db) => {
       const newRows = [
         {
           projectId: ProjectId('project-c'),
-          timestamp: BASE + UnixTime(3, 'days'),
+          timestamp: BASE + 3 * UnixTime.DAY,
           minimumTimeToInclusion: 1,
           maximumTimeToInclusion: 3,
           averageTimeToInclusion: 2,
@@ -75,7 +75,7 @@ describeDatabase(FinalityRepository.name, (db) => {
         },
         {
           projectId: ProjectId('project-c'),
-          timestamp: BASE + UnixTime(4, 'days'),
+          timestamp: BASE + 4 * UnixTime.DAY,
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
@@ -98,7 +98,7 @@ describeDatabase(FinalityRepository.name, (db) => {
       const records: FinalityRecord[] = []
       for (let i = 0; i < 5_000; i++) {
         records.push({
-          timestamp: FROM - UnixTime(i, 'hours'),
+          timestamp: FROM - i * UnixTime.HOUR,
           projectId: ProjectId('project-a'),
           averageTimeToInclusion: i,
           maximumTimeToInclusion: i + 1,
@@ -121,7 +121,7 @@ describeDatabase(FinalityRepository.name, (db) => {
   describe(FinalityRepository.prototype.findProjectFinalityOnTimestamp
     .name, () => {
     it('finds a record', async () => {
-      const target = BASE + UnixTime(1, 'days')
+      const target = BASE + 1 * UnixTime.DAY
       const result = await repository.findProjectFinalityOnTimestamp(
         ProjectId('project-a'),
         target,
@@ -135,7 +135,7 @@ describeDatabase(FinalityRepository.name, (db) => {
     })
 
     it('returns undefined if not found', async () => {
-      const target = BASE + UnixTime(300, 'days')
+      const target = BASE + 300 * UnixTime.DAY
 
       const result = await repository.findProjectFinalityOnTimestamp(
         ProjectId('project-a'),
@@ -160,7 +160,7 @@ describeDatabase(FinalityRepository.name, (db) => {
     it('returns latest rows grouped by projectId', async () => {
       const latestProjectAFinality = {
         projectId: ProjectId('project-a'),
-        timestamp: BASE + UnixTime(7, 'days'),
+        timestamp: BASE + 7 * UnixTime.DAY,
         minimumTimeToInclusion: 4,
         maximumTimeToInclusion: 8,
         averageTimeToInclusion: 6,
@@ -169,7 +169,7 @@ describeDatabase(FinalityRepository.name, (db) => {
 
       const latestProjectBFinality = {
         projectId: ProjectId('project-b'),
-        timestamp: BASE + UnixTime(7, 'days'),
+        timestamp: BASE + 7 * UnixTime.DAY,
         minimumTimeToInclusion: 1,
         maximumTimeToInclusion: 3,
         averageTimeToInclusion: 2,
@@ -179,7 +179,7 @@ describeDatabase(FinalityRepository.name, (db) => {
       const latestProjectCFinality = [
         {
           projectId: ProjectId('project-c'),
-          timestamp: BASE + UnixTime(6, 'days'),
+          timestamp: BASE + 6 * UnixTime.DAY,
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
@@ -187,7 +187,7 @@ describeDatabase(FinalityRepository.name, (db) => {
         },
         {
           projectId: ProjectId('project-c'),
-          timestamp: BASE + UnixTime(7, 'days'),
+          timestamp: BASE + 7 * UnixTime.DAY,
           minimumTimeToInclusion: 4,
           maximumTimeToInclusion: 8,
           averageTimeToInclusion: 6,
@@ -197,7 +197,7 @@ describeDatabase(FinalityRepository.name, (db) => {
 
       const latestProjectDFinality = {
         projectId: ProjectId('project-d'),
-        timestamp: BASE + UnixTime(7, 'days'),
+        timestamp: BASE + 7 * UnixTime.DAY,
         minimumTimeToInclusion: 4,
         maximumTimeToInclusion: 8,
         averageTimeToInclusion: 6,

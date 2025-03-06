@@ -16,10 +16,10 @@ describe(getValuesStatus.name, () => {
   })
 
   it('data source excluded', () => {
-    const targetTimestamp = UnixTime(14, 'days')
+    const targetTimestamp = 14 * UnixTime.DAY
 
     // It is later than 7D ago, so will be considered excluded
-    const timestamp = targetTimestamp - UnixTime(10, 'days')
+    const timestamp = targetTimestamp - 10 * UnixTime.DAY
     const valuesByTimestamp = {
       [timestamp]: [mockValue('A', timestamp)],
       // No entry for "B", will be considered excluded
@@ -34,11 +34,11 @@ describe(getValuesStatus.name, () => {
   })
 
   it('data source lagging', () => {
-    const targetTimestamp = UnixTime(14, 'days')
+    const targetTimestamp = 14 * UnixTime.DAY
 
     // It is earlier than 7D ago, so will be considered lagging
-    const timestamp = targetTimestamp - UnixTime(4, 'hours')
-    const timestamp7DaysAgo = targetTimestamp - UnixTime(7, 'days')
+    const timestamp = targetTimestamp - 4 * UnixTime.HOUR
+    const timestamp7DaysAgo = targetTimestamp - 7 * UnixTime.DAY
     const valuesByTimestamp = {
       // this one is needed for the function assumptions about the data
       [timestamp7DaysAgo]: [mockValue('A', timestamp7DaysAgo)],

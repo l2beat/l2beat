@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 
 export function isThroughputSynced(syncedUntil: UnixTime): boolean {
-  return UnixTime.now() - UnixTime(2, 'days') <= syncedUntil
+  return UnixTime.now() - 2 * UnixTime.DAY <= syncedUntil
 }
 
 export function getThroughputSyncWarning(

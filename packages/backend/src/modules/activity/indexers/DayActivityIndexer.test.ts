@@ -56,8 +56,8 @@ describe(DayActivityIndexer.name, () => {
 
       const mockActvityRecords = [
         activityRecord('a', START, 5),
-        activityRecord('a', START + UnixTime(1, 'days'), 4),
-        activityRecord('a', START + UnixTime(2, 'days'), 2),
+        activityRecord('a', START + 1 * UnixTime.DAY, 4),
+        activityRecord('a', START + 2 * UnixTime.DAY, 2),
       ]
 
       const txsCountService = mockObject<TxsCountService>({
@@ -104,7 +104,7 @@ function activityRecord(
     count,
     uopsCount,
     start: UnixTime.toStartOf(timestamp, 'day'),
-    end: UnixTime.toEndOf(timestamp, 'day') - UnixTime(1, 'seconds'),
+    end: UnixTime.toEndOf(timestamp, 'day') - 1,
   }
 }
 

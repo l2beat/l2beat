@@ -68,8 +68,8 @@ describe(PriceService.name, () => {
   describe(PriceService.prototype.fetchPricesWithFallback.name, () => {
     it('returns DB record when PriceProvider fails', async () => {
       const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const from = to - UnixTime(1, 'hours') + UnixTime(1, 'seconds') // indexer ticks
-      const lastFetched = to - UnixTime(1, 'hours')
+      const from = to - 1 * UnixTime.HOUR + 1 // indexer ticks
+      const lastFetched = to - 1 * UnixTime.HOUR
       const configurations = [configuration('id', 1, null)]
 
       const priceProvider = mockObject<PriceProvider>({
@@ -104,7 +104,7 @@ describe(PriceService.name, () => {
     it('works only for latest hour', async () => {
       const coingeckoId = CoingeckoId('coingecko-id')
       const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const from = to - UnixTime(365, 'days')
+      const from = to - 365 * UnixTime.DAY
       const configurations = [configuration('id', 1, null)]
 
       const priceProvider = mockObject<PriceProvider>({

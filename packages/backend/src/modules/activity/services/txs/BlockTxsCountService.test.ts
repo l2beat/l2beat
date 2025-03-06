@@ -17,8 +17,8 @@ describe(BlockTxsCountService.name, () => {
 
       const client = mockRpcClient([
         { timestamp: START, count: 1, number: 1 },
-        { timestamp: START + UnixTime(1, 'hours'), count: 2, number: 2 },
-        { timestamp: START + UnixTime(2, 'days'), count: 5, number: 3 },
+        { timestamp: START + 1 * UnixTime.HOUR, count: 2, number: 2 },
+        { timestamp: START + 2 * UnixTime.DAY, count: 5, number: 3 },
       ])
 
       const txsCountProvider = new BlockTxsCountService({
@@ -33,7 +33,7 @@ describe(BlockTxsCountService.name, () => {
         activityRecord('a', UnixTime.toStartOf(START, 'day'), 3, 5, 1, 2),
         activityRecord(
           'a',
-          UnixTime.toStartOf(START + UnixTime(2, 'days'), 'day'),
+          UnixTime.toStartOf(START + 2 * UnixTime.DAY, 'day'),
           5,
           7,
           3,
@@ -48,7 +48,7 @@ describe(BlockTxsCountService.name, () => {
       const analyzer = new RpcUopsAnalyzer()
       const client = mockRpcClient([
         { timestamp: START, count: 1, number: 1 },
-        { timestamp: START + UnixTime(1, 'hours'), count: 2, number: 2 },
+        { timestamp: START + 1 * UnixTime.HOUR, count: 2, number: 2 },
       ])
       const assessCount = mockFn((count) => count - 1)
 

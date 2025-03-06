@@ -65,7 +65,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       count: aggregated.length,
     })
 
-    return shiftedTo + UnixTime(1, 'seconds')
+    return shiftedTo + 1
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -92,7 +92,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
 
     // do not include ending hour
     // 13:00:00 => 12:59:59
-    shiftedUnixTo = shiftedUnixTo - UnixTime(1, 'seconds')
+    shiftedUnixTo = shiftedUnixTo - 1
 
     this.logger.info('Time range shifted', {
       shiftedFrom: shiftedUnixFrom,

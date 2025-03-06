@@ -59,7 +59,7 @@ describe(RpcCounter.name, () => {
   describe(RpcCounter.prototype.countForBlocks.name, () => {
     it('should return correct stats', () => {
       const end = UnixTime.now()
-      const start = end - UnixTime(1, 'hours')
+      const start = end - 1 * UnixTime.HOUR
 
       const mockBlocks: Block[] = [
         createBlock(1, start),

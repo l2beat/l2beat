@@ -51,7 +51,7 @@ const cmd = command({
 
     logger.info('Executing TVS to exclude zero-valued tokens')
     const timestamp =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(3, 'hours')
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
     const localExecutor = new LocalExecutor(ps, env, logger)
     const tvs = await localExecutor.run(tvsConfig, [timestamp], true)
 

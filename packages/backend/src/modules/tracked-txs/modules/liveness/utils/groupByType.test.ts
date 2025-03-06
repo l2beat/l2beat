@@ -10,23 +10,23 @@ describe(groupByType.name, () => {
   it('returns grouped by type', () => {
     const records: LivenessRecordWithConfig[] = [
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW - UnixTime(1, 'hours'),
+        timestamp: NOW - 1 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
       }),
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW - UnixTime(2, 'hours'),
+        timestamp: NOW - 2 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
       }),
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW - UnixTime(2, 'hours'),
+        timestamp: NOW - 2 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
       }),
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW - UnixTime(1, 'hours'),
+        timestamp: NOW - 1 * UnixTime.HOUR,
         subtype: 'stateUpdates',
       }),
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW - UnixTime(2, 'hours'),
+        timestamp: NOW - 2 * UnixTime.HOUR,
         subtype: 'stateUpdates',
       }),
     ]
@@ -42,7 +42,7 @@ describe(groupByType.name, () => {
   it('should throw on uknown type', () => {
     const records = [
       {
-        timestamp: NOW - UnixTime(1, 'hours'),
+        timestamp: NOW - 1 * UnixTime.HOUR,
         subtype: 'unknown',
       },
     ]

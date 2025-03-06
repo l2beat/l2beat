@@ -10,11 +10,11 @@ export function filterIntervalsByRange(
   switch (range) {
     case '30D':
       return intervals.filter(
-        (i) => i.record.timestamp > syncTo - UnixTime(30, 'days'),
+        (i) => i.record.timestamp > syncTo - 30 * UnixTime.DAY,
       )
     case '90D':
       return intervals.filter(
-        (i) => i.record.timestamp > syncTo - UnixTime(90, 'days'),
+        (i) => i.record.timestamp > syncTo - 90 * UnixTime.DAY,
       )
     case 'MAX':
       return intervals

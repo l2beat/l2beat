@@ -17,8 +17,8 @@ export type ThroughputSummaryData = Awaited<
 const getCachedDaThroughputSummaryData = cache(
   async () => {
     const db = getDb()
-    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime(1, 'days')
-    const from = to - UnixTime(7, 'days')
+    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
+    const from = to - 7 * UnixTime.DAY
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
       ['ethereum', 'celestia', 'avail'],
       [from, to],

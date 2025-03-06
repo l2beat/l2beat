@@ -70,8 +70,8 @@ describe(VerifiersStatusRefresher.name, () => {
 
   describe(VerifiersStatusRefresher.prototype.refresh.name, () => {
     it('correctly fetches verifier statuses', async () => {
-      const lastUsed = UnixTime.now() - UnixTime(2, 'hours')
-      const lastUpdated = UnixTime.now() - UnixTime(1, 'hours')
+      const lastUsed = UnixTime.now() - 2 * UnixTime.HOUR
+      const lastUpdated = UnixTime.now() - 1 * UnixTime.HOUR
 
       const time = install()
       time.setSystemTime(UnixTime.toDate(lastUpdated))
@@ -93,7 +93,7 @@ describe(VerifiersStatusRefresher.name, () => {
         mockObject<BlockscoutV2Client>({
           getInternalTransactions: mockFn().resolvesTo([
             mockObject<BlockscoutInternalTransaction>({
-              timestamp: lastUsed - UnixTime(1, 'hours'),
+              timestamp: lastUsed - 1 * UnixTime.HOUR,
             }),
             mockObject<BlockscoutInternalTransaction>({
               timestamp: lastUsed,

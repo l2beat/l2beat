@@ -99,7 +99,7 @@ const CONFIGURATIONS = [
       type: 'l2costs',
       subtype: 'batchSubmissions',
       sinceTimestamp: FROM,
-      untilTimestamp: FROM + UnixTime(2, 'days'),
+      untilTimestamp: FROM + 2 * UnixTime.DAY,
       params: {
         formula: 'transfer',
         from: ADDRESS_1,

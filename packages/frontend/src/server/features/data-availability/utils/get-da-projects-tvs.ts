@@ -15,8 +15,8 @@ export async function getDaProjectsTvs(projectIds: ProjectId[]) {
 type DaProjectsTvs = Awaited<ReturnType<typeof getDaProjectsTvsData>>
 async function getDaProjectsTvsData(projectIds: ProjectId[]) {
   const db = getDb()
-  const to = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime(1, 'hours')
-  const from = to - UnixTime(7, 'days')
+  const to = UnixTime.toStartOf(UnixTime.now(), 'hour') - 1 * UnixTime.HOUR
+  const from = to - 7 * UnixTime.DAY
   const values = await db.value.getValuesByProjectIdsAndTimeRange(projectIds, [
     from,
     to,

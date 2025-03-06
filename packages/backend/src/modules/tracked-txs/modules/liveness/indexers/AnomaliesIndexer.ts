@@ -36,7 +36,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     // we only need to go one day back
     const maxDepth = UnixTime.toStartOf(
-      UnixTime.now() - UnixTime(1, 'days'),
+      UnixTime.now() - 1 * UnixTime.DAY,
       'day',
     )
     if (to <= maxDepth) {
@@ -86,7 +86,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     )
 
     // we need data from 2 * SYNC_RANGE past days to calculate standard deviation
-    const deviationRange = to - UnixTime(1 * this.SYNC_RANGE * 2, 'days')
+    const deviationRange = to - 1 * this.SYNC_RANGE * 2 * UnixTime.DAY
 
     for (const project of this.$.projects) {
       const activeConfigs = getActiveConfigurations(project, configurations)
@@ -160,8 +160,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     const lastRecord = livenessRecords.at(-1)
     if (
       lastRecord?.timestamp &&
-      lastRecord.timestamp >
-        to - UnixTime(1 * (2 * this.SYNC_RANGE - 1), 'days')
+      lastRecord.timestamp > to - 1 * (2 * this.SYNC_RANGE - 1) * UnixTime.DAY
     )
       return []
 
@@ -181,7 +180,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     const lastIndex = intervals.findIndex(
       (interval) =>
-        interval.record.timestamp <= to - UnixTime(1 * this.SYNC_RANGE, 'days'),
+        interval.record.timestamp <= to - 1 * this.SYNC_RANGE * UnixTime.DAY,
     )
 
     const { means, stdDeviations } = this.calculate30DayRollingStats(
@@ -246,10 +245,10 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     result.means.set(timeStart, mean)
     result.stdDeviations.set(timeStart, rollingStdDev.getStandardDeviation())
-    while (timeStart >= upTo - UnixTime(1 * this.SYNC_RANGE, 'days')) {
-      timeStart = timeStart - UnixTime(1, 'minutes')
+    while (timeStart >= upTo - 1 * this.SYNC_RANGE * UnixTime.DAY) {
+      timeStart = timeStart - 1 * UnixTime.MINUTE
       const leftFence = timeStart
-      const rightFence = timeStart - UnixTime(1 * this.SYNC_RANGE, 'days')
+      const rightFence = timeStart - 1 * this.SYNC_RANGE * UnixTime.DAY
 
       while (entireScope[windowStartIndex].record.timestamp >= leftFence) {
         sum -= entireScope[windowStartIndex].duration ?? 0

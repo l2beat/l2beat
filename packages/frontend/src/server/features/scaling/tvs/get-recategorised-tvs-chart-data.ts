@@ -154,8 +154,7 @@ function getMockTvsChartData({
     getTvsTargetTimestamp(),
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from =
-    days !== null ? target - UnixTime(days, 'days') : MIN_TIMESTAMPS.tvs
+  const from = days !== null ? target - days * UnixTime.DAY : MIN_TIMESTAMPS.tvs
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {

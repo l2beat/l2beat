@@ -450,7 +450,7 @@ describe(UpdateNotifier.name, () => {
         ],
       }
       const timestamp =
-        UnixTime.toStartOf(UnixTime.now(), 'day') + UnixTime(6, 'hours')
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 6 * UnixTime.HOUR
       const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
       const rows = [
         ['project-b', 'ethereum', '3', '2', '', ''],
@@ -528,7 +528,7 @@ describe(UpdateNotifier.name, () => {
         ],
       }
       const timestamp =
-        UnixTime.toStartOf(UnixTime.now(), 'day') + UnixTime(6, 'hours')
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 6 * UnixTime.HOUR
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 
@@ -556,7 +556,7 @@ describe(UpdateNotifier.name, () => {
 
       const reminders = {}
       const timestamp =
-        UnixTime.toStartOf(UnixTime.now(), 'day') + UnixTime(1, 'hours')
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 
