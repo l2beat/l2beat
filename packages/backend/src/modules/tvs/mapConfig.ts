@@ -153,6 +153,7 @@ export function createEscrowToken(
   const source = escrow.source ?? 'canonical'
 
   return {
+    mode: 'auto',
     id,
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
