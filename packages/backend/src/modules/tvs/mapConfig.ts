@@ -81,7 +81,7 @@ export async function mapConfig(
         const chain = CHAINS.get(escrow.chain)
         assert(chain)
 
-        tokens.push(createEscrowToken(project, chain, escrow, legacyToken))
+        tokens.push(createEscrowToken(project, escrow, chain, legacyToken))
       }
     }
   }
@@ -89,7 +89,7 @@ export async function mapConfig(
   for (const legacyToken of project.tvlConfig.tokens) {
     const chain = CHAINS.get(legacyToken.chainName)
     assert(chain)
-    tokens.push(createToken(project, chain, legacyToken))
+    tokens.push(createToken(project, legacyToken))
   }
 
   return {
@@ -100,15 +100,18 @@ export async function mapConfig(
 
 export function createEscrowToken(
   project: Project<'tvlConfig'>,
-  chain: ChainConfig,
   escrow: ProjectTvlEscrow,
+  chainOfEscrow: ChainConfig,
   legacyToken: LegacyToken & { isPreminted?: boolean },
 ): Token {
   assert(
-    chain.name === legacyToken.chainName,
+    chainOfEscrow.name === legacyToken.chainName,
     `${legacyToken.symbol}: chain mismatch`,
   )
-  assert(chain.name === escrow.chain, `${legacyToken.symbol}: chain mismatch`)
+  assert(
+    chainOfEscrow.name === escrow.chain,
+    `${legacyToken.symbol}: chain mismatch`,
+  )
   const id = TokenId.create(project.id, legacyToken.symbol)
 
   let amountFormula: CalculationFormula | AmountFormula
@@ -144,7 +147,7 @@ export function createEscrowToken(
   const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
     legacyToken,
     escrow,
-    chain,
+    chainOfEscrow,
   )
 
   const source = escrow.source ?? 'canonical'
@@ -167,9 +170,11 @@ export function createEscrowToken(
 
 export function createToken(
   project: Project<'tvlConfig', 'chainConfig'>,
-  chain: ChainConfig,
   legacyToken: LegacyToken,
 ): Token {
+  assert(
+    project.chainConfig && project.chainConfig.name === legacyToken.chainName,
+  )
   const id = TokenId.create(project.id, legacyToken.symbol)
   let amountFormula: AmountFormula
 
@@ -196,7 +201,7 @@ export function createToken(
 
   const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
     legacyToken,
-    chain,
+    project.chainConfig,
   )
 
   return {

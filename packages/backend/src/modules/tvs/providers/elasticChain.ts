@@ -119,7 +119,7 @@ export async function getElasticChainTokens(
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
       tokensToAssignFromL1.push(
-        createEscrowToken(project, chainOfL1Escrow, escrow, token),
+        createEscrowToken(project, escrow, chainOfL1Escrow, token),
       )
     }
   }

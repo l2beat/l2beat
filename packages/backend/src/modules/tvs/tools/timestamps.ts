@@ -20,7 +20,10 @@ export function getTimestampsRange(
 }
 
 function getSinceTimestamp(...timestamps: (UnixTime | undefined)[]): UnixTime {
-  assert(timestamps.every((t) => t !== undefined))
+  assert(
+    timestamps.every((t) => t !== undefined),
+    'sinceTimestamp should be defined',
+  )
 
   return Math.max(...timestamps)
 }
