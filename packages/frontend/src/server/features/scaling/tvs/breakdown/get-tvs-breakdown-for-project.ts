@@ -54,7 +54,10 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           amount: 100,
           assetId: AssetId('1'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           escrows: [
@@ -68,12 +71,16 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
+          name: 'Ether',
           supply: 'totalSupply',
         },
         {
           amount: 100,
           assetId: AssetId('4'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           escrows: [
@@ -92,6 +99,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
+          name: 'Ether',
           supply: 'totalSupply',
         },
       ],
@@ -99,13 +107,17 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           amount: 100,
           assetId: AssetId('2'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
+          name: 'Token',
           supply: 'totalSupply',
         },
       ],
@@ -113,13 +125,17 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           amount: 100,
           assetId: AssetId('3'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
+          name: 'Token',
           supply: 'totalSupply',
           bridgedUsing: {
             bridges: [

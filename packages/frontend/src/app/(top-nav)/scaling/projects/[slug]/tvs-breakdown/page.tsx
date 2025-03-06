@@ -3,6 +3,11 @@ import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-s
 import { PrimaryCard } from '~/components/primary-card'
 import { env } from '~/env'
 import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
+import type { BaseAssetBreakdownData } from '~/server/features/scaling/tvs/breakdown/types'
+import type {
+  ProjectToken,
+  ProjectTokens,
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { ps } from '~/server/projects'
@@ -68,7 +73,6 @@ export default async function Page(props: Props) {
       dataTimestamp,
       breakdown: { canonical, native, external },
     },
-    tokens,
     _,
   ] = await Promise.all([
     getTvsBreakdownForProject(project),
@@ -79,6 +83,12 @@ export default async function Page(props: Props) {
       range: '1y',
     }),
   ])
+
+  const tokens: ProjectTokens = {
+    canonical: canonical.map((t) => breakdownToToken(t, 'canonical')),
+    native: native.map((t) => breakdownToToken(t, 'native')),
+    external: external.map((t) => breakdownToToken(t, 'external')),
+  }
 
   return (
     <>
@@ -119,4 +129,19 @@ export default async function Page(props: Props) {
       <RequestTokenBox />
     </>
   )
+}
+
+function breakdownToToken(
+  t: BaseAssetBreakdownData & { iconUrl: string; name: string; symbol: string },
+  source: 'canonical' | 'native' | 'external',
+): ProjectToken {
+  return {
+    assetId: t.assetId,
+    iconUrl: t.iconUrl,
+    symbol: t.symbol,
+    name: t.name,
+    address: t.tokenAddress ?? 'native',
+    chain: t.chain.name,
+    source,
+  }
 }
