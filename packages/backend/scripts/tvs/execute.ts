@@ -49,7 +49,7 @@ const cmd = command({
     const tvsBreakdown = calculateBreakdown(tvs, timestamp, args.project)
 
     logger.info(`TVS: ${tvsBreakdown.tvs}`)
-    logger.info(`Go to /src/modules/tvs/breakdown.json for more details`)
+    logger.info(`Go to ./src/modules/tvs/breakdown.json for more details`)
 
     fs.writeFileSync(
       './src/modules/tvs/breakdown.json',

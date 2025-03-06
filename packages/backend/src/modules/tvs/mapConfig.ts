@@ -34,7 +34,7 @@ export async function mapConfig(
   rpcClient?: RpcClient,
 ): Promise<TvsConfig> {
   const CHAINS = await getChains()
-  const tokens: Token[] = []
+  const tokens: Map<string, Token> = new Map()
 
   for (const escrow of project.tvlConfig.escrows) {
     if (escrow.sharedEscrow) {
@@ -54,8 +54,7 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-
-        tokens.push(...aggLayerL2Tokens)
+        aggLayerL2Tokens.forEach((t) => tokens.set(t.id, t))
       }
 
       if (escrow.sharedEscrow.type === 'ElasticChain') {
@@ -67,8 +66,7 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-
-        tokens.push(...elasticChainTokens)
+        elasticChainTokens.forEach((t) => tokens.set(t.id, t))
       }
     } else {
       for (const legacyToken of escrow.tokens) {
@@ -80,8 +78,39 @@ export async function mapConfig(
         }
         const chain = CHAINS.get(escrow.chain)
         assert(chain)
+        const token = createEscrowToken(project, escrow, chain, legacyToken)
+        const previousToken = tokens.get(token.id)
 
-        tokens.push(createEscrowToken(project, escrow, chain, legacyToken))
+        if (previousToken === undefined) {
+          tokens.set(token.id, token)
+          continue
+        }
+
+        if (previousToken?.amount.type === 'balanceOfEscrow') {
+          tokens.set(token.id, {
+            ...previousToken,
+            amount: {
+              type: 'calculation',
+              operator: 'sum',
+              arguments: [previousToken.amount, token.amount],
+            },
+          })
+          continue
+        }
+
+        if (previousToken?.amount.type === 'calculation') {
+          tokens.set(token.id, {
+            ...previousToken,
+            amount: {
+              ...(previousToken.amount as CalculationFormula),
+              arguments: [
+                ...(previousToken.amount as CalculationFormula).arguments,
+                token.amount,
+              ],
+            },
+          })
+          continue
+        }
       }
     }
   }
@@ -89,12 +118,13 @@ export async function mapConfig(
   for (const legacyToken of project.tvlConfig.tokens) {
     const chain = CHAINS.get(legacyToken.chainName)
     assert(chain)
-    tokens.push(createToken(project, legacyToken))
+    const token = createToken(project, legacyToken)
+    tokens.set(token.id, token)
   }
 
   return {
     projectId: project.id,
-    tokens,
+    tokens: Array.from(tokens.values()),
   }
 }
 
