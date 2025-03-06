@@ -1,6 +1,9 @@
 import * as React from 'react'
+import {
+  HighlightedTableRowProvider,
+  useHighlightedTableRowContext,
+} from '~/providers/highlighted-table-row-provider'
 import { cn } from '~/utils/cn'
-import { TableRowHighlighter } from '../highlighters/table-row-highlighter'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -10,14 +13,15 @@ const Table = ({
   return (
     <div className="max-md:-mr-4">
       <div className={cn('relative w-full overflow-auto pb-3 max-md:pr-4')}>
-        <table
-          className={cn('w-full border-collapse text-left', className)}
-          cellSpacing={0}
-          cellPadding={0}
-          {...props}
-        />
+        <HighlightedTableRowProvider>
+          <table
+            className={cn('w-full border-collapse text-left', className)}
+            cellSpacing={0}
+            cellPadding={0}
+            {...props}
+          />
+        </HighlightedTableRowProvider>
       </div>
-      <TableRowHighlighter />
     </div>
   )
 }
@@ -56,16 +60,19 @@ TableHeaderRow.displayName = 'TableHeaderRow'
 const TableRow = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLTableRowElement>) => (
-  <TableHeaderRow
-    className={cn(
-      'group/row border-b border-b-divider',
-      'data-[highlighted]:animate-row-highlight',
-      className,
-    )}
-    {...props}
-  />
-)
+}: React.HTMLAttributes<HTMLTableRowElement> & { slug: string }) => {
+  const { highlightedSlug } = useHighlightedTableRowContext()
+  return (
+    <TableHeaderRow
+      className={cn(
+        'group/row border-b border-b-divider',
+        highlightedSlug === props.slug && 'animate-row-highlight',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 TableRow.displayName = 'TableRow'
 
 const TableHead = ({

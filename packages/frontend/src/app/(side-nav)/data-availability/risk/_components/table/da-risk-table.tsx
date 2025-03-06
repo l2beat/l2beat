@@ -34,7 +34,7 @@ export function DaRiskTable({
       <>
         {remainingBridges.map((bridge) => (
           <TableRow
-            data-slug={`${row.original.slug}`}
+            slug={row.original.slug}
             key={bridge.slug}
             className={getRowTypeClassNames({
               isEthereum: false,

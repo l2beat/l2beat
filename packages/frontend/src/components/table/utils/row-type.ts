@@ -41,12 +41,12 @@ export function getRowClassNames(rowType: RowType) {
 export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
     case 'ethereum':
-      return 'bg-blue-400 dark:bg-blue-900 group-data-[highlighted]/row:animate-row-highlight-no-opacity'
+      return 'bg-blue-400 dark:bg-blue-900'
     case 'unverified':
-      return 'bg-[#FEE4E4] dark:bg-[#371315] group-data-[highlighted]/row:animate-row-highlight-no-opacity'
+      return 'bg-[#FEE4E4] dark:bg-[#371315]'
     case 'under-review':
-      return 'bg-[#faf5e6] dark:bg-[#2F2A1D] group-data-[highlighted]/row:animate-row-highlight-no-opacity'
+      return 'bg-[#faf5e6] dark:bg-[#2F2A1D]'
     default:
-      return 'bg-surface-primary group-data-[highlighted]/row:animate-row-highlight-no-opacity'
+      return 'bg-surface-primary'
   }
 }

@@ -8,6 +8,7 @@ import type {
 import { flexRender } from '@tanstack/react-table'
 import { range } from 'lodash'
 import React from 'react'
+import { useHighlightedTableRowContext } from '~/providers/highlighted-table-row-provider'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/sorting-arrows'
@@ -178,11 +179,12 @@ export function BasicTableRow<T extends CommonProjectEntry>({
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
   const rowType = getRowType(row.original, props.rowColoringMode)
+  const { highlightedSlug } = useHighlightedTableRowContext()
 
   return (
     <>
       <TableRow
-        data-slug={row.original.slug}
+        slug={row.original.slug}
         className={cn(
           getRowClassNames(rowType),
           row.getIsExpanded() &&
@@ -217,6 +219,8 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                     : undefined,
                   cell.column.getIsPinned() &&
                     getRowClassNamesWithoutOpacity(rowType),
+                  highlightedSlug === row.original.slug &&
+                    'animate-row-highlight-no-opacity',
                   meta?.cellClassName,
                 )}
                 style={getCommonPinningStyles(cell.column)}
