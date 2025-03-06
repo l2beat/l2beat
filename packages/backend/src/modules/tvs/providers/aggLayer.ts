@@ -1,5 +1,10 @@
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
-import type { AggLayerEscrow, Project, ProjectTvlEscrow } from '@l2beat/config'
+import type {
+  AggLayerEscrow,
+  ChainConfig,
+  Project,
+  ProjectTvlEscrow,
+} from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
 import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -18,6 +23,7 @@ const ORIGIN_NETWORK = 0
 export async function getAggLayerTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
   escrow: ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+  chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
 ): Promise<Token[]> {
   const chain = project.chainConfig
@@ -153,7 +159,9 @@ export async function getAggLayerTokens(
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
-      tokensToAssignFromL1.push(createEscrowToken(project, escrow, token))
+      tokensToAssignFromL1.push(
+        createEscrowToken(project, chainOfL1Escrow, escrow, token),
+      )
     }
   }
 

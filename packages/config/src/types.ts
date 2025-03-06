@@ -187,6 +187,7 @@ export interface ChainConfig {
    * January 2021 but the block 1 on November 2021.
    */
   sinceTimestamp?: UnixTime
+  untilTimestamp?: UnixTime
   apis: ChainApiConfig[]
 }
 

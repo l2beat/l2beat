@@ -1,15 +1,16 @@
 import { createHash } from 'crypto'
-import { getEscrowUntilTimestamp } from '@l2beat/backend-shared'
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  AggLayerEscrow,
-  ElasticChainEscrow,
-  Project,
-  ProjectTvlEscrow,
+import {
+  type AggLayerEscrow,
+  type ChainConfig,
+  type ElasticChainEscrow,
+  type Project,
+  ProjectService,
+  type ProjectTvlEscrow,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
-import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { assert, notUndefined } from '@l2beat/shared-pure'
+import type { Token as LegacyToken, UnixTime } from '@l2beat/shared-pure'
 import { getAggLayerTokens } from './providers/aggLayer'
 import { getElasticChainTokens } from './providers/elasticChain'
 import {
@@ -31,6 +32,7 @@ export async function mapConfig(
   logger: Logger,
   rpcClient?: RpcClient,
 ): Promise<TvsConfig> {
+  const CHAINS = await getChains()
   const tokens: Token[] = []
 
   for (const escrow of project.tvlConfig.escrows) {
@@ -40,17 +42,18 @@ export async function mapConfig(
         continue
       }
 
+      const chainOfL1Escrow = CHAINS.get(escrow.chain)
+      assert(chainOfL1Escrow)
+
       if (escrow.sharedEscrow.type === 'AggLayer') {
         logger.info(`Querying for AggLayer L2 tokens addresses`)
         const aggLayerL2Tokens = await getAggLayerTokens(
           project,
-          // TODO: fix types
           escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+          chainOfL1Escrow,
           rpcClient,
         )
 
-        // TODO: add support for L1 assets
-        // add support for native token
         tokens.push(...aggLayerL2Tokens)
       }
 
@@ -59,8 +62,8 @@ export async function mapConfig(
 
         const elasticChainTokens = await getElasticChainTokens(
           project,
-          // TODO: fix types
           escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+          chainOfL1Escrow,
           rpcClient,
         )
 
@@ -74,14 +77,18 @@ export async function mapConfig(
             `Token address is required ${legacyToken.id}`,
           )
         }
+        const chain = CHAINS.get(escrow.chain)
+        assert(chain)
 
-        tokens.push(createEscrowToken(project, escrow, legacyToken))
+        tokens.push(createEscrowToken(project, chain, escrow, legacyToken))
       }
     }
   }
 
   for (const legacyToken of project.tvlConfig.tokens) {
-    tokens.push(createToken(legacyToken, project))
+    const chain = CHAINS.get(legacyToken.chainName)
+    assert(chain)
+    tokens.push(createToken(project, chain, legacyToken))
   }
 
   return {
@@ -92,9 +99,15 @@ export async function mapConfig(
 
 export function createEscrowToken(
   project: Project<'tvlConfig'>,
+  chain: ChainConfig,
   escrow: ProjectTvlEscrow,
   legacyToken: LegacyToken & { isPreminted?: boolean },
 ): Token {
+  assert(
+    chain.name === legacyToken.chainName,
+    `${legacyToken.symbol}: chain mismatch`,
+  )
+  assert(chain.name === escrow.chain, `${legacyToken.symbol}: chain mismatch`)
   const id = TokenId.create(project.id, legacyToken.symbol)
 
   let amountFormula: CalculationFormula | AmountFormula
@@ -127,14 +140,16 @@ export function createEscrowToken(
     } as BalanceOfEscrowAmountFormula
   }
 
+  assert(chain.sinceTimestamp, `${chain.name}: missing sinceTimestamp`)
   const sinceTimestamp = Math.max(
-    // TODO: make sure it takes chain.sinceTimestamp into consideration
     legacyToken.sinceTimestamp,
     escrow.sinceTimestamp,
+    chain.sinceTimestamp,
   )
   const untilTimestamp = getEscrowUntilTimestamp(
     legacyToken.untilTimestamp,
     escrow.untilTimestamp,
+    chain.untilTimestamp,
   )
   const source = escrow.source ?? 'canonical'
 
@@ -155,8 +170,9 @@ export function createEscrowToken(
 }
 
 export function createToken(
-  legacyToken: LegacyToken,
   project: Project<'tvlConfig', 'chainConfig'>,
+  chain: ChainConfig,
+  legacyToken: LegacyToken,
 ): Token {
   const id = TokenId.create(project.id, legacyToken.symbol)
   let amountFormula: AmountFormula
@@ -182,15 +198,24 @@ export function createToken(
       throw new Error(`Unsupported supply type ${legacyToken.supply}`)
   }
 
+  assert(chain.sinceTimestamp, `${chain.name}: missing sinceTimestamp`)
+  const sinceTimestamp = Math.max(
+    legacyToken.sinceTimestamp,
+    chain.sinceTimestamp,
+  )
+  const untilTimestamp = getEscrowUntilTimestamp(
+    legacyToken.untilTimestamp,
+    chain.untilTimestamp,
+  )
+
   return {
     id,
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
     name: legacyToken.name,
     amount: amountFormula,
-    // TODO: make sure it aligns with chain
-    sinceTimestamp: legacyToken.sinceTimestamp,
-    untilTimestamp: legacyToken.untilTimestamp,
+    sinceTimestamp,
+    untilTimestamp,
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -320,4 +345,24 @@ function processFormula(
 export function hash(input: string[]): string {
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
+}
+
+export function getEscrowUntilTimestamp(
+  ...timestamps: (UnixTime | undefined)[]
+): UnixTime | undefined {
+  const definedTimestamps = timestamps.filter(notUndefined)
+
+  if (definedTimestamps.length === 0) {
+    return undefined
+  }
+
+  return Math.min(...definedTimestamps)
+}
+
+async function getChains() {
+  const ps = new ProjectService()
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  return new Map(chains.map((c) => [c.name, c]))
 }

@@ -1,4 +1,5 @@
 import type {
+  ChainConfig,
   ElasticChainEscrow,
   Project,
   ProjectTvlEscrow,
@@ -19,6 +20,7 @@ export const bridgeInterface = new utils.Interface([
 export async function getElasticChainTokens(
   project: Project<'tvlConfig', 'chainConfig'>,
   escrow: ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+  chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
 ): Promise<Token[]> {
   const chain = project.chainConfig
@@ -109,7 +111,9 @@ export async function getElasticChainTokens(
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
-      tokensToAssignFromL1.push(createEscrowToken(project, escrow, token))
+      tokensToAssignFromL1.push(
+        createEscrowToken(project, chainOfL1Escrow, escrow, token),
+      )
     }
   }
 
