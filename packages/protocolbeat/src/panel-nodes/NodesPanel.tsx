@@ -43,6 +43,7 @@ export function NodesPanel() {
 function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   const clear = useNodeStore((state) => state.clear)
   const loadNodes = useNodeStore((state) => state.loadNodes)
+  const preferences = useNodeStore((state) => state.userPreferences)
 
   useEffect(() => {
     clear()
@@ -92,7 +93,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         nodes.push(node)
       }
     }
-    loadNodes(project, nodes)
+    loadNodes(project, nodes, { hideUnknowns: preferences.hideUnknownOnLoad })
   }, [project, data, clear, loadNodes])
 }
 

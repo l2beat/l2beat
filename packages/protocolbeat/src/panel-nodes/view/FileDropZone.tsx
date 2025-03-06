@@ -8,13 +8,14 @@ export function FileDropZone(props: {
   disabled: boolean
 }) {
   const loadNodes = useStore((state) => state.loadNodes)
+  const preferences = useStore((state) => state.userPreferences)
 
   async function loadFromFile(file: File) {
     const contents = await file.text()
     const discovery = parseDiscovery(JSON.parse(contents))
     const projectId = encodeProjectId(discovery)
     const nodes = discoveryToNodes(discovery)
-    loadNodes(projectId, nodes)
+    loadNodes(projectId, nodes, { hideUnknowns: preferences.hideUnknownOnLoad })
   }
 
   return (

@@ -2,6 +2,8 @@ import { ClearButton } from './ClearButton'
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { HideButton } from './HideButton'
+import { HideUnknownsButton } from './HideUnknowns'
+import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'
 
@@ -16,6 +18,9 @@ export function Controls(props: ControlsProps) {
       <StackLayoutButton />
       <span className="text-coffee-600">|</span>
       <ShowButton />
+      <HideUnknownsButton />
+      <Settings />
+      <span className="text-coffee-600">|</span>
       <HideButton />
       <ColorButton />
       {!props.panelMode && (

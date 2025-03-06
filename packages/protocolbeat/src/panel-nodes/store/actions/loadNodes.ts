@@ -13,6 +13,7 @@ export function loadNodes(
   state: State,
   projectId: string,
   nodes: Node[],
+  opts?: { hideUnknowns?: boolean },
 ): Partial<State> {
   const toAdd: Node[] = nodes.filter(
     (x) => !state.nodes.some((y) => x.id === y.id),
@@ -37,8 +38,27 @@ export function loadNodes(
   })
 
   const allNodes = existing.concat(added)
+  console.log(opts, state.hidden)
+
+  // Identify red nodes (nodes with addressType === 'Unknown')
+  const redNodeIds = opts?.hideUnknowns
+    ? allNodes
+        .filter((node) => node.addressType === 'Unknown')
+        .map((node) => node.id)
+    : []
+
+  // Combine existing hidden nodes with red nodes
+  const hiddenNodes = [...new Set([...state.hidden, ...redNodeIds])]
+
+  console.log(hiddenNodes, state)
+
   return layout(
-    { ...state, nodes: allNodes, projectId },
+    {
+      ...state,
+      nodes: allNodes,
+      projectId,
+      hidden: hiddenNodes,
+    },
     stackAutoLayout(allNodes),
   )
 }

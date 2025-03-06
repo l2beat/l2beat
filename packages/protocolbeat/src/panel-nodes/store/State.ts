@@ -5,6 +5,9 @@ export interface State {
   readonly nodes: readonly Node[]
   readonly selected: readonly string[]
   readonly hidden: readonly string[]
+  readonly userPreferences: {
+    readonly hideUnknownOnLoad: boolean
+  }
   readonly transform: {
     readonly offsetX: number
     readonly offsetY: number

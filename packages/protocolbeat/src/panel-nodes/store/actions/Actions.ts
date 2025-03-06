@@ -1,4 +1,4 @@
-import type { Node } from '../State'
+import type { Node, State } from '../State'
 import type { NodeLocations } from '../utils/storage'
 
 export interface Actions {
@@ -9,11 +9,18 @@ export interface Actions {
   onMouseUp: (event: MouseEvent) => void
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
-  loadNodes: (projectId: string, nodes: Node[]) => void
+  loadNodes: (
+    projectId: string,
+    nodes: Node[],
+    opts?: { hideUnknowns?: boolean },
+  ) => void
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
   hideSelected: () => void
+  hideUnknowns: () => void
   showHidden: () => void
   clear: () => void
   selectAndFocus: (selected: readonly string[]) => void
+
+  setPreferences: (preferences: Partial<State['userPreferences']>) => void
 }
