@@ -192,11 +192,11 @@ function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
   // some orbit chains represent maxTimeVariation as an array, others an object
   const result = discovery.getContractValue<
     | {
-        delayBlocks: number
-        futureBlocks: number
-        delaySeconds: number
-        futureSeconds: number
-      }
+      delayBlocks: number
+      futureBlocks: number
+      delaySeconds: number
+      futureSeconds: number
+    }
     | number[]
   >('SequencerInbox', 'maxTimeVariation')
 
@@ -406,6 +406,11 @@ function orbitStackCommon(
       'Central actors allowed to submit transaction batches to L1.',
     )
 
+  const isPostBoLD = templateVars.discovery.getContractValue<boolean>(
+    'RollupProxy',
+    'isPostBoLD',
+  )
+
   if (sequencers.accounts.length === 0) {
     throw new Error(
       `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,
@@ -524,7 +529,26 @@ function orbitStackCommon(
         : ['ETH'],
     },
     technology: {
-      sequencing: templateVars.nonTemplateTechnology?.sequencing,
+      sequencing:
+        templateVars.nonTemplateTechnology?.sequencing ??
+        (() => {
+          const commonDescription = `To force transactions from the base chain, users must enqueue "delayed" messages in the "delayed" inbox of the Bridge contract. Only authorized Inboxes are allowed to enqueue delayed messages, and the so-called Inbox contract is the one usually used as the entry point by calling the \`sendMessage\` or \`sendMessageFromOrigin\` functions. If the centralized sequencer doesn't process the request within some time bound, users can call the \`forceInclusion\` function on the SequencerInbox contract to move the message to the canonical chain.`
+          if (isPostBoLD) {
+            return {
+              name: 'Delayed forced transactions',
+              description:
+                commonDescription +
+                ` The time bound is hardcoded to be ${formatSeconds(selfSequencingDelaySeconds)}.`,
+            } as ProjectTechnologyChoice
+          } else {
+            return {
+              name: 'Buffered forced transactions',
+              description:
+                commonDescription +
+                ` The time bound is defined to be the minimum between ${formatSeconds(selfSequencingDelaySeconds)} and the time left in the delay buffer. The delay buffer gets replenished over time and gets consumed every time the sequencer doesn't timely process a message.`,
+            } as ProjectTechnologyChoice
+          }
+        })(),
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
@@ -705,13 +729,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           warnings: {
             stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
           },
-          explanation: `${
-            templateVars.display.name
-          } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
-            selfSequencingDelaySeconds,
-          )}. The state root gets finalized ${formatSeconds(
-            challengePeriodSeconds,
-          )} after it has been posted.`,
+          explanation: `${templateVars.display.name
+            } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+              selfSequencingDelaySeconds,
+            )}. The state root gets finalized ${formatSeconds(
+              challengePeriodSeconds,
+            )} after it has been posted.`,
         },
       ),
     },
@@ -749,34 +772,34 @@ function getDaTracking(
 
   return usesBlobs
     ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxDeploymentBlockNumber,
-          inbox: templateVars.sequencerInbox.address,
-          sequencers: batchPosters,
-        },
-      ]
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxDeploymentBlockNumber,
+        inbox: templateVars.sequencerInbox.address,
+        sequencers: batchPosters,
+      },
+    ]
     : templateVars.celestiaDa
       ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
+        {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          // TODO: update to value from discovery
+          sinceBlock: templateVars.celestiaDa.sinceBlock,
+          namespace: templateVars.celestiaDa.namespace,
+        },
+      ]
       : templateVars.availDa
         ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
+          {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.availDa.sinceBlock,
+            appId: templateVars.availDa.appId,
+          },
+        ]
         : undefined
 }
 
