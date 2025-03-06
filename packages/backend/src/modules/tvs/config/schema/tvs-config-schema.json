@@ -12,9 +12,6 @@
         },
         {
           "$ref": "#/definitions/CirculatingSupplyAmountFormula"
-        },
-        {
-          "$ref": "#/definitions/ConstAmountFormula"
         }
       ]
     },
@@ -41,20 +38,6 @@
       "required": ["type", "address", "chain", "escrowAddress", "decimals"],
       "type": "object"
     },
-    "ConstAmountFormula": {
-      "additionalProperties": false,
-      "properties": {
-        "type": {
-          "const": "const",
-          "type": "string"
-        },
-        "value": {
-          "type": "number"
-        }
-      },
-      "required": ["type", "value"],
-      "type": "object"
-    },
     "CalculationFormula": {
       "additionalProperties": false,
       "properties": {
@@ -66,9 +49,6 @@
               },
               {
                 "$ref": "#/definitions/ValueFormula"
-              },
-              {
-                "$ref": "#/definitions/AmountFormula"
               }
             ]
           },
@@ -100,21 +80,14 @@
       "type": "object"
     },
     "Operator": {
-      "enum": ["sum", "diff", "max", "min"],
+      "enum": ["sum", "diff"],
       "type": "string"
     },
     "Token": {
       "additionalProperties": false,
       "properties": {
         "amount": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/AmountFormula"
-            },
-            {
-              "$ref": "#/definitions/CalculationFormula"
-            }
-          ]
+          "$ref": "#/definitions/AmountFormula"
         },
         "category": {
           "enum": ["ether", "stablecoin", "other"],
@@ -140,7 +113,7 @@
           "type": "string"
         },
         "priceId": {
-          "type": "string"
+          "priceId": "string"
         },
         "untilTimestamp": {
           "type": "number"
@@ -222,14 +195,7 @@
       "additionalProperties": false,
       "properties": {
         "amount": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/AmountFormula"
-            },
-            {
-              "$ref": "#/definitions/CalculationFormula"
-            }
-          ]
+          "$ref": "#/definitions/AmountFormula"
         },
         "priceId": {
           "type": "string"
