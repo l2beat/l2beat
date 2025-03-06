@@ -1,6 +1,6 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { BaseProject } from '../../types'
-import { getProjects } from './getProjects'
+import type { BaseProject } from './types'
+import { getProjects } from './projects/project/getProjects'
 
 type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
 type Key = Exclude<keyof BaseProject, BasicKeys>
