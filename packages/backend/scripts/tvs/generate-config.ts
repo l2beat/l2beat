@@ -34,7 +34,7 @@ const cmd = command({
 
     logger.info(
       'Generating TVS config ' +
-      (args.project ? `for project '${args.project}'` : ''),
+        (args.project ? `for project '${args.project}'` : ''),
     )
 
     // get token data
@@ -55,9 +55,7 @@ const cmd = command({
     const localExecutor = new LocalExecutor(ps, env, logger)
     const tvs = await localExecutor.run(tvsConfig, [timestamp], true)
 
-    const currentTvs = tvs
-      .get(timestamp)
-      ?.filter((token) => token.value !== 0)
+    const currentTvs = tvs.get(timestamp)?.filter((token) => token.value !== 0)
 
     assert(currentTvs, 'No data for timestamp')
 
