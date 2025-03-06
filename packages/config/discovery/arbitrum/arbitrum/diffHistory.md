@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x55f5f02a21dd751708e1ca494d116991e8fea317
+
+# Diff at Thu, 06 Mar 2025 14:52:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 308283361
+- current block number: 308283361
+
+## Description
+
+change timelock descriptions, add delay.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308283361 (main branch discovery), not current.
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.5.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.5.delay:
++        691200
+      issuedPermissions.0.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.0.delay:
++        691200
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      receivedPermissions.0.delay:
++        691200
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      directlyReceivedPermissions.2.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.2.delay:
++        691200
+    }
+```
+
 Generated with discovered.json: 0xe9e6a4d3f0c7642dfbb8fd12872613c951ba11ac
 
 # Diff at Tue, 04 Mar 2025 10:40:22 GMT:

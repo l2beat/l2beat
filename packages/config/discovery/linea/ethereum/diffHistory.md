@@ -1,3 +1,172 @@
+Generated with discovered.json: 0x27d91c35b22208bdb021939a561b8d1b44dd21a9
+
+# Diff at Thu, 06 Mar 2025 14:50:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21434844
+- current block number: 21434844
+
+## Description
+
+change timelock descriptions, add delay.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]}
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.3.via:
+-        [{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+      receivedPermissions.3.description:
++        "propose transactions."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.2.via.1:
+-        {"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}
+      receivedPermissions.2.via.0.address:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.2.description:
++        "manage all access control roles and change the minimum delay."
+      receivedPermissions.1.description:
+-        "propose transactions in the Timelock."
++        "execute transactions that are ready."
+      receivedPermissions.0.description:
+-        "cancel transactions that are waiting in the Timelock."
++        "cancel queued transactions."
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      template:
+-        "linea/Timelock"
++        "global/Timelock"
+      description:
+-        "A Timelock with currently 0s minimum delay."
++        "A standard timelock with access control. The current minimum delay is 0s."
+      issuedPermissions.7:
++        {"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"propose transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.6:
++        {"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]}
+      issuedPermissions.5:
++        {"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"cancel queued transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.3.to:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.3.description:
+-        "propose transactions in the Timelock."
++        "propose transactions."
+      issuedPermissions.3.via.0:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      issuedPermissions.2.to:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.2.description:
+-        "cancel transactions that are waiting in the Timelock."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.2.via.0.address:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      issuedPermissions.1.description:
+-        "propose transactions in the Timelock."
++        "execute transactions that are ready."
+      issuedPermissions.0.description:
+-        "cancel transactions that are waiting in the Timelock."
++        "cancel queued transactions."
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"manage all access control roles and change the minimum delay."}
+      values.Canceller:
+-        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.delayFormatted:
+-        "0s"
+      values.Executor:
+-        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.Proposer:
+-        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.cancellerAC:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.executorAC:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.minDelayFormatted:
++        "0s"
+      values.proposerAC:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.timelockAdminAC:
++        ["0xd6B95c960779c72B8C6752119849318E5d550574"]
+      displayName:
++        "L1Timelock"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.3.via.2:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      receivedPermissions.3.via.1:
+-        {"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}
+      receivedPermissions.3.via.0.address:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      receivedPermissions.3.description:
++        "propose transactions."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.2.via.2:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      receivedPermissions.2.via.1.address:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      receivedPermissions.2.via.0.address:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.2.description:
++        "manage all access control roles and change the minimum delay."
+      receivedPermissions.1.description:
+-        "propose transactions in the Timelock."
++        "execute transactions that are ready."
+      receivedPermissions.0.description:
+-        "cancel transactions that are waiting in the Timelock."
++        "cancel queued transactions."
+    }
+```
+
 Generated with discovered.json: 0xe3f1d6d950a414cc9a2239609bb82e1651353cfa
 
 # Diff at Tue, 04 Mar 2025 10:39:22 GMT:

@@ -1,3 +1,315 @@
+Generated with discovered.json: 0x1cc84b54de0fb8d6808a12102a3a7d8aaa0deb5c
+
+# Diff at Thu, 06 Mar 2025 14:50:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21786859
+- current block number: 21786859
+
+## Description
+
+change timelock descriptions, add delay.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786859 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"0xFb209827c58283535b744575e11953DCC4bEAD88"}
+      directlyReceivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.6.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      directlyReceivedPermissions.5.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xFb209827c58283535b744575e11953DCC4bEAD88"
+      directlyReceivedPermissions.5.description:
+-        "update the minimum delay of the timelock."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      directlyReceivedPermissions.4.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      directlyReceivedPermissions.4.delay:
++        259200
+    }
+```
+
+```diff
+    contract ArbitrumBridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Contract used to relay governance action messages from Arbitrum One to Ethereum. It is also an escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      receivedPermissions.16:
+-        {"permission":"upgrade","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]}
+      receivedPermissions.15.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xFb209827c58283535b744575e11953DCC4bEAD88"
+      receivedPermissions.15.via.2:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      receivedPermissions.15.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.15.via.1.delay:
++        259200
+      receivedPermissions.15.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.14.from:
+-        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.14.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.13.from:
+-        "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
++        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
+      receivedPermissions.13.via.0.address:
+-        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.12.from:
+-        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
++        "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
+      receivedPermissions.12.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      receivedPermissions.11.from:
+-        "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"
++        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+      receivedPermissions.10.from:
+-        "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
++        "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"
+      receivedPermissions.10.via.0.address:
+-        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.9.from:
+-        "0xA59075221b50C598aED0Eae0bB9869639513af0D"
++        "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
+      receivedPermissions.9.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      receivedPermissions.8.from:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xA59075221b50C598aED0Eae0bB9869639513af0D"
+      receivedPermissions.8.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.7.from:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.7.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.6.from:
+-        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.6.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.5.from:
+-        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
++        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+      receivedPermissions.5.via.0.address:
+-        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.4.from:
+-        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
++        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
+      receivedPermissions.4.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0xFb209827c58283535b744575e11953DCC4bEAD88"
++        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
+      receivedPermissions.3.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.3.via.2:
++        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      receivedPermissions.3.via.1.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.3.via.1.delay:
+-        259200
+      receivedPermissions.3.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.2.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xFb209827c58283535b744575e11953DCC4bEAD88"
+      receivedPermissions.2.description:
+-        "update the minimum delay of the timelock."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.0.delay:
++        259200
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions.6:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.5:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.4.description:
+-        "update the minimum delay of the timelock."
+      issuedPermissions.4.via.1:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      issuedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.3.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.3.description:
+-        "cancel queued transactions."
+      issuedPermissions.3.via.2:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      issuedPermissions.3.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.3.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.3.via.0.delay:
++        259200
+      issuedPermissions.2.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
+      issuedPermissions.2.description:
+-        "update the minimum delay of the timelock."
++        "update the minimum delay and manage all access control roles of the timelock."
+      issuedPermissions.2.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.2.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.2.via.0.delay:
+-        259200
+      issuedPermissions.2.delay:
++        259200
+      issuedPermissions.0.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      issuedPermissions.0.delay:
++        259200
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      receivedPermissions.15:
+-        {"permission":"upgrade","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      receivedPermissions.14.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xFb209827c58283535b744575e11953DCC4bEAD88"
+      receivedPermissions.14.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.14.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.13.from:
+-        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.13.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.12.from:
+-        "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
++        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
+      receivedPermissions.12.via.0.address:
+-        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.11.from:
+-        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
++        "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
+      receivedPermissions.11.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      receivedPermissions.10.from:
+-        "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"
++        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+      receivedPermissions.9.from:
+-        "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
++        "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"
+      receivedPermissions.9.via.0.address:
+-        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.8.from:
+-        "0xA59075221b50C598aED0Eae0bB9869639513af0D"
++        "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
+      receivedPermissions.8.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      receivedPermissions.7.from:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xA59075221b50C598aED0Eae0bB9869639513af0D"
+      receivedPermissions.7.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.6.from:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.6.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.5.from:
+-        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.5.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.4.from:
+-        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
++        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+      receivedPermissions.4.via.0.address:
+-        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.3.from:
+-        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
++        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
+      receivedPermissions.3.via.0.address:
+-        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0xFb209827c58283535b744575e11953DCC4bEAD88"
++        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
+      receivedPermissions.2.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.2.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.2.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      receivedPermissions.1.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xFb209827c58283535b744575e11953DCC4bEAD88"
+      receivedPermissions.1.description:
+-        "update the minimum delay of the timelock."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.0.delay:
++        259200
+    }
+```
+
 Generated with discovered.json: 0xcd990630651ef17f17650629b632df5f67dcd92b
 
 # Diff at Thu, 06 Mar 2025 09:39:03 GMT:

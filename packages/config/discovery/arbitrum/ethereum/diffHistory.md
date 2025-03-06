@@ -1,3 +1,324 @@
+Generated with discovered.json: 0x566d46078b047a201a48a4a6ab191d724edad6bf
+
+# Diff at Thu, 06 Mar 2025 14:50:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21892618
+- current block number: 21892618
+
+## Description
+
+change timelock descriptions, add delay.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21892618 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      receivedPermissions.17:
+-        {"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]}
+      receivedPermissions.16.from:
+-        "0xcEe284F754E854890e311e3280b767F80797180d"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.16.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.15.from:
+-        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
++        "0xcEe284F754E854890e311e3280b767F80797180d"
+      receivedPermissions.15.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.14.from:
+-        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
++        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
+      receivedPermissions.14.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.13.from:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
+      receivedPermissions.13.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.12.from:
+-        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.11.from:
+-        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
++        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+      receivedPermissions.11.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.10.from:
+-        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
++        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      receivedPermissions.10.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.9.from:
+-        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
++        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
+      receivedPermissions.8.from:
+-        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
++        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
+      receivedPermissions.8.via.3:
++        {"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}
+      receivedPermissions.8.via.2.address:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.8.via.2.delay:
++        259200
+      receivedPermissions.8.via.1.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.8.via.1.delay:
+-        259200
+      receivedPermissions.8.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.7.from:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      receivedPermissions.7.via.3:
+-        {"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}
+      receivedPermissions.7.via.2.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.7.via.2.delay:
+-        259200
+      receivedPermissions.7.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.7.via.1.delay:
++        259200
+      receivedPermissions.7.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.6.from:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      receivedPermissions.6.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.5.from:
+-        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.5.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.4.from:
+-        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
++        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      receivedPermissions.3.description:
+-        "update the minimum delay of the timelock."
+      receivedPermissions.3.via.3:
++        {"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}
+      receivedPermissions.3.via.2.address:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.3.via.2.delay:
++        259200
+      receivedPermissions.3.via.1.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.3.via.1.delay:
+-        259200
+      receivedPermissions.3.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.1.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.1.delay:
++        259200
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"}
+      directlyReceivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.5.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      directlyReceivedPermissions.5.description:
+-        "update the minimum delay of the timelock."
+      directlyReceivedPermissions.4.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      directlyReceivedPermissions.4.delay:
++        259200
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions.6:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.5:
+-        {"permission":"upgrade","to":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.4.description:
+-        "update the minimum delay of the timelock."
+      issuedPermissions.4.via.1:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      issuedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.3.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.3.description:
+-        "cancel queued transactions."
+      issuedPermissions.3.via.3:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      issuedPermissions.3.via.2:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.3.via.1:
++        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      issuedPermissions.3.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.2.to:
+-        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
++        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
+      issuedPermissions.2.description:
+-        "update the minimum delay of the timelock."
++        "update the minimum delay and manage all access control roles of the timelock."
+      issuedPermissions.2.via.2:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.2.via.1:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      issuedPermissions.2.via.0.address:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.2.delay:
++        259200
+      issuedPermissions.0.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      issuedPermissions.0.delay:
++        259200
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      receivedPermissions.16:
+-        {"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      receivedPermissions.15.from:
+-        "0xcEe284F754E854890e311e3280b767F80797180d"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.15.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.14.from:
+-        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
++        "0xcEe284F754E854890e311e3280b767F80797180d"
+      receivedPermissions.14.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.13.from:
+-        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
++        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
+      receivedPermissions.13.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.12.from:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
+      receivedPermissions.12.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.11.from:
+-        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.10.from:
+-        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
++        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+      receivedPermissions.10.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.9.from:
+-        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
++        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      receivedPermissions.9.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.8.from:
+-        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
++        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
+      receivedPermissions.7.from:
+-        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
++        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
+      receivedPermissions.7.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.7.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.6.from:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      receivedPermissions.6.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.6.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.5.from:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      receivedPermissions.5.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.4.from:
+-        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.4.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.3.from:
+-        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
++        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      receivedPermissions.2.description:
+-        "update the minimum delay of the timelock."
+      receivedPermissions.2.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.2.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.1.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.1.delay:
++        259200
+    }
+```
+
 Generated with discovered.json: 0x6be3da72bffcea676a63969f1088efc534ac0f95
 
 # Diff at Thu, 06 Mar 2025 09:38:57 GMT:

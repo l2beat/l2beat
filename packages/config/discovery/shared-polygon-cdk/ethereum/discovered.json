@@ -57,7 +57,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -69,19 +69,23 @@
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay"
         },
         {
           "permission": "upgrade",
@@ -91,7 +95,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -103,7 +107,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -115,7 +119,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         }
@@ -125,7 +129,7 @@
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
-          "condition": "there is no emergency state, in which case there is no delay"
+          "condition": "there is no emergency state, in which case there would be no delay"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -167,7 +171,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -289,7 +293,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -318,7 +322,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -740,7 +744,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -832,18 +836,22 @@
         {
           "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay",
           "via": []
         },
         {
           "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         }
@@ -857,7 +865,7 @@
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
-          "condition": "there is no emergency state, in which case there is no delay"
+          "condition": "there is no emergency state, in which case there would be no delay"
         },
         {
           "permission": "interact",
@@ -867,7 +875,9 @@
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay"
         }
       ],
       "sinceTimestamp": 1679653187,
@@ -1612,6 +1622,6 @@
     "polygon-cdk/PolygonGlobalExitRootV2": "0x75cc9862e96eb2a8e076fd553e1c729decfc584304d456003762d3723ee3e596",
     "polygon-cdk/PolygonRollupManager_pessimistic": "0x8574f67c4c0c0f40efb066c6029a163cc79af6464e05c04b046eb34199784ea9",
     "polygon-cdk/PolygonSharedBridge": "0x7c6fe6c28a9c090b0f04dcb3b30a58343dd07fd39421e73f2a7317828767e522",
-    "polygon-cdk/Timelock": "0x27daafce564beac7f1a3b4ddb0321c30d7630d1db27ad0e585a8b2e9faa82f7d"
+    "polygon-cdk/Timelock": "0x57977b80a99b9ab24f98df7a4d1b615609f3dff107f7667a6fe28c8048452c54"
   }
 }

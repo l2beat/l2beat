@@ -1,3 +1,122 @@
+Generated with discovered.json: 0x9524041ad20fc2f84d9de2c417e75e367fbc47de
+
+# Diff at Thu, 06 Mar 2025 14:50:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21965308
+- current block number: 21965308
+
+## Description
+
+change timelock descriptions, add delay.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21965308 (main branch discovery), not current.
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.7.via.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.6.via.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.5.via.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.4.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.4.delay:
++        259200
+      receivedPermissions.4.condition:
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.3.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.3.delay:
++        259200
+      receivedPermissions.3.condition:
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.1.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      directlyReceivedPermissions.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
+      issuedPermissions.0.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      issuedPermissions.7.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      issuedPermissions.3.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      issuedPermissions.0.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      issuedPermissions.1.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      issuedPermissions.1.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      issuedPermissions.1.delay:
++        259200
+      issuedPermissions.1.condition:
++        "there is no emergency state, in which case there would be no delay"
+      issuedPermissions.0.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      issuedPermissions.0.delay:
++        259200
+      issuedPermissions.0.condition:
++        "there is no emergency state, in which case there would be no delay"
+      directlyReceivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.3.delay:
++        259200
+      directlyReceivedPermissions.3.condition:
++        "there is no emergency state, in which case there would be no delay"
+      directlyReceivedPermissions.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
 Generated with discovered.json: 0xca48085bb640a1c7b33063a665f4872987b4f21f
 
 # Diff at Tue, 04 Mar 2025 10:39:51 GMT:
