@@ -1,3 +1,115 @@
+Generated with discovered.json: 0x504ae4df134fe60e0f152d6708a4e38d557d6af0
+
+# Diff at Wed, 05 Mar 2025 14:07:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21387345
+- current block number: 21981175
+
+## Description
+
+discodrive starkExes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387345 (main branch discovery), not current.
+
+```diff
+    contract DACommittee (0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 5.
+      name:
+-        "Committee"
++        "DACommittee"
+      template:
++        "starkex/Committee"
+      description:
++        "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 5."
+      fieldMeta:
++        {"constructorArgs":{"description":"Includes DAC members and threshold."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: Helper contract for registering limit orders from L1.
+      template:
++        "starkex/OrderRegistry"
+      description:
++        "Helper contract for registering limit orders from L1."
+    }
+```
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0xD2C37fC6fD89563187f3679304975655e448D192","delay":1209600,"via":[]}
+      issuedPermissions.4:
++        {"permission":"operateStarknet","to":"0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xeDb0219557ba13816f1dEb7fA54688362B05A5aE","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xD2C37fC6fD89563187f3679304975655e448D192","description":"manage the token admin role.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      values.OPERATORS:
+-        ["0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"]
+      values.operators:
++        ["0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"]
+      values.tokenAdmins:
++        ["0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A","0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"]
+      values.UPGRADE_DELAY_SLOT:
++        "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      fieldMeta.$admin:
++        {"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."}
+      fieldMeta.isFinalized:
++        {"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."}
+      template:
++        "starkex/StarkExchange"
+      description:
++        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).
+      values.programHashMapped:
++        "3485280386001712778192330279103973322645241679001461923469191557000342180556"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`)."
+    }
+```
+
+```diff
+    contract IMXAdminMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      name:
+-        "IMXProxyGovernanceMultisig2"
++        "IMXAdminMultisig"
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0x5FDCCA53617f4d2b9134B29090C87D01058e27e9","delay":1209600}
+      receivedPermissions.1:
++        {"permission":"interact","from":"0x5FDCCA53617f4d2b9134B29090C87D01058e27e9","description":"manage the token admin role."}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      severity:
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x297af54cd97a1a67d5d6d63d86f444685b6a6f23
 
 # Diff at Tue, 04 Mar 2025 10:39:16 GMT:
