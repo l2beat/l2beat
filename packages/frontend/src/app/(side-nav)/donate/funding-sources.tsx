@@ -17,22 +17,17 @@ export const fundingSources = [
     source:
       'Processes and tooling around independent verification of ZK circuits',
     tier: 'Medium',
-    description:
-      'Grant from Worldcoin Foundation',
+    description: 'Grant from Worldcoin Foundation',
   },
   {
-    source:
-      'DA solutions risk framework & dashboard',
+    source: 'DA solutions risk framework & dashboard',
     tier: 'Medium',
-    description:
-      'Grant from Celestia',
+    description: 'Grant from Celestia',
   },
   {
-    source:
-      'Building infrastructure to count UOPS alongside TPS',
+    source: 'Building infrastructure to count UOPS alongside TPS',
     tier: 'Medium',
-    description:
-      'Grant from Starknet Foundation',
+    description: 'Grant from Starknet Foundation',
   },
   {
     source: 'Optimism RPGF',
