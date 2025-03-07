@@ -11,7 +11,7 @@ export const fundingSources = [
       'Rewards & compensation for participating in L2 governance frameworks',
     tier: 'Medium',
     description:
-      'We are participating in the governance of Arbitrum, Optimism, Hop, Polygon, Uniswap, Scroll and Connext, and more',
+      'We are participating in the governance of Arbitrum, Optimism, Hop, Polygon, Uniswap, Scroll, Connext, and more',
   },
   {
     source:
