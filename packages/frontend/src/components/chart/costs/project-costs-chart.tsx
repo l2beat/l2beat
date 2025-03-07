@@ -1,13 +1,18 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { Checkbox } from '~/components/core/checkbox'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import { CostsChart } from './costs-chart'
@@ -23,7 +28,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const [showDataPosted, setShowDataPosted] = useState(false)
 
-  const { data, isLoading } = api.costs.chartWithDataPosted.useQuery({
+  const { data, isLoading } = api.costs.projectChart.useQuery({
     range,
     projectId,
   })
@@ -33,7 +38,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       return undefined
     }
 
-    return data?.map(
+    return data.chart.map(
       ([
         timestamp,
         overheadGas,
@@ -109,6 +114,55 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         className="mb-2 mt-4"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
+
+      <HorizontalSeparator className="my-4" />
+      <ChartStats columns={3}>
+        <ChartStatsItem
+          label={
+            range === 'max' ? 'Total cost' : `${rangeToLabel(range)} total cost`
+          }
+          value={
+            data?.stats.totalCosts[unit].total
+              ? formatCostValue(
+                  data?.stats.totalCosts[unit].total,
+                  unit,
+                  'total',
+                )
+              : undefined
+          }
+          isLoading={isLoading}
+        />
+        <ChartStatsItem
+          label="Avg cost per L2 UOP"
+          value={
+            data?.stats.perL2UopCost?.[unit]?.total &&
+            range !== '1d' &&
+            range !== '7d'
+              ? formatCostValue(
+                  data.stats.perL2UopCost[unit].total,
+                  unit,
+                  'per-l2-uop',
+                )
+              : undefined
+          }
+          isLoading={isLoading}
+          className="md:max-lg:items-center"
+        />
+        <ChartStatsItem
+          label={
+            range === 'max'
+              ? 'Total UOPS count'
+              : `${rangeToLabel(range)} UOPS count`
+          }
+          value={
+            data?.stats.uopsCount
+              ? formatNumber(data?.stats.uopsCount)
+              : undefined
+          }
+          isLoading={isLoading}
+          className="md:max-lg:items-end"
+        />
+      </ChartStats>
     </div>
   )
 }
@@ -161,4 +215,19 @@ function UnitControls({
       )}
     </div>
   )
+}
+
+function rangeToLabel(range: Exclude<CostsTimeRange, 'max'>) {
+  switch (range) {
+    case '1d':
+      return 'Past day'
+    case '7d':
+    case '30d':
+    case '90d':
+    case '180d':
+    case '1y':
+      return range.toUpperCase()
+    default:
+      assertUnreachable(range)
+  }
 }

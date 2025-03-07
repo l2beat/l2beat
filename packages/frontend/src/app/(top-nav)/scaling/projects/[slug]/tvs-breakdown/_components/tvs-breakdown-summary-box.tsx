@@ -26,7 +26,7 @@ type Props = {
 
 export function TvsBreakdownSummaryBox(props: Props) {
   return (
-    <ChartStats>
+    <ChartStats columns={4}>
       <StatsItem
         title="Total value secured"
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."

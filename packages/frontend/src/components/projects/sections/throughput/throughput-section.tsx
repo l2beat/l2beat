@@ -65,7 +65,7 @@ export function ThroughputSection({
         milestones={milestones}
       />
       <HorizontalSeparator className="my-4" />
-      <ChartStats>
+      <ChartStats columns={4}>
         <Detail
           label="Past day avg. throughput"
           value={formatBpsToMbps(pastDayAvgThroughputPerSecond)}
