@@ -35,6 +35,12 @@ export function HighlightedTableRowProvider({
 
   useEffect(() => {
     handleHighlightChange()
+
+    const timeoutId = setTimeout(() => {
+      setHighlightedSlug(undefined)
+    }, 3000)
+
+    return () => clearTimeout(timeoutId)
   }, [handleHighlightChange])
 
   return (
