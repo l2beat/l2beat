@@ -4,8 +4,8 @@ import { z } from 'zod'
 import { getDb } from '~/server/database'
 import { getProjectDaThroughputChart } from '../../data-availability/throughput/get-project-da-throughput-chart'
 import { getCostsChart } from './get-costs-chart'
+import { getCostsForProject } from './get-costs-for-project'
 import type { LatestCostsProjectResponse } from './types'
-import { addIfDefined } from './utils/add-if-defined'
 import { CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
 
 export type ProjectCostsChartParams = z.infer<typeof ProjectCostsChartParams>
@@ -14,84 +14,48 @@ export const ProjectCostsChartParams = z.object({
   projectId: z.string(),
 })
 
+type ProjectLatestCosts = Omit<LatestCostsProjectResponse, 'syncedUntil'> & {
+  posted: number | undefined
+}
+
 export async function getProjectCostsChart(params: ProjectCostsChartParams) {
-  const [costs, da, uopsCount] = await Promise.all([
+  const [costsChart, costs, da, uopsCount] = await Promise.all([
     getCostsChart({
       previewRecategorisation: false,
       filter: { type: 'projects', projectIds: [params.projectId] },
       range: params.range,
     }),
+    getCostsForProject(params.projectId, params.range),
     getProjectDaThroughputChart(params),
     getLatestActivityForProject(params.projectId, params.range),
   ])
 
   const timestampedDaData = Object.fromEntries(da ?? [])
-  const chart = costs.map((cost) => {
+  const chart = costsChart.map((cost) => {
     const dailyTimestamp = UnixTime.toStartOf(cost[0], 'day')
     const isHourlyRange = params.range === '1d' || params.range === '7d'
     const posted = timestampedDaData[dailyTimestamp]
     return [
       ...cost,
-      posted !== undefined ? (isHourlyRange ? posted / 24 : posted) : null,
+      posted !== undefined ? (isHourlyRange ? posted / 24 : posted) : undefined,
     ] as const
   })
 
-  const summed = costs.reduce<Omit<LatestCostsProjectResponse, 'syncedUntil'>>(
-    (acc, record) => {
-      return {
-        gas: {
-          overhead: acc.gas.overhead + record[1],
-          calldata: acc.gas.calldata + record[4],
-          compute: acc.gas.compute + record[7],
-          blobs: addIfDefined(acc.gas.blobs, record[10]),
-        },
-        eth: {
-          overhead: acc.eth.overhead + record[2],
-          calldata: acc.eth.calldata + record[5],
-          compute: acc.eth.compute + record[8],
-          blobs: addIfDefined(acc.eth.blobs, record[11]),
-        },
-        usd: {
-          overhead: acc.usd.overhead + record[3],
-          calldata: acc.usd.calldata + record[6],
-          compute: acc.usd.compute + record[9],
-          blobs: addIfDefined(acc.usd.blobs, record[12]),
-        },
-      }
-    },
-    {
-      gas: {
-        overhead: 0,
-        calldata: 0,
-        compute: 0,
-        blobs: undefined,
-      },
-      eth: {
-        overhead: 0,
-        calldata: 0,
-        compute: 0,
-        blobs: undefined,
-      },
-      usd: {
-        overhead: 0,
-        calldata: 0,
-        compute: 0,
-        blobs: undefined,
-      },
-    },
-  )
+  const summedThroughput = da.reduce((acc, [_, throughput]) => {
+    return acc + throughput
+  }, 0)
+  const total = withTotal({ ...costs, posted: summedThroughput })
+  const perL2Uop = uopsCount ? mapToPerL2UopsCost(total, uopsCount) : undefined
 
-  const totalCosts = withTotal(summed)
-
-  const perL2UopCost = uopsCount
-    ? mapToPerL2UopsCost(totalCosts, uopsCount)
-    : undefined
-
-  return { chart, stats: { totalCosts, perL2UopCost, uopsCount } }
+  return {
+    chart,
+    stats: { total, perL2Uop, uopsCount },
+  }
 }
 
-function withTotal(data: Omit<LatestCostsProjectResponse, 'syncedUntil'>) {
+function withTotal(data: ProjectLatestCosts) {
   return {
+    ...data,
     gas: {
       ...data.gas,
       total:
@@ -149,6 +113,7 @@ function mapToPerL2UopsCost(
         data.usd.blobs !== undefined ? data.usd.blobs / uopsCount : undefined,
       total: data.usd.total / uopsCount,
     },
+    posted: data.posted !== undefined ? data.posted / uopsCount : undefined,
   }
 }
 

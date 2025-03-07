@@ -4,12 +4,12 @@ import {
   getCostsChart,
 } from '~/server/features/scaling/costs/get-costs-chart'
 import { getCostsTable } from '~/server/features/scaling/costs/get-costs-table-data'
-import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
-import { procedure, router } from '../trpc'
 import {
   ProjectCostsChartParams,
   getProjectCostsChart,
-} from '~/server/features/scaling/costs/get-costs-with-throughput-data'
+} from '~/server/features/scaling/costs/get-project-costs-chart'
+import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { procedure, router } from '../trpc'
 
 export const costsRouter = router({
   chart: procedure

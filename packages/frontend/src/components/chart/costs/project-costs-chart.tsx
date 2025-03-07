@@ -5,16 +5,17 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
+import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
+import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { Checkbox } from '~/components/core/checkbox'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
-import { formatNumber } from '~/utils/number-format/format-number'
-import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
-import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
+import { formatBytes } from '~/utils/number-format/format-bytes'
 import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
@@ -86,7 +87,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const hasPostedData = chartData?.some((cost) => cost.posted !== null)
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
-
+  const resolution = rangeToResolution(range)
   return (
     <div>
       <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
@@ -116,51 +117,55 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
 
       <HorizontalSeparator className="my-4" />
-      <ChartStats columns={3}>
+      <ChartStats columns={4}>
         <ChartStatsItem
           label={
-            range === 'max' ? 'Total cost' : `${rangeToLabel(range)} total cost`
+            range === 'max'
+              ? `Total ${unitToLabel(unit)}`
+              : `${rangeToLabel(range)} total ${unitToLabel(unit)}`
           }
           value={
-            data?.stats.totalCosts[unit].total
-              ? formatCostValue(
-                  data?.stats.totalCosts[unit].total,
-                  unit,
-                  'total',
-                )
+            data?.stats.total[unit].total
+              ? formatCostValue(data?.stats.total[unit].total, unit, 'total')
               : undefined
           }
           isLoading={isLoading}
         />
         <ChartStatsItem
-          label="Avg cost per L2 UOP"
+          label={`Avg ${unitToLabel(unit)} per L2 UOP`}
           value={
-            data?.stats.perL2UopCost?.[unit]?.total &&
-            range !== '1d' &&
-            range !== '7d'
+            data?.stats.perL2Uop?.[unit]?.total && resolution !== 'hourly'
               ? formatCostValue(
-                  data.stats.perL2UopCost[unit].total,
+                  data.stats.perL2Uop[unit].total,
                   unit,
                   'per-l2-uop',
                 )
               : undefined
           }
           isLoading={isLoading}
-          className="md:max-lg:items-center"
         />
+
         <ChartStatsItem
           label={
             range === 'max'
-              ? 'Total UOPS count'
-              : `${rangeToLabel(range)} UOPS count`
+              ? 'Total data posted'
+              : `${rangeToLabel(range)} data posted`
           }
           value={
-            data?.stats.uopsCount
-              ? formatNumber(data?.stats.uopsCount)
+            data?.stats.total.posted
+              ? formatBytes(data.stats.total.posted)
               : undefined
           }
           isLoading={isLoading}
-          className="md:max-lg:items-end"
+        />
+        <ChartStatsItem
+          label="Avg size of data posted"
+          value={
+            data?.stats.perL2Uop?.posted && resolution !== 'hourly'
+              ? formatBytes(data.stats.perL2Uop.posted)
+              : undefined
+          }
+          isLoading={isLoading}
         />
       </ChartStats>
     </div>
@@ -222,12 +227,28 @@ function rangeToLabel(range: Exclude<CostsTimeRange, 'max'>) {
     case '1d':
       return 'Past day'
     case '7d':
+      return '7 days'
     case '30d':
+      return '30 days'
     case '90d':
+      return '90 days'
     case '180d':
+      return '180 days'
     case '1y':
-      return range.toUpperCase()
+      return '1 year'
     default:
       assertUnreachable(range)
+  }
+}
+
+function unitToLabel(unit: CostsUnit) {
+  switch (unit) {
+    case 'usd':
+    case 'eth':
+      return 'cost'
+    case 'gas':
+      return 'gas'
+    default:
+      assertUnreachable(unit)
   }
 }
