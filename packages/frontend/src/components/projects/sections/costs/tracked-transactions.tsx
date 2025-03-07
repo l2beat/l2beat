@@ -1,12 +1,12 @@
 'use client'
 import { useState } from 'react'
 import { Badge } from '~/components/badge/badge'
+import { Checkbox } from '~/components/core/checkbox'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '~/components/core/collapsible'
-import { Switch } from '~/components/core/switch'
 import {
   Tooltip,
   TooltipContent,
@@ -54,20 +54,17 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
       </CollapsibleTrigger>
       <CollapsibleContent className="px-6">
         {hasHistoricalTransactions && (
-          <div className="mb-4 flex items-center gap-2">
-            <Switch
-              id="show-historical-transactions"
-              name="show-historical-transactions"
-              checked={showHistoricalTransactions}
-              onCheckedChange={setShowHistoricalTransactions}
-            />
-            <label
-              htmlFor="show-historical-transactions"
-              className="text-base leading-none"
-            >
-              Show historical transactions
-            </label>
-          </div>
+          <Checkbox
+            id="show-historical-transactions"
+            name="show-historical-transactions"
+            className="mb-4"
+            checked={showHistoricalTransactions}
+            onCheckedChange={(checked) =>
+              setShowHistoricalTransactions(!!checked)
+            }
+          >
+            Show historical transactions
+          </Checkbox>
         )}
         {transactions.batchSubmissions &&
           transactions.batchSubmissions.length > 0 && (
