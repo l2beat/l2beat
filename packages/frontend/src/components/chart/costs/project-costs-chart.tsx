@@ -129,6 +129,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               ? formatCostValue(data?.stats.total[unit].total, unit, 'total')
               : undefined
           }
+          tooltip="The total cost for the selected time period that the project paid to Ethereum. This includes the costs for calldata, computation, blobs, and overhead."
           isLoading={isLoading}
         />
         <ChartStatsItem
@@ -142,6 +143,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
                 )
               : undefined
           }
+          tooltip="The average cost per L2 user operation for the selected time period."
           isLoading={isLoading}
         />
 
@@ -156,6 +158,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               ? formatBytes(data.stats.total.posted)
               : undefined
           }
+          tooltip="The total amount of data posted to Ethereum for the selected time period."
           isLoading={isLoading}
         />
         <ChartStatsItem
@@ -165,6 +168,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               ? formatBytes(data.stats.perL2Uop.posted)
               : undefined
           }
+          tooltip="The average posted data size of a L2 user operation for the selected time period."
           isLoading={isLoading}
         />
       </ChartStats>
