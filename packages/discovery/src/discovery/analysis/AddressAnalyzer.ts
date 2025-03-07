@@ -95,8 +95,6 @@ export class AddressAnalyzer {
       }
     }
 
-    const deployment = await provider.getDeployment(address)
-
     const templateErrors: Record<string, string> = {}
     let extendedTemplate: ExtendedTemplate | undefined = undefined
 
@@ -142,8 +140,7 @@ export class AddressAnalyzer {
 
     const sources = await this.sourceCodeService.getSources(
       provider,
-      address,
-      implementations,
+      [address, ...implementations],
       config.manualSourcePaths,
     )
 
@@ -195,6 +192,7 @@ export class AddressAnalyzer {
       ...(values ?? {}),
     }
 
+    const deployment = await provider.getDeployment(address)
     const analysisWithoutMeta: Omit<
       AnalyzedContract,
       'selfMeta' | 'targetsMeta'
