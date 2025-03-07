@@ -12,7 +12,7 @@ export const train: Bridge = {
     slug: 'train',
     category: 'Liquidity Network',
     links: {
-      websites: ['https://www.train.tech/'],
+      websites: ['https://train.tech/'],
       documentation: ['https://docs.train.tech/protocol/introduction'],
       repositories: ['https://github.com/trainprotocol'],
       socialMedia: [
