@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../internalTypes'
 import type { ProjectTechnologyChoice } from '../../types'
-import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('zircuit')
@@ -34,7 +34,7 @@ const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
 }
 
 export const zircuit: Layer2 = opStackL2({
-  addedAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
+  addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -57,7 +57,7 @@ export const zircuit: Layer2 = opStackL2({
     },
     architectureImage: 'zircuit',
   },
-  genesisTimestamp: new UnixTime(1719936217),
+  genesisTimestamp: UnixTime(1719936217),
   // Chain ID: 48900
   isNodeAvailable: 'UnderReview',
   nonTemplateTechnology: {
@@ -67,7 +67,7 @@ export const zircuit: Layer2 = opStackL2({
     name: 'zircuit',
     chainId: 48900,
     coingeckoPlatform: 'zircuit',
-    sinceTimestamp: new UnixTime(1719936217),
+    sinceTimestamp: UnixTime(1719936217),
     apis: [
       {
         type: 'rpc',
@@ -110,7 +110,7 @@ export const zircuit: Layer2 = opStackL2({
         selector: '0xa9efd6b8',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber, bytes _proof)',
-        sinceTimestamp: new UnixTime(1720137600),
+        sinceTimestamp: UnixTime(1720137600),
       },
     },
   ],

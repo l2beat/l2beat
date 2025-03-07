@@ -11,9 +11,8 @@ export interface UsedInProject {
   id: ProjectId
   name: string
   slug: string
-  iconPath: string
+  url: string
   targetName: string
-  hrefRoot: string
   type: 'implementation' | 'proxy' | 'permission'
 }
 
@@ -31,14 +30,14 @@ export function UsedInProjectEntry({
           <Tooltip key={i}>
             <TooltipTrigger disabledOnMobile>
               <LinkWithOnHoverPrefetch
-                href={`/${project.hrefRoot}/projects/${project.slug}/#${project.targetName}`}
+                href={`${project.url}#${project.targetName}`}
                 className="size-5"
               >
                 <Image
                   width={20}
                   height={20}
                   key={i}
-                  src={project.iconPath}
+                  src={`/icons/${project.slug}.png`}
                   alt="Project icon"
                   className="mx-1 inline"
                 />

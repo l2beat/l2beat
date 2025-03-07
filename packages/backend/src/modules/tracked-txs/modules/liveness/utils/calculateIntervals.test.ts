@@ -8,15 +8,15 @@ describe(calculateIntervals.name, () => {
   it('returns calculated intervals', () => {
     const records: LivenessRecordWithConfig[] = [
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW.add(-1, 'hours'),
+        timestamp: NOW - 1 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
       }),
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW.add(-3, 'hours'),
+        timestamp: NOW - 3 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
       }),
       mockObject<LivenessRecordWithConfig>({
-        timestamp: NOW.add(-7, 'hours'),
+        timestamp: NOW - 7 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
       }),
     ]

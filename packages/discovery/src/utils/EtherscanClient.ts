@@ -62,13 +62,7 @@ export class EtherscanClient implements IEtherscanClient {
     apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
   ): EtherscanClient {
-    return new EtherscanClient(
-      httpClient,
-      url,
-      apiKey,
-      new UnixTime(0),
-      unsupportedMethods,
-    )
+    return new EtherscanClient(httpClient, url, apiKey, 0, unsupportedMethods)
   }
 
   // Etherscan API is not stable enough to trust it to return "closest" block.
@@ -79,9 +73,9 @@ export class EtherscanClient implements IEtherscanClient {
   //
   // To mitigate this, we need to go back in time by 10 minutes until we find a block
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
-    let current = new UnixTime(timestamp.toNumber())
+    let current = UnixTime(timestamp)
 
-    while (current.gte(this.minTimestamp)) {
+    while (current >= this.minTimestamp) {
       try {
         const result = await this.callWithRetries('block', 'getblocknobytime', {
           timestamp: current.toString(),
@@ -101,7 +95,7 @@ export class EtherscanClient implements IEtherscanClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-10, 'minutes')
+        current = current - 10 * UnixTime.MINUTE
       }
     }
 
@@ -197,7 +191,7 @@ export class EtherscanClient implements IEtherscanClient {
     const resp = OneTransactionListResult.parse(response)[0]
     assert(resp)
 
-    return new UnixTime(parseInt(resp.timeStamp, 10))
+    return UnixTime(parseInt(resp.timeStamp, 10))
   }
 
   async getAtMost10RecentOutgoingTxs(

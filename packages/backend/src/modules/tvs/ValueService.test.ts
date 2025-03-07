@@ -5,6 +5,8 @@ import { ValueService } from './ValueService'
 import { createAmountConfig } from './mapConfig'
 import {
   type BalanceOfEscrowAmountFormula,
+  type CalculationFormula,
+  type ConstAmountFormula,
   type Token,
   TokenId,
   type TokenValue,
@@ -59,7 +61,7 @@ describe(ValueService.name, () => {
       expect(result).toEqual(
         new Map<number, TokenValue[]>([
           [
-            mockTimestamp.toNumber(),
+            mockTimestamp,
             [
               {
                 tokenConfig: tvsConfig.tokens[0],
@@ -193,7 +195,7 @@ describe(ValueService.name, () => {
       expect(result).toEqual(
         new Map<number, TokenValue[]>([
           [
-            mockTimestamp.toNumber(),
+            mockTimestamp,
             [
               {
                 tokenConfig: tvsConfig.tokens[0],
@@ -210,6 +212,79 @@ describe(ValueService.name, () => {
                 value: 1600000,
                 valueForProject: 600000,
                 valueForTotal: 600000,
+              },
+            ],
+          ],
+        ]),
+      )
+    })
+
+    it('should calculate TVS - amount as minimum of const and dynamic value', async () => {
+      const priceId = 'price-ABCD'
+
+      const amountFormula = {
+        type: 'calculation',
+        operator: 'min',
+        arguments: [
+          {
+            type: 'const',
+            value: 20000,
+          } as ConstAmountFormula,
+          {
+            type: 'totalSupply',
+            address: EthereumAddress.random(),
+            chain: 'chain',
+            decimals: 18,
+          } as TotalSupplyAmountFormula,
+        ],
+      } as CalculationFormula
+
+      const amountConfigId = createAmountConfig(
+        amountFormula.arguments[1] as TotalSupplyAmountFormula,
+      ).id
+
+      const tvsConfig = mockObject<TvsConfig>({
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<Token>({
+            id: TokenId('tokenId'),
+            priceId,
+            amount: amountFormula,
+            valueForProject: undefined,
+            valueForTotal: undefined,
+          }),
+        ],
+      })
+
+      const mockTimestamp = UnixTime.now()
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          .given(amountConfigId, mockTimestamp)
+          .resolvesToOnce(10000)
+          .resolvesToOnce(10000),
+        getPrice: mockFn()
+          .given(priceId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
+      })
+
+      const valueService = new ValueService(mockDataStorage)
+
+      const result = await valueService.calculate(tvsConfig, [mockTimestamp])
+
+      expect(result).toEqual(
+        new Map<number, TokenValue[]>([
+          [
+            mockTimestamp,
+            [
+              {
+                tokenConfig: tvsConfig.tokens[0],
+                amount: 10000,
+                projectId: ProjectId('project'),
+                value: 2000000,
+                valueForProject: 2000000,
+                valueForTotal: 2000000,
               },
             ],
           ],

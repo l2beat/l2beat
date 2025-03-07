@@ -4,30 +4,27 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
-import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
-import { getUsedInProjects } from './get-used-in-projects'
+import type { ContractUtils } from './get-contract-utils'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   type: 'layer2' | 'layer3' | 'bridge'
-  id?: string
+  id: ProjectId
   slug: string
   isUnderReview?: boolean
   isVerified: boolean
   architectureImage?: string
   contracts?: ProjectContracts
   daSolution?: DaSolution
-  escrows: ProjectEscrow[] | undefined
-  hostChainName: string
 }
 
 type ContractsSection = Omit<
@@ -37,6 +34,7 @@ type ContractsSection = Omit<
 
 export function getContractsSection(
   projectParams: ProjectParams,
+  contractUtils: ContractUtils,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
   if (!projectParams.contracts) {
@@ -56,13 +54,14 @@ export function getContractsSection(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
       ([chainName, contracts]) => {
         return [
-          slugToDisplayName(chainName),
+          contractUtils.getChainName(chainName),
           contracts.map((contract) => {
             return makeTechnologyContract(
               contract,
               projectParams,
               !contract.isVerified,
               projectChangeReport,
+              contractUtils,
             )
           }),
         ]
@@ -74,22 +73,23 @@ export function getContractsSection(
     projectParams.daSolution?.contracts &&
     projectParams.daSolution.contracts.length !== 0
       ? {
-          layerName: projectParams.daSolution?.layerName,
-          bridgeName: projectParams.daSolution?.bridgeName,
-          hostChainName: projectParams.hostChainName,
+          layerName: projectParams.daSolution.layerName,
+          bridgeName: projectParams.daSolution.bridgeName,
+          hostChainName: projectParams.daSolution.hostChainName,
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
             return makeTechnologyContract(
               contract,
               projectParams,
               !contract.isVerified,
               projectChangeReport,
+              contractUtils,
             )
           }),
         }
       : undefined
 
   const escrows =
-    projectParams.escrows
+    projectParams.contracts.escrows
       ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
@@ -100,6 +100,7 @@ export function getContractsSection(
           projectParams,
           !contract.isVerified,
           projectChangeReport,
+          contractUtils,
           true,
         )
       }) ?? []
@@ -107,7 +108,6 @@ export function getContractsSection(
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
 
   return {
-    chainName: projectParams.hostChainName,
     contracts,
     escrows,
     risks,
@@ -125,6 +125,7 @@ function makeTechnologyContract(
   projectParams: ProjectParams,
   isUnverified: boolean,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
+  contractUtils: ContractUtils,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = item.chain
@@ -190,7 +191,7 @@ function makeTechnologyContract(
     }
   }
 
-  const tokens = projectParams.escrows?.find(
+  const tokens = projectParams.contracts?.escrows?.find(
     (x) => x.address === item.address,
   )?.tokens
   // if contract is an escrow we already tweak it's name so we don't need to add this
@@ -226,16 +227,12 @@ function makeTechnologyContract(
   )
 
   const additionalReferences: ReferenceLink[] = []
-  const mainAddresses = [getAddress({ address: item.address })]
-  const implementationAddresses =
-    item.upgradeability?.implementations.map((implementation) =>
-      getAddress({ address: implementation }),
-    ) ?? []
 
-  const usedInProjects = getUsedInProjects(
-    projectParams,
-    mainAddresses,
-    implementationAddresses,
+  const usedInProjects = [
+    item.address,
+    ...(item.upgradeability?.implementations ?? []),
+  ].flatMap((address) =>
+    contractUtils.getUsedIn(projectParams.id, item.chain, address),
   )
 
   return {

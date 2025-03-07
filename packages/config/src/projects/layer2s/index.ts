@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../global/milestones'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'

@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "ethereum",
   "blockNumber": 21786859,
-  "configHash": "0x0537b8d1912a7e9ba9ad4e08c5c9725b191035e2ff719cf0f266bee2b80a0fe1",
+  "configHash": "0xddefd2abd2e0dfc797a5408ce9f7bb66b823d173c2d10aaf909aa7e94887669e",
   "contracts": [
     {
       "name": "ValidatorWallet",
@@ -442,12 +442,8 @@
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "cancel queued transactions."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "update the minimum delay of the timelock."
+          "delay": 259200,
+          "description": "update the minimum delay and manage all access control roles of the timelock."
         },
         {
           "permission": "interact",
@@ -710,7 +706,8 @@
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "cancel queued transactions.",
+          "delay": 259200,
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
           "via": [
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             {
@@ -723,18 +720,6 @@
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "description": "propose transactions."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "update the minimum delay of the timelock.",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            }
-          ]
         },
         {
           "permission": "interact",
@@ -933,7 +918,35 @@
             ["0x1066CEcC8880948FE55e427E94F1FF221d626591"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 2,
+        "inboxHistory": [
+          "0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
+          "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
+          "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+        ],
+        "outboxHistory": [
+          "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+          "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+          "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+        ]
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1293,10 +1306,33 @@
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "delayedMessageCount": 429694,
+        "inboxHistory": [
+          "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+          "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+        ],
+        "outboxHistory": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
         "sequencerMessageCount": 184229,
         "sequencerReportedSubMessageCount": 82160093
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1670,7 +1706,8 @@
         {
           "permission": "interact",
           "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-          "description": "cancel queued transactions.",
+          "delay": 259200,
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
           "via": [
             {
               "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
@@ -1687,26 +1724,9 @@
         },
         {
           "permission": "interact",
-          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-          "description": "update the minimum delay of the timelock.",
-          "via": [
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "interact",
           "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "interact",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "description": "update the minimum delay of the timelock.",
+          "delay": 259200,
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
@@ -3315,13 +3335,8 @@
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "update the minimum delay of the timelock.",
+          "delay": 259200,
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
@@ -4992,8 +5007,8 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/ArbitrumBridge": "0xa389f58c81ceedd7f7dcca6d42f2fa79a37a4350097d720b035af484260f414e",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/ArbitrumBridge": "0x4cca19b26c5182ada1edeab46aff2ab90b7b30a62c02c903fb921615df42d5e8",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/CustomGateway": "0xe610ed6acda2c607b2801da142ad354c7f16661baeaf0a026c2618b04da0f018",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
@@ -5007,7 +5022,7 @@
     "orbitstack/RollupProxy": "0x23008c1256ac001023fb7343b4740c018f305d7bf8596af189533f7cf7624f49",
     "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
-    "orbitstack/Timelock": "0x7028f0a00afeef513c2691c06a88473e30470dcb4f24a3f5e34f49848574f850",
+    "orbitstack/Timelock": "0xef7d35a3d44e286c427681f05bea89b31593f88325d42e2fcaefaf70d00accc2",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }

@@ -38,7 +38,7 @@
     "prettier": "^3.0.3",
     "redis": "^4.7.0",
     "rimraf": "^5.0.0",
-    "sqlite3": "5.1.6",
+    "sqlite3": "5.1.7",
     "zod": "^3.22.2"
   },
   "devDependencies": {

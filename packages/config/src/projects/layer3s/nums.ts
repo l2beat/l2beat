@@ -1,11 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
 export const nums: Layer3 = upcomingL3({
   id: ProjectId('nums'),
   capability: 'universal',
-  addedAt: new UnixTime(1740706975),
+  addedAt: UnixTime(1740706975),
   hostChain: ProjectId('starknet'),
   display: {
     name: 'Nums',

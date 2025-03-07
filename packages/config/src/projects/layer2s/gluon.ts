@@ -10,7 +10,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 
 const upgradeDelay = 0
 const discovery = new ProjectDiscovery('gluon')
@@ -19,7 +19,7 @@ export const gluon: Layer2 = {
   type: 'layer2',
   id: ProjectId('gluon'),
   capability: 'universal',
-  addedAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
+  addedAt: UnixTime(1623332638), // 2021-06-10T13:43:58Z
   isArchived: true,
   display: {
     name: 'Gluon',
@@ -52,13 +52,13 @@ export const gluon: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB'),
-        sinceTimestamp: new UnixTime(1573694037),
+        sinceTimestamp: UnixTime(1573694037),
         tokens: ['ETH', 'DAI'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x84e34fD82FC368F1a072075114AdC4b552a7a1F4'),
-        sinceTimestamp: new UnixTime(1612360715),
+        sinceTimestamp: UnixTime(1612360715),
         tokens: ['DAI', 'USDT'],
         chain: 'ethereum',
       },

@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { languageJoin } from '../../utils/languageJoin'
 import { RISK_VIEW } from './common'
 import {
@@ -18,7 +18,7 @@ const discovery = new ProjectDiscovery('lzomnichain')
 export const lzOmnichain: Bridge = {
   type: 'bridge',
   id: ProjectId('lzomnichain'),
-  addedAt: new UnixTime(1677513767), // 2023-02-27T16:02:47Z
+  addedAt: UnixTime(1677513767), // 2023-02-27T16:02:47Z
   display: {
     name: 'Omnichain (LayerZero)',
     slug: 'omnichain',

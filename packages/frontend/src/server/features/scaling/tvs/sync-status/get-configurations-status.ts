@@ -25,7 +25,7 @@ export async function getConfigurationsStatus(
   for (const c of configurations) {
     processed.add(c.id)
 
-    const status = c.currentHeight ? new UnixTime(c.currentHeight) : undefined
+    const status = c.currentHeight ? UnixTime(c.currentHeight) : undefined
 
     // newly added configuration
     if (status === undefined) {
@@ -33,7 +33,7 @@ export async function getConfigurationsStatus(
       continue
     }
     // fully synced configuration
-    if (status.gte(targetTimestamp)) {
+    if (status >= targetTimestamp) {
       continue
     }
 
@@ -43,7 +43,7 @@ export async function getConfigurationsStatus(
     }
 
     // decide whether it is excluded or lagging
-    if (status.lt(getExclusionBoundary(targetTimestamp))) {
+    if (status < getExclusionBoundary(targetTimestamp)) {
       excluded.add(c.id)
     } else {
       lagging.push({

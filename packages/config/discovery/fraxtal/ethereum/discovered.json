@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 21802913,
-  "configHash": "0x226900c84d8d0b22870c806b3a8f97dc457f1c3713d2d6c5a7a6713e72269e06",
+  "configHash": "0x895af4f9193188971c4949140263cdd241db789c242ae7ad4e0296bb5caee5f9",
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",

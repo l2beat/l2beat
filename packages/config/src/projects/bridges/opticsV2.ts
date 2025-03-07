@@ -7,7 +7,7 @@ import {
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('opticsV2')
@@ -19,7 +19,7 @@ const challengeWindowSeconds = discovery.getContractValue<number>(
 export const opticsV2: Bridge = {
   type: 'bridge',
   id: ProjectId('opticsV2'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Optics V2',
     slug: 'opticsv2',

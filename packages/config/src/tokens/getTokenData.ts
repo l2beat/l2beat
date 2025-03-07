@@ -14,7 +14,7 @@ import {
 } from '@l2beat/shared-pure'
 import { isEqual } from 'earl'
 import { providers } from 'ethers'
-import { ProjectService } from '../projects/project/ProjectService'
+import { ProjectService } from '../ProjectService'
 import type { ChainConfig } from '../types'
 import type { GeneratedToken, Output, SourceEntry } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'

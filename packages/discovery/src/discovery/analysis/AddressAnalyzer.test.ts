@@ -99,7 +99,7 @@ describe(AddressAnalyzer.name, () => {
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
         getDeployment: async () => ({
-          timestamp: new UnixTime(1234),
+          timestamp: UnixTime(1234),
           blockNumber: 9876,
           deployer: EthereumAddress.random(),
           transactionHash: Hash256.random(),
@@ -145,7 +145,7 @@ describe(AddressAnalyzer.name, () => {
         category: undefined,
         name: 'Test',
         isVerified: true,
-        deploymentTimestamp: new UnixTime(1234),
+        deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
         references: undefined,
@@ -221,7 +221,7 @@ describe(AddressAnalyzer.name, () => {
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
         getDeployment: async () => ({
-          timestamp: new UnixTime(1234),
+          timestamp: UnixTime(1234),
           blockNumber: 9876,
           deployer: EthereumAddress.random(),
           transactionHash: Hash256.random(),
@@ -267,7 +267,7 @@ describe(AddressAnalyzer.name, () => {
         address,
         category: undefined,
         isVerified: false,
-        deploymentTimestamp: new UnixTime(1234),
+        deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
         references: undefined,

@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('satellite')
 
@@ -17,7 +17,7 @@ const mintLimiterThreshold = discovery.getContractValue<number>(
 export const satellite: Bridge = {
   type: 'bridge',
   id: ProjectId('satellite'),
-  addedAt: new UnixTime(1664183093), // 2022-09-26T09:04:53Z
+  addedAt: UnixTime(1664183093), // 2022-09-26T09:04:53Z
   display: {
     name: 'Satellite (Axelar)',
     slug: 'satellite',
@@ -40,7 +40,7 @@ export const satellite: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x4F4495243837681061C4743b74B3eEdf548D56A5'), // AxerlR Gateway
-        sinceTimestamp: new UnixTime(1634135918),
+        sinceTimestamp: UnixTime(1634135918),
         tokens: [
           'USDC',
           'WBTC',

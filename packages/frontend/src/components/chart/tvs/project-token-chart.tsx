@@ -76,7 +76,6 @@ export function ProjectTokenChart({
     },
     range: timeRange,
   })
-
   const chartMeta = {
     value: {
       label: token.name,

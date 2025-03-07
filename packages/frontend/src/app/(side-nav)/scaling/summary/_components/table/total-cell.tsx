@@ -29,6 +29,7 @@ export interface TotalCellProps {
   associatedTokenSymbols: string[]
   change?: number
   tvsWarnings?: WarningWithSentiment[]
+  gasTokens?: string[]
 }
 
 export function TotalCell(data: TotalCellProps) {
@@ -99,6 +100,7 @@ export function TotalCell(data: TotalCellProps) {
           stablecoin={data.breakdown.stablecoin}
           tvsWarnings={tvsWarnings}
           associatedTokenSymbols={data.associatedTokenSymbols}
+          gasTokens={data.gasTokens}
         />
       </TooltipContent>
     </Tooltip>

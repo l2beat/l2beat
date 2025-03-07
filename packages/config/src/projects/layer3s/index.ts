@@ -1,4 +1,4 @@
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { alphadune } from './alphadune'
 import { animechain } from './animechain'
 import { anomaly } from './anomaly'
