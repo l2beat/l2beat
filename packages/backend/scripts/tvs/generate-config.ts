@@ -81,7 +81,8 @@ const cmd = command({
 
       assert(currentTvs, 'No data for timestamp')
 
-      const filePath = `./src/modules/tvs/config/${project.id}.json`
+      // =nil;
+      const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
       const currentConfig = readFromFile(filePath)
       const mergedTokens = mergeWithExistingConfig(
         currentTvs,
