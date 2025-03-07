@@ -7,8 +7,6 @@ import {
   getEnv,
 } from '@l2beat/backend-tools'
 import { type Project, ProjectService } from '@l2beat/config'
-// TODO: This script should probably be part of config
-import { getTokenData } from '@l2beat/config/src/tokens/getTokenData'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
@@ -34,12 +32,6 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
-
-    // get token data
-    logger.info('Executing token script')
-    const sourceFilePath = '../../packages/config/src/tokens/tokens.jsonc'
-    const outputFilePath = '../../packages/config/src/tokens/generated.json'
-    await getTokenData(sourceFilePath, outputFilePath)
 
     let projects: Project<'tvlConfig', 'chainConfig'>[] | undefined
 
@@ -128,16 +120,16 @@ async function generateConfigForProject(
   const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
   const rpc = rpcApi
     ? new RpcClient({
-      http: new HttpClient(),
-      callsPerMinute: env.integer(
-        `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        rpcApi.callsPerMinute ?? 120,
-      ),
-      retryStrategy: 'RELIABLE',
-      logger,
-      url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
-      sourceName: project.id,
-    })
+        http: new HttpClient(),
+        callsPerMinute: env.integer(
+          `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+          rpcApi.callsPerMinute ?? 120,
+        ),
+        retryStrategy: 'RELIABLE',
+        logger,
+        url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
+        sourceName: project.id,
+      })
     : undefined
 
   return mapConfig(project, logger, rpc)
