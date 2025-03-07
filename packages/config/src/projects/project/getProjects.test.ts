@@ -41,6 +41,57 @@ describe('getProjects', () => {
     }
   })
 
+  it('every project can be serialized', () => {
+    function findNonSerializable(
+      value: unknown,
+      path: string[],
+    ): string[] | undefined {
+      if (
+        typeof value === 'boolean' ||
+        typeof value === 'number' ||
+        typeof value === 'string' ||
+        value === undefined
+      ) {
+        return undefined
+      }
+      if (Array.isArray(value)) {
+        for (let i = 0; i < value.length; i++) {
+          const res = findNonSerializable(value[i], [...path, i.toString()])
+          if (res) {
+            return res
+          }
+        }
+        return undefined
+      }
+      if (
+        typeof value === 'object' &&
+        value !== null &&
+        Object.getPrototypeOf(value) === Object.prototype
+      ) {
+        for (const key in value) {
+          const res = findNonSerializable(Reflect.get(value, key), [
+            ...path,
+            key,
+          ])
+          if (res) {
+            return res
+          }
+        }
+        return undefined
+      }
+      return path
+    }
+
+    for (const project of projects) {
+      const path = findNonSerializable(project, [])
+      if (path) {
+        throw new Error(
+          `Project ${project.id} cannot be serialized. Path: ${path.join('.')}`,
+        )
+      }
+    }
+  })
+
   describe('display.description ends with a dot', () => {
     for (const project of projects) {
       if (project.display) {
