@@ -1,7 +1,7 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 21915821,
+  "blockNumber": 21994047,
   "configHash": "0x24d1eadc3e9e537f7884f987ed3bbd9725b71401892a7c6288a1738a27aa7e8f",
   "contracts": [
     {
@@ -161,12 +161,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 498,
+        "firstUnresolvedNode": 520,
         "inbox": "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
+        "isPostBoLD": false,
         "lastStakeBlock": 21895273,
-        "latestConfirmed": 497,
-        "latestNodeCreated": 497,
+        "latestConfirmed": 519,
+        "latestNodeCreated": 519,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -462,7 +463,7 @@
           "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 259,
+        "delayedMessageCount": 306,
         "inboxHistory": [
           "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
           "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
@@ -471,8 +472,8 @@
         "outboxHistory": ["0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 614,
-        "sequencerReportedSubMessageCount": 2889225
+        "sequencerMessageCount": 656,
+        "sequencerReportedSubMessageCount": 3038668
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -730,7 +731,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 614,
+        "batchCount": 656,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -767,7 +768,7 @@
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 259,
+        "totalDelayedMessagesRead": 306,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -811,7 +812,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 231,
+        "nonce": 253,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1665,7 +1666,7 @@
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
     "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x3a9246a912d738821e12f469caa2b045470c35e714b11f5761fb5ed8944002af",
+    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
