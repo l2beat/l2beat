@@ -139,7 +139,11 @@ export class LocalExecutor {
         new RpcClientPOC(rpc, chainConfig.name, this.logger, {
           ...(multicallV3?.address ? { multicallV3: multicallV3.address } : {}),
           batchingEnabled:
-            multicallV3 || chainConfig.name === 'swell' ? false : true,
+            multicallV3 ||
+              chainConfig.name === 'swell' ||
+              chainConfig.name === 'silicon'
+              ? false
+              : true,
         }),
       )
       blockProviders.set(

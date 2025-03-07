@@ -76,6 +76,7 @@ const cmd = command({
       logger.info(`Generating TVS config for project ${project.id}`)
       const tvsConfig = await generateConfigForProject(project, logger)
 
+      // when running for the first time we want to dump the config in case TVS execution fails
       if (!fs.existsSync(filePath)) {
         writeToFile(filePath, project.id, tvsConfig.tokens)
       }
