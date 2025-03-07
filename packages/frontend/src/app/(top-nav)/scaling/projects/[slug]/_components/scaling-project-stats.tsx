@@ -27,6 +27,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     <ProjectStat
       key="tokens"
       title="Tokens"
+      className="md:gap-[11px]"
       value={
         <TokenBreakdownStat
           tokenTvs={project.header.tvs?.tokens}
@@ -73,6 +74,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     project.stageConfig.stage !== 'NotApplicable' ? (
       <ProjectStat
         title="Stage"
+        className="md:gap-[7px]"
         value={
           <a href="#stage">
             <StageCell
@@ -144,7 +146,9 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-secondary">{props.title}</span>
+        <span className="text-xs leading-normal text-secondary">
+          {props.title}
+        </span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
