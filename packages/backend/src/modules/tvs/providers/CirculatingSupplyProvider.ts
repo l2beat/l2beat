@@ -19,7 +19,7 @@ export class CirculatingSupplyProvider {
       `${priceId}: Too many supplies fetched ${JSON.stringify(supplies)}`,
     )
 
-    return BigInt(supplies[0].value) * 10n ** BigInt(decimals)
+    return BigInt(Math.round(supplies[0].value * 10 ** decimals))
   }
 
   async getLatestCirculatingSupplies(
@@ -36,7 +36,7 @@ export class CirculatingSupplyProvider {
       assert(data !== undefined, `${token.priceId}: Price not found`)
       result.set(
         token.priceId,
-        BigInt(data.circulating) * 10n ** BigInt(token.decimals),
+        BigInt(Math.round(data.circulating * 10 ** token.decimals)),
       )
     }
 

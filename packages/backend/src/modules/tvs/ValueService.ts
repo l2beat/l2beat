@@ -12,7 +12,7 @@ import type {
 const DECIMALS = 2
 
 export class ValueService {
-  constructor(private readonly storage: DataStorage) { }
+  constructor(private readonly storage: DataStorage) {}
 
   async calculate(
     config: TvsConfig,
@@ -79,9 +79,7 @@ export class ValueService {
     assert(price !== undefined, `Price not found for ${formula.priceId}`)
 
     const amount = await this.executeFormula(formula.amount, timestamp)
-    console.log('price', price)
-    console.log('bigint-price', numberToBigInt(price))
-    const value = amount * numberToBigInt(price)
+    const value = (amount * numberToBigInt(price)) / BigInt(10 ** DECIMALS)
     return value
   }
 
