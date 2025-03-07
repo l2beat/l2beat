@@ -11,7 +11,8 @@ export function Viewport() {
   const viewRef = useRef<HTMLDivElement>(null)
 
   const currentPanel = useMultiViewStore((state) => state.active)
-  const isActive = currentPanel === 'nodes'
+  // Always capture if we're not in panel mode, or if we're in nodes panel
+  const shouldCapture = currentPanel === undefined || currentPanel === 'nodes'
 
   const onKeyDown = useStore((state) => state.onKeyDown)
   const onKeyUp = useStore((state) => state.onKeyUp)
@@ -38,7 +39,7 @@ export function Viewport() {
     }
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (!isActive) return
+      if (!shouldCapture) return
       onKeyDown(event)
     }
 
@@ -64,7 +65,7 @@ export function Viewport() {
     onMouseMove,
     onMouseUp,
     onWheel,
-    isActive,
+    shouldCapture,
   ])
 
   return (
