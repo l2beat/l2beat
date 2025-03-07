@@ -27,7 +27,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     <ProjectStat
       key="tokens"
       title="Tokens"
-      className="md:gap-[11px]"
+      className="md:gap-2"
       value={
         <TokenBreakdownStat
           tokenTvs={project.header.tvs?.tokens}
@@ -74,7 +74,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     project.stageConfig.stage !== 'NotApplicable' ? (
       <ProjectStat
         title="Stage"
-        className="md:gap-[7px]"
+        className="md:gap-2"
         value={
           <a href="#stage">
             <StageCell
