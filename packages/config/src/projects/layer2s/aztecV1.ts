@@ -11,6 +11,7 @@ import {
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
+  SOA,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -154,6 +155,16 @@ export const aztecV1: Layer2 = {
     genesisState: 'No genesis state is used.',
     dataFormat:
       'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol).',
+  },
+  scopeOfAssessment: {
+    checked: [SOA.l1Contracts, SOA.gasToken],
+    notChecked: [
+      SOA.specToSourceCode,
+      SOA.nonGasTokens,
+      SOA.derivationSpec,
+      SOA.sourceCodeToVerificationKeys,
+      SOA.trustedSetup,
+    ],
   },
   stage: getStage(
     {

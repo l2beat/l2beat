@@ -17,6 +17,7 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
+  SOA,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -195,6 +196,17 @@ export const degate3: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
+  scopeOfAssessment: {
+    checked: [SOA.l1Contracts, SOA.gasToken, SOA.derivationSpec],
+    notChecked: [
+      SOA.specToSourceCode,
+      SOA.sourceCodeToVerificationKeys,
+      SOA.trustedSetup,
+      SOA.sequencerPolicy,
+      SOA.nonGasTokens,
+    ],
+  },
+
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
