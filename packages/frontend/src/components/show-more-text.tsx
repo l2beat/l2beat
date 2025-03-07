@@ -32,29 +32,21 @@ export function ShowMoreText({
   const desktopContentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const checkMobileTruncation = () => {
+    const checkOverflow = () => {
       if (mobileContentRef.current) {
         const { scrollHeight, offsetHeight } = mobileContentRef.current
         setIsTruncatedMobile(scrollHeight > offsetHeight)
       }
-    }
 
-    checkMobileTruncation()
-    window.addEventListener('resize', checkMobileTruncation)
-    return () => window.removeEventListener('resize', checkMobileTruncation)
-  }, [children])
-
-  useEffect(() => {
-    const checkDesktopOverflow = () => {
       if (desktopContentRef.current) {
         const { scrollWidth, clientWidth } = desktopContentRef.current
         setIsOverflowingDesktop(scrollWidth > clientWidth)
       }
     }
 
-    checkDesktopOverflow()
-    window.addEventListener('resize', checkDesktopOverflow)
-    return () => window.removeEventListener('resize', checkDesktopOverflow)
+    checkOverflow()
+    window.addEventListener('resize', checkOverflow)
+    return () => window.removeEventListener('resize', checkOverflow)
   }, [children])
 
   const toggleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -89,7 +81,7 @@ export function ShowMoreText({
           {children}
           {isTruncatedMobile && (
             <Drawer>
-              <DrawerTrigger className="absolute bottom-0 right-0 inline-flex items-center bg-background pl-1">
+              <DrawerTrigger className="absolute bottom-0 right-0 inline-flex items-center bg-background">
                 <span>...</span>
                 <div
                   className={cn('ml-1 cursor-pointer underline', textClassName)}
