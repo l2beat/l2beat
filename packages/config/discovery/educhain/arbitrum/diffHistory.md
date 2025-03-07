@@ -1,131 +1,26 @@
-Generated with discovered.json: 0x392e4324cd600bb7193bc77739940d7117835a35
+Generated with discovered.json: 0x15aa872870d5faed3f7a4d6f53b9e5f1cd0d1ffd
 
-# Diff at Fri, 07 Mar 2025 14:39:58 GMT:
+# Diff at Thu, 06 Mar 2025 14:21:50 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 308396879
-- current block number: 313218525
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@454ef41fea41bcea030780b23fd1f11519ff78d2 block: 308396879
+- current block number: 308396879
 
 ## Description
 
-Validators removed, fastConfirmer MS threshold raised.
+Discovery rerun on the same block number with only config-related changes.
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308396879 (main branch discovery), not current.
 
 ```diff
     contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) {
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      issuedPermissions.16:
--        {"permission":"validate","to":"0xedbFE5493367F8fBc340276503D3c18D2C02E9AE","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]}
-      issuedPermissions.15:
--        {"permission":"validate","to":"0xedbFE5493367F8fBc340276503D3c18D2C02E9AE","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.14:
--        {"permission":"validate","to":"0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]}
-      issuedPermissions.13:
--        {"permission":"validate","to":"0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.12:
--        {"permission":"validate","to":"0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]}
-      issuedPermissions.11:
--        {"permission":"validate","to":"0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.10:
--        {"permission":"validate","to":"0x834999E1D729Ead48Ae1Db1dAa11463102EccB77","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]}
-      issuedPermissions.9:
--        {"permission":"validate","to":"0x834999E1D729Ead48Ae1Db1dAa11463102EccB77","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.8:
--        {"permission":"validate","to":"0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]}
-      issuedPermissions.7:
--        {"permission":"validate","to":"0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.6:
--        {"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x9132151475ACCf0662C545Bc81FbC1741d978EE0"}]}
-      issuedPermissions.5:
--        {"permission":"interact","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x9132151475ACCf0662C545Bc81FbC1741d978EE0"}]}
-      issuedPermissions.4.permission:
--        "fastconfirm"
-+        "validate"
-      issuedPermissions.4.to:
--        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
-+        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
-      issuedPermissions.4.description:
--        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-+        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-      issuedPermissions.4.via.0:
--        {"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}
-      issuedPermissions.3.permission:
--        "fastconfirm"
-+        "validate"
-      issuedPermissions.3.description:
--        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-+        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-      issuedPermissions.3.via.0:
--        {"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}
-      issuedPermissions.2.permission:
--        "fastconfirm"
-+        "upgrade"
-      issuedPermissions.2.to:
--        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
-+        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
-      issuedPermissions.2.description:
--        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-      issuedPermissions.2.via.0.address:
--        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
-+        "0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
-      issuedPermissions.1.permission:
--        "fastconfirm"
-+        "interact"
-      issuedPermissions.1.to:
--        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
-+        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
-      issuedPermissions.1.description:
--        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-+        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-      issuedPermissions.1.via.0.address:
--        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
-+        "0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
-      issuedPermissions.0.to:
--        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
-+        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
-      issuedPermissions.0.via.0:
--        {"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}
-      values.baseStake:
--        "100000000000000000"
-+        "10000000000000000"
-      values.currentRequiredStake:
--        "100000000000000000"
-+        "10000000000000000"
-+++ description: Increments on each Validator change.
-      values.setValidatorCount:
--        6
-+        7
-      values.validators.5:
--        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
-      values.validators.4:
--        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
-      values.validators.3:
--        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
-      values.validators.2:
--        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
-      values.validators.1:
--        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
-+        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
-      values.validators.0:
--        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
-+        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
-    }
-```
-
-```diff
-    contract EduFastConfirmerMultisig (0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b) {
-    +++ description: None
-      directlyReceivedPermissions:
--        [{"permission":"fastconfirm","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."},{"permission":"validate","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
-      values.$threshold:
--        1
-+        3
-      values.multisigThreshold:
--        "1 of 5 (20%)"
-+        "3 of 5 (60%)"
-      receivedPermissions:
-+        [{"permission":"fastconfirm","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."},{"permission":"validate","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+      values.isPostBoLD:
++        false
     }
 ```
 

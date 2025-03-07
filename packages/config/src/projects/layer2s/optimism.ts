@@ -13,6 +13,7 @@ import {
   DERIVATION,
   EXITS,
   RISK_VIEW,
+  SOA,
 } from '../../common'
 import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
@@ -321,6 +322,16 @@ export const optimism: Layer2 = {
       { type: 'etherscan', url: 'https://api-optimistic.etherscan.io/api' },
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
+  },
+  scopeOfAssessment: {
+    checked: [
+      SOA.l1Contracts,
+      SOA.l2Contracts,
+      SOA.gasToken,
+      SOA.derivationSpec,
+      SOA.sourceCodeToProgramHash,
+    ],
+    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
