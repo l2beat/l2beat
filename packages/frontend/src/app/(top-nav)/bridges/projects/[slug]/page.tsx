@@ -51,9 +51,25 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = await ps.getProject({
     slug: params.slug,
-    select: ['display', 'tvlConfig', 'bridgeInfo', 'display'],
+    select: [
+      'display',
+      'statuses',
+      'tvlInfo',
+      'tvlConfig',
+      'bridgeInfo',
+      'bridgeRisks',
+      'bridgeTechnology',
+      'display',
+    ],
     where: ['isBridge'],
-    optional: ['chainConfig'],
+    optional: [
+      'chainConfig',
+      'isArchived',
+      'isUpcoming',
+      'milestones',
+      'contracts',
+      'permissions',
+    ],
   })
 
   if (!project) {
@@ -62,7 +78,7 @@ export default async function Page(props: Props) {
 
   const projectEntry = await getBridgesProjectEntry(project)
   const navigationSections = projectDetailsToNavigationSections(
-    projectEntry.projectDetails,
+    projectEntry.sections,
   )
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -77,7 +93,7 @@ export default async function Page(props: Props) {
       <BridgesProjectSummary project={projectEntry} />
       <ContentWrapper mobileFull>
         {isNavigationEmpty ? (
-          <ProjectDetails items={projectEntry.projectDetails} />
+          <ProjectDetails items={projectEntry.sections} />
         ) : (
           <div className="gap-x-12 md:flex">
             <div className="mt-10 hidden w-[242px] shrink-0 md:block">
@@ -92,7 +108,7 @@ export default async function Page(props: Props) {
             </div>
             <div className="w-full">
               <HighlightableLinkContextProvider>
-                <ProjectDetails items={projectEntry.projectDetails} />
+                <ProjectDetails items={projectEntry.sections} />
               </HighlightableLinkContextProvider>
             </div>
           </div>

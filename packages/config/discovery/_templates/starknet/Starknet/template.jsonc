@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.",
+  "displayName": "Starknet",
+  "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
   "category": "core",
   "fields": {
     "$admin": {
@@ -19,7 +20,7 @@
       }
     },
     "isFinalized": {
-      "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade).",
+      "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade).",
       "severity": "HIGH"
     },
     "programHashHistory": {
@@ -63,6 +64,22 @@
       "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
       "severity": "HIGH",
       "type": "CODE_CHANGE"
+    },
+    "programHashMapped": {
+      "handler": {
+        "type": "call",
+        "method": "programHash",
+        "args": []
+      },
+      "returnType": "(StarknetProgramHash)"
+    },
+    "aggregatorHashMapped": {
+      "handler": {
+        "type": "call",
+        "method": "aggregatorProgramHash",
+        "args": []
+      },
+      "returnType": "(StarknetProgramHash)"
     }
   },
   "ignoreInWatchMode": [

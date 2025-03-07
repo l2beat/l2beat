@@ -61,8 +61,10 @@ export class TvlCleaner {
         await this.db.tvlCleaner.findByRepositoryName(repositoryName)
 
       if (
-        tvlCleanerRecord?.hourlyCleanedUntil?.gte(hourlyDeletionBoundary) &&
-        tvlCleanerRecord.sixHourlyCleanedUntil?.gte(sixHourlyDeletionBoundary)
+        tvlCleanerRecord?.hourlyCleanedUntil &&
+        tvlCleanerRecord.sixHourlyCleanedUntil &&
+        tvlCleanerRecord.hourlyCleanedUntil >= hourlyDeletionBoundary &&
+        tvlCleanerRecord.sixHourlyCleanedUntil >= sixHourlyDeletionBoundary
       ) {
         this.logger.info(
           `Nothing to clean for ${repositoryName}, waiting for next hour`,

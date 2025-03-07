@@ -1,14 +1,11 @@
 import { UnixTime } from '../types'
 
 export function clampRangeToDay(
-  from: number,
-  to: number,
+  from: UnixTime,
+  to: UnixTime,
 ): { from: UnixTime; to: UnixTime } {
-  const fromUnixTime = new UnixTime(from)
-  const toUnixTime = new UnixTime(to)
-
-  if (!fromUnixTime.toStartOf('day').equals(toUnixTime.toStartOf('day'))) {
-    return { from: fromUnixTime, to: fromUnixTime.toNext('day') }
+  if (UnixTime.toStartOf(from, 'day') !== UnixTime.toStartOf(to, 'day')) {
+    return { from, to: UnixTime.toNext(from, 'day') }
   }
-  return { from: fromUnixTime, to: toUnixTime }
+  return { from, to }
 }

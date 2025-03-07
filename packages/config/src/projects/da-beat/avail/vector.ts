@@ -13,7 +13,7 @@ export const vector: BaseProject = {
   slug: 'vector',
   name: 'Vector',
   shortName: undefined,
-  addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
+  addedAt: UnixTime(1725372159), // 2024-09-03T14:02:39Z
   // data
   statuses: {
     yellowWarning: undefined,

@@ -1,7 +1,7 @@
-import { bridges } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
+import { ps } from '~/server/projects'
 import { getBaseUrl } from '~/utils/get-base-url'
 
 export const runtime = 'nodejs'
@@ -12,8 +12,9 @@ const size = {
 }
 
 export async function generateStaticParams() {
-  return bridges.map((project) => ({
-    slug: project.display.slug,
+  const projects = await ps.getProjects({ where: ['isBridge'] })
+  return projects.map((project) => ({
+    slug: project.slug,
   }))
 }
 
@@ -35,7 +36,10 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-  const project = bridges.find((p) => p.display.slug === params.slug)
+  const project = await ps.getProject({
+    slug: params.slug,
+    where: ['isBridge'],
+  })
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
@@ -51,8 +55,8 @@ export default async function Image({ params }: Props) {
   return new ImageResponse(
     <ProjectOpengraphImage
       baseUrl={baseUrl}
-      slug={project.display.slug}
-      name={project.display.name}
+      slug={project.slug}
+      name={project.name}
       size={size}
     >
       {/* See comment in zk-catalog/[slug]/opengraph-image.tsx for explanation why we use &nbsp; */}

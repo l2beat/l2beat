@@ -1,13 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
+import type { Layer2Config } from '../../../internalTypes'
+import type { ProjectScalingTechnology } from '../../../internalTypes'
 import type {
-  Layer2,
-  Layer2Config,
-  Layer2Display,
   ProjectContracts,
-  ScalingProjectRiskView,
-  ScalingProjectTechnology,
-  StageConfig,
+  ProjectScalingRiskView,
+  ProjectScalingStage,
   TableReadyValue,
 } from '../../../types'
 import { isUnderReview } from './isUnderReview'
@@ -15,17 +14,17 @@ import { isUnderReview } from './isUnderReview'
 describe(isUnderReview.name, () => {
   const mockProject: Layer2 = {
     type: 'layer2',
-    addedAt: new UnixTime(1234567890),
+    addedAt: UnixTime(1234567890),
     id: ProjectId('project-id'),
     capability: 'universal',
     display: mockObject<Layer2Display>(),
-    technology: mockObject<ScalingProjectTechnology>({
+    technology: mockObject<ProjectScalingTechnology>({
       isUnderReview: undefined,
     }),
     contracts: mockObject<ProjectContracts>({}),
-    riskView: mockObject<ScalingProjectRiskView>(),
+    riskView: mockObject<ProjectScalingRiskView>(),
     config: mockObject<Layer2Config>(),
-    stage: mockObject<StageConfig>({ stage: 'Stage 1' }),
+    stage: mockObject<ProjectScalingStage>({ stage: 'Stage 1' }),
   }
 
   it('returns false', () => {

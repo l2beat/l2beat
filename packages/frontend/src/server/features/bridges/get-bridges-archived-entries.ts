@@ -1,4 +1,4 @@
-import type { BridgeDisplay, BridgeRiskView } from '@l2beat/config'
+import type { BridgeCategory, TableReadyValue } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
@@ -7,8 +7,8 @@ import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
 export interface BridgesArchivedEntry extends CommonBridgesEntry {
-  type: BridgeDisplay['category']
-  validatedBy: BridgeRiskView['validatedBy']
+  type: BridgeCategory
+  validatedBy: TableReadyValue
   totalTvs: number | undefined
   tvsOrder: number
 }

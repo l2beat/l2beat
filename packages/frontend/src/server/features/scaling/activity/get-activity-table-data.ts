@@ -58,7 +58,7 @@ async function getActivityTableData(projects: Project[]) {
             summedCount: sumTpsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.count),
-              timestamp: maxCount.countTimestamp.toNumber(),
+              timestamp: maxCount.countTimestamp,
             },
           },
           uops: {
@@ -67,7 +67,7 @@ async function getActivityTableData(projects: Project[]) {
             summedCount: sumUopsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
-              timestamp: maxCount.uopsTimestamp.toNumber(),
+              timestamp: maxCount.uopsTimestamp,
             },
           },
           ratio: getLastDayRatio(records),
@@ -96,7 +96,7 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           summedCount: 1500,
           maxCount: {
             value: 30,
-            timestamp: UnixTime.now().toNumber(),
+            timestamp: UnixTime.now(),
           },
         },
         uops: {
@@ -105,7 +105,7 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           summedCount: 1550,
           maxCount: {
             value: 30,
-            timestamp: UnixTime.now().add(-1, 'days').toNumber(),
+            timestamp: UnixTime.now() - 1 * UnixTime.DAY,
           },
         },
         ratio: 1.1,

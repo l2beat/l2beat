@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const polygonpos2: Layer2 = upcomingL2({
   id: 'polygon-pos-2',
   capability: 'universal',
-  addedAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
+  addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z
   display: {
     name: 'Polygon PoS 2.0',
     slug: 'polygon-pos-2',

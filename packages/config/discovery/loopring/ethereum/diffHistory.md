@@ -1,20 +1,20 @@
-Generated with discovered.json: 0xebbe07c7fa672b187c1f7c0510570a32368e47ad
+Generated with discovered.json: 0x4988fff89c36dee4dd21d593c6bef2d5be3b16bf
 
-# Diff at Tue, 04 Mar 2025 10:39:22 GMT:
+# Diff at Thu, 06 Mar 2025 15:18:49 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21543795
-- current block number: 21543795
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21973864
+- current block number: 21973864
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+config: updates timelock templates, added starknet proghashes to global config.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21543795 (main branch discovery), not current.
+discovery. Values are for block 21973864 (main branch discovery), not current.
 
 ```diff
     contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) {
@@ -73,14 +73,6 @@ discovery. Values are for block 21543795 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
-    +++ description: None
-      sinceBlock:
-+        21278465
-    }
-```
-
-```diff
     contract LRC_v2 (0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD) {
     +++ description: None
       sinceBlock:
@@ -118,6 +110,46 @@ discovery. Values are for block 21543795 (main branch discovery), not current.
       sinceBlock:
 +        8967548
     }
+```
+
+Generated with discovered.json: 0x442cadafa802b101f34a95c00599bc3b5a7158f1
+
+# Diff at Tue, 04 Mar 2025 13:37:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21543795
+- current block number: 21973864
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      values.$members.1:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98"
+      values.$members.0:
+-        "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98"
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@21543795/Safe/Safe.sol => /dev/null      | 1088 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   37 -
+ 2 files changed, 1125 deletions(-)
 ```
 
 Generated with discovered.json: 0xcf18a36cf3e08f6b14a8e8ee7487127783ac0b28

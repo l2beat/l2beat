@@ -15,7 +15,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -127,7 +127,7 @@ assert(
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   capability: 'universal',
-  addedAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
+  addedAt: UnixTime(1680768480), // 2023-04-06T08:08:00Z
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
@@ -176,14 +176,14 @@ export const taiko: Layer2 = {
       {
         // Shared ETH bridge
         address: EthereumAddress('0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC'),
-        sinceTimestamp: new UnixTime(1714550603),
+        sinceTimestamp: UnixTime(1714550603),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         // Shared ERC20 vault
         address: EthereumAddress('0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab'),
-        sinceTimestamp: new UnixTime(1714550603),
+        sinceTimestamp: UnixTime(1714550603),
         tokens: '*',
         chain: 'ethereum',
       },
@@ -213,7 +213,7 @@ export const taiko: Layer2 = {
           selector: '0xef16e845',
           functionSignature:
             'function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)',
-          sinceTimestamp: new UnixTime(1716620627),
+          sinceTimestamp: UnixTime(1716620627),
         },
       },
       {
@@ -227,7 +227,7 @@ export const taiko: Layer2 = {
           selector: '0x648885fb',
           functionSignature:
             'function proposeBlockV2(bytes _params, bytes _txList) returns (tuple meta_)',
-          sinceTimestamp: new UnixTime(1730602883),
+          sinceTimestamp: UnixTime(1730602883),
         },
       },
       {
@@ -241,7 +241,7 @@ export const taiko: Layer2 = {
           selector: '0x0c8f4a10',
           functionSignature:
             'function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple[] metaArr_)',
-          sinceTimestamp: new UnixTime(1730602883),
+          sinceTimestamp: UnixTime(1730602883),
         },
       },
       {
@@ -255,7 +255,7 @@ export const taiko: Layer2 = {
           selector: '0x10d008bd',
           functionSignature:
             'function proveBlock(uint64 _blockId, bytes _input)',
-          sinceTimestamp: new UnixTime(1716620627),
+          sinceTimestamp: UnixTime(1716620627),
         },
       },
       {
@@ -269,7 +269,7 @@ export const taiko: Layer2 = {
           selector: '0x440b6e18',
           functionSignature:
             'function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)',
-          sinceTimestamp: new UnixTime(1730602883),
+          sinceTimestamp: UnixTime(1730602883),
         },
       },
     ],
@@ -278,7 +278,8 @@ export const taiko: Layer2 = {
     name: 'taiko',
     chainId: 167000,
     explorerUrl: 'https://taikoscan.io',
-    sinceTimestamp: new UnixTime(1716620627),
+    sinceTimestamp: UnixTime(1716620627),
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'rpc',

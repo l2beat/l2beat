@@ -56,8 +56,8 @@ describe(LocalStorage.name, () => {
   describe('multiple operations', () => {
     it('can store multiple items for different timestamps', async () => {
       const storage = new LocalStorage(TEST_FILE_PATH)
-      const timestamp1 = new UnixTime(1000)
-      const timestamp2 = new UnixTime(2000)
+      const timestamp1 = UnixTime(1000)
+      const timestamp2 = UnixTime(2000)
 
       await storage.writeAmount('token1', timestamp1, 1000)
       await storage.writeAmount('token1', timestamp2, 2000)

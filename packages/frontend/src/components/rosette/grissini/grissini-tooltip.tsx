@@ -2,11 +2,8 @@ import { UnderReviewBadge } from '../../badge/under-review-badge'
 import type { GrissiniCellProps } from './grissini-cell'
 import { GrissiniDetails } from './grissini-details'
 
-export function GrissiniTooltip({
-  values,
-  isUnderReview,
-  hasNoBridge,
-}: GrissiniCellProps) {
+export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
+  const hasNoBridge = values.length === 0
   if (isUnderReview) {
     return (
       <div className="w-[300px]">

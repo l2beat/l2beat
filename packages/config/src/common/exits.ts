@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { ProjectTechnologyChoice, ScalingProjectRisk } from '../types'
+import type { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
 function REGULAR_WITHDRAWAL(
   type: 'zk' | 'optimistic',
@@ -122,7 +122,7 @@ function EMERGENCY(
   proof: 'zero knowledge proof' | 'merkle proof',
   delay?: number,
 ): ProjectTechnologyChoice {
-  const risks: ScalingProjectRisk[] =
+  const risks: ProjectRisk[] =
     proof === 'zero knowledge proof'
       ? [
           {
@@ -205,7 +205,7 @@ const STARKEX_EMERGENCY_SPOT: ProjectTechnologyChoice = {
   references: [...STARKEX_FORCED_SPOT.references],
 }
 
-const OPERATOR_CENSORS_WITHDRAWAL: ScalingProjectRisk = {
+const OPERATOR_CENSORS_WITHDRAWAL: ProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the operator censors withdrawal transaction.',
 }
@@ -233,7 +233,7 @@ const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
   references: [],
 }
 
-const BLOCKLIST_CENSORS_WITHDRAWAL: ScalingProjectRisk = {
+const BLOCKLIST_CENSORS_WITHDRAWAL: ProjectRisk = {
   category: 'Users can be censored if',
   text: 'their address gets added to the Blocklist by the BlockAdmin.',
 }
@@ -267,19 +267,19 @@ export const AUTONOMOUS: ProjectTechnologyChoice = {
   references: [],
 }
 
-export const RISK_CENTRALIZED_VALIDATOR: ScalingProjectRisk = {
+export const RISK_CENTRALIZED_VALIDATOR: ProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'the centralized validator goes down. Users cannot produce blocks themselves and exiting the system requires new block production.',
   isCritical: true,
 }
 
-export const RISK_REHYPOTHECATED_ASSETS: ScalingProjectRisk = {
+export const RISK_REHYPOTHECATED_ASSETS: ProjectRisk = {
   category: 'Funds can lose value if',
   text: 'there is a hack or the yield goes negative for yield providers.',
   isCritical: true,
 }
 
-export const RISK_LACK_OF_LIQUIDITY: ScalingProjectRisk = {
+export const RISK_LACK_OF_LIQUIDITY: ProjectRisk = {
   category: 'Funds can be frozen if',
   text: 'there is not enough liquidity in the bridge, transactions are locked in withdrawal queue.',
   isCritical: true,

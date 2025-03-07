@@ -2,7 +2,7 @@
   "name": "dbk",
   "chain": "ethereum",
   "blockNumber": 20792021,
-  "configHash": "0x20ef618eaaca72145f9c8333d497b3327ac2d245fce782f4f3ffbaf224247998",
+  "configHash": "0xaaa6ef0ea2650f8850f5c379c2172dfbcd9db9bbb3c924ab3aa7fae979d02875",
   "contracts": [
     {
       "name": "L2OutputOracle",

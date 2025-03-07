@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('ink')
 const l2Discovery = new ProjectDiscovery('ink', 'ink')
-const genesisTimestamp = new UnixTime(1733498411)
+const genesisTimestamp = UnixTime(1733498411)
 
 export const ink: Layer2 = opStackL2({
-  addedAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  addedAt: UnixTime(1729797861), // 2024-10-24T21:24:21Z
   additionalBadges: [BADGES.RaaS.Gelato],
   discovery,
   additionalDiscoveries: { ['ink']: l2Discovery },
@@ -39,8 +39,8 @@ export const ink: Layer2 = opStackL2({
   },
   finality: {
     type: 'OPStack',
-    minTimestamp: new UnixTime(1733502012),
-    genesisTimestamp: new UnixTime(1733498411),
+    minTimestamp: UnixTime(1733502012),
+    genesisTimestamp: UnixTime(1733498411),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',

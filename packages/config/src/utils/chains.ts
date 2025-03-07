@@ -1,10 +1,7 @@
-import type {
-  BaseProject,
-  Bridge,
-  Layer2,
-  Layer3,
-  ProjectContract,
-} from '../types'
+import type { Layer3 } from '../internalTypes'
+import type { Layer2 } from '../internalTypes'
+import type { Bridge } from '../internalTypes'
+import type { BaseProject, ProjectContract } from '../types'
 
 export function getChainNames(
   ...projects: (Layer2 | Layer3 | Bridge | BaseProject)[]

@@ -5,17 +5,17 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-export type Operator = 'sum' | 'diff'
+export type Operator = 'sum' | 'diff' | 'max' | 'min'
 
 export interface CalculationFormula {
   type: 'calculation'
   operator: Operator
-  arguments: (CalculationFormula | ValueFormula)[]
+  arguments: (CalculationFormula | ValueFormula | AmountFormula)[]
 }
 
 export type ValueFormula = {
   type: 'value'
-  amount: AmountFormula
+  amount: AmountFormula | CalculationFormula
   priceId: string
 }
 
@@ -23,6 +23,7 @@ export type AmountFormula =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
   | CirculatingSupplyAmountFormula
+  | ConstAmountFormula
 
 export interface BalanceOfEscrowAmountFormula {
   type: 'balanceOfEscrow'
@@ -51,6 +52,11 @@ export interface CirculatingSupplyAmountFormula {
   priceId: string
 }
 
+export interface ConstAmountFormula {
+  type: 'const'
+  value: number
+}
+
 export interface AmountConfigBase {
   id: string
 }
@@ -71,13 +77,14 @@ export type AmountConfig =
 
 // token deployed to single chain
 export interface Token {
+  mode: 'auto' | 'custom'
   // unique identifier
   id: TokenId
   // by default it is set to coingeckoId
   priceId: string
   symbol: string
   name: string
-  amount: AmountFormula
+  amount: AmountFormula | CalculationFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)
@@ -128,16 +135,26 @@ export interface TokenValue {
 }
 
 export interface TvsBreakdown {
-  total: number
+  tvs: number
   source: {
-    canonical: number
-    external: number
-    native: number
+    canonical: {
+      value: number
+      tokens: TokenValue[]
+    }
+    external: {
+      value: number
+      tokens: TokenValue[]
+    }
+    native: {
+      value: number
+      tokens: TokenValue[]
+    }
   }
   category: {
     ether: number
     stablecoin: number
     other: number
+    associated: number
   }
 }
 

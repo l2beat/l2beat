@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
   type CleanDateRange,
@@ -21,7 +21,7 @@ export class BlockTimestampRepository extends BaseRepository {
       .selectFrom('BlockTimestamp')
       .select('blockNumber')
       .where('chain', '=', chain)
-      .where('timestamp', '=', timestamp.toDate())
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
       .limit(1)
       .executeTakeFirst()
     return row?.blockNumber
@@ -34,7 +34,7 @@ export class BlockTimestampRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('BlockTimestamp')
       .where('chain', '=', chain)
-      .where('timestamp', '>', timestamp.toDate())
+      .where('timestamp', '>', UnixTime.toDate(timestamp))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
   assert,
@@ -18,27 +19,60 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = mapConfig(arbitrum, arbitrum.chainConfig)
+    const result = await mapConfig(arbitrum, Logger.SILENT)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
-    expect(result.tokens[0]).toEqual({
+    expect(result.tokens.find((t) => t.id === 'arbitrum-ETH')).toEqual({
+      mode: 'auto',
       id: TokenId('arbitrum-ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ether',
       amount: {
-        type: 'balanceOfEscrow',
-        address: 'native',
-        chain: 'ethereum',
-        escrowAddress: EthereumAddress(
-          '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
-        ),
-        decimals: 18,
+        type: 'calculation',
+        operator: 'sum',
+        arguments: [
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0xcEe284F754E854890e311e3280b767F80797180d',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
+            ),
+            decimals: 18,
+          },
+        ],
       },
-      sinceTimestamp: new UnixTime(1661457944),
-      untilTimestamp: undefined,
+      sinceTimestamp: UnixTime(1661457944),
       category: 'ether',
       source: 'canonical',
       isAssociated: false,
@@ -49,6 +83,7 @@ describe(mapConfig.name, () => {
         (t) => t.id === 'arbitrum-ARB' && t.amount.type === 'circulatingSupply',
       ),
     ).toEqual({
+      mode: 'auto',
       id: TokenId('arbitrum-ARB'),
       symbol: 'ARB',
       name: 'Arbitrum',
@@ -57,14 +92,14 @@ describe(mapConfig.name, () => {
         type: 'circulatingSupply',
         priceId: 'arbitrum',
       },
-      sinceTimestamp: new UnixTime(1679529600),
-      untilTimestamp: undefined,
+      sinceTimestamp: UnixTime(1679529600),
       category: 'other',
       source: 'native',
       isAssociated: true,
     })
 
     expect(result.tokens.find((t) => t.id === 'arbitrum-ATH')).toEqual({
+      mode: 'auto',
       id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',
       name: 'Aethir Token',
@@ -75,8 +110,7 @@ describe(mapConfig.name, () => {
         chain: 'arbitrum',
         decimals: 18,
       },
-      sinceTimestamp: new UnixTime(1718150400),
-      untilTimestamp: undefined,
+      sinceTimestamp: UnixTime(1718150400),
       category: 'other',
       source: 'external',
       isAssociated: false,
@@ -117,12 +151,22 @@ describe(extractPricesAndAmounts.name, () => {
         mockObject<Token>({
           priceId: 'price-ATH',
           amount: {
-            type: 'totalSupply',
-            address: EthereumAddress(
-              '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-            ),
-            chain: 'arbitrum',
-            decimals: 18,
+            type: 'calculation',
+            operator: 'max',
+            arguments: [
+              {
+                type: 'const',
+                value: 100,
+              },
+              {
+                type: 'totalSupply',
+                address: EthereumAddress(
+                  '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+                ),
+                chain: 'arbitrum',
+                decimals: 18,
+              },
+            ],
           },
           valueForProject: undefined,
           valueForTotal: undefined,

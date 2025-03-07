@@ -1,39 +1,23 @@
 'use client'
 
-import { useRef } from 'react'
-import { useEventListener } from '~/hooks/use-event-listener'
-import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
-import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import type { RosetteValue } from '../types'
 import { SingleGrissini } from './single-grissini'
 
 interface Props {
   values: RosetteValue[]
   className?: string
-  hasNoBridge?: boolean
 }
 
 const EMPTY: RosetteValue = { name: '', value: '' }
 const EMPTY_GRISSINI = [EMPTY, EMPTY, EMPTY]
 
-export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
-  const containerRef = useRef(null)
-  const context = useRosetteTooltipContext()
-  const setSelectedRisk = context?.setSelectedRisk
-
-  useOnClickOutside(containerRef, () => setSelectedRisk?.(undefined))
-  useEventListener('scroll', () => setSelectedRisk?.(undefined))
-
-  const selectRisk = (risk: RosetteValue) => {
-    setSelectedRisk?.(risk)
-  }
-
+export function GrissiniIcon({ values, className }: Props) {
+  const hasNoBridge = values.length === 0
   const display = hasNoBridge ? EMPTY_GRISSINI : values
 
   return (
     <div
-      ref={containerRef}
       className={cn(
         'flex flex-row items-center justify-center gap-1',
         className,
@@ -45,7 +29,6 @@ export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
             hasNoBridge ? 'UnderReview' : (value.sentiment ?? 'neutral')
           }
           key={i}
-          onMouseEnter={() => selectRisk(value)}
         />
       ))}
       {hasNoBridge && (

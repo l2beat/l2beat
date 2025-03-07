@@ -1,4 +1,4 @@
-import type { ProjectTechnologyChoice, ScalingProjectRisk } from '../types'
+import type { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
 const ON_CHAIN_CALLDATA: ProjectTechnologyChoice = {
   name: 'All data required for proofs is published onchain',
@@ -227,7 +227,7 @@ function DACHALLENGES_OFF_CHAIN(
   daResolveWindow: string,
   nodeSourceLink?: string,
 ): ProjectTechnologyChoice {
-  const risks: ScalingProjectRisk[] = [
+  const risks: ProjectRisk[] = [
     {
       category: 'Funds can be stolen if',
       text: 'the sequencer is malicious and is able to economically outspend the altruistic challengers.',

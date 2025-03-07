@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const PROJECT_ID = ProjectId('beamer-bridge-v2')
@@ -16,7 +16,7 @@ const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 export const beamerbridgev2: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
-  addedAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
+  addedAt: UnixTime(1688643599), // 2023-07-06T11:39:59Z
   display: {
     name: 'Beamer Bridge V2',
     slug: 'beamerbridgev2',
@@ -41,7 +41,7 @@ export const beamerbridgev2: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         address: discovery.getContractDetails('EthereumRequestManager').address,
-        sinceTimestamp: new UnixTime(1678964183),
+        sinceTimestamp: UnixTime(1678964183),
         tokens: ['USDC', 'WETH', 'DAI', 'USDT'],
       }),
     ],

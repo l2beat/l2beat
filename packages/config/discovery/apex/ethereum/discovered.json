@@ -1,31 +1,19 @@
 {
   "name": "apex",
   "chain": "ethereum",
-  "blockNumber": 21872281,
-  "configHash": "0x4fc4216a694b505e661a580adc6875128547201f5528e54a6e2e7e0dc3693106",
+  "blockNumber": 21981180,
+  "configHash": "0x61de21955498eea83d6d97807504dc7212d310e6acb57b01e1b38decb7491524",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
-      "name": "AggregationRouterV4",
-      "address": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
-      "sourceHashes": [
-        "0xcf1a7058461495ed508bbdc19356705fd4208d5522d226052109f79f3b1c07a3"
-      ],
-      "sinceTimestamp": 1636107489,
-      "sinceBlock": 13556016,
-      "values": {
-        "$immutable": true,
-        "DOMAIN_SEPARATOR": "0x39821575e26f6b451072044840d9a68b6718f7a7770887d2b17a3b48f7147ca3",
-        "LIMIT_ORDER_RFQ_TYPEHASH": "0x74ab4f0cde46aaf927859983f7d04002116dd057d4c4941f6dbfb775c3e31f45",
-        "owner": "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1"
-      }
-    },
-    {
       "name": "CommitteeUSDC",
       "address": "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4",
+      "template": "starkex/Committee",
       "sourceHashes": [
         "0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5"
       ],
+      "displayName": "DACommittee",
+      "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
       "sinceTimestamp": 1671630143,
       "sinceBlock": 16233442,
       "values": {
@@ -45,37 +33,23 @@
         "identify": "StarkWare_Committee_2022_2",
         "signaturesRequired": 3
       },
-      "derivedName": "Committee"
-    },
-    {
-      "name": "MultiSigPoolUSDT",
-      "address": "0x379c15156B527D6E693bED60d1FBb44CE46046b8",
-      "sourceHashes": [
-        "0x641d1fce90ca144fc5ced3c8ee055f6876620610fc3afa756a5dc174f53963d3"
-      ],
-      "sinceTimestamp": 1698822623,
-      "sinceBlock": 18475677,
-      "values": {
-        "$immutable": true,
-        "AGGREGATION_ROUTER_V4_ADDRESS": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
-        "ASSET_TYPE": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
-        "FACT_ADDRESS": "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A",
-        "signers": [
-          "0x04b4B6f7a61B121Cb4913871e3aB52Ce77589128",
-          "0x467c78EF773C91836ccFdafd8Ed0be12a64476d3",
-          "0x22c89137525b593Dd2A18434348b550ffA5984Fe"
-        ],
-        "STARKEX_ADDRESS": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-        "USDC_ADDRESS": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      "fieldMeta": {
+        "constructorArgs": {
+          "description": "Includes DAC members and threshold."
+        }
       },
-      "derivedName": "MultiSigPool"
+      "derivedName": "Committee",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "FinalizableGpsFactAdapterUSDT",
       "address": "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
+      "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
+      "displayName": "GpsFactRegistryAdapter",
+      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).",
       "sinceTimestamp": 1697631587,
       "sinceBlock": 18377195,
       "values": {
@@ -84,46 +58,47 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
-        "programHash": "770346231394331402493200980986217737662224545740427952627288191358999988146"
+        "programHash": "770346231394331402493200980986217737662224545740427952627288191358999988146",
+        "programHashMapped": "ApeX-USDT"
       },
-      "derivedName": "FinalizableGpsFactAdapter"
-    },
-    {
-      "name": "AggregationRouterV4Owner",
-      "address": "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1608623778,
-      "sinceBlock": 11502031,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0xB1A308e7F02798377b7acF685E997E3D774c5863",
-          "0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8",
-          "0x2BB718a3986C36c6E02D8d15cdA4370820D08169"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xb2a122829c88bf9bb3f25990d266e007c3961f0f8e7b7808ee3c3ae2c98f4c33",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 479,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      "derivedName": "FinalizableGpsFactAdapter",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
+            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (Starknet)",
+            "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
+            "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
+            "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
+            "770346231394331402493200980986217737662224545740427952627288191358999988146": "ApeX-USDT",
+            "3174901404014912024702042974619036870715605532092680335571201877913899936957": "StarkEx Spot v4.0 (RhinoFi, Sorare)",
+            "16830627573509542901909952446321116535677491650708854009406762893086223513": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)",
+            "2530337539466159944237001094809327283009177793361359619481044346150483328860": "ApeX-USDC 20250130",
+            "3114724292040200590153042023978438629733352741898912919152162079752811928849": "StarkEx Perp v2.0 ApeX-USDC",
+            "217719352201300445998518619904782191262194843262573339166404641663770051805": "StarkNet (old)",
+            "3003515909324298587247571665454372831319437787162989623104387385306791861180": "StarkNet (old)",
+            "1161178844461337253856226043908368523817098764221830529880464854589141231910": "StarkNet Aggregator (old)",
+            "1921772108187713503530008849184725638117898887391063185252422808224349294626": "StarkNet (old)",
+            "3258367057337572248818716706664617507069572185152472699066582725377748079373": "StarkNet (old)",
+            "407700941260678649793204927710478760533239334662847444187959202896452163393": "StarkNet (old)",
+            "1865367024509426979036104162713508294334262484507712987283009063059134893433": "StarkNet (old)",
+            "54878256403880350656938046611252303365750679698042371543935159963667935317": "StarkNet (old)",
+            "2479841346739966073527450029179698923866252973805981504232089731754042431018": "StarkNet (old)",
+            "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
+          }
+        }
+      ]
     },
     {
       "name": "CommitteeUSDT",
       "address": "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800",
+      "template": "starkex/Committee",
       "sourceHashes": [
         "0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a"
       ],
+      "displayName": "DACommittee",
+      "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
       "sinceTimestamp": 1697631587,
       "sinceBlock": 18377195,
       "values": {
@@ -142,11 +117,18 @@
         "identify": "StarkWare_Committee_2022_2",
         "signaturesRequired": 3
       },
-      "derivedName": "Committee"
+      "fieldMeta": {
+        "constructorArgs": {
+          "description": "Includes DAC members and threshold."
+        }
+      },
+      "derivedName": "Committee",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "StarkExchangeUSDC",
+      "name": "StarkPerpetualUSDC",
       "address": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+      "template": "starkex/StarkPerpetual",
       "sourceHashes": [
         "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587",
         "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d",
@@ -156,15 +138,57 @@
         "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
       ],
       "proxyType": "StarkWare diamond",
+      "displayName": "StarkPerpetual",
+      "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
+        {
+          "permission": "governStarknet",
+          "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
+          "via": []
+        },
+        {
+          "permission": "governStarknet",
+          "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
+          "description": "manage the token admin role.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+          "description": "manage the token admin role.",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
+          "delay": 1209600,
           "via": []
         },
         {
           "permission": "upgrade",
           "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+          "delay": 1209600,
           "via": []
         }
       ],
@@ -257,7 +281,7 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 14555,
+        "getLastBatchId": 15016,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -268,7 +292,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 14393,
+        "getSequenceNumber": 14854,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -281,19 +305,34 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": [
+        "operators": [
           "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
           "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb"
         ],
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "StarkWareDiamond_upgradeDelay": 1209600,
+        "tokenAdmins": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"],
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERIFIER_REMOVAL_DELAY": 2419200,
         "VERSION": "3.2.0"
       },
-      "derivedName": "Proxy"
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."
+        },
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+        }
+      },
+      "derivedName": "Proxy",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PerpetualEscapeVerifier",
@@ -301,6 +340,7 @@
       "sourceHashes": [
         "0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"
       ],
+      "description": "Special verifier for the escape() function.",
       "sinceTimestamp": 1660252035,
       "sinceBlock": 15322966,
       "values": {
@@ -310,21 +350,7 @@
       }
     },
     {
-      "name": "TransferRegistry",
-      "address": "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A",
-      "sourceHashes": [
-        "0xca65c90eab3222ece5205fccdae3a20a07419751133d38894a85db4802060a14"
-      ],
-      "sinceTimestamp": 1613903192,
-      "sinceBlock": 11899719,
-      "values": {
-        "$immutable": true,
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_TransferRegistry_2020_1"
-      }
-    },
-    {
-      "name": "PerpetualGovernanceMultisig",
+      "name": "ApexAdminMultisig",
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -332,10 +358,21 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
-          "permission": "upgrade",
+          "permission": "governStarknet",
           "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
+        },
+        {
+          "permission": "interact",
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "manage the token admin role."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "delay": 1209600
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -359,8 +396,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "StarkExchangeUSDT",
+      "name": "StarkPerpetualUSDT",
       "address": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+      "template": "starkex/StarkPerpetual",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
         "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d",
@@ -370,10 +408,40 @@
         "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
       ],
       "proxyType": "StarkWare diamond",
+      "displayName": "StarkPerpetual",
+      "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
+        {
+          "permission": "governStarknet",
+          "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
+          "description": "manage the token admin role.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169",
+          "via": []
+        },
+        {
+          "permission": "operateStarknet",
+          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
+          "delay": 1209600,
           "via": []
         }
       ],
@@ -455,26 +523,44 @@
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_UPGRADE_DELAY": 15552000,
         "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": [
+        "operators": [
           "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
           "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169"
         ],
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareDiamond_upgradeDelay": 1209600,
+        "tokenAdmins": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"],
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERIFIER_REMOVAL_DELAY": 2419200,
         "VERSION": "3.2.0"
       },
-      "derivedName": "Proxy"
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."
+        },
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+        }
+      },
+      "derivedName": "Proxy",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "FinalizableGpsFactAdapterUSDC",
       "address": "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
+      "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
+      "displayName": "GpsFactRegistryAdapter",
+      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).",
       "sinceTimestamp": 1661254231,
       "sinceBlock": 15396280,
       "values": {
@@ -483,103 +569,133 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
-        "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860"
+        "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860",
+        "programHashMapped": "ApeX-USDC 20250130"
       },
-      "derivedName": "FinalizableGpsFactAdapter"
-    },
-    {
-      "name": "MultiSigPoolUSDC",
-      "address": "0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE",
-      "sourceHashes": [
-        "0x331aa6df8abe04615c862e5d29cee5ef8b680ab3d244de1399ca760503ebe945"
-      ],
-      "sinceTimestamp": 1661502844,
-      "sinceBlock": 15414333,
-      "values": {
-        "$immutable": true,
-        "AGGREGATION_ROUTER_V4_ADDRESS": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
-        "ASSET_TYPE": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
-        "FACT_ADDRESS": "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A",
-        "signers": [
-          "0x015155D9f7bb601FbF25084C106531c759c05379",
-          "0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92",
-          "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81"
-        ],
-        "STARKEX_ADDRESS": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-        "USDC_ADDRESS": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "MultiSigPool"
+      "derivedName": "FinalizableGpsFactAdapter",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
+            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (Starknet)",
+            "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
+            "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
+            "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
+            "770346231394331402493200980986217737662224545740427952627288191358999988146": "ApeX-USDT",
+            "3174901404014912024702042974619036870715605532092680335571201877913899936957": "StarkEx Spot v4.0 (RhinoFi, Sorare)",
+            "16830627573509542901909952446321116535677491650708854009406762893086223513": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)",
+            "2530337539466159944237001094809327283009177793361359619481044346150483328860": "ApeX-USDC 20250130",
+            "3114724292040200590153042023978438629733352741898912919152162079752811928849": "StarkEx Perp v2.0 ApeX-USDC",
+            "217719352201300445998518619904782191262194843262573339166404641663770051805": "StarkNet (old)",
+            "3003515909324298587247571665454372831319437787162989623104387385306791861180": "StarkNet (old)",
+            "1161178844461337253856226043908368523817098764221830529880464854589141231910": "StarkNet Aggregator (old)",
+            "1921772108187713503530008849184725638117898887391063185252422808224349294626": "StarkNet (old)",
+            "3258367057337572248818716706664617507069572185152472699066582725377748079373": "StarkNet (old)",
+            "407700941260678649793204927710478760533239334662847444187959202896452163393": "StarkNet (old)",
+            "1865367024509426979036104162713508294334262484507712987283009063059134893433": "StarkNet (old)",
+            "54878256403880350656938046611252303365750679698042371543935159963667935317": "StarkNet (old)",
+            "2479841346739966073527450029179698923866252973805981504232089731754042431018": "StarkNet (old)",
+            "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
+          }
+        }
+      ]
     }
   ],
   "eoas": [
-    { "address": "0x015155D9f7bb601FbF25084C106531c759c05379" },
-    { "address": "0x04b4B6f7a61B121Cb4913871e3aB52Ce77589128" },
     { "address": "0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8" },
     { "address": "0x17094A7Cc09686787E0dF95604fd1F9da94B9501" },
     { "address": "0x22c89137525b593Dd2A18434348b550ffA5984Fe" },
-    { "address": "0x2BB718a3986C36c6E02D8d15cdA4370820D08169" },
-    { "address": "0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92" },
-    { "address": "0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8" },
-    { "address": "0x467c78EF773C91836ccFdafd8Ed0be12a64476d3" },
     { "address": "0x4F753A937318A64b2867b16a55f5aea83A4C44dB" },
     {
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
+          "permission": "governStarknet",
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
+        },
+        {
+          "permission": "interact",
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "manage the token admin role."
+        },
+        {
           "permission": "upgrade",
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "delay": 1209600
+        }
+      ]
+    },
+    {
+      "address": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
           "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
         }
       ]
     },
-    { "address": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169" },
-    { "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A" },
-    { "address": "0x696cC7615A50CF12d1d1B38bF18A5606e9708296" },
-    { "address": "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb" },
-    { "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5" },
-    { "address": "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c" },
-    { "address": "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A" },
-    { "address": "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D" },
-    { "address": "0xB1A308e7F02798377b7acF685E997E3D774c5863" },
-    { "address": "0xb557219DC53Af7Da9777540426DEe9c196842420" },
     {
-      "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "receivedPermissions": [
         {
-          "permission": "upgrade",
+          "permission": "interact",
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        },
+        {
+          "permission": "interact",
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        },
+        {
+          "permission": "operateStarknet",
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
+        },
+        {
+          "permission": "operateStarknet",
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
+        }
+      ]
+    },
+    { "address": "0x696cC7615A50CF12d1d1B38bF18A5606e9708296" },
+    {
+      "address": "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
           "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ]
     },
-    { "address": "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81" }
+    { "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5" },
+    { "address": "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c" },
+    { "address": "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A" },
+    { "address": "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D" },
+    { "address": "0xb557219DC53Af7Da9777540426DEe9c196842420" },
+    {
+      "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
+        },
+        {
+          "permission": "interact",
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "manage the token admin role."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "delay": 1209600
+        }
+      ]
+    }
   ],
   "abis": {
-    "0x1111111254fb6c44bAC0beD2854e76F90643097d": [
-      "constructor(address weth, address _clipperExchange)",
-      "event OrderFilledRFQ(bytes32 orderHash, uint256 makingAmount)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function LIMIT_ORDER_RFQ_TYPEHASH() view returns (bytes32)",
-      "function cancelOrderRFQ(uint256 orderInfo)",
-      "function clipperSwap(address srcToken, address dstToken, uint256 amount, uint256 minReturn) payable returns (uint256 returnAmount)",
-      "function clipperSwapTo(address recipient, address srcToken, address dstToken, uint256 amount, uint256 minReturn) payable returns (uint256 returnAmount)",
-      "function clipperSwapToWithPermit(address recipient, address srcToken, address dstToken, uint256 amount, uint256 minReturn, bytes permit) returns (uint256 returnAmount)",
-      "function destroy()",
-      "function fillOrderRFQ(tuple(uint256 info, address makerAsset, address takerAsset, address maker, address allowedSender, uint256 makingAmount, uint256 takingAmount) order, bytes signature, uint256 makingAmount, uint256 takingAmount) payable returns (uint256, uint256)",
-      "function fillOrderRFQTo(tuple(uint256 info, address makerAsset, address takerAsset, address maker, address allowedSender, uint256 makingAmount, uint256 takingAmount) order, bytes signature, uint256 makingAmount, uint256 takingAmount, address target) payable returns (uint256, uint256)",
-      "function fillOrderRFQToWithPermit(tuple(uint256 info, address makerAsset, address takerAsset, address maker, address allowedSender, uint256 makingAmount, uint256 takingAmount) order, bytes signature, uint256 makingAmount, uint256 takingAmount, address target, bytes permit) returns (uint256, uint256)",
-      "function invalidatorForOrderRFQ(address maker, uint256 slot) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function rescueFunds(address token, uint256 amount)",
-      "function swap(address caller, tuple(address srcToken, address dstToken, address srcReceiver, address dstReceiver, uint256 amount, uint256 minReturnAmount, uint256 flags, bytes permit) desc, bytes data) payable returns (uint256 returnAmount, uint256 spentAmount, uint256 gasLeft)",
-      "function transferOwnership(address newOwner)",
-      "function uniswapV3Swap(uint256 amount, uint256 minReturn, uint256[] pools) payable returns (uint256 returnAmount)",
-      "function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes)",
-      "function uniswapV3SwapTo(address recipient, uint256 amount, uint256 minReturn, uint256[] pools) payable returns (uint256 returnAmount)",
-      "function uniswapV3SwapToWithPermit(address recipient, address srcToken, uint256 amount, uint256 minReturn, uint256[] pools, bytes permit) returns (uint256 returnAmount)",
-      "function unoswap(address srcToken, uint256 amount, uint256 minReturn, bytes32[] pools) payable returns (uint256 returnAmount)",
-      "function unoswapWithPermit(address srcToken, uint256 amount, uint256 minReturn, bytes32[] pools, bytes permit) returns (uint256 returnAmount)"
-    ],
     "0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
       "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
@@ -764,24 +880,6 @@
       "function registerSender(uint256 starkKey, bytes starkSignature)",
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
-    ],
-    "0x379c15156B527D6E693bED60d1FBb44CE46046b8": [
-      "constructor(address[] allowedSigners, address usdc, address aggregationRouterV4, address starkex, address fact, uint256 assetType)",
-      "event Deposit(address from, address token, uint256 spentAmount, uint256 swapReturnAmount, uint256 starkKey, uint256 positionId)",
-      "event WithdrawERC20(uint256 orderId, address token, address to, uint256 amount)",
-      "event WithdrawETH(uint256 orderId, address to, uint256 amount)",
-      "function AGGREGATION_ROUTER_V4_ADDRESS() view returns (address)",
-      "function ASSET_TYPE() view returns (uint256)",
-      "function FACT_ADDRESS() view returns (address)",
-      "function STARKEX_ADDRESS() view returns (address)",
-      "function USDC_ADDRESS() view returns (address)",
-      "function calcSigHash(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, bool isFact, uint256 salt) view returns (bytes32)",
-      "function deposit(address token, uint256 amount, uint256 starkKey, uint256 positionId, bytes exchangeData) payable returns (uint256)",
-      "function factTransferErc20(address to, address token, uint256 amount, uint256 salt, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
-      "function isAllowedSigner(address signer) view returns (bool)",
-      "function signers(uint256) view returns (address)",
-      "function withdrawETH(address to, uint256 amount, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
-      "function withdrawErc20(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)"
     ],
     "0x3F3A131caB7eb5b4EAE9497Bebb9E06bE80F2809": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
@@ -1096,9 +1194,6 @@
       "function updateState(uint256[] programOutput, uint256[] applicationData)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1": [
-      "constructor(address _masterCopy)"
-    ],
     "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800": [
       "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
       "function hasRegisteredFact() view returns (bool)",
@@ -1150,14 +1245,6 @@
       "function identify() pure returns (string)",
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyEscape(uint256[] merkleProof, uint256 nAssets, uint256[] sharedState)"
-    ],
-    "0xBE9a129909EbCb954bC065536D2bfAfBd170d27A": [
-      "event LogRegisteredTransfer(address recipient, address token, uint256 amount, uint256 salt)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function transfer(address recipient, uint256 salt) payable",
-      "function transferERC20(address recipient, address erc20, uint256 amount, uint256 salt)"
     ],
     "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6": [
       "constructor(address _singleton)"
@@ -1255,27 +1342,12 @@
       "function registerAdmin(address newAdmin)",
       "function removeAdmin(address removedAdmin)",
       "function setProgramHash(uint256 newProgramHash)"
-    ],
-    "0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE": [
-      "constructor(address[] allowedSigners, address usdc, address aggregationRouterV4, address starkex, address fact, uint256 assetType)",
-      "event Deposit(address from, address token, uint256 spentAmount, uint256 swapReturnAmount, uint256 starkKey, uint256 positionId)",
-      "event WithdrawERC20(uint256 orderId, address token, address to, uint256 amount)",
-      "event WithdrawETH(uint256 orderId, address to, uint256 amount)",
-      "function AGGREGATION_ROUTER_V4_ADDRESS() view returns (address)",
-      "function ASSET_TYPE() view returns (uint256)",
-      "function FACT_ADDRESS() view returns (address)",
-      "function STARKEX_ADDRESS() view returns (address)",
-      "function USDC_ADDRESS() view returns (address)",
-      "function calcSigHash(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, bool isFact, uint256 salt) view returns (bytes32)",
-      "function deposit(address token, uint256 amount, uint256 starkKey, uint256 positionId, bytes exchangeData) payable returns (uint256)",
-      "function factTransferErc20(address to, address token, uint256 amount, uint256 salt, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
-      "function isAllowedSigner(address signer) view returns (bool)",
-      "function signers(uint256) view returns (address)",
-      "function withdrawETH(address to, uint256 amount, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
-      "function withdrawErc20(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "starkex/Committee": "0x90ae5e5cc0dffb33fc7c639d0761991e36387df71ff12cb5bfdda74d3398533e",
+    "starkex/GpsFactRegistryAdapter": "0xc60e8d2a607d6e461e47bf15f6cb9e5cba1f13a2933a2aa8afa93c3b801a45f3",
+    "starkex/StarkPerpetual": "0xe998db8c55554f0f3a92f3f836f8061f83462b953268e25532cf07be72f4f937"
   }
 }

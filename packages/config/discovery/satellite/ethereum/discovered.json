@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0x60bb90967d7550210e6c8161b552d97b23d1f66ce3de771a2da3e318b1a8e1f9",
+  "configHash": "0xb2b1dad4803b37678649f32dc544bd8ded98d9dbe270686e7dd9319f0309a7a6",
   "contracts": [
     {
       "name": "AxelarGasService",
