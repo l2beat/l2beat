@@ -8,6 +8,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
+  SOA,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -60,6 +61,10 @@ export const fuelv1: Layer2 = {
         chain: 'ethereum',
       },
     ],
+  },
+  scopeOfAssessment: {
+    checked: [SOA.l1Contracts, SOA.gasToken],
+    notChecked: [SOA.specToSourceCode, SOA.nonGasTokens, SOA.derivationSpec],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,

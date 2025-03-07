@@ -408,6 +408,11 @@ function orbitStackCommon(
       'Central actors allowed to submit transaction batches to L1.',
     )
 
+  const isPostBoLD = templateVars.discovery.getContractValue<boolean>(
+    'RollupProxy',
+    'isPostBoLD',
+  )
+
   if (sequencers.accounts.length === 0) {
     throw new Error(
       `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,
@@ -526,7 +531,47 @@ function orbitStackCommon(
         : ['ETH'],
     },
     technology: {
-      sequencing: templateVars.nonTemplateTechnology?.sequencing,
+      sequencing:
+        templateVars.nonTemplateTechnology?.sequencing ??
+        (() => {
+          const commonDescription = `To force transactions from the host chain, users must first enqueue "delayed" messages in the "delayed" inbox of the Bridge contract. Only authorized Inboxes are allowed to enqueue delayed messages, and the so-called Inbox contract is the one used as the entry point by calling the \`sendMessage\` or \`sendMessageFromOrigin\` functions. If the centralized sequencer doesn't process the request within some time bound, users can call the \`forceInclusion\` function on the SequencerInbox contract to include the message in the canonical chain.`
+          if (!isPostBoLD) {
+            return {
+              name: 'Delayed forced transactions',
+              description:
+                commonDescription +
+                ` The time bound is hardcoded to be ${formatSeconds(selfSequencingDelaySeconds)}.`,
+              references: [],
+              risks: [],
+            } as ProjectTechnologyChoice
+          } else {
+            const buffer = templateVars.discovery.getContractValue<{
+              bufferBlocks: number
+              max: number
+              threshold: number
+              prevBlockNumber: number
+              replenishRateInBasis: number
+              prevSequencedBlockNumber: number
+            }>('SequencerInbox', 'buffer')
+
+            const basis = 10000 // hardcoded in SequencerInbox
+
+            return {
+              name: 'Buffered forced transactions',
+              description:
+                commonDescription +
+                ` The time bound is defined to be the minimum between ${formatSeconds(selfSequencingDelaySeconds)} and the time left in the delay buffer. The delay buffer gets replenished over time and gets consumed every time the sequencer doesn't timely process a message. Only messages processed with a delay greater than ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)} consume the buffer. The buffer is capped at ${formatSeconds(buffer.max * blockNumberOpcodeTimeSeconds)}. The replenish rate is currently set at ${formatSeconds((buffer.replenishRateInBasis / basis) * 1200)} every ${formatSeconds(1200)}. Even if the buffer is fully consumed, messages are still allowed to be delayed up to ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)}.`,
+              references: [
+                {
+                  title:
+                    'Sequencer and censorship resistance - Arbitrum documentation',
+                  url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer',
+                },
+              ],
+              risks: [],
+            } as ProjectTechnologyChoice
+          }
+        })(),
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
