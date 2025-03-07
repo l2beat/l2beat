@@ -27,7 +27,6 @@ export class HighLevelProvider implements IProvider {
     readonly chain: string,
     readonly blockNumber: number,
   ) {}
-
   switchBlock(blockNumber: number): IProvider {
     return this.allProviders.get(this.chain, blockNumber)
   }
@@ -293,8 +292,8 @@ export class HighLevelProvider implements IProvider {
     return this.provider.getBlobs(txHash)
   }
 
-  getCelestiaBlob(height: number, namespace: string, commitment: string) {
-    return this.provider.getCelestiaBlob(height, namespace, commitment)
+  celestiaBlobExists(height: number, namespace: string, commitment: string) {
+    return this.provider.celestiaBlobExists(height, namespace, commitment)
   }
 
   getCelestiaBlockResultLogs(height: number) {

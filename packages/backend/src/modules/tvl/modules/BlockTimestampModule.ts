@@ -47,7 +47,7 @@ function createBlockTimestampIndexers(
     const indexer = new BlockTimestampIndexer({
       logger,
       parents: [hourlyIndexer],
-      minHeight: chain.minBlockTimestamp.toNumber(),
+      minHeight: chain.minBlockTimestamp,
       indexerService,
       chain: chain.name,
       blockTimestampProvider,

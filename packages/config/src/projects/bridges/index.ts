@@ -1,4 +1,4 @@
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { acrossV3 } from './acrossV3'
 import { allbridge } from './allbridge'
 import { amarok } from './amarok'

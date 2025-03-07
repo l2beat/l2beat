@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { zkStackL2 } from './templates/zkStack'
 
@@ -16,7 +16,7 @@ export const grvt: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],
-  addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
+  addedAt: UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {

@@ -14,7 +14,7 @@ import { getScalingProjectEntry } from '~/server/features/scaling/project/get-sc
 import { ps } from '~/server/projects'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
-import { ScalingProjectSummary } from './_components/scaling-project-summary'
+import { ProjectScalingSummary } from './_components/scaling-project-summary'
 
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
@@ -100,7 +100,7 @@ export default async function Page(props: Props) {
           <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
-      <ScalingProjectSummary project={projectEntry} />
+      <ProjectScalingSummary project={projectEntry} />
       <ContentWrapper mobileFull>
         {isNavigationEmpty ? (
           <ProjectDetails items={projectEntry.sections} />

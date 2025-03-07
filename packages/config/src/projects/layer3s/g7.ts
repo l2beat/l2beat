@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('game7', 'arbitrum')
 const L1OrbitERC20Gateway = discovery.getContract('ERC20Gateway')
 
 export const g7: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1738899615),
+  addedAt: UnixTime(1738899615),
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],

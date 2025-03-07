@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x543a958cf4a6ccd24319c16e850e209c2141c052
+
+# Diff at Thu, 06 Mar 2025 09:39:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 21872461
+- current block number: 21872461
+
+## Description
+
+Config related: set severity for arbitrum inbox/outbox changes to high and add historical In- and Outboxes via events.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872461 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory:
++        ["0xBFfaA85c1756472fFC37e6D172A7eC0538C14474","0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"]
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory:
++        ["0x655761AD5FC251F414D6993A73184B0669F278c8"]
+      fieldMeta:
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
+    }
+```
+
 Generated with discovered.json: 0x7e4c189edbbafb3e8c4f992b91ca6b2102ede1cd
 
 # Diff at Tue, 04 Mar 2025 10:39:18 GMT:

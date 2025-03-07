@@ -9,17 +9,17 @@ import { BadgesSection } from '~/components/projects/sections/badges-section'
 import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
 import { WarningBar } from '~/components/warning-bar'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
-import { ScalingProjectRosette } from './scaling-project-rosette'
-import { ScalingProjectStats } from './scaling-project-stats'
+import { ProjectScalingRosette } from './scaling-project-rosette'
+import { ProjectScalingStats } from './scaling-project-stats'
 import { ValueSecuredSummary } from './value-secured-summary'
 
 interface Props {
-  project: ScalingProjectEntry
+  project: ProjectScalingEntry
 }
 
-export function ScalingProjectSummary({ project }: Props) {
+export function ProjectScalingSummary({ project }: Props) {
   return (
     <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
       <section id="summary" className="w-full max-md:bg-header-primary">
@@ -71,13 +71,13 @@ export function ScalingProjectSummary({ project }: Props) {
                 isArchived={project.isArchived}
               />
               <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
-              <ScalingProjectStats
+              <ProjectScalingStats
                 project={project}
                 className="md:order-first md:col-span-2 [@media(min-width:1000px)]:order-none"
               />
             </div>
           </div>
-          <ScalingProjectRosette project={project} />
+          <ProjectScalingRosette project={project} />
         </div>
 
         <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />

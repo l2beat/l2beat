@@ -457,12 +457,36 @@
         ],
         "allowedOutboxList": ["0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "delayedMessageCount": 541,
+        "inboxHistory": [
+          "0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
+          "0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
+          "0x04577832300ca28cE7e21ddEC3E304af8739710c"
+        ],
         "nativeToken": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
         "nativeTokenDecimals": 18,
+        "outboxHistory": ["0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
         "sequencerMessageCount": 19232,
         "sequencerReportedSubMessageCount": 7089412
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1427,7 +1451,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",

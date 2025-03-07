@@ -117,11 +117,9 @@ function createIndexers(
         ),
       )
 
-      const minHeight = Math.min(
-        ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
-      )
+      const minHeight = Math.min(...amountConfigs.map((c) => c.sinceTimestamp))
       const maxHeight = Math.max(
-        ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+        ...amountConfigs.map((c) => c.untilTimestamp ?? Infinity),
       )
 
       const indexer = new ValueIndexer({
@@ -153,10 +151,11 @@ function toConfigurations(
   const chainAmountConfigurations = chainAmountEntries.map((a) => ({
     id: createAmountId(a),
     properties: a,
-    minHeight: a.sinceTimestamp.lt(chain.minBlockTimestamp)
-      ? chain.minBlockTimestamp.toNumber()
-      : a.sinceTimestamp.toNumber(),
-    maxHeight: a.untilTimestamp?.toNumber() ?? null,
+    minHeight:
+      a.sinceTimestamp < chain.minBlockTimestamp
+        ? chain.minBlockTimestamp
+        : a.sinceTimestamp,
+    maxHeight: a.untilTimestamp ?? null,
   }))
   return chainAmountConfigurations
 }
@@ -192,9 +191,9 @@ function getBaseEntry(value: EscrowEntry | TotalSupplyEntry) {
     chain: value.chain,
     project: value.project.toString(),
     source: value.source,
-    sinceTimestamp: value.sinceTimestamp.toNumber(),
+    sinceTimestamp: value.sinceTimestamp,
     ...(Object.keys(value).includes('untilTimestamp')
-      ? { untilTimestamp: value.untilTimestamp?.toNumber() }
+      ? { untilTimestamp: value.untilTimestamp }
       : {}),
     includeInTotal: value.includeInTotal,
     decimals: value.decimals,

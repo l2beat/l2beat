@@ -2,7 +2,7 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -29,7 +29,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const redstone: Layer2 = opStackL2({
-  addedAt: new UnixTime(1714996778), // 2024-05-06T11:59:38Z
+  addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
@@ -60,7 +60,7 @@ export const redstone: Layer2 = opStackL2({
     'https://github.com/latticexyz/redstone',
     DA_LAYERS.OP_ALT_DA,
   ),
-  genesisTimestamp: new UnixTime(1712192291),
+  genesisTimestamp: UnixTime(1712192291),
   isNodeAvailable: 'UnderReview',
   chainConfig: {
     name: 'redstone',

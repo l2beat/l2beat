@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 21678827,
-  "configHash": "0x711af64ba420f16296f9880828f9111213dc0b48707b397547c95008f3b4a7fa",
+  "configHash": "0x9bec19ab11e7166e1313d3bf629c3dab457aa101a7dedc21226ddcce339802a2",
   "contracts": [
     {
       "name": "FacetEtherBridgeV6",

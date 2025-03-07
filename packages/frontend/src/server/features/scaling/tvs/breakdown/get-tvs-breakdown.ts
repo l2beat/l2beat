@@ -25,11 +25,15 @@ export function getTvsBreakdown(
   configMapping: ConfigMapping,
   chains: ChainConfig[],
 ) {
-  return async function (projectId: ProjectId, target?: UnixTime) {
+  return async function (
+    projectId: ProjectId,
+    gasTokens?: string[],
+    target?: UnixTime,
+  ) {
     const chainConverter = new ChainConverter(chains)
 
     const targetTimestamp =
-      target ?? UnixTime.now().toStartOf('hour').add(-2, 'hours')
+      target ?? UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
     const prices = await getLatestPriceForConfigurations(
       configMapping.prices,
@@ -60,7 +64,7 @@ export function getTvsBreakdown(
         )
       }
 
-      if (config.untilTimestamp?.lt(targetTimestamp)) {
+      if (config.untilTimestamp && config.untilTimestamp < targetTimestamp) {
         continue
       }
 
@@ -106,10 +110,14 @@ export function getTvsBreakdown(
                * chain from amount config is different for frontend and backend purposes.
                * E.g. Elastic chain and AggLayer where we have shared escrows.
                */
-              chainId: ChainId(chainConverter.toChainId(priceConfig.chain)),
+              chain: {
+                name: priceConfig.chain,
+                id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+              },
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
+              isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
               tokenAddress: address === 'native' ? undefined : address,
               escrows: [
                 {
@@ -133,10 +141,14 @@ export function getTvsBreakdown(
 
           breakdown.external.push({
             assetId: priceConfig.assetId,
-            chainId: ChainId(chainConverter.toChainId(config.chain)),
+            chain: {
+              name: priceConfig.chain,
+              id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+            },
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
+            isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
             tokenAddress: address === 'native' ? undefined : address,
             bridgedUsing: config.bridgedUsing ?? {
               bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
@@ -149,10 +161,14 @@ export function getTvsBreakdown(
           const address = getTokenAddress(config)
           breakdown.native.push({
             assetId: priceConfig.assetId,
-            chainId: ChainId(chainConverter.toChainId(config.chain)),
+            chain: {
+              name: priceConfig.chain,
+              id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+            },
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
+            isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
             // TODO: force fe to accept "native"
             tokenAddress: address === 'native' ? undefined : address,
           })
@@ -164,7 +180,7 @@ export function getTvsBreakdown(
     const breakdownWithTokenInfo = assignTokenMetaToBreakdown(sortedBreakdown)
 
     return {
-      dataTimestamp: targetTimestamp.toNumber(),
+      dataTimestamp: targetTimestamp,
       breakdown: breakdownWithTokenInfo,
     }
   }

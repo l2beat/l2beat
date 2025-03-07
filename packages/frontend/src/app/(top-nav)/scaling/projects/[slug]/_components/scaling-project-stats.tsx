@@ -12,22 +12,27 @@ import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TypeInfo } from '~/components/table/cells/type-info'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
-  project: ScalingProjectEntry
+  project: ProjectScalingEntry
   className?: string
 }
 
-export function ScalingProjectStats({ project, className }: Props) {
+export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
     <ProjectStat
       key="tokens"
       title="Tokens"
-      value={<TokenBreakdownStat tokenTvs={project.header.tvs?.tokens} />}
+      value={
+        <TokenBreakdownStat
+          tokenTvs={project.header.tvs?.tokens}
+          gasTokens={project.header.gasTokens}
+        />
+      }
     />,
     <ProjectStat
       key="ops-count"
@@ -109,7 +114,9 @@ export function ScalingProjectStats({ project, className }: Props) {
 
         return (
           <Fragment key={i}>
-            {statGroup.map((stat) => stat)}
+            {statGroup.map((stat) => (
+              <Fragment key={stat.key}>{stat}</Fragment>
+            ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
             )}
@@ -130,6 +137,7 @@ interface ProjectStat {
 function ProjectStat(props: ProjectStat) {
   return (
     <li
+      key={props.title}
       className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,

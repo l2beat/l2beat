@@ -32,5 +32,5 @@ export function getSyncedUntil(
   }
 
   const syncedUntil = Math.min(...lastSyncedTimestamps)
-  return new UnixTime(syncedUntil)
+  return UnixTime(syncedUntil)
 }

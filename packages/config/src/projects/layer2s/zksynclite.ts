@@ -21,7 +21,7 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -63,7 +63,7 @@ export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
@@ -110,7 +110,7 @@ export const zksynclite: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
-        sinceTimestamp: new UnixTime(1592218707),
+        sinceTimestamp: UnixTime(1592218707),
         tokens: '*',
       }),
     ],
@@ -128,7 +128,7 @@ export const zksynclite: Layer2 = {
           selector: '0x45269298',
           functionSignature:
             'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,(bytes,uint32)[],uint32,uint32)[])',
-          sinceTimestamp: new UnixTime(1612885558),
+          sinceTimestamp: UnixTime(1612885558),
         },
       },
       {
@@ -144,7 +144,7 @@ export const zksynclite: Layer2 = {
           selector: '0x83981808',
           functionSignature:
             'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestamp: UnixTime(1592218707),
         },
       },
       {
@@ -160,14 +160,14 @@ export const zksynclite: Layer2 = {
           selector: '0xb0705b42',
           functionSignature:
             'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestamp: UnixTime(1592218707),
         },
       },
     ],
     finality: {
       lag: 0,
       type: 'zkSyncLite',
-      minTimestamp: new UnixTime(1592218708),
+      minTimestamp: UnixTime(1592218708),
       stateUpdate: 'disabled',
     },
   },

@@ -47,11 +47,11 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       }
       this.logger.info('Saved txs into DB', {
         from,
-        to: unixTo.toNumber(),
+        to: unixTo,
         configurationsToSync: configurations.length,
       })
 
-      return unixTo.toNumber()
+      return unixTo
     }
   }
 
@@ -61,13 +61,13 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
         [
           this.$.db.liveness.deleteByConfigInTimeRange(
             configuration.id,
-            new UnixTime(configuration.from),
-            new UnixTime(configuration.to),
+            UnixTime(configuration.from),
+            UnixTime(configuration.to),
           ),
           this.$.db.l2Cost.deleteByConfigInTimeRange(
             configuration.id,
-            new UnixTime(configuration.from),
-            new UnixTime(configuration.to),
+            UnixTime(configuration.from),
+            UnixTime(configuration.to),
           ),
         ],
       )

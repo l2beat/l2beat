@@ -1,15 +1,12 @@
 import type {
   Badge,
-  Layer2,
-  Layer3,
   Project,
+  ProjectScalingCategory,
+  ProjectScalingStage,
   ReasonForBeingInOther,
-  ScalingProjectCategory,
-  StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { layer2s, layer3s } from '@l2beat/config'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -20,6 +17,7 @@ import {
 } from '~/server/features/utils/is-chart-data-empty'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
@@ -46,9 +44,7 @@ import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
 
-export type ScalingProject = Layer2 | Layer3
-
-export interface ScalingProjectEntry {
+export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
   slug: string
@@ -63,7 +59,7 @@ export interface ScalingProjectEntry {
     badges?: Badge[]
     links: ProjectLink[]
     hostChain?: string
-    category: ScalingProjectCategory
+    category: ProjectScalingCategory
     purposes: string[]
     tvs?: {
       breakdown?: {
@@ -97,7 +93,7 @@ export interface ScalingProjectEntry {
   countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
 }
 
 export async function getScalingProjectEntry(
@@ -121,13 +117,7 @@ export async function getScalingProjectEntry(
     | 'milestones'
     | 'trackedTxsConfig'
   >,
-): Promise<ScalingProjectEntry> {
-  /** @deprecated */
-  const legacy =
-    layer2s.find((x) => x.id === project.id) ??
-    layer3s.find((x) => x.id === project.id)
-  assert(legacy)
-
+): Promise<ProjectScalingEntry> {
   const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
     await Promise.all([
       getProjectsChangeReport(),
@@ -135,7 +125,7 @@ export async function getScalingProjectEntry(
       getTvsProjectStats(project),
     ])
 
-  const header: ScalingProjectEntry['header'] = {
+  const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
@@ -394,7 +384,6 @@ export async function getScalingProjectEntry(
       props: {
         id: 'risk-analysis',
         title: 'Risk analysis',
-        rosetteType: 'pizza',
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
@@ -420,6 +409,7 @@ export async function getScalingProjectEntry(
           project.scalingStage.stage !== 'UnderReview'
             ? project.scalingStage.additionalConsiderations
             : undefined,
+        scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
       },
     })
   }
@@ -551,14 +541,19 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const permissionsSection = getPermissionsSection({
-    id: project.id,
-    type: project.scalingInfo.layer,
-    hostChain: hostChain?.id,
-    isUnderReview: project.statuses.isUnderReview,
-    permissions: project.permissions,
-    daSolution,
-  })
+  const contractUtils = await getContractUtils()
+
+  const permissionsSection = getPermissionsSection(
+    {
+      id: project.id,
+      type: project.scalingInfo.layer,
+      hostChain: hostChain?.id,
+      isUnderReview: project.statuses.isUnderReview,
+      permissions: project.permissions,
+      daSolution,
+    },
+    contractUtils,
+  )
   if (permissionsSection) {
     const permissionedEntities = project.customDa?.dac?.knownMembers
 
@@ -577,15 +572,14 @@ export async function getScalingProjectEntry(
     {
       id: project.id,
       type: project.scalingInfo.layer,
-      hostChainName: project.scalingInfo.hostChain.name,
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: project.statuses.isUnderReview,
-      escrows: legacy.config.escrows,
       architectureImage: project.scalingTechnology.architectureImage,
       daSolution,
     },
+    contractUtils,
     projectsChangeReport,
   )
   if (contractsSection) {

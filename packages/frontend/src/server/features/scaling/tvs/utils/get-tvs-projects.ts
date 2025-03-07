@@ -31,12 +31,12 @@ export async function toTvsProject(
 
   const minTimestamp = amounts
     .map((x) => x.sinceTimestamp)
-    .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
+    .reduce((a, b) => Math.min(a, b), UnixTime.now())
 
   const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
   for (const amount of amounts) {
     const source = sources.get(amount.dataSource)
-    if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+    if (!source || source.minTimestamp > amount.sinceTimestamp) {
       sources.set(amount.dataSource, {
         name: amount.dataSource,
         minTimestamp: amount.sinceTimestamp,
@@ -79,12 +79,12 @@ export async function getTvsProjects(
 
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
-      .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
+      .reduce((a, b) => Math.min(a, b), UnixTime.now())
 
     const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
     for (const amount of amounts) {
       const source = sources.get(amount.dataSource)
-      if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+      if (!source || source.minTimestamp > amount.sinceTimestamp) {
         sources.set(amount.dataSource, {
           name: amount.dataSource,
           minTimestamp: amount.sinceTimestamp,

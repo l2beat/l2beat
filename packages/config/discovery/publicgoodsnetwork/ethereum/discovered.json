@@ -2,7 +2,7 @@
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
   "blockNumber": 21637087,
-  "configHash": "0x9facea626383c2d33a87c674cef3fdf54167e868af4c235e453e2f3a4929d05e",
+  "configHash": "0x58ed78112461d5609238a25dc40d5f5e27e108a16514e47cdc14d33298fcb4e4",
   "contracts": [
     {
       "name": "AddressManager",

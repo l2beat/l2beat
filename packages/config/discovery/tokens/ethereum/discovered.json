@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 21938183,
-  "configHash": "0x22f0099f860c92d28f74b0a381be2e6cd65308cf95a6e114d3459a175c821bb3",
+  "configHash": "0x3779589cbbf504a17ac248331d6b2e3ab48788ededb88fa38097ff2b11e113b7",
   "contracts": [
     {
       "name": "DepositContract",

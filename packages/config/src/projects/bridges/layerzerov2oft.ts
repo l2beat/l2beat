@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('layerzerov2oft')
@@ -16,7 +16,7 @@ const enaExecutor = EthereumAddress(
 export const layerzerov2oft: Bridge = {
   type: 'bridge',
   id: ProjectId('layerzerov2oft'),
-  addedAt: new UnixTime(1718891395), // 2024-06-20T13:49:55Z
+  addedAt: UnixTime(1718891395), // 2024-06-20T13:49:55Z
   display: {
     name: 'LayerZero v2 OFTs',
     slug: 'layerzerov2oft',

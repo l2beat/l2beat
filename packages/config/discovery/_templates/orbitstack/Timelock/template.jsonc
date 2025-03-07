@@ -14,7 +14,8 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "update the minimum delay of the timelock."
+            "delay": "{{getMinDelay}}",
+            "description": "update the minimum delay and manage all access control roles of the timelock."
           }
         ]
       }

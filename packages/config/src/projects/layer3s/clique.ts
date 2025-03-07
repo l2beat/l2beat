@@ -1,12 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const clique: Layer3 = underReviewL3({
   id: 'clique',
   capability: 'universal',
-  addedAt: new UnixTime(1726595996), // 2024-09-17T17:59:56Z
+  addedAt: UnixTime(1726595996), // 2024-09-17T17:59:56Z
   hostChain: ProjectId('base'),
   badges: [
     BADGES.L3ParentChain.Base,
@@ -48,7 +48,7 @@ export const clique: Layer3 = underReviewL3({
     // BRIDGE
     {
       address: EthereumAddress('0x29e464a7e6331e80f0e707e2cbdbafb1a6af0a76'),
-      sinceTimestamp: new UnixTime(1710831600),
+      sinceTimestamp: UnixTime(1710831600),
       includeInTotal: false,
       tokens: ['ETH'],
       chain: 'base',

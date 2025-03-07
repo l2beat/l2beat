@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('aptos')
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('aptos')
 export const aptos: Bridge = {
   type: 'bridge',
   id: ProjectId('aptos'),
-  addedAt: new UnixTime(1667124468), // 2022-10-30T10:07:48Z
+  addedAt: UnixTime(1667124468), // 2022-10-30T10:07:48Z
   display: {
     name: 'Aptos (LayerZero)',
     slug: 'aptos',
@@ -90,7 +90,7 @@ export const aptos: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907'),
-        sinceTimestamp: new UnixTime(1666143827),
+        sinceTimestamp: UnixTime(1666143827),
         tokens: [
           'USDC',
           'USDT',
