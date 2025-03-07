@@ -160,6 +160,26 @@ describeDatabase(ActivityRepository.name, (db) => {
       })
     })
   })
+  describe(ActivityRepository.prototype.getSummedUopsCountForProjectAndTimeRange
+    .name, () => {
+    it('should return summed count grouped by projectId for given time range', async () => {
+      await repository.upsertMany([
+        record('a', START, 1),
+        record('a', START + 1 * UnixTime.DAY, 3, 4),
+        record('a', START + 2 * UnixTime.DAY, 4, 6),
+        // project without any uopsCount
+        record('b', START + 1 * UnixTime.DAY, 2),
+        record('b', START + 2 * UnixTime.DAY, 5),
+      ])
+
+      const result = await repository.getSummedUopsCountForProjectAndTimeRange(
+        ProjectId('a'),
+        [START, START + 2 * UnixTime.DAY],
+      )
+
+      expect(result).toEqual(5)
+    })
+  })
 
   describe(ActivityRepository.prototype
     .getSummedUopsCountForProjectsAndTimeRange.name, () => {
