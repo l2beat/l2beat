@@ -1,7 +1,7 @@
 {
   "name": "fluence",
   "chain": "ethereum",
-  "blockNumber": 21895095,
+  "blockNumber": 21994038,
   "configHash": "0xab530fbeaf5f835462147ae9596132eb558e5dc06a2035a8524b60cc3777c5bd",
   "contracts": [
     {
@@ -327,7 +327,7 @@
           "0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"
         ],
         "allowedOutboxList": ["0x50Df2E43aDefee3b6510b637697d30e7dc155e13"],
-        "delayedMessageCount": 287,
+        "delayedMessageCount": 320,
         "inboxHistory": [
           "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
           "0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"
@@ -336,8 +336,8 @@
         "outboxHistory": ["0x50Df2E43aDefee3b6510b637697d30e7dc155e13"],
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerInbox": "0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0",
-        "sequencerMessageCount": 1916,
-        "sequencerReportedSubMessageCount": 6415713
+        "sequencerMessageCount": 2107,
+        "sequencerReportedSubMessageCount": 7083553
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -608,7 +608,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 27,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -689,7 +689,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1916,
+        "batchCount": 2107,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -726,7 +726,7 @@
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 287,
+        "totalDelayedMessagesRead": 320,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -834,13 +834,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 388,
+        "firstUnresolvedNode": 416,
         "inbox": "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895038,
-        "latestConfirmed": 387,
-        "latestNodeCreated": 400,
+        "latestConfirmed": 415,
+        "latestNodeCreated": 427,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x50Df2E43aDefee3b6510b637697d30e7dc155e13",

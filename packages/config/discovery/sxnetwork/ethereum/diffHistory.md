@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3f8322be86cf56687f7c6eae44ebbee84d97f1a4
+Generated with discovered.json: 0x8bd6e756bf48ca718fc2b492d3d9d9f0c9b950b4
 
-# Diff at Thu, 06 Mar 2025 14:20:30 GMT:
+# Diff at Fri, 07 Mar 2025 09:16:35 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@454ef41fea41bcea030780b23fd1f11519ff78d2 block: 21915821
-- current block number: 21915821
+- current block number: 21994047
 
 ## Description
 
@@ -24,7 +24,7 @@ discovery. Values are for block 21915821 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xcae8de8b0b81933e2c513033882799cef2793a36
+Generated with discovered.json: 0x616880a585d57f0acb2a0d774ff8d39cdace2da5
 
 # Diff at Thu, 06 Mar 2025 09:39:07 GMT:
 

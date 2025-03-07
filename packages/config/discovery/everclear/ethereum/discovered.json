@@ -1,7 +1,7 @@
 {
   "name": "everclear",
   "chain": "ethereum",
-  "blockNumber": 21915758,
+  "blockNumber": 21994003,
   "configHash": "0x4f4ad0fe6134f37fd4794a6c62aa88367ec7585d26f0c1d3f183a4c8c34d16ea",
   "contracts": [
     {
@@ -236,7 +236,7 @@
           "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         ],
         "allowedOutboxList": ["0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
-        "delayedMessageCount": 369,
+        "delayedMessageCount": 391,
         "inboxHistory": [
           "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
           "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
@@ -244,8 +244,8 @@
         "outboxHistory": ["0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "sequencerMessageCount": 333,
-        "sequencerReportedSubMessageCount": 814430
+        "sequencerMessageCount": 355,
+        "sequencerReportedSubMessageCount": 875979
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -331,7 +331,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 333,
+        "batchCount": 355,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -368,7 +368,7 @@
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 368,
+        "totalDelayedMessagesRead": 390,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -788,13 +788,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 331,
+        "firstUnresolvedNode": 353,
         "inbox": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895344,
-        "latestConfirmed": 330,
-        "latestNodeCreated": 330,
+        "latestConfirmed": 352,
+        "latestNodeCreated": 352,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
@@ -1003,7 +1003,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 95,
+        "nonce": 117,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"

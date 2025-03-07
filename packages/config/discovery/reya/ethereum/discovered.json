@@ -1,7 +1,7 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 21915807,
+  "blockNumber": 21994045,
   "configHash": "0xe8f7744e1ff1943c619903ea26e8e723e2de0a9587d9fe169a95f4c5ba9b5045",
   "contracts": [
     {
@@ -165,7 +165,7 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 30326,
+        "delayedMessageCount": 31527,
         "inboxHistory": [
           "0x672109752635177ebcb17F2C7e04575A709014BD",
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
@@ -173,8 +173,8 @@
         "outboxHistory": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 28797,
-        "sequencerReportedSubMessageCount": 60264056
+        "sequencerMessageCount": 29986,
+        "sequencerReportedSubMessageCount": 61634475
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -314,13 +314,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2090,
+        "firstUnresolvedNode": 2111,
         "inbox": "0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21894997,
-        "latestConfirmed": 2089,
-        "latestNodeCreated": 2101,
+        "latestConfirmed": 2110,
+        "latestNodeCreated": 2123,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -481,7 +481,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 28797,
+        "batchCount": 29986,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x29156F8dFfE8979F49E3a085dbb10477373a6051"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -512,7 +512,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 30325,
+        "totalDelayedMessagesRead": 31526,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },

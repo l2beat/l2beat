@@ -1,7 +1,7 @@
 {
   "name": "xchain",
   "chain": "ethereum",
-  "blockNumber": 21723964,
+  "blockNumber": 21994049,
   "configHash": "0x9132429702d21f42a2af0b8b92d86e498bbe348dad846530a3f0263877e90028",
   "contracts": [
     {
@@ -242,7 +242,7 @@
           "0x6c8faa6b06d4bDD5Af628ac28954736a0fC0BD6b"
         ],
         "allowedOutboxList": ["0x0b8071337dcB089478Ea740efC10904d9F359141"],
-        "delayedMessageCount": 57,
+        "delayedMessageCount": 58,
         "inboxHistory": [
           "0xE961Ef06c26D0f032F0298c97C41e648d3bb715a",
           "0x6c8faa6b06d4bDD5Af628ac28954736a0fC0BD6b"
@@ -250,8 +250,8 @@
         "outboxHistory": ["0x0b8071337dcB089478Ea740efC10904d9F359141"],
         "rollup": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerInbox": "0x47861E0419BE83d0175818a09221B6DF2EFD7793",
-        "sequencerMessageCount": 1736,
-        "sequencerReportedSubMessageCount": 2122952
+        "sequencerMessageCount": 2031,
+        "sequencerReportedSubMessageCount": 2627483
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -330,7 +330,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 1736,
+        "batchCount": 2031,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x74978411BbBCbC466e79fb855DAe981997100deB"],
         "bridge": "0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1",
@@ -360,7 +360,7 @@
         "rollup": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 57,
+        "totalDelayedMessagesRead": 58,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -477,7 +477,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 78,
+        "nonce": 82,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -710,13 +710,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 468,
+        "firstUnresolvedNode": 545,
         "inbox": "0xE961Ef06c26D0f032F0298c97C41e648d3bb715a",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19938496,
-        "latestConfirmed": 467,
-        "latestNodeCreated": 480,
+        "latestConfirmed": 544,
+        "latestNodeCreated": 555,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0b8071337dcB089478Ea740efC10904d9F359141",
