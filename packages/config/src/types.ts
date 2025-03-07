@@ -384,11 +384,11 @@ export interface StageConfiguredMessage {
 export interface StageSummary {
   stage: Stage
   principle:
-  | {
-    satisfied: boolean | 'UnderReview'
-    description: string
-  }
-  | undefined
+    | {
+        satisfied: boolean | 'UnderReview'
+        description: string
+      }
+    | undefined
   requirements: {
     satisfied: boolean | 'UnderReview'
     description: string
@@ -460,14 +460,14 @@ export interface ProjectScalingStateValidation {
 
 export interface ProjectScalingStateValidationCategory {
   title: // ZK
-  | 'ZK Circuits'
-  | 'Prover Architecture'
-  | 'Verification Keys Generation'
-  | 'Proven Program'
-  // Optimistic
-  | 'State root proposals'
-  | 'Challenges'
-  | 'Fast confirmations'
+    | 'ZK Circuits'
+    | 'Prover Architecture'
+    | 'Verification Keys Generation'
+    | 'Proven Program'
+    // Optimistic
+    | 'State root proposals'
+    | 'Challenges'
+    | 'Fast confirmations'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
@@ -625,7 +625,7 @@ export type OnchainVerifier = {
   chainId: ChainId
   subVerifiers: SubVerifier[]
 } & (
-    | {
+  | {
       verified: 'yes' | 'failed'
       /** Details of entity that performed verification */
       performedBy: {
@@ -633,8 +633,8 @@ export type OnchainVerifier = {
         link: string
       }
     }
-    | { verified: 'no' }
-  )
+  | { verified: 'no' }
+)
 
 export interface SubVerifier {
   name: string
@@ -760,34 +760,34 @@ export interface ProjectFinalityInfo {
 export type ProjectFinalityConfig =
   // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
   | {
-    type:
-    | 'Linea'
-    | 'zkSyncEra'
-    | 'Scroll'
-    | 'zkSyncLite'
-    | 'Starknet'
-    | 'Arbitrum'
-    | 'Loopring'
-    | 'Degate'
-    | 'PolygonZkEvm'
+      type:
+        | 'Linea'
+        | 'zkSyncEra'
+        | 'Scroll'
+        | 'zkSyncLite'
+        | 'Starknet'
+        | 'Arbitrum'
+        | 'Loopring'
+        | 'Degate'
+        | 'PolygonZkEvm'
 
-    minTimestamp: UnixTime
-    lag: number
-    stateUpdate: StateUpdateMode
-  }
+      minTimestamp: UnixTime
+      lag: number
+      stateUpdate: StateUpdateMode
+    }
   | {
-    type: 'OPStack'
-    minTimestamp: UnixTime
-    lag: number
-    // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
-    // you can get this values by calling the RPC method optimism_rollupConfig
-    // rollup config: curl -X POST -H "Content-Type: application/json" --data \
-    // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
-    // <rpc-url> | jq
-    genesisTimestamp: UnixTime
-    l2BlockTimeSeconds: number
-    stateUpdate: StateUpdateMode
-  }
+      type: 'OPStack'
+      minTimestamp: UnixTime
+      lag: number
+      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
+      // you can get this values by calling the RPC method optimism_rollupConfig
+      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
+      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
+      // <rpc-url> | jq
+      genesisTimestamp: UnixTime
+      l2BlockTimeSeconds: number
+      stateUpdate: StateUpdateMode
+    }
 
 /**
  * Determines how the state update should be handled.
