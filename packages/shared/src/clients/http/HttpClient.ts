@@ -13,7 +13,7 @@ export class HttpClient {
     })
 
     if (!res.ok) {
-      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
+      throw new Error(`HTTP error: ${res.status} ${res.statusText} at ${url}`)
     }
 
     return res.json()
