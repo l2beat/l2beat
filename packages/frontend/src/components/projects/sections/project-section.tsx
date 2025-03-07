@@ -23,7 +23,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
     <Component
       id={props.id}
       className={cn(
-        'border-divider bg-surface-primary p-4 primary-card max-md:border-b max-md:last:border-none md:mt-10 md:rounded-lg md:p-8',
+        'border-divider bg-surface-primary px-4 py-8 primary-card max-md:border-b max-md:last:border-none md:mt-10 md:rounded-lg md:p-8',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
