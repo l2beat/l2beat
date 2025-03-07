@@ -55,7 +55,6 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
       <CollapsibleContent className="px-6">
         {hasHistoricalTransactions && (
           <Checkbox
-            id="show-historical-transactions"
             name="show-historical-transactions"
             className="mb-4"
             checked={showHistoricalTransactions}
