@@ -15,7 +15,7 @@ import { BADGES } from '../badges'
 const discovery = new ProjectDiscovery('lightlink')
 
 const upgradesLightLink = {
-  upgradableBy: [{ name: 'LightLinkAdmin', delay: 'no' }],
+  upgradableBy: [{ name: 'LightLinkMultisig2', delay: 'no' }],
 }
 
 const validators = discovery.getContractValue<
