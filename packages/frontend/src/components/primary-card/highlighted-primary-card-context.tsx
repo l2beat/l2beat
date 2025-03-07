@@ -47,13 +47,13 @@ export function HighlightedPrimaryCardProvider({
   useEventListener('hashchange', handleHashChange)
 
   useEffect(() => {
-    if (highlightedId) {
-      const timeoutId = setTimeout(() => {
-        setHighlightedId(undefined)
-      }, 3000)
+    if (!highlightedId) return
 
-      return () => clearTimeout(timeoutId)
-    }
+    const timeoutId = setTimeout(() => {
+      setHighlightedId(undefined)
+    }, 3000)
+
+    return () => clearTimeout(timeoutId)
   }, [highlightedId])
 
   return (

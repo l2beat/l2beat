@@ -1,7 +1,7 @@
 'use client'
 import type { ReactNode } from 'react'
 
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import type { ProjectSectionId } from './types'

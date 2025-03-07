@@ -1,5 +1,5 @@
 import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'

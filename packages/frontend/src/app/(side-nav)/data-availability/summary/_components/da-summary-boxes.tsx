@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { PercentChange } from '~/components/percent-change'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { ChevronIcon } from '~/icons/chevron'
 import { InfoIcon } from '~/icons/info'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'

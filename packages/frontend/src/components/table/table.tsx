@@ -2,7 +2,7 @@ import * as React from 'react'
 import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
-} from '~/providers/highlighted-table-row-provider'
+} from '~/components/table/highlighted-table-row-context'
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './table-tooltip'
 

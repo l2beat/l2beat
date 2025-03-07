@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react'
 import {
   HighlightedPrimaryCardProvider,
   useHighlightedPrimaryCardContext,
-} from '~/providers/highlighted-primary-card-provider'
+} from '~/components/primary-card/highlighted-primary-card-context'
 import { cn } from '~/utils/cn'
 
 export function PrimaryCard(

@@ -8,7 +8,7 @@ import type {
 import { flexRender } from '@tanstack/react-table'
 import { range } from 'lodash'
 import React from 'react'
-import { useHighlightedTableRowContext } from '~/providers/highlighted-table-row-provider'
+import { useHighlightedTableRowContext } from '~/components/table/highlighted-table-row-context'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/sorting-arrows'
