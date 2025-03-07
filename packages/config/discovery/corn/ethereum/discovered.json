@@ -1,8 +1,8 @@
 {
   "name": "corn",
   "chain": "ethereum",
-  "blockNumber": 21642560,
-  "configHash": "0x64d48a98d047d2008e54fb2cca2748456621446d73fd785477c7be1541208350",
+  "blockNumber": 21993984,
+  "configHash": "0x02f34bd6e261cd2357d05d6b7ff10e9ab3e398168b622e661e941327bc50084a",
   "contracts": [
     {
       "name": "wBTC Escrow",
@@ -197,7 +197,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 289,
+        "batchCount": 392,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x9298413c781c241aF6F6733b7df00De5D4A42D93"],
         "bridge": "0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C",
@@ -357,8 +357,8 @@
         "outboxHistory": ["0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d"],
         "rollup": "0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
         "sequencerInbox": "0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
-        "sequencerMessageCount": 289,
-        "sequencerReportedSubMessageCount": 149788
+        "sequencerMessageCount": 392,
+        "sequencerReportedSubMessageCount": 285889
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -446,13 +446,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 103,
+        "firstUnresolvedNode": 201,
         "inbox": "0x37693F11f3D724E55D0B03D5F328D8202C913243",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21224759,
-        "latestConfirmed": 102,
-        "latestNodeCreated": 113,
+        "latestConfirmed": 200,
+        "latestNodeCreated": 211,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d",

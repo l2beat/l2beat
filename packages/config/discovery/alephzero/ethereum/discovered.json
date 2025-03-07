@@ -1,7 +1,7 @@
 {
   "name": "alephzero",
   "chain": "ethereum",
-  "blockNumber": 21988383,
+  "blockNumber": 21993982,
   "configHash": "0xe1d1324ae16d16c40fa52a46d65348e1c737dc59221807dd931d09607ffc88fb",
   "contracts": [
     {
@@ -125,13 +125,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1094,
+        "firstUnresolvedNode": 1097,
         "inbox": "0x56D8EC76a421063e1907503aDd3794c395256AEb",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895035,
-        "latestConfirmed": 1093,
-        "latestNodeCreated": 1093,
+        "latestConfirmed": 1096,
+        "latestNodeCreated": 1096,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e",
@@ -292,7 +292,7 @@
           "0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d"
         ],
         "allowedOutboxList": ["0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e"],
-        "delayedMessageCount": 462,
+        "delayedMessageCount": 463,
         "inboxHistory": [
           "0x56D8EC76a421063e1907503aDd3794c395256AEb",
           "0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d"
@@ -301,8 +301,8 @@
         "outboxHistory": ["0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e"],
         "rollup": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
         "sequencerInbox": "0xF75206c49c1694594E3e69252E519434f1579876",
-        "sequencerMessageCount": 3084,
-        "sequencerReportedSubMessageCount": 7101831
+        "sequencerMessageCount": 3087,
+        "sequencerReportedSubMessageCount": 7125736
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -897,7 +897,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 521,
+        "nonce": 524,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -966,7 +966,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 3084,
+        "batchCount": 3087,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -1003,7 +1003,7 @@
         "rollup": "0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 462,
+        "totalDelayedMessagesRead": 463,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
