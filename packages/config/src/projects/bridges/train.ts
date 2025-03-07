@@ -28,8 +28,9 @@ export const train: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'TBD',
-      description: 'TBD',
+      value: 'User',
+      description:
+        'The Hashed Timelock Contract (HTLC) of the solver must be verified by the user or the DApp themselves (using a trusted RPC, a light client of the destination chain or similar).',
       sentiment: 'warning',
     },
   },
