@@ -117,7 +117,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
 
       <HorizontalSeparator className="my-4" />
-      <ChartStats columns={4}>
+      <ChartStats>
         <ChartStatsItem
           label={
             range === 'max'

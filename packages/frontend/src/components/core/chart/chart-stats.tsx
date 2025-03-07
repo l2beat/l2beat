@@ -1,29 +1,18 @@
-import type { VariantProps } from 'class-variance-authority'
-import { cva } from 'class-variance-authority'
 import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../skeleton'
 
-const chartStatsVariants = cva(
-  'grid rounded-lg bg-surface-secondary p-4 md:gap-4 md:p-6',
-  {
-    variants: {
-      columns: {
-        3: 'md:grid-cols-3',
-        4: 'md:grid-cols-2 lg:grid-cols-4',
-      },
-    },
-  },
-)
-
 interface Props {
-  columns: NonNullable<VariantProps<typeof chartStatsVariants>['columns']>
   children: React.ReactNode
 }
 
-export function ChartStats({ children, columns }: Props) {
-  return <div className={chartStatsVariants({ columns })}>{children}</div>
+export function ChartStats({ children }: Props) {
+  return (
+    <div className="grid rounded-lg bg-surface-secondary p-4 md:grid-cols-2 md:gap-4 md:p-6 lg:grid-cols-4">
+      {children}
+    </div>
+  )
 }
 
 export function ChartStatsItem({
