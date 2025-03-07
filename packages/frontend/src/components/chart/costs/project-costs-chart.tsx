@@ -27,7 +27,7 @@ interface Props {
 export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [range, setRange] = useState<CostsTimeRange>('1y')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const [showDataPosted, setShowDataPosted] = useState(false)
+  const [showDataPosted, setShowDataPosted] = useState(true)
 
   const { data, isLoading } = api.costs.projectChart.useQuery({
     range,
@@ -188,7 +188,7 @@ function DataPostedCheckbox({
   return (
     <Checkbox
       name="showDataPosted"
-      checked={showDataPosted}
+      checked={hasPostedData ? showDataPosted : false}
       onCheckedChange={(state) => setShowDataPosted(!!state)}
       disabled={!hasPostedData}
       labelTitle={!hasPostedData ? 'No data' : undefined}
