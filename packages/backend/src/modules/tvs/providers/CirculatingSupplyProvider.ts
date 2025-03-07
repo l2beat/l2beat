@@ -6,8 +6,9 @@ export class CirculatingSupplyProvider {
 
   async getCirculatingSupply(
     priceId: string,
+    decimals: number,
     timestamp: UnixTime,
-  ): Promise<number> {
+  ): Promise<bigint> {
     const supplies = await this.client.getCirculatingSupplies(
       CoingeckoId(priceId),
 
@@ -18,22 +19,25 @@ export class CirculatingSupplyProvider {
       `${priceId}: Too many supplies fetched ${JSON.stringify(supplies)}`,
     )
 
-    return supplies[0].value
+    return BigInt(supplies[0].value) * 10n ** BigInt(decimals)
   }
 
   async getLatestCirculatingSupplies(
-    priceIds: string[],
-  ): Promise<Map<string, number>> {
-    const coingeckoIds = priceIds.map((priceId) => CoingeckoId(priceId))
+    tokens: { priceId: string; decimals: number }[],
+  ): Promise<Map<string, bigint>> {
+    const coingeckoIds = tokens.map((token) => CoingeckoId(token.priceId))
 
     const latestMarketData = await this.client.getLatestMarketData(coingeckoIds)
 
-    const result = new Map<string, number>()
+    const result = new Map<string, bigint>()
 
-    for (const priceId of priceIds) {
-      const data = latestMarketData.get(CoingeckoId(priceId))
-      assert(data !== undefined, `${priceId}: Price not found`)
-      result.set(priceId, data.circulating)
+    for (const token of tokens) {
+      const data = latestMarketData.get(CoingeckoId(token.priceId))
+      assert(data !== undefined, `${token.priceId}: Price not found`)
+      result.set(
+        token.priceId,
+        BigInt(data.circulating) * 10n ** BigInt(token.decimals),
+      )
     }
 
     return result

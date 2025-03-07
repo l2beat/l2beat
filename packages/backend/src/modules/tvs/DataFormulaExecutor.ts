@@ -109,7 +109,10 @@ export class DataFormulaExecutor {
           )
           const latestCirculatingSupplies =
             await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
-              circulatingSupplies.map((p) => p.priceId),
+              circulatingSupplies.map((p) => ({
+                priceId: p.priceId,
+                decimals: p.decimals,
+              })),
             )
 
           for (const c of circulatingSupplies) {
@@ -181,33 +184,33 @@ export class DataFormulaExecutor {
   async fetchCirculatingSupply(
     config: CirculatingSupplyAmountConfig,
     timestamp: UnixTime,
-  ): Promise<number> {
+  ): Promise<bigint> {
     this.logger.debug(`Fetching circulating supply for ${config.priceId}`)
 
     try {
       return await this.circulatingSupplyProvider.getCirculatingSupply(
         config.priceId,
+        config.decimals,
         timestamp,
       )
     } catch {
       this.logger.error(
         `Error fetching circulating supply for ${config.priceId}. Assuming 0`,
       )
-      return 0
+      return 0n
     }
   }
 
   async fetchTotalSupply(
     config: TotalSupplyAmountConfig,
     blockNumber: number,
-  ): Promise<number> {
+  ): Promise<bigint> {
     this.logger.debug(
       `Fetching total supply for ${config.address} on ${config.chain}`,
     )
     return await this.totalSupplyProvider.getTotalSupply(
       config.chain,
       config.address,
-      config.decimals,
       blockNumber,
     )
   }
@@ -215,7 +218,7 @@ export class DataFormulaExecutor {
   async fetchEscrowBalance(
     config: BalanceOfEscrowAmountFormula,
     blockNumber: number,
-  ): Promise<number> {
+  ): Promise<bigint> {
     this.logger.debug(
       `Fetching balance of ${config.address} token for escrow ${config.escrowAddress} on ${config.chain}`,
     )
@@ -224,14 +227,12 @@ export class DataFormulaExecutor {
         ? await this.balanceProvider.getNativeAssetBalance(
             config.chain,
             config.escrowAddress,
-            config.decimals,
             blockNumber,
           )
         : await this.balanceProvider.getTokenBalance(
             config.chain,
             config.address,
             config.escrowAddress,
-            config.decimals,
             blockNumber,
           )
 

@@ -140,8 +140,8 @@ export class LocalExecutor {
           ...(multicallV3?.address ? { multicallV3: multicallV3.address } : {}),
           batchingEnabled:
             multicallV3 ||
-              chainConfig.name === 'swell' ||
-              chainConfig.name === 'silicon'
+            chainConfig.name === 'swell' ||
+            chainConfig.name === 'silicon'
               ? false
               : true,
         }),

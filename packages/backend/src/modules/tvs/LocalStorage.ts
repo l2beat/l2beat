@@ -4,13 +4,13 @@ import type { DataStorage } from './DataStorage'
 
 interface LocalStorageJSON {
   prices: Record<string, number>
-  amounts: Record<string, number>
+  amounts: Record<string, bigint>
   blocks: Record<string, number>
 }
 
 export class LocalStorage implements DataStorage {
   private prices: Map<string, number>
-  private amounts: Map<string, number>
+  private amounts: Map<string, string>
   private blocks: Map<string, number>
 
   constructor(private readonly filePath: string) {
@@ -39,9 +39,9 @@ export class LocalStorage implements DataStorage {
   async writeAmount(
     id: string,
     timestamp: UnixTime,
-    amount: number,
+    amount: bigint,
   ): Promise<void> {
-    this.amounts.set(key(id, timestamp), amount)
+    this.amounts.set(key(id, timestamp), amount.toString())
     this.saveToFile()
     return await Promise.resolve()
   }
@@ -49,10 +49,10 @@ export class LocalStorage implements DataStorage {
   async getAmount(
     id: string,
     timestamp: UnixTime,
-  ): Promise<number | undefined> {
+  ): Promise<bigint | undefined> {
     const amount = this.amounts.get(key(id, timestamp))
 
-    return await Promise.resolve(amount)
+    return await Promise.resolve(amount ? BigInt(amount) : undefined)
   }
 
   async writeBlockNumber(

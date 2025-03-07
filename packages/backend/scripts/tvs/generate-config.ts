@@ -161,7 +161,14 @@ function writeToFile(
     tokens: nonZeroTokens,
   }
 
-  fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2) + '\n')
+  fs.writeFileSync(
+    filePath,
+    JSON.stringify(
+      wrapper,
+      (_, v) => (typeof v === 'bigint' ? v.toString() : v),
+      2,
+    ) + '\n',
+  )
 }
 
 function readFromFile(filePath: string) {

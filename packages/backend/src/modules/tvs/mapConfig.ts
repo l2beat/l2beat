@@ -156,6 +156,7 @@ export function createEscrowToken(
         {
           type: 'circulatingSupply',
           priceId: legacyToken.coingeckoId,
+          decimals: legacyToken.decimals,
         },
         {
           type: 'balanceOfEscrow',
@@ -225,6 +226,7 @@ export function createToken(
       amountFormula = {
         type: 'circulatingSupply',
         priceId: legacyToken.coingeckoId,
+        decimals: legacyToken.decimals,
       } as CirculatingSupplyAmountFormula
       break
 
