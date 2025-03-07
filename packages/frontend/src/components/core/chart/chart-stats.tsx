@@ -19,14 +19,14 @@ export function ChartStats({ children }: Props) {
 
 export function ChartStatsItem({
   label,
-  value,
+  children,
   tooltip,
   isSynced = true,
   isLoading,
   className,
 }: {
-  label: string
-  value: string | undefined
+  label: React.ReactNode
+  children: React.ReactNode
   tooltip?: string
   isSynced?: boolean
   isLoading?: boolean
@@ -52,10 +52,10 @@ export function ChartStatsItem({
           </Tooltip>
         )}
       </div>
-      {value ? (
+      {children ? (
         <SyncStatusWrapper isSynced={isSynced}>
           <span className="text-sm font-medium text-primary xs:text-lg md:font-bold">
-            {value}
+            {children}
           </span>
         </SyncStatusWrapper>
       ) : isLoading ? (

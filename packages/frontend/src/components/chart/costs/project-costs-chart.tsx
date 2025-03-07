@@ -124,28 +124,26 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               ? `Total ${unitToLabel(unit)}`
               : `${rangeToLabel(range)} total ${unitToLabel(unit)}`
           }
-          value={
-            data?.stats.total[unit].total
-              ? formatCostValue(data?.stats.total[unit].total, unit, 'total')
-              : undefined
-          }
           tooltip="The total cost for the selected time period that the project paid to Ethereum. This includes the costs for calldata, computation, blobs, and overhead."
           isLoading={isLoading}
-        />
+        >
+          {data?.stats.total[unit].total
+            ? formatCostValue(data?.stats.total[unit].total, unit, 'total')
+            : undefined}
+        </ChartStatsItem>
         <ChartStatsItem
           label={`Avg ${unitToLabel(unit)} per L2 UOP`}
-          value={
-            data?.stats.perL2Uop?.[unit]?.total && resolution !== 'hourly'
-              ? formatCostValue(
-                  data.stats.perL2Uop[unit].total,
-                  unit,
-                  'per-l2-uop',
-                )
-              : undefined
-          }
           tooltip="The average cost per L2 user operation for the selected time period."
           isLoading={isLoading}
-        />
+        >
+          {data?.stats.perL2Uop?.[unit]?.total && resolution !== 'hourly'
+            ? formatCostValue(
+                data.stats.perL2Uop[unit].total,
+                unit,
+                'per-l2-uop',
+              )
+            : undefined}
+        </ChartStatsItem>
 
         <ChartStatsItem
           label={
@@ -153,24 +151,22 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               ? 'Total data posted'
               : `${rangeToLabel(range)} data posted`
           }
-          value={
-            data?.stats.total.posted
-              ? formatBytes(data.stats.total.posted)
-              : undefined
-          }
           tooltip="The total amount of data posted to Ethereum for the selected time period."
           isLoading={isLoading}
-        />
+        >
+          {data?.stats.total.posted
+            ? formatBytes(data.stats.total.posted)
+            : undefined}
+        </ChartStatsItem>
         <ChartStatsItem
           label="Avg size per L2 UOP"
-          value={
-            data?.stats.perL2Uop?.posted && resolution !== 'hourly'
-              ? formatBytes(data.stats.perL2Uop.posted)
-              : undefined
-          }
           tooltip="The average posted data size of a L2 user operation for the selected time period."
           isLoading={isLoading}
-        />
+        >
+          {data?.stats.perL2Uop?.posted && resolution !== 'hourly'
+            ? formatBytes(data.stats.perL2Uop.posted)
+            : undefined}
+        </ChartStatsItem>
       </ChartStats>
     </div>
   )
