@@ -1,12 +1,11 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { getDb } from '~/server/database'
 import { getProjectDaThroughputChart } from '../../data-availability/throughput/get-project-da-throughput-chart'
+import { getSummedActivityForProject } from '../activity/get-summed-activity-for-project'
 import { getCostsChart } from './get-costs-chart'
 import { getCostsForProject } from './get-costs-for-project'
 import type { LatestCostsProjectResponse } from './types'
-import { CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
+import { CostsTimeRange } from './utils/range'
 
 export type ProjectCostsChartParams = z.infer<typeof ProjectCostsChartParams>
 export const ProjectCostsChartParams = z.object({
@@ -27,7 +26,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     }),
     getCostsForProject(params.projectId, params.range),
     getProjectDaThroughputChart(params),
-    getLatestActivityForProject(params.projectId, params.range),
+    getSummedActivityForProject(params.projectId, params.range),
   ])
 
   const timestampedDaData = Object.fromEntries(da ?? [])
@@ -115,16 +114,4 @@ function mapToPerL2UopsCost(
     },
     posted: data.posted !== undefined ? data.posted / uopsCount : undefined,
   }
-}
-
-async function getLatestActivityForProject(
-  projectId: string,
-  timeRange: CostsTimeRange,
-) {
-  const db = getDb()
-  const range = getFullySyncedCostsRange(timeRange)
-  return db.activity.getSummedUopsCountForProjectAndTimeRange(
-    ProjectId(projectId),
-    range,
-  )
 }
