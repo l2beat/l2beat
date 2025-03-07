@@ -29,10 +29,8 @@ import { type ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
-export interface AnalyzedContract {
-  type: 'Contract'
+interface AnalyzedCommon {
   address: EthereumAddress
-  name: string
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
   derivedName: string | undefined
@@ -55,19 +53,21 @@ export interface AnalyzedContract {
   category?: DiscoveryCategory
 }
 
+export type AnalyzedContract = {
+  type: 'Contract'
+  name: string
+} & AnalyzedCommon
+
 export interface ExtendedTemplate {
   template: string
   reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
   templateHash: Hash256
 }
 
-interface AnalyzedEOA {
+type AnalyzedEOA = {
   type: 'EOA'
-  name?: string
-  address: EthereumAddress
-  combinedMeta?: ContractMeta
-  category?: DiscoveryCategory
-}
+  name: string | undefined
+} & AnalyzedCommon
 
 export type AddressesWithTemplates = Record<string, Set<string>>
 
@@ -86,14 +86,7 @@ export class AddressAnalyzer {
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
-    if (codeIsEOA(code)) {
-      return {
-        type: 'EOA',
-        name: config.name,
-        address,
-        category: resolveCategory(config),
-      }
-    }
+    const isEOA = codeIsEOA(code)
 
     const templateErrors: Record<string, string> = {}
     let extendedTemplate: ExtendedTemplate | undefined = undefined
@@ -138,9 +131,18 @@ export class AddressAnalyzer {
     const beacons = get$Beacons(proxy?.values)
     const pastUpgrades = get$PastUpgrades(proxy?.values)
 
+    const addresses = []
+    let deployment
+    // TODO(radomski): Maybe this should be rolled into some other place
+    if (!isEOA) {
+      addresses.push(address)
+      deployment = await provider.getDeployment(address)
+    }
+    addresses.push(...implementations)
+
     const sources = await this.sourceCodeService.getSources(
       provider,
-      [address, ...implementations],
+      addresses,
       config.manualSourcePaths,
     )
 
@@ -192,13 +194,9 @@ export class AddressAnalyzer {
       ...(values ?? {}),
     }
 
-    const deployment = await provider.getDeployment(address)
-    const analysisWithoutMeta: Omit<
-      AnalyzedContract,
-      'selfMeta' | 'targetsMeta'
-    > = {
-      type: 'Contract',
-      name: config.name ?? sources.name,
+    const analysisWithoutMeta: Omit<Analysis, 'selfMeta' | 'targetsMeta'> = {
+      type: isEOA ? 'EOA' : 'Contract',
+      name: isEOA ? config.name : (config.name ?? sources.name),
       derivedName:
         config.name !== undefined && config.name !== sources.name
           ? sources.name
@@ -222,7 +220,7 @@ export class AddressAnalyzer {
       category: resolveCategory(config),
     }
 
-    const analysis: AnalyzedContract = {
+    const analysis: Analysis = {
       ...analysisWithoutMeta,
       selfMeta: getSelfMeta(config, analysisWithoutMeta),
       targetsMeta: getTargetsMeta(
@@ -231,7 +229,8 @@ export class AddressAnalyzer {
         config.fields,
         analysisWithoutMeta,
       ),
-    }
+    } as Analysis
+
     return analysis
   }
 

@@ -1,6 +1,6 @@
 import { assert, type Bytes } from '@l2beat/shared-pure'
 
-export function codeIsEOA(code: Bytes): boolean {
+export function codeIsEIP7702(code: Bytes): boolean {
   const startsWithEF = code.slice(0, 1).toString() === '0xef'
   if (startsWithEF) {
     const hasEIP7702Prefix = code.slice(1, 3).toString() === '0x0100'
@@ -18,5 +18,9 @@ export function codeIsEOA(code: Bytes): boolean {
     return true
   }
 
-  return code.length === 0
+  return false
+}
+
+export function codeIsEOA(code: Bytes): boolean {
+  return codeIsEIP7702(code) || code.length === 0
 }

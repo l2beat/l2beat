@@ -25,6 +25,7 @@ import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
 import type { ProxyDetails } from './types'
+import { codeIsEIP7702, codeIsEOA } from '../analysis/codeIsEOA'
 
 type Detector = (
   provider: IProvider,
@@ -70,9 +71,13 @@ export class ProxyDetector {
     address: EthereumAddress,
     manualProxyType?: ManualProxyType,
   ): Promise<ProxyDetails | undefined> {
-    const proxy = manualProxyType
-      ? await this.getManualProxy(provider, address, manualProxyType)
-      : await this.getAutoProxy(provider, address)
+    const eoaProxy = await this.getEOAProxy(provider, address)
+
+    const proxy =
+      eoaProxy ??
+      (manualProxyType
+        ? await this.getManualProxy(provider, address, manualProxyType)
+        : await this.getAutoProxy(provider, address))
 
     if (proxy) {
       adjust$Arrays(proxy.values)
@@ -81,6 +86,21 @@ export class ProxyDetector {
     }
 
     return proxy
+  }
+
+  async getEOAProxy(
+    provider: IProvider,
+    address: EthereumAddress,
+  ): Promise<ProxyDetails | undefined> {
+    const code = await provider.getBytecode(address)
+    const isEOA = codeIsEOA(code)
+    if (isEOA) {
+      if (codeIsEIP7702(code)) {
+        return { type: 'EIP7702 EOA', values: {} }
+      } else {
+        return { type: 'EOA', values: {} }
+      }
+    }
   }
 
   async getAutoProxy(
