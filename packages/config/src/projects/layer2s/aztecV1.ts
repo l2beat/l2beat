@@ -163,6 +163,7 @@ export const aztecV1: Layer2 = {
       SOA.nonGasTokens,
       SOA.derivationSpec,
       SOA.sourceCodeToVerificationKeys,
+      SOA.trustedSetup,
     ],
   },
   stage: getStage(
