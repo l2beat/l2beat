@@ -159,7 +159,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           isLoading={isLoading}
         />
         <ChartStatsItem
-          label="Avg size of data posted"
+          label="Avg size per L2 UOP"
           value={
             data?.stats.perL2Uop?.posted && resolution !== 'hourly'
               ? formatBytes(data.stats.perL2Uop.posted)
