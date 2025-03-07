@@ -2,7 +2,7 @@
   "name": "bob",
   "chain": "ethereum",
   "blockNumber": 20921492,
-  "configHash": "0x1860e0a13d7f1d78d8faf979fc17402cec1b5fbca8a9366b2fe7ce8592c2db1e",
+  "configHash": "0x6445ea9fc543bb2c469c0a70dada64f2520bfa1d3a6ff413538da0b572c012b5",
   "contracts": [
     {
       "name": "L1ERC20TokenBridge",

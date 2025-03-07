@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21845178,
-  "configHash": "0x1690e28f29da802bb197b48e891a7d015a5c9507904c645e9a8f9a0a0312e992",
+  "configHash": "0xadad246a384380f935d8f37a55e5b30adcf9e237aa9c41e05c0dd818582fd6e6",
   "contracts": [
     {
       "name": "ZKProofVerifier",
@@ -124,7 +124,7 @@
         "0x6bcef64b35598149aee2e622e06fb8e414063ee43de09312ca4bbd0306b0eea9"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A timelock with access control. The current minimum delay is 0s.",
+      "description": "A standard timelock with access control. The current minimum delay is 0s.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -141,7 +141,7 @@
         {
           "permission": "interact",
           "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [
             { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
             { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" }
@@ -150,7 +150,7 @@
         {
           "permission": "interact",
           "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
         },
         {
@@ -177,7 +177,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles."
+          "description": "manage all access control roles and change the minimum delay."
         },
         {
           "permission": "interact",
@@ -232,15 +232,15 @@
             "members": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
           }
         },
-        "Canceller": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellerAC": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorAC": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "getMinDelay": 0,
-        "getMinDelayFormatted": "0s",
-        "Proposer": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
+        "minDelayFormatted": "0s",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposerAC": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": [
           "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
@@ -1068,7 +1068,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles."
+          "description": "manage all access control roles and change the minimum delay."
         },
         {
           "permission": "interact",
@@ -1268,7 +1268,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [
             { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
             { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
@@ -1277,7 +1277,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
         },
         {
@@ -2659,7 +2659,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "global/Timelock": "0xe09ef3053ce20980b4ff0f3bb1bf2a3add4269cfcd5921748fe06a7f6a4e9db1",
+    "global/Timelock": "0x63b12b6a368c044f8110c739995963299475aad5416d02a41a689197cb5de026",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
     "opstack/L1ERC721Bridge": "0x75f13310a0c37850676bb421a095318b633336022aeb2fb69c7f961890b6f69c",

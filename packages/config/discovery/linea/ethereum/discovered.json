@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 21434844,
-  "configHash": "0x8d1c6dcfc95119706a493d4350711586e584bd384e87da4756aca6612c84e12a",
+  "configHash": "0xb5a6370ab504492a06178be3d018bf632d1aa7fca53b8670dd52ec822e6957fa",
   "contracts": [
     {
       "name": "TokenBridge",
@@ -244,12 +244,23 @@
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "cancel transactions that are waiting in the Timelock."
+          "description": "cancel queued transactions."
         },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions in the Timelock."
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions."
         },
         {
           "permission": "upgrade",
@@ -585,34 +596,62 @@
     {
       "name": "Timelock",
       "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
-      "template": "linea/Timelock",
+      "template": "global/Timelock",
       "sourceHashes": [
         "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
       ],
-      "description": "A Timelock with currently 0s minimum delay.",
+      "displayName": "L1Timelock",
+      "description": "A standard timelock with access control. The current minimum delay is 0s.",
       "issuedPermissions": [
         {
           "permission": "interact",
           "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "cancel transactions that are waiting in the Timelock.",
+          "description": "cancel queued transactions.",
           "via": []
         },
         {
           "permission": "interact",
           "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "description": "propose transactions in the Timelock.",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "propose transactions.",
           "via": []
         },
         {
           "permission": "interact",
           "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "cancel transactions that are waiting in the Timelock.",
+          "description": "cancel queued transactions.",
           "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
         },
         {
           "permission": "interact",
           "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "propose transactions in the Timelock.",
+          "description": "execute transactions that are ready.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "propose transactions.",
           "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
         }
       ],
@@ -620,6 +659,11 @@
         {
           "permission": "act",
           "from": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay."
         }
       ],
       "sinceTimestamp": 1689150959,
@@ -648,16 +692,17 @@
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "Canceller": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellerAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "delayFormatted": "0s",
-        "Executor": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "getMinDelay": 0,
-        "Proposer": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "minDelayFormatted": "0s",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "proposerAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
       },
       "derivedName": "TimeLock"
     },
@@ -673,13 +718,28 @@
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "cancel transactions that are waiting in the Timelock.",
+          "description": "cancel queued transactions.",
           "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
         },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions in the Timelock.",
+          "description": "execute transactions that are ready.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
           "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
         },
         {
@@ -1343,9 +1403,9 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "global/Timelock": "0x63b12b6a368c044f8110c739995963299475aad5416d02a41a689197cb5de026",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "linea/LineaRollup": "0xaa176c3ecbcb7e80b7d2989b18ee549fd8876f9b36dfc17a554db558d5008937",
-    "linea/Timelock": "0x9f99dc25ab22a20330b33c901cf53ee9df6e1e0bd99da91615e22fed2f9109bd",
     "linea/TokenBridge": "0x344e398a00b4da4b739370df1e59ae2bc56c107d1b1e6839d965eb131f6110e0"
   }
 }

@@ -34,7 +34,14 @@ export async function mapConfig(
   rpcClient?: RpcClient,
 ): Promise<TvsConfig> {
   const CHAINS = await getChains()
+  const getChain = (name: string) => {
+    const chain = CHAINS.get(name)
+    assert(chain)
+    return chain
+  }
+
   const tokens: Token[] = []
+  const escrowTokens: Map<string, Token> = new Map()
 
   for (const escrow of project.tvlConfig.escrows) {
     if (escrow.sharedEscrow) {
@@ -43,8 +50,7 @@ export async function mapConfig(
         continue
       }
 
-      const chainOfL1Escrow = CHAINS.get(escrow.chain)
-      assert(chainOfL1Escrow)
+      const chainOfL1Escrow = getChain(escrow.chain)
 
       if (escrow.sharedEscrow.type === 'AggLayer') {
         logger.info(`Querying for AggLayer L2 tokens addresses`)
@@ -54,7 +60,6 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-
         tokens.push(...aggLayerL2Tokens)
       }
 
@@ -67,7 +72,6 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-
         tokens.push(...elasticChainTokens)
       }
     } else {
@@ -78,23 +82,51 @@ export async function mapConfig(
             `Token address is required ${legacyToken.id}`,
           )
         }
-        const chain = CHAINS.get(escrow.chain)
-        assert(chain)
+        const chain = getChain(escrow.chain)
+        const token = createEscrowToken(project, escrow, chain, legacyToken)
+        const previousToken = escrowTokens.get(token.id)
 
-        tokens.push(createEscrowToken(project, escrow, chain, legacyToken))
+        if (previousToken === undefined) {
+          escrowTokens.set(token.id, token)
+          continue
+        }
+
+        if (previousToken?.amount.type === 'balanceOfEscrow') {
+          escrowTokens.set(token.id, {
+            ...previousToken,
+            amount: {
+              type: 'calculation',
+              operator: 'sum',
+              arguments: [previousToken.amount, token.amount],
+            },
+          })
+          continue
+        }
+
+        if (previousToken?.amount.type === 'calculation') {
+          escrowTokens.set(token.id, {
+            ...previousToken,
+            amount: {
+              ...(previousToken.amount as CalculationFormula),
+              arguments: [
+                ...(previousToken.amount as CalculationFormula).arguments,
+                token.amount,
+              ],
+            },
+          })
+          continue
+        }
       }
     }
   }
 
   for (const legacyToken of project.tvlConfig.tokens) {
-    const chain = CHAINS.get(legacyToken.chainName)
-    assert(chain)
     tokens.push(createToken(project, legacyToken))
   }
 
   return {
     projectId: project.id,
-    tokens,
+    tokens: [...tokens, ...Array.from(escrowTokens.values())],
   }
 }
 
