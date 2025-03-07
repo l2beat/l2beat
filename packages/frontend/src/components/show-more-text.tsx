@@ -91,7 +91,7 @@ export function ShowMoreText({
               </DrawerTrigger>
               <DrawerContent className="pb-8">
                 <DrawerHeader>
-                  <DrawerTitle className="text-lg font-semibold text-primary">
+                  <DrawerTitle className="mb-2.5 text-lg font-semibold text-primary">
                     {pageTitle}
                   </DrawerTitle>
                   <DrawerDescription className={textClassName}>

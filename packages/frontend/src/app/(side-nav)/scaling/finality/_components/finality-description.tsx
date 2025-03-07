@@ -2,7 +2,7 @@ import { CustomLink } from '~/components/link/custom-link'
 import { PageDescription } from '~/components/page-description'
 import { externalLinks } from '~/consts/external-links'
 
-export function FinalityWarning() {
+export function FinalityDescription() {
   return (
     <PageDescription
       pageTitle="Finality"
@@ -24,7 +24,6 @@ export function FinalityWarning() {
           .
         </>
       }
-      warning="testt"
     />
   )
 }

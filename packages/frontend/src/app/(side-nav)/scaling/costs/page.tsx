@@ -8,6 +8,7 @@ import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
 import { ScalingCostsTabs } from './_components/scaling-costs-tabs'
+import { CostsDescription } from './_components/costs-description'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -33,6 +34,7 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
+              <CostsDescription />
               <ScalingCostsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>

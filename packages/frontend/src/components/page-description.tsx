@@ -36,7 +36,7 @@ function Warning({ children, className }: WarningProps) {
   return (
     <div
       className={cn(
-        'flex items-center border border-yellow-700 bg-yellow-200 px-4 py-2 align-top text-[13px] font-medium leading-normal text-yellow-900 md:rounded-lg md:px-6',
+        'flex items-start border border-yellow-700 bg-yellow-200 px-4 py-2 align-top text-[13px] font-medium leading-normal text-yellow-900 md:rounded-lg md:px-6',
         className,
       )}
     >
