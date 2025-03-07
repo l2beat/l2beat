@@ -74,8 +74,19 @@ const cmd = command({
         continue
       }
 
+      // TEMP!
+      const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
+      // if (fs.existsSync(filePath)) {
+      //   logger.info(`Skipping project ${project.id}. Already processed`)
+      //   continue
+      // }
+
       logger.info(`Generating TVS config for project ${project.id}`)
       const tvsConfig = await generateConfigForProject(project, logger)
+
+      if (!fs.existsSync(filePath)) {
+        writeToFile(filePath, project.id, tvsConfig.tokens)
+      }
 
       logger.info('Executing TVS to exclude zero-valued tokens')
       const timestamp =
@@ -90,10 +101,6 @@ const cmd = command({
         .sort((a, b) => a.id.localeCompare(b.id))
 
       assert(currentTvs, 'No data for timestamp')
-
-      // =nil;
-      const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
-      writeToFile(filePath, project.id, currentTvs)
 
       const currentConfig = readFromFile(filePath)
       const mergedTokens = mergeWithExistingConfig(
@@ -118,19 +125,19 @@ async function generateConfigForProject(
 ) {
   const env = getEnv()
 
-  const rpcUrl = project.chainConfig?.apis.find((a) => a.type === 'rpc')?.url
-  const rpc = rpcUrl
+  const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
+  const rpc = rpcApi
     ? new RpcClient({
-      http: new HttpClient(),
-      callsPerMinute: env.integer(
-        `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        120,
-      ),
-      retryStrategy: 'RELIABLE',
-      logger,
-      url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcUrl),
-      sourceName: project.id,
-    })
+        http: new HttpClient(),
+        callsPerMinute: env.integer(
+          `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+          rpcApi.callsPerMinute ?? 120,
+        ),
+        retryStrategy: 'RELIABLE',
+        logger,
+        url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
+        sourceName: project.id,
+      })
     : undefined
 
   return mapConfig(project, logger, rpc)
