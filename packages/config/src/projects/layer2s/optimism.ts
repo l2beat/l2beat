@@ -329,6 +329,7 @@ export const optimism: Layer2 = {
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationLogic,
+      SOA.sourceCodeToProgramHash,
     ],
     notChecked: [SOA.l2Node, SOA.sequencerPolicy, SOA.nonGasTokens],
   },

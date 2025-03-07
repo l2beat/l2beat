@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION } from '../../common'
+import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
@@ -48,6 +48,17 @@ export const ink: Layer2 = opStackL2({
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('INK'),
   isNodeAvailable: true,
+  scopeOfAssessment: {
+    checked: [
+      SOA.l1Contracts,
+      SOA.l2Contracts,
+      SOA.gasToken,
+      SOA.derivationLogic,
+      SOA.sourceCodeToProgramHash,
+    ],
+    notChecked: [SOA.l2Node, SOA.sequencerPolicy, SOA.nonGasTokens],
+  },
+
   stage: getStage(
     {
       stage0: {

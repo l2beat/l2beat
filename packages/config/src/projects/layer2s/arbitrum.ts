@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { CONTRACTS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { CONTRACTS, RISK_VIEW, SOA, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../internalTypes'
@@ -243,6 +243,17 @@ export const arbitrum: Layer2 = orbitStackL2({
       isHistorical: true,
     },
   ],
+  scopeOfAssessment: {
+    checked: [
+      SOA.l1Contracts,
+      SOA.l2Contracts,
+      SOA.gasToken,
+      SOA.derivationLogic,
+      SOA.sourceCodeToProgramHash,
+    ],
+    notChecked: [SOA.l2Node, SOA.sequencerPolicy, SOA.nonGasTokens],
+  },
+
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_PERMISSIONLESS_BOLD(
       l2TimelockDelay,
