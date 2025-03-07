@@ -52,6 +52,7 @@ import type {
   ProjectScalingDa,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
@@ -175,6 +176,7 @@ interface OpStackConfigCommon {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -338,6 +340,7 @@ function opStackCommon(
       templateVars.stage ??
       computedStage(templateVars, postsToEthereum(templateVars)),
     dataAvailability: extractDA(daProvider),
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 

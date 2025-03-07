@@ -49,6 +49,7 @@ import type {
   ProjectScalingDa,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
@@ -175,6 +176,7 @@ interface OrbitStackConfigCommon {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -608,6 +610,7 @@ function orbitStackCommon(
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDA(daProvider),
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
