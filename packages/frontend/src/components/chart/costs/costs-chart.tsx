@@ -202,7 +202,7 @@ function CustomTooltip({
   }, 0)
   return (
     <ChartTooltipWrapper>
-      <div className="flex min-w-40 flex-col gap-1">
+      <div className="flex min-w-44 flex-col gap-1">
         <div>
           {formatTimestamp(label, {
             mode: resolution === 'daily' ? 'date' : 'datetime',
