@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 21723814,
+  "blockNumber": 21995383,
   "configHash": "0x616fe6990257c23ebeb3a9cdd609ae1bb9a4ca943afddba32d99a7e5dbf68ae8",
   "contracts": [
     {
@@ -236,8 +236,15 @@
           "303": 20,
           "317": 20,
           "318": 20,
+          "320": 20,
+          "322": 20,
+          "324": 20,
+          "327": 20,
           "332": 20,
-          "339": 20
+          "339": 20,
+          "340": 20,
+          "362": 20,
+          "367": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -554,11 +561,39 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "320": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "322": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "324": {
+            "proofType": 2,
+            "adapterParams": "0x000100000000000000000000000000000000000000000000000000000000003d0900"
+          },
+          "327": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "332": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "339": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "340": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "362": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "367": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -1196,6 +1231,38 @@
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
             "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
           },
+          "320": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "322": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "324": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "327": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
           "332": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
@@ -1210,6 +1277,30 @@
             "outboundProofType": 2,
             "outboundBlockConfirm": 15,
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "340": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "362": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "367": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 1,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
             "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
           }
         },
@@ -1516,11 +1607,36 @@
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ],
+          "320": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "322": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "324": ["0x07245eEa05826F5984c7c3C8F478b04892e4df89"],
+          "327": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
           "332": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ],
           "339": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "340": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "362": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "367": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ]
@@ -1609,8 +1725,15 @@
           "303": [2],
           "317": [2],
           "318": [2],
+          "320": [2],
+          "322": [2],
+          "324": [2],
+          "327": [2],
           "332": [2],
-          "339": [2]
+          "339": [2],
+          "340": [2],
+          "362": [2],
+          "367": [2]
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1692,8 +1815,15 @@
           "303": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "317": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "318": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "320": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "322": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "324": "0x000000000000000000000000fe5dfa6b4d6be848b57dd378b0798af60f1e6d35",
+          "327": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be"
+          "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be",
+          "340": "0x0000000000000000000000009375af50d3aa53eab296ee80667ccd0d72a12a5b",
+          "362": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "367": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098"
         }
       }
     },
@@ -1708,7 +1838,7 @@
       "sinceBlock": 15719673,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "33991415757336030",
+        "circulatingSupply": "37775053402223996",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -1829,7 +1959,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 884,
+        "nonce": 903,
         "VERSION": "1.3.0"
       }
     },
@@ -1909,12 +2039,12 @@
       "values": {
         "$immutable": true,
         "cap": "100000000000000000000000",
-        "circulatingSupply": "82670332811131019244944",
+        "circulatingSupply": "89347055616926480590840",
         "DAY_INTERVAL": 86400,
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "enable": true,
-        "getQuota": "99999997600000000000000",
+        "getQuota": "99999999700000000000000",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "minter": "0xEc306E46549A7E8f4fCE823D3058f2D134133B17",
         "name": "StakeStone Ether",
@@ -1927,7 +2057,7 @@
         "PT_SET_ENABLE": 2,
         "symbol": "STONE",
         "token": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
-        "totalSupply": "109508697312923148445015",
+        "totalSupply": "106541388696963592958750",
         "useCustomAdapterParams": false
       },
       "derivedName": "Stone"
@@ -1997,7 +2127,7 @@
       "values": {
         "$immutable": true,
         "cap": "4761000000000000000000000000",
-        "circulatingSupply": "316741907922125228264768546",
+        "circulatingSupply": "312079281111310493290251154",
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "GLOBAL_MAX_TOTAL_SUPPLY": "4761000000000000000000000000",
@@ -2009,7 +2139,7 @@
         "PT_SEND": 0,
         "symbol": "WAGMI",
         "token": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
-        "totalSupply": "2639856967206793118294282880",
+        "totalSupply": "2644856967206793118294282880",
         "useCustomAdapterParams": true
       },
       "derivedName": "WagmiToken"
@@ -2038,6 +2168,27 @@
       }
     },
     {
+      "name": "DVN",
+      "address": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+      "sourceHashes": [
+        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
+      ],
+      "sinceTimestamp": 1706489567,
+      "sinceBlock": 19108732,
+      "values": {
+        "$immutable": true,
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "paused": false,
+        "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "quorum": 1,
+        "signerSize": 3,
+        "vid": 101,
+        "workerFeeLib": "0xa7b5189bcA84Cd304D8553977c7C614329750d99"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
       "sourceHashes": [
@@ -2059,6 +2210,14 @@
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
+    },
+    {
+      "name": "",
+      "address": "0xa7b5189bcA84Cd304D8553977c7C614329750d99",
+      "unverified": true,
+      "sinceTimestamp": 1706489555,
+      "sinceBlock": 19108731,
+      "values": { "$immutable": true }
     },
     {
       "name": "Stargate Token",
@@ -2120,7 +2279,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 219,
+        "nonce": 240,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2175,7 +2334,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 159,
+        "nonce": 161,
         "VERSION": "1.3.0"
       }
     },
@@ -2215,7 +2374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 195,
+        "nonce": 197,
         "VERSION": "1.3.0"
       }
     },
@@ -2230,7 +2389,7 @@
       "sinceBlock": 15584943,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "999976258923986795623532463",
+        "circulatingSupply": "999976331524212995623532463",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -2714,6 +2873,82 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": [
+      "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
+      "error DVN_DuplicatedHash(bytes32 executableHash)",
+      "error DVN_InstructionExpired()",
+      "error DVN_InvalidRole(bytes32 role)",
+      "error DVN_InvalidSignatures()",
+      "error DVN_InvalidTarget(address target)",
+      "error DVN_InvalidVid(uint32 vid)",
+      "error DVN_OnlySelf()",
+      "error MultiSig_OnlySigner()",
+      "error MultiSig_QuorumIsZero()",
+      "error MultiSig_SignersSizeIsLessThanQuorum(uint64 signersSize, uint64 quorum)",
+      "error MultiSig_StateAlreadySet(address signer, bool active)",
+      "error MultiSig_UnorderedSigners()",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "error Worker_NotAllowed()",
+      "error Worker_OnlyMessageLib()",
+      "error Worker_RoleRenouncingDisabled()",
+      "event ExecuteFailed(uint256 _index, bytes _data)",
+      "event HashAlreadyUsed(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) param, bytes32 _hash)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] params)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetSupportedOptionTypes(uint32 dstEid, uint8[] optionTypes)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event UpdateQuorum(uint64 _quorum)",
+      "event UpdateSigner(address _signer, bool _active)",
+      "event VerifierFeePaid(uint256 fee)",
+      "event VerifySignaturesFailed(uint256 idx)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(tuple(uint32 dstEid, bytes packetHeader, bytes32 payloadHash, uint64 confirmations, address sender) _param, bytes _options) payable returns (uint256 totalFee)",
+      "function assignJob(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) returns (uint256 totalFee)",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)",
+      "function execute(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures)[] _params)",
+      "function getFee(uint32 _dstEid, uint64 _confirmations, address _sender, bytes _options) view returns (uint256 fee)",
+      "function getFee(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSupportedOptionTypes(uint32 _eid) view returns (uint8[])",
+      "function grantRole(bytes32 _role, address _account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashCallData(uint32 _vid, address _target, bytes _callData, uint256 _expiration) pure returns (bytes32)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function quorum() view returns (uint64)",
+      "function quorumChangeAdmin(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) _param)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 _role, address _account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setQuorum(uint64 _quorum)",
+      "function setSigner(address _signer, bool _active)",
+      "function setSupportedOptionTypes(uint32 _eid, uint8[] _optionTypes)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function signerSize() view returns (uint64)",
+      "function signers(address signer) view returns (bool active)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function usedHashes(bytes32 executableHash) view returns (bool used)",
+      "function verifySignatures(bytes32 _hash, bytes _signatures) view returns (bool, uint8)",
+      "function vid() view returns (uint32)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
     ],
     "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9": [
       "constructor(address owner)",
