@@ -110,7 +110,10 @@ export function getTvsBreakdown(
                * chain from amount config is different for frontend and backend purposes.
                * E.g. Elastic chain and AggLayer where we have shared escrows.
                */
-              chainId: ChainId(chainConverter.toChainId(priceConfig.chain)),
+              chain: {
+                name: priceConfig.chain,
+                id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+              },
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
@@ -138,7 +141,10 @@ export function getTvsBreakdown(
 
           breakdown.external.push({
             assetId: priceConfig.assetId,
-            chainId: ChainId(chainConverter.toChainId(config.chain)),
+            chain: {
+              name: priceConfig.chain,
+              id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+            },
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
@@ -155,7 +161,10 @@ export function getTvsBreakdown(
           const address = getTokenAddress(config)
           breakdown.native.push({
             assetId: priceConfig.assetId,
-            chainId: ChainId(chainConverter.toChainId(config.chain)),
+            chain: {
+              name: priceConfig.chain,
+              id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+            },
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),

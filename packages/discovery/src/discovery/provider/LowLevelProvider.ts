@@ -215,12 +215,20 @@ export class LowLevelProvider {
     return await this.blobClient.getRelevantBlobs(txHash)
   }
 
-  async getCelestiaBlob(height: number, namespace: string, commitment: string) {
+  async celestiaBlobExists(
+    height: number,
+    namespace: string,
+    commitment: string,
+  ) {
     assert(
       this.celestiaApiClient,
       'CelestiaApiClient is not available, configure the .env to include celestia API url.',
     )
-    return await this.celestiaApiClient.getBlob(height, namespace, commitment)
+    return await this.celestiaApiClient.blobExists(
+      height,
+      namespace,
+      commitment,
+    )
   }
 
   async getCelestiaBlockResultLogs(height: number) {

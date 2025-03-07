@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 21872493,
-  "configHash": "0xee7c176d8afaa8554e2375cccbe57898197d098e532d9af41a49f7b6b61f6450",
+  "configHash": "0xcd6e9d90669edb7ef340eac943ee83a93cf77e46b6e9e70d239d3dc4a44c1124",
   "contracts": [
     {
       "name": "PauserRegistry",

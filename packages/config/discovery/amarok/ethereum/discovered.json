@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0x0f63f49c622f4956b4d793fab7a235469a0117fb4d4ddd1e5af98b7753c2a3e5",
+  "configHash": "0xa2ef5246d0361ad2f8b58d6c9693c3073268b96564ccbc17e4d12db270bc5ef9",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",

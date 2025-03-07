@@ -1,23 +1,9 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1Timelock",
-  "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
+  "description": "A standard timelock with access control. The current minimum delay is {{minDelayFormatted}}.",
   "fields": {
-    "timelockAdminAC": {
-      "handler": {
-        "type": "accessControl",
-        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
-      },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "manage all access control roles."
-          }
-        ]
-      }
-    },
-    "getMinDelayFormatted": {
+    "minDelayFormatted": {
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -30,7 +16,22 @@
         "type": "accessControl"
       }
     },
-    "Proposer": {
+    "timelockAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "delay": "{{getMinDelay}}",
+            "description": "manage all access control roles and change the minimum delay."
+          }
+        ]
+      }
+    },
+    "proposerAC": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -44,7 +45,7 @@
         ]
       }
     },
-    "Canceller": {
+    "cancellerAC": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
@@ -58,7 +59,7 @@
         ]
       }
     },
-    "Executor": {
+    "executorAC": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

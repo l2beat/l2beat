@@ -3,9 +3,9 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
+import { ChartStats } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { ClockIcon } from '~/icons/clock'
-import { cn } from '~/utils/cn'
 import {
   formatBpsToMbps,
   formatBytes,
@@ -65,12 +65,7 @@ export function ThroughputSection({
         milestones={milestones}
       />
       <HorizontalSeparator className="my-4" />
-      <div
-        className={cn(
-          'grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:grid-cols-4',
-          'mt-5 rounded-lg bg-surface-secondary p-4 md:p-6',
-        )}
-      >
+      <ChartStats>
         <Detail
           label="Past day avg. throughput"
           value={formatBpsToMbps(pastDayAvgThroughputPerSecond)}
@@ -95,7 +90,7 @@ export function ThroughputSection({
           value={formatBytes(totalPosted)}
           isSynced={syncStatus.isSynced}
         />
-      </div>
+      </ChartStats>
     </ProjectSection>
   )
 }

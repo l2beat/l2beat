@@ -2,7 +2,7 @@
   "name": "edgeless",
   "chain": "ethereum",
   "blockNumber": 21766618,
-  "configHash": "0x6738e1b00e52642a4fd18f272f948eb26d344c890d6bc79d9d3bd358b12c2041",
+  "configHash": "0x61a1f56ff605304e55774614787119d77b896704cc20be13d24eca01927f777c",
   "contracts": [
     {
       "name": "StakingManager",

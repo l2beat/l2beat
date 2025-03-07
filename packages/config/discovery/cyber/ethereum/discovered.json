@@ -2,7 +2,7 @@
   "name": "cyber",
   "chain": "ethereum",
   "blockNumber": 21235446,
-  "configHash": "0xede48cd57484d2225afb2d8ed02ceeaff6aad4bc905a6dbb5549a4d928c85fb4",
+  "configHash": "0xc6d7e347387d3725bec4da4420b409c9525eb621053212e5af5850f04672d8e5",
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",

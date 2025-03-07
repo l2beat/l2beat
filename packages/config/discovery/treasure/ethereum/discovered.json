@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 21786543,
-  "configHash": "0x129afaea57e1d80f2c64ffed539b5674657af445094299baf9ca1f551cdafb28",
+  "configHash": "0xccf4e71c9f37c153033b05b005971326703bd23973033368db72580a61cce5b5",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {

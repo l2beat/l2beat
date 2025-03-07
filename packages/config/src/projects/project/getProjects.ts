@@ -94,6 +94,7 @@ function layer2Or3ToProject(
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
+      scopeOfAssessment: p.scopeOfAssessment,
     },
     scalingStage: p.stage,
     scalingRisks: {
@@ -298,8 +299,16 @@ function toBackendTrackedTxsConfig(
 }
 
 function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
+  const tokens = project.chainConfig
+    ? tokenList.filter(
+        (t) =>
+          t.supply !== 'zero' && t.chainId === project.chainConfig?.chainId,
+      )
+    : []
+
   return {
     escrows: project.config.escrows.map(toProjectEscrow),
+    tokens,
     associatedTokens: project.config.associatedTokens ?? [],
   }
 }

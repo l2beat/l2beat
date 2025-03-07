@@ -38,6 +38,7 @@ import type {
   ProjectPermissions,
   ProjectScalingCapability,
   ProjectScalingPurpose,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
@@ -89,6 +90,7 @@ export interface PolygonCDKStackConfig {
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -454,6 +456,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
     ),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
