@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import type { Bridge } from '../../internalTypes'
 
-export const davos: Bridge = {
+export const train: Bridge = {
   type: 'bridge',
   id: ProjectId('train'),
   addedAt: UnixTime(1741358288), // 2025-03-07T14:38:08Z
