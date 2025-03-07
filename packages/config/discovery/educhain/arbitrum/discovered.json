@@ -1,7 +1,7 @@
 {
   "name": "educhain",
   "chain": "arbitrum",
-  "blockNumber": 313218525,
+  "blockNumber": 313221510,
   "configHash": "0xbda6e93349929ba854777d4eabe77ea8ea8eca573d8047b3f2f621ff0a2587fb",
   "contracts": [
     {
@@ -103,8 +103,8 @@
         "outboxHistory": ["0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 38635,
-        "sequencerReportedSubMessageCount": 8319592
+        "sequencerMessageCount": 38651,
+        "sequencerReportedSubMessageCount": 8322227
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -461,7 +461,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 38635,
+        "batchCount": 38651,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647"],
         "bridge": "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
