@@ -50,7 +50,7 @@
           }
         }
       },
-      "ignoreInWatchMode": ["scalar", "overhead"],
+      "ignoreInWatchMode": ["scalar", "overhead", "getSequencerPubkeyInfos"],
       "ignoreRelatives": [
         "gasPayingToken",
         "disputeGameFactory",
