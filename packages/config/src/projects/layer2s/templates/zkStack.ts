@@ -39,6 +39,7 @@ import type {
   ProjectScalingCapability,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
@@ -115,6 +116,7 @@ export interface ZkStackConfigCommon {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export type Upgradeability = {
@@ -570,6 +572,7 @@ ZKsync Era's ChainAdmin differs from the others as it also has the above *Elasti
     },
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
