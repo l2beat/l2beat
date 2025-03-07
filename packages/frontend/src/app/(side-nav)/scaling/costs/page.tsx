@@ -4,11 +4,11 @@ import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scal
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
+import { CostsDescription } from './_components/costs-description'
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
 import { ScalingCostsTabs } from './_components/scaling-costs-tabs'
-import { CostsDescription } from './_components/costs-description'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
