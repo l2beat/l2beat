@@ -197,9 +197,9 @@ export const degate3: Layer2 = {
     },
   },
   scopeOfAssessment: {
-    checked: [SOA.l1Contracts, SOA.gasToken, SOA.derivationLogic],
+    checked: [SOA.l1Contracts, SOA.gasToken, SOA.derivationSpec],
     notChecked: [
-      SOA.l2Node,
+      SOA.specToSourceCode,
       SOA.sourceCodeToVerificationKeys,
       SOA.trustedSetup,
       SOA.sequencerPolicy,

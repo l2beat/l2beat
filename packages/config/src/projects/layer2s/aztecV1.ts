@@ -159,9 +159,9 @@ export const aztecV1: Layer2 = {
   scopeOfAssessment: {
     checked: [SOA.l1Contracts, SOA.gasToken],
     notChecked: [
-      SOA.l2Node,
+      SOA.specToSourceCode,
       SOA.nonGasTokens,
-      SOA.derivationLogic,
+      SOA.derivationSpec,
       SOA.sourceCodeToVerificationKeys,
     ],
   },

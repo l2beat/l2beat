@@ -1,10 +1,10 @@
 export const SOA = {
   l1Contracts: 'L1 core contracts',
   l2Contracts: 'L2 core contracts',
-  derivationLogic: 'Derivation logic',
+  derivationSpec: 'Derivation logic spec',
   sourceCodeToProgramHash: 'Source code to program hash mapping',
   sourceCodeToVerificationKeys: 'Source code to verification keys mapping',
-  l2Node: 'L2 node logic',
+  specToSourceCode: 'Source code implementation of the spec',
   trustedSetup: 'Trusted setup',
   sequencerPolicy: 'Sequencer policy',
   gasToken: 'Gas token',

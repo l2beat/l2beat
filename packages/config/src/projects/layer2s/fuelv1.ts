@@ -64,7 +64,7 @@ export const fuelv1: Layer2 = {
   },
   scopeOfAssessment: {
     checked: [SOA.l1Contracts, SOA.gasToken],
-    notChecked: [SOA.l2Node, SOA.nonGasTokens, SOA.derivationLogic],
+    notChecked: [SOA.specToSourceCode, SOA.nonGasTokens, SOA.derivationSpec],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,

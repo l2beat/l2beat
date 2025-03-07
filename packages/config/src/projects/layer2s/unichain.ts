@@ -38,10 +38,10 @@ export const unichain: Layer2 = opStackL2({
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
-      SOA.derivationLogic,
+      SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.l2Node, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   stage: getStage(
     {
