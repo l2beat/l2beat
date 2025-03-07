@@ -14,7 +14,10 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/mapConfig'
-import type { Token, TokenValue } from '../../src/modules/tvs/types'
+import type { Token } from '../../src/modules/tvs/types'
+
+// some projects are VERY slow to sync, to get config for them you need to run this script with the project name as an argument
+const PROJECTS_TO_SKIP = ['silicon']
 
 const args = {
   project: positional({
@@ -66,6 +69,11 @@ const cmd = command({
     }
 
     for (const project of projects) {
+      if (!args.project && PROJECTS_TO_SKIP.includes(project.id)) {
+        logger.info(`Skipping project ${project.id}`)
+        continue
+      }
+
       logger.info(`Generating TVS config for project ${project.id}`)
       const tvsConfig = await generateConfigForProject(project, logger)
 
@@ -78,11 +86,15 @@ const cmd = command({
       const currentTvs = tvs
         .get(timestamp)
         ?.filter((token) => token.value !== 0)
+        .map((token) => token.tokenConfig)
+        .sort((a, b) => a.id.localeCompare(b.id))
 
       assert(currentTvs, 'No data for timestamp')
 
       // =nil;
       const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
+      writeToFile(filePath, project.id, currentTvs)
+
       const currentConfig = readFromFile(filePath)
       const mergedTokens = mergeWithExistingConfig(
         currentTvs,
@@ -109,16 +121,16 @@ async function generateConfigForProject(
   const rpcUrl = project.chainConfig?.apis.find((a) => a.type === 'rpc')?.url
   const rpc = rpcUrl
     ? new RpcClient({
-        http: new HttpClient(),
-        callsPerMinute: env.integer(
-          `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-          120,
-        ),
-        retryStrategy: 'RELIABLE',
-        logger,
-        url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcUrl),
-        sourceName: project.id,
-      })
+      http: new HttpClient(),
+      callsPerMinute: env.integer(
+        `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+        120,
+      ),
+      retryStrategy: 'RELIABLE',
+      logger,
+      url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcUrl),
+      sourceName: project.id,
+    })
     : undefined
 
   return mapConfig(project, logger, rpc)
@@ -162,14 +174,10 @@ function readFromFile(filePath: string) {
 }
 
 function mergeWithExistingConfig(
-  tokenValues: TokenValue[],
+  nonZeroTokens: Token[],
   currentConfig: Token[],
   logger: Logger,
 ) {
-  const nonZeroTokens = tokenValues.map((token) => token.tokenConfig)
-
-  assert(nonZeroTokens, 'No data for timestamp')
-
   const resultMap = new Map<string, Token>()
   nonZeroTokens.forEach((token) => {
     if (resultMap.has(token.id)) {
