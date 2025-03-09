@@ -26,35 +26,37 @@ import {
   formatDelay,
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../../internalTypes'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
+import type { ScalingProject } from '../../../internalTypes'
+import type { ProjectScalingDisplay } from '../../../internalTypes'
+import type {
+  Layer2TxConfig,
+  ProjectScalingTechnology,
+} from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
-  CustomDa,
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-  Layer3,
   Milestone,
   ProjectActivityConfig,
+  ProjectCustomDa,
   ProjectDaTrackingConfig,
-  ProjectDataAvailability,
   ProjectEscrow,
+  ProjectFinalityConfig,
   ProjectPermission,
+  ProjectRisk,
+  ProjectScalingCapability,
+  ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
+  ProjectScalingStateDerivation,
+  ProjectScalingStateValidation,
+  ProjectScalingStateValidationCategory,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
-  ScalingProject,
-  ScalingProjectCapability,
-  ScalingProjectDisplay,
-  ScalingProjectPurpose,
-  ScalingProjectRisk,
-  ScalingProjectRiskView,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectStateValidationCategory,
-  ScalingProjectTechnology,
-  StageConfig,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -68,7 +70,7 @@ import {
 } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
-type DAProvider = ProjectDataAvailability & {
+type DAProvider = ProjectScalingDa & {
   riskViewDA: TableReadyValue
   riskViewExitWindow: TableReadyValue
   technology: ProjectTechnologyChoice
@@ -121,7 +123,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
 
 interface OrbitStackConfigCommon {
   addedAt: UnixTime
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
@@ -133,33 +135,33 @@ interface OrbitStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
-  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ScalingProjectDisplay['category']
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingDisplay['category']
   }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
-  finality?: Layer2FinalityConfig
+  finality?: ProjectFinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
-  nonTemplateRiskView?: Partial<ScalingProjectRiskView>
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   activityConfig?: ProjectActivityConfig
   milestones?: Milestone[]
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
   additionalBadges?: Badge[]
-  stage?: StageConfig
-  stateValidation?: ScalingProjectStateValidation
-  stateDerivation?: ScalingProjectStateDerivation
-  nonTemplateContractRisks?: ScalingProjectRisk[]
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
+  stage?: ProjectScalingStage
+  stateValidation?: ProjectScalingStateValidation
+  stateDerivation?: ProjectScalingStateDerivation
+  nonTemplateContractRisks?: ProjectRisk[]
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
   isArchived?: boolean
   /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
   untrackedGasTokens?: string[]
-  customDa?: CustomDa
+  customDa?: ProjectCustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -174,10 +176,11 @@ interface OrbitStackConfigCommon {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  stackedRiskView?: Partial<ScalingProjectRiskView>
+  stackedRiskView?: Partial<ProjectScalingRiskView>
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -258,8 +261,8 @@ function defaultStateValidation(
   currentRequiredStake: number,
   challengePeriod: number,
   existFastConfirmer: boolean = false,
-): ScalingProjectStateValidation {
-  const categories: ScalingProjectStateValidationCategory[] = [
+): ProjectScalingStateValidation {
+  const categories: ProjectScalingStateValidationCategory[] = [
     {
       title: 'State root proposals',
       description: `Whitelisted validators propose state roots as children of a previous state root. A state root can have multiple conflicting children. This structure forms a graph, and therefore, in the contracts, state roots are referred to as nodes. Each proposal requires a stake, currently set to ${utils.formatEther(
@@ -341,7 +344,7 @@ function orbitStackCommon(
   hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
-    ScalingProjectDisplay,
+    ProjectScalingDisplay,
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
@@ -404,6 +407,11 @@ function orbitStackCommon(
       templateVars.discovery.getPermissionsByRole('sequence'),
       'Central actors allowed to submit transaction batches to L1.',
     )
+
+  const isPostBoLD = templateVars.discovery.getContractValue<boolean>(
+    'RollupProxy',
+    'isPostBoLD',
+  )
 
   if (sequencers.accounts.length === 0) {
     throw new Error(
@@ -523,7 +531,47 @@ function orbitStackCommon(
         : ['ETH'],
     },
     technology: {
-      sequencing: templateVars.nonTemplateTechnology?.sequencing,
+      sequencing:
+        templateVars.nonTemplateTechnology?.sequencing ??
+        (() => {
+          const commonDescription = `To force transactions from the host chain, users must first enqueue "delayed" messages in the "delayed" inbox of the Bridge contract. Only authorized Inboxes are allowed to enqueue delayed messages, and the so-called Inbox contract is the one used as the entry point by calling the \`sendMessage\` or \`sendMessageFromOrigin\` functions. If the centralized sequencer doesn't process the request within some time bound, users can call the \`forceInclusion\` function on the SequencerInbox contract to include the message in the canonical chain.`
+          if (!isPostBoLD) {
+            return {
+              name: 'Delayed forced transactions',
+              description:
+                commonDescription +
+                ` The time bound is hardcoded to be ${formatSeconds(selfSequencingDelaySeconds)}.`,
+              references: [],
+              risks: [],
+            } as ProjectTechnologyChoice
+          } else {
+            const buffer = templateVars.discovery.getContractValue<{
+              bufferBlocks: number
+              max: number
+              threshold: number
+              prevBlockNumber: number
+              replenishRateInBasis: number
+              prevSequencedBlockNumber: number
+            }>('SequencerInbox', 'buffer')
+
+            const basis = 10000 // hardcoded in SequencerInbox
+
+            return {
+              name: 'Buffered forced transactions',
+              description:
+                commonDescription +
+                ` The time bound is defined to be the minimum between ${formatSeconds(selfSequencingDelaySeconds)} and the time left in the delay buffer. The delay buffer gets replenished over time and gets consumed every time the sequencer doesn't timely process a message. Only messages processed with a delay greater than ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)} consume the buffer. The buffer is capped at ${formatSeconds(buffer.max * blockNumberOpcodeTimeSeconds)}. The replenish rate is currently set at ${formatSeconds((buffer.replenishRateInBasis / basis) * 1200)} every ${formatSeconds(1200)}. Even if the buffer is fully consumed, messages are still allowed to be delayed up to ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)}.`,
+              references: [
+                {
+                  title:
+                    'Sequencer and censorship resistance - Arbitrum documentation',
+                  url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer',
+                },
+              ],
+              risks: [],
+            } as ProjectTechnologyChoice
+          }
+        })(),
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
@@ -607,6 +655,7 @@ function orbitStackCommon(
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDA(daProvider),
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
@@ -803,7 +852,7 @@ function ifPostsToEthereum<T>(
 function getRiskView(
   templateVars: OrbitStackConfigCommon,
   daProvider: DAProvider,
-): ScalingProjectRiskView {
+): ProjectScalingRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
@@ -1011,7 +1060,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0xe0bc9729',
         functionSignature:
           'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(genesisTimestamp),
+        sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
     {
@@ -1025,7 +1074,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0x8f111f3c',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(genesisTimestamp),
+        sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
     {
@@ -1039,7 +1088,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0x3e5aa082',
         functionSignature:
           'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(genesisTimestamp),
+        sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
     {
@@ -1053,7 +1102,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0x6e620055',
         functionSignature:
           'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: new UnixTime(genesisTimestamp),
+        sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
     {
@@ -1067,7 +1116,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0x917cf8ac',
         functionSignature:
           'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: new UnixTime(genesisTimestamp),
+        sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
     {
@@ -1081,7 +1130,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0x69cacded',
         functionSignature:
           'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
-        sinceTimestamp: new UnixTime(genesisTimestamp),
+        sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
     {
@@ -1095,13 +1144,13 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0xa04cee60',
         functionSignature:
           'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-        sinceTimestamp: new UnixTime(genesisTimestamp),
+        sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
   ]
 }
 
-function extractDA(daProvider: DAProvider): ProjectDataAvailability {
+function extractDA(daProvider: DAProvider): ProjectScalingDa {
   return {
     layer: daProvider.layer,
     bridge: daProvider.bridge,
@@ -1109,7 +1158,9 @@ function extractDA(daProvider: DAProvider): ProjectDataAvailability {
   }
 }
 
-function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
+function computedStage(
+  templateVars: OrbitStackConfigCommon,
+): ProjectScalingStage {
   const postsToL1 = postsToEthereum(templateVars)
 
   if (templateVars.stage !== undefined) {

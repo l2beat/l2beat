@@ -1,14 +1,14 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('pepeunchained')
 
 export const pepeunchained: Layer2 = opStackL2({
-  addedAt: new UnixTime(1739541812), // 2025-02-14T14:03:32Z
+  addedAt: UnixTime(1739541812), // 2025-02-14T14:03:32Z
   daProvider: CELESTIA_DA_PROVIDER,
   celestiaDa: {
     sinceBlock: 21314461,
@@ -44,12 +44,12 @@ export const pepeunchained: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1733132700),
+  genesisTimestamp: UnixTime(1733132700),
   isNodeAvailable: true,
   nonTemplateEscrows: [
     {
       address: EthereumAddress('0x384e3ae4d5efc9471201039b555eae496b2a7240'),
-      sinceTimestamp: new UnixTime(1733132700),
+      sinceTimestamp: UnixTime(1733132700),
       tokens: ['PEPU'],
       chain: 'ethereum',
     },

@@ -18,7 +18,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -43,7 +43,7 @@ const challengePeriod = discovery.getContractValue<number>(
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
   capability: 'universal',
-  addedAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
+  addedAt: UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,
     bridge: DA_BRIDGES.ENSHRINED,
@@ -83,14 +83,14 @@ export const fuel: Layer2 = {
       {
         // ETH bridge
         address: EthereumAddress('0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf'),
-        sinceTimestamp: new UnixTime(1724767871),
+        sinceTimestamp: UnixTime(1724767871),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         // ERC20 bridge
         address: EthereumAddress('0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67'),
-        sinceTimestamp: new UnixTime(1725464663),
+        sinceTimestamp: UnixTime(1725464663),
         tokens: '*',
         chain: 'ethereum',
       },
@@ -114,7 +114,7 @@ export const fuel: Layer2 = {
           formula: 'transfer',
           from: sequencerAddress,
           to: sequencerAddress,
-          sinceTimestamp: new UnixTime(1728323243),
+          sinceTimestamp: UnixTime(1728323243),
         },
       },
       {
@@ -130,7 +130,7 @@ export const fuel: Layer2 = {
           selector: '0xe900ead8',
           functionSignature:
             'function commit(bytes32 blockHash, uint256 commitHeight)',
-          sinceTimestamp: new UnixTime(1725061115),
+          sinceTimestamp: UnixTime(1725061115),
         },
       },
     ],
@@ -139,6 +139,7 @@ export const fuel: Layer2 = {
   chainConfig: {
     name: 'fuel',
     chainId: undefined,
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'fuel',

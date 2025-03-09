@@ -1,7 +1,9 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { unlinkSync } from 'fs'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { BaseProject } from '../../types'
+import { ProjectDatabase } from './ProjectDatabase'
 import { ProjectService } from './ProjectService'
+import type { BaseProject } from './types'
 
 describe(ProjectService.name, () => {
   const projects: BaseProject[] = [
@@ -10,7 +12,7 @@ describe(ProjectService.name, () => {
       slug: 'foochain',
       name: 'Foo Chain',
       shortName: undefined,
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
       isScaling: true,
       isArchived: true,
     },
@@ -19,14 +21,30 @@ describe(ProjectService.name, () => {
       slug: 'barnetwork',
       name: 'Bar Network',
       shortName: 'Bar',
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
       isScaling: true,
     },
   ]
-  const getProjects = () => projects
+
+  let db: ProjectDatabase
+  const TEMP_PATH = '/tmp/projectdb.sqlite'
+  before(async () => {
+    try {
+      unlinkSync(TEMP_PATH)
+    } catch {}
+
+    db = new ProjectDatabase(TEMP_PATH)
+    await db.init()
+    for (const project of projects) {
+      await db.saveProject(project)
+    }
+  })
+  after(() => {
+    unlinkSync(TEMP_PATH)
+  })
 
   it('selects a single project by id', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProject({
       id: ProjectId('foo'),
     })
@@ -35,12 +53,12 @@ describe(ProjectService.name, () => {
       slug: 'foochain',
       name: 'Foo Chain',
       shortName: undefined,
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
     })
   })
 
   it('returns undefined for non-existent project', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProject({
       id: ProjectId('baz'),
     })
@@ -48,7 +66,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns selected items', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProject({
       id: ProjectId('foo'),
       select: ['isScaling'],
@@ -59,7 +77,7 @@ describe(ProjectService.name, () => {
       slug: 'foochain',
       name: 'Foo Chain',
       shortName: undefined,
-      addedAt: UnixTime.ZERO,
+      addedAt: 0,
       isScaling: true,
       isBridge: undefined,
       isArchived: true,
@@ -67,7 +85,7 @@ describe(ProjectService.name, () => {
   })
 
   it('returns multiple projects', async () => {
-    const ps = new ProjectService(getProjects)
+    const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProjects({
       select: ['isScaling'],
       optional: ['isBridge', 'isArchived'],
@@ -78,7 +96,7 @@ describe(ProjectService.name, () => {
         slug: 'foochain',
         name: 'Foo Chain',
         shortName: undefined,
-        addedAt: UnixTime.ZERO,
+        addedAt: 0,
         isScaling: true,
         isBridge: undefined,
         isArchived: true,
@@ -88,7 +106,7 @@ describe(ProjectService.name, () => {
         slug: 'barnetwork',
         name: 'Bar Network',
         shortName: 'Bar',
-        addedAt: UnixTime.ZERO,
+        addedAt: 0,
         isScaling: true,
         isBridge: undefined,
         isArchived: undefined,

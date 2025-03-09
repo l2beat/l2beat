@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
 export const turboprotocol: Layer2 = upcomingL2({
   id: 'turboprotocol',
   capability: 'universal',
-  addedAt: new UnixTime(1728666437),
+  addedAt: UnixTime(1728666437),
   display: {
     name: 'Turbo Protocol',
     slug: 'turboprotocol',

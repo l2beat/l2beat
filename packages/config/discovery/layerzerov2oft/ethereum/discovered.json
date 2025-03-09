@@ -2,7 +2,7 @@
   "name": "layerzerov2oft",
   "chain": "ethereum",
   "blockNumber": 21943925,
-  "configHash": "0x1155515670e367ca1b73543337977c7d3c08c849b64ad65bcae0707ccbcb7f64",
+  "configHash": "0x86e8067fc3b9f4602826d2137b2c06153968a5aa403971b662dbc0dbd7cd3eca",
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
@@ -162,12 +162,22 @@
       }
     },
     {
-      "name": "",
+      "name": "BlockedMessageLib",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-      "unverified": true,
+      "sourceHashes": [
+        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
+      ],
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
-      "values": { "$immutable": true }
+      "values": {
+        "$immutable": true,
+        "messageLibType": 2,
+        "version": {
+          "major": "18446744073709551615",
+          "minor": 255,
+          "endpointVersion": 2
+        }
+      }
     },
     {
       "name": "DineroOFTLockbox",
@@ -1285,6 +1295,13 @@
       "function transferOwnership(address newOwner)",
       "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
       "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
+    ],
+    "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
+      "error LZ_NotImplemented()",
+      "function isSupportedEid(uint32) pure returns (bool)",
+      "function messageLibType() pure returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
     "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",

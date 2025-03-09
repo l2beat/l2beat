@@ -6,13 +6,12 @@ import {
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+import type { Layer3 } from '../../internalTypes'
+import type { Layer2 } from '../../internalTypes'
+import type { Bridge, Layer2TxConfig } from '../../internalTypes'
 import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
-  Bridge,
-  Layer2,
-  Layer2TxConfig,
-  Layer3,
   ProjectCostsInfo,
   ProjectDiscoveryInfo,
   ProjectEscrow,
@@ -64,7 +63,7 @@ function layer2Or3ToProject(
       otherMigration:
         p.reasonsForBeingOther && p.display.category !== 'Other'
           ? {
-              expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
+              expiresAt: PROJECT_COUNTDOWNS.otherMigration,
               pretendingToBe: p.display.category,
               reasons: p.reasonsForBeingOther,
             }
@@ -73,7 +72,7 @@ function layer2Or3ToProject(
     display: {
       description: p.display.description,
       links: p.display.links,
-      badges: p.badges ?? [],
+      badges: (p.badges ?? []).sort(badgesCompareFn),
     },
     contracts: p.contracts,
     permissions: p.permissions,
@@ -84,7 +83,7 @@ function layer2Or3ToProject(
       capability: p.capability,
       isOther:
         p.display.category === 'Other' ||
-        (PROJECT_COUNTDOWNS.otherMigration.lt(UnixTime.now()) &&
+        (PROJECT_COUNTDOWNS.otherMigration < UnixTime.now() &&
           !!p.reasonsForBeingOther),
       hostChain: getHostChain(
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
@@ -95,10 +94,7 @@ function layer2Or3ToProject(
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
-      badges:
-        p.badges && p.badges.length > 0
-          ? p.badges.sort(badgesCompareFn)
-          : undefined,
+      scopeOfAssessment: p.scopeOfAssessment,
     },
     scalingStage: p.stage,
     scalingRisks: {
@@ -244,8 +240,8 @@ function toBackendTrackedTxsConfig(
     config.uses.map((use) => {
       const base = {
         projectId,
-        sinceTimestamp: config.query.sinceTimestamp.toNumber(),
-        untilTimestamp: config.query.untilTimestamp?.toNumber(),
+        sinceTimestamp: config.query.sinceTimestamp,
+        untilTimestamp: config.query.untilTimestamp,
         type: use.type,
         subtype: use.subtype,
         costMultiplier:
@@ -303,8 +299,16 @@ function toBackendTrackedTxsConfig(
 }
 
 function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
+  const tokens = project.chainConfig
+    ? tokenList.filter(
+        (t) =>
+          t.supply !== 'zero' && t.chainId === project.chainConfig?.chainId,
+      )
+    : []
+
   return {
     escrows: project.config.escrows.map(toProjectEscrow),
+    tokens,
     associatedTokens: project.config.associatedTokens ?? [],
   }
 }
@@ -339,7 +343,8 @@ function toProjectEscrow(escrow: ProjectEscrow): ProjectTvlEscrow {
           token.chainId === escrow.chainId &&
           (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
           !escrow.excludedTokens?.includes(token.symbol) &&
-          !token.untilTimestamp?.lt(escrow.sinceTimestamp),
+          (!token.untilTimestamp ||
+            token.untilTimestamp > escrow.sinceTimestamp),
       )
       .map((token) => ({
         ...token,

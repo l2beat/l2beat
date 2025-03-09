@@ -30,9 +30,7 @@ function getVerifierLastUsedDaysAgo(
   }
 
   const secondsInDay = 60 * 60 * 24
-  const days = Math.floor(
-    (UnixTime.now().toNumber() - timestamp.toNumber()) / secondsInDay,
-  )
+  const days = Math.floor((UnixTime.now() - timestamp) / secondsInDay)
 
   return days
 }

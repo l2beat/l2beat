@@ -2,7 +2,7 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -46,7 +46,7 @@ assert(
 )
 
 export const zksyncera: Layer2 = zkStackL2({
-  addedAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
+  addedAt: UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
   display: {
@@ -81,7 +81,7 @@ export const zksyncera: Layer2 = zkStackL2({
     name: 'zksync2',
     chainId: 324,
     explorerUrl: 'https://era.zksync.network',
-    sinceTimestamp: new UnixTime(1676384520),
+    sinceTimestamp: UnixTime(1676384520),
     multicallContracts: [
       {
         version: '3',
@@ -120,7 +120,7 @@ export const zksyncera: Layer2 = zkStackL2({
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x41527B2d03844dB6b0945f25702cB958b6d55989'),
-      sinceTimestamp: new UnixTime(1698058151),
+      sinceTimestamp: UnixTime(1698058151),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -129,16 +129,16 @@ export const zksyncera: Layer2 = zkStackL2({
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
-      sinceTimestamp: new UnixTime(1676268575),
+      sinceTimestamp: UnixTime(1676268575),
       tokens: ['ETH'],
       description: 'Main rollup contract of ZKsync Era.',
       ...zkStackUpgrades,
       isHistorical: true,
-      untilTimestamp: new UnixTime(1717922458),
+      untilTimestamp: UnixTime(1717922458),
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
-      sinceTimestamp: new UnixTime(1676367083),
+      sinceTimestamp: UnixTime(1676367083),
       tokens: '*',
       description:
         'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
@@ -154,8 +154,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x701f58c5',
         functionSignature:
           'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
-        sinceTimestamp: new UnixTime(1701721931),
-        untilTimestamp: new UnixTime(1710169104),
+        sinceTimestamp: UnixTime(1701721931),
+        untilTimestamp: UnixTime(1710169104),
       },
     },
     {
@@ -166,8 +166,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x701f58c5',
         functionSignature:
           'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
-        sinceTimestamp: new UnixTime(1710169104),
-        untilTimestamp: new UnixTime(1717681823),
+        sinceTimestamp: UnixTime(1710169104),
+        untilTimestamp: UnixTime(1717681823),
       },
     },
     {
@@ -178,8 +178,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x6edd4f12',
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
-        sinceTimestamp: new UnixTime(1717681823),
-        untilTimestamp: new UnixTime(1722410363), // first cronoszkevm batch commit to the shared ValidatorTimelock https://etherscan.io/tx/0x9c69ea744cdfa74e328234f546b4313dab448d2126a2a1c4dda706f9d233c3a5
+        sinceTimestamp: UnixTime(1717681823),
+        untilTimestamp: UnixTime(1722410363), // first cronoszkevm batch commit to the shared ValidatorTimelock https://etherscan.io/tx/0x9c69ea744cdfa74e328234f546b4313dab448d2126a2a1c4dda706f9d233c3a5
       },
     },
     {
@@ -191,7 +191,7 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x6edd4f12',
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
-        sinceTimestamp: new UnixTime(1722410363),
+        sinceTimestamp: UnixTime(1722410363),
       },
     },
     {
@@ -205,8 +205,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x7739cbe7',
         functionSignature:
           'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
-        sinceTimestamp: new UnixTime(1679602559),
-        untilTimestamp: new UnixTime(1701718427),
+        sinceTimestamp: UnixTime(1679602559),
+        untilTimestamp: UnixTime(1701718427),
       },
     },
     {
@@ -220,8 +220,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x7f61885c',
         functionSignature:
           'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-        sinceTimestamp: new UnixTime(1701258299),
-        untilTimestamp: new UnixTime(1710165419),
+        sinceTimestamp: UnixTime(1701258299),
+        untilTimestamp: UnixTime(1710165419),
       },
     },
     {
@@ -235,8 +235,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x7f61885c',
         functionSignature:
           'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-        sinceTimestamp: new UnixTime(1710165419),
-        untilTimestamp: new UnixTime(1717694375),
+        sinceTimestamp: UnixTime(1710165419),
+        untilTimestamp: UnixTime(1717694375),
       },
     },
     {
@@ -250,8 +250,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0xc37533bb',
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], (uint256[] recursiveAggregationInput, uint256[] serializedProof))',
-        sinceTimestamp: new UnixTime(1717694375),
-        untilTimestamp: new UnixTime(1722410363),
+        sinceTimestamp: UnixTime(1717694375),
+        untilTimestamp: UnixTime(1722410363),
       },
     },
     {
@@ -266,7 +266,7 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0xc37533bb',
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
-        sinceTimestamp: new UnixTime(1722410363),
+        sinceTimestamp: UnixTime(1722410363),
       },
     },
     {
@@ -280,8 +280,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0xce9dcf16',
         functionSignature:
           'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
-        sinceTimestamp: new UnixTime(1679602559),
-        untilTimestamp: new UnixTime(1701719687),
+        sinceTimestamp: UnixTime(1679602559),
+        untilTimestamp: UnixTime(1701719687),
       },
     },
     {
@@ -295,8 +295,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0xc3d93e7c',
         functionSignature:
           'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-        sinceTimestamp: new UnixTime(1701258299),
-        untilTimestamp: new UnixTime(1710167255),
+        sinceTimestamp: UnixTime(1701258299),
+        untilTimestamp: UnixTime(1710167255),
       },
     },
     {
@@ -310,8 +310,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0xc3d93e7c',
         functionSignature:
           'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-        sinceTimestamp: new UnixTime(1710167255),
-        untilTimestamp: new UnixTime(1717683407),
+        sinceTimestamp: UnixTime(1710167255),
+        untilTimestamp: UnixTime(1717683407),
       },
     },
     {
@@ -325,8 +325,8 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x6f497ac6',
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)',
-        sinceTimestamp: new UnixTime(1717683407),
-        untilTimestamp: new UnixTime(1722410363),
+        sinceTimestamp: UnixTime(1717683407),
+        untilTimestamp: UnixTime(1722410363),
       },
     },
     {
@@ -341,14 +341,14 @@ export const zksyncera: Layer2 = zkStackL2({
         selector: '0x6f497ac6',
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
-        sinceTimestamp: new UnixTime(1722410363),
+        sinceTimestamp: UnixTime(1722410363),
       },
     },
   ],
   finality: {
     type: 'zkSyncEra',
     stateUpdate: 'zeroed',
-    minTimestamp: new UnixTime(1708556400),
+    minTimestamp: UnixTime(1708556400),
     lag: 0,
   },
   milestones: [

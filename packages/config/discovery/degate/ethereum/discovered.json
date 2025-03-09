@@ -2,7 +2,7 @@
   "name": "degate",
   "chain": "ethereum",
   "blockNumber": 18939731,
-  "configHash": "0x910e0aa93926c2e4fff5f6fe80e5b52345344fb2e6f35b29a1dd015e8ea455d0",
+  "configHash": "0xad1dd1bb16be7eb19ad045e8468c42ed4cb971e22f99c443d38ed1596532509d",
   "contracts": [
     {
       "name": "BlockVerifier",

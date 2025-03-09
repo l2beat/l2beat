@@ -11,7 +11,7 @@ import { CustomLink } from '~/components/link/custom-link'
 import { Square } from '~/components/square'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -26,7 +26,7 @@ interface ValueSecuredBreakdown {
 }
 
 export interface ValueSecuredSummaryProps {
-  tvs: NonNullable<ScalingProjectEntry['header']['tvs']> | undefined
+  tvs: NonNullable<ProjectScalingEntry['header']['tvs']> | undefined
   detailedBreakdownHref: string
   isArchived?: boolean
 }
@@ -43,18 +43,18 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
       icon: <Square variant="canonical" size="small" />,
     },
     {
-      label: 'Externally Bridged',
-      shortLabel: 'External',
-      value: formatCurrency(params.breakdown.external, 'usd'),
-      usage: params.usage.external,
-      icon: <Square variant="external" size="small" />,
-    },
-    {
       label: 'Natively Minted',
       shortLabel: 'Native',
       value: formatCurrency(params.breakdown.native, 'usd'),
       usage: params.usage.native,
       icon: <Square variant="native" size="small" />,
+    },
+    {
+      label: 'Externally Bridged',
+      shortLabel: 'External',
+      value: formatCurrency(params.breakdown.external, 'usd'),
+      usage: params.usage.external,
+      icon: <Square variant="external" size="small" />,
     },
   ]
 

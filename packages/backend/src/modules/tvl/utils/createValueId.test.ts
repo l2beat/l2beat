@@ -5,7 +5,6 @@ import {
   type PriceConfigEntry,
   ProjectId,
   type TotalSupplyEntry,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -99,8 +98,8 @@ function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
     dataSource: 'chain',
     project: ProjectId('project'),
     source: 'canonical' as const,
-    sinceTimestamp: UnixTime.ZERO,
-    untilTimestamp: UnixTime.ZERO,
+    sinceTimestamp: 0,
+    untilTimestamp: 0,
     includeInTotal: true,
     decimals: 18,
     symbol: 'SYMBOL',
@@ -118,7 +117,7 @@ function mockPrice(v?: Partial<PriceConfigEntry>): PriceConfigEntry {
     chain: 'chain',
     type: 'coingecko',
     coingeckoId: CoingeckoId('id'),
-    sinceTimestamp: UnixTime.ZERO,
+    sinceTimestamp: 0,
     assetId: AssetId('test'),
     ...v,
   }

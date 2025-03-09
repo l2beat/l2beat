@@ -2,7 +2,7 @@
   "name": "form",
   "chain": "ethereum",
   "blockNumber": 21916627,
-  "configHash": "0x059849886d8fbef7278ca72cc586b45b245a7e3701142dee335482703e9ddb12",
+  "configHash": "0x8cb62571fbc6c7d033c4b9505a1fe06f71346cea81088ec929e9f5139209cb39",
   "contracts": [
     {
       "name": "AddressManager",

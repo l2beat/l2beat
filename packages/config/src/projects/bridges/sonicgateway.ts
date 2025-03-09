@@ -7,7 +7,7 @@ import {
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -41,7 +41,7 @@ const fastLaneFee =
 export const sonicgateway: Bridge = {
   type: 'bridge',
   id: ProjectId('sonicgateway'),
-  addedAt: new UnixTime(1738059875), // 2025-01-28T10:24:35+00:00
+  addedAt: UnixTime(1738059875), // 2025-01-28T10:24:35+00:00
   display: {
     name: 'Sonic Gateway',
     slug: 'sonicgateway',

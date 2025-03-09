@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 21744158,
-  "configHash": "0xa216057668ff91319e0b6551dfce86404e2ddb2010f50f64c6bd86940f74c658",
+  "blockNumber": 21981875,
+  "configHash": "0x86a3f29da3f3a23eee23c603128777a3ea885fa3a4b22af526171be0c0ad2625",
   "contracts": [
     {
       "name": "OmniBridgeGovernance",
@@ -195,7 +195,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       }
     },
@@ -353,7 +353,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5"],
+        "adapters": ["0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0x0a74748a93656acd952c12f9e5b2b6a3eead25ba1c94ffa6ddb26f454a179cae",
@@ -448,7 +448,6 @@
       ]
     },
     { "address": "0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4" },
-    { "address": "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5" },
     { "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6" },
     { "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6" },
     { "address": "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b" },
@@ -468,6 +467,7 @@
     { "address": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe" },
     { "address": "0xBF3d6f830CE263CAE987193982192Cd990442B53" },
     { "address": "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8" },
+    { "address": "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A" },
     { "address": "0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE" },
     { "address": "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709" },
     { "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A" },

@@ -31,7 +31,8 @@
     "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": "Committee",
     "0xb9431E19B29B952d9358025f680077C3Fd37292f": "TreasuryVester",
     "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9": "WrappedEthereumDydxToken",
-    "0xc2f5F3505910Da80F0592a3Cc023881C50b16505": "GovernanceStrategyV2"
+    "0xc2f5F3505910Da80F0592a3Cc023881C50b16505": "GovernanceStrategyV2",
+    "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C": "FinalizableGpsFactAdapter"
   },
   "overrides": {
     "StarkPerpetual": {
