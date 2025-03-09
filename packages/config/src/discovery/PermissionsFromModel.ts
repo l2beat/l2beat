@@ -111,6 +111,7 @@ export class PermissionsFromModel implements PermissionRegistry {
   ): string {
     const result: string[] = []
     const permission = fact.params[1] as Permission
+    const giver = fact.params[2]
     const delay = Number(fact.params[3])
     const description = fact.params[4]
     const _totalDelay = fact.params[5]
@@ -127,7 +128,7 @@ export class PermissionsFromModel implements PermissionRegistry {
         `has permission ${permission} from`,
     )
     if (PermissionsRequiringTarget.includes(permission)) {
-      result.push(fact.params[2].map((x) => `@@${x}`).join(', '))
+      result.push(giver.map((x) => `@@${x}`).join(', '))
     }
     if (delay > 0) {
       result.push(formatPermissionDelay(delay))
