@@ -81,7 +81,7 @@ export class PermissionsFromModel implements PermissionRegistry {
 
   describePermissions(
     contractOrEoa: ContractParameters | EoaParameters,
-    _includeDirectPermissions: boolean = true, // TODO: do we need this?
+    includeDirectPermissions: boolean = true,
   ): string[] {
     const id = this.modelIdRegistry.getModelId(
       this.projectDiscovery.chain,
@@ -91,12 +91,16 @@ export class PermissionsFromModel implements PermissionRegistry {
       'filteredTransitivePermission',
       [id],
     )
-    const grouped = groupFacts(transitivePermissionFacts, 2)
+    const grouped = groupFacts(
+      transitivePermissionFacts,
+      2,
+    ) as GroupedTransitivePermissionFact[]
     const result: string[] = []
     for (const fact of grouped) {
-      const rendered = this.renderGroupedTransitivePermissionFact(
-        fact as GroupedTransitivePermissionFact,
-      )
+      if (fact.params[7] === 'nonFinal' && !includeDirectPermissions) {
+        continue
+      }
+      const rendered = this.renderGroupedTransitivePermissionFact(fact)
       result.push(this.modelIdRegistry.replaceIdsWithNames(rendered))
     }
     return result
