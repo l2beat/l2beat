@@ -60,7 +60,7 @@ export class PermissionsFromModel implements PermissionRegistry {
   getPermissionedContracts(): EthereumAddress[] {
     const chain = this.projectDiscovery.chain
     return this.knowledgeBase
-      .getFacts('showContractInPermissionsSection') // TODO: simply use permission facts
+      .getFacts('showContractInPermissionsSection')
       .map((fact) =>
         this.modelIdRegistry.getAddressData(fact.params[0] as string),
       )
