@@ -14,12 +14,12 @@
     value: "None"
   }
   proposerFailure: {
-    description: "The Polygon PoS network is composed of 105 validators. Blocks are included in the chain only if signed by 2/3+1 of the network stake. It's currently not possible to join the set if the validator cap is reached. The current validator cap is set to 105. In the event of a failure in reaching consensus, withdrawals are frozen."
+    description: "The Polygon PoS network is composed of 104 validators. Blocks are included in the chain only if signed by 2/3+1 of the network stake. It's currently not possible to join the set if the validator cap is reached. The current validator cap is set to 105. In the event of a failure in reaching consensus, withdrawals are frozen."
     sentiment: "warning"
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone. In Polygon PoS, the sequencers network corresponds to the PoS validators network, which is composed of 105 members."
+    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone. In Polygon PoS, the sequencers network corresponds to the PoS validators network, which is composed of 104 members."
     sentiment: "warning"
     value: "Enqueue via L1"
   }
