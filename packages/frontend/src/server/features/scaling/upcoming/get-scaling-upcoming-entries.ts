@@ -1,10 +1,10 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
 } from '@l2beat/config'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 
@@ -18,13 +18,13 @@ export async function getScalingUpcomingEntries() {
     .map((project) => getScalingUpcomingEntry(project))
     .sort((a, b) => b.initialOrder - a.initialOrder)
 
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
   initialOrder: number
-  category: ScalingProjectCategory
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  stack: ProjectScalingStack | undefined
   purposes: string[]
 }
 
@@ -36,6 +36,6 @@ function getScalingUpcomingEntry(
     category: project.scalingInfo.type,
     stack: project.scalingInfo.stack,
     purposes: project.scalingInfo.purposes,
-    initialOrder: project.addedAt.toNumber(),
+    initialOrder: project.addedAt,
   }
 }

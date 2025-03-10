@@ -13,16 +13,18 @@ const Checkbox = ({
   children,
   name,
   labelTitle,
+  id: propsId,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
   name: string
   labelTitle?: string
 }) => {
   const id = useId()
+  const usedId = propsId ?? id
   const { track } = useTracking()
   return (
     <label
-      htmlFor={id}
+      htmlFor={usedId}
       className={cn(
         'flex h-8 w-max cursor-pointer select-none items-center space-x-2 rounded-lg py-1 pl-2 pr-3',
         'bg-surface-primary primary-card:bg-surface-secondary',
@@ -32,7 +34,7 @@ const Checkbox = ({
       title={labelTitle}
     >
       <CheckboxPrimitive.Root
-        id={id}
+        id={usedId}
         ref={ref}
         className={cn(
           'peer size-5 shrink-0 rounded bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',

@@ -3,15 +3,17 @@ import {
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type Token, UnixTime } from '@l2beat/shared-pure'
+import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
-import { tokenList } from '../../tokens/tokens'
+import type {
+  Bridge,
+  Layer2TxConfig,
+  ScalingProject,
+} from '../../internalTypes'
+import { getTokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
-  Bridge,
-  Layer2,
-  Layer2TxConfig,
-  Layer3,
   ProjectCostsInfo,
   ProjectDiscoveryInfo,
   ProjectEscrow,
@@ -35,13 +37,24 @@ import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
+  runConfigAdjustments()
+
+  const chains = [...refactored, ...layer2s, ...layer3s, ...bridges]
+    .map((p) => p.chainConfig)
+    .filter((c) => c !== undefined)
+  const tokenList = getTokenList(chains)
+
   return refactored
-    .concat(layer2s.map(layer2Or3ToProject))
-    .concat(layer3s.map(layer2Or3ToProject))
-    .concat(bridges.map(bridgeToProject))
+    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], tokenList)))
+    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, tokenList)))
+    .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
 }
 
-function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
+function layer2Or3ToProject(
+  p: ScalingProject,
+  layer2s: ScalingProject[],
+  tokenList: Token[],
+): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -58,7 +71,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       otherMigration:
         p.reasonsForBeingOther && p.display.category !== 'Other'
           ? {
-              expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
+              expiresAt: PROJECT_COUNTDOWNS.otherMigration,
               pretendingToBe: p.display.category,
               reasons: p.reasonsForBeingOther,
             }
@@ -67,7 +80,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     display: {
       description: p.display.description,
       links: p.display.links,
-      badges: p.badges ?? [],
+      badges: (p.badges ?? []).sort(badgesCompareFn),
     },
     contracts: p.contracts,
     permissions: p.permissions,
@@ -78,35 +91,46 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       capability: p.capability,
       isOther:
         p.display.category === 'Other' ||
-        (PROJECT_COUNTDOWNS.otherMigration.lt(UnixTime.now()) &&
+        (PROJECT_COUNTDOWNS.otherMigration < UnixTime.now() &&
           !!p.reasonsForBeingOther),
-      hostChain: getHostChain(
-        p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
-      ),
+      hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.stack,
       raas: getRaas(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
-      badges:
-        p.badges && p.badges.length > 0
-          ? p.badges.sort(badgesCompareFn)
-          : undefined,
+      scopeOfAssessment: p.scopeOfAssessment,
     },
     scalingStage: p.stage,
     scalingRisks: {
       self: p.riskView,
-      host: undefined,
-      stacked: undefined,
+      host:
+        p.type === 'layer3'
+          ? layer2s.find((x) => x.id === p.hostChain)?.riskView
+          : undefined,
+      stacked: p.type === 'layer3' ? p.stackedRiskView : undefined,
     },
     scalingDa: p.dataAvailability,
+    scalingTechnology: {
+      warning: p.display.warning,
+      detailedDescription: p.display.detailedDescription,
+      architectureImage: p.display.architectureImage,
+      ...p.technology,
+      sequencingImage: p.display.sequencingImage,
+      stateDerivation: p.stateDerivation,
+      stateValidation: p.stateValidation,
+      stateValidationImage: p.display.stateValidationImage,
+      upgradesAndGovernance:
+        p.type === 'layer2' ? p.upgradesAndGovernance : undefined,
+      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
+    },
     customDa: p.customDa,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
-    tvlConfig: getTvlConfig(p),
+    tvlConfig: getTvlConfig(p, tokenList),
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
@@ -129,13 +153,13 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
   }
 }
 
-function getLivenessInfo(p: Layer2 | Layer3): ProjectLivenessInfo | undefined {
+function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
   if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
     return p.display.liveness ?? {}
   }
 }
 
-function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
+function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
   if (
     p.type === 'layer2' &&
     (p.display.category === 'Optimistic Rollup' ||
@@ -149,7 +173,7 @@ function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
 }
 
 function getFinality(
-  p: Layer2 | Layer3,
+  p: ScalingProject,
 ): Pick<BaseProject, 'finalityConfig' | 'finalityInfo'> {
   if (
     p.type === 'layer2' &&
@@ -166,7 +190,7 @@ function getFinality(
   return {}
 }
 
-function bridgeToProject(p: Bridge): BaseProject {
+function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -190,6 +214,10 @@ function bridgeToProject(p: Bridge): BaseProject {
       destination: p.technology.destination,
       validatedBy: p.riskView.validatedBy.value,
     },
+    bridgeTechnology: {
+      ...p.technology,
+      detailedDescription: p.display.detailedDescription,
+    },
     contracts: p.contracts,
     permissions: p.permissions,
     discoveryInfo: getDiscoveryInfo(p),
@@ -198,7 +226,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
-    tvlConfig: getTvlConfig(p),
+    tvlConfig: getTvlConfig(p, tokenList),
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags
@@ -234,6 +262,7 @@ function toBackendTrackedTxsConfig(
               formula: 'functionCall',
               address: config.query.address,
               selector: config.query.selector,
+              signature: config.query.functionSignature,
             },
           }
         }
@@ -275,15 +304,26 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
+function getTvlConfig(
+  project: ScalingProject | Bridge,
+  tokenList: Token[],
+): ProjectTvlConfig {
+  const tokens = project.chainConfig
+    ? tokenList.filter(
+        (t) =>
+          t.supply !== 'zero' && t.chainId === project.chainConfig?.chainId,
+      )
+    : []
+
   return {
-    escrows: project.config.escrows.map(toProjectEscrow),
+    escrows: project.config.escrows.map((e) => toProjectEscrow(e, tokenList)),
+    tokens,
     associatedTokens: project.config.associatedTokens ?? [],
   }
 }
 
 export function getDiscoveryInfo(
-  project: Layer2 | Layer3 | Bridge,
+  project: ScalingProject | Bridge,
 ): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
   const permissionsDiscoDriven = arePermissionsDiscoveryDriven(
@@ -297,7 +337,10 @@ export function getDiscoveryInfo(
   }
 }
 
-function toProjectEscrow(escrow: ProjectEscrow): ProjectTvlEscrow {
+function toProjectEscrow(
+  escrow: ProjectEscrow,
+  tokenList: Token[],
+): ProjectTvlEscrow {
   return {
     address: escrow.address,
     sinceTimestamp: escrow.sinceTimestamp,
@@ -312,7 +355,8 @@ function toProjectEscrow(escrow: ProjectEscrow): ProjectTvlEscrow {
           token.chainId === escrow.chainId &&
           (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
           !escrow.excludedTokens?.includes(token.symbol) &&
-          !token.untilTimestamp?.lt(escrow.sinceTimestamp),
+          (!token.untilTimestamp ||
+            token.untilTimestamp > escrow.sinceTimestamp),
       )
       .map((token) => ({
         ...token,

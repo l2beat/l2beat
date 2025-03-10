@@ -18,7 +18,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
@@ -83,11 +83,11 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
   'minDelay',
 )
 
-export const zklinknova: Layer3 = {
+export const zklinknova: ScalingProject = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
   capability: 'universal',
-  addedAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
+  addedAt: UnixTime(1705330478), // 2024-01-15T14:54:38Z
   hostChain: ProjectId('linea'),
   badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.L3ParentChain.Linea],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
@@ -120,7 +120,7 @@ export const zklinknova: Layer3 = {
     name: 'zklinknova',
     chainId: 810180,
     explorerUrl: 'https://explorer.zklink.io',
-    sinceTimestamp: new UnixTime(1709273393),
+    sinceTimestamp: UnixTime(1709273393),
     apis: [
       { type: 'etherscan', url: 'https://explorer-api.zklink.io/api' },
       { type: 'rpc', url: 'https://rpc.zklink.io', callsPerMinute: 1500 },
@@ -134,7 +134,7 @@ export const zklinknova: Layer3 = {
         chain: 'optimism',
         includeInTotal: false,
         address: EthereumAddress('0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b'),
-        sinceTimestamp: new UnixTime(1711092485),
+        sinceTimestamp: UnixTime(1711092485),
         tokens: ['ETH'],
         source: 'external',
         bridgedUsing: {
@@ -149,7 +149,7 @@ export const zklinknova: Layer3 = {
         chain: 'optimism',
         includeInTotal: false,
         address: EthereumAddress('0x5Bd51296423A9079b931414C1De65e7057326EaA'),
-        sinceTimestamp: new UnixTime(1711095511),
+        sinceTimestamp: UnixTime(1711095511),
         tokens: '*',
         source: 'external',
         bridgedUsing: {
@@ -164,21 +164,21 @@ export const zklinknova: Layer3 = {
         chain: 'linea',
         includeInTotal: false,
         address: EthereumAddress('0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05'),
-        sinceTimestamp: new UnixTime(1709218085),
+        sinceTimestamp: UnixTime(1709218085),
         tokens: ['ETH'],
       },
       {
         chain: 'linea',
         includeInTotal: false,
         address: EthereumAddress('0x62cE247f34dc316f93D3830e4Bf10959FCe630f8'),
-        sinceTimestamp: new UnixTime(1709218113),
+        sinceTimestamp: UnixTime(1709218113),
         tokens: '*',
       },
       {
         chain: 'ethereum',
         includeInTotal: false,
         address: EthereumAddress('0x5fD9F73286b7E8683Bab45019C94553b93e015Cf'),
-        sinceTimestamp: new UnixTime(1709278799),
+        sinceTimestamp: UnixTime(1709278799),
         tokens: ['ETH'],
         bridgedUsing: {
           bridges: [
@@ -192,7 +192,7 @@ export const zklinknova: Layer3 = {
         chain: 'ethereum',
         includeInTotal: false,
         address: EthereumAddress('0xAd16eDCF7DEB7e90096A259c81269d811544B6B6'),
-        sinceTimestamp: new UnixTime(1709295323),
+        sinceTimestamp: UnixTime(1709295323),
         tokens: '*',
         bridgedUsing: {
           bridges: [
@@ -207,7 +207,7 @@ export const zklinknova: Layer3 = {
         chain: 'mantapacific',
         includeInTotal: false,
         address: EthereumAddress('0xd784d7128b46b60ca7d8bdc17dcec94917455657'),
-        sinceTimestamp: new UnixTime(1709279099),
+        sinceTimestamp: UnixTime(1709279099),
         tokens: ['ETH'],
         source: 'external',
         bridgedUsing: {
@@ -222,7 +222,7 @@ export const zklinknova: Layer3 = {
         chain: 'mantapacific',
         includeInTotal: false,
         address: EthereumAddress('0x44a65dc12865a1e5249b45b4868f32b0e37168ff'),
-        sinceTimestamp: new UnixTime(1709295839),
+        sinceTimestamp: UnixTime(1709295839),
         tokens: '*',
         source: 'external',
         bridgedUsing: {
@@ -237,7 +237,7 @@ export const zklinknova: Layer3 = {
         chain: 'mantle',
         includeInTotal: false,
         address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
-        sinceTimestamp: new UnixTime(1709279309),
+        sinceTimestamp: UnixTime(1709279309),
         tokens: ['MNT'],
         source: 'external',
         bridgedUsing: {
@@ -252,7 +252,7 @@ export const zklinknova: Layer3 = {
         chain: 'mantle',
         includeInTotal: false,
         address: EthereumAddress('0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2'),
-        sinceTimestamp: new UnixTime(1709296907),
+        sinceTimestamp: UnixTime(1709296907),
         tokens: '*',
         source: 'external',
         bridgedUsing: {
@@ -267,7 +267,7 @@ export const zklinknova: Layer3 = {
         chain: 'zksync2',
         includeInTotal: false,
         address: EthereumAddress('0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A'),
-        sinceTimestamp: new UnixTime(1709280600),
+        sinceTimestamp: UnixTime(1709280600),
         tokens: ['ETH'],
         source: 'external',
         bridgedUsing: {
@@ -282,7 +282,7 @@ export const zklinknova: Layer3 = {
         chain: 'zksync2',
         includeInTotal: false,
         address: EthereumAddress('0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08'),
-        sinceTimestamp: new UnixTime(1709297040),
+        sinceTimestamp: UnixTime(1709297040),
         tokens: '*',
         source: 'external',
         bridgedUsing: {
@@ -297,7 +297,7 @@ export const zklinknova: Layer3 = {
         chain: 'arbitrum',
         includeInTotal: false,
         address: EthereumAddress('0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A'),
-        sinceTimestamp: new UnixTime(1709280428),
+        sinceTimestamp: UnixTime(1709280428),
         tokens: ['ETH'],
         source: 'external',
         bridgedUsing: {
@@ -312,7 +312,7 @@ export const zklinknova: Layer3 = {
         chain: 'arbitrum',
         includeInTotal: false,
         address: EthereumAddress('0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585'),
-        sinceTimestamp: new UnixTime(1709296973),
+        sinceTimestamp: UnixTime(1709296973),
         tokens: '*',
         source: 'external',
         bridgedUsing: {
@@ -327,7 +327,7 @@ export const zklinknova: Layer3 = {
         chain: 'blast',
         includeInTotal: false,
         address: EthereumAddress('0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD'),
-        sinceTimestamp: new UnixTime(1710417729),
+        sinceTimestamp: UnixTime(1710417729),
         tokens: ['ETH'],
         source: 'external',
         bridgedUsing: {
@@ -342,7 +342,7 @@ export const zklinknova: Layer3 = {
         chain: 'blast',
         includeInTotal: false,
         address: EthereumAddress('0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b'),
-        sinceTimestamp: new UnixTime(1710427013),
+        sinceTimestamp: UnixTime(1710427013),
         tokens: '*',
         source: 'external',
         bridgedUsing: {
@@ -357,7 +357,7 @@ export const zklinknova: Layer3 = {
         chain: 'base',
         includeInTotal: false,
         address: EthereumAddress('0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd'),
-        sinceTimestamp: new UnixTime(1711095697),
+        sinceTimestamp: UnixTime(1711095697),
         tokens: ['ETH'],
         source: 'external',
         bridgedUsing: {
@@ -372,7 +372,7 @@ export const zklinknova: Layer3 = {
         chain: 'base',
         includeInTotal: false,
         address: EthereumAddress('0x80d12A78EfE7604F00ed07aB2f16F643301674D5'),
-        sinceTimestamp: new UnixTime(1711098033),
+        sinceTimestamp: UnixTime(1711098033),
         tokens: '*',
         source: 'external',
         bridgedUsing: {

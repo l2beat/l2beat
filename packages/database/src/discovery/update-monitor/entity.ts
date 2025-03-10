@@ -1,4 +1,4 @@
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { UpdateMonitor } from '../../kysely/generated/types'
@@ -17,7 +17,8 @@ export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
     projectName: record.projectName,
     chainId: +record.chainId,
     blockNumber: record.blockNumber,
-    timestamp: record.timestamp ? record.timestamp.toDate() : null,
+    timestamp:
+      record.timestamp !== null ? UnixTime.toDate(record.timestamp) : null,
     discoveryJsonBlob: JSON.stringify(record.discovery),
     configHash: record.configHash.toString(),
   }

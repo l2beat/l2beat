@@ -1,3 +1,2073 @@
+Generated with discovered.json: 0x566ee9d02f5fd5f1abf13c892844a5592ae35927
+
+# Diff at Thu, 06 Mar 2025 15:20:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21973410
+- current block number: 21973410
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973410 (main branch discovery), not current.
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      displayName:
+-        "StarkExchange"
+      values.aggregatorHashMapped:
++        "Starknet Aggregator (since v0.13.3)"
+      values.programHashMapped:
++        "StarkNet OS (Starknet)"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"15787695375210609250491147414005894154890873413229882671403677761527504080":"Starknet Aggregator (since v0.13.3)","2397984267054479079853548842566103781972463965746662494980785692480538410509":"StarkNet OS (Starknet)","853638403225561750106379562222782223909906501242604214771127703946595519856":"StarkNet OS (Paradex)","3383082961563516565935611087683915026448707331436034043529592588079494402084":"StarkNet OS (old Paradex, old StarkNet)","3485280386001712778192330279103973322645241679001461923469191557000342180556":"StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)","770346231394331402493200980986217737662224545740427952627288191358999988146":"ApeX-USDT","3174901404014912024702042974619036870715605532092680335571201877913899936957":"StarkEx Spot v4.0 (RhinoFi, Sorare)","16830627573509542901909952446321116535677491650708854009406762893086223513":"StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)","2530337539466159944237001094809327283009177793361359619481044346150483328860":"ApeX-USDC 20250130","3114724292040200590153042023978438629733352741898912919152162079752811928849":"StarkEx Perp v2.0 ApeX-USDC","217719352201300445998518619904782191262194843262573339166404641663770051805":"StarkNet (old)","3003515909324298587247571665454372831319437787162989623104387385306791861180":"StarkNet (old)","1161178844461337253856226043908368523817098764221830529880464854589141231910":"StarkNet Aggregator (old)","1921772108187713503530008849184725638117898887391063185252422808224349294626":"StarkNet (old)","3258367057337572248818716706664617507069572185152472699066582725377748079373":"StarkNet (old)","407700941260678649793204927710478760533239334662847444187959202896452163393":"StarkNet (old)","1865367024509426979036104162713508294334262484507712987283009063059134893433":"StarkNet (old)","54878256403880350656938046611252303365750679698042371543935159963667935317":"StarkNet (old)","2479841346739966073527450029179698923866252973805981504232089731754042431018":"StarkNet (old)","109586309220455887239200613090920758778188956576212125550190099009305121410":"StarkNet (old)"}}]
+    }
+```
+
+Generated with discovered.json: 0x8552ceb01801c776c6ce581820197452d29dec41
+
+# Diff at Wed, 05 Mar 2025 11:05:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21973410
+- current block number: 21973410
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973410 (main branch discovery), not current.
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      description:
+-        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles."
++        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta.isFinalized.description:
+-        "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
++        "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+      displayName:
++        "StarkExchange"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      description:
+-        "StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually."
++        "Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually."
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      description:
+-        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
++        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+```
+
+Generated with discovered.json: 0x0fd63f1d47196c7337ff2bd0b09978386456a0ff
+
+# Diff at Tue, 04 Mar 2025 12:05:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 21959652
+- current block number: 21973410
+
+## Description
+
+Config related: Starknet (upgrade) governance is complicated (templates updated):
+
+Starknet contract:
+* proxy version 3 -> our proxy handler fetches the 'governors' via deployer address and events and saves them to `$admin`
+* the governors can upgrade the proxy implementation, register operators, finalize state and so on
+
+Bridge contracts (ETH and ERC20):
+* proxy version 3 -> our proxy handler fetches the 'governors' via deployer address and events and saves them to `$admin`
+* the governors can upgrade the proxy implementation
+* there is a separate GOVERNANCE_ADMIN in access control (see implementation) who can do access control stuff but ALSO override the governors that can upgrade the proxy
+
+Later bridge contracts and multibridge:
+* proxy version 5 -> our proxy handler fetches the UPGRADE_ADMIN roles via access control events and saves them to `$admin`
+* the UPGRADE_ADMINs can upgrade the proxy implementation
+* there is a separate GOVERNANCE_ADMIN in access control (see implementation) who can do access control stuff but ALSO is the role admin of the UPGRADE_ADMINs (can manage them)
+
+the sharp callproxy contract has a similar isolated $admin (v3) that is just an upgrade admin as we are used to.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21959652 (main branch discovery), not current.
+
+```diff
+    contract StarkgateBridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.55:
++        {"permission":"upgrade","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"}
+      receivedPermissions.54.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.54.delay:
++        259200
+      receivedPermissions.53.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.53.delay:
+-        259200
+      receivedPermissions.52.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.51.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.50.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.50.delay:
++        259200
+      receivedPermissions.49.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.48.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.47.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.46.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.45.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.45.delay:
+-        259200
+      receivedPermissions.44.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.44.delay:
++        259200
+      receivedPermissions.43.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+      receivedPermissions.43.delay:
+-        259200
+      receivedPermissions.42.from:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      receivedPermissions.41.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.41.from:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.41.description:
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.40.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.39.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.38.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.38.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.37.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.36.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.35.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.35.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.34.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.33.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.32.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.32.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.31.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.30.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.29.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.29.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.28.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.27.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.26.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.26.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.25.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.24.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.23.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.23.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.22.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.21.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.20.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.20.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.19.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.18.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.17.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.17.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.16.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.15.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.14.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.14.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.13.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.12.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.11.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.11.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.10.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.9.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.8.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.8.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.7.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.6.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.5.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.5.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.4.description:
+-        "manage critical access control roles related to upgrades."
++        "enable the withdrawal limit."
+      receivedPermissions.3.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.2.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+      receivedPermissions.2.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation.."
+      receivedPermissions.1.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      sinceBlock:
++        17983541
+    }
+```
+
+```diff
+    contract LORDSBridge (0x023A2aAc5d0fa69E3243994672822BA43E34E5C9) {
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+      sinceBlock:
++        17542373
+    }
+```
+
+```diff
+    contract DAIBridge (0x0437465dfb5B79726e35F08559B0cBea55bb585C) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      sinceBlock:
++        14742550
+    }
+```
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      issuedPermissions.1.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
+      sinceBlock:
++        19176289
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "manage critical access control roles and the role that can upgrade the implementation.."
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC:
++        {"description":"This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."}
+      sinceBlock:
++        19177447
+    }
+```
+
+```diff
+    contract StarknetSecurityCouncil (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      severity:
++        "HIGH"
+      sinceBlock:
++        21767132
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        15090980
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        17968760
+    }
+```
+
+```diff
+    contract StarkgateSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      sinceBlock:
++        20819642
+    }
+```
+
+```diff
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      sinceBlock:
++        16312873
+    }
+```
+
+```diff
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d) {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      sinceBlock:
++        15804056
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        14429055
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        15090981
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        17371995
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.governors:
+-        ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","0xCA112018fEB729458b628AadC8f996f9deCbCa0c"]
+      fieldMeta.$admin:
++        {"severity":"HIGH","description":"Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."}
+      sinceBlock:
++        13620297
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      severity:
++        "HIGH"
+      sinceBlock:
++        21882151
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        18977888
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        17407168
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        17968761
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        17968759
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        17585317
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
+      sinceBlock:
++        19177451
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        15090984
+    }
+```
+
+```diff
+    contract StarknetSCMinorityMultisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      sinceBlock:
++        21767145
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades."
++        "manage critical access control roles and the role that can upgrade the implementation."
++++ description: inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        []
++        "inactive"
+      fieldMeta.$admin.description:
+-        "Same as the `GOVERNANCE_ADMIN` access control role."
++        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
++        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
+      fieldMeta.govAdminAC.description:
+-        "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
++        "This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation."
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}}
+      sinceBlock:
++        18412782
+    }
+```
+
+Generated with discovered.json: 0x80cf1d5ff9d85ba8fc41bdcae133cd7983a5a200
+
+# Diff at Sun, 02 Mar 2025 14:18:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 21900569
+- current block number: 21959652
+
+## Description
+
+Starknet introduces an 8d timelock and adds their 2/6 MS as upgrade admin (governor) for the starknet contract.
+
+Multibridge, StarkgateRegistry upgrade: minor change, `getL2Bridge()` added.
+
+Config related: discodrive + renamed some starknet contracts.
+
+## Watched changes
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      sourceHashes.1:
+-        "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b"
++        "0x90444355cfe353ba90f2050035caf7c6ae157bfb6e54bf74a4117580f568bf95"
+      values.$implementation:
+-        "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"
++        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
+      values.$pastUpgrades.1:
++        ["2025-03-02T12:30:11.000Z","0x86ccb24833adb42f79ff55fcce4e69508e467df41c653a1b2578b5f2788f3c0c",["0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.identify:
+-        "StarkWare_StarkgateRegistry_2.0_1"
++        "StarkWare_StarkgateRegistry_2.0_6"
+      values.implementation:
+-        "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"
++        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "operateStarknet"
+      issuedPermissions.3.to:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      issuedPermissions.2.to:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
+      issuedPermissions.1.permission:
+-        "operateStarknet"
++        "governStarknet"
+      issuedPermissions.1.to:
+-        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
++        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
+      issuedPermissions.1.via.0:
++        {"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}
+      values.$admin:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        ["0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","0xCA112018fEB729458b628AadC8f996f9deCbCa0c"]
+      values.governors.1:
++        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      sourceHashes.1:
+-        "0xd3e96d9fb623969bd9cc3e5fed6779ce42c5de753b49fc73da783863d4043a2f"
++        "0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211"
+      values.$implementation:
+-        "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"
++        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
+      values.$pastUpgrades.1:
++        ["2025-03-02T12:30:11.000Z","0x86ccb24833adb42f79ff55fcce4e69508e467df41c653a1b2578b5f2788f3c0c",["0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.identify:
+-        "StarkWare_StarknetTokenBridge_2.0_4"
++        "StarkWare_StarknetTokenBridge_2.0_6"
+      values.implementation:
+-        "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"
++        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
+      values.getL2Bridge:
++        "2753558522583921927398465007099029577135491466235436788531469409255283003990"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c)
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+```
+
+## Source code changes
+
+```diff
+.../starknet/ethereum/.flat/DelayedExecutor.sol    | 271 ++++++
+ .../MultiBridge/StarknetTokenBridge.sol            |  11 +-
+ .../StarkgateRegistry/StarkgateRegistry.sol        |  12 +-
+ .../.flat/StarknetAdminMultisig/GnosisSafe.sol     | 953 +++++++++++++++++++++
+ .../StarknetAdminMultisig/GnosisSafeProxy.p.sol    |  35 +
+ 5 files changed, 1280 insertions(+), 2 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21900569 (main branch discovery), not current.
+
+```diff
+    contract StarkgateBridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.54:
++        {"permission":"upgrade","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"}
+      receivedPermissions.53:
++        {"permission":"upgrade","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","delay":259200}
+      receivedPermissions.52:
++        {"permission":"upgrade","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
+      receivedPermissions.51:
++        {"permission":"upgrade","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"}
+      receivedPermissions.50:
++        {"permission":"upgrade","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"}
+      receivedPermissions.49:
++        {"permission":"upgrade","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","delay":259200}
+      receivedPermissions.48:
++        {"permission":"upgrade","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","delay":259200}
+      receivedPermissions.47:
++        {"permission":"upgrade","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","delay":259200}
+      receivedPermissions.46:
++        {"permission":"upgrade","from":"0xbb3400F107804DFB482565FF1Ec8D8aE66747605","delay":259200}
+      receivedPermissions.45:
++        {"permission":"upgrade","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","delay":259200}
+      receivedPermissions.44:
++        {"permission":"upgrade","from":"0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"}
+      receivedPermissions.43:
++        {"permission":"upgrade","from":"0x283751A21eafBFcD52297820D27C1f1963D9b5b4","delay":259200}
+      receivedPermissions.42:
++        {"permission":"upgrade","from":"0x1268cc171c54F2000402DfF20E93E60DF4c96812"}
+      receivedPermissions.41:
++        {"permission":"upgrade","from":"0x0c5aE94f8939182F2D06097025324D1E537d5B60"}
+      receivedPermissions.40:
++        {"permission":"interact","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.39:
++        {"permission":"interact","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B","description":"enable the withdrawal limit."}
+      receivedPermissions.38:
++        {"permission":"interact","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B","description":"disable the withdrawal limit."}
+      receivedPermissions.37:
++        {"permission":"interact","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.36:
++        {"permission":"interact","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"enable the withdrawal limit."}
+      receivedPermissions.35:
++        {"permission":"interact","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","description":"disable the withdrawal limit."}
+      receivedPermissions.34:
++        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.33:
++        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"enable the withdrawal limit."}
+      receivedPermissions.32:
++        {"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"disable the withdrawal limit."}
+      receivedPermissions.31:
++        {"permission":"interact","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.30:
++        {"permission":"interact","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5","description":"enable the withdrawal limit."}
+      receivedPermissions.29:
++        {"permission":"interact","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5","description":"disable the withdrawal limit."}
+      receivedPermissions.28:
++        {"permission":"interact","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.27:
++        {"permission":"interact","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","description":"enable the withdrawal limit."}
+      receivedPermissions.26:
++        {"permission":"interact","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb","description":"disable the withdrawal limit."}
+      receivedPermissions.25:
++        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.24:
++        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"enable the withdrawal limit."}
+      receivedPermissions.23:
++        {"permission":"interact","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8","description":"disable the withdrawal limit."}
+      receivedPermissions.22:
++        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.21:
++        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"enable the withdrawal limit."}
+      receivedPermissions.20:
++        {"permission":"interact","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","description":"disable the withdrawal limit."}
+      receivedPermissions.19:
++        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.18:
++        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"enable the withdrawal limit."}
+      receivedPermissions.17:
++        {"permission":"interact","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","description":"disable the withdrawal limit."}
+      receivedPermissions.16:
++        {"permission":"interact","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","description":"manage critical access control roles related to upgrades."}
+      receivedPermissions.15:
++        {"permission":"interact","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","description":"enable the withdrawal limit."}
+      receivedPermissions.14:
++        {"permission":"interact","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","description":"disable the withdrawal limit."}
+      receivedPermissions.13.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.13.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.13.description:
++        "manage critical access control roles related to upgrades."
+      receivedPermissions.12.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.12.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.12.description:
++        "enable the withdrawal limit."
+      receivedPermissions.11.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.11.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.11.description:
++        "disable the withdrawal limit."
+      receivedPermissions.10.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.10.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.10.description:
++        "manage critical access control roles related to upgrades."
+      receivedPermissions.9.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.9.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.9.description:
++        "enable the withdrawal limit."
+      receivedPermissions.8.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.8.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.8.description:
++        "disable the withdrawal limit."
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.7.description:
++        "manage critical access control roles related to upgrades."
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.6.description:
++        "enable the withdrawal limit."
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.5.description:
++        "disable the withdrawal limit."
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.4.description:
++        "manage critical access control roles related to upgrades."
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.3.description:
++        "enable the withdrawal limit."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.description:
++        "disable the withdrawal limit."
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      receivedPermissions.1.description:
++        "manage critical access control roles related to upgrades."
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.description:
++        "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract LORDSBridge (0x023A2aAc5d0fa69E3243994672822BA43E34E5C9) {
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+      template:
++        "starknet/LordsL1Bridge"
+      description:
++        "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2."
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract DAIBridge (0x0437465dfb5B79726e35F08559B0cBea55bb585C) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      values.wards:
++        ["0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58","0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB","0xc238E3D63DfD677Fa0FA9985576f0945C581A266"]
+      template:
++        "maker/L1Escrow"
+      description:
++        "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    }
+```
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+      values.accessControl.APP_GOVERNOR:
+-        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
+-        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.OPERATOR:
+-        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN.adminRole:
+-        "APP_ROLE_ADMIN"
++        "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99"
+      values.accessControl.UPGRADE_GOVERNOR:
+-        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_ADMIN:
+-        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
+-        {"adminRole":"SECURITY_ADMIN","members":[]}
+      values.accessControl.0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068:
++        {"adminRole":"0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99","members":[]}
+      values.accessControl.0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7:
++        {"adminRole":"0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99","members":[]}
+      values.accessControl.0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3:
++        {"adminRole":"0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96:
++        {"adminRole":"0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3","members":[]}
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.tokenAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      template:
++        "starknet/StarkgateManager"
+      description:
++        "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows."
+      receivedPermissions:
++        [{"permission":"interact","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb","description":"enroll new tokens or deactivate deposits into the escrow (for each token individually)."}]
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."},"tokenAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"GOVERNANCE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"APP_GOVERNOR":{"adminRole":"APP_ROLE_ADMIN","members":[]},"APP_ROLE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"OPERATOR":{"adminRole":"APP_ROLE_ADMIN","members":[]},"TOKEN_ADMIN":{"adminRole":"APP_ROLE_ADMIN","members":["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"UPGRADE_GOVERNOR":{"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"SECURITY_ADMIN":{"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]},"SECURITY_AGENT":{"adminRole":"SECURITY_ADMIN","members":[]}}
+      template:
++        "starknet/StarkgateRegistry"
+      description:
++        "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."}}
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract StarknetSecurityCouncil (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x033796B61cD66eD49d22a786cbA12a8D76717302"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x428144D0D0Dbf8b7bFbC44306a3386Aa95a24296"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TheLordsToken (0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0)
+    +++ description: None
+```
+
+```diff
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d) {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      values.wards:
++        ["0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB","0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"]
+      template:
++        "starknet/L1EscrowDAI"
+      displayName:
++        "L1EscrowDAI"
+      description:
++        "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate."
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetEthBridge"
+      description:
++        "StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0xCc6d9c3Dd8A2A05B1075d55E5967F42296f16Bd0"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x1713B7fA72079d4EDDf291103CcbE41E78a9615C"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","via":[]}
+      issuedPermissions.2:
++        {"permission":"operateStarknet","to":"0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B","via":[]}
+      issuedPermissions.1:
++        {"permission":"operateStarknet","to":"0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      template:
++        "starknet/Starknet"
+      description:
++        "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0xEB7e3917D6994A03C13405Ba42867f83D85F085d"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0xae78736Cd615f374D3085123A210448E74Fc6393"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x34F7C385fD4F4540d5668f1bE3EDE0D3Bb1B9D4d"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0xac3E018457B222d93114458476f3E3416Abbe38F"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x635C207e3da73332282Aa2132058022520fA0179"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0x853d955aCEf822Db058eb8505911ED77F175b99e"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0xACD89f99539A152B96E72DaEe6A7a3734AA5299a"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x6246A7a3012Dd35B0ed728e3c455aF2647385C80"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0x0c5aE94f8939182F2D06097025324D1E537d5B60","description":"enroll new tokens or deactivate deposits into the escrow (for each token individually).","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.maxTotalBalance_EKUBO:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x8d591C2807316d992BbC3bB1A5C1821630589256"
++++ description: The maximum total escrow balance per token (can limit deposits) is listed here if modified.
+      values.maxTotalTokenBalance:
++        {"0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9":{"value":1,"token":"0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"},"0x4c9EDD5852cd905f086C759E8383e09bff1E68B3":{"value":1,"token":"0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"},"0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91":{"value":1,"token":"0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91"},"0x57e114B691Db790C35207b2e685D4A43181e6061":{"value":1,"token":"0x57e114B691Db790C35207b2e685D4A43181e6061"},"0x6c3ea9036406852006290770BEdFcAbA0e23A0e8":{"value":1,"token":"0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"},"0x808507121B80c02388fAd14726482e061B8da827":{"value":1,"token":"0x808507121B80c02388fAd14726482e061B8da827"},"0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83":{"value":1,"token":"0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"},"0x6985884C4392D348587B19cb9eAAf157F13271cd":{"value":1,"token":"0x6985884C4392D348587B19cb9eAAf157F13271cd"},"0xbf5495Efe5DB9ce00f80364C8B423567e58d2110":{"value":1,"token":"0xbf5495Efe5DB9ce00f80364C8B423567e58d2110"}}
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetMultiBridge"
+      description:
++        "StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"maxTotalTokenBalance":{"description":"The maximum total escrow balance per token (can limit deposits) is listed here if modified."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x217e808319ffCC1C5A6A463F7d8FA2dA48218196"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract StarknetSCMinorityMultisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"operateStarknet","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}]
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"manage critical access control roles related to upgrades.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "disable the withdrawal limit."
+      values.bridgedToken:
++        "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+      values.depositorAddress:
++        "0x0000000000000000000000000000000000000000"
++++ description: Token status managed by the Manager. Only affects deposits.
++++ severity: HIGH
+      values.depositStatus:
++        "active"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.govAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.l2TokenContract:
++        "0x4bbDfbc7c046b4b9D7cf31B79647540C85b8EC79"
+      values.messagingContract:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.secAgentAC:
++        ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
++        []
++++ description: The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.
+      values.withdrawLimitPct:
++        5
+      template:
++        "starknet/StarknetERC20Bridge"
+      description:
++        "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Same as the `GOVERNANCE_ADMIN` access control role."},"withdrawalLimitStatus":{"severity":"HIGH","description":"empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."},"maxTotalBalance":{"description":"The maximum total balance that can be locked in the bridge."},"depositStatus":{"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."},"withdrawLimitPct":{"description":"The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."},"accessControl":{"severity":"HIGH","description":"Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."},"govAdminAC":{"description":"This role is actually the proxy upgrade admin role, but we already resolve it to $admin."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
 Generated with discovered.json: 0x670dbd4bf2d20f78d9f0c2fa59153c184fa5cc51
 
 # Diff at Fri, 21 Feb 2025 13:28:06 GMT:

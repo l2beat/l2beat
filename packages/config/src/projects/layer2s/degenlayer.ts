@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const degenlayer: Layer2 = upcomingL2({
+export const degenlayer: ScalingProject = upcomingL2({
   id: 'degenlayer',
   capability: 'universal',
-  addedAt: new UnixTime(1733383382), // 2024-12-05T07:23:02Z
+  addedAt: UnixTime(1733383382), // 2024-12-05T07:23:02Z
   display: {
     name: 'DegenLayer',
     slug: 'degenlayer',

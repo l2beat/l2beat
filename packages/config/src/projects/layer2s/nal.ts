@@ -1,11 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from './templates/underReview'
 
-export const nal: Layer2 = underReviewL2({
+export const nal: ScalingProject = underReviewL2({
   id: 'nal',
   capability: 'universal',
-  addedAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
+  isArchived: true,
+  addedAt: UnixTime(1726499832), // 2024-09-16T15:17:12Z
   display: {
     name: 'Nal',
     slug: 'nal',
@@ -41,7 +42,7 @@ export const nal: Layer2 = underReviewL2({
   escrows: [
     {
       address: EthereumAddress('0x8a471dF117E2fEA79DACE93cF5f6dd4217931Db7'),
-      sinceTimestamp: new UnixTime(1719457200),
+      sinceTimestamp: UnixTime(1719457200),
       tokens: '*',
       chain: 'ethereum',
     },

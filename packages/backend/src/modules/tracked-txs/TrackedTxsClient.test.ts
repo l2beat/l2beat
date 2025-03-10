@@ -99,7 +99,7 @@ const CONFIGURATIONS = [
       type: 'l2costs',
       subtype: 'batchSubmissions',
       sinceTimestamp: FROM,
-      untilTimestamp: FROM.add(2, 'days'),
+      untilTimestamp: FROM + 2 * UnixTime.DAY,
       params: {
         formula: 'transfer',
         from: ADDRESS_1,
@@ -124,6 +124,7 @@ const CONFIGURATIONS = [
         formula: 'functionCall',
         address: ADDRESS_3,
         selector: '0x9aaab648',
+        signature: 'function foo()',
       },
     },
   } as Configuration<
@@ -278,7 +279,7 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
 )
 
 function toBigQueryDate(timestamp: UnixTime) {
-  return { value: timestamp.toDate().toISOString() }
+  return { value: UnixTime.toDate(timestamp).toISOString() }
 }
 
 function getMockBiqQuery(responses: unknown[][]) {

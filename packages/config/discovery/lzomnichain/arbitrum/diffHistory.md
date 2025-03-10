@@ -1,3 +1,158 @@
+Generated with discovered.json: 0xf9cee52ee33a4c0de577dfabf9929de1708ef941
+
+# Diff at Fri, 07 Mar 2025 13:45:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 300193052
+- current block number: 313205484
+
+## Description
+
+DVN / Verifier for ZKsync Era added.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract  (0x6a4C9096F162f0ab3C0517B0a40dc1CE44785e16)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../lzomnichain/arbitrum/.flat/DVN.sol             | 2116 ++++++++++++++++++++
+ 1 file changed, 2116 insertions(+)
+```
+
+Generated with discovered.json: 0xd0918a8a920fc2a1dd8b3fd1668f3f050a157653
+
+# Diff at Tue, 04 Mar 2025 10:40:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 300193052
+- current block number: 300193052
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 300193052 (main branch discovery), not current.
+
+```diff
+    contract  (0x177d36dBE2271A4DdB2Ad8304d82628eb921d790) {
+    +++ description: None
+      sinceBlock:
++        21432305
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      sinceBlock:
++        21426807
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      sinceBlock:
++        7920349
+    }
+```
+
+```diff
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      sinceBlock:
++        7920157
+    }
+```
+
+```diff
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859) {
+    +++ description: None
+      sinceBlock:
++        21426785
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sinceBlock:
++        21426799
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      sinceBlock:
++        21083158
+    }
+```
+
+```diff
+    contract FPValidator (0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B) {
+    +++ description: None
+      sinceBlock:
++        30331127
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sinceBlock:
++        21273027
+    }
+```
+
+```diff
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f) {
+    +++ description: None
+      sinceBlock:
++        21439748
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sinceBlock:
++        129337490
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sinceBlock:
++        129337500
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xFE22f5D2755b06b9149656C5793Cb15A08d09847) {
+    +++ description: None
+      sinceBlock:
++        8434100
+    }
+```
+
 Generated with discovered.json: 0xb16883d5da1c64b92ce4efdb52d65092026056d0
 
 # Diff at Tue, 28 Jan 2025 15:08:10 GMT:

@@ -1,19 +1,19 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
-import type { ProjectContracts, ScalingProjectRisk } from '../types'
+import type { ProjectContracts, ProjectRisk } from '../types'
 
-const UNVERIFIED_RISK: ScalingProjectRisk = {
+const UNVERIFIED_RISK: ProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'the source code of unverified contracts contains malicious code.',
   isCritical: true,
 }
 
-const UPGRADE_NO_DELAY_RISK: ScalingProjectRisk = {
+const UPGRADE_NO_DELAY_RISK: ProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'a contract receives a malicious code upgrade. There is no delay on code upgrades.',
   isCritical: true,
 }
 
-function UPGRADE_WITH_DELAY_RISK(delay: string): ScalingProjectRisk {
+function UPGRADE_WITH_DELAY_RISK(delay: string): ProjectRisk {
   return {
     category: 'Funds can be stolen if',
     text: `a contract receives a malicious code upgrade. There is a ${delay} delay on code upgrades.`,
@@ -23,7 +23,7 @@ function UPGRADE_WITH_DELAY_RISK(delay: string): ScalingProjectRisk {
 function UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
   delay: string,
   who: string,
-): ScalingProjectRisk {
+): ProjectRisk {
   return {
     category: 'Funds can be stolen if',
     text: `a contract receives a malicious code upgrade. There is a ${delay} delay on code upgrades unless upgrade is initiated by the \
@@ -33,9 +33,7 @@ function UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
 
 const DANGER_DELAY_THRESHOLD_SECONDS = 60 * 60 * 12
 
-function UPGRADE_WITH_DELAY_SECONDS_RISK(
-  delaySeconds: number,
-): ScalingProjectRisk {
+function UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds: number): ProjectRisk {
   if (delaySeconds < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADE_NO_DELAY_RISK
   }

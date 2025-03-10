@@ -1,3 +1,453 @@
+Generated with discovered.json: 0x18ed3dcbfc5774e9c0f377ec679af1ddaddd4fa4
+
+# Diff at Tue, 04 Mar 2025 10:39:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21679349
+- current block number: 21679349
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21679349 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      sinceBlock:
++        20173741
+    }
+```
+
+```diff
+    contract TimelockSC (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
+    +++ description: None
+      sinceBlock:
++        21078719
+    }
+```
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+    +++ description: None
+      sinceBlock:
++        18306933
+    }
+```
+
+```diff
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4) {
+    +++ description: None
+      sinceBlock:
++        18306947
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) {
+    +++ description: None
+      sinceBlock:
++        21225420
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      sinceBlock:
++        21270585
+    }
+```
+
+```diff
+    contract ScrollExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      sinceBlock:
++        18296951
+    }
+```
+
+```diff
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      sinceBlock:
++        19638084
+    }
+```
+
+```diff
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
+    +++ description: None
+      sinceBlock:
++        18306933
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV2 (0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB) {
+    +++ description: None
+      sinceBlock:
++        20460054
+    }
+```
+
+```diff
+    contract TimelockSlow (0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) {
+    +++ description: None
+      sinceBlock:
++        21036143
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247) {
+    +++ description: None
+      sinceBlock:
++        19638087
+    }
+```
+
+```diff
+    contract PlonkVerifierV0 (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      sinceBlock:
++        18306805
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      sinceBlock:
++        20460107
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV0 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D) {
+    +++ description: None
+      sinceBlock:
++        18306933
+    }
+```
+
+```diff
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4) {
+    +++ description: None
+      sinceBlock:
++        19909154
+    }
+```
+
+```diff
+    contract L2ERC1155GatewayFallback (0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2) {
+    +++ description: None
+      sinceBlock:
++        20173752
+    }
+```
+
+```diff
+    contract L2CustomERC20GatewayFallback (0x64CCBE37c9A82D85A1F2E74649b7A42923067988) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      sinceBlock:
++        18318364
+    }
+```
+
+```diff
+    contract L2TokenFactoryFallback (0x66e5312EDeEAef6e80759A0F789e7914Fb401484) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
+    +++ description: None
+      sinceBlock:
++        18318330
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract Safe (0x69C2eD64171bF5737c2B78bdF722e68a032B2825) {
+    +++ description: None
+      sinceBlock:
++        21232661
+    }
+```
+
+```diff
+    contract L2ETHGatewayFallback (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract L2WETHGatewayFallback (0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract L2ScrollMessengerFallback (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      sinceBlock:
++        18306947
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract L2ERC721GatewayFallback (0x7bC08E1c04fb41d75F1410363F0c5746Eae80582) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b) {
+    +++ description: None
+      sinceBlock:
++        21078719
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      sinceBlock:
++        20460053
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      sinceBlock:
++        20631259
+    }
+```
+
+```diff
+    contract Safe (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) {
+    +++ description: None
+      sinceBlock:
++        20937315
+    }
+```
+
+```diff
+    contract ScrollFeeVaultMultisig (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      sinceBlock:
++        18296974
+    }
+```
+
+```diff
+    contract Safe (0x9479ABfebefEea3c846163012a472b44F305b3d7) {
+    +++ description: None
+      sinceBlock:
++        21078008
+    }
+```
+
+```diff
+    contract OLD_L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      sinceBlock:
++        18306933
+    }
+```
+
+```diff
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: None
+      sinceBlock:
++        19660037
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract ScrollEmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      sinceBlock:
++        18296928
+    }
+```
+
+```diff
+    contract Safe (0xC3eA7C657884BB380B66D79C36aDCb5658b01896) {
+    +++ description: None
+      sinceBlock:
++        21131603
+    }
+```
+
+```diff
+    contract L2TokenImplementationFallback (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3) {
+    +++ description: None
+      sinceBlock:
++        20631260
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
+```diff
+    contract L2StandardERC20GatewayFallback (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) {
+    +++ description: None
+      sinceBlock:
++        18318929
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      sinceBlock:
++        18306933
+    }
+```
+
+```diff
+    contract ScrollOpsMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      sinceBlock:
++        18296825
+    }
+```
+
+```diff
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+    +++ description: None
+      sinceBlock:
++        18318268
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: None
+      sinceBlock:
++        18306934
+    }
+```
+
 Generated with discovered.json: 0xb7a977e772960aa9a1cfe2ed719fc9ab82319da0
 
 # Diff at Wed, 26 Feb 2025 09:16:47 GMT:

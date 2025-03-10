@@ -91,7 +91,7 @@ function convertData(inputData: InputData): OutputData[] {
 
       const outputEntry: OutputData = {
         address: `EthereumAddress('${data.Vault}')`,
-        sinceTimestamp: 'new UnixTime()', // Always left empty
+        sinceTimestamp: 'UnixTime()', // Always left empty
         source: 'external',
         bridge: {
           name: 'Socket bridge',

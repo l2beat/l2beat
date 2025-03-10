@@ -1,5 +1,6 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { Layer2, Layer3, UsedInProject } from '../../../types'
+import type { ScalingProject } from '../../../internalTypes'
+import type { UsedInProject } from '../../../types'
 import { layer2s } from '../../layer2s'
 import { layer3s } from '../../layer3s'
 
@@ -12,7 +13,7 @@ export function linkByDA(where: {
   bridge: ProjectId | undefined
 }): UsedInProject[] {
   return [...layer2s, ...layer3s]
-    .filter((project: Layer2 | Layer3) => {
+    .filter((project: ScalingProject) => {
       return (
         !project.isArchived &&
         !project.isUpcoming &&

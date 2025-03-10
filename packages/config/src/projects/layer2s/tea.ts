@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const tea: Layer2 = upcomingL2({
+export const tea: ScalingProject = upcomingL2({
   id: 'tea',
   capability: 'universal',
-  addedAt: new UnixTime(1739629387),
+  addedAt: UnixTime(1739629387),
   display: {
     name: 'Tea',
     slug: 'tea',

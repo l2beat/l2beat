@@ -1,15 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 
-export const blessnet: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
+export const blessnet: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
   additionalPurposes: ['Interoperability'],
   additionalBadges: [BADGES.RaaS.Caldera],
   isArchived: true,
@@ -54,8 +54,8 @@ export const blessnet: Layer3 = orbitStackL3({
   //   }),
   // ],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  gasTokens: { untracked: ['BLESS'] },
   // associatedTokens: ['BLESS'],
+  untrackedGasTokens: ['BLESS'],
   chainConfig: {
     name: 'blessnet',
     chainId: 45513,
@@ -66,6 +66,7 @@ export const blessnet: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['BLESS'],
   },
   discovery,
   bridge: discovery.getContract('Bridge'),

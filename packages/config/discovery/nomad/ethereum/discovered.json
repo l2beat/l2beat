@@ -2,7 +2,7 @@
   "name": "nomad",
   "chain": "ethereum",
   "blockNumber": 21937195,
-  "configHash": "0xa05b0e409ae2c341e0bfbec6d3df43711db7be126258c5cd45c492e0525e97b0",
+  "configHash": "0x06b3bd4f0f877e72446563da60f53c58924dd57ac53361e7a8e61fcf23746347",
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
@@ -21,6 +21,7 @@
       ],
       "ignoreInWatchMode": ["committedRoot"],
       "sinceTimestamp": 1641898337,
+      "sinceBlock": 13983756,
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0x7f221A1850c12b57fed1f0831dd25399a13b68c2",
@@ -66,6 +67,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641898210,
+      "sinceBlock": 13983742,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -77,6 +79,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641898337,
+      "sinceBlock": 13983756,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -87,6 +90,7 @@
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
       ],
       "sinceTimestamp": 1641899379,
+      "sinceBlock": 13983838,
       "values": { "$immutable": true }
     },
     {
@@ -105,6 +109,7 @@
         }
       ],
       "sinceTimestamp": 1641898263,
+      "sinceBlock": 13983751,
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707",
@@ -148,6 +153,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641898261,
+      "sinceBlock": 13983750,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -167,6 +173,7 @@
         }
       ],
       "sinceTimestamp": 1641899423,
+      "sinceBlock": 13983843,
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0xe0db61ac718f502B485DEc66D013afbbE0B52F84",
@@ -205,6 +212,7 @@
         "0x4ac3e27d1d1ef6c9a05335874ae7286f305ae29a71c239cd1095617d01efbaf0"
       ],
       "sinceTimestamp": 1641898065,
+      "sinceBlock": 13983731,
       "values": {
         "$immutable": true,
         "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
@@ -227,6 +235,7 @@
         }
       ],
       "sinceTimestamp": 1641898210,
+      "sinceBlock": 13983742,
       "values": {
         "$admin": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "$implementation": "0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06",
@@ -281,6 +290,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1641859677,
+      "sinceBlock": 13980892,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -308,6 +318,7 @@
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
       ],
       "sinceTimestamp": 1669736603,
+      "sinceBlock": 16076617,
       "values": { "$immutable": true }
     },
     {
@@ -318,6 +329,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1641899423,
+      "sinceBlock": 13983843,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -332,6 +344,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1641860106,
+      "sinceBlock": 13980925,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -375,6 +388,7 @@
         }
       ],
       "sinceTimestamp": 1641897946,
+      "sinceBlock": 13983725,
       "values": {
         "$immutable": true,
         "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a"
@@ -387,6 +401,7 @@
         "0xb64e5af8c508ce86c29728805a64c3b45bf37a0a28c4ea602902a3e23de80dfd"
       ],
       "sinceTimestamp": 1641898174,
+      "sinceBlock": 13983737,
       "values": {
         "$immutable": true,
         "home": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8",

@@ -1,15 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('corn')
 
-export const corn: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1733880840),
+export const corn: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
@@ -72,9 +72,7 @@ export const corn: Layer2 = orbitStackL2({
         "This vault escrows the cbBTC backing BTCN, Corn's gastoken. Users can directly bridge via LayerZero when minting BTCN in this contract.",
     }),
   ],
-  gasTokens: {
-    untracked: ['BTCN'],
-  },
+  untrackedGasTokens: ['BTCN'],
   // associatedTokens: ['BTCN'],
   discovery,
   bridge: discovery.getContract('Bridge'),
@@ -84,7 +82,8 @@ export const corn: Layer2 = orbitStackL2({
     name: 'corn',
     chainId: 21000000,
     explorerUrl: 'https://maizenet-explorer.usecorn.com',
-    sinceTimestamp: new UnixTime(1732012151),
+    sinceTimestamp: UnixTime(1732012151),
+    gasTokens: ['BTCN'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

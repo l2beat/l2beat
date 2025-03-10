@@ -1,5 +1,5 @@
 'use client'
-import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/global/countdowns'
+import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
 import { externalLinks } from '~/consts/external-links'
 import { cn } from '~/utils/cn'
 import { TextCountdown } from '../countdown'
@@ -24,10 +24,7 @@ export function RecategorisationPreviewBanner({
       <div className="text-balance text-center text-sm">
         You&apos;re viewing a preview of the recategorisation that will come
         into force in{' '}
-        <TextCountdown
-          expiresAt={PROJECT_COUNTDOWNS.otherMigration.toNumber()}
-        />
-        .
+        <TextCountdown expiresAt={PROJECT_COUNTDOWNS.otherMigration} />.
       </div>
       <BannerActionButton />
     </div>

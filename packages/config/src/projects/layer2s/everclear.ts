@@ -1,15 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('everclear')
 
-export const everclear: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
+export const everclear: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1717512064), // 2024-06-04T14:41:04Z
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Interoperability'],
   reasonsForBeingOther: [
@@ -45,7 +45,7 @@ export const everclear: Layer2 = orbitStackL2({
         callsPerMinute: 1500,
       },
     ],
-    sinceTimestamp: new UnixTime(1725539051), // block 1 ts
+    sinceTimestamp: UnixTime(1725539051), // block 1 ts
   },
   discovery,
   bridge: discovery.getContract('Bridge'),

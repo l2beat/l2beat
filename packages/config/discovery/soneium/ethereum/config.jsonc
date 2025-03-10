@@ -11,7 +11,6 @@
   "names": {
     "0x509182eC226b3B71D36A3255A80EF0b1A9D43033": "SoneiumMultisig"
   },
-  "sharedModules": {},
   "overrides": {
     "0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0": {
       // permissionedGamesTotal from the template ignored as they are using permissioned games by default

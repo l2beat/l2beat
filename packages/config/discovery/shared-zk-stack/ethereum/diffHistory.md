@@ -1,3 +1,277 @@
+Generated with discovered.json: 0x1fe9adce13c15a3b4586ceda3f4450e3b5aa9dcc
+
+# Diff at Tue, 04 Mar 2025 10:39:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21944239
+- current block number: 21944239
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944239 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x015318c16AE443a20DE0A776dB06a59F0D279057) {
+    +++ description: None
+      sinceBlock:
++        20292687
+    }
+```
+
+```diff
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66) {
+    +++ description: None
+      sinceBlock:
++        20372302
+    }
+```
+
+```diff
+    contract GnosisSafe (0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D) {
+    +++ description: None
+      sinceBlock:
++        20292681
+    }
+```
+
+```diff
+    contract GnosisSafe (0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384) {
+    +++ description: None
+      sinceBlock:
++        20292637
+    }
+```
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      sinceBlock:
++        20427018
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      sinceBlock:
++        20019828
+    }
+```
+
+```diff
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a) {
+    +++ description: None
+      sinceBlock:
++        20390079
+    }
+```
+
+```diff
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F) {
+    +++ description: None
+      sinceBlock:
++        20422264
+    }
+```
+
+```diff
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F) {
+    +++ description: None
+      sinceBlock:
++        20406309
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      sinceBlock:
++        15839298
+    }
+```
+
+```diff
+    contract GnosisSafe (0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f) {
+    +++ description: None
+      sinceBlock:
++        20292668
+    }
+```
+
+```diff
+    contract GnosisSafe (0x55c671BcE13120387Ded710A1d1b80C0e3d8E857) {
+    +++ description: None
+      sinceBlock:
++        20292673
+    }
+```
+
+```diff
+    contract GnosisSafe (0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69) {
+    +++ description: None
+      sinceBlock:
++        20292656
+    }
+```
+
+```diff
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2) {
+    +++ description: None
+      sinceBlock:
++        20425173
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0) {
+    +++ description: None
+      sinceBlock:
++        20292645
+    }
+```
+
+```diff
+    contract GenesisUpgrade (0x6e2BC597F1e83F9fC7c1f69157F2C12476873971) {
+    +++ description: Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts.
+      sinceBlock:
++        21087222
+    }
+```
+
+```diff
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A) {
+    +++ description: None
+      sinceBlock:
++        20378889
+    }
+```
+
+```diff
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0) {
+    +++ description: None
+      sinceBlock:
++        20370671
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      sinceBlock:
++        20486023
+    }
+```
+
+```diff
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88) {
+    +++ description: None
+      sinceBlock:
++        20370122
+    }
+```
+
+```diff
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803) {
+    +++ description: None
+      sinceBlock:
++        20386973
+    }
+```
+
+```diff
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44) {
+    +++ description: None
+      sinceBlock:
++        20372086
+    }
+```
+
+```diff
+    contract ZkFoundationMultisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      sinceBlock:
++        20363246
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      sinceBlock:
++        20486034
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      sinceBlock:
++        20019827
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      sinceBlock:
++        20019830
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) {
+    +++ description: None
+      sinceBlock:
++        20393837
+    }
+```
+
+```diff
+    contract GnosisSafe (0xCe7a3dFcc35602155809920Ff65e093aa726f6cf) {
+    +++ description: None
+      sinceBlock:
++        20292663
+    }
+```
+
+```diff
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      sinceBlock:
++        20486034
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      sinceBlock:
++        20019898
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29) {
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+      sinceBlock:
++        20486038
+    }
+```
+
+```diff
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231) {
+    +++ description: None
+      sinceBlock:
++        20390387
+    }
+```
+
 Generated with discovered.json: 0xd6e875cc8e83e0d38c0bba2253c8bb8ef4021044
 
 # Diff at Fri, 28 Feb 2025 10:27:08 GMT:

@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { CONTRACTS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { CONTRACTS, RISK_VIEW, SOA, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
@@ -78,8 +78,8 @@ const maxTimeVariation = discovery.getContractValue<{
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
-export const arbitrum: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+export const arbitrum: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     BADGES.VM.WasmVM,
     BADGES.Stack.Nitro,
@@ -141,7 +141,7 @@ export const arbitrum: Layer2 = orbitStackL2({
     type: 'Arbitrum',
     // First blob tx from arbitrum
     // https://etherscan.io/tx/0x5969e9d520e138e6eeb5c020a75635fd2fdc15803f707dce7909c1bf062b32d0
-    minTimestamp: new UnixTime(1710427823),
+    minTimestamp: UnixTime(1710427823),
     lag: 0,
     stateUpdate: 'disabled',
   },
@@ -238,11 +238,22 @@ export const arbitrum: Layer2 = orbitStackL2({
       // in case we have to gather historic data
       address: EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'),
       chain: 'ethereum',
-      sinceTimestamp: new UnixTime(1622243344),
+      sinceTimestamp: UnixTime(1622243344),
       tokens: ['ETH'],
       isHistorical: true,
     },
   ],
+  scopeOfAssessment: {
+    checked: [
+      SOA.l1Contracts,
+      SOA.l2Contracts,
+      SOA.gasToken,
+      SOA.derivationSpec,
+      SOA.sourceCodeToProgramHash,
+    ],
+    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+  },
+
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_PERMISSIONLESS_BOLD(
       l2TimelockDelay,

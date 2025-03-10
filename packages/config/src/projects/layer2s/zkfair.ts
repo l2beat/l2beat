@@ -19,7 +19,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 
@@ -104,11 +104,11 @@ const dacMembers = discovery
   .getContractValue<string[][]>('ZKFairValidiumDAC', 'members')
   .map((e) => e[1])
 
-export const zkfair: Layer2 = {
+export const zkfair: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zkfair'),
   capability: 'universal',
-  addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
   badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.Stack.PolygonCDK],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -136,7 +136,7 @@ export const zkfair: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x9cb4706e20A18E59a48ffa7616d700A3891e1861'),
-        sinceTimestamp: new UnixTime(1702879283),
+        sinceTimestamp: UnixTime(1702879283),
         tokens: '*',
       }),
     ],

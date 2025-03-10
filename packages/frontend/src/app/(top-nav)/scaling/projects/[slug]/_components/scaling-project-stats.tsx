@@ -1,5 +1,6 @@
 import { pluralize } from '@l2beat/shared-pure'
-import type { ReactNode } from 'react'
+import { chunk, compact, isEmpty } from 'lodash'
+import { Fragment, type ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
@@ -11,82 +12,117 @@ import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TypeInfo } from '~/components/table/cells/type-info'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
-  project: ScalingProjectEntry
+  project: ProjectScalingEntry
   className?: string
 }
 
-export function ScalingProjectStats({ project, className }: Props) {
-  const isAppchain = project.capability === 'appchain'
+export function ProjectScalingStats({ project, className }: Props) {
+  const stats = compact([
+    <ProjectStat
+      key="tokens"
+      title="Tokens"
+      value={
+        <TokenBreakdownStat
+          tokenTvs={project.header.tvs?.tokens}
+          gasTokens={project.header.gasTokens}
+        />
+      }
+    />,
+    <ProjectStat
+      key="ops-count"
+      title="Past day UOPS"
+      tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
+      value={
+        project.header.activity ? (
+          <ValueWithPercentageChange
+            change={project.header.activity.uopsWeeklyChange}
+            className="font-medium !leading-none md:text-lg md:font-bold"
+            changeClassName="md:text-base md:font-medium !leading-none"
+          >
+            {project.header.activity.lastDayUops.toFixed(2)}
+          </ValueWithPercentageChange>
+        ) : (
+          <NoDataBadge />
+        )
+      }
+    />,
+    <ProjectStat
+      key="ops-count"
+      title="30D ops count"
+      value={
+        project.header.activity ? (
+          formatNumber(project.header.activity.uopsCount)
+        ) : (
+          <NoDataBadge />
+        )
+      }
+    />,
+
+    project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
+      <ProjectStat
+        title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
+        value={project.header.gasTokens.join(', ')}
+      />
+    ) : undefined,
+    project.stageConfig.stage !== 'NotApplicable' ? (
+      <ProjectStat
+        title="Stage"
+        value={
+          <a href="#stage">
+            <StageCell
+              stageConfig={project.stageConfig}
+              isAppchain={project.isAppchain}
+            />
+          </a>
+        }
+      />
+    ) : undefined,
+    <ProjectStat
+      key="type"
+      title="Type"
+      value={<TypeInfo>{project.header.category}</TypeInfo>}
+    />,
+
+    <ProjectStat
+      key="purpose"
+      title={pluralize(project.header.purposes.length, 'Purpose')}
+      value={project.header.purposes.join(', ')}
+    />,
+    project.header.hostChain ? (
+      <ProjectStat title="Host chain" value={project.header.hostChain} />
+    ) : undefined,
+  ])
+
+  const GROUPS = 4
+  const partitioned = chunk(stats, GROUPS)
 
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5',
+        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5',
         className,
       )}
     >
-      <ProjectStat
-        title="Tokens"
-        value={<TokenBreakdownStat tokenTvs={project.header.tvs?.tokens} />}
-      />
-      <ProjectStat
-        title="Past day UOPS"
-        tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
-        value={
-          project.header.activity ? (
-            <ValueWithPercentageChange
-              change={project.header.activity.uopsWeeklyChange}
-              className="font-medium !leading-none md:text-xl md:font-bold"
-              changeClassName="md:text-base md:font-medium !leading-none"
-            >
-              {project.header.activity.lastDayUops.toFixed(2)}
-            </ValueWithPercentageChange>
-          ) : (
-            <NoDataBadge />
-          )
-        }
-      />
-      <ProjectStat
-        title="30D ops count"
-        value={
-          project.header.activity ? (
-            formatNumber(project.header.activity.uopsCount)
-          ) : (
-            <NoDataBadge />
-          )
-        }
-      />
-      <HorizontalSeparator className="col-span-full max-md:hidden" />
-      {project.stageConfig.stage !== 'NotApplicable' ? (
-        <ProjectStat
-          title="Stage"
-          value={
-            <a href="#stage">
-              <StageCell
-                stageConfig={project.stageConfig}
-                isAppchain={isAppchain}
-              />
-            </a>
-          }
-        />
-      ) : null}
-      <ProjectStat
-        title="Type"
-        value={<TypeInfo>{project.header.category}</TypeInfo>}
-      />
-      <ProjectStat
-        title={pluralize(project.header.purposes.length, 'Purpose')}
-        value={project.header.purposes.join(', ')}
-      />
-      {project.header.hostChain && (
-        <ProjectStat title="Host chain" value={project.header.hostChain} />
-      )}
+      {partitioned.map((statGroup, i) => {
+        const isLastGroup = i === partitioned.length - 1
+
+        return (
+          <Fragment key={i}>
+            {statGroup.map((stat) => (
+              <Fragment key={stat.key}>{stat}</Fragment>
+            ))}
+            {!isLastGroup && (
+              <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
+            )}
+          </Fragment>
+        )
+      })}
     </div>
   )
 }
@@ -101,6 +137,7 @@ interface ProjectStat {
 function ProjectStat(props: ProjectStat) {
   return (
     <li
+      key={props.title}
       className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,
@@ -118,7 +155,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
+      <span className="text-lg font-medium !leading-none md:font-bold">
         {props.value}
       </span>
     </li>

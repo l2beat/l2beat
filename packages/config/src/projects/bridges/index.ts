@@ -1,4 +1,4 @@
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { acrossV3 } from './acrossV3'
 import { allbridge } from './allbridge'
 import { amarok } from './amarok'
@@ -42,6 +42,7 @@ import { stargatev2 } from './stargatev2'
 import { sygma } from './sygma'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
+import { train } from './train'
 import { transporter } from './transporter'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
@@ -88,6 +89,7 @@ export const bridges: Bridge[] = [
   stargatev2,
   sygma,
   synapse,
+  train,
   transporter,
   portal,
   wormholeV1,

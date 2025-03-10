@@ -43,8 +43,12 @@ export function NoBridgeGrissiniDetailsPlaceholder({
 
 export function InlinedNoBridgeGrissiniDetailsPlaceholder({
   className,
+  contentClassName,
+  size = 'regular',
 }: {
   className?: string
+  contentClassName?: string
+  size?: 'regular' | 'small'
 }) {
   return (
     <div
@@ -57,8 +61,21 @@ export function InlinedNoBridgeGrissiniDetailsPlaceholder({
         sentiment="neutral"
         className="h-full shrink-0 max-md:w-1"
       />
-      <div className="flex flex-1 flex-col justify-center gap-1 p-4 md:items-center">
-        <div className="text-sm font-bold md:text-lg">{TITLE}</div>
+      <div
+        className={cn(
+          'flex flex-1 flex-col justify-center gap-1 p-4 md:items-center',
+          contentClassName,
+        )}
+      >
+        <div
+          className={cn(
+            'font-bold',
+            size === 'small' && 'text-base',
+            size === 'regular' && 'text-sm md:text-lg',
+          )}
+        >
+          {TITLE}
+        </div>
         <div
           className={cn(
             'text-[13px] font-medium leading-none',

@@ -1,27 +1,20 @@
-import type { WarningWithSentiment } from '@l2beat/config'
 import Image from 'next/image'
 import { Breadcrumbs } from '~/components/breadcrumbs'
-import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { formatTimestampToDateWithHour } from '~/utils/dates'
-import { TvsBreakdownSummaryBox } from './tvs-breakdown-summary-box'
 
 interface Props {
   title: string
   slug: string
-  tvs: ProjectSevenDayTvsBreakdown
-  tvsWarning: WarningWithSentiment | undefined
   tvsBreakdownTimestamp: number
 }
 
 export function TvsBreakdownPageHeader({
   title,
   slug,
-  tvs,
-  tvsWarning,
   tvsBreakdownTimestamp,
 }: Props) {
   return (
-    <div className="flex flex-col border-divider px-4 pt-6 max-md:border-b max-md:bg-header-primary md:mt-[38px] md:px-0">
+    <div className="flex flex-col border-divider px-4 py-6 max-md:border-b max-md:bg-header-primary md:mt-[38px] md:px-0">
       <Breadcrumbs
         className="mb-4"
         items={[
@@ -54,26 +47,6 @@ export function TvsBreakdownPageHeader({
           </span>
         </div>
       </div>
-
-      <TvsBreakdownSummaryBox
-        total={{
-          value: tvs.breakdown.total,
-          change: tvs.change.total,
-        }}
-        canonical={{
-          value: tvs.breakdown.canonical,
-          change: tvs.change.canonical,
-        }}
-        external={{
-          value: tvs.breakdown.external,
-          change: tvs.change.external,
-        }}
-        native={{
-          value: tvs.breakdown.native,
-          change: tvs.change.native,
-        }}
-        warning={tvsWarning}
-      />
     </div>
   )
 }

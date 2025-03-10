@@ -1,6 +1,7 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingStackedTvsChart } from '~/components/chart/tvs/stacked/scaling-stacked-tvs-chart'
 import {
@@ -20,7 +21,6 @@ import {
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'

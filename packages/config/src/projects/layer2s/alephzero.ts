@@ -1,15 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('alephzero')
 
-export const alephzero: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+export const alephzero: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
@@ -32,7 +32,6 @@ export const alephzero: Layer2 = orbitStackL2({
     },
   },
   associatedTokens: ['AZERO'],
-  gasTokens: { tracked: ['AZERO'] },
   chainConfig: {
     name: 'alephzero',
     chainId: 41455,
@@ -43,6 +42,7 @@ export const alephzero: Layer2 = orbitStackL2({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['AZERO'],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

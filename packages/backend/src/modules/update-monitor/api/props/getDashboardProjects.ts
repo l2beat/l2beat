@@ -3,9 +3,9 @@ import {
   type ConfigReader,
   type DiscoveryConfig,
   type DiscoveryDiff,
+  type DiscoveryOutput,
   diffDiscovery,
 } from '@l2beat/discovery'
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId } from '@l2beat/shared-pure'
 
 export interface DashboardProject {

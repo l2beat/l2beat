@@ -21,7 +21,7 @@ import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
@@ -47,10 +47,10 @@ const finalizationPeriod = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const kroma: Layer2 = {
+export const kroma: ScalingProject = {
   type: 'layer2',
   id: ProjectId('kroma'),
-  addedAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
+  addedAt: UnixTime(1686820004), // 2023-06-15T09:06:44Z
   capability: 'universal',
   badges: [
     BADGES.VM.EVM,
@@ -123,20 +123,20 @@ export const kroma: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x31F648572b67e60Ec6eb8E197E1848CC5F5558de'),
-        sinceTimestamp: new UnixTime(1693880555),
+        sinceTimestamp: UnixTime(1693880555),
         tokens: ['ETH'],
         description: 'Main entry point for users depositing ETH.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x827962404D7104202C5aaa6b929115C8211d9596'),
-        sinceTimestamp: new UnixTime(1693880555),
+        sinceTimestamp: UnixTime(1693880555),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 token that do not require custom gateway.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
-        sinceTimestamp: new UnixTime(1700122827),
+        sinceTimestamp: UnixTime(1700122827),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
         description: 'Main entry point for users depositing USDC.',
@@ -170,7 +170,7 @@ export const kroma: Layer2 = {
           to: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'sequencerInbox'),
           ),
-          sinceTimestamp: new UnixTime(1693883663),
+          sinceTimestamp: UnixTime(1693883663),
         },
       },
       {
@@ -186,16 +186,16 @@ export const kroma: Layer2 = {
           selector: '0x5a045f78',
           functionSignature:
             'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1693880579),
+          sinceTimestamp: UnixTime(1693880579),
         },
       },
     ],
     finality: {
       type: 'OPStack',
       // timestamp of the first blob tx
-      minTimestamp: new UnixTime(1714032407),
+      minTimestamp: UnixTime(1714032407),
       l2BlockTimeSeconds: 2,
-      genesisTimestamp: new UnixTime(1693880387),
+      genesisTimestamp: UnixTime(1693880387),
       lag: 0,
       stateUpdate: 'disabled',
     },

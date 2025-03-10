@@ -1,4 +1,4 @@
-import type { StageConfig } from '@l2beat/config'
+import type { ProjectScalingStage } from '@l2beat/config'
 
 import {
   StageBadge,
@@ -15,7 +15,7 @@ import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
 
 export interface StageCellProps {
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
   isAppchain: boolean
 }
 

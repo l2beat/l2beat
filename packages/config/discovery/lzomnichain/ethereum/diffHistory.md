@@ -1,3 +1,286 @@
+Generated with discovered.json: 0xf0e814792edc3dc0abf2af01767b40cb0891c19e
+
+# Diff at Fri, 07 Mar 2025 13:45:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21723814
+- current block number: 21995383
+
+## Description
+
+DVN / Verifier for ZKsync Era added.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract DVN (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../lzomnichain/ethereum/.flat/DVN.sol             | 2116 ++++++++++++++++++++
+ 1 file changed, 2116 insertions(+)
+```
+
+Generated with discovered.json: 0x563d1c3b6a1e7b96711ecf73b11827c2d3f7ae58
+
+# Diff at Tue, 04 Mar 2025 10:39:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21723814
+- current block number: 21723814
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723814 (main branch discovery), not current.
+
+```diff
+    contract FPValidator (0x07245eEa05826F5984c7c3C8F478b04892e4df89) {
+    +++ description: None
+      sinceBlock:
++        15757967
+    }
+```
+
+```diff
+    contract GnosisSafe (0x19565F4771843467aAD632d6B56c75396785b06C) {
+    +++ description: None
+      sinceBlock:
++        16363222
+    }
+```
+
+```diff
+    contract BobaEscrow1 (0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55) {
+    +++ description: None
+      sinceBlock:
++        15522081
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b) {
+    +++ description: None
+      sinceBlock:
++        13472909
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      sinceBlock:
++        15416287
+    }
+```
+
+```diff
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859) {
+    +++ description: None
+      sinceBlock:
++        15416264
+    }
+```
+
+```diff
+    contract  (0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034) {
+    +++ description: None
+      sinceBlock:
++        16050867
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sinceBlock:
++        15416271
+    }
+```
+
+```diff
+    contract UsdcEscrow (0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E) {
+    +++ description: None
+      sinceBlock:
++        15719673
+    }
+```
+
+```diff
+    contract EuraEscrow (0x4Fa745FCCC04555F2AFA8874cd23961636CdF982) {
+    +++ description: None
+      sinceBlock:
++        15133087
+    }
+```
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      sinceBlock:
++        15416736
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      sinceBlock:
++        15398311
+    }
+```
+
+```diff
+    contract GnosisSafe (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      sinceBlock:
++        14402408
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      sinceBlock:
++        14388880
+    }
+```
+
+```diff
+    contract  (0x6BD792911F4B3714E88FbDf32B351632e7d22c70) {
+    +++ description: None
+      sinceBlock:
++        16050424
+    }
+```
+
+```diff
+    contract BobaEscrow3 (0x6F537839714761388B6d7ED61Bc09579d5dA2F41) {
+    +++ description: None
+      sinceBlock:
++        15372766
+    }
+```
+
+```diff
+    contract StoneEscrow (0x7122985656e38BDC0302Db86685bb972b145bD3C) {
+    +++ description: None
+      sinceBlock:
++        18203782
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      sinceBlock:
++        15416448
+    }
+```
+
+```diff
+    contract WagmiEscrow (0x92CC36D66e9d739D50673d1f27929a371FB83a67) {
+    +++ description: None
+      sinceBlock:
++        17621321
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sinceBlock:
++        15410443
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      sinceBlock:
++        14388905
+    }
+```
+
+```diff
+    contract Stargate Token (0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6) {
+    +++ description: None
+      sinceBlock:
++        14402855
+    }
+```
+
+```diff
+    contract BobaEscrow2 (0xB0003eB166654f7e57c0463F8D1a438eB238c490) {
+    +++ description: None
+      sinceBlock:
++        15435468
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sinceBlock:
++        14457816
+    }
+```
+
+```diff
+    contract Google Cloud Oracle (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sinceBlock:
++        18095084
+    }
+```
+
+```diff
+    contract GnosisSafe (0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8) {
+    +++ description: None
+      sinceBlock:
++        13931946
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sinceBlock:
++        18095085
+    }
+```
+
+```diff
+    contract GnosisSafe (0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373) {
+    +++ description: None
+      sinceBlock:
++        13398698
+    }
+```
+
+```diff
+    contract LinkEscrow (0xEe381e476b4335B8584A2026f3E845edaC2c69de) {
+    +++ description: None
+      sinceBlock:
++        15584943
+    }
+```
+
 Generated with discovered.json: 0x05da60f726ccbb7d82985cabfaef1547144b915b
 
 # Diff at Tue, 28 Jan 2025 15:08:02 GMT:

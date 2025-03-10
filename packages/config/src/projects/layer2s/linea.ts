@@ -24,7 +24,8 @@ import {
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2, ProjectPermissionedAccount } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
+import type { ProjectPermissionedAccount } from '../../types'
 import { BADGES } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
@@ -99,11 +100,11 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
   periodInSeconds,
 )} time window.`
 
-export const linea: Layer2 = {
+export const linea: ScalingProject = {
   type: 'layer2',
   id: ProjectId('linea'),
   capability: 'universal',
-  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Linea',
@@ -145,18 +146,18 @@ export const linea: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xd19d4B5d358258f05D7B411E21A1460D11B0876F'),
-        sinceTimestamp: new UnixTime(1689159923),
+        sinceTimestamp: UnixTime(1689159923),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
-        sinceTimestamp: new UnixTime(1691079071),
+        sinceTimestamp: UnixTime(1691079071),
         ...ESCROW.CANONICAL_EXTERNAL,
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319'),
-        sinceTimestamp: new UnixTime(1691060675),
+        sinceTimestamp: UnixTime(1691060675),
         excludedTokens: ['rsETH'],
         tokens: '*',
       }),
@@ -191,8 +192,8 @@ export const linea: Layer2 = {
           selector: '0x7a776315',
           functionSignature:
             'function submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))',
-          sinceTimestamp: new UnixTime(1707831168),
-          untilTimestamp: new UnixTime(1711469339),
+          sinceTimestamp: UnixTime(1707831168),
+          untilTimestamp: UnixTime(1711469339),
         },
       },
       {
@@ -210,8 +211,8 @@ export const linea: Layer2 = {
             'function submitBlobData(tuple(bytes32,bytes32,bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)',
           // first tx with blobs
           // https://etherscan.io/tx/0x4d03b7e1950256de257ff95b52fac047faeb11600c5975abe7e0ccbc7be7ecfb
-          sinceTimestamp: new UnixTime(1711449407),
-          untilTimestamp: new UnixTime(1717588271),
+          sinceTimestamp: UnixTime(1711449407),
+          untilTimestamp: UnixTime(1717588271),
         },
       },
       {
@@ -229,8 +230,8 @@ export const linea: Layer2 = {
             'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[], bytes32, bytes32)',
           // first tx with blobs
           // https://etherscan.io/tx/0x88bca59bc9581b15b39379e5c68a6d0e4847eae04185c838f1c48c9b67abf87a
-          sinceTimestamp: new UnixTime(1717588271),
-          untilTimestamp: new UnixTime(1734357131),
+          sinceTimestamp: UnixTime(1717588271),
+          untilTimestamp: UnixTime(1734357131),
         },
       },
       {
@@ -246,7 +247,7 @@ export const linea: Layer2 = {
           selector: '0x6854f6bc',
           functionSignature:
             'function submitDataAsCalldata(tuple(bytes32 finalStateRootHash, bytes32 snarkHash, bytes compressedData) _submission, bytes32 _parentShnarf, bytes32 _expectedShnarf)',
-          sinceTimestamp: new UnixTime(1734357131),
+          sinceTimestamp: UnixTime(1734357131),
         },
       },
       {
@@ -264,7 +265,7 @@ export const linea: Layer2 = {
             'function submitBlobs(tuple(uint256 dataEvaluationClaim, bytes kzgCommitment, bytes kzgProof, bytes32 finalStateRootHash, bytes32 snarkHash)[] _blobSubmissions, bytes32 _parentShnarf, bytes32 _finalBlobShnarf)',
           // upgrade tx
           // https://etherscan.io/tx/0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d
-          sinceTimestamp: new UnixTime(1734357131),
+          sinceTimestamp: UnixTime(1734357131),
         },
       },
       {
@@ -286,8 +287,8 @@ export const linea: Layer2 = {
           selector: '0x4165d6dd',
           functionSignature:
             'function finalizeBlocks((bytes32, uint32, bytes[], bytes32[], bytes, uint16[])[] _blocksData,bytes _proof,uint256 _proofType,bytes32 _parentStateRootHash)',
-          sinceTimestamp: new UnixTime(1689159923),
-          untilTimestamp: new UnixTime(1707831168),
+          sinceTimestamp: UnixTime(1689159923),
+          untilTimestamp: UnixTime(1707831168),
         },
       },
       {
@@ -309,8 +310,8 @@ export const linea: Layer2 = {
           selector: '0xd630280f',
           functionSignature:
             'function finalizeCompressedBlocksWithProof(bytes,uint256,(bytes32,bytes32[],bytes32,uint256,uint256,uint256,bytes32,uint256,bytes32[],uint256,bytes))',
-          sinceTimestamp: new UnixTime(1707831168),
-          untilTimestamp: new UnixTime(1717508999),
+          sinceTimestamp: UnixTime(1707831168),
+          untilTimestamp: UnixTime(1717508999),
         },
       },
       {
@@ -332,8 +333,8 @@ export const linea: Layer2 = {
           selector: '0xabffac32',
           functionSignature:
             'function finalizeBlocksWithProof(bytes,uint256,(bytes32,bytes32,uint256,(bytes32,bytes32,bytes32,bytes32,bytes32),uint256,uint256,bytes32,bytes32,uint256,uint256,uint256,bytes32[],bytes))',
-          sinceTimestamp: new UnixTime(1717508999),
-          untilTimestamp: new UnixTime(1734357131),
+          sinceTimestamp: UnixTime(1717508999),
+          untilTimestamp: UnixTime(1734357131),
         },
       },
       {
@@ -355,7 +356,7 @@ export const linea: Layer2 = {
           selector: '0x5603c65f',
           functionSignature:
             'function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)',
-          sinceTimestamp: new UnixTime(1734357131),
+          sinceTimestamp: UnixTime(1734357131),
         },
       },
     ],
@@ -368,7 +369,7 @@ export const linea: Layer2 = {
     finality: {
       type: 'Linea',
       lag: 0,
-      minTimestamp: new UnixTime(1717588271),
+      minTimestamp: UnixTime(1717588271),
       stateUpdate: 'disabled',
     },
   },
@@ -377,6 +378,7 @@ export const linea: Layer2 = {
     chainId: 59144,
     explorerUrl: 'https://lineascan.build',
     sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

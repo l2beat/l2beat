@@ -1,8 +1,3 @@
-import {
-  ContractFieldSeverity,
-  ContractValueType,
-  ManualProxyType,
-} from '@l2beat/discovery-types'
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
@@ -28,6 +23,8 @@ export const RolePermissionEntries = [
   'validateBridge2',
   'relay',
   'aggregatePolygon',
+  'operateStarknet',
+  'governStarknet',
 ] as const
 
 export const Permission = z.enum([
@@ -51,6 +48,18 @@ export type PermissionConfiguration = RawPermissionConfiguration & {
   target: EthereumAddress
   delay: number
 }
+
+export type ContractValueType = z.infer<typeof ContractValueType>
+export const ContractValueType = z.enum([
+  'CODE_CHANGE',
+  'L2',
+  'EXTERNAL',
+  'RISK_PARAMETER',
+  'PERMISSION',
+])
+
+export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
+export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
 export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
@@ -92,6 +101,20 @@ export const DiscoveryCategory = z.object({
   priority: z.number(),
 })
 
+export type ManualProxyType = z.infer<typeof ManualProxyType>
+export const ManualProxyType = z.enum([
+  'new Arbitrum proxy',
+  'call implementation proxy',
+  'zkSync Lite proxy',
+  'zkSpace proxy',
+  'Eternal Storage proxy',
+  'Polygon Extension proxy',
+  'Optics Beacon proxy',
+  'Axelar proxy',
+  'LightLink proxy',
+  'immutable',
+])
+
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
@@ -129,7 +152,7 @@ export const CommonDiscoveryConfig = z.object({
       z.string(),
     ),
   ),
-  sharedModules: z.optional(z.record(z.string(), z.string())),
+  sharedModules: z.optional(z.array(z.string())),
 })
 
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>

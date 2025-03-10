@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xefdcd1de31432a1ebfe63de63f2984914ed23b30
+
+# Diff at Tue, 04 Mar 2025 10:40:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20311131
+- current block number: 20311131
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311131 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x02ecef526f806f06357659fFD14834fe82Ef4B04) {
+    +++ description: None
+      sinceBlock:
++        11841962
+    }
+```
+
+```diff
+    contract Verifier (0x27C229937745d697d28FC7853d1bFEA7331Edf56) {
+    +++ description: None
+      sinceBlock:
++        11841962
+    }
+```
+
+```diff
+    contract ZkSyncCommitBlock (0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157) {
+    +++ description: None
+      sinceBlock:
++        11841959
+    }
+```
+
+```diff
+    contract PairManager (0x661121AE41edE3f6FECDed922c59acC19A3ea9B3) {
+    +++ description: None
+      sinceBlock:
++        11841962
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x714B2D10210f2A3a7AA614F949259C87613689aB) {
+    +++ description: None
+      sinceBlock:
++        11841962
+    }
+```
+
+```diff
+    contract ZkSyncExit (0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5) {
+    +++ description: None
+      sinceBlock:
++        11841961
+    }
+```
+
+```diff
+    contract ZkSync (0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad) {
+    +++ description: None
+      sinceBlock:
++        11841962
+    }
+```
+
+```diff
+    contract VerifierExit (0x961369d347EF7A6896BDD39cBE2B89e3911f521f) {
+    +++ description: None
+      sinceBlock:
++        11841962
+    }
+```
+
 Generated with discovered.json: 0x314a5a5990f8f8d4800eeb6bbf318a1eb48c1b4c
 
 # Diff at Mon, 20 Jan 2025 11:10:25 GMT:

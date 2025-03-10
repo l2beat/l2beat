@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 20826378,
-  "configHash": "0xd9a84173c045b4bc0412d26dd5399a533a88883db209fb00131f2a2c03f492d4",
+  "configHash": "0x24681e9b859a180722b8afdae4ded5175be72d6ad6e42aa4341019fd76119942",
   "contracts": [
     {
       "name": "UpaVerifier",
@@ -27,6 +27,7 @@
         "lastVerifiedSubmissionHeight"
       ],
       "sinceTimestamp": 1723653167,
+      "sinceBlock": 20528085,
       "values": {
         "$admin": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
         "$implementation": "0xB6cD7eD75c008d0033ED241872639a1D8a35020a",
@@ -85,6 +86,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722891191,
+      "sinceBlock": 20464874,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -112,6 +114,7 @@
       "address": "0xE990F8e3505391d2b42C80683d403A8371Ee88B9",
       "unverified": true,
       "sinceTimestamp": 1723652291,
+      "sinceBlock": 20528013,
       "values": { "$immutable": true }
     }
   ],

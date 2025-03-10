@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21744154,
-  "configHash": "0x7216d1410f01c464930482af3e524c3ef4350906680845ac2d9a0b56bf78667e",
+  "configHash": "0xb397a03dad019d4cc95f86c87da4a60efabff143b9cd8e6f0262d08cfa5c917c",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -14,6 +14,7 @@
       ],
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
+      "sinceBlock": 19505052,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -42,6 +43,7 @@
         }
       ],
       "sinceTimestamp": 1718797871,
+      "sinceBlock": 20125601,
       "values": {
         "$admin": "0xada59D145126A746976F0F56477aafFEB3acc8e3",
         "$implementation": "0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8",
@@ -85,6 +87,7 @@
         }
       ],
       "sinceTimestamp": 1718797859,
+      "sinceBlock": 20125600,
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
@@ -122,6 +125,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1716807971,
+      "sinceBlock": 19960801,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",

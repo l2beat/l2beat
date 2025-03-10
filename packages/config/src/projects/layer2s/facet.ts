@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { FORCE_TRANSACTIONS, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
@@ -13,8 +13,8 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const facet: Layer2 = opStackL2({
-  addedAt: new UnixTime(1735889012), // 2025-01-03T01:36:52Z
+export const facet: ScalingProject = opStackL2({
+  addedAt: UnixTime(1735889012), // 2025-01-03T01:36:52Z
   discovery,
   additionalBadges: [BADGES.Other.BasedSequencing],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -83,6 +83,7 @@ export const facet: Layer2 = opStackL2({
   chainConfig: {
     name: 'facet',
     chainId: 1027303,
+    gasTokens: ['FCT'],
     apis: [
       {
         type: 'rpc',
@@ -91,7 +92,7 @@ export const facet: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1733855495),
+  genesisTimestamp: UnixTime(1733855495),
   milestones: [
     {
       title: 'Facet Mainnet Launch',

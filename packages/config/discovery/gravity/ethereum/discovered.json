@@ -2,7 +2,7 @@
   "name": "gravity",
   "chain": "ethereum",
   "blockNumber": 17065004,
-  "configHash": "0xfebdcd0b7083ec4c17429871779feb92136e6f7a73de06be0a86e53dd7815db1",
+  "configHash": "0x19fa0914164a1eb64cbc3b9b8e7427caf9e719e99891b92b019567eb52b79aef",
   "contracts": [
     {
       "name": "Gravity",
@@ -17,6 +17,7 @@
         "state_lastValsetNonce"
       ],
       "sinceTimestamp": 1639416372,
+      "sinceBlock": 13798211,
       "values": {
         "$immutable": true,
         "state_gravityId": "0x677261766974792d6272696467652d6d61696e6e657400000000000000000000",

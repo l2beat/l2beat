@@ -1,8 +1,8 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 21635772,
-  "configHash": "0x39613d278859e94c77e632242c2ec5f0688a52b57180edd0e8eeab5f5070b113",
+  "blockNumber": 21995407,
+  "configHash": "0x6efceb705f550e80e80fdb76f75befaeb93bcab52d8cfaf35f5242883797d270",
   "contracts": [
     {
       "name": "Challenge",
@@ -15,13 +15,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
           "via": []
         }
       ],
       "sinceTimestamp": 1717522343,
+      "sinceBlock": 20019970,
       "values": {
-        "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "$implementation": "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B",
         "$pastUpgrades": [
           [
@@ -53,7 +54,7 @@
         "isHeaderChallengeEnabled": true,
         "isL2HeaderChallengeEnabled": false,
         "maxBundleSize": 42000,
-        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       }
@@ -69,13 +70,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
           "via": []
         }
       ],
       "sinceTimestamp": 1717522307,
+      "sinceBlock": 20019967,
       "values": {
-        "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "$implementation": "0x79B3E839333a74137e78b0DaF84FC12512a8c704",
         "$pastUpgrades": [
           [
@@ -87,7 +89,7 @@
         "$upgradeCount": 1,
         "canonicalStateChain": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
         "daOracle": "0x0000000000000000000000000000000000000000",
-        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "proxiableUUID": "EXPECT_REVERT",
         "rlpReader": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -114,6 +116,7 @@
         }
       ],
       "sinceTimestamp": 1692154319,
+      "sinceBlock": 17924532,
       "values": {
         "$immutable": true,
         "getMemberByIndex": [
@@ -124,7 +127,7 @@
           "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
           "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
         ],
-        "getTransactionCount": 20,
+        "getTransactionCount": 22,
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "derivedName": "Multisig"
@@ -145,6 +148,7 @@
         }
       ],
       "sinceTimestamp": 1692155207,
+      "sinceBlock": 17924604,
       "values": {
         "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "$implementation": "0x468b89D930ca7974196D7195033600B658011756",
@@ -157,7 +161,7 @@
         ],
         "$upgradeCount": 1,
         "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
-        "isPaused": false,
+        "isPaused": true,
         "l2Predicate": "0x7F17A74942c5b22b340688f099c99A79426447e1",
         "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9",
         "proxiableUUID": "EXPECT_REVERT"
@@ -180,6 +184,7 @@
         }
       ],
       "sinceTimestamp": 1692154667,
+      "sinceBlock": 17924561,
       "values": {
         "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "$implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
@@ -222,6 +227,7 @@
         }
       ],
       "sinceTimestamp": 1692155531,
+      "sinceBlock": 17924631,
       "values": {
         "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "$implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
@@ -252,14 +258,15 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
           "via": []
         }
       ],
       "ignoreInWatchMode": ["chainHead", "getHead"],
       "sinceTimestamp": 1717522271,
+      "sinceBlock": 20019964,
       "values": {
-        "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "$implementation": "0xeFE38Bd58ADDf23eFab1FFa16312030384929289",
         "$pastUpgrades": [
           [
@@ -274,39 +281,39 @@
           ]
         ],
         "$upgradeCount": 2,
-        "chainHead": 960,
+        "chainHead": 1168,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {
-          "epoch": 21634047,
-          "l2Height": 123519364,
-          "prevHash": "0xeb85cc21341ae1de6309daae86699408c0db5a6aa570ca53f4321e8a43e319f9",
-          "outputRoot": "0x3e48a33e099b44d0184059543a6ffb900e5c31daf6b5002b897e881b7abdb9ff",
+          "epoch": 21993309,
+          "l2Height": 132108607,
+          "prevHash": "0x0357f67f6fa768ac91770152e7bebe923951d349f2648f8886c87c63d737e9dc",
+          "outputRoot": "0x62314ae58400e70955d971703a83315a1cf702aef43d048e47f39cbf9925efb7",
           "celestiaPointers": [
-            { "height": 3558090, "shareStart": 64, "shareLen": 3445 },
-            { "height": 3558097, "shareStart": 64, "shareLen": 3497 },
-            { "height": 3558104, "shareStart": 64, "shareLen": 3339 },
-            { "height": 3558111, "shareStart": 64, "shareLen": 3640 },
-            { "height": 3558118, "shareStart": 64, "shareLen": 3664 },
-            { "height": 3558125, "shareStart": 128, "shareLen": 3643 },
-            { "height": 3558133, "shareStart": 64, "shareLen": 3663 },
-            { "height": 3558140, "shareStart": 64, "shareLen": 3369 },
-            { "height": 3558147, "shareStart": 128, "shareLen": 3665 },
-            { "height": 3558154, "shareStart": 64, "shareLen": 3664 },
-            { "height": 3558161, "shareStart": 256, "shareLen": 3663 },
-            { "height": 3558168, "shareStart": 64, "shareLen": 3663 },
-            { "height": 3558175, "shareStart": 64, "shareLen": 3650 },
-            { "height": 3558183, "shareStart": 64, "shareLen": 3665 },
-            { "height": 3558190, "shareStart": 64, "shareLen": 3664 },
-            { "height": 3558199, "shareStart": 64, "shareLen": 3523 },
-            { "height": 3558206, "shareStart": 64, "shareLen": 3664 },
-            { "height": 3558213, "shareStart": 128, "shareLen": 3489 },
-            { "height": 3558221, "shareStart": 64, "shareLen": 3665 },
-            { "height": 3558228, "shareStart": 64, "shareLen": 3664 },
-            { "height": 3558236, "shareStart": 64, "shareLen": 3549 }
+            { "height": 4336090, "shareStart": 6912, "shareLen": 3658 },
+            { "height": 4336102, "shareStart": 9344, "shareLen": 3663 },
+            { "height": 4336118, "shareStart": 4096, "shareLen": 3662 },
+            { "height": 4336127, "shareStart": 4352, "shareLen": 3663 },
+            { "height": 4336143, "shareStart": 6784, "shareLen": 3664 },
+            { "height": 4336161, "shareStart": 3840, "shareLen": 3665 },
+            { "height": 4336175, "shareStart": 1792, "shareLen": 3664 },
+            { "height": 4336193, "shareStart": 7744, "shareLen": 3635 },
+            { "height": 4336210, "shareStart": 1344, "shareLen": 3664 },
+            { "height": 4336227, "shareStart": 9920, "shareLen": 3664 },
+            { "height": 4336241, "shareStart": 6784, "shareLen": 3546 },
+            { "height": 4336258, "shareStart": 1792, "shareLen": 3652 },
+            { "height": 4336273, "shareStart": 2688, "shareLen": 3465 },
+            { "height": 4336284, "shareStart": 6080, "shareLen": 3655 },
+            { "height": 4336303, "shareStart": 3456, "shareLen": 3657 },
+            { "height": 4336314, "shareStart": 5376, "shareLen": 3664 },
+            { "height": 4336329, "shareStart": 4352, "shareLen": 3665 },
+            { "height": 4336343, "shareStart": 6208, "shareLen": 3664 },
+            { "height": 4336358, "shareStart": 6848, "shareLen": 3529 },
+            { "height": 4336373, "shareStart": 4416, "shareLen": 3664 },
+            { "height": 4336382, "shareStart": 6976, "shareLen": 3415 }
           ]
         },
         "maxPointers": 21,
-        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "proxiableUUID": "EXPECT_REVERT",
         "publisher": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
         "startingTimestamp": 1717522271,
@@ -314,27 +321,14 @@
       }
     },
     {
-      "name": "RLPReader",
-      "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
+      "name": "LightLinkMultisig2",
+      "address": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+      "template": "GnosisSafe",
       "sourceHashes": [
-        "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
-      "sinceTimestamp": 1717522283,
-      "values": { "$immutable": true }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118" },
-    { "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC" },
-    { "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91" },
-    { "address": "0x6f933814903561F79137099587737DFB24c6E86D" },
-    { "address": "0x7F17A74942c5b22b340688f099c99A79426447e1" },
-    { "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9" },
-    { "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df" },
-    { "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938" },
-    {
-      "address": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+      "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -348,8 +342,50 @@
           "permission": "upgrade",
           "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
         }
-      ]
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1740666983,
+      "sinceBlock": 21938311,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
+          "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+          "0x6F17201F241231f183CE52212e4C47B009036421"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xfc26165dd2190870ea8f65dffadcf120d5820ce42cb7de2f7a3a1b595f28ef64",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 3 (100%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe"
     },
+    {
+      "name": "RLPReader",
+      "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
+      "sourceHashes": [
+        "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
+      ],
+      "sinceTimestamp": 1717522283,
+      "sinceBlock": 20019965,
+      "values": { "$immutable": true }
+    }
+  ],
+  "eoas": [
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118" },
+    { "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC" },
+    { "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91" },
+    { "address": "0x6F17201F241231f183CE52212e4C47B009036421" },
+    { "address": "0x6f933814903561F79137099587737DFB24c6E86D" },
+    { "address": "0x7F17A74942c5b22b340688f099c99A79426447e1" },
+    { "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9" },
+    { "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df" },
+    { "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938" },
     { "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590" }
   ],
   "abis": {
@@ -397,6 +433,54 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x468b89D930ca7974196D7195033600B658011756": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -553,6 +637,9 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": [
+      "constructor(address _singleton)"
+    ],
     "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -660,5 +747,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+  }
 }

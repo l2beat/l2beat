@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const union: Layer2 = upcomingL2({
+export const union: ScalingProject = upcomingL2({
   id: 'union',
   capability: 'universal',
-  addedAt: new UnixTime(1740072951), // 2025-01-20T17:35:51Z
+  addedAt: UnixTime(1740072951), // 2025-01-20T17:35:51Z
   display: {
     name: 'Union Chain',
     slug: 'union',

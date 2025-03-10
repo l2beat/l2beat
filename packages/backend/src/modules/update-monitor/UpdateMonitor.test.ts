@@ -1,13 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type ConfigReader,
+  type ContractParameters,
   DiscoveryConfig,
   type DiscoveryDiff,
+  type DiscoveryOutput,
 } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-} from '@l2beat/discovery-types'
 import {
   ChainConverter,
   ChainId,
@@ -30,7 +28,7 @@ const ADDRESS_A = EthereumAddress.random()
 const NAME_B = 'contract-b'
 const ADDRESS_B = EthereumAddress.random()
 const BLOCK_NUMBER = 1
-const TIMESTAMP = new UnixTime(0)
+const TIMESTAMP = 0
 
 const COMMITTED: ContractParameters[] = [
   {
@@ -150,7 +148,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => undefined,
         upsert: async () => undefined,
       })
-      const timestamp = new UnixTime(0)
+      const timestamp = 0
 
       const updateMonitor = new UpdateMonitor(
         runners,
@@ -336,7 +334,7 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, 0)
 
       // gets block number
       expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
@@ -385,7 +383,7 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, 0)
 
       // send notification about the error of discovery
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
@@ -450,7 +448,7 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, 0)
 
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(2)
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
@@ -499,7 +497,7 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, 0)
 
       // gets block number
       expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
@@ -738,7 +736,7 @@ describe(UpdateMonitor.name, () => {
 
       const runners = [discoveryRunnerEth, discoveryRunnerArb]
 
-      const timestamp = new UnixTime(0)
+      const timestamp = 0
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
         upsert: async () => undefined,
@@ -824,7 +822,7 @@ describe(UpdateMonitor.name, () => {
 
       const runners = [discoveryRunnerEth, discoveryRunnerArb]
 
-      const timestamp = new UnixTime(0)
+      const timestamp = 0
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
         upsert: async () => undefined,
@@ -870,7 +868,7 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('does nothing for an empty cache', async () => {
-      const timestamp = new UnixTime(0)
+      const timestamp = 0
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
         upsert: async () => undefined,

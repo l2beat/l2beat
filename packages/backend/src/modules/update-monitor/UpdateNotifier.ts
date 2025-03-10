@@ -64,7 +64,7 @@ export class UpdateNotifier {
       chainId: chainId,
     })
 
-    const timeFence = UnixTime.now().add(-HOUR_RANGE, 'hours')
+    const timeFence = UnixTime.now() - HOUR_RANGE * UnixTime.HOUR
     const previousRecords = await this.db.updateNotifier.getNewerThan(
       timeFence,
       name,
@@ -308,7 +308,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
 async function getDailyReminderHeader(timestamp: UnixTime): Promise<string> {
   const templatizedProjectsString = await generateTemplatizedStatus()
 
-  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n${templatizedProjectsString}\n:x: Detected changes with following severities :x:`
+  return `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${templatizedProjectsString}\n:x: Detected changes with following severities :x:`
 }
 
 function countDiff(diff: DiscoveryDiff[]): number {

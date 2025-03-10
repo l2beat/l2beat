@@ -2,7 +2,7 @@
   "name": "gluon",
   "chain": "ethereum",
   "blockNumber": 21686363,
-  "configHash": "0x27fa843bac202cf33de7a5dbeb4c153ef061d708b6ac18ad3d46ace8473dd73e",
+  "configHash": "0x07fd5586ae5ffcdfcc6eff72a7a9ecf174ae2d00d37f9208a76abfc55f69f1b7",
   "contracts": [
     {
       "name": "SpotData",
@@ -11,6 +11,7 @@
         "0x60956e4310b2c0f9e257be22fc2a90fd8fb33c31afde71e079637abfc2003cca"
       ],
       "sinceTimestamp": 1573695223,
+      "sinceBlock": 8929713,
       "values": {
         "$immutable": true,
         "currentGblockNumber": 46358,
@@ -28,6 +29,7 @@
         "0xaace81ba02c18429f1f3bbdb0f3ed454c5a1e5b71c806bcafd468ccb0d895f0a"
       ],
       "sinceTimestamp": 1573694818,
+      "sinceBlock": 8929683,
       "values": {
         "$immutable": true,
         "currentLogic": "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
@@ -42,6 +44,7 @@
         "0xd2bd180f3e9f88c9860dc063c2c7980436adacaeca7a3598a05d26dacdb8ff76"
       ],
       "sinceTimestamp": 1609784209,
+      "sinceBlock": 11589589,
       "values": {
         "$immutable": true,
         "abandonPoint": 40320,
@@ -72,6 +75,7 @@
         "0x4684cbe7c244176dec5da5457624b1032bfa285743f6efcb53d6e1bd6d08f84c"
       ],
       "sinceTimestamp": 1573694866,
+      "sinceBlock": 8929689,
       "values": {
         "$immutable": true,
         "currentLogic": "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
@@ -91,6 +95,7 @@
         "0x6a6c3e88d7035a123ae7218c83a0c2ae43ea59031938a1d2f84b5f10b0971799"
       ],
       "sinceTimestamp": 1598562243,
+      "sinceBlock": 10744938,
       "values": {
         "$immutable": true,
         "currentGblockNumber": 3272,
@@ -109,6 +114,7 @@
         "0xbeaf3aa965abd0080866e6b7678d9fcd01b57afbcb108dde7cec28201e9bf73b"
       ],
       "sinceTimestamp": 1573694037,
+      "sinceBlock": 8929632,
       "values": {
         "$immutable": true,
         "getOwners": [
@@ -130,6 +136,7 @@
         "0xe8ca5c8a73c3851118ee0c57955bbcb56f68bb600dec6bb2cfe1f45c3ad6983d"
       ],
       "sinceTimestamp": 1550106622,
+      "sinceBlock": 7217381,
       "values": {
         "$immutable": true,
         "getOwners": [
@@ -148,6 +155,7 @@
       ],
       "ignoreInWatchMode": ["currentIntervalIndex", "getToBeDistributed"],
       "sinceTimestamp": 1612360715,
+      "sinceBlock": 11783715,
       "values": {
         "$immutable": true,
         "activationInterval": 11520,
@@ -185,6 +193,7 @@
         "0x50df386c3dc507e245b90c20b9969b4fc26c4d36624723856d758d5f51347048"
       ],
       "sinceTimestamp": 1573695152,
+      "sinceBlock": 8929704,
       "values": {
         "$immutable": true,
         "currentLogic": "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
@@ -199,6 +208,7 @@
         "0x7842af2456839eaca09b5cc4cff3de4a54887bce623c2c1edf75642a996f048f"
       ],
       "sinceTimestamp": 1604952423,
+      "sinceBlock": 11225379,
       "values": {
         "$immutable": true,
         "getOwners": [
@@ -222,6 +232,7 @@
         "0x55d07767faeba9ec203367433b6cce8b8e03e7881cd40bc3112740eb6efcab7b"
       ],
       "sinceTimestamp": 1604952429,
+      "sinceBlock": 11225380,
       "values": {
         "$immutable": true,
         "abandonPoint": 40320,

@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import type { Meta } from '@l2beat/discovery-types'
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
+import type { Meta } from './types'
 
 const emptyOutputMeta: Meta = {}
 
@@ -14,7 +14,7 @@ describe(processAnalysis.name, () => {
     type: 'Contract' as const,
     derivedName: undefined,
     isVerified: true,
-    deploymentTimestamp: new UnixTime(1234),
+    deploymentTimestamp: UnixTime(1234),
     deploymentBlockNumber: 9876,
     proxyType: 'immutable',
     ignoreInWatchMode: undefined,
@@ -107,7 +107,8 @@ describe(processAnalysis.name, () => {
           name: 'A',
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: base.deploymentBlockNumber,
+          sinceTimestamp: base.deploymentTimestamp,
         },
       ],
       eoas: [],
@@ -125,7 +126,8 @@ describe(processAnalysis.name, () => {
           name: 'B',
           derivedName: 'Something not B',
           proxyType: CONTRACT_B.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: base.deploymentBlockNumber,
+          sinceTimestamp: base.deploymentTimestamp,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
           sourceHashes: [],
@@ -148,7 +150,8 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_C,
           name: 'C',
           proxyType: CONTRACT_C.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: base.deploymentBlockNumber,
+          sinceTimestamp: base.deploymentTimestamp,
           values: CONTRACT_C.values,
           sourceHashes: [],
         },
@@ -176,7 +179,8 @@ describe(processAnalysis.name, () => {
           name: 'A',
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: base.deploymentBlockNumber,
+          sinceTimestamp: base.deploymentTimestamp,
         },
         {
           address: ADDRESS_B,
@@ -185,7 +189,8 @@ describe(processAnalysis.name, () => {
           derivedName: 'Something not B',
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: base.deploymentBlockNumber,
+          sinceTimestamp: base.deploymentTimestamp,
           sourceHashes: [],
         },
         {
@@ -193,7 +198,8 @@ describe(processAnalysis.name, () => {
           proxyType: CONTRACT_C.proxyType,
           name: 'C',
           values: CONTRACT_C.values,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: base.deploymentBlockNumber,
+          sinceTimestamp: base.deploymentTimestamp,
           sourceHashes: [],
         },
       ],

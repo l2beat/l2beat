@@ -1,3 +1,259 @@
+Generated with discovered.json: 0xeae0073031609583b15dc96a7f0dfc1b2e980f7b
+
+# Diff at Thu, 06 Mar 2025 15:16:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21965308
+- current block number: 21988681
+
+## Description
+
+Related to lumia upgrating to latest validium (type 7).
+
+config: change timelock descriptions, add delay.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.4:
+-        4
++        7
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.3:
+-        9
++        12
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21965308 (main branch discovery), not current.
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.7.via.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.6.via.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.5.via.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.4.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.4.delay:
++        259200
+      receivedPermissions.4.condition:
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.3.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.3.delay:
++        259200
+      receivedPermissions.3.condition:
++        "there is no emergency state, in which case there would be no delay"
+      receivedPermissions.1.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      directlyReceivedPermissions.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
+      issuedPermissions.0.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      issuedPermissions.7.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      issuedPermissions.3.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      issuedPermissions.0.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      issuedPermissions.1.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      issuedPermissions.1.via.0.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+      issuedPermissions.1.delay:
++        259200
+      issuedPermissions.1.condition:
++        "there is no emergency state, in which case there would be no delay"
+      issuedPermissions.0.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      issuedPermissions.0.delay:
++        259200
+      issuedPermissions.0.condition:
++        "there is no emergency state, in which case there would be no delay"
+      directlyReceivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles."
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.3.delay:
++        259200
+      directlyReceivedPermissions.3.condition:
++        "there is no emergency state, in which case there would be no delay"
+      directlyReceivedPermissions.1.condition:
+-        "there is no emergency state, in which case there is no delay"
++        "there is no emergency state, in which case there would be no delay"
+    }
+```
+
+Generated with discovered.json: 0xca48085bb640a1c7b33063a665f4872987b4f21f
+
+# Diff at Tue, 04 Mar 2025 10:39:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21965308
+- current block number: 21965308
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21965308 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      sinceBlock:
++        16896716
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      sinceBlock:
++        16839348
+    }
+```
+
+```diff
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
+      sinceBlock:
++        16896718
+    }
+```
+
+```diff
+    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      sinceBlock:
++        16795950
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      sinceBlock:
++        16896721
+    }
+```
+
+```diff
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      sinceBlock:
++        16896720
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      sinceBlock:
++        20435175
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      sinceBlock:
++        16896723
+    }
+```
+
+Generated with discovered.json: 0xbb8fd8041aced16a9017c546a34e7b9c5d03190d
+
+# Diff at Mon, 03 Mar 2025 08:57:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 21802929
+- current block number: 21965308
+
+## Description
+
+New chain deployed, looks like a testnet or child chain of previously deployed 623 pen-chain (see below).
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.15:
++        [false]
+      values.rollupCount:
+-        15
++        16
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.15:
++        ["0xb1714954bBc0162A36FB44934F3216aCE81C40d7",3344,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
+    }
+```
+
 Generated with discovered.json: 0x10917e985ceae936d9e950fcf60ef01adaa8cb97
 
 # Diff at Thu, 27 Feb 2025 11:46:35 GMT:

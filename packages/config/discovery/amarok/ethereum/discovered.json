@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0x0f63f49c622f4956b4d793fab7a235469a0117fb4d4ddd1e5af98b7753c2a3e5",
+  "configHash": "0xa2ef5246d0361ad2f8b58d6c9693c3073268b96564ccbc17e4d12db270bc5ef9",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -19,6 +19,7 @@
         "rateLimitBlocks"
       ],
       "sinceTimestamp": 1701992807,
+      "sinceBlock": 18737765,
       "values": {
         "$immutable": true,
         "AMB": "0x0000000000000000000000000000000000000000",
@@ -64,6 +65,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1578581061,
+      "sinceBlock": 9247089,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -93,6 +95,7 @@
         }
       ],
       "sinceTimestamp": 1693752671,
+      "sinceBlock": 18056674,
       "values": {
         "$immutable": false,
         "avatar": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
@@ -126,6 +129,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1706543447,
+      "sinceBlock": 19113187,
       "values": {
         "$immutable": true,
         "AMB": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
@@ -151,6 +155,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1712599655,
+      "sinceBlock": 19612628,
       "values": {
         "$immutable": true,
         "AMB": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -173,6 +178,7 @@
         "0x096b81df0c8f5335503eff3f349aa3136ee8cc6a502b3929f5112ae8b164ee0a"
       ],
       "sinceTimestamp": 1671623183,
+      "sinceBlock": 16232868,
       "values": { "$immutable": true }
     },
     {
@@ -182,6 +188,7 @@
         "0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb"
       ],
       "sinceTimestamp": 1578580941,
+      "sinceBlock": 9247083,
       "values": {
         "$immutable": true,
         "isOwner": false,
@@ -196,6 +203,7 @@
         "0x71fef919ee98513b92f3201b728bedde3148dcf73156bc42ab0fb2273a0ddd50"
       ],
       "sinceTimestamp": 1636540506,
+      "sinceBlock": 13588014,
       "values": {
         "$immutable": true,
         "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -215,6 +223,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1671651491,
+      "sinceBlock": 16235215,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -247,6 +256,7 @@
       ],
       "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "sinceTimestamp": 1677231527,
+      "sinceBlock": 16697363,
       "values": {
         "$immutable": true,
         "bond": "5000000000000000000000",
@@ -273,6 +283,7 @@
         "proposed"
       ],
       "sinceTimestamp": 1701992495,
+      "sinceBlock": 18737740,
       "values": {
         "$immutable": true,
         "connectors": [
@@ -343,6 +354,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1701993503,
+      "sinceBlock": 18737822,
       "values": {
         "$immutable": true,
         "AMB": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -365,6 +377,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1706543435,
+      "sinceBlock": 19113186,
       "values": {
         "$immutable": true,
         "AMB": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
@@ -389,6 +402,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1701992831,
+      "sinceBlock": 18737767,
       "values": {
         "$immutable": true,
         "AMB": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -427,6 +441,7 @@
         }
       ],
       "sinceTimestamp": 1681981595,
+      "sinceBlock": 17086720,
       "values": {
         "$admin": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
         "$implementation": "0xb82e63585e53C47Ee83104f22c21ab1FE76F2EAE",
@@ -445,6 +460,7 @@
         "0x293656e6300059a6f65d693963085275a4b36a5e375b6101ce937d0f2938207e"
       ],
       "sinceTimestamp": 1671629363,
+      "sinceBlock": 16233378,
       "values": {
         "$immutable": true,
         "connext": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
@@ -468,6 +484,7 @@
       ],
       "ignoreInWatchMode": ["proposedTimestamp", "proposed"],
       "sinceTimestamp": 1701992231,
+      "sinceBlock": 18737718,
       "values": {
         "$immutable": true,
         "delay": 604800,
@@ -496,6 +513,7 @@
       ],
       "ignoreInWatchMode": ["numProposals"],
       "sinceTimestamp": 1677230459,
+      "sinceBlock": 16697276,
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
@@ -515,6 +533,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1708656995,
+      "sinceBlock": 19287458,
       "values": {
         "$immutable": true,
         "AMB": "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f",
@@ -543,6 +562,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710955703,
+      "sinceBlock": 19477398,
       "values": {
         "$immutable": false,
         "$implementation": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
@@ -570,6 +590,7 @@
         "0x096b81df0c8f5335503eff3f349aa3136ee8cc6a502b3929f5112ae8b164ee0a"
       ],
       "sinceTimestamp": 1671622727,
+      "sinceBlock": 16232831,
       "values": { "$immutable": true }
     },
     {
@@ -580,6 +601,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1706543423,
+      "sinceBlock": 19113185,
       "values": {
         "$immutable": true,
         "AMB": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -605,6 +627,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1597806870,
+      "sinceBlock": 10688070,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -631,6 +654,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1701993479,
+      "sinceBlock": 18737820,
       "values": {
         "$immutable": true,
         "AMB": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
@@ -671,6 +695,7 @@
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": ["nonce", "proposedTimestamp", "ROUTERS"],
       "sinceTimestamp": 1671625595,
+      "sinceBlock": 16233067,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -984,6 +1009,7 @@
         "0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"
       ],
       "sinceTimestamp": 1677231923,
+      "sinceBlock": 16697394,
       "values": {
         "$immutable": true,
         "emergencyProposals": [],
@@ -1012,6 +1038,7 @@
         }
       ],
       "sinceTimestamp": 1650541439,
+      "sinceBlock": 14628098,
       "values": {
         "$admin": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
         "$implementation": "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
@@ -1030,6 +1057,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1706543411,
+      "sinceBlock": 19113184,
       "values": {
         "$immutable": true,
         "AMB": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
@@ -1069,6 +1097,7 @@
         }
       ],
       "sinceTimestamp": 1662626413,
+      "sinceBlock": 15495566,
       "values": {
         "$admin": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
         "$implementation": "0xd91C07a7e8FCb1039fE326e6dE274fD0F3307350",
@@ -1087,6 +1116,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1701993251,
+      "sinceBlock": 18737801,
       "values": {
         "$immutable": true,
         "AMB": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
@@ -1112,6 +1142,7 @@
         "0x6c908f2cfba26c3f8579904361d66ac752f7d6e58a7dade2ca752d80de50ee30"
       ],
       "sinceTimestamp": 1701993539,
+      "sinceBlock": 18737823,
       "values": {
         "$immutable": true,
         "autonolas": "0x0000000000000000000000000000000000000000",
@@ -1146,6 +1177,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1668987047,
+      "sinceBlock": 16014519,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1170,6 +1202,7 @@
         "0x2caa39c242be8054678e58b07c53f52a796a2d1c50f065af98ccb92de4275ff7"
       ],
       "sinceTimestamp": 1680181427,
+      "sinceBlock": 16940236,
       "values": {
         "$immutable": true,
         "autonolas": "0x0dC1dBD30f162A5a55E6054b692E37E4038D0E03",
@@ -1215,6 +1248,7 @@
         }
       ],
       "sinceTimestamp": 1603880884,
+      "sinceBlock": 11144602,
       "values": {
         "$immutable": true,
         "ALLOWANCE_TRANSFER_TYPEHASH": "0x80b006280932094e7cc965863eb5118dc07e5d272c6670c4a7c87299e04fceeb",
@@ -1232,6 +1266,7 @@
         "0x06a889d020b7a23683b5ac7ead2e75691788f53221e130558d8fb7d7c343ed57"
       ],
       "sinceTimestamp": 1650541411,
+      "sinceBlock": 14628096,
       "values": {
         "$immutable": true,
         "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6"
@@ -1246,6 +1281,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1701993335,
+      "sinceBlock": 18737808,
       "values": {
         "$immutable": true,
         "AMB": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
@@ -1285,6 +1321,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1625059038,
+      "sinceBlock": 12735567,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1319,6 +1356,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1701993275,
+      "sinceBlock": 18737803,
       "values": {
         "$immutable": true,
         "AMB": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
@@ -1347,6 +1385,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1693608707,
+      "sinceBlock": 18044793,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1374,6 +1413,7 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "sinceTimestamp": 1706543459,
+      "sinceBlock": 19113188,
       "values": {
         "$immutable": true,
         "AMB": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
@@ -1400,6 +1440,7 @@
         "0x70de0f52f9c98e17b083184c29d00c0c7ba199299d2758c1ec88e6af3428b060"
       ],
       "sinceTimestamp": 1706628131,
+      "sinceBlock": 19120190,
       "values": { "$immutable": true },
       "derivedName": "GelatoRelay1BalanceV2"
     },
@@ -1410,6 +1451,7 @@
         "0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"
       ],
       "sinceTimestamp": 1676487275,
+      "sinceBlock": 16636058,
       "values": {
         "$immutable": true,
         "burnedBondPercentage": "500000000000000000",

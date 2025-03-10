@@ -2,15 +2,15 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('inevm', 'arbitrum')
 
-export const inevm: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
+export const inevm: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
   additionalPurposes: ['Interoperability'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
@@ -47,7 +47,7 @@ export const inevm: Layer3 = orbitStackL3({
       tokens: '*',
     }),
   ],
-  gasTokens: { untracked: ['INJ'] },
+  untrackedGasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   chainConfig: {
     name: 'inevm',
@@ -59,6 +59,7 @@ export const inevm: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['INJ'],
   },
   discovery,
   bridge: discovery.getContract('Bridge'),

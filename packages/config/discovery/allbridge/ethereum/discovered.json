@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 21723681,
-  "configHash": "0x40f08c144f5a6b7896c0baec7873d7e810f9d9cae676c20173cd086056a55f29",
+  "configHash": "0xa19e8985ce61821cb197f4b5f4346a3b2dfe9dba73de1f9428140e7c3dcc5f20",
   "contracts": [
     {
       "name": "GasOracle",
@@ -11,6 +11,7 @@
         "0x61437d07b213292a6639ca58a2549f8fec70a7497940aba88e8d137a2b23e5a1"
       ],
       "sinceTimestamp": 1685102099,
+      "sinceBlock": 17343106,
       "values": {
         "$immutable": true,
         "chainId": 1,
@@ -24,6 +25,7 @@
         "0xb232ad1147747fd0ac80fb67952fcf5297e1a534c2009196849b29ac950afdcf"
       ],
       "sinceTimestamp": 1685102279,
+      "sinceBlock": 17343121,
       "values": {
         "$immutable": true,
         "chainId": 1,
@@ -37,6 +39,7 @@
       "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
       "unverified": true,
       "sinceTimestamp": 1662595853,
+      "sinceBlock": 15493337,
       "values": { "$immutable": true },
       "derivedName": ""
     },
@@ -47,6 +50,7 @@
         "0x814861bc3f9f100efbeb6a574409097f4080e9c4765d678fca86ffa46e453d7f"
       ],
       "sinceTimestamp": 1685102447,
+      "sinceBlock": 17343135,
       "values": {
         "$immutable": true,
         "canSwap": 1,
@@ -77,6 +81,7 @@
         "vUsdBalance"
       ],
       "sinceTimestamp": 1694519831,
+      "sinceBlock": 18120096,
       "values": {
         "$immutable": true,
         "a": 20,
@@ -115,6 +120,7 @@
         "0xd907a740abab7d5003a704cad4c8273b66cd185386078939c9c8abccec6ec131"
       ],
       "sinceTimestamp": 1685102363,
+      "sinceBlock": 17343128,
       "values": {
         "$immutable": true,
         "chainId": 1,
@@ -127,6 +133,7 @@
       "address": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
       "unverified": true,
       "sinceTimestamp": 1636666899,
+      "sinceBlock": 13597354,
       "values": { "$immutable": true },
       "derivedName": ""
     },
@@ -137,6 +144,7 @@
         "0x227ed0f9173e33afccdd9e79a6d7d760104d62875552f49b4ef2a9c7c7431ba6"
       ],
       "sinceTimestamp": 1662596119,
+      "sinceBlock": 15493360,
       "values": {
         "$immutable": true,
         "allbridgeMessenger": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
@@ -165,6 +173,7 @@
         "vUsdBalance"
       ],
       "sinceTimestamp": 1685102651,
+      "sinceBlock": 17343152,
       "values": {
         "$immutable": true,
         "a": 20,
@@ -203,6 +212,7 @@
       "address": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
       "unverified": true,
       "sinceTimestamp": 1636634854,
+      "sinceBlock": 13594973,
       "values": {
         "$immutable": true,
         "owner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
@@ -216,6 +226,7 @@
         "0x130012988c91475c96e6c32d27893406b8a1837f48f56d47571e53852d863a6d"
       ],
       "sinceTimestamp": 1636635220,
+      "sinceBlock": 13595007,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -253,6 +264,7 @@
         "0x2953fb7cbb1c9e0950eac2b3e6206de8087063655779e90a024f7aaf8f31d55c"
       ],
       "sinceTimestamp": 1711380611,
+      "sinceBlock": 19512388,
       "values": {
         "$immutable": true,
         "adminFeeShareBP": 10,
@@ -266,6 +278,7 @@
       "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "unverified": true,
       "sinceTimestamp": 1662998060,
+      "sinceBlock": 15521726,
       "values": { "$immutable": true },
       "derivedName": ""
     }

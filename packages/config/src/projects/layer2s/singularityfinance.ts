@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const singularityfinance: Layer2 = upcomingL2({
+export const singularityfinance: ScalingProject = upcomingL2({
   id: 'singularityfinance',
   capability: 'universal',
-  addedAt: new UnixTime(1732266303), // 2024-11-22T09:05:03Z
+  addedAt: UnixTime(1732266303), // 2024-11-22T09:05:03Z
   display: {
     name: 'Singularity Finance',
     slug: 'singularity-finance',

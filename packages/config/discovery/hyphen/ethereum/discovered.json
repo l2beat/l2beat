@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "blockNumber": 20138492,
-  "configHash": "0x894dbd29788476c414244a8dc2ac92885706d179da640ba430a519bbb0d8bc0a",
+  "configHash": "0x4db6bb3d8aee9555ea4306a7fdce2258b6b773576ef44cd6212d8fa8de484057",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -25,6 +25,7 @@
         }
       ],
       "sinceTimestamp": 1647128852,
+      "sinceBlock": 14375007,
       "values": {
         "$immutable": true,
         "owner": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7"
@@ -46,6 +47,7 @@
         }
       ],
       "sinceTimestamp": 1647128990,
+      "sinceBlock": 14375018,
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x4906b8E690EB1E09Fec924422452d1105D59d042",
@@ -92,6 +94,7 @@
         "0x892e396c29b5c992295525eefa7f4625709df8fd34d319dcc638eb61bacef0d6"
       ],
       "sinceTimestamp": 1647128800,
+      "sinceBlock": 14375002,
       "values": {
         "$immutable": true,
         "getAllExecutors": [
@@ -119,6 +122,7 @@
         }
       ],
       "sinceTimestamp": 1652360689,
+      "sinceBlock": 14761234,
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
@@ -150,6 +154,7 @@
         }
       ],
       "sinceTimestamp": 1647128942,
+      "sinceBlock": 14375014,
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
         "$implementation": "0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103",

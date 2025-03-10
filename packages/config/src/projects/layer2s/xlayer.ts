@@ -7,7 +7,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -29,8 +29,8 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const xlayer: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
+export const xlayer: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
   additionalBadges: [BADGES.DA.DAC, BADGES.Infra.AggLayer],
   daProvider: {
@@ -67,7 +67,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     name: 'xlayer',
     chainId: 196,
     explorerUrl: 'https://rpc.xlayer.tech',
-    sinceTimestamp: new UnixTime(1711782180),
+    sinceTimestamp: UnixTime(1711782180),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -104,7 +104,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
-      sinceTimestamp: new UnixTime(1712620800),
+      sinceTimestamp: UnixTime(1712620800),
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherWrapped',

@@ -2,7 +2,7 @@
   "name": "transporter",
   "chain": "ethereum",
   "blockNumber": 21387870,
-  "configHash": "0xe60870aa4839b113e02334900b378350fa0222229f8c1a1e629cb51e5be81af0",
+  "configHash": "0xecc07ca79f674b0fe17d1c0aca246cf02c696df5997fc72c127bc78e0fa54d3c",
   "contracts": [
     {
       "name": "CommitStore",
@@ -16,6 +16,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727415695,
+      "sinceBlock": 20839933,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -75,6 +76,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1726555127,
+      "sinceBlock": 20768590,
       "values": {
         "$immutable": true,
         "commitStore": ["0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d"],
@@ -139,6 +141,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1701286919,
+      "sinceBlock": 18679422,
       "values": {
         "$immutable": true,
         "commitStore": ["0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76"],
@@ -206,6 +209,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727416331,
+      "sinceBlock": 20839986,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -269,6 +273,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727362391,
+      "sinceBlock": 20835511,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -329,6 +334,7 @@
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689096839,
+      "sinceBlock": 17671884,
       "values": {
         "$immutable": true,
         "getConfig": {
@@ -613,6 +619,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1710865403,
+      "sinceBlock": 19469957,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -680,6 +687,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727970527,
+      "sinceBlock": 20885982,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -755,6 +763,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1726555115,
+      "sinceBlock": 20768589,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -814,6 +823,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1718230427,
+      "sinceBlock": 20078659,
       "values": {
         "$immutable": true,
         "commitStore": ["0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53"],
@@ -884,6 +894,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1732124627,
+      "sinceBlock": 21230515,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -955,6 +966,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1726223735,
+      "sinceBlock": 20741134,
       "values": {
         "$immutable": true,
         "commitStore": ["0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114"],
@@ -1023,6 +1035,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1701286199,
+      "sinceBlock": 18679363,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -1084,6 +1097,7 @@
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1695826667,
+      "sinceBlock": 18227834,
       "values": {
         "$immutable": true,
         "getConfig": {
@@ -1173,6 +1187,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1701802727,
+      "sinceBlock": 18722080,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -1234,6 +1249,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727362439,
+      "sinceBlock": 20835515,
       "values": {
         "$immutable": true,
         "commitStore": ["0x0f89C7c0586536B618e0469402e1c8234bc52959"],
@@ -1298,6 +1314,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727715335,
+      "sinceBlock": 20864802,
       "values": {
         "$immutable": true,
         "commitStore": ["0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210"],
@@ -1369,6 +1386,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1726554755,
+      "sinceBlock": 20768559,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -1447,6 +1465,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727922491,
+      "sinceBlock": 20882000,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -1525,6 +1544,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1701286259,
+      "sinceBlock": 18679368,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -1617,6 +1637,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1726223915,
+      "sinceBlock": 20741149,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -1688,6 +1709,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1701803111,
+      "sinceBlock": 18722112,
       "values": {
         "$immutable": true,
         "commitStore": ["0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB"],
@@ -1759,6 +1781,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1732563935,
+      "sinceBlock": 21266940,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -1830,6 +1853,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1733879759,
+      "sinceBlock": 21375925,
       "values": {
         "$immutable": true,
         "commitStore": ["0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9"],
@@ -1894,6 +1918,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1726554287,
+      "sinceBlock": 20768520,
       "values": {
         "$immutable": true,
         "commitStore": ["0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72"],
@@ -1962,6 +1987,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1718230103,
+      "sinceBlock": 20078632,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2026,6 +2052,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1718911199,
+      "sinceBlock": 20134981,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2093,6 +2120,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1701286163,
+      "sinceBlock": 18679360,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2167,6 +2195,7 @@
         "0x5561ac1c24a1f2bd38ec522cf6fde1f06f5d2eff0d9006035ff445d9e1505a47"
       ],
       "sinceTimestamp": 1688661563,
+      "sinceBlock": 17636043,
       "values": {
         "$immutable": true,
         "getARM": "0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F",
@@ -2182,6 +2211,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1726173575,
+      "sinceBlock": 20736973,
       "values": {
         "$immutable": true,
         "commitStore": ["0x9f592c28590595F3F78a8881E8Dbb9984ed705cD"],
@@ -2245,6 +2275,7 @@
         "0xd5b2b6b0153f0ac33437f0059e864bae869943a68c01d8626d43eb2abebb728d"
       ],
       "sinceTimestamp": 1689097535,
+      "sinceBlock": 17671941,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -2308,6 +2339,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1718230007,
+      "sinceBlock": 20078624,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2374,6 +2406,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1717182935,
+      "sinceBlock": 19991838,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2445,6 +2478,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1701285563,
+      "sinceBlock": 18679310,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2512,6 +2546,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1728302759,
+      "sinceBlock": 20913572,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2583,6 +2618,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1728339623,
+      "sinceBlock": 20916633,
       "values": {
         "$immutable": true,
         "commitStore": ["0xA48269e5c9A234daBfEBE98b82390Be705536d1c"],
@@ -2654,6 +2690,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1733879687,
+      "sinceBlock": 21375919,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2729,6 +2766,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727346815,
+      "sinceBlock": 20834217,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2788,6 +2826,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727922695,
+      "sinceBlock": 20882017,
       "values": {
         "$immutable": true,
         "commitStore": ["0x83F3DA5aa2C7534d694B0acde7624573c830250D"],
@@ -2852,6 +2891,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1701286211,
+      "sinceBlock": 18679364,
       "values": {
         "$immutable": true,
         "commitStore": ["0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE"],
@@ -2919,6 +2959,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727970599,
+      "sinceBlock": 20885988,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -2982,6 +3023,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1726223711,
+      "sinceBlock": 20741132,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -3041,6 +3083,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1729099439,
+      "sinceBlock": 20979594,
       "values": {
         "$immutable": true,
         "commitStore": ["0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802"],
@@ -3105,6 +3148,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1731971195,
+      "sinceBlock": 21217782,
       "values": {
         "$immutable": true,
         "commitStore": ["0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159"],
@@ -3176,6 +3220,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1726172891,
+      "sinceBlock": 20736917,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -3246,6 +3291,7 @@
         "0x688c9ef9fcf10c32b9b0a4f7e176ccedfc1dbf30a96b45ae691ccd273621d7e8"
       ],
       "sinceTimestamp": 1712581007,
+      "sinceBlock": 19611092,
       "values": {
         "$immutable": true,
         "getRouter": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -3260,6 +3306,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727851163,
+      "sinceBlock": 20876075,
       "values": {
         "$immutable": true,
         "commitStore": ["0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb"],
@@ -3331,6 +3378,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727346719,
+      "sinceBlock": 20834209,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -3402,6 +3450,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727416343,
+      "sinceBlock": 20839987,
       "values": {
         "$immutable": true,
         "commitStore": ["0x0d26BaE784c8986502E072F4e73B6168e2052045"],
@@ -3473,6 +3522,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727977943,
+      "sinceBlock": 20886594,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -3544,6 +3594,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727977007,
+      "sinceBlock": 20886516,
       "values": {
         "$immutable": true,
         "commitStore": ["0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe"],
@@ -3612,6 +3663,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1733879723,
+      "sinceBlock": 21375922,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -3678,6 +3730,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1729099043,
+      "sinceBlock": 20979561,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -3749,6 +3802,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727749091,
+      "sinceBlock": 20867607,
       "values": {
         "$immutable": true,
         "commitStore": ["0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A"],
@@ -3813,6 +3867,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727970623,
+      "sinceBlock": 20885990,
       "values": {
         "$immutable": true,
         "commitStore": ["0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3"],
@@ -3884,6 +3939,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727343587,
+      "sinceBlock": 20833949,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -3962,6 +4018,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727362199,
+      "sinceBlock": 20835495,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -4037,6 +4094,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1717183043,
+      "sinceBlock": 19991847,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -4097,6 +4155,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727343671,
+      "sinceBlock": 20833956,
       "values": {
         "$immutable": true,
         "commitStore": ["0x95deB0c4bB9168202d50E874865f9A1842b82D64"],
@@ -4161,6 +4220,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1701457427,
+      "sinceBlock": 18693525,
       "values": {
         "$immutable": true,
         "commitStore": ["0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75"],
@@ -4224,6 +4284,7 @@
         "0x56b28474b4daa9a8cbbe1a1ed1135d6881be21c0f343671e361b90eebf0b210d"
       ],
       "sinceTimestamp": 1700593571,
+      "sinceBlock": 18622113,
       "values": {
         "$immutable": true,
         "getArmProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -4447,6 +4508,7 @@
         "0x0b5d83431c69340cb7e56f4baac882eed639a835829b4752caefdb78e4b32741"
       ],
       "sinceTimestamp": 1689097595,
+      "sinceBlock": 17671946,
       "values": { "$immutable": true }
     },
     {
@@ -4461,6 +4523,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1715889587,
+      "sinceBlock": 19884780,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -4525,6 +4588,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727922659,
+      "sinceBlock": 20882014,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -4591,6 +4655,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1701285455,
+      "sinceBlock": 18679301,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -4685,6 +4750,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1731971171,
+      "sinceBlock": 21217780,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -4748,6 +4814,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1701457415,
+      "sinceBlock": 18693524,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -4808,6 +4875,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1732563995,
+      "sinceBlock": 21266945,
       "values": {
         "$immutable": true,
         "commitStore": ["0xdCF6F209d36d93A26B251D2CFE994bEF02954110"],
@@ -4872,6 +4940,7 @@
         "0xb3ac732170b6c82e6eb8e400fac9618c85fcdce082a404030cee9be7bd700bdf"
       ],
       "sinceTimestamp": 1700593583,
+      "sinceBlock": 18622114,
       "values": {
         "$immutable": true,
         "getFeeTokens": [
@@ -4937,6 +5006,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1701287747,
+      "sinceBlock": 18679489,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5004,6 +5074,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1701287003,
+      "sinceBlock": 18679429,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5102,6 +5173,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1701287339,
+      "sinceBlock": 18679457,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5262,6 +5334,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727851103,
+      "sinceBlock": 20876070,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5337,6 +5410,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727343635,
+      "sinceBlock": 20833953,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5396,6 +5470,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1730712959,
+      "sinceBlock": 21113427,
       "values": {
         "$immutable": true,
         "commitStore": ["0xE41677500B425999cB4133950ca3aB79eA7470a6"],
@@ -5467,6 +5542,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727416535,
+      "sinceBlock": 20840003,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5542,6 +5618,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1701287831,
+      "sinceBlock": 18679496,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5606,6 +5683,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727851151,
+      "sinceBlock": 20876074,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5669,6 +5747,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727749055,
+      "sinceBlock": 20867604,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5732,6 +5811,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1726173551,
+      "sinceBlock": 20736971,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5795,6 +5875,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727350607,
+      "sinceBlock": 20834532,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5858,6 +5939,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1728307091,
+      "sinceBlock": 20913933,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5921,6 +6003,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1721311463,
+      "sinceBlock": 20333884,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -5985,6 +6068,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1731970691,
+      "sinceBlock": 21217741,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -6051,6 +6135,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1718911571,
+      "sinceBlock": 20135012,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -6119,6 +6204,7 @@
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689394931,
+      "sinceBlock": 17696402,
       "values": {
         "$immutable": true,
         "getConfig": {
@@ -6208,6 +6294,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727975351,
+      "sinceBlock": 20886380,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -6268,6 +6355,7 @@
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689096875,
+      "sinceBlock": 17671887,
       "values": {
         "$immutable": true,
         "getConfig": {
@@ -6440,6 +6528,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727975303,
+      "sinceBlock": 20886376,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -6511,6 +6600,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1701285983,
+      "sinceBlock": 18679345,
       "values": {
         "$immutable": true,
         "commitStore": ["0x4af4B497c998007eF83ad130318eB2b925a79dc8"],
@@ -6573,6 +6663,7 @@
         "0x85182d3d77430870c56e6951818542e80e1313ec76f723c2c554ac02d7344adf"
       ],
       "sinceTimestamp": 1726156727,
+      "sinceBlock": 20735575,
       "values": {
         "$immutable": true,
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
@@ -6587,6 +6678,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1721311487,
+      "sinceBlock": 20333885,
       "values": {
         "$immutable": true,
         "commitStore": ["0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194"],
@@ -6650,6 +6742,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727415731,
+      "sinceBlock": 20839936,
       "values": {
         "$immutable": true,
         "commitStore": ["0x01346721418045A6c07b71052e452eF8615e9084"],
@@ -6721,6 +6814,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727976899,
+      "sinceBlock": 20886508,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -6799,6 +6893,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1726554203,
+      "sinceBlock": 20768513,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -6870,6 +6965,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727350619,
+      "sinceBlock": 20834533,
       "values": {
         "$immutable": true,
         "commitStore": ["0xA4755Cd68CA2092447c8c842659a2931f9110320"],
@@ -6941,6 +7037,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1701802691,
+      "sinceBlock": 18722077,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7008,6 +7105,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1718911247,
+      "sinceBlock": 20134985,
       "values": {
         "$immutable": true,
         "commitStore": ["0x3d8a95adA63D406ee8232562AbD83CEdb0B90466"],
@@ -7075,6 +7173,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1732123727,
+      "sinceBlock": 21230440,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7138,6 +7237,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1701286319,
+      "sinceBlock": 18679373,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7198,6 +7298,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1715889599,
+      "sinceBlock": 19884781,
       "values": {
         "$immutable": true,
         "commitStore": ["0x831097033C88c82a7F1897b168Aa88cC44540C8f"],
@@ -7268,6 +7369,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1721330867,
+      "sinceBlock": 20335493,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7330,6 +7432,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689260771,
+      "sinceBlock": 17685354,
       "values": {
         "$immutable": false,
         "$implementation": "0x2ED1A552C03f843a2Db7DE10AD390d24bb66CEE0",
@@ -7371,6 +7474,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727715131,
+      "sinceBlock": 20864785,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7446,6 +7550,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1729099415,
+      "sinceBlock": 20979592,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7505,6 +7610,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727975375,
+      "sinceBlock": 20886382,
       "values": {
         "$immutable": true,
         "commitStore": ["0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8"],
@@ -7573,6 +7679,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1726554263,
+      "sinceBlock": 20768518,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7636,6 +7743,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727976923,
+      "sinceBlock": 20886510,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7702,6 +7810,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1731971135,
+      "sinceBlock": 21217777,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7780,6 +7889,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1730713007,
+      "sinceBlock": 21113431,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7850,6 +7960,7 @@
         "0x38e330756b6f0c7e8ff458b8eb57f55c8a4942b33493a95238d164664fe054c9"
       ],
       "sinceTimestamp": 1724945447,
+      "sinceBlock": 20635146,
       "values": {
         "$immutable": true,
         "getConfigDetails": {
@@ -7932,6 +8043,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1732563971,
+      "sinceBlock": 21266943,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -7998,6 +8110,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1731970775,
+      "sinceBlock": 21217748,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -8069,6 +8182,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1732124543,
+      "sinceBlock": 21230508,
       "values": {
         "$immutable": true,
         "commitStore": ["0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99"],
@@ -8140,6 +8254,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727350583,
+      "sinceBlock": 20834530,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -8211,6 +8326,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727978015,
+      "sinceBlock": 20886600,
       "values": {
         "$immutable": true,
         "commitStore": ["0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3"],
@@ -8275,6 +8391,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1701287759,
+      "sinceBlock": 18679490,
       "values": {
         "$immutable": true,
         "commitStore": ["0x8DC27D621c41a32140e22E2a4dAf1259639BAe04"],
@@ -8345,6 +8462,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1701287375,
+      "sinceBlock": 18679460,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -8476,6 +8594,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1730712935,
+      "sinceBlock": 21113425,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -8536,6 +8655,7 @@
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1689096911,
+      "sinceBlock": 17671890,
       "values": {
         "$immutable": true,
         "getConfig": {
@@ -8661,6 +8781,7 @@
         "0xa94cfe197937dba7daa80daaa739c4f88fbd91f326e45ade5b3b3c0f23cdc9d5"
       ],
       "sinceTimestamp": 1688661659,
+      "sinceBlock": 17636051,
       "values": {
         "$immutable": true,
         "getArmProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -8688,6 +8809,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1717183115,
+      "sinceBlock": 19991853,
       "values": {
         "$immutable": true,
         "commitStore": ["0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e"],
@@ -8751,6 +8873,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1710866867,
+      "sinceBlock": 19470078,
       "values": {
         "$immutable": true,
         "commitStore": ["0x118a9389960F86390A4F14ce4C95D6ff076C6bFC"],
@@ -8821,6 +8944,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727415563,
+      "sinceBlock": 20839922,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -8899,6 +9023,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1715889491,
+      "sinceBlock": 19884772,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -8958,6 +9083,7 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "sinceTimestamp": 1701287843,
+      "sinceBlock": 18679497,
       "values": {
         "$immutable": true,
         "commitStore": ["0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749"],
@@ -9021,6 +9147,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1731970715,
+      "sinceBlock": 21217743,
       "values": {
         "$immutable": true,
         "commitStore": ["0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9"],
@@ -9085,6 +9212,7 @@
         "0x698458a99b1fa622eec8cacbecdd3e68d5473c71a13a76cc881f1a9040ffa890"
       ],
       "sinceTimestamp": 1727346827,
+      "sinceBlock": 20834218,
       "values": {
         "$immutable": true,
         "commitStore": ["0x52275dC17f9eD92230C8C4d57fD36d128701f694"],
@@ -9156,6 +9284,7 @@
         "getExpectedNextSequenceNumber"
       ],
       "sinceTimestamp": 1727748911,
+      "sinceBlock": 20867592,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -9234,6 +9363,7 @@
         "tokenPools"
       ],
       "sinceTimestamp": 1710865355,
+      "sinceBlock": 19469953,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -9297,6 +9427,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727977991,
+      "sinceBlock": 20886598,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {
@@ -9360,6 +9491,7 @@
         "getLatestPriceEpochAndRound"
       ],
       "sinceTimestamp": 1727715311,
+      "sinceBlock": 20864800,
       "values": {
         "$immutable": true,
         "getDynamicConfig": {

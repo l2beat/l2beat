@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { type HttpClient, RpcClient } from '@l2beat/shared'
+import { CelestiaApiClient, type HttpClient, RpcClient } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -47,6 +47,7 @@ export class AllProviders {
 
       const etherscanClient = getExplorerClient(http, config.explorer)
       let blobClient: BlobClient | undefined
+      let celestiaApiClient: CelestiaApiClient | undefined
 
       const ethereumRpc = new RpcClient({
         url: config.rpcUrl,
@@ -69,6 +70,17 @@ export class AllProviders {
         })
       }
 
+      if (config.celestiaApiUrl) {
+        celestiaApiClient = new CelestiaApiClient({
+          url: config.celestiaApiUrl,
+          http,
+          logger: Logger.SILENT,
+          sourceName: 'celestia-api',
+          callsPerMinute: 300,
+          retryStrategy: 'SCRIPT',
+        })
+      }
+
       this.config.set(config.name, {
         config,
         providers: {
@@ -76,6 +88,7 @@ export class AllProviders {
           eventProvider,
           etherscanClient,
           blobClient,
+          celestiaApiClient,
         },
       })
     }
@@ -103,6 +116,7 @@ export class AllProviders {
         config.providers.baseProvider,
         config.providers.eventProvider,
         config.providers.etherscanClient,
+        config.providers.celestiaApiClient,
         config.providers.blobClient,
       )
     this.lowLevelProviders.set(chain, lowLevelProvider)

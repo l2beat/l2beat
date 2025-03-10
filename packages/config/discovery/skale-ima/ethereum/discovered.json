@@ -2,7 +2,7 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 21744185,
-  "configHash": "0x61ba7ab95cb0808b0ee781b1ece0eb45cce126258f73eb477a1e85a526d88cd5",
+  "configHash": "0x8dbdfc8953040bddcb6180aa79571ca3d57316c4403700ef5a530b3e187a05fb",
   "contracts": [
     {
       "name": "ProxyAdminOwner",
@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1601280823,
+      "sinceBlock": 10949879,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -51,6 +52,7 @@
         }
       ],
       "sinceTimestamp": 1626720238,
+      "sinceBlock": 12858680,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
@@ -121,6 +123,7 @@
         }
       ],
       "sinceTimestamp": 1626719733,
+      "sinceBlock": 12858640,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
@@ -196,6 +199,7 @@
         "multiplierNumerator"
       ],
       "sinceTimestamp": 1626719564,
+      "sinceBlock": 12858631,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a",
@@ -268,6 +272,7 @@
         }
       ],
       "sinceTimestamp": 1626719338,
+      "sinceBlock": 12858615,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
@@ -326,6 +331,7 @@
         }
       ],
       "sinceTimestamp": 1626720065,
+      "sinceBlock": 12858665,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
@@ -404,6 +410,7 @@
         "REVERT_REASON_LENGTH"
       ],
       "sinceTimestamp": 1626719196,
+      "sinceBlock": 12858602,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0x0AE92a5105111281151b980A0aD680b890bf1944",
@@ -493,6 +500,7 @@
         }
       ],
       "sinceTimestamp": 1626719900,
+      "sinceBlock": 12858653,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
@@ -569,6 +577,7 @@
         }
       ],
       "sinceTimestamp": 1650021217,
+      "sinceBlock": 14589619,
       "values": {
         "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
         "$implementation": "0xF99F446340483C5d9D63697a60232ECb9274E1e7",
@@ -644,6 +653,7 @@
         }
       ],
       "sinceTimestamp": 1626716630,
+      "sinceBlock": 12858428,
       "values": {
         "$immutable": true,
         "owner": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"

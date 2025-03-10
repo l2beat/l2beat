@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
@@ -28,11 +28,11 @@ const withdrawalDelay = discovery.getContractValue<number>(
   'withdrawalDelay',
 )
 
-export const immutablezkevm: Layer2 = {
+export const immutablezkevm: ScalingProject = {
   type: 'layer2',
   id: ProjectId('immutablezkevm'),
   capability: 'universal',
-  addedAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
+  addedAt: UnixTime(1707318380), // 2024-02-07T15:06:20Z
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -71,7 +71,7 @@ export const immutablezkevm: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6'),
-        sinceTimestamp: new UnixTime(1702962563),
+        sinceTimestamp: UnixTime(1702962563),
         tokens: ['IMX', 'USDC', 'ETH', 'USDT', 'GOG'],
         chain: 'ethereum',
       },

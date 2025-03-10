@@ -62,9 +62,11 @@ export const getCachedRecategorisedTvsChartData = cache(
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
+    const tokenList = await ps.getTokens()
     const tvsProjects = await getTvsProjects(
       projectsFilter,
       chains,
+      tokenList,
       previewRecategorisation,
     )
 
@@ -150,14 +152,15 @@ function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
   const { days, resolution } = getRangeConfig(range)
-  const target = getTvsTargetTimestamp().toStartOf(
+  const target = UnixTime.toStartOf(
+    getTvsTargetTimestamp(),
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from = days !== null ? target.add(-days, 'days') : MIN_TIMESTAMPS.tvs
+  const from = days !== null ? target - days * UnixTime.DAY : MIN_TIMESTAMPS.tvs
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
-    return [timestamp.toNumber(), 3000, 2000, 1000]
+    return [timestamp, 3000, 2000, 1000]
   })
 }
 

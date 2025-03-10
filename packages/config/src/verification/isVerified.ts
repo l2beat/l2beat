@@ -1,7 +1,8 @@
-import type { BaseProject, Bridge, Layer2, Layer3 } from '../types'
+import type { Bridge, ScalingProject } from '../internalTypes'
+import type { BaseProject } from '../types'
 
 // TODO(radomski): Permissions
-export function isVerified(project: Layer2 | Layer3 | Bridge): boolean {
+export function isVerified(project: ScalingProject | Bridge): boolean {
   const contractsVerification = Object.values(
     project.contracts?.addresses ?? {},
   ).every((p) => p.every((c) => c.isVerified))

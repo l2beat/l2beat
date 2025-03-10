@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const myshell: Layer2 = upcomingL2({
+export const myshell: ScalingProject = upcomingL2({
   id: 'myshell',
   capability: 'universal',
-  addedAt: new UnixTime(1716981396), // 2024-05-29T11:16:36Z
+  addedAt: UnixTime(1716981396), // 2024-05-29T11:16:36Z
   display: {
     name: 'MyShell L2',
     slug: 'myshell',

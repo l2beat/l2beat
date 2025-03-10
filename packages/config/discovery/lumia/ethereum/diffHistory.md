@@ -1,4 +1,95 @@
-Generated with discovered.json: 0x85cfcd35b3b74d91e6bf2b6776779f45622d4d39
+Generated with discovered.json: 0xeef87092de98a2f44deccf27e9b73f2e148439ea
+
+# Diff at Thu, 06 Mar 2025 15:18:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21764836
+- current block number: 21981677
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Watched changes
+
+```diff
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      values.$implementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.$pastUpgrades.1:
++        ["2025-03-05T12:12:47.000Z","0xc376c3725fb986eead241c5b7663e6e081f66b92984bc4b3f0c08d23a0101a35",["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]]
+      values.$upgradeCount:
+-        1
++        2
+      derivedName:
+-        "PolygonValidiumStorageMigration"
++        "PolygonValidiumEtrog"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Validium/PolygonValidiumEtrog.sol}             | 203 +++++++++++----------
+ 1 file changed, 111 insertions(+), 92 deletions(-)
+```
+
+Generated with discovered.json: 0xd002180745803850fbaa75f1c68b02af67455bd6
+
+# Diff at Tue, 04 Mar 2025 10:39:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21764836
+- current block number: 21764836
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21764836 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      sinceBlock:
++        19505052
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      sinceBlock:
++        20234353
+    }
+```
+
+```diff
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+      sinceBlock:
++        20183666
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a) {
+    +++ description: None
+      sinceBlock:
++        20234352
+    }
+```
+
+Generated with discovered.json: 0x84b25f7e83bd6b9bf49ae097b00c9cab20148727
 
 # Diff at Thu, 27 Feb 2025 11:45:57 GMT:
 

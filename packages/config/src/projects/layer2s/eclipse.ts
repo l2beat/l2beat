@@ -13,7 +13,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('eclipse')
@@ -23,11 +23,11 @@ const withdrawalDelaySeconds = discovery.getContractValue<number>(
   'fraudWindowDuration',
 )
 
-export const eclipse: Layer2 = {
+export const eclipse: ScalingProject = {
   type: 'layer2',
   id: ProjectId('eclipse'),
   capability: 'universal',
-  addedAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
+  addedAt: UnixTime(1725359142), // 2024-09-03T10:25:42Z
   badges: [BADGES.VM.SolanaVM, BADGES.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -62,7 +62,7 @@ export const eclipse: Layer2 = {
       {
         chain: 'ethereum',
         address: EthereumAddress('0xd7e4b67e735733ac98a88f13d087d8aac670e644'),
-        sinceTimestamp: new UnixTime(1722140987),
+        sinceTimestamp: UnixTime(1722140987),
         tokens: ['ETH'],
       },
     ],

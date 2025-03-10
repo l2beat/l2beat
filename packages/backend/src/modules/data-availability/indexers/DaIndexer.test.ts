@@ -50,8 +50,8 @@ describe(DaIndexer.name, () => {
       expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
-        new UnixTime(100).toStartOf('day'),
-        new UnixTime(200).toEndOf('day'),
+        UnixTime.toStartOf(100, 'day'),
+        UnixTime.toEndOf(200, 'day'),
       )
       expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
         blobs,
@@ -216,7 +216,7 @@ function config(project: string): {
 function blob(timestamp: number, size: number): DaBlob {
   return {
     daLayer: DA_LAYER,
-    blockTimestamp: new UnixTime(timestamp),
+    blockTimestamp: UnixTime(timestamp),
     size: BigInt(size),
     type: 'ethereum',
     inbox: '',
@@ -232,7 +232,7 @@ function record(
   return {
     projectId,
     daLayer: DA_LAYER,
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     totalSize: BigInt(size),
   }
 }

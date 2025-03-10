@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { CONTRACTS } from './common'
+import type { Bridge, ScalingProject } from './internalTypes'
 import { BADGES, badgesCompareFn } from './projects/badges'
 import { bridges } from './projects/bridges'
 import { layer2s } from './projects/layer2s'
@@ -7,8 +8,10 @@ import { mergeBadges } from './projects/layer2s/templates/utils'
 import { layer3s } from './projects/layer3s'
 import { getDiscoveryInfo } from './projects/project/getProjects'
 import { refactored } from './projects/refactored'
-import type { BaseProject, Bridge, ChainConfig, Layer2, Layer3 } from './types'
+import type { BaseProject, ChainConfig } from './types'
 import { isProjectVerified, isVerified } from './verification/isVerified'
+
+let once = false
 
 /**
  * Some things can only be computed once all projects have been configured.
@@ -21,6 +24,9 @@ import { isProjectVerified, isVerified } from './verification/isVerified'
  * process.
  */
 export function runConfigAdjustments() {
+  if (once) return
+  once = true
+
   const chains = [...layer2s, ...layer3s, ...bridges, ...refactored]
     .map((x) => x.chainConfig)
     .filter((x) => x !== undefined)
@@ -34,10 +40,7 @@ export function runConfigAdjustments() {
   refactored.forEach((p) => adjustRefactored(p, chains))
 }
 
-function adjustLegacy(
-  project: Layer2 | Layer3 | Bridge,
-  chains: ChainConfig[],
-) {
+function adjustLegacy(project: ScalingProject | Bridge, chains: ChainConfig[]) {
   for (const escrow of project.config.escrows) {
     const chain = chains.find((x) => x.name === escrow.chain)
     assert(chain, `Missing chain: ${escrow.chain}`)
@@ -53,6 +56,7 @@ function adjustLegacy(
     }
   }
   adjustContracts(project, chains)
+  adjustEscrows(project)
 
   project.discoveryInfo = getDiscoveryInfo(project)
 }
@@ -72,7 +76,7 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
 }
 
 function adjustContracts(
-  project: Layer2 | Layer3 | Bridge | BaseProject,
+  project: ScalingProject | Bridge | BaseProject,
   chains: ChainConfig[],
 ) {
   if (project.contracts) {
@@ -92,11 +96,17 @@ function adjustContracts(
   }
 }
 
-function adjustBadges(project: Layer2, l3s: Layer3[]) {
+function adjustBadges(project: ScalingProject, l3s: ScalingProject[]) {
   const hostsL3 = l3s.some((l3) => l3.hostChain === project.id)
   if (hostsL3) {
     project.badges = mergeBadges(project.badges ?? [], [
       BADGES.Other.L3HostChain,
     ])
+  }
+}
+
+function adjustEscrows(project: ScalingProject | Bridge) {
+  if (project.contracts) {
+    project.contracts.escrows = project.config.escrows
   }
 }

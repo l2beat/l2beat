@@ -1,3 +1,239 @@
+Generated with discovered.json: 0xc14a93418c8e0d19dbc615571a9f5672150dac66
+
+# Diff at Thu, 06 Mar 2025 15:34:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 762641
+- current block number: 763116
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Watched changes
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.accessControl.roles.NIO_GOVERNOR_ROLE.members.1:
++        {"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1741118224,"executionDelay":0}
++++ description: List of roles granted to accounts.
+      values.RolesGranted.1635978423191113331.2:
++        {"account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":0,"since":1741118224,"newMember":true}
++++ description: List of roles granted to accounts.
+      values.RolesGranted.1635978423191113331.1:
++        {"account":"0x0000000000000000000000000000000000000000","delay":0,"since":1741117274,"newMember":true}
++++ description: List of roles revoked from accounts.
+      values.RolesRevoked.1635978423191113331:
++        [{"roleId":"1635978423191113331","account":"0x0000000000000000000000000000000000000000"}]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 762641 (main branch discovery), not current.
+
+```diff
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      sinceBlock:
++        234135
+    }
+```
+
+```diff
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      sinceBlock:
++        234141
+    }
+```
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sinceBlock:
++        181511
+    }
+```
+
+```diff
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03) {
+    +++ description: None
+      sinceBlock:
++        169
+    }
+```
+
+```diff
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd) {
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+      sinceBlock:
++        68
+    }
+```
+
+```diff
+    contract EntryPoint (0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb) {
+    +++ description: None
+      sinceBlock:
++        61
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      sinceBlock:
++        84
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x340487b92808B84c2bd97C87B590EE81267E04a7) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract Socket (0x3e9727470C66B1e77034590926CDe0242B5A3dCc) {
+    +++ description: None
+      sinceBlock:
++        130639
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.
+      sinceBlock:
++        126
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      sinceBlock:
++        205278
+    }
+```
+
+```diff
+    contract  (0x87799989341A07F495287B1433eea98398FD73aA) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: None
+      sinceBlock:
++        65
+    }
+```
+
+```diff
+    contract  (0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.
+      sinceBlock:
++        64
+    }
+```
+
+```diff
+    contract BundleBulker (0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d) {
+    +++ description: None
+      sinceBlock:
++        129612
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9eC0253E4174a14C0536261888416451A407Bf79) {
+    +++ description: None
+      sinceBlock:
++        11
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      sinceBlock:
++        234140
+    }
+```
+
+```diff
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA) {
+    +++ description: None
+      sinceBlock:
++        185011
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+      sinceBlock:
++        59
+    }
+```
+
+Generated with discovered.json: 0x85641b329797b7e3abafd6c3cdc764983c7ee6e5
+
+# Diff at Tue, 04 Mar 2025 13:35:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@40abad0e9dad8439d751a811eb767233c5a70a2f block: 758248
+- current block number: 762641
+
+## Description
+
+Add sanctions monitoring.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 758248 (main branch discovery), not current.
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
++++ description: addresses confirmed sanctioned by the GOVERNANCE_ROLE.
+      values.confirmedSanctions:
++        ["0x2a14E7B96D2362bdf1Df8C0bB4544714e7601Af0","0xc1ad34Bd24180A15735dd7919C0F24A63e4017ff"]
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions:
++        [{"_to":"0x8F14A1990cB5D327E545be6aF2a03B517aC58259","_timestamp":1706074667},{"_to":"0xE9Cb04a602cAA9D2C649dDE854Ab7389C98CF912","_timestamp":1706139865},{"_to":"0xC44F5CA2F187D5ece6864b8a31174C36dEFdC29c","_timestamp":1706139865},{"_to":"0x505D435C8B66a7511dbec7f3C8DA6F1e67D50dDA","_timestamp":1706148032},{"_to":"0x5579CA784CdC93776b9c030618548f1317AB4c39","_timestamp":1706148032},{"_to":"0xc2811Dfd12FF70b229d26E465359664f9e60b9D2","_timestamp":1706148032},{"_to":"0x7498cF5863fd745eE79d7F07516725b87fE9C8FB","_timestamp":1706148032},{"_to":"0xf30BF377b3C4ed1f111E6E28CF26003CE5a682Cf","_timestamp":1706580004},{"_to":"0x1f16335Fd1dD3e8DCC8b401f5ae8BA57F8AD76a8","_timestamp":1706580004},{"_to":"0xcf011278736204F57B343568A8A8DC09f266a834","_timestamp":1706580004},{"_to":"0x3CfA8C0e6eEb1e601f76355A82f583232b186a7D","_timestamp":1706580004},{"_to":"0x19CC0e919b58e0d0eF7BaeBb103f72dee1031978","_timestamp":1706580004},{"_to":"0xc3106dd6f982d4269a6618E77f49927d44BCCafD","_timestamp":1706580004},{"_to":"0x2955ca0D791C30C16e7298B803BB116bED5d7269","_timestamp":1706580004},{"_to":"0x015374c2Dc040eE1c40739936C72D5F035186f0f","_timestamp":1706662831},{"_to":"0x5420f6C9Bc0495d24f35Ba25Be8e259693615625","_timestamp":1707343233},{"_to":"0x60BF5eE1CBf2a18639412ce694FbCe1c8c3E6637","_timestamp":1707346822},{"_to":"0x76De7fC28E69bb78e6475C8Fd71B71793B663E31","_timestamp":1707346822},{"_to":"0x927491618ECd06afBCEDeA84a2fEF71c991f00Eb","_timestamp":1707354023},{"_to":"0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477","_timestamp":1707401778},{"_to":"0xca3E2E5c75121Cb46360E4459F6F94dCA6D868f4","_timestamp":1707462016},{"_to":"0xa5AFC38dDBE6e2dda8dC7A4fdae380a9Dbe12a06","_timestamp":1707472806},{"_to":"0xe12BcEe0219f3c80FFF8C271D29e343bA42B814d","_timestamp":1707483639},{"_to":"0x3365dB4c3490AC6A43986Cfe2c26FE61B22aA917","_timestamp":1707494421},{"_to":"0x0828b8Fe631347dA81a46E3D23394C3b18395aD4","_timestamp":1707498031},{"_to":"0x2548e483ceeFBe4de727f2F853AF0124869Ae75E","_timestamp":1707566427},{"_to":"0x463d21B0620C77620aeD87A769e5836132158855","_timestamp":1707627639},{"_to":"0x504a1ef47bF87a550bebfBA6ffe58a3a57bADeB7","_timestamp":1707652818},{"_to":"0xb2c54B111705B23BCB4cf584C396982c3B613F99","_timestamp":1707739213},{"_to":"0xE65a2Dee17190786c76f83e36F489a085690686C","_timestamp":1707840030},{"_to":"0xC14051DBDc3459A6A353D887dDF68F2BE286FaD6","_timestamp":1707998409},{"_to":"0x1075d13CE70F8F4eB840c4c264b6c84C2CD4E785","_timestamp":1708034428},{"_to":"0x24444de1eFf861197fd1393cF6081701237d3380","_timestamp":1708048804},{"_to":"0x4F5D61De15F7D9C933f78937295402b3E0D9AA6f","_timestamp":1708077610},{"_to":"0x92D620d0279359727A0128cC19b84EEF89621Fb4","_timestamp":1708164033},{"_to":"0xCc946190D2F37497d21e10309a20D56CF240446B","_timestamp":1710360415},{"_to":"0x9baE98859a9D5Ba64AD43E0C22F99d8BAd7FB554","_timestamp":1710363512},{"_to":"0x3e7b92D14dfA2A891B69d73A9912C7bea9C86bDB","_timestamp":1710363512},{"_to":"0x102C7CAF21c4B1EF75c5d3EEEbe673E73c1706D3","_timestamp":1710363512},{"_to":"0x275edFf82EB0c3845edaBa411D7A5bE31486C2B6","_timestamp":1710367221},{"_to":"0xdb563dA812f5d90727bb12a0959F5679B9a2Ea5F","_timestamp":1710533376},{"_to":"0xdb563dA812f5d90727bb12a0959F5679B9a2Ea5F","_timestamp":1710533543},{"_to":"0xfd1dCf92A221f333061575FD8B7D02b6E3A5957D","_timestamp":1710867621},{"_to":"0x574CFb5AA6F7A05B111Cd298b73A4123AAfdF97f","_timestamp":1710932425},{"_to":"0x49aEa6275e1D94Df2AC90c3ee4e4afd47e468d71","_timestamp":1712710928},{"_to":"0x3C9959C3EfEC9674926D86D8CAA814A486bA047B","_timestamp":1712740568},{"_to":"0xBD85550C39dE4844E501A278D6b632FbE68cF70F","_timestamp":1716580853},{"_to":"0x1B2888e792e82fe352FC9D1E73cdc91C6217F55c","_timestamp":1717533287},{"_to":"0x93402720154e26A044E8389D2733F281fF830c5c","_timestamp":1717937047},{"_to":"0xcD984AD7eBB2ab7B2aE0afd967F371c6E24a4Bc6","_timestamp":1718846587},{"_to":"0x493ff963FAAbbBeDBA2Aa19378bF8d8a0F0e2C5E","_timestamp":1718846587},{"_to":"0xbf3fBce48ff8a49918dD8578290814ea466aB79F","_timestamp":1718846587},{"_to":"0xD0aC63a724dCb105561F981c3D9dda033570193e","_timestamp":1718846587},{"_to":"0xf6f06e71eFB2671eAaBcf6E2C090357c995C495D","_timestamp":1718846587},{"_to":"0x1971eB33A28eCFa6BF701a6efec4255633F338FB","_timestamp":1718846645},{"_to":"0x9E292AFD2492f4ecBA6c1eb8B73BC87A5650eB8F","_timestamp":1718846645},{"_to":"0x7B31BC4FD8A00f734690AD0607903AA2C770a802","_timestamp":1718846645},{"_to":"0x99758a8519691B6bffEeD3976080c943634B7364","_timestamp":1718846645},{"_to":"0x81bb2B25eA1A01BADA25d41C67A34d81C9684712","_timestamp":1718846645},{"_to":"0x6E6E2044A4cfeA057E02d6FB72c33Fc893A9B788","_timestamp":1718846703},{"_to":"0x467Fa5244cd8386581635646F12E13C05Ad0f41F","_timestamp":1718846703},{"_to":"0x933b0f5e531648Bef764b58Ff7782AfB13AB06D0","_timestamp":1718846703},{"_to":"0x615E981442C93325449cB379d991237a01c06b15","_timestamp":1719715389},{"_to":"0xA4EcEAB6C954C3b967cF18e947879A6708A96D5e","_timestamp":1719715444},{"_to":"0x45Ace2D41040B7267a465A4dF8733F3327EEFBb5","_timestamp":1719715444},{"_to":"0x3b2E6A063125c95f327aE214eD1F20B901801059","_timestamp":1719715506},{"_to":"0x02b308D92893E3d93a2cD1C6506a7935B369f2C9","_timestamp":1719715506},{"_to":"0xa7E7870aFEe03C4768feDCb55db9bC11E1187356","_timestamp":1719715506},{"_to":"0x9E33F1333587Ee7f96772523821187de185d2ead","_timestamp":1719715565},{"_to":"0x10888fc193ec8a5b9ce29a0213473B2ceFA1E707","_timestamp":1719715565},{"_to":"0xC10730513A843fa0E2Fc223eC2AE3B6d3d002294","_timestamp":1719715565},{"_to":"0x504CC21F6343F966E672ce27054f9b7e546cd918","_timestamp":1719715623},{"_to":"0x01e523cC67e5d3459bE930837d89bccEA85Fd1DC","_timestamp":1719715623},{"_to":"0x4D836F0f988424f32065086D9A32644a7695e248","_timestamp":1719718509},{"_to":"0x6402119871Cc942Edc26e4815B99711750B87DBB","_timestamp":1719718623},{"_to":"0xB3902654321D214d2B7Ca531832d0EF19780fDef","_timestamp":1719718623},{"_to":"0x7Faf6f69caD10Eaf3903847434bF92b4Bb6fC955","_timestamp":1719718623},{"_to":"0x47DBDEe9AD57e48b9F9a0F867712357Ffb5B489f","_timestamp":1719718623},{"_to":"0x985540465088C9c667690cC17BFf732fC703D2E5","_timestamp":1719718623},{"_to":"0x6CDB95f68B61922d4fE0708e55792390D8c669e4","_timestamp":1719718623},{"_to":"0x75D9312845d38764229455Ea8d526A122b37768D","_timestamp":1719718623},{"_to":"0x6baa2c84A37999D264DA7bEe9639cDd3171c1397","_timestamp":1719718683},{"_to":"0x8862Dd4657aBCdf04c96402cD4C3007511538500","_timestamp":1719718683},{"_to":"0x89F6188006a35b9D0407c37f01FCa27AeD48CA3B","_timestamp":1719718683},{"_to":"0x9bC8048273BBa88f36c81a94EBde7ab5E0322e22","_timestamp":1719718683},{"_to":"0x23C1c317368AB6Dc5F92a496e08A79ceE6f90392","_timestamp":1719718683},{"_to":"0x6C38A71C9bd2cb9A262C5503E8D9D3D095386C00","_timestamp":1719718683},{"_to":"0x0E00e97FefD00F71b54E038899a97b470D6f662F","_timestamp":1719718683},{"_to":"0xdD330d70F14AEa4Ce7b9E777fDCC117321c74124","_timestamp":1722940629},{"_to":"0x2a14E7B96D2362bdf1Df8C0bB4544714e7601Af0","_timestamp":1734246668},{"_to":"0xc1ad34Bd24180A15735dd7919C0F24A63e4017ff","_timestamp":1734613992},{"_to":"0x2f3f40216112e54F8AC7668c364E459F156ed2af","_timestamp":1734613992},{"_to":"0x60a05081683493b2932Df77eE5fac141D2329B89","_timestamp":1736789115},{"_to":"0xfB474dDfDc91293aD2a37A58DC94D6505d2c88dF","_timestamp":1738203485}]
++++ description: addresses unsanctioned manually by any KYC_PROVIDER role. Mind that sanctions also expire if not confirmed (and those do not emit).
+      values.removedSanctions:
++        ["0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477","0x015374c2Dc040eE1c40739936C72D5F035186f0f","0xdb563dA812f5d90727bb12a0959F5679B9a2Ea5F","0x49aEa6275e1D94Df2AC90c3ee4e4afd47e468d71","0x1B2888e792e82fe352FC9D1E73cdc91C6217F55c"]
+      fieldMeta.pendingSanctions:
++        {"description":"addresses sanctioned by any KYC_PROVIDER role."}
+      fieldMeta.removedSanctions:
++        {"description":"addresses unsanctioned manually by any KYC_PROVIDER role. Mind that sanctions also expire if not confirmed (and those do not emit)."}
+      fieldMeta.confirmedSanctions:
++        {"description":"addresses confirmed sanctioned by the GOVERNANCE_ROLE."}
+    }
+```
+
 Generated with discovered.json: 0x505af3caad8c9a7b11115942b44d2dfd09eaf642
 
 # Diff at Mon, 24 Feb 2025 15:41:14 GMT:

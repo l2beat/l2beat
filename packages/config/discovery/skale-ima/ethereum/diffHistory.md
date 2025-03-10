@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x7972faf9fdaafae26fb5b7fe65424a93a424e768
+
+# Diff at Tue, 04 Mar 2025 10:39:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21744185
+- current block number: 21744185
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744185 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminOwner (0x13fD1622F0E7e50A87B79cb296cbAf18362631C0) {
+    +++ description: None
+      sinceBlock:
++        10949879
+    }
+```
+
+```diff
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      sinceBlock:
++        12858680
+    }
+```
+
+```diff
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      sinceBlock:
++        12858640
+    }
+```
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      sinceBlock:
++        12858631
+    }
+```
+
+```diff
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      sinceBlock:
++        12858615
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      sinceBlock:
++        12858665
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      sinceBlock:
++        12858602
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      sinceBlock:
++        12858653
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      sinceBlock:
++        14589619
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627) {
+    +++ description: None
+      sinceBlock:
++        12858428
+    }
+```
+
 Generated with discovered.json: 0xbef7462693748f2d5bbaba76411e9e55519e8f4a
 
 # Diff at Fri, 31 Jan 2025 11:23:12 GMT:

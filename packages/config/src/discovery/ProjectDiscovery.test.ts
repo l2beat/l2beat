@@ -7,11 +7,7 @@ import {
   type RawDiscoveryConfig,
 } from '@l2beat/discovery'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
-import {
-  ProjectDiscovery,
-  formatAsBulletPoints,
-  trimTrailingDots,
-} from './ProjectDiscovery'
+import { ProjectDiscovery, formatAsBulletPoints } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
@@ -19,6 +15,7 @@ describe(ProjectDiscovery.name, () => {
     readConfig: (projectName: string, chain: string) =>
       mockConfig(projectName, chain),
     readDiscovery: () => discoveredJsonStub,
+    getDisplayMode: () => 'fromDiscovery',
   })
 
   const discovery = new ProjectDiscovery(projectName, 'ethereum', configReader)
@@ -141,20 +138,6 @@ describe(formatAsBulletPoints.name, () => {
     const description = ['Single point']
     const formatted = formatAsBulletPoints(description)
     expect(formatted).toEqual('Single point')
-  })
-})
-
-describe(trimTrailingDots.name, () => {
-  it('should remove trailing dots', () => {
-    const description = 'Some description...'
-    const trimmed = trimTrailingDots(description)
-    expect(trimmed).toEqual('Some description')
-  })
-
-  it('should not remove trailing dots if there are no dots', () => {
-    const description = 'Some description'
-    const trimmed = trimTrailingDots(description)
-    expect(trimmed).toEqual(description)
   })
 })
 

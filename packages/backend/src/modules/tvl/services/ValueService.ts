@@ -53,12 +53,12 @@ export class ValueService {
       assert(amountConfig, 'Config not found')
 
       const until = amountConfig.untilTimestamp
-        ? amountConfig.untilTimestamp.gt(x.timestamp)
+        ? amountConfig.untilTimestamp > x.timestamp
         : true
-      return amountConfig.sinceTimestamp.lte(x.timestamp) && until
+      return amountConfig.sinceTimestamp <= x.timestamp && until
     })
     const amountsByTimestamp = groupBy(
-      filteredAmounts.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
+      filteredAmounts.map((x) => ({ ...x, timestamp: x.timestamp })),
       'timestamp',
     )
 
@@ -68,13 +68,13 @@ export class ValueService {
       timestamps[timestamps.length - 1],
     )
     const pricesByTimestamp = groupBy(
-      prices.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
+      prices.map((x) => ({ ...x, timestamp: x.timestamp })),
       'timestamp',
     )
 
     const results = new Map<number, Values>()
 
-    for (const timestamp of timestamps.map((t) => t.toNumber())) {
+    for (const timestamp of timestamps.map((t) => t)) {
       const result = createEmptyResult()
 
       const amountsAtTimestamp = amountsByTimestamp[timestamp]
@@ -161,7 +161,7 @@ function toValueRecords(
     ([timestamp, value]) =>
       ({
         projectId: project,
-        timestamp: new UnixTime(timestamp),
+        timestamp: UnixTime(timestamp),
         dataSource: source,
         native: value.native,
         nativeAssociated: value.nativeAssociated,

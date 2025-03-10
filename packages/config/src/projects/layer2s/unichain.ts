@@ -1,16 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION } from '../../common'
+import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
 const l2discovery = new ProjectDiscovery('unichain', 'unichain')
-const genesisTimestamp = new UnixTime(1730748359)
+const genesisTimestamp = UnixTime(1730748359)
 
-export const unichain: Layer2 = opStackL2({
-  addedAt: new UnixTime(1728932992), // 2024-10-14T19:09:00Z
+export const unichain: ScalingProject = opStackL2({
+  addedAt: UnixTime(1728932992), // 2024-10-14T19:09:00Z
   discovery,
   additionalDiscoveries: { ['unichain']: l2discovery },
   additionalPurposes: ['Exchange'],
@@ -32,6 +32,16 @@ export const unichain: Layer2 = opStackL2({
         'https://discord.com/invite/uniswap',
       ],
     },
+  },
+  scopeOfAssessment: {
+    checked: [
+      SOA.l1Contracts,
+      SOA.l2Contracts,
+      SOA.gasToken,
+      SOA.derivationSpec,
+      SOA.sourceCodeToProgramHash,
+    ],
+    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   stage: getStage(
     {

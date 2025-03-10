@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 21937191,
-  "configHash": "0x350a19363eeadf16d76108236f8728385e94cc1e8d13f106cc6d29929358f841",
+  "configHash": "0x762636fb82e1ff49ae46ef27412ffb4bfda66ccc93b1f6b082eec710e8b9fd1a",
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",
@@ -12,6 +12,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1637961283,
+      "sinceBlock": 13692067,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -32,6 +33,7 @@
       ],
       "ignoreInWatchMode": ["committedRoot"],
       "sinceTimestamp": 1637962173,
+      "sinceBlock": 13692126,
       "values": {
         "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
         "$implementation": "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F",
@@ -74,6 +76,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1637291734,
+      "sinceBlock": 13643255,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -104,6 +107,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1637961347,
+      "sinceBlock": 13692072,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -132,6 +136,7 @@
         }
       ],
       "sinceTimestamp": 1637960876,
+      "sinceBlock": 13692049,
       "values": {
         "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
@@ -153,6 +158,7 @@
         }
       ],
       "sinceTimestamp": 1637963549,
+      "sinceBlock": 13692228,
       "values": {
         "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
         "$implementation": "0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738",
@@ -180,6 +186,7 @@
         "0x4ac3e27d1d1ef6c9a05335874ae7286f305ae29a71c239cd1095617d01efbaf0"
       ],
       "sinceTimestamp": 1637961011,
+      "sinceBlock": 13692055,
       "values": {
         "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
@@ -193,6 +200,7 @@
         "0xb64e5af8c508ce86c29728805a64c3b45bf37a0a28c4ea602902a3e23de80dfd"
       ],
       "sinceTimestamp": 1637961153,
+      "sinceBlock": 13692061,
       "values": {
         "$immutable": true,
         "home": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
@@ -209,6 +217,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1637962173,
+      "sinceBlock": 13692126,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -237,6 +246,7 @@
         "suggestUpdate"
       ],
       "sinceTimestamp": 1637961283,
+      "sinceBlock": 13692067,
       "values": {
         "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
         "$implementation": "0xfc6E146384b5c65f372d5b20537F3e8727aD3723",
@@ -278,6 +288,7 @@
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1637963549,
+      "sinceBlock": 13692228,
       "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
@@ -297,6 +308,7 @@
         }
       ],
       "sinceTimestamp": 1637961347,
+      "sinceBlock": 13692072,
       "values": {
         "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
         "$implementation": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835",

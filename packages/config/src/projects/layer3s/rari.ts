@@ -1,14 +1,14 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
-export const rari: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
+export const rari: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   discovery,
@@ -56,7 +56,7 @@ export const rari: Layer3 = orbitStackL3({
     name: 'rari',
     chainId: 1380012617,
     explorerUrl: 'https://mainnet.explorer.rarichain.org',
-    sinceTimestamp: new UnixTime(1705716145),
+    sinceTimestamp: UnixTime(1705716145),
     apis: [
       {
         type: 'rpc',

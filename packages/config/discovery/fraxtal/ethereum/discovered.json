@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 21802913,
-  "configHash": "0x226900c84d8d0b22870c806b3a8f97dc457f1c3713d2d6c5a7a6713e72269e06",
+  "configHash": "0x895af4f9193188971c4949140263cdd241db789c242ae7ad4e0296bb5caee5f9",
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
@@ -22,6 +22,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x6cA98f43719231d38F6426DB64C7F3D5C7CE7876",
@@ -56,6 +57,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": false,
         "$implementation": "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8",
@@ -142,6 +144,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": true,
         "addressManager": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
@@ -179,6 +182,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367",
@@ -214,8 +218,8 @@
         "l2OutputOracle": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -268,6 +272,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x30Cd695249394eED44C576f2caEC5304be6455F9",
@@ -308,6 +313,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23",
@@ -373,6 +379,7 @@
         }
       ],
       "sinceTimestamp": 1734221171,
+      "sinceBlock": 21404227,
       "values": {
         "$immutable": true,
         "amosArray": ["0xEcb9bBb97BD3C23e8f176075EDB3c68B9a1869Ae"],
@@ -421,6 +428,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1665022895,
+      "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -462,6 +470,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4",
@@ -525,6 +534,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65",
@@ -610,6 +620,7 @@
         }
       ],
       "sinceTimestamp": 1734221195,
+      "sinceBlock": 21404229,
       "values": {
         "$immutable": true,
         "etherRouter": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
@@ -655,6 +666,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1665087971,
+      "sinceBlock": 15691435,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -698,6 +710,7 @@
         }
       ],
       "sinceTimestamp": 1608140486,
+      "sinceBlock": 11465576,
       "values": {
         "$immutable": true,
         "admin": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -727,6 +740,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": true,
         "owner": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
@@ -750,6 +764,7 @@
         }
       ],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
         "$implementation": "0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4",
@@ -797,6 +812,7 @@
         "totalSupply"
       ],
       "sinceTimestamp": 1665022895,
+      "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
@@ -855,6 +871,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1629667690,
+      "sinceBlock": 13077564,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -905,6 +922,7 @@
       ],
       "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
       "sinceTimestamp": 1665022895,
+      "sinceBlock": 15686046,
       "values": {
         "$immutable": true,
         "currentWithheldETH": "454434241964665580682",
@@ -1002,6 +1020,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706811599,
+      "sinceBlock": 19135323,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

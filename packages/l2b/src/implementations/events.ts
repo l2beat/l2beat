@@ -1,5 +1,5 @@
 import { type IProvider, ProxyDetector } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery'
 import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import type { CliLogger } from '@l2beat/shared'
 import {
@@ -107,7 +107,7 @@ async function getTimestampFromBlock(
 ): Promise<UnixTime> {
   const result = await provider.getBlock(blockNumber)
   assert(result !== undefined)
-  return new UnixTime(result.timestamp)
+  return UnixTime(result.timestamp)
 }
 
 async function getTransactionSender(
@@ -120,7 +120,7 @@ async function getTransactionSender(
 }
 
 function formatTimestamp(timestamp: UnixTime): string {
-  const date = timestamp.toDate()
+  const date = UnixTime.toDate(timestamp)
   const day = String(date.getDate()).padStart(2, '0')
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const year = date.getFullYear()

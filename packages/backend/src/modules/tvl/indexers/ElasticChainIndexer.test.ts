@@ -27,7 +27,7 @@ describe(ElasticChainIndexer.name, () => {
     it('fetches amounts and saves them to DB', async () => {
       const from = 100
       const to = 1000
-      const timestampToSync = new UnixTime(200)
+      const timestampToSync = UnixTime(200)
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: () => timestampToSync,
       })
@@ -85,13 +85,13 @@ describe(ElasticChainIndexer.name, () => {
         amount('a', 200, 123),
       ])
 
-      expect(safeHeight).toEqual(timestampToSync.toNumber())
+      expect(safeHeight).toEqual(timestampToSync)
     })
 
     it('returns if optimized timestamp later than to', async () => {
       const from = 100
       const to = 1000
-      const timestampToSync = new UnixTime(to + 100)
+      const timestampToSync = UnixTime(to + 100)
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: () => timestampToSync,
@@ -130,7 +130,7 @@ describe(ElasticChainIndexer.name, () => {
       const indexer = new ElasticChainIndexer({
         elasticChainService: mockObject<ElasticChainService>({}),
         syncOptimizer: mockObject<SyncOptimizer>({
-          getTimestampToSync: () => new UnixTime(1001),
+          getTimestampToSync: () => UnixTime(1001),
         }),
         chain: 'chain',
         parents: [],
@@ -180,11 +180,11 @@ describe(ElasticChainIndexer.name, () => {
 
       expect(
         amountRepository.deleteByConfigInTimeRange,
-      ).toHaveBeenNthCalledWith(1, 'a', new UnixTime(100), new UnixTime(200))
+      ).toHaveBeenNthCalledWith(1, 'a', UnixTime(100), UnixTime(200))
 
       expect(
         amountRepository.deleteByConfigInTimeRange,
-      ).toHaveBeenLastCalledWith('b', new UnixTime(200), new UnixTime(300))
+      ).toHaveBeenLastCalledWith('b', UnixTime(200), UnixTime(300))
     })
   })
 })
@@ -196,7 +196,7 @@ function amount(
 ): AmountRecord {
   return {
     configId,
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     amount: BigInt(amount),
   }
 }

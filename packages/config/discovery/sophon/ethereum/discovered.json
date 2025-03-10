@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 21786541,
-  "configHash": "0xa350cfc9b8d97f7ac085742d9f734b808733d79f02f05572a82d09123813b500",
+  "configHash": "0x65d97fc7cb21e775b9e990524b2be63954fa6371694c7a77a21befa48779adc2",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -46,6 +46,7 @@
         "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1729268843,
+      "sinceBlock": 20993638,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -236,6 +237,7 @@
       ],
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
+      "sinceBlock": 21081436,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
@@ -270,6 +272,7 @@
         }
       ],
       "sinceTimestamp": 1717520615,
+      "sinceBlock": 20019826,
       "values": {
         "$immutable": true,
         "executionDelay": 10800,
@@ -309,6 +312,7 @@
         }
       ],
       "sinceTimestamp": 1729079339,
+      "sinceBlock": 20977925,
       "values": {
         "$immutable": true,
         "owner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
@@ -351,6 +355,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729249919,
+      "sinceBlock": 20992068,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -382,6 +387,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1734114251,
+      "sinceBlock": 21395362,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB",

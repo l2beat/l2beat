@@ -1,9 +1,7 @@
-import {
-  type ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
-import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
+import type { ContractParameters } from '@l2beat/discovery'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
+import { get$Implementations } from '../../../discovery/extractors'
 import type {
   Badge,
   ProjectContracts,

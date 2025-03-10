@@ -9,13 +9,13 @@ import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('lightlink')
 
 const upgradesLightLink = {
-  upgradableBy: [{ name: 'LightLinkAdmin', delay: 'no' }],
+  upgradableBy: [{ name: 'LightLinkMultisig2', delay: 'no' }],
 }
 
 const validators = discovery.getContractValue<
@@ -56,11 +56,12 @@ const CHALLENGE_FEE = utils.formatEther(
   discovery.getContractValue<number>('Challenge', 'challengeFee'),
 )
 
-export const lightlink: Layer2 = {
+export const lightlink: ScalingProject = {
+  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('lightlink'),
   capability: 'universal',
-  addedAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
+  addedAt: UnixTime(1718443080), // 2024-06-15T09:18:00Z
   badges: [BADGES.VM.EVM, BADGES.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -69,6 +70,8 @@ export const lightlink: Layer2 = {
   display: {
     name: 'LightLink',
     slug: 'lightlink',
+    headerWarning:
+      'The old ETH bridge is paused and funds have been [moved to a multisig](https://etherscan.io/tx/0x416221c8a6e0454762409735f01d3b9c8bb0e894c36ccd1e3e80e4a69b5bb923). New infra is under review.',
     description:
       'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
     category: 'Other',
@@ -95,12 +98,12 @@ export const lightlink: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
-        sinceTimestamp: new UnixTime(1692181067),
+        sinceTimestamp: UnixTime(1692181067),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
-        sinceTimestamp: new UnixTime(1692185219),
+        sinceTimestamp: UnixTime(1692185219),
         tokens: '*',
       }),
     ],
@@ -118,7 +121,7 @@ export const lightlink: Layer2 = {
     name: 'lightlink',
     chainId: 1890,
     explorerUrl: 'https://phoenix.lightlink.io',
-    sinceTimestamp: new UnixTime(1692181067),
+    sinceTimestamp: UnixTime(1692181067),
     apis: [
       {
         type: 'rpc',
@@ -245,10 +248,9 @@ export const lightlink: Layer2 = {
           discovery.getPermissionedAccounts('L1BridgeRegistry', 'multisig'),
           'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
         ),
-        discovery.getPermissionDetails(
-          'LightLinkAdmin',
-          discovery.getPermissionedAccounts('CanonicalStateChain', 'owner'),
-          'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
+        discovery.getMultisigPermission(
+          'LightLinkMultisig2',
+          'Owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
         ),
       ],
     },

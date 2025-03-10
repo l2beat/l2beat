@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../global/milestones'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
@@ -132,6 +132,7 @@ import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
 import { payy } from './payy'
+import { penchain } from './penchain'
 import { pepeunchained } from './pepeunchained'
 import { phala } from './phala'
 import { plumenetwork } from './plumenetwork'
@@ -213,7 +214,7 @@ import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
 
-export const layer2s: Layer2[] = [
+export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
   aiechain,
@@ -347,6 +348,7 @@ export const layer2s: Layer2[] = [
   parallel,
   patex,
   payy,
+  penchain,
   pepeunchained,
   phala,
   plumenetwork,

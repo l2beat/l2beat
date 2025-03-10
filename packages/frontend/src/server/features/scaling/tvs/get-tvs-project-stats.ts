@@ -1,4 +1,4 @@
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getTokenBreakdown } from './utils/get-token-breakdown'
@@ -6,7 +6,9 @@ import { getTvsBreakdown } from './utils/get-tvs-breakdown'
 import { toTvsProject } from './utils/get-tvs-projects'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
 
-export async function getTvsProjectStats(project: Layer2 | Layer3 | Bridge) {
+export async function getTvsProjectStats(
+  project: Project<'tvlConfig', 'chainConfig'>,
+) {
   if (env.MOCK) {
     return getMockTvsProjectStatsData()
   }
@@ -14,11 +16,14 @@ export async function getTvsProjectStats(project: Layer2 | Layer3 | Bridge) {
 }
 
 type TvsProjectStats = Awaited<ReturnType<typeof getTvsProjectStatsData>>
-async function getTvsProjectStatsData(project: Layer2 | Layer3 | Bridge) {
+async function getTvsProjectStatsData(
+  project: Project<'tvlConfig', 'chainConfig'>,
+) {
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const tvsProject = await toTvsProject(project, chains)
+  const tokenList = await ps.getTokens()
+  const tvsProject = await toTvsProject(project, chains, tokenList)
   const tvsValues = await getTvsValuesForProjects([tvsProject], '7d')
   const projectTvsValues = tvsValues[project.id]
   if (!projectTvsValues) {

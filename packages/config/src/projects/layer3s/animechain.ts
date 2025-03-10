@@ -1,11 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
-export const animechain: Layer3 = upcomingL3({
+export const animechain: ScalingProject = upcomingL3({
   id: 'animechain',
   capability: 'universal',
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'AnimeChain',

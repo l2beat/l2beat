@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x094cbb6e98e6616cd612b9b82a742be3bfebfe38
+
+# Diff at Tue, 04 Mar 2025 10:39:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21937191
+- current block number: 21937191
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21937191 (main branch discovery), not current.
+
+```diff
+    contract HomeUpgradeBeacon (0x101a39eA1143cb252fc8093847399046fc35Db89) {
+    +++ description: None
+      sinceBlock:
++        13692067
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x27658c5556A9a57f96E69Bbf6d3B8016f001a785) {
+    +++ description: None
+      sinceBlock:
++        13692126
+    }
+```
+
+```diff
+    contract RecoveryManager (0x2bB2a5A724170357cb691841F40d26A950d8C33D) {
+    +++ description: None
+      sinceBlock:
++        13643255
+    }
+```
+
+```diff
+    contract GovernanceUpgradeBeacon (0x4d89F34dB307015F8002F97c1d100d84e3AFb76c) {
+    +++ description: None
+      sinceBlock:
++        13692072
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0x4F50a7081792063693F46A6402390b9647562457) {
+    +++ description: None
+      sinceBlock:
++        13692049
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x4fc16De11deAc71E8b2Db539d82d93BE4b486892) {
+    +++ description: None
+      sinceBlock:
++        13692228
+    }
+```
+
+```diff
+    contract UpdaterManager (0x81B97dfBB743c343983e9bE7B863dB636DbD7373) {
+    +++ description: None
+      sinceBlock:
++        13692055
+    }
+```
+
+```diff
+    contract XAppConnectionManager (0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD) {
+    +++ description: None
+      sinceBlock:
++        13692061
+    }
+```
+
+```diff
+    contract ReplicaUpgradeBeacon (0xA734EDE8229970776e1B68085D579b6b6E97dAd4) {
+    +++ description: None
+      sinceBlock:
++        13692126
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xa73a3a74C7044B5411bD61E1990618A1400DA379) {
+    +++ description: None
+      sinceBlock:
++        13692067
+    }
+```
+
+```diff
+    contract BridgeUpgradeBeacon (0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE) {
+    +++ description: None
+      sinceBlock:
++        13692228
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94) {
+    +++ description: None
+      sinceBlock:
++        13692072
+    }
+```
+
 Generated with discovered.json: 0xdd49557a814fe3a97b52c050bfe10c1af8176d3b
 
 # Diff at Mon, 20 Jan 2025 11:09:50 GMT:

@@ -1,3 +1,383 @@
+Generated with discovered.json: 0x3fca8774ab1cfba5fca982a19bfc546916323a05
+
+# Diff at Thu, 06 Mar 2025 15:18:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21343041
+- current block number: 21343041
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"15787695375210609250491147414005894154890873413229882671403677761527504080":"Starknet Aggregator (since v0.13.3)","2397984267054479079853548842566103781972463965746662494980785692480538410509":"StarkNet OS (Starknet)","853638403225561750106379562222782223909906501242604214771127703946595519856":"StarkNet OS (Paradex)","3383082961563516565935611087683915026448707331436034043529592588079494402084":"StarkNet OS (old Paradex, old StarkNet)","3485280386001712778192330279103973322645241679001461923469191557000342180556":"StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)","770346231394331402493200980986217737662224545740427952627288191358999988146":"ApeX-USDT","3174901404014912024702042974619036870715605532092680335571201877913899936957":"StarkEx Spot v4.0 (RhinoFi, Sorare)","16830627573509542901909952446321116535677491650708854009406762893086223513":"StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)","2530337539466159944237001094809327283009177793361359619481044346150483328860":"ApeX-USDC 20250130","3114724292040200590153042023978438629733352741898912919152162079752811928849":"StarkEx Perp v2.0 ApeX-USDC","217719352201300445998518619904782191262194843262573339166404641663770051805":"StarkNet (old)","3003515909324298587247571665454372831319437787162989623104387385306791861180":"StarkNet (old)","1161178844461337253856226043908368523817098764221830529880464854589141231910":"StarkNet Aggregator (old)","1921772108187713503530008849184725638117898887391063185252422808224349294626":"StarkNet (old)","3258367057337572248818716706664617507069572185152472699066582725377748079373":"StarkNet (old)","407700941260678649793204927710478760533239334662847444187959202896452163393":"StarkNet (old)","1865367024509426979036104162713508294334262484507712987283009063059134893433":"StarkNet (old)","54878256403880350656938046611252303365750679698042371543935159963667935317":"StarkNet (old)","2479841346739966073527450029179698923866252973805981504232089731754042431018":"StarkNet (old)","109586309220455887239200613090920758778188956576212125550190099009305121410":"StarkNet (old)"}}]
+    }
+```
+
+Generated with discovered.json: 0xb844bd6d912312c4ed9b9b2cba006df5f01d5c34
+
+# Diff at Wed, 05 Mar 2025 14:58:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21343041
+- current block number: 21343041
+
+## Description
+
+discodrive sn stack and starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).
+      values.programHashMapped:
++        "3022993219738828102988654230098311570191704199468817569337520096526584973032"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      displayName:
++        "GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`)."
+    }
+```
+
+Generated with discovered.json: 0xca660cc957c983c4624df9c0a50391be04f085a2
+
+# Diff at Tue, 04 Mar 2025 10:39:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21343041
+- current block number: 21343041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      sinceBlock:
++        12931482
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73) {
+    +++ description: None
+      sinceBlock:
++        11813202
+    }
+```
+
+```diff
+    contract CpuOods (0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5) {
+    +++ description: None
+      sinceBlock:
++        11813198
+    }
+```
+
+```diff
+    contract MerkleStatementContract (0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830) {
+    +++ description: None
+      sinceBlock:
++        11813198
+    }
+```
+
+```diff
+    contract ClaimsProxy (0x0fd829C3365A225FB9226e75c97c3A114bD3199e) {
+    +++ description: None
+      sinceBlock:
++        12931509
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92) {
+    +++ description: None
+      sinceBlock:
++        11813192
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D) {
+    +++ description: None
+      sinceBlock:
++        11813182
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x1F5459AA7857291112A8172ae1328248948d9d13) {
+    +++ description: None
+      sinceBlock:
++        11813186
+    }
+```
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      sinceBlock:
++        12931441
+    }
+```
+
+```diff
+    contract WrappedEthereumDydxToken (0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9) {
+    +++ description: None
+      sinceBlock:
++        18112365
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x4922f8750DFd040954b44F23980160342e308863) {
+    +++ description: None
+      sinceBlock:
++        11813200
+    }
+```
+
+```diff
+    contract EcdsaPointsXColumn (0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5) {
+    +++ description: None
+      sinceBlock:
++        11813192
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      sinceBlock:
++        12931493
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD) {
+    +++ description: None
+      sinceBlock:
++        12424523
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      sinceBlock:
++        12931442
+    }
+```
+
+```diff
+    contract ShortTimelockExecutor (0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc) {
+    +++ description: None
+      sinceBlock:
++        12816312
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      sinceBlock:
++        12931454
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      sinceBlock:
++        12931449
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      sinceBlock:
++        12931480
+    }
+```
+
+```diff
+    contract DydxGovernor (0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2) {
+    +++ description: None
+      sinceBlock:
++        12816310
+    }
+```
+
+```diff
+    contract GpsStatementVerifier (0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3) {
+    +++ description: None
+      sinceBlock:
++        12013702
+    }
+```
+
+```diff
+    contract Committee (0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1) {
+    +++ description: None
+      sinceBlock:
++        11834295
+    }
+```
+
+```diff
+    contract DydxToken (0x92D6C1e31e14520e676a687F0a93788B716BEff5) {
+    +++ description: None
+      sinceBlock:
++        12809555
+    }
+```
+
+```diff
+    contract ChainlinkAdapter (0x99B0599952a4FD2d1A1561Fa4C010827EaD30354) {
+    +++ description: None
+      sinceBlock:
++        12931491
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (0x9Bcf13C6b68450B427bfa86698D61901A8a3456D) {
+    +++ description: None
+      sinceBlock:
++        11813187
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      sinceBlock:
++        12931528
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      sinceBlock:
++        12931492
+    }
+```
+
+```diff
+    contract TreasuryVester (0xb9431E19B29B952d9358025f680077C3Fd37292f) {
+    +++ description: None
+      sinceBlock:
++        12931477
+    }
+```
+
+```diff
+    contract GovernanceStrategyV2 (0xc2f5F3505910Da80F0592a3Cc023881C50b16505) {
+    +++ description: None
+      sinceBlock:
++        18112366
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (0xD14fd39630Ec941C3bA6C791E3af9E0027013A15) {
+    +++ description: None
+      sinceBlock:
++        11813192
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      sinceBlock:
++        11834295
+    }
+```
+
+```diff
+    contract MerklePauserExecutor (0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52) {
+    +++ description: None
+      sinceBlock:
++        12816315
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3) {
+    +++ description: None
+      sinceBlock:
++        12013692
+    }
+```
+
+```diff
+    contract LongTimelockExecutor (0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B) {
+    +++ description: None
+      sinceBlock:
++        12816311
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (0xEfbCcE4659db72eC6897F46783303708cf9ACef8) {
+    +++ description: None
+      sinceBlock:
++        11813182
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: None
+      sinceBlock:
++        17065528
+    }
+```
+
+```diff
+    contract FriStatementContract (0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1) {
+    +++ description: None
+      sinceBlock:
++        11813198
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      sinceBlock:
++        12946416
+    }
+```
+
 Generated with discovered.json: 0x5db33511cf5bddbb87778a1a432d9dc05a2a4d36
 
 # Diff at Mon, 20 Jan 2025 11:09:26 GMT:

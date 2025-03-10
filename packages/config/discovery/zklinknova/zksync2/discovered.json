@@ -32,6 +32,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692606473,
+      "sinceBlock": 11790443,
       "values": {
         "$immutable": false,
         "$implementation": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
@@ -68,6 +69,7 @@
         }
       ],
       "sinceTimestamp": 1709297079,
+      "sinceBlock": 27865488,
       "values": {
         "$admin": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
         "$implementation": "0xdBA32e62e929a7e2Fa65782F812416CA65208E40",
@@ -100,6 +102,7 @@
         }
       ],
       "sinceTimestamp": 1709280624,
+      "sinceBlock": 27849895,
       "values": {
         "$admin": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
         "$implementation": "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E",
@@ -139,6 +142,7 @@
         }
       ],
       "sinceTimestamp": 1709297074,
+      "sinceBlock": 27865483,
       "values": {
         "$immutable": true,
         "owner": "0x3334552599C9aA1FE08CfF276A02033FF37646ca"

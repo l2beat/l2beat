@@ -1,7 +1,7 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { ethers, utils } from 'ethers'
 import * as z from 'zod'
+import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'

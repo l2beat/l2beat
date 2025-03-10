@@ -1,6 +1,6 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { ContractParameters } from '../output/types'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,
@@ -37,7 +37,7 @@ describe(tryCastingToName.name, () => {
 
 describe(interpolateModelTemplate.name, () => {
   it('properly interpolates the model file', () => {
-    const modelFile = `
+    const modelTemplate = `
       msig(@self, #$threshold).
       member(@self, 
         #$members
@@ -67,7 +67,11 @@ describe(interpolateModelTemplate.name, () => {
     }
 
     const values = contractValuesForInterpolation('ethereum', contract)
-    const result = interpolateModelTemplate(modelFile, values, addressToNameMap)
+    const result = interpolateModelTemplate(
+      modelTemplate,
+      values,
+      addressToNameMap,
+    )
     expect(result).toEqual(`
       msig(contactMsigA, 2).
       member(contactMsigA, 
@@ -79,8 +83,24 @@ describe(interpolateModelTemplate.name, () => {
     `)
   })
 
+  it('properly casts to lowercase', () => {
+    const modelTemplate = `msg1("#msg|lower").msg2("#msg:raw|lower").`
+    const contract: ContractParameters = {
+      address: EthereumAddress.from('0x123'),
+      name: 'ContractA',
+      description: 'Description of ContractA',
+      values: {
+        msg: 'Hello, WORLD!',
+      },
+    }
+
+    const values = contractValuesForInterpolation('ethereum', contract)
+    const result = interpolateModelTemplate(modelTemplate, values, {})
+    expect(result).toEqual('msg1("hello, world!").msg2("hello, world!").')
+  })
+
   it('fails for missing values', () => {
-    const modelFile = `
+    const modelTemplate = `
       one(#one).
       two(#two).
     `
@@ -94,7 +114,7 @@ describe(interpolateModelTemplate.name, () => {
     }
 
     const values = contractValuesForInterpolation('ethereum', contract)
-    expect(() => interpolateModelTemplate(modelFile, values, {})).toThrow(
+    expect(() => interpolateModelTemplate(modelTemplate, values, {})).toThrow(
       'Field "two" not found in contract ContactMsigA',
     )
   })

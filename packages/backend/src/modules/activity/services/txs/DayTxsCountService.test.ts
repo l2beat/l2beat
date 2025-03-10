@@ -10,12 +10,12 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const txsCountProvider = new DayTxsCountService(provider, ProjectId('a'))
 
-    const start = UnixTime.fromDays(5)
-    const end = UnixTime.fromDays(6)
+    const start = 5 * UnixTime.DAY
+    const end = 6 * UnixTime.DAY
 
     const result = await txsCountProvider.getTxsCount(
-      start.toDays(),
-      end.toDays(),
+      UnixTime.toDays(start),
+      UnixTime.toDays(end),
     )
 
     expect(result).toEqual([
@@ -24,17 +24,10 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
         start,
         2000,
         null,
-        start.toNumber(),
-        start.add(1, 'days').add(-1, 'seconds').toNumber(),
+        start,
+        start + 1 * UnixTime.DAY - 1,
       ),
-      activityRecord(
-        'a',
-        end,
-        3000,
-        null,
-        end.toNumber(),
-        end.add(1, 'days').add(-1, 'seconds').toNumber(),
-      ),
+      activityRecord('a', end, 3000, null, end, end + 1 * UnixTime.DAY - 1),
     ])
     expect(provider.getDailyCount).toHaveBeenCalledTimes(2)
   })

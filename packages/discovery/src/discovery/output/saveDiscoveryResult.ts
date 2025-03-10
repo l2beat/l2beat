@@ -1,5 +1,4 @@
 import { dirname, posix } from 'path'
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
@@ -13,6 +12,7 @@ import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
+import type { DiscoveryOutput } from './types'
 
 export interface SaveDiscoveryResultOptions {
   rootFolder: string
