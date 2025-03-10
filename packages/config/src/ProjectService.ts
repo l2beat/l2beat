@@ -14,8 +14,8 @@ export type Project<K extends Key = never, O extends Key = never> = Simplify<
     OptionalToUndefined<Pick<BaseProject, O | BasicKeys>>
 >
 
-// we are in build/src/ProjectService.js and we want build/db.sqlite
-const DEFAULT_DB_LOCATION = join(__dirname, '../db.sqlite')
+// we are in build/ProjectService.js and we want build/db.sqlite
+const DEFAULT_DB_LOCATION = join(__dirname, 'db.sqlite')
 
 export class ProjectService {
   db: ProjectDatabase
