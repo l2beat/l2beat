@@ -21,6 +21,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
+import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatExecutionDelay } from '../common/formatDelays'
 import { getStage } from '../common/stages/getStage'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -30,7 +31,6 @@ import type {
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
-import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   Badge,
   ChainConfig,
