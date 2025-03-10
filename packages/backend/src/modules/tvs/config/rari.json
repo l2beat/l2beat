@@ -134,23 +134,6 @@
       "id": "rari-USDC.e",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
-      "name": "Bridged USDC (Stargate)",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
-        "chain": "rari",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1716939237,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "rari-USDC.e-duplicate",
-      "priceId": "usd-coin",
-      "symbol": "USDC.e",
       "name": "USD Coin (Arb1)",
       "amount": {
         "type": "calculation",
@@ -188,9 +171,27 @@
     },
     {
       "mode": "auto",
-      "id": "rari-USDT",
+      "id": "rari-USDC.e.rari",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e.rari",
+      "name": "Bridged USDC (Stargate)",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+        "chain": "rari",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1716939237,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "displaySymbol": "USDC.e"
+    },
+    {
+      "mode": "auto",
+      "id": "rari-USDT.rari",
       "priceId": "tether",
-      "symbol": "USDT",
+      "symbol": "USDT.rari",
       "name": "Tether USD",
       "amount": {
         "type": "totalSupply",
@@ -201,7 +202,8 @@
       "sinceTimestamp": 1716939239,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "USDT"
     },
     {
       "mode": "auto",
