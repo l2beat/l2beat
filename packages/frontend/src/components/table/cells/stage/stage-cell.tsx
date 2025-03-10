@@ -36,16 +36,14 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
         {hasNotice && (
           <CircleQuestionMarkIcon
             className={cn(
-              'mt-px size-5 fill-current',
+              '-mt-px size-5 fill-current md:mt-px',
               getStageTextClassname(stageConfig.stage),
             )}
           />
         )}
         {stageConfig.stage !== 'NotApplicable' &&
           stageConfig.stage !== 'UnderReview' &&
-          stageConfig.downgradePending && (
-            <StopwatchIcon className="mt-[3px]" />
-          )}
+          stageConfig.downgradePending && <StopwatchIcon />}
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
