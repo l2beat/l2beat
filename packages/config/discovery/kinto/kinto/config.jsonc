@@ -27,7 +27,9 @@
     "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": "AccessManager",
     "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": "NioGovernor",
     "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": "NioGuardians",
-    "0x87f0eE85bF3198654900a422832157abBba30828": "BeaconKintoWallet"
+    "0x87f0eE85bF3198654900a422832157abBba30828": "BeaconKintoWallet",
+
+    "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e": "KintoSecurityCouncil_L2Alias"
   },
   "maxAddresses": 200, // bumped from default 100 mainly due to the sanctioned to the eoas
   "types": {
@@ -84,7 +86,6 @@
       }
     },
     "AccessManager": {
-      // highly custom/manual event-based discovery here, should be automated
       "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
       "fields": {
         "accessControl": {

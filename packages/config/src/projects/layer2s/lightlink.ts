@@ -15,7 +15,7 @@ import { BADGES } from '../badges'
 const discovery = new ProjectDiscovery('lightlink')
 
 const upgradesLightLink = {
-  upgradableBy: [{ name: 'LightLinkAdmin', delay: 'no' }],
+  upgradableBy: [{ name: 'LightLinkMultisig2', delay: 'no' }],
 }
 
 const validators = discovery.getContractValue<
@@ -248,10 +248,9 @@ export const lightlink: Layer2 = {
           discovery.getPermissionedAccounts('L1BridgeRegistry', 'multisig'),
           'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
         ),
-        discovery.getPermissionDetails(
-          'LightLinkAdmin',
-          discovery.getPermissionedAccounts('CanonicalStateChain', 'owner'),
-          'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
+        discovery.getMultisigPermission(
+          'LightLinkMultisig2',
+          'Owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
         ),
       ],
     },
