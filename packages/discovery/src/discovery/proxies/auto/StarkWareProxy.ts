@@ -1,4 +1,3 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import {
   assert,
   Bytes,
@@ -7,6 +6,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, type providers, utils } from 'ethers'
+import type { ContractValue } from '../../output/types'
+import type { ProxyDetails } from '../types'
 
 import { type Semver, parseSemver } from '../../../utils/semver'
 import type { IProvider } from '../../provider/IProvider'
@@ -115,10 +116,7 @@ async function getPastProxyUpgrades(
   )
   assert(blocks.every((b) => b !== undefined))
   const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
+    blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
 
   return logs.map((l) => {
@@ -206,10 +204,7 @@ async function getPastDiamondUpgrades(
   )
   assert(blocks.every((b) => b !== undefined))
   const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
+    blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
 
   return await Promise.all(

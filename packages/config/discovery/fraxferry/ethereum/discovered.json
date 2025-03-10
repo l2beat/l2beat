@@ -2,7 +2,7 @@
   "name": "fraxferry",
   "chain": "ethereum",
   "blockNumber": 21880952,
-  "configHash": "0x722d3089b2a48934da5e00b2de20a2ae0fbcfe2fa938aaa1c86fa007092a1779",
+  "configHash": "0x443ace16c831c10fa48d2c9c24d6587c2cd9ce926819da1825573b84762285ef",
   "contracts": [
     {
       "name": "sfrxETH Ferry Bridge (Optimism)",
@@ -12,6 +12,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673221499,
+      "sinceBlock": 16365436,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -40,6 +41,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668366635,
+      "sinceBlock": 15963106,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -66,6 +68,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1682188295,
+      "sinceBlock": 17103686,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -94,6 +97,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674288023,
+      "sinceBlock": 16453840,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -122,6 +126,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668385391,
+      "sinceBlock": 15964667,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -148,6 +153,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1683145451,
+      "sinceBlock": 17182542,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -176,6 +182,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673218139,
+      "sinceBlock": 16365158,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -204,6 +211,7 @@
         "0x25f69689b4f19737540bcc34f5b90ee060dc982de2506fa40bc7f93469782a4c"
       ],
       "sinceTimestamp": 1699757687,
+      "sinceBlock": 18552986,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -232,6 +240,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1682187491,
+      "sinceBlock": 17103619,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -260,6 +269,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1682188655,
+      "sinceBlock": 17103716,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -288,6 +298,7 @@
       ],
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708807463,
+      "sinceBlock": 19299909,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -319,6 +330,7 @@
         "0x88288c617550b61f425cdad7bc8fbd84ddd53512a79ba1078759c172fef9869c"
       ],
       "sinceTimestamp": 1672248239,
+      "sinceBlock": 16284725,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -345,6 +357,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674326603,
+      "sinceBlock": 16457044,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -373,6 +386,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673221403,
+      "sinceBlock": 16365428,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -401,6 +415,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1682187419,
+      "sinceBlock": 17103613,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -429,6 +444,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680647663,
+      "sinceBlock": 16978490,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -457,6 +473,7 @@
         "0x88288c617550b61f425cdad7bc8fbd84ddd53512a79ba1078759c172fef9869c"
       ],
       "sinceTimestamp": 1672248107,
+      "sinceBlock": 16284714,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -483,6 +500,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668366803,
+      "sinceBlock": 15963120,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -509,6 +527,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680647447,
+      "sinceBlock": 16978474,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -537,6 +556,7 @@
       ],
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806863,
+      "sinceBlock": 19299859,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -568,6 +588,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674284027,
+      "sinceBlock": 16453509,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -596,6 +617,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673214563,
+      "sinceBlock": 16364862,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -624,6 +646,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1677016667,
+      "sinceBlock": 16679694,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -652,6 +675,7 @@
         "0x25f69689b4f19737540bcc34f5b90ee060dc982de2506fa40bc7f93469782a4c"
       ],
       "sinceTimestamp": 1699758131,
+      "sinceBlock": 18553022,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -680,6 +704,7 @@
       ],
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708807391,
+      "sinceBlock": 19299903,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -711,6 +736,7 @@
       ],
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806563,
+      "sinceBlock": 19299834,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -743,6 +769,7 @@
         "0x25f69689b4f19737540bcc34f5b90ee060dc982de2506fa40bc7f93469782a4c"
       ],
       "sinceTimestamp": 1699758371,
+      "sinceBlock": 18553042,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -771,6 +798,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673215727,
+      "sinceBlock": 16364959,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -799,6 +827,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674326975,
+      "sinceBlock": 16457075,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -830,6 +859,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1649111477,
+      "sinceBlock": 14522206,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -858,6 +888,7 @@
         "0xa41cfaa41b91276ffca29912369bb3b9cb237551a7e6e18d061a7adb07dcb6cc"
       ],
       "sinceTimestamp": 1667947691,
+      "sinceBlock": 15928395,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -884,6 +915,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668365735,
+      "sinceBlock": 15963031,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -910,6 +942,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680647183,
+      "sinceBlock": 16978452,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -938,6 +971,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673214815,
+      "sinceBlock": 16364883,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -966,6 +1000,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680744995,
+      "sinceBlock": 16986425,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -994,6 +1029,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673220779,
+      "sinceBlock": 16365376,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1022,6 +1058,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1683145523,
+      "sinceBlock": 17182548,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1050,6 +1087,7 @@
       ],
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806983,
+      "sinceBlock": 19299869,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1081,6 +1119,7 @@
         "0x25f69689b4f19737540bcc34f5b90ee060dc982de2506fa40bc7f93469782a4c"
       ],
       "sinceTimestamp": 1699758215,
+      "sinceBlock": 18553029,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1109,6 +1148,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673220671,
+      "sinceBlock": 16365367,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1137,6 +1177,7 @@
       ],
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806923,
+      "sinceBlock": 19299864,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1168,6 +1209,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674285011,
+      "sinceBlock": 16453591,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1196,6 +1238,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674287015,
+      "sinceBlock": 16453757,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1224,6 +1267,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1682188439,
+      "sinceBlock": 17103698,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1252,6 +1296,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668366047,
+      "sinceBlock": 15963057,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1278,6 +1323,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674492683,
+      "sinceBlock": 16470815,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1309,6 +1355,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1629667690,
+      "sinceBlock": 13077564,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1337,6 +1384,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674492923,
+      "sinceBlock": 16470835,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1365,6 +1413,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680647759,
+      "sinceBlock": 16978498,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1393,6 +1442,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680647327,
+      "sinceBlock": 16978464,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1421,6 +1471,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1683145379,
+      "sinceBlock": 17182536,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1449,6 +1500,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673218535,
+      "sinceBlock": 16365191,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1477,6 +1529,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680744803,
+      "sinceBlock": 16986411,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1505,6 +1558,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1674325847,
+      "sinceBlock": 16456981,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1533,6 +1587,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1677016787,
+      "sinceBlock": 16679704,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1561,6 +1616,7 @@
         "0x9d19911d31a35d89879ca19eb4d20239373dc1d8f9205d89dab03b1de161bc4b"
       ],
       "sinceTimestamp": 1673215631,
+      "sinceBlock": 16364951,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1589,6 +1645,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668366179,
+      "sinceBlock": 15963068,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1615,6 +1672,7 @@
         "0x25f69689b4f19737540bcc34f5b90ee060dc982de2506fa40bc7f93469782a4c"
       ],
       "sinceTimestamp": 1699758047,
+      "sinceBlock": 18553015,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1643,6 +1701,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1677017063,
+      "sinceBlock": 16679727,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1671,6 +1730,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668366455,
+      "sinceBlock": 15963091,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1697,6 +1757,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1683145595,
+      "sinceBlock": 17182554,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1725,6 +1786,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1680647555,
+      "sinceBlock": 16978483,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1753,6 +1815,7 @@
         "0xdc63c2b7e66b801babcccf079126ff7839a3672d7e0e17081498dc9d38991771"
       ],
       "sinceTimestamp": 1668366335,
+      "sinceBlock": 15963081,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1779,6 +1842,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1682188367,
+      "sinceBlock": 17103692,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1807,6 +1871,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1677016967,
+      "sinceBlock": 16679719,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -1835,6 +1900,7 @@
         "0x0259a520ef15ca8185f69a953fd4e39704846d6c263a8efb41fedf06ab4049f2"
       ],
       "sinceTimestamp": 1676510795,
+      "sinceBlock": 16638006,
       "values": {
         "$immutable": true,
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",

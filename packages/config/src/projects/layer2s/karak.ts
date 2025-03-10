@@ -1,14 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('karak')
 
 export const karak: Layer2 = opStackL2({
-  addedAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
+  addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Caldera],
   discovery,
@@ -42,7 +42,7 @@ export const karak: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
+  genesisTimestamp: UnixTime(1703226695), //First sequencer transaction
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',

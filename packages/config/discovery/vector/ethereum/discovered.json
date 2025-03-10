@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 21635855,
-  "configHash": "0x7da087b51553bf4afd30468bd2edebda236af2ea0586baee7aa7b138458376b3",
+  "configHash": "0xa50428079d31f9b9e99728464008b7edb0ac4d73dd96033f31cd3ab3562c0e80",
   "contracts": [
     {
       "name": "Vector",
@@ -35,6 +35,7 @@
       ],
       "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId"],
       "sinceTimestamp": 1720128227,
+      "sinceBlock": 20235805,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D",
@@ -112,6 +113,7 @@
         }
       ],
       "sinceTimestamp": 1720099223,
+      "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
         "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
@@ -166,6 +168,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1714943123,
+      "sinceBlock": 19806461,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -206,6 +209,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204135,
+      "sinceBlock": 20573748,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -231,6 +235,7 @@
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
       "sinceTimestamp": 1729727135,
+      "sinceBlock": 21031662,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
@@ -251,6 +256,7 @@
         }
       ],
       "sinceTimestamp": 1735949699,
+      "sinceBlock": 21547470,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",

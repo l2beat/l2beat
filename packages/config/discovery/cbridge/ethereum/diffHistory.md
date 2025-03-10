@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x4eb77e75dfd312774d578602f09f49758e7f59a2
+
+# Diff at Tue, 04 Mar 2025 10:39:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21628437
+- current block number: 21628437
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628437 (main branch discovery), not current.
+
+```diff
+    contract PeggedTokenBridge (0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB) {
+    +++ description: None
+      sinceBlock:
++        13810512
+    }
+```
+
+```diff
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C) {
+    +++ description: None
+      sinceBlock:
++        14546010
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      sinceBlock:
++        14545993
+    }
+```
+
+```diff
+    contract PeggedTokenBridgeV2 (0x52E4f244f380f8fA51816c8a10A63105dd4De084) {
+    +++ description: None
+      sinceBlock:
++        14627208
+    }
+```
+
+```diff
+    contract Liquidity Network (0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820) {
+    +++ description: None
+      sinceBlock:
++        13719989
+    }
+```
+
+```diff
+    contract MessageBusOwner (0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175) {
+    +++ description: None
+      sinceBlock:
++        16651238
+    }
+```
+
+```diff
+    contract OriginalTokenVaultV2 (0x7510792A3B1969F9307F3845CE88e39578f2bAE1) {
+    +++ description: None
+      sinceBlock:
++        14710499
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      sinceBlock:
++        17789313
+    }
+```
+
+```diff
+    contract TransferAgent (0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b) {
+    +++ description: None
+      sinceBlock:
++        15783099
+    }
+```
+
+```diff
+    contract OriginalTokenVault (0xB37D31b2A74029B5951a2778F959282E2D518595) {
+    +++ description: None
+      sinceBlock:
++        13808358
+    }
+```
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      sinceBlock:
++        17860848
+    }
+```
+
+```diff
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575) {
+    +++ description: None
+      sinceBlock:
++        15075143
+    }
+```
+
 Generated with discovered.json: 0x3cf7a512439af864d7771fd0bdeef5e6f30440cc
 
 # Diff at Mon, 20 Jan 2025 11:09:21 GMT:

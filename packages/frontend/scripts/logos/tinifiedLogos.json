@@ -38,7 +38,7 @@
   "fuelv1.png": "bcb4d770f600c602c2c9b7d905027fd3",
   "gluon.png": "8ce59ec89cf935594d8cb372ad9cc600",
   "gravity.png": "213c6b6cccf4d2fd6b9a62a44f657946",
-  "grvt.png": "df387339c6f8b2be097af1abcc46eb9e",
+  "grvt.png": "89056352d62069835f0d38ae1da9b9ab",
   "harmony.png": "27119920934a11db579e7e6f94b539e4",
   "hermez.png": "1238ed6912bb6f6396bddd8036a1c841",
   "hop.png": "c9c2e88906004de3030beead8b9f5fb3",
@@ -186,6 +186,7 @@
   "muster.png": "9da36ab27501b0b4bd38d19ae88fe089",
   "l3x.png": "4ec67b303df44a5a0cc6edea2a909661",
   "payy.png": "e4fce4c25bf9d63b8b5d818182672b1d",
+  "penchain.png": "f2fec2c743eb6f7d0189f98a58cdada2",
   "fhenix.png": "20ffd3aad03a4a0c7b60fb4658bc38f4",
   "celo.png": "cb1348a209121107260b3661d1c51908",
   "transporter.png": "adef25aac7f514d81a497d3e0a34139a",
@@ -320,6 +321,7 @@
   "bitlazer.png": "84d55155218fe3821b407db6f09dbc2e",
   "arenaz.png": "98dba265497930f1426f3b770b88313c",
   "optimism.png": "4a6ad22b2b9724d793cca478a3016e9c",
+  "vessel.png": "3d6111f80b1e99158886b1db208c81af",
   "evedex.png": "868de4629c5570555c6fc630b57738f1",
   "tusima.png": "269e4de0d6ca305a0474e63102a6dc13",
   "shibarium.png": "f72a08f348df1e9923d5fd81eac58fcb",
@@ -354,5 +356,8 @@
   "union.png": "9519a26d04a3df119dbc9f1792f5dd5a",
   "wonderfi.png": "7603a325ef05b5f6d4d2884c0814770d",
   "genlayer.png": "b5154791191cdfeabdf9f02985440db4",
-  "gameswift.png": "5ab1800619a0da02570e1e8b1e2a5a5d"
+  "gameswift.png": "5ab1800619a0da02570e1e8b1e2a5a5d",
+  "nums.png": "f41890799f55de0c8adcc0fa67c33e9d",
+  "gasp.png": "9c2d303ca18a7b10070e8dbe299764c0",
+  "train.png": "abec536a4d7311a186887e258b3bae85"
 }

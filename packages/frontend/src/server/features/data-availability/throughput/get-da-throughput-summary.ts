@@ -17,8 +17,8 @@ export type ThroughputSummaryData = Awaited<
 const getCachedDaThroughputSummaryData = cache(
   async () => {
     const db = getDb()
-    const to = UnixTime.now().toStartOf('day').add(-1, 'days')
-    const from = to.add(-7, 'days')
+    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
+    const from = to - 7 * UnixTime.DAY
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
       ['ethereum', 'celestia', 'avail'],
       [from, to],
@@ -31,14 +31,14 @@ const getCachedDaThroughputSummaryData = cache(
 
     return {
       latest: {
-        ethereum: grouped[maxTimestamp.toNumber()]?.ethereum ?? 0,
-        celestia: grouped[maxTimestamp.toNumber()]?.celestia ?? 0,
-        avail: grouped[maxTimestamp.toNumber()]?.avail ?? 0,
+        ethereum: grouped[maxTimestamp]?.ethereum ?? 0,
+        celestia: grouped[maxTimestamp]?.celestia ?? 0,
+        avail: grouped[maxTimestamp]?.avail ?? 0,
       },
       data7dAgo: {
-        ethereum: grouped[minTimestamp.toNumber()]?.ethereum ?? 0,
-        celestia: grouped[minTimestamp.toNumber()]?.celestia ?? 0,
-        avail: grouped[minTimestamp.toNumber()]?.avail ?? 0,
+        ethereum: grouped[minTimestamp]?.ethereum ?? 0,
+        celestia: grouped[minTimestamp]?.celestia ?? 0,
+        avail: grouped[minTimestamp]?.avail ?? 0,
       },
     }
   },

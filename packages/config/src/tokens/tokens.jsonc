@@ -5332,6 +5332,13 @@
   ],
   "mint": [
     {
+      "symbol": "MINT",
+      "address": "0x8511138208529fe1b9a37b863c7EEE3Fe234b7Ab",
+      "coingeckoId": "mint-blockchain",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "MST",
       "address": "0x9f7bd1ce3412960524e86183b8f005271c09a5e0",
       "source": "native",
@@ -5940,6 +5947,67 @@
     }
   ],
   "soneium": [
+    {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "coingeckoId": "stakestone-ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pufETH",
+      "address": "0x6c460b2c6D6719562D5dA43E5152B375e79B9A8B",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vASTR",
+      "address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
+      "source": "external",
+      "coingeckoId": "bifrost-voucher-astr",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "PIPO",
+      "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
+      "source": "external",
+      "coingeckoId": "pipo-2",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "WBTC",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",

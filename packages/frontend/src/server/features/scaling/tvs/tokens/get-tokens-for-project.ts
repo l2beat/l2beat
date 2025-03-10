@@ -1,4 +1,3 @@
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import {
@@ -30,18 +29,18 @@ export type ProjectToken = {
 type ProjectTokenSource = 'native' | 'canonical' | 'external'
 
 export async function getTokensForProject(
-  project: Layer2 | Layer3 | Bridge,
+  projectId: ProjectId,
 ): Promise<ProjectTokens> {
   if (env.MOCK) {
-    return toDisplayableTokens(project.id, getMockTokensDataForProject())
+    return toDisplayableTokens(projectId, getMockTokensDataForProject())
   }
-  const cachedTokens = await getTokensDataForProject(project)
-  return toDisplayableTokens(project.id, cachedTokens)
+  const cachedTokens = await getTokensDataForProject(projectId)
+  return toDisplayableTokens(projectId, cachedTokens)
 }
 
-async function getTokensDataForProject({
-  id,
-}: Layer2 | Layer3 | Bridge): Promise<Record<ProjectTokenSource, AssetId[]>> {
+async function getTokensDataForProject(
+  id: ProjectId,
+): Promise<Record<ProjectTokenSource, AssetId[]>> {
   const project = await ps.getProject({
     id,
     select: ['tvlConfig'],
@@ -53,7 +52,8 @@ async function getTokensDataForProject({
     (p) => p.chainConfig,
   )
   const configMapping = getConfigMapping(project, chains)
-  const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
+  const targetTimestamp =
+    UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
   const [priceConfigs, amountConfigs] = await Promise.all([
     getLatestPriceForConfigurations(configMapping.prices, targetTimestamp),

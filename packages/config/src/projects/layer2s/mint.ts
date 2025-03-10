@@ -1,14 +1,14 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('mint')
 
 export const mint: Layer2 = opStackL2({
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
@@ -36,6 +36,7 @@ export const mint: Layer2 = opStackL2({
     name: 'mint',
     chainId: 185,
     explorerUrl: 'https://explorer.mintchain.io',
+    coingeckoPlatform: 'mint',
     multicallContracts: [
       {
         sinceBlock: 19861572,
@@ -56,7 +57,7 @@ export const mint: Layer2 = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   isNodeAvailable: true,
-  genesisTimestamp: new UnixTime(1715608931),
+  genesisTimestamp: UnixTime(1715608931),
   milestones: [
     {
       title: 'Mint Mainnet Launch',

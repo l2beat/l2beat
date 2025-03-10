@@ -16,9 +16,7 @@
     "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": "daiBridge",
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "PolygonZkEvmEscrowsMultisig"
   },
-  "sharedModules": {
-    "woeeeeeeeeeeeeeeeeeeoowwwwwwweeeeee": "shared-polygon-cdk"
-  },
+  "sharedModules": ["shared-polygon-cdk"],
   "overrides": {
     "wstETHBridge": {
       "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",

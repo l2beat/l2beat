@@ -27,7 +27,7 @@ describe(AmountService.name, () => {
   const NATIVE_CODEC_SINCE_BLOCK = 1_111
 
   const blockNumber = NATIVE_CODEC_SINCE_BLOCK + 1
-  const timestamp = new UnixTime(923_234)
+  const timestamp = UnixTime(923_234)
 
   it('calls RPC if multicall does not support native balance', async () => {
     const mockRpc = mockObject<RpcClient>({
@@ -224,7 +224,7 @@ function mockBaseConfig(
     dataSource: 'chain',
     project: ProjectId('project'),
     source: 'canonical' as const,
-    sinceTimestamp: new UnixTime(123),
+    sinceTimestamp: UnixTime(123),
     includeInTotal: true,
     untilTimestamp: undefined,
     decimals: 18,

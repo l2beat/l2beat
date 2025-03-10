@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 21895001,
-  "configHash": "0x49cd863794661652c0eeba13cfa7810a891c6d554bb63df13ad8ae1711fd3753",
+  "configHash": "0xca233e4d9fe1e56fcb12a8a352270b8f3066ee742c3ba30cf956784b43c20c35",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
@@ -56,6 +57,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
+      "sinceBlock": 19968607,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -118,6 +120,7 @@
         }
       ],
       "sinceTimestamp": 1721746031,
+      "sinceBlock": 20369923,
       "values": {
         "$immutable": true,
         "addressManager": "0xcee78437aE9e15cee9c78E63757E0153c0FD7479",
@@ -139,6 +142,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -157,6 +161,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1721746187,
+      "sinceBlock": 20369936,
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
@@ -218,6 +223,7 @@
       ],
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1737735011,
+      "sinceBlock": 21695466,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
@@ -262,6 +268,7 @@
         }
       ],
       "sinceTimestamp": 1721746199,
+      "sinceBlock": 20369937,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -294,6 +301,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
+      "sinceBlock": 16780617,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -330,6 +338,7 @@
         }
       ],
       "sinceTimestamp": 1685377355,
+      "sinceBlock": 17365800,
       "values": {
         "$immutable": true,
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -368,6 +377,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420875,
+      "sinceBlock": 19185554,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -394,6 +404,7 @@
       ],
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1733920139,
+      "sinceBlock": 21379266,
       "values": {
         "$immutable": true,
         "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
@@ -419,6 +430,7 @@
         }
       ],
       "sinceTimestamp": 1721746175,
+      "sinceBlock": 20369935,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
@@ -453,6 +465,7 @@
         }
       ],
       "sinceTimestamp": 1737735023,
+      "sinceBlock": 21695467,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0x581cB5157dcAaA7B5Ea88D28e384dA3A8D46267e",
@@ -478,6 +491,7 @@
       ],
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1739905283,
+      "sinceBlock": 21875214,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
@@ -573,6 +587,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1739905235,
+      "sinceBlock": 21875210,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
@@ -627,6 +642,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
+      "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -695,6 +711,7 @@
         }
       ],
       "sinceTimestamp": 1705954799,
+      "sinceBlock": 19064589,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -755,6 +772,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
+      "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -787,6 +805,7 @@
       ],
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1724975087,
+      "sinceBlock": 20637600,
       "values": {
         "$immutable": true,
         "challengePeriod": 86400,
@@ -866,6 +885,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1719432803,
+      "sinceBlock": 20178171,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -905,6 +925,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
+      "sinceBlock": 19185517,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -948,6 +969,7 @@
         }
       ],
       "sinceTimestamp": 1724111315,
+      "sinceBlock": 20566057,
       "values": {
         "$immutable": true,
         "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -973,6 +995,7 @@
         }
       ],
       "sinceTimestamp": 1721746019,
+      "sinceBlock": 20369922,
       "values": {
         "$immutable": true,
         "owner": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"
@@ -995,6 +1018,7 @@
         }
       ],
       "sinceTimestamp": 1624400033,
+      "sinceBlock": 12686687,
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
@@ -1019,6 +1043,7 @@
         }
       ],
       "sinceTimestamp": 1721746211,
+      "sinceBlock": 20369938,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -1069,6 +1094,7 @@
       ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1721746151,
+      "sinceBlock": 20369933,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
@@ -1152,6 +1178,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1721746163,
+      "sinceBlock": 20369934,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$implementation": "0xF56D96B2535B932656d3c04Ebf51baBff241D886",
@@ -1188,8 +1215,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",

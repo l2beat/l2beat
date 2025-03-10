@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xce9cad82b5b4c036784e70761964d0ce8ba4a0a3
+
+# Diff at Tue, 04 Mar 2025 10:40:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21387773
+- current block number: 21387773
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    contract Liquidity Pool (0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8) {
+    +++ description: None
+      sinceBlock:
++        13033711
+    }
+```
+
+```diff
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F) {
+    +++ description: None
+      sinceBlock:
++        13033711
+    }
+```
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      sinceBlock:
++        13033669
+    }
+```
+
+```diff
+    contract TimelockController (0x647489df0673E17dB3163c47d5233EBB6F5cAc70) {
+    +++ description: None
+      sinceBlock:
++        13105394
+    }
+```
+
+```diff
+    contract L1BridgeZap (0x6571d6be3d8460CF5F7d6711Cd9961860029D85F) {
+    +++ description: None
+      sinceBlock:
++        13674290
+    }
+```
+
+```diff
+    contract Bridge Multisig (0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55) {
+    +++ description: None
+      sinceBlock:
++        13025256
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2) {
+    +++ description: None
+      sinceBlock:
++        13033197
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      sinceBlock:
++        11144602
+    }
+```
+
 Generated with discovered.json: 0xf3dab2c0b2743d08525594d53272dcedb39bbe1c
 
 # Diff at Mon, 20 Jan 2025 11:10:15 GMT:

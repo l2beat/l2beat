@@ -19,7 +19,7 @@ export function toRecord(row: Selectable<Price>): PriceRecord {
 export function toRow(record: PriceRecord): Insertable<Price> {
   return {
     configurationId: record.configId,
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
     priceUsd: record.priceUsd,
   }
 }

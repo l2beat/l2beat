@@ -2,7 +2,7 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 21766747,
-  "configHash": "0xf75e7c417fd0a2c3a7694248fd3b1d63bfcd15f0b1ab20e28c942c878b6f0c41",
+  "configHash": "0xe47c08505f3857f21ada176b2eb744c43deaf2e42866f544804823e68ff236b2",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -34,6 +34,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1735650935,
+      "sinceBlock": 21522690,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
@@ -96,6 +97,7 @@
       ],
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1729157663,
+      "sinceBlock": 20984421,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier_12",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -124,6 +126,7 @@
         }
       ],
       "sinceTimestamp": 1735824851,
+      "sinceBlock": 21537112,
       "values": {
         "$admin": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
         "$implementation": "0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11",
@@ -163,6 +166,7 @@
         }
       ],
       "sinceTimestamp": 1735824839,
+      "sinceBlock": 21537111,
       "values": {
         "$immutable": true,
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC"

@@ -19,7 +19,7 @@ export function ContentWrapper({
   return (
     <Comp
       className={cn(
-        'mx-auto h-full max-w-[1296px] md:px-12',
+        'mx-auto h-full max-w-[1296px] md:px-6',
         !mobileFull && 'px-4',
         className,
       )}

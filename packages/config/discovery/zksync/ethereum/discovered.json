@@ -2,7 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "blockNumber": 21365608,
-  "configHash": "0x728f9b209655ed421db8e6a0d2c33253e8f1e27cd22f23accfeb0a7e26488723",
+  "configHash": "0xe2d9d859db1659d23d63b9d83c17f763cfe6fbf196420dd05836a0312111b020",
   "contracts": [
     {
       "name": "Multisig 1",
@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1612680486,
+      "sinceBlock": 11807778,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -46,6 +47,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1621970023,
+      "sinceBlock": 12505303,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -79,6 +81,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1587354416,
+      "sinceBlock": 9907020,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -114,6 +117,7 @@
       ],
       "ignoreInWatchMode": ["totalTokens"],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
@@ -133,6 +137,7 @@
         "0xbc5215ffaf06b3d4f7facebe48a2d345c8b0cf97c800aa3f8e644d843a86ae03"
       ],
       "sinceTimestamp": 1645178700,
+      "sinceBlock": 14229421,
       "values": {
         "$immutable": true,
         "governance": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
@@ -164,6 +169,7 @@
         }
       ],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$immutable": true,
         "getMaster": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
@@ -195,6 +201,7 @@
         }
       ],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": "0x6e95812C432F293b8045811F4B1758285EBDB206",
@@ -210,6 +217,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1626171128,
+      "sinceBlock": 12818185,
       "values": {
         "$immutable": true,
         "baseURI": "",
@@ -236,6 +244,7 @@
         }
       ],
       "sinceTimestamp": 1592218707,
+      "sinceBlock": 10269890,
       "values": {
         "$admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": [
@@ -290,6 +299,7 @@
         "0x379cacebf61f1aa488b2a43b02fff3f8d7835d9dca8f342a13570553219e6e8c"
       ],
       "sinceTimestamp": 1557156465,
+      "sinceBlock": 7708066,
       "values": { "$immutable": true }
     },
     {
@@ -303,6 +313,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1585581484,
+      "sinceBlock": 9773819,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",

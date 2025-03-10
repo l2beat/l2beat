@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 21944239,
-  "configHash": "0x775a6315d0afe57758a17f707c5116a1f442fee81ffa45c5f62e1afa34df96ec",
+  "configHash": "0x16ae5e8b8386576130c74354832bc666db702fcfee5dc067e3bc9db6fc1fe59f",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720814567,
+      "sinceBlock": 20292687,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -40,6 +41,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721774711,
+      "sinceBlock": 20372302,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -65,6 +67,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720814495,
+      "sinceBlock": 20292681,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -90,6 +93,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720813955,
+      "sinceBlock": 20292637,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -129,6 +133,7 @@
         }
       ],
       "sinceTimestamp": 1722434735,
+      "sinceBlock": 20427018,
       "values": {
         "$immutable": true,
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
@@ -174,6 +179,7 @@
         }
       ],
       "sinceTimestamp": 1717520639,
+      "sinceBlock": 20019828,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0x0029e562c0b54C0b88cB22adF4346DbfEC87400c",
@@ -283,6 +289,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721989115,
+      "sinceBlock": 20390079,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -311,6 +318,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722377435,
+      "sinceBlock": 20422264,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -342,6 +350,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722184895,
+      "sinceBlock": 20406309,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -396,6 +405,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1666872275,
+      "sinceBlock": 15839298,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -429,6 +439,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720814339,
+      "sinceBlock": 20292668,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -454,6 +465,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720814399,
+      "sinceBlock": 20292673,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -479,6 +491,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720814195,
+      "sinceBlock": 20292656,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -504,6 +517,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722412487,
+      "sinceBlock": 20425173,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -541,6 +555,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720814051,
+      "sinceBlock": 20292645,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -564,6 +579,7 @@
       ],
       "description": "Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts.",
       "sinceTimestamp": 1730396975,
+      "sinceBlock": 21087222,
       "values": { "$immutable": true }
     },
     {
@@ -577,6 +593,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721854115,
+      "sinceBlock": 20378889,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -602,6 +619,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721755031,
+      "sinceBlock": 20370671,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -657,6 +675,7 @@
         }
       ],
       "sinceTimestamp": 1723146059,
+      "sinceBlock": 20486023,
       "values": {
         "$immutable": true,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
@@ -695,6 +714,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721748419,
+      "sinceBlock": 20370122,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -724,6 +744,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721951675,
+      "sinceBlock": 20386973,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -757,6 +778,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721772071,
+      "sinceBlock": 20372086,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -786,6 +808,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721665487,
+      "sinceBlock": 20363246,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -822,6 +845,7 @@
         }
       ],
       "sinceTimestamp": 1723146191,
+      "sinceBlock": 20486034,
       "values": {
         "$immutable": true,
         "$members": [
@@ -901,6 +925,7 @@
         }
       ],
       "sinceTimestamp": 1717520627,
+      "sinceBlock": 20019827,
       "values": {
         "$immutable": true,
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
@@ -933,6 +958,7 @@
         }
       ],
       "sinceTimestamp": 1717520663,
+      "sinceBlock": 20019830,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75",
@@ -995,6 +1021,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722034463,
+      "sinceBlock": 20393837,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1025,6 +1052,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720814279,
+      "sinceBlock": 20292663,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1055,6 +1083,7 @@
         }
       ],
       "sinceTimestamp": 1723146191,
+      "sinceBlock": 20486034,
       "values": {
         "$immutable": true,
         "$members": [
@@ -1121,6 +1150,7 @@
         }
       ],
       "sinceTimestamp": 1717521479,
+      "sinceBlock": 20019898,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0xF5A14DCdde1143443f06033200D345c2a2828A99",
@@ -1193,6 +1223,7 @@
         }
       ],
       "sinceTimestamp": 1723146239,
+      "sinceBlock": 20486038,
       "values": {
         "$immutable": true,
         "eip712Domain": {
@@ -1222,6 +1253,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721992847,
+      "sinceBlock": 20390387,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

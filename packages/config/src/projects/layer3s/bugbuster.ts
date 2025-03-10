@@ -12,7 +12,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
 
@@ -22,7 +22,7 @@ export const bugbuster: Layer3 = {
   type: 'layer3',
   id: ProjectId('bugbuster'),
   capability: 'appchain',
-  addedAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  addedAt: UnixTime(1723722996), // 2024-08-15T11:56:36Z
   hostChain: ProjectId('optimism'),
   badges: [
     BADGES.Stack.Cartesi,

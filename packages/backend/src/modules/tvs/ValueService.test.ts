@@ -5,6 +5,8 @@ import { ValueService } from './ValueService'
 import { createAmountConfig } from './mapConfig'
 import {
   type BalanceOfEscrowAmountFormula,
+  type CalculationFormula,
+  type ConstAmountFormula,
   type Token,
   TokenId,
   type TokenValue,
@@ -15,7 +17,7 @@ import {
 describe(ValueService.name, () => {
   describe(ValueService.prototype.calculate.name, () => {
     it('should calculate TVS - simple scenario', async () => {
-      const ticker = 'ABCD'
+      const priceId = 'price-ABCD'
 
       const amountFormula = {
         type: 'totalSupply',
@@ -30,8 +32,8 @@ describe(ValueService.name, () => {
         projectId: ProjectId('project'),
         tokens: [
           mockObject<Token>({
-            id: TokenId('tokeId'),
-            ticker,
+            id: TokenId('tokenId'),
+            priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForTotal: undefined,
@@ -47,7 +49,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(10000)
           .resolvesToOnce(10000),
         getPrice: mockFn()
-          .given(ticker, mockTimestamp)
+          .given(priceId, mockTimestamp)
           .resolvesToOnce(200)
           .resolvesToOnce(200),
       })
@@ -59,12 +61,12 @@ describe(ValueService.name, () => {
       expect(result).toEqual(
         new Map<number, TokenValue[]>([
           [
-            mockTimestamp.toNumber(),
+            mockTimestamp,
             [
               {
+                tokenConfig: tvsConfig.tokens[0],
                 amount: 10000,
                 projectId: ProjectId('project'),
-                tokenId: 'tokeId',
                 value: 2000000,
                 valueForProject: 2000000,
                 valueForTotal: 2000000,
@@ -122,7 +124,7 @@ describe(ValueService.name, () => {
           // WBTC with amount formula as totalSupply on L2
           mockObject<Token>({
             id: TokenId('WBTC'),
-            ticker: 'WBTC',
+            priceId: 'price-WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
             valueForTotal: undefined,
@@ -132,7 +134,7 @@ describe(ValueService.name, () => {
           // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
           mockObject<Token>({
             id: TokenId('solvBTC'),
-            ticker: 'solvBTC',
+            priceId: 'price-solvBTC',
             amount: solvBTCAmountFormula,
             valueForProject: {
               type: 'calculation',
@@ -141,12 +143,12 @@ describe(ValueService.name, () => {
                 {
                   type: 'value',
                   amount: solvBTCAmountFormula,
-                  ticker: 'solvBTC',
+                  priceId: 'price-solvBTC',
                 },
                 {
                   type: 'value',
                   amount: wBTCBalanceOfEscrowFormula,
-                  ticker: 'WBTC',
+                  priceId: 'price-WBTC',
                 },
               ],
             },
@@ -155,9 +157,9 @@ describe(ValueService.name, () => {
         ],
       })
 
-      const wBTCPriceConfigId = 'WBTC'
+      const wBTCPriceConfigId = 'price-WBTC'
 
-      const solvBTCPriceConfigId = 'solvBTC'
+      const solvBTCPriceConfigId = 'price-solvBTC'
 
       const mockTimestamp = UnixTime.now()
 
@@ -193,23 +195,96 @@ describe(ValueService.name, () => {
       expect(result).toEqual(
         new Map<number, TokenValue[]>([
           [
-            mockTimestamp.toNumber(),
+            mockTimestamp,
             [
               {
-                amount: 10000,
+                tokenConfig: tvsConfig.tokens[0],
                 projectId: ProjectId('bob'),
-                tokenId: 'WBTC',
+                amount: 10000,
                 value: 2000000,
                 valueForProject: 2000000,
                 valueForTotal: 2000000,
               },
               {
-                amount: 8000,
+                tokenConfig: tvsConfig.tokens[1],
                 projectId: ProjectId('bob'),
-                tokenId: 'solvBTC',
+                amount: 8000,
                 value: 1600000,
                 valueForProject: 600000,
                 valueForTotal: 600000,
+              },
+            ],
+          ],
+        ]),
+      )
+    })
+
+    it('should calculate TVS - amount as minimum of const and dynamic value', async () => {
+      const priceId = 'price-ABCD'
+
+      const amountFormula = {
+        type: 'calculation',
+        operator: 'min',
+        arguments: [
+          {
+            type: 'const',
+            value: 20000,
+          } as ConstAmountFormula,
+          {
+            type: 'totalSupply',
+            address: EthereumAddress.random(),
+            chain: 'chain',
+            decimals: 18,
+          } as TotalSupplyAmountFormula,
+        ],
+      } as CalculationFormula
+
+      const amountConfigId = createAmountConfig(
+        amountFormula.arguments[1] as TotalSupplyAmountFormula,
+      ).id
+
+      const tvsConfig = mockObject<TvsConfig>({
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<Token>({
+            id: TokenId('tokenId'),
+            priceId,
+            amount: amountFormula,
+            valueForProject: undefined,
+            valueForTotal: undefined,
+          }),
+        ],
+      })
+
+      const mockTimestamp = UnixTime.now()
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          .given(amountConfigId, mockTimestamp)
+          .resolvesToOnce(10000)
+          .resolvesToOnce(10000),
+        getPrice: mockFn()
+          .given(priceId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
+      })
+
+      const valueService = new ValueService(mockDataStorage)
+
+      const result = await valueService.calculate(tvsConfig, [mockTimestamp])
+
+      expect(result).toEqual(
+        new Map<number, TokenValue[]>([
+          [
+            mockTimestamp,
+            [
+              {
+                tokenConfig: tvsConfig.tokens[0],
+                amount: 10000,
+                projectId: ProjectId('project'),
+                value: 2000000,
+                valueForProject: 2000000,
+                valueForTotal: 2000000,
               },
             ],
           ],

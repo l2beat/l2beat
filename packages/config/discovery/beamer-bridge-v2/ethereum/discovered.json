@@ -2,7 +2,7 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0x4972e58bb76a9faddea6645de4650cbcef8e1e26f5002b91ce3dd2e5d40af874",
+  "configHash": "0xdc450107df85d1383cb2e7daa3e594257e8b88fe89838b40d80a6c4a7366119d",
   "contracts": [
     {
       "name": "EthereumL1Messenger",
@@ -11,6 +11,7 @@
         "0x53a70d11cd7796a36186bc6faf5761365984bd862be2a0a8e30f96d0510e40bc"
       ],
       "sinceTimestamp": 1680258323,
+      "sinceBlock": 16946577,
       "values": {
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
@@ -23,6 +24,7 @@
         "0x8ce69cb7eef1745342d1a5730155558e6a15cf3530e4d28816fb4d7c7301cea9"
       ],
       "sinceTimestamp": 1680258335,
+      "sinceBlock": 16946578,
       "values": {
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
@@ -36,6 +38,7 @@
         "0x4b9b7280455da961659b45ac59c98334d9cef746991718d2ec48b8e9a90a69d3"
       ],
       "sinceTimestamp": 1680258563,
+      "sinceBlock": 16946597,
       "values": {
         "$immutable": true,
         "nativeMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -49,6 +52,7 @@
         "0x95eb429107814a5f14a897acd61975d017790ae60ad9314ae5e35524a3ec1a5c"
       ],
       "sinceTimestamp": 1680258503,
+      "sinceBlock": 16946592,
       "values": {
         "$immutable": true,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -64,6 +68,7 @@
       ],
       "ignoreInWatchMode": ["chains", "currentNonce"],
       "sinceTimestamp": 1680258347,
+      "sinceBlock": 16946579,
       "values": {
         "$immutable": true,
         "chains": {
@@ -116,6 +121,7 @@
         "0x6f0996aaa83416e4ef529a91847760e8b44f88c827adfeb579723ed0b708cbf3"
       ],
       "sinceTimestamp": 1680258311,
+      "sinceBlock": 16946576,
       "values": {
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
@@ -128,6 +134,7 @@
         "0xb8bd718248dbf8a521e10a055b52eb5ddcf6ddedf62a4259dbdf50574289ea5b"
       ],
       "sinceTimestamp": 1680258395,
+      "sinceBlock": 16946583,
       "values": {
         "$immutable": true,
         "l1Resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD",

@@ -2,7 +2,7 @@
   "name": "xterio",
   "chain": "ethereum",
   "blockNumber": 21235438,
-  "configHash": "0x07c4d9909cac24ba01ab79a37854a6eda6a1fc72dd629fd44bfa24a8e76882b7",
+  "configHash": "0x91653ba5f1158b7d3b85f7b82d5a267cf5b3c9368b3a415aee775d85af5f1743",
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
@@ -28,6 +28,7 @@
         }
       ],
       "sinceTimestamp": 1716540311,
+      "sinceBlock": 19938634,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x36b9F31874b8790d4caf341168A95FE165bA3C91",
@@ -69,6 +70,7 @@
         }
       ],
       "sinceTimestamp": 1716540431,
+      "sinceBlock": 19938644,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x53699fbA16599c1425D2637B839bA59c121a2e6a",
@@ -109,6 +111,7 @@
         }
       ],
       "sinceTimestamp": 1716540383,
+      "sinceBlock": 19938640,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0xC2AbCf1dDADA750936a168334fD14D66fCa931e0",
@@ -143,6 +146,7 @@
         }
       ],
       "sinceTimestamp": 1716540419,
+      "sinceBlock": 19938643,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x78Bd7b48E74669Dd6709C111200c6B862505Fc4A",
@@ -193,6 +197,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1716540455,
+      "sinceBlock": 19938646,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x48Ef83Cf812f291EDB00C2D48440Ee90cD12be1a",
@@ -263,6 +268,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1716540371,
+      "sinceBlock": 19938639,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x42557f7920a257C7be82C2dfafcEd7aC1CCDb43F",
@@ -288,8 +294,8 @@
         "l2OutputOracle": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -335,6 +341,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1716540407,
+      "sinceBlock": 19938642,
       "values": {
         "$immutable": false,
         "$implementation": "0x5eAAeabB78C28EF184Bb0cF9B0af6D2DA232679a",
@@ -415,6 +422,7 @@
         }
       ],
       "sinceTimestamp": 1716540191,
+      "sinceBlock": 19938624,
       "values": {
         "$immutable": true,
         "addressManager": "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a",
@@ -446,6 +454,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1716540359,
+      "sinceBlock": 19938638,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0xb6a5DCc244EfAbE3194cf5e5590a463f44eD5784",
@@ -492,6 +501,7 @@
         }
       ],
       "sinceTimestamp": 1716540179,
+      "sinceBlock": 19938623,
       "values": {
         "$immutable": true,
         "owner": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
@@ -520,6 +530,7 @@
         }
       ],
       "sinceTimestamp": 1716540227,
+      "sinceBlock": 19938627,
       "values": {
         "$admin": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
         "$implementation": "0x17bcBF2A2CF8156cf4603f8aFAAB27Ec4e998888",
@@ -605,6 +616,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716540167,
+      "sinceBlock": 19938622,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

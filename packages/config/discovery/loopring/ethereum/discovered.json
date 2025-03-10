@@ -1,8 +1,8 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "blockNumber": 21543795,
-  "configHash": "0x6044d9583cb8b81e947220994a965b5fc143feb9567a31eeaeb391781e696ac7",
+  "blockNumber": 21973864,
+  "configHash": "0xdee244cac6cf3252f7be1be1c68b027929bf8fa91e7c9ee9542a16ac6038ed15",
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -27,6 +27,7 @@
         "getConstants"
       ],
       "sinceTimestamp": 1603950102,
+      "sinceBlock": 11149814,
       "values": {
         "$admin": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "$immutable": false,
@@ -72,7 +73,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 57336,
+        "getBlockHeight": 58575,
         "getConstants": {
           "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           "MAX_OPEN_FORCED_REQUESTS": 4096,
@@ -89,10 +90,10 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x083956b5db7484d10f75a8968c9cbdd32b8d7c41352b62b529c62b5fa77a3569",
+        "getMerkleRoot": "0x013675e77b7648db1569de2cc000c47fdcecc82785044efbc3960b512eea05e5",
         "getNumAvailableForcedSlots": 4096,
         "getProtocolFeeValues": {
-          "syncedAt": 1735564763,
+          "syncedAt": 1741027571,
           "takerFeeBips": 0,
           "makerFeeBips": 0,
           "previousTakerFeeBips": 0,
@@ -116,6 +117,7 @@
         "0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"
       ],
       "sinceTimestamp": 1616396742,
+      "sinceBlock": 12087157,
       "values": {
         "$immutable": true,
         "blockSubmitters": [
@@ -146,6 +148,7 @@
         "0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"
       ],
       "sinceTimestamp": 1603946693,
+      "sinceBlock": 11149547,
       "values": {
         "$immutable": true,
         "agents": [
@@ -299,6 +302,7 @@
         "0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"
       ],
       "sinceTimestamp": 1583852946,
+      "sinceBlock": 9644449,
       "values": {
         "$immutable": true,
         "DAO_PERDENTAGE": 20,
@@ -329,6 +333,7 @@
       ],
       "description": "Auxiliary contract able to force withdrawals from L1 on behalf of users.",
       "sinceTimestamp": 1615357743,
+      "sinceBlock": 12009173,
       "values": {
         "$immutable": true,
         "managers": [
@@ -350,6 +355,7 @@
         "0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"
       ],
       "sinceTimestamp": 1603946469,
+      "sinceBlock": 11149533,
       "values": {
         "$immutable": true,
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
@@ -363,38 +369,12 @@
         "0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"
       ],
       "sinceTimestamp": 1603949642,
+      "sinceBlock": 11149779,
       "values": {
         "$immutable": true,
         "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
-      "name": "Safe",
-      "address": "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1732702979,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2",
-          "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0x4d1471e323401d347b11627cf824dfcf21c5307d1377cffaec145c873dc2550d",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 22,
-        "VERSION": "1.4.1"
       }
     },
     {
@@ -404,6 +384,7 @@
         "0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"
       ],
       "sinceTimestamp": 1554948637,
+      "sinceBlock": 7544036,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -430,12 +411,13 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1606289169,
+      "sinceBlock": 11326208,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
           "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98",
-          "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
           "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
           "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
           "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
@@ -446,7 +428,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 210,
+        "nonce": 216,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -458,6 +440,7 @@
         "0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"
       ],
       "sinceTimestamp": 1603955371,
+      "sinceBlock": 11150215,
       "values": {
         "$immutable": true,
         "blockVerifierAddress": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
@@ -481,6 +464,7 @@
         "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
       ],
       "sinceTimestamp": 1603946697,
+      "sinceBlock": 11149548,
       "values": { "$immutable": true }
     },
     {
@@ -491,6 +475,7 @@
       ],
       "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"],
       "sinceTimestamp": 1574241665,
+      "sinceBlock": 8967548,
       "values": {
         "$immutable": true,
         "getTotalStaking": "479473040632219091170868",
@@ -511,12 +496,12 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438" },
     { "address": "0x1F28F10176F89F4E9985873B84d14e75751BB3D1" },
     { "address": "0x212e75BF264C4FB3133fA5ef6f47A34367020A1A" },
     { "address": "0x238b649E62a0C383b54060b1625516b489183843" },
     { "address": "0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46" },
     { "address": "0x2Fc617E933a52713247CE25730f6695920B3befe" },
-    { "address": "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2" },
     { "address": "0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2" },
     { "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1" },
     { "address": "0x4374D3d032B3c96785094ec9f384f07077792768" },
@@ -525,7 +510,6 @@
     { "address": "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234" },
     { "address": "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98" },
     { "address": "0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374" },
-    { "address": "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C" },
     { "address": "0x7414eA41bd1844f61e8990b209a1Dc301489baa9" },
     { "address": "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191" },
     { "address": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97" },
@@ -671,54 +655,6 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171": [
       "constructor(address _lrcAddress)",
       "event DAOFunded(uint256 amountDAO, uint256 amountBurn)",
@@ -796,9 +732,6 @@
       "function transfer(address from, address to, address token, uint256 amount) payable",
       "function transferOwnership(address newOwner)",
       "function withdraw(address, address to, address token, uint256 amount, bytes) payable"
-    ],
-    "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": [
-      "constructor(address _singleton)"
     ],
     "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": [
       "function name() view returns (string)",

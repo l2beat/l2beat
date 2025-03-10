@@ -41,7 +41,7 @@ describe(CirculatingSupplyIndexer.name, () => {
       })
 
       const circulatingSupplyService = mockObject<CirculatingSupplyService>({
-        getAdjustedTo: () => new UnixTime(adjustedTo),
+        getAdjustedTo: () => UnixTime(adjustedTo),
         fetchCirculatingSupplies: async () => [
           { ...amount(configuration, 100), amount: 0n }, // this should be filtered out
           amount(configuration, 150), // this should be filtered out
@@ -50,7 +50,7 @@ describe(CirculatingSupplyIndexer.name, () => {
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        shouldTimestampBeSynced: (t: UnixTime) => !(t.toNumber() % 100),
+        shouldTimestampBeSynced: (t: UnixTime) => !(t % 100),
       })
 
       const indexer = new CirculatingSupplyIndexer({
@@ -73,7 +73,7 @@ describe(CirculatingSupplyIndexer.name, () => {
 
       expect(
         circulatingSupplyService.fetchCirculatingSupplies,
-      ).toHaveBeenOnlyCalledWith(new UnixTime(from), new UnixTime(adjustedTo), {
+      ).toHaveBeenOnlyCalledWith(UnixTime(from), UnixTime(adjustedTo), {
         ...configuration,
         id: createAmountId(configuration),
       })
@@ -97,7 +97,7 @@ describe(CirculatingSupplyIndexer.name, () => {
         address: EthereumAddress.random(),
         coingeckoId: CoingeckoId('id'),
         category: 'other',
-        untilTimestamp: new UnixTime(maxHeight),
+        untilTimestamp: UnixTime(maxHeight),
       })
 
       const indexer = new CirculatingSupplyIndexer({
@@ -133,11 +133,11 @@ describe(CirculatingSupplyIndexer.name, () => {
         address: EthereumAddress.random(),
         coingeckoId: CoingeckoId('id'),
         category: 'other',
-        untilTimestamp: new UnixTime(maxHeight),
+        untilTimestamp: UnixTime(maxHeight),
       })
 
       const circulatingSupplyService = mockObject<CirculatingSupplyService>({
-        getAdjustedTo: () => new UnixTime(adjustedTo),
+        getAdjustedTo: () => UnixTime(adjustedTo),
         fetchCirculatingSupplies: async () => [
           amount(configuration, 150), // this should be filtered out
           amount(configuration, 200),
@@ -146,7 +146,7 @@ describe(CirculatingSupplyIndexer.name, () => {
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        shouldTimestampBeSynced: (t: UnixTime) => !(t.toNumber() % 100),
+        shouldTimestampBeSynced: (t: UnixTime) => !(t % 100),
       })
 
       const indexer = new CirculatingSupplyIndexer({
@@ -169,7 +169,7 @@ describe(CirculatingSupplyIndexer.name, () => {
 
       expect(
         circulatingSupplyService.fetchCirculatingSupplies,
-      ).toHaveBeenOnlyCalledWith(new UnixTime(from), new UnixTime(maxHeight), {
+      ).toHaveBeenOnlyCalledWith(UnixTime(from), UnixTime(maxHeight), {
         ...configuration,
         id: createAmountId(configuration),
       })
@@ -215,7 +215,7 @@ describe(CirculatingSupplyIndexer.name, () => {
 
       expect(amountRepository.deleteByConfigAfter).toHaveBeenOnlyCalledWith(
         createAmountId(configuration),
-        new UnixTime(targetHeight),
+        UnixTime(targetHeight),
       )
     })
   })
@@ -227,7 +227,7 @@ function amount(
 ): AmountRecord {
   return {
     configId: createAmountId(config),
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     amount: BigInt(timestamp), // for simplicity it equals timestamp
   }
 }

@@ -1,3 +1,293 @@
+Generated with discovered.json: 0x4246365a36aa1295c7d5b2749285413b95041e14
+
+# Diff at Tue, 04 Mar 2025 10:39:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21665493
+- current block number: 21665493
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21665493 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      sinceBlock:
++        10735475
+    }
+```
+
+```diff
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) {
+    +++ description: None
+      sinceBlock:
++        12189058
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) {
+    +++ description: None
+      sinceBlock:
++        12907032
+    }
+```
+
+```diff
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: None
+      sinceBlock:
++        10167763
+    }
+```
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: None
+      sinceBlock:
++        10167782
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      sinceBlock:
++        11839898
+    }
+```
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      sinceBlock:
++        10167715
+    }
+```
+
+```diff
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b) {
+    +++ description: None
+      sinceBlock:
++        20606009
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: None
+      sinceBlock:
++        10167767
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      sinceBlock:
++        10735445
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) {
+    +++ description: None
+      sinceBlock:
++        15092842
+    }
+```
+
+```diff
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) {
+    +++ description: None
+      sinceBlock:
++        10342574
+    }
+```
+
+```diff
+    contract RootChainInitialImplementation (0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84) {
+    +++ description: None
+      sinceBlock:
++        10167721
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      sinceBlock:
++        10342580
+    }
+```
+
+```diff
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966) {
+    +++ description: None
+      sinceBlock:
++        20606009
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      sinceBlock:
++        12115587
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: None
+      sinceBlock:
++        10167713
+    }
+```
+
+```diff
+    contract ValidatorShare (0x7e94d6cAbb20114b22a088d828772645f68CC67B) {
+    +++ description: None
+      sinceBlock:
++        21078712
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      sinceBlock:
++        10735538
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: None
+      sinceBlock:
++        10167725
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      sinceBlock:
++        10735465
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      sinceBlock:
++        11839404
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      sinceBlock:
++        10735437
+    }
+```
+
+```diff
+    contract MaticWETH (0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8) {
+    +++ description: None
+      sinceBlock:
++        10167098
+    }
+```
+
+```diff
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: None
+      sinceBlock:
++        10342572
+    }
+```
+
+```diff
+    contract MerklePatriciaProof (0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa) {
+    +++ description: None
+      sinceBlock:
++        10735421
+    }
+```
+
+```diff
+    contract ValidatorShareFactory (0xc4FA447A0e77Eff9717b09C057B40570813bb642) {
+    +++ description: None
+      sinceBlock:
++        10342570
+    }
+```
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      sinceBlock:
++        13106903
+    }
+```
+
+```diff
+    contract  (0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861) {
+    +++ description: None
+      sinceBlock:
++        10166989
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      sinceBlock:
++        13125225
+    }
+```
+
+```diff
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) {
+    +++ description: None
+      sinceBlock:
++        10167778
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      sinceBlock:
++        10735454
+    }
+```
+
+```diff
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166) {
+    +++ description: None
+      sinceBlock:
++        12115595
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      sinceBlock:
++        10372536
+    }
+```
+
 Generated with discovered.json: 0xc6a0e8d5d1c63a2b0f06a5de6aeb7b09ed984a07
 
 # Diff at Mon, 20 Jan 2025 11:46:57 GMT:

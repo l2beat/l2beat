@@ -1,3 +1,109 @@
+Generated with discovered.json: 0xf475720afd1836cebc6120ab02f21535ed377dea
+
+# Diff at Tue, 04 Mar 2025 10:40:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21365608
+- current block number: 21365608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21365608 (main branch discovery), not current.
+
+```diff
+    contract Multisig 1 (0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346) {
+    +++ description: None
+      sinceBlock:
++        11807778
+    }
+```
+
+```diff
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      sinceBlock:
++        12505303
+    }
+```
+
+```diff
+    contract Multisig 3 (0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      sinceBlock:
++        9907020
+    }
+```
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      sinceBlock:
++        10269890
+    }
+```
+
+```diff
+    contract TokenGovernance (0x35cc31f63deef017c38d51B038891bAE7d614e86) {
+    +++ description: None
+      sinceBlock:
++        14229421
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      sinceBlock:
++        10269890
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      sinceBlock:
++        10269890
+    }
+```
+
+```diff
+    contract NftFactory (0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D) {
+    +++ description: None
+      sinceBlock:
++        12818185
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      sinceBlock:
++        10269890
+    }
+```
+
+```diff
+    contract Proxy (0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6) {
+    +++ description: None
+      sinceBlock:
++        7708066
+    }
+```
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      sinceBlock:
++        9773819
+    }
+```
+
 Generated with discovered.json: 0x6f25ffc8edca9c5b283f43b6024f52588163f0c2
 
 # Diff at Mon, 20 Jan 2025 11:10:26 GMT:

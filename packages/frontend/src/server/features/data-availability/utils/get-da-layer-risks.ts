@@ -1,9 +1,9 @@
-import type { DaLayer, TableReadyValue } from '@l2beat/config'
+import type { ProjectDaLayer, TableReadyValue } from '@l2beat/config'
 
 export function getDaLayerRisks(
-  daLayer: DaLayer,
+  daLayer: ProjectDaLayer,
   totalValueSecured: number,
-  economicSecurity?: number,
+  economicSecurity: number | undefined,
 ) {
   return {
     economicSecurity: getEconomicSecurity(
@@ -16,7 +16,7 @@ export function getDaLayerRisks(
 }
 
 function getEconomicSecurity(
-  daLayer: DaLayer,
+  daLayer: ProjectDaLayer,
   totalValueSecured: number,
   economicSecurity?: number,
 ): TableReadyValue | undefined {

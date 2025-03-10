@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x782fa52b56254792da338e85b79b22867e6afaac
+
+# Diff at Tue, 04 Mar 2025 10:39:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21372994
+- current block number: 21372994
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21372994 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      sinceBlock:
++        20883069
+    }
+```
+
+```diff
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      sinceBlock:
++        21123201
+    }
+```
+
 Generated with discovered.json: 0x69e9e843273627453fcaf0d110127ab87d88aa8a
 
 # Diff at Tue, 04 Feb 2025 12:31:24 GMT:

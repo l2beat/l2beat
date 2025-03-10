@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0x9d631e0a852b329aa3f91767f14040fec289c62674e521b2b1fbade6d63f0e47",
+  "configHash": "0x2f31b296f00060eb69a60554ceeabd9711554b58b0943f9761bb84e54215fe0d",
   "contracts": [
     {
       "name": "MerkleDistributor",
@@ -30,6 +30,7 @@
         "WAITING_PERIOD"
       ],
       "sinceTimestamp": 1627709502,
+      "sinceBlock": 12931482,
       "values": {
         "$admin": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0",
         "$implementation": "0xFE1d5439625a9524a80F66670733129E80E0C112",
@@ -91,6 +92,7 @@
         "0x4ed0a8fed2fb6b8cc5ecf363781107f0fea73b810fb2a78b6ff0e7565fac2f62"
       ],
       "sinceTimestamp": 1612752384,
+      "sinceBlock": 11813202,
       "values": { "$immutable": true }
     },
     {
@@ -100,6 +102,7 @@
         "0xc9f95b23f16315cabf114838b357854b67aa18bffeb85f3e4763dd0b2ebdac5b"
       ],
       "sinceTimestamp": 1612752351,
+      "sinceBlock": 11813198,
       "values": { "$immutable": true }
     },
     {
@@ -109,6 +112,7 @@
         "0xa671d6ba3e3803dbd31bbc7ade04cc66b5b41ef6553c5efe6b8645e4d2ea6030"
       ],
       "sinceTimestamp": 1612752351,
+      "sinceBlock": 11813198,
       "values": { "$immutable": true, "hasRegisteredFact": true }
     },
     {
@@ -118,6 +122,7 @@
         "0x14247f67293c931189c2f13126a402c94b2afb17f22e034e27562a726393e921"
       ],
       "sinceTimestamp": 1627709848,
+      "sinceBlock": 12931509,
       "values": {
         "$immutable": true,
         "LIQUIDITY_STAKING": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
@@ -133,6 +138,7 @@
         "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
       ],
       "sinceTimestamp": 1612752276,
+      "sinceBlock": 11813192,
       "values": { "$immutable": true }
     },
     {
@@ -142,6 +148,7 @@
         "0x910ee17561c1bd968dbc0547bafcc9e8321d4ee336392525c0956ec59c94b799"
       ],
       "sinceTimestamp": 1612752200,
+      "sinceBlock": 11813182,
       "values": {
         "$immutable": true,
         "getCompiledProgram": [
@@ -379,6 +386,7 @@
         "0xeda6df888e68f267f04ff010db56b1a7b83756e14076d73718df7d33b1e2ae41"
       ],
       "sinceTimestamp": 1612752229,
+      "sinceBlock": 11813186,
       "values": { "$immutable": true }
     },
     {
@@ -394,6 +402,7 @@
         }
       ],
       "sinceTimestamp": 1627708831,
+      "sinceBlock": 12931441,
       "values": {
         "$immutable": true,
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
@@ -408,6 +417,7 @@
       ],
       "ignoreInWatchMode": ["_nextAvailableBridgeId", "totalSupply"],
       "sinceTimestamp": 1694426279,
+      "sinceBlock": 18112365,
       "values": {
         "_nextAvailableBridgeId": 6230,
         "$immutable": true,
@@ -431,6 +441,7 @@
         "0x40ad0c189ae6d45546284ca7cfba8a4147e474ac91828f587c736afe8ef3a668"
       ],
       "sinceTimestamp": 1612752363,
+      "sinceBlock": 11813200,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -457,6 +468,7 @@
         "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
       ],
       "sinceTimestamp": 1612752276,
+      "sinceBlock": 11813192,
       "values": { "$immutable": true }
     },
     {
@@ -499,6 +511,7 @@
         "TOTAL_ALLOCATION"
       ],
       "sinceTimestamp": 1627709656,
+      "sinceBlock": 12931493,
       "values": {
         "$admin": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790",
         "$implementation": "0xBE607a58206180fef691bf1B5aE9670174284388",
@@ -586,6 +599,7 @@
         "0x684921b3b4e6212f66865889daeb916ea5de2487eb8558ef4ef000b6fb159b35"
       ],
       "sinceTimestamp": 1620888418,
+      "sinceBlock": 12424523,
       "values": {
         "$immutable": true,
         "hasRegisteredFact": true,
@@ -608,6 +622,7 @@
         }
       ],
       "sinceTimestamp": 1627708861,
+      "sinceBlock": 12931442,
       "values": {
         "$admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
         "$implementation": "0x8d0051943D4c72aF12D638c6b7253C71929A910A",
@@ -633,6 +648,7 @@
         "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
       ],
       "sinceTimestamp": 1626145373,
+      "sinceBlock": 12816312,
       "values": {
         "$immutable": true,
         "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
@@ -666,6 +682,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
       "sinceTimestamp": 1627709015,
+      "sinceBlock": 12931454,
       "values": {
         "$admin": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
         "$implementation": "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A",
@@ -762,6 +779,7 @@
         }
       ],
       "sinceTimestamp": 1627708955,
+      "sinceBlock": 12931449,
       "values": {
         "$immutable": true,
         "owner": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
@@ -781,6 +799,7 @@
         }
       ],
       "sinceTimestamp": 1627709450,
+      "sinceBlock": 12931480,
       "values": {
         "$immutable": true,
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
@@ -795,6 +814,7 @@
       ],
       "ignoreInWatchMode": ["getProposalsCount"],
       "sinceTimestamp": 1626145334,
+      "sinceBlock": 12816310,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -835,6 +855,7 @@
         "0xfe731822f194cf686e57ab136911f5128f6262c4ecadef68cee6eba0751ca77b"
       ],
       "sinceTimestamp": 1615417556,
+      "sinceBlock": 12013702,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -857,6 +878,7 @@
         "0xca16a90f8e3d769dcf7c193aade241726dd9cca439bdf131740e54b7725ee599"
       ],
       "sinceTimestamp": 1613033682,
+      "sinceBlock": 11834295,
       "values": {
         "$immutable": true,
         "constructorArgs": [
@@ -878,6 +900,7 @@
         "0xa1c6b779016519cd0e36109115853fdb48caef5ca257585e2ff61ca5a6e990c6"
       ],
       "sinceTimestamp": 1626053832,
+      "sinceBlock": 12809555,
       "values": {
         "_mintingRestrictedBefore": 1784041200,
         "_totalSupplySnapshotsCount": 1,
@@ -907,6 +930,7 @@
         "0x3450d9fd6eeaee34343e727534e9aef6f035cc7b19eab0f5690268f9ddd379d6"
       ],
       "sinceTimestamp": 1627709600,
+      "sinceBlock": 12931491,
       "values": {
         "$immutable": true,
         "CHAINLINK_TOKEN": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
@@ -924,6 +948,7 @@
         "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
       ],
       "sinceTimestamp": 1612752231,
+      "sinceBlock": 11813187,
       "values": { "$immutable": true }
     },
     {
@@ -939,6 +964,7 @@
         }
       ],
       "sinceTimestamp": 1627710079,
+      "sinceBlock": 12931528,
       "values": {
         "$immutable": true,
         "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
@@ -969,6 +995,7 @@
         }
       ],
       "sinceTimestamp": 1627709620,
+      "sinceBlock": 12931492,
       "values": {
         "$immutable": true,
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
@@ -983,6 +1010,7 @@
       ],
       "ignoreInWatchMode": ["lastUpdate"],
       "sinceTimestamp": 1627709382,
+      "sinceBlock": 12931477,
       "values": {
         "$immutable": true,
         "dydx": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
@@ -1001,6 +1029,7 @@
         "0xee1844f59c7ff492ee5430d8673a00537a966cb0de1e21ec8c8ff1adf630e0af"
       ],
       "sinceTimestamp": 1694426291,
+      "sinceBlock": 18112366,
       "values": {
         "$immutable": true,
         "DYDX_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
@@ -1015,6 +1044,7 @@
         "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
       ],
       "sinceTimestamp": 1612752276,
+      "sinceBlock": 11813192,
       "values": { "$immutable": true }
     },
     {
@@ -1043,6 +1073,7 @@
       ],
       "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
       "sinceTimestamp": 1613033682,
+      "sinceBlock": 11834295,
       "values": {
         "$admin": [
           "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
@@ -1160,6 +1191,7 @@
         "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
       ],
       "sinceTimestamp": 1626145414,
+      "sinceBlock": 12816315,
       "values": {
         "$immutable": true,
         "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
@@ -1183,6 +1215,7 @@
         "0x0b61340aa73762dba13146142086ff4fbd1b253748bc6c19238d628db084e076"
       ],
       "sinceTimestamp": 1615417455,
+      "sinceBlock": 12013692,
       "values": { "$immutable": true }
     },
     {
@@ -1192,6 +1225,7 @@
         "0x2b69eb06923cd9704b99e54ed0d1294ea96da2ec719476b1f93b1d9176b6fe98"
       ],
       "sinceTimestamp": 1626145348,
+      "sinceBlock": 12816311,
       "values": {
         "$immutable": true,
         "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
@@ -1215,23 +1249,56 @@
         "0x1a064332cbf420353ceab684146a9c730873a5617ce302e26a88da05ea14b449"
       ],
       "sinceTimestamp": 1612752200,
+      "sinceBlock": 11813182,
       "values": { "$immutable": true, "hasRegisteredFact": true }
     },
     {
       "name": "FinalizableGpsFactAdapter",
       "address": "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+      "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
+      "displayName": "GpsFactRegistryAdapter",
+      "description": "Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).",
       "sinceTimestamp": 1681722659,
+      "sinceBlock": 17065528,
       "values": {
         "$immutable": true,
         "gpsContract": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": true,
-        "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
-      }
+        "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032",
+        "programHashMapped": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
+            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (Starknet)",
+            "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
+            "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
+            "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
+            "770346231394331402493200980986217737662224545740427952627288191358999988146": "ApeX-USDT",
+            "3174901404014912024702042974619036870715605532092680335571201877913899936957": "StarkEx Spot v4.0 (RhinoFi, Sorare)",
+            "16830627573509542901909952446321116535677491650708854009406762893086223513": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)",
+            "2530337539466159944237001094809327283009177793361359619481044346150483328860": "ApeX-USDC 20250130",
+            "3114724292040200590153042023978438629733352741898912919152162079752811928849": "StarkEx Perp v2.0 ApeX-USDC",
+            "217719352201300445998518619904782191262194843262573339166404641663770051805": "StarkNet (old)",
+            "3003515909324298587247571665454372831319437787162989623104387385306791861180": "StarkNet (old)",
+            "1161178844461337253856226043908368523817098764221830529880464854589141231910": "StarkNet Aggregator (old)",
+            "1921772108187713503530008849184725638117898887391063185252422808224349294626": "StarkNet (old)",
+            "3258367057337572248818716706664617507069572185152472699066582725377748079373": "StarkNet (old)",
+            "407700941260678649793204927710478760533239334662847444187959202896452163393": "StarkNet (old)",
+            "1865367024509426979036104162713508294334262484507712987283009063059134893433": "StarkNet (old)",
+            "54878256403880350656938046611252303365750679698042371543935159963667935317": "StarkNet (old)",
+            "2479841346739966073527450029179698923866252973805981504232089731754042431018": "StarkNet (old)",
+            "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
+          }
+        }
+      ]
     },
     {
       "name": "FriStatementContract",
@@ -1240,6 +1307,7 @@
         "0x193add6f23ec1dadc0f158bf31a76ebee58c7f4c229944b80585c7abf71b4d2d"
       ],
       "sinceTimestamp": 1612752351,
+      "sinceBlock": 11813198,
       "values": { "$immutable": true, "hasRegisteredFact": true }
     },
     {
@@ -1255,6 +1323,7 @@
         }
       ],
       "sinceTimestamp": 1627913849,
+      "sinceBlock": 12946416,
       "values": {
         "$immutable": true,
         "MAIN_GOVERNORS_TO_REMOVE": [
@@ -2406,5 +2475,7 @@
       "function updateRoot()"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "starkex/GpsFactRegistryAdapter": "0xc60e8d2a607d6e461e47bf15f6cb9e5cba1f13a2933a2aa8afa93c3b801a45f3"
+  }
 }

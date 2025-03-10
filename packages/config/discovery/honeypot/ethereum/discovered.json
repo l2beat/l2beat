@@ -2,7 +2,7 @@
   "name": "honeypot",
   "chain": "ethereum",
   "blockNumber": 20641250,
-  "configHash": "0x8ba24928d7ba671f2db1021beae72d43e9f7bab5734838edff6f5d54323e4b1e",
+  "configHash": "0x67e8c362ce07d5955117466f92c22bdf0e8a2750472582e734faa2a829c99316",
   "contracts": [
     {
       "name": "Honeypot",
@@ -11,6 +11,7 @@
         "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
       ],
       "sinceTimestamp": 1694553335,
+      "sinceBlock": 18122866,
       "values": {
         "$immutable": true,
         "getConsensus": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
@@ -26,6 +27,7 @@
         "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
       ],
       "sinceTimestamp": 1694457347,
+      "sinceBlock": 18114934,
       "values": {
         "$immutable": true,
         "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
@@ -38,6 +40,7 @@
         "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
       ],
       "sinceTimestamp": 1690464923,
+      "sinceBlock": 17784733,
       "values": { "$immutable": true }
     },
     {
@@ -47,6 +50,7 @@
         "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
       ],
       "sinceTimestamp": 1690464947,
+      "sinceBlock": 17784735,
       "values": {
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
@@ -59,6 +63,7 @@
         "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
       ],
       "sinceTimestamp": 1694456915,
+      "sinceBlock": 18114898,
       "values": {
         "$immutable": true,
         "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",

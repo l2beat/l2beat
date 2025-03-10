@@ -29,6 +29,7 @@
         "totalValidatorForwardFee"
       ],
       "sinceTimestamp": 1710417729,
+      "sinceBlock": 803957,
       "values": {
         "$admin": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "$implementation": "0xDe4Be50Bfe9503180231357Eab19d709F8F73C66",
@@ -90,6 +91,7 @@
         }
       ],
       "sinceTimestamp": 1710418385,
+      "sinceBlock": 804285,
       "values": {
         "$admin": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "$implementation": "0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD",
@@ -129,6 +131,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710486067,
+      "sinceBlock": 838126,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -168,6 +171,7 @@
         }
       ],
       "sinceTimestamp": 1710427013,
+      "sinceBlock": 808599,
       "values": {
         "$admin": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
         "$implementation": "0xc24864769346073f5fEf0386A18734F0eF5503F5",
@@ -202,6 +206,7 @@
         }
       ],
       "sinceTimestamp": 1710427013,
+      "sinceBlock": 808599,
       "values": {
         "$immutable": true,
         "owner": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",

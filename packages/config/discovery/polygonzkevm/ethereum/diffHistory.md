@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x2bc8fc86c8976b7195bb37ebc2ea23d06921c29f
+Generated with discovered.json: 0x6d8bab15d89dad0d9a3ffc2042136d3f30375da6
+
+# Diff at Tue, 04 Mar 2025 10:39:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21744722
+- current block number: 21744722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sinceBlock:
++        18175991
+    }
+```
+
+```diff
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      sinceBlock:
++        19098451
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sinceBlock:
++        18583475
+    }
+```
+
+```diff
+    contract Verifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      sinceBlock:
++        20790618
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sinceBlock:
++        18898811
+    }
+```
+
+```diff
+    contract PolygonZkEvmEscrowsMultisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      sinceBlock:
++        18142537
+    }
+```
+
+Generated with discovered.json: 0x673a1132499eaeb36571e351224906dc9b4ff984
 
 # Diff at Thu, 27 Feb 2025 11:46:20 GMT:
 

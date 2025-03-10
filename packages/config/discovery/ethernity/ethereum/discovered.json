@@ -2,7 +2,7 @@
   "name": "ethernity",
   "chain": "ethereum",
   "blockNumber": 21802884,
-  "configHash": "0x7b22d7c50d8418f8496d4d171685fb0f6902a12114f78687161094d5c0bd989b",
+  "configHash": "0x4d0af32d403ba9374790ef945603bf2bed2e1ae8fcd41eaf6207d2e32abe9055",
   "contracts": [
     {
       "name": "L1ERC721Bridge",
@@ -25,6 +25,7 @@
         }
       ],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$admin": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f",
         "$implementation": "0x26dcD660CFe0ae991053dA73077914F95C15E79D",
@@ -90,6 +91,7 @@
         }
       ],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$immutable": true,
         "addressManager": "0x464Ca56D40f94E8A50eFa7F5b90c59D956a0efC9",
@@ -134,6 +136,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$admin": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f",
         "$implementation": "0xC12C14d46a53a0BBAA1e71Ae42bA4fAb079E7933",
@@ -200,6 +203,7 @@
         }
       ],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$admin": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f",
         "$implementation": "0xD3fc43F83E0f287b9438cE323AC0Da8dEf28c65b",
@@ -252,6 +256,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$admin": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f",
         "$implementation": "0xe9670A42Fd1433c29Eda37eE63EF96A3277A9b93",
@@ -285,8 +290,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -332,6 +337,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$immutable": false,
         "$implementation": "0xcfB7B0E4f49782CE44A2f590180ecE5Ea3FF43e5",
@@ -386,6 +392,7 @@
         }
       ],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$admin": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f",
         "$implementation": "0x7f3710c09FcB168d11E4761c8e2683f3d207b202",
@@ -422,6 +429,7 @@
         }
       ],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$immutable": true,
         "owner": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f"
@@ -449,6 +457,7 @@
         }
       ],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$admin": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f",
         "$implementation": "0x4AEC9D641b46124f89dcf3a0C16f75053a8B836c",
@@ -483,6 +492,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -594,6 +604,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1711489163,
+      "sinceBlock": 19521321,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -646,6 +657,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1723548899,
+      "sinceBlock": 20519437,
       "values": {
         "$admin": "0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f",
         "$implementation": "0x8956B5301DbB0e410b97006DdC07a8f360062D04",

@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xd95a4abc7d5c5fbda3651cce8de9c842893a82fd
+
+# Diff at Tue, 04 Mar 2025 10:39:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21778467
+- current block number: 21778467
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21778467 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3) {
+    +++ description: None
+      sinceBlock:
++        12093588
+    }
+```
+
+```diff
+    contract HermezAuctionProtocol (0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2) {
+    +++ description: None
+      sinceBlock:
++        12093592
+    }
+```
+
+```diff
+    contract Verifier2048 (0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342) {
+    +++ description: None
+      sinceBlock:
++        12373414
+    }
+```
+
+```diff
+    contract WithdrawalDelayer (0x392361427Ef5e17b69cFDd1294F31ab555c86124) {
+    +++ description: None
+      sinceBlock:
++        12093599
+    }
+```
+
+```diff
+    contract Verifier400 (0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2) {
+    +++ description: None
+      sinceBlock:
++        12373413
+    }
+```
+
+```diff
+    contract VerifierWithdraw (0x4464A1E499cf5443541da6728871af1D5C4920ca) {
+    +++ description: None
+      sinceBlock:
++        12373429
+    }
+```
+
+```diff
+    contract Hermez2 (0x6D85D79D69b7e190E671C16e8611997152bD3e95) {
+    +++ description: None
+      sinceBlock:
++        12373616
+    }
+```
+
+```diff
+    contract HermezAuctionProtocol2 (0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6) {
+    +++ description: None
+      sinceBlock:
++        12093585
+    }
+```
+
+```diff
+    contract Hermez (0xA68D85dF56E733A06443306A095646317B5Fa633) {
+    +++ description: None
+      sinceBlock:
++        12093596
+    }
+```
+
+```diff
+    contract GnosisSafe (0xe1bbC673E537053c3536310851C6554BcfcF11Cd) {
+    +++ description: None
+      sinceBlock:
++        12080648
+    }
+```
+
+```diff
+    contract HermezGovernance (0xf1B3b124842555782F98bE08d1357ABb8013F11c) {
+    +++ description: None
+      sinceBlock:
++        12087709
+    }
+```
+
+```diff
+    contract Timelock (0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3) {
+    +++ description: None
+      sinceBlock:
++        12087731
+    }
+```
+
 Generated with discovered.json: 0x350824661d288d2237a3317d3c51c924ad667c99
 
 # Diff at Wed, 05 Feb 2025 06:23:13 GMT:

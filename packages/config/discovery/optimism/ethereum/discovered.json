@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 21829671,
-  "configHash": "0x6c53ba9c83a5f645191592eda624819a1d1aab299f1e0ab79323938b50d09d83",
+  "configHash": "0x1469baac24c6a05142005c8b391aca9e12a166e3c1b2de2b55d8a7eea37bafa2",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -27,6 +27,7 @@
         }
       ],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
@@ -59,6 +60,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
+      "sinceBlock": 19968607,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -81,6 +83,7 @@
       ],
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
       "sinceTimestamp": 1625675779,
+      "sinceBlock": 12781431,
       "values": {
         "$immutable": true,
         "escrow": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
@@ -109,6 +112,7 @@
         }
       ],
       "sinceTimestamp": 1715887043,
+      "sinceBlock": 19884569,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x1B5CC028A4276597C607907F24E1AC05d3852cFC",
@@ -155,6 +159,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1733920151,
+      "sinceBlock": 21379267,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
@@ -207,6 +212,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1685377403,
+      "sinceBlock": 17365804,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375",
@@ -284,8 +290,8 @@
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -335,10 +341,11 @@
       ],
       "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
       "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "16d 21h",
+        "timeSinceLastL2beatInteraction": "24d",
         "version": "1.0.0"
       }
     },
@@ -354,6 +361,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1624400997,
+      "sinceBlock": 12686757,
       "values": {
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
@@ -443,6 +451,7 @@
       ],
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
       "sinceTimestamp": 1733920235,
+      "sinceBlock": 21379274,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568",
@@ -537,6 +546,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1733920199,
+      "sinceBlock": 21379271,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
@@ -570,6 +580,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678243007,
+      "sinceBlock": 16780617,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -589,12 +600,20 @@
     {
       "name": "L1DAIEscrow",
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "template": "maker/L1Escrow",
       "sourceHashes": [
         "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
       ],
       "description": "Stores DAI deposited from the attached L1DAITokenBridge.",
       "sinceTimestamp": 1625675683,
-      "values": { "$immutable": true },
+      "sinceBlock": 12781427,
+      "values": {
+        "$immutable": true,
+        "wards": [
+          "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+          "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
+        ]
+      },
       "derivedName": "L1Escrow"
     },
     {
@@ -654,6 +673,7 @@
         }
       ],
       "sinceTimestamp": 1685377355,
+      "sinceBlock": 17365800,
       "values": {
         "$immutable": true,
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -738,6 +758,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420875,
+      "sinceBlock": 19185554,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -773,6 +794,7 @@
         }
       ],
       "sinceTimestamp": 1664918591,
+      "sinceBlock": 15677422,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -830,6 +852,7 @@
       ],
       "description": "Custom escrow for SNX bridged via canonical messaging.",
       "sinceTimestamp": 1620680982,
+      "sinceBlock": 12409015,
       "values": {
         "$immutable": true,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
@@ -845,6 +868,7 @@
       ],
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1733920139,
+      "sinceBlock": 21379266,
       "values": {
         "$immutable": true,
         "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
@@ -869,6 +893,7 @@
         }
       ],
       "sinceTimestamp": 1685377391,
+      "sinceBlock": 17365803,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -917,6 +942,7 @@
       "displayName": "L1ERC20TokenBridge",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1659687799,
+      "sinceBlock": 15281202,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0x168Cfea1Ad879d7032B3936eF3b0E90790b6B6D4",
@@ -1025,6 +1051,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
+      "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1056,6 +1083,7 @@
       ],
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1733920187,
+      "sinceBlock": 21379270,
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568",
@@ -1178,6 +1206,7 @@
         }
       ],
       "sinceTimestamp": 1705954799,
+      "sinceBlock": 19064589,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -1226,6 +1255,7 @@
         }
       ],
       "sinceTimestamp": 1624401464,
+      "sinceBlock": 12686786,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
@@ -1276,6 +1306,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
+      "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -1308,6 +1339,7 @@
       ],
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1724975087,
+      "sinceBlock": 20637600,
       "values": {
         "$immutable": true,
         "challengePeriod": 86400,
@@ -1330,6 +1362,7 @@
       "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"],
       "sinceTimestamp": 1672938575,
+      "sinceBlock": 16341988,
       "values": {
         "$immutable": true,
         "getNextSequenceId": 123,
@@ -1358,6 +1391,7 @@
       ],
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1685377379,
+      "sinceBlock": 17365802,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xe2F826324b2faf99E513D16D266c3F80aE87832B",
@@ -1450,6 +1484,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
+      "sinceBlock": 19185517,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1500,6 +1535,7 @@
         }
       ],
       "sinceTimestamp": 1724111315,
+      "sinceBlock": 20566057,
       "values": {
         "$immutable": true,
         "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -1525,6 +1561,7 @@
         }
       ],
       "sinceTimestamp": 1624400033,
+      "sinceBlock": 12686687,
       "values": {
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -1552,6 +1589,7 @@
       ],
       "ignoreInWatchMode": ["gameCount"],
       "sinceTimestamp": 1715887043,
+      "sinceBlock": 19884569,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
@@ -2577,6 +2615,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xbf09136c280484ee64edb52bd001d64ccf893d29dfa459662549b59a778a6e18",
     "gnosisSafeModules/LivenessModule": "0xaf5f707166f662310012e2d9d33d92bef536591231e024ae86fe1fb1d74633f8",
     "lido/L1LidoTokensBridge": "0xc7f9240c649749b30d835a342d6042229aff7f93596fa88893a387fe33428af3",
+    "maker/L1Escrow": "0xfe5c1f545e5d63ef9898c0aba6ba0dc3534f41b038497adb713efd766b66191f",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/AnchorStateRegistry": "0x5edafcbd7ee4adf7acb235602afad395d234f30cb9b817bdcf13429ac1c3c77a",
     "opstack/DelayedWETH": "0xc8b5f9d249266af7ce4c098dfb30dd9861a2a456fc8f813f5fa87ccc04ecbf7f",

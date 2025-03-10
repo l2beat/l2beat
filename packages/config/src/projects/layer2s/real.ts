@@ -3,7 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -11,7 +11,7 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('real')
 
 export const real: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
+  addedAt: UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
@@ -37,10 +37,12 @@ export const real: Layer2 = orbitStackL2({
       ],
     },
   },
+  untrackedGasTokens: ['reETH'],
   chainConfig: {
     name: 'real',
     chainId: 111188,
     explorerUrl: 'https://explorer.re.al',
+    gasTokens: ['reETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -49,7 +51,7 @@ export const real: Layer2 = orbitStackL2({
         version: '3',
       },
     ],
-    sinceTimestamp: new UnixTime(1710580715),
+    sinceTimestamp: UnixTime(1710580715),
     coingeckoPlatform: 're-al',
     apis: [
       { type: 'rpc', url: 'https://real.drpc.org', callsPerMinute: 1500 },
@@ -61,7 +63,6 @@ export const real: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  gasTokens: { untracked: ['reETH'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xfC89B875970122E24C6C5ADd4Dea139443943ea7'),

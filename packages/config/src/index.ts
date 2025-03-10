@@ -18,20 +18,9 @@
 
 export { HOMEPAGE_MILESTONES } from './global/milestones'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
-export { ProjectDiscovery } from './discovery/ProjectDiscovery'
-export { bridges } from './projects/bridges'
-export { layer2s } from './projects/layer2s'
-export { layer3s } from './projects/layer3s'
-export { ProjectService, type Project } from './projects/project/ProjectService'
-export { isUnderReview } from './projects/project/utils/isUnderReview'
+export { ProjectService, type Project } from './ProjectService'
 export {
   safeGetTokenByAssetId,
   tokenList,
 } from './tokens/tokens'
 export type * from './types'
-export { getCommonContractsIn } from './utils/commonContracts'
-export { isVerified } from './verification/isVerified'
-
-import { runConfigAdjustments } from './adjustments'
-
-runConfigAdjustments()

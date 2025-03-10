@@ -2,7 +2,7 @@
   "name": "orbiter",
   "chain": "ethereum",
   "blockNumber": 21322840,
-  "configHash": "0x0c956b5b4eecc6c75fa4161ff9a76a0b7c6185e8ca18f75461d397bf892d72bc",
+  "configHash": "0xa234eba378b43b6e209dff56041ccf44637bcf6d708f27b0a5e6f7246088e1f2",
   "contracts": [
     {
       "name": "OBSource",
@@ -11,6 +11,7 @@
         "0xe23a80bc25bbb7fd86290d129904d428cc4cac65b4598f208bbc449d4d9c6951"
       ],
       "sinceTimestamp": 1649661119,
+      "sinceBlock": 14563000,
       "values": { "$immutable": true }
     }
   ],

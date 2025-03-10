@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('chainport')
 const congressSize = discovery.getContractValue<number>(
@@ -16,7 +16,7 @@ const congressThreshold = discovery.getContractValue<number>(
 export const chainport: Bridge = {
   type: 'bridge',
   id: ProjectId('chainport'),
-  addedAt: new UnixTime(1696938823), // 2023-10-10T11:53:43Z
+  addedAt: UnixTime(1696938823), // 2023-10-10T11:53:43Z
   display: {
     name: 'Chainport',
     slug: 'chainport',
@@ -40,13 +40,13 @@ export const chainport: Bridge = {
       }),
       {
         address: EthereumAddress('0xD2238E8c085E5059F8DFC52256530210bc7250F6'), // Vault 3
-        sinceTimestamp: new UnixTime(1626181305),
+        sinceTimestamp: UnixTime(1626181305),
         tokens: '*',
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x873089bC765a1C0AFAd48e34fCd305d17D81be87'), // Vault 5
-        sinceTimestamp: new UnixTime(1636903885),
+        sinceTimestamp: UnixTime(1636903885),
         tokens: '*',
         chain: 'ethereum',
       },
@@ -57,13 +57,13 @@ export const chainport: Bridge = {
       {
         address: EthereumAddress('0x894107B7b5051409f279E8300774B2f62Febe057'),
         tokens: '*',
-        sinceTimestamp: new UnixTime(1626181305),
+        sinceTimestamp: UnixTime(1626181305),
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xfE83475880d3592833249BAAacfEC5eD51E29D82'),
         tokens: '*',
-        sinceTimestamp: new UnixTime(1626181305),
+        sinceTimestamp: UnixTime(1626181305),
         chain: 'ethereum',
       },
     ],

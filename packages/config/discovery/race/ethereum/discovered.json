@@ -2,7 +2,7 @@
   "name": "race",
   "chain": "ethereum",
   "blockNumber": 21242938,
-  "configHash": "0x4bc156bc6948cca00b79d71b00c284decab99cd6b460fbb64170448f1bc3cea0",
+  "configHash": "0xb4f1c521ee2606e38931dfb1e436e5cae5a82feb959a6b05c754b7e514f28d68",
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -28,6 +28,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1720427159,
+      "sinceBlock": 20260590,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
         "$implementation": "0xF3C933F69a43f5a967062448F62b736043b5dEf5",
@@ -75,6 +76,7 @@
         }
       ],
       "sinceTimestamp": 1720427231,
+      "sinceBlock": 20260596,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
         "$implementation": "0x122cdded0fc84aD675B55f212e114A4B2e6879ee",
@@ -114,6 +116,7 @@
         }
       ],
       "sinceTimestamp": 1720427219,
+      "sinceBlock": 20260595,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
         "$implementation": "0x6291F75ea1E525FF9bA50AE09a82BC23DE9b9850",
@@ -156,6 +159,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1718826227,
+      "sinceBlock": 20127951,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -193,6 +197,7 @@
         }
       ],
       "sinceTimestamp": 1720427027,
+      "sinceBlock": 20260579,
       "values": {
         "$immutable": true,
         "owner": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191"
@@ -259,6 +264,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720427003,
+      "sinceBlock": 20260577,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -298,6 +304,7 @@
         }
       ],
       "sinceTimestamp": 1720427195,
+      "sinceBlock": 20260593,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
         "$implementation": "0x4E40ee3E2f8ff7A915c23473D0C256ADc77fa03F",
@@ -348,6 +355,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1720427171,
+      "sinceBlock": 20260591,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
         "$implementation": "0x22f3BB2c9E8540FD47B4Ab83F74E0E838e1756A2",
@@ -432,6 +440,7 @@
         }
       ],
       "sinceTimestamp": 1720427039,
+      "sinceBlock": 20260580,
       "values": {
         "$immutable": true,
         "addressManager": "0x3d2BdE87466Cae97011702D2C305fd40EEBbbF0a",
@@ -457,6 +466,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1718825039,
+      "sinceBlock": 20127852,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -500,6 +510,7 @@
         }
       ],
       "sinceTimestamp": 1720427075,
+      "sinceBlock": 20260583,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
         "$implementation": "0x13BC171e3014355969Fa022e33839653829697C2",
@@ -549,6 +560,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1720427183,
+      "sinceBlock": 20260592,
       "values": {
         "$admin": "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
         "$implementation": "0xe72ac62d31A0CCc8Ecd2b3Ac80E73479641715e2",
@@ -574,8 +586,8 @@
         "l2OutputOracle": "0x8bF8442d49d52377d735a90F19657a29f29aA83c",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -621,6 +633,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1720427207,
+      "sinceBlock": 20260594,
       "values": {
         "$immutable": false,
         "$implementation": "0x01Dae1EFfB0D0469fC4a9695866D5cc75190e385",

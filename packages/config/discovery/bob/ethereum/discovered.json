@@ -2,7 +2,7 @@
   "name": "bob",
   "chain": "ethereum",
   "blockNumber": 20921492,
-  "configHash": "0x1860e0a13d7f1d78d8faf979fc17402cec1b5fbca8a9366b2fe7ce8592c2db1e",
+  "configHash": "0x6445ea9fc543bb2c469c0a70dada64f2520bfa1d3a6ff413538da0b572c012b5",
   "contracts": [
     {
       "name": "L1ERC20TokenBridge",
@@ -15,6 +15,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
       "sinceTimestamp": 1713786239,
+      "sinceBlock": 19710718,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "$implementation": "0xB531445401926029B1647669cFAc8b4e5d8C7777",
@@ -75,6 +76,7 @@
         }
       ],
       "sinceTimestamp": 1712862035,
+      "sinceBlock": 19634325,
       "values": {
         "$immutable": true,
         "addressManager": "0xF2dc77c697e892542cC53336178a78Bb313DFDC7",
@@ -101,6 +103,7 @@
         }
       ],
       "sinceTimestamp": 1712862107,
+      "sinceBlock": 19634331,
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0xEEAfA156A5dd3811Ee0D9F91db57A77eA53A8d31",
@@ -125,6 +128,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
       "sinceTimestamp": 1714403615,
+      "sinceBlock": 19761785,
       "values": {
         "$admin": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
         "$implementation": "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9",
@@ -167,6 +171,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1712862059,
+      "sinceBlock": 19634327,
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0x994e3B01D130944a3E67BFd3B8Fc73069b959FEc",
@@ -222,6 +227,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1712862095,
+      "sinceBlock": 19634330,
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0xaa0A1EfD35d6578ea6B5704dbc2c40B36A55B590",
@@ -237,8 +243,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "overhead": 0,
@@ -325,6 +331,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1712774867,
+      "sinceBlock": 19627114,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -380,6 +387,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1712862083,
+      "sinceBlock": 19634329,
       "values": {
         "$admin": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "$implementation": "0x59191bD38EBA4a642C9FEc308dc188731b229822",
@@ -427,6 +435,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1712862119,
+      "sinceBlock": 19634332,
       "values": {
         "$immutable": false,
         "$implementation": "0x237853621998a33Fa5B9B820592F4c6f4c158c12",
@@ -477,6 +486,7 @@
         }
       ],
       "sinceTimestamp": 1712862023,
+      "sinceBlock": 19634324,
       "values": {
         "$immutable": true,
         "owner": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"

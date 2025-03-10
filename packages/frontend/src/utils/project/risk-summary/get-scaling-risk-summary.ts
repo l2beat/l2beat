@@ -1,36 +1,44 @@
-import type { Layer2, Layer3, ScalingProjectRisk } from '@l2beat/config'
+import type { Project, ProjectRisk } from '@l2beat/config'
 import isArray from 'lodash/isArray'
-
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './group-risks'
 
 export function getScalingRiskSummarySection(
-  project: Layer2 | Layer3,
+  project: Project<'scalingTechnology', 'contracts'>,
   isVerified: boolean,
 ): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
   const sections = [
     {
       id: 'state-correctness',
-      value: project.technology.stateCorrectness,
+      value: project.scalingTechnology.stateCorrectness,
     },
-    { id: 'new-cryptography', value: project.technology.newCryptography },
-    { id: 'data-availability', value: project.technology.dataAvailability },
-    { id: 'operator', value: project.technology.operator },
-    { id: 'force-transactions', value: project.technology.forceTransactions },
-    { id: 'withdrawals', value: project.technology.exitMechanisms },
-    { id: 'mass-exit', value: project.technology.massExit },
+    {
+      id: 'new-cryptography',
+      value: project.scalingTechnology.newCryptography,
+    },
+    {
+      id: 'data-availability',
+      value: project.scalingTechnology.dataAvailability,
+    },
+    { id: 'operator', value: project.scalingTechnology.operator },
+    {
+      id: 'force-transactions',
+      value: project.scalingTechnology.forceTransactions,
+    },
+    { id: 'withdrawals', value: project.scalingTechnology.exitMechanisms },
+    { id: 'mass-exit', value: project.scalingTechnology.massExit },
     {
       id: 'other-considerations',
-      value: project.technology.otherConsiderations,
+      value: project.scalingTechnology.otherConsiderations,
     },
     {
       id: 'sequencing',
-      value: project.technology.sequencing,
+      value: project.scalingTechnology.sequencing,
     },
   ]
 
-  const risks: (ScalingProjectRisk & { referencedId: string })[] = []
+  const risks: (ProjectRisk & { referencedId: string })[] = []
   for (const { id, value } of sections) {
     if (value) {
       if (isArray(value)) {
@@ -48,7 +56,7 @@ export function getScalingRiskSummarySection(
     risks.push({ ...risk, referencedId: 'contracts' })
   }
 
-  for (const risk of project.stateValidation?.categories.flatMap(
+  for (const risk of project.scalingTechnology.stateValidation?.categories.flatMap(
     (c) => c.risks ?? [],
   ) ?? []) {
     risks.push({ ...risk, referencedId: 'state-validation' })
@@ -56,7 +64,7 @@ export function getScalingRiskSummarySection(
 
   return {
     riskGroups: groupRisks(risks),
-    warning: project.display.warning,
+    warning: project.scalingTechnology.warning,
     isVerified,
     redWarning: undefined,
   }

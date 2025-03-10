@@ -2,7 +2,7 @@
   "name": "sygma",
   "chain": "ethereum",
   "blockNumber": 19532229,
-  "configHash": "0xdd48fbbb68f269746dbbdad39fd2d28cf0096da30fd383e8199a2dcaed8490c8",
+  "configHash": "0x3528d29c15188802a3fb7faab8460da5718c6aeff1fd89faea35bdadce354847",
   "contracts": [
     {
       "name": "FeeHandlerRouter",
@@ -11,6 +11,7 @@
         "0x57d2aa380d47a54717ec0de4d2ce6f34d5618f91a876226f60828e03036c07bb"
       ],
       "sinceTimestamp": 1701074999,
+      "sinceBlock": 18661897,
       "values": {
         "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
         "$immutable": true,
@@ -30,6 +31,7 @@
         "0x6cbae46385d34a7539ed992fd427d294cf815bc599a5b8814ba0272276864f21"
       ],
       "sinceTimestamp": 1697118143,
+      "sinceBlock": 18334705,
       "values": {
         "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
         "$immutable": true,
@@ -44,6 +46,7 @@
         "0x70d800f2dae04f7c3240cdf754404e86a486cea0a8591eec762e903d2eec5c77"
       ],
       "sinceTimestamp": 1686658607,
+      "sinceBlock": 17471016,
       "values": {
         "_accessControl": "0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E",
         "_domainID": 1,
@@ -62,6 +65,7 @@
         "0x057a9fc15bc757cf2e6b63ad07391d1629be177ca6f4c1af91bc407b7a7ef4c9"
       ],
       "sinceTimestamp": 1701075143,
+      "sinceBlock": 18661909,
       "values": {
         "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
         "_feeHandlerRouterAddress": "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
@@ -80,6 +84,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680813119,
+      "sinceBlock": 16991929,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -108,6 +113,7 @@
         "0x6f164184a36f7f6b52d39867d75472915b53a643e2fca4319619d7f76706905e"
       ],
       "sinceTimestamp": 1686658619,
+      "sinceBlock": 17471017,
       "values": {
         "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
         "$immutable": true,
@@ -126,6 +132,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686579155,
+      "sinceBlock": 17464490,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -153,6 +160,7 @@
         "0xffa23c6121a2e1d41ad45b0ea97f759dbbc6b73bc7e8d810590d9cb36b3dfb2b"
       ],
       "sinceTimestamp": 1686658583,
+      "sinceBlock": 17471014,
       "values": {
         "$immutable": true,
         "GRANT_ACCESS_SIG": "0xa973ec93",

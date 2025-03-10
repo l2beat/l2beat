@@ -1,11 +1,11 @@
 import type {
   Project,
-  ProjectDataAvailability,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingDa,
+  ProjectScalingStack,
 } from '@l2beat/config'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
@@ -35,13 +35,13 @@ export async function getScalingDaEntries() {
     .filter((entry) => entry !== undefined)
     .sort(compareStageAndTvs)
 
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingDaEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
-  dataAvailability: ProjectDataAvailability
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  dataAvailability: ProjectScalingDa
+  stack: ProjectScalingStack | undefined
   tvsOrder: number
 }
 

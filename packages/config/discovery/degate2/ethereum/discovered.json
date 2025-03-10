@@ -2,7 +2,7 @@
   "name": "degate2",
   "chain": "ethereum",
   "blockNumber": 18554408,
-  "configHash": "0xdc3c324633a6629e91b4557abc845b79a60807825b4a06bdab962380d2731e7a",
+  "configHash": "0xf704574a1072d255c245c0286f9190468ded2bdec3bbbdc213252c351df012ab",
   "contracts": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -11,6 +11,7 @@
         "0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"
       ],
       "sinceTimestamp": 1693304819,
+      "sinceBlock": 18019675,
       "values": {
         "$immutable": true,
         "blockSubmitters": ["0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"],
@@ -27,6 +28,7 @@
         "0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"
       ],
       "sinceTimestamp": 1693304687,
+      "sinceBlock": 18019664,
       "values": {
         "$immutable": true,
         "blockVerifierAddress": "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2",
@@ -47,6 +49,7 @@
         "0x1154ee2a46fb0e5586723354429b36343227a2e36a12e518d7e985031b67695d"
       ],
       "sinceTimestamp": 1693304675,
+      "sinceBlock": 18019663,
       "values": {
         "$immutable": true,
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
@@ -61,6 +64,7 @@
       ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1614841682,
+      "sinceBlock": 11970338,
       "values": {
         "$immutable": true,
         "getOwners": [
@@ -92,6 +96,7 @@
         "state"
       ],
       "sinceTimestamp": 1693304795,
+      "sinceBlock": 18019673,
       "values": {
         "$immutable": true,
         "allowOnchainTransferFrom": false,
@@ -172,6 +177,7 @@
         "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
       ],
       "sinceTimestamp": 1693304807,
+      "sinceBlock": 18019674,
       "values": {
         "$immutable": true,
         "exchange": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",

@@ -1,7 +1,7 @@
 import { assert, type ProjectId, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type {
-  ScalingProjectRiskView,
+  ProjectScalingRiskView,
   Sentiment,
   TableReadyValue,
   WarningWithSentiment,
@@ -321,7 +321,7 @@ export const UPCOMING_RISK: TableReadyValue = {
   sentiment: 'neutral',
 }
 
-export const UPCOMING_RISK_VIEW: ScalingProjectRiskView = {
+export const UPCOMING_RISK_VIEW: ProjectScalingRiskView = {
   stateValidation: UPCOMING_RISK,
   dataAvailability: UPCOMING_RISK,
   exitWindow: UPCOMING_RISK,
@@ -335,7 +335,7 @@ export const UNDER_REVIEW_RISK: TableReadyValue = {
   sentiment: 'UnderReview',
 }
 
-export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView = {
+export const UNDER_REVIEW_RISK_VIEW: ProjectScalingRiskView = {
   stateValidation: UNDER_REVIEW_RISK,
   dataAvailability: UNDER_REVIEW_RISK,
   exitWindow: UNDER_REVIEW_RISK,

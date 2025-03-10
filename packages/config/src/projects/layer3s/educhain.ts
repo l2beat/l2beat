@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -10,7 +10,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 
 export const educhain: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
+  addedAt: UnixTime(1720082709), // 2024-07-04T08:45:09Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Gelato],
   additionalPurposes: ['Social'],
@@ -48,9 +48,9 @@ export const educhain: Layer3 = orbitStackL3({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['EDU'],
   },
   associatedTokens: ['EDU'],
-  gasTokens: { tracked: ['EDU'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),

@@ -28,11 +28,25 @@
         {
           "permission": "interact",
           "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [{ "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
           "description": "propose transactions.",
           "via": []
         }
       ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "manage all access control roles and change the minimum delay."
+        }
+      ],
       "sinceTimestamp": 1738853604,
+      "sinceBlock": 55404657,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -66,7 +80,8 @@
         "getMinDelay_formatted": "0s",
         "Proposer": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": ["0x085b8B6407f150D62adB1EF926F7f304600ec714"]
       },
       "derivedName": "TimelockController"
     },
@@ -93,6 +108,18 @@
         }
       ],
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            {
+              "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+              "delay": 259200
+            }
+          ]
+        },
         {
           "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
@@ -129,6 +156,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723145395,
+      "sinceBlock": 41197311,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -184,6 +212,18 @@
         {
           "permission": "interact",
           "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            {
+              "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "cancel queued transactions.",
           "via": []
         },
@@ -203,11 +243,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
+          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay."
+        },
+        {
+          "permission": "interact",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."
         }
       ],
       "sinceTimestamp": 1723145391,
+      "sinceBlock": 41197308,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -241,7 +288,8 @@
         "getMinDelay_formatted": "3d",
         "Proposer": ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": ["0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"]
       },
       "derivedName": "TimelockController"
     },
@@ -262,6 +310,18 @@
         }
       ],
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            {
+              "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+              "delay": 259200
+            }
+          ]
+        },
         {
           "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
@@ -287,6 +347,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723145514,
+      "sinceBlock": 41197430,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -364,6 +425,7 @@
       ],
       "ignoreInWatchMode": ["clock", "totalSupply"],
       "sinceTimestamp": 1716317326,
+      "sinceBlock": 34572100,
       "values": {
         "$admin": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
         "$implementation": "0x01a6715d3560241E09E865a46122bf347A576c09",
@@ -469,6 +531,12 @@
         {
           "permission": "interact",
           "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [{ "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "propose transactions."
         }
       ],
@@ -480,6 +548,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723144920,
+      "sinceBlock": 41196850,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -532,6 +601,18 @@
         {
           "permission": "interact",
           "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            {
+              "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "description": "cancel queued transactions.",
           "via": []
         },
@@ -548,7 +629,16 @@
           "via": []
         }
       ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay."
+        }
+      ],
       "sinceTimestamp": 1723145510,
+      "sinceBlock": 41197426,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -582,7 +672,8 @@
         "getMinDelay_formatted": "3d",
         "Proposer": ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": ["0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"]
       },
       "derivedName": "TimelockController"
     },
@@ -601,6 +692,7 @@
         }
       ],
       "sinceTimestamp": 1716317321,
+      "sinceBlock": 34572095,
       "values": {
         "$immutable": true,
         "owner": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
@@ -1064,7 +1156,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "shared-zk-stack/TimelockController": "0xb19fa409e8aab26306d8d1694bc6f340f67218c38b6d4d3e9d3b6da7b6eb56aa",
+    "shared-zk-stack/TimelockController": "0xe6c0b45d14eb210761e6903323aad92524bc3b9a8b9ca2ab0a97caa682e8db45",
     "shared-zk-stack/ZkGovernor": "0xeccfe4df218a5d91bb4d70f756b873e03ec1e472a334fbd9dc11cfa111078852",
     "shared-zk-stack/ZkToken": "0x0b3f521e99577081132884d9a0c7f20be6a8d132c8c15e1f5ba1f76c79bca0e4"
   }

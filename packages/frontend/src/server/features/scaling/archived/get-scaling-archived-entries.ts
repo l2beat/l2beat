@@ -1,12 +1,12 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
 } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
@@ -33,13 +33,13 @@ export async function getScalingArchivedEntries() {
     ),
   )
 
-  return groupByTabs(entries.sort(compareTvs))
+  return groupByScalingTabs(entries.sort(compareTvs))
 }
 
 export interface ScalingArchivedEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
+  category: ProjectScalingCategory
   purposes: string[]
-  stack: ScalingProjectStack | undefined
+  stack: ProjectScalingStack | undefined
   risks: RosetteValue[] | undefined
   totalTvs: number | undefined
   tvsOrder: number

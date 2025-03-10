@@ -89,14 +89,14 @@ describe(getFunctionCallQuery.name, () => {
 
     expect(params).toEqual([
       [ADDRESS_2.toLowerCase()],
-      FROM.toDate().toISOString(),
-      TO.toDate().toISOString(),
+      UnixTime.toDate(FROM).toISOString(),
+      UnixTime.toDate(TO).toISOString(),
       ADDRESS_1.toLowerCase(),
       SELECTOR_1.toLowerCase() + '%',
       ADDRESS_2.toLowerCase(),
       SELECTOR_2.toLowerCase() + '%',
-      FROM.toDate().toISOString(),
-      TO.toDate().toISOString(),
+      UnixTime.toDate(FROM).toISOString(),
+      UnixTime.toDate(TO).toISOString(),
     ])
 
     // @ts-expect-error BigQuery types are wrong

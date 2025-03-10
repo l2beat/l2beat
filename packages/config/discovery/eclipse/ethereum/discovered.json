@@ -2,7 +2,7 @@
   "name": "eclipse",
   "chain": "ethereum",
   "blockNumber": 21121371,
-  "configHash": "0xa13a0126b1581bb625e10cc1900ca4ab76cf134b904391339343071d870c6847",
+  "configHash": "0x382b6f46027c3e1df807907e25dce75e03f958f9b70386916bc0e6e4de1092d7",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -15,6 +15,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1715256563,
+      "sinceBlock": 19832392,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -38,6 +39,7 @@
         "0x39cf355665c54bebc4ab239f0a40e776f0f1f3ab01a77a95830c90f9517c48ca"
       ],
       "sinceTimestamp": 1730778803,
+      "sinceBlock": 21118887,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -104,6 +106,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722032243,
+      "sinceBlock": 20393653,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -135,6 +138,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722018611,
+      "sinceBlock": 20392523,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -164,6 +168,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1722141227,
+      "sinceBlock": 20402682,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
@@ -199,6 +204,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1722141467,
+      "sinceBlock": 20402702,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
@@ -239,6 +245,7 @@
         "0x599d3ce0d649d659cb428825fa26a5ae43f782ff2acc3b65fd5d633f4a34f360"
       ],
       "sinceTimestamp": 1730774639,
+      "sinceBlock": 21118543,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -272,6 +279,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1722140987,
+      "sinceBlock": 20402663,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978",

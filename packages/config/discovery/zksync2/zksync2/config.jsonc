@@ -11,8 +11,6 @@
   "chain": "zksync2",
   "name": "zksync2",
   "import": ["../../globalConfig.jsonc"],
-  "sharedModules": {
-    "doesThisKeyDoAnything": "shared-zk-stack"
-  },
+  "sharedModules": ["shared-zk-stack"],
   "initialAddresses": []
 }

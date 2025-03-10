@@ -34,11 +34,11 @@ function toToken(generated: GeneratedToken): Token {
     `Token added for chain without sinceTimestamp ${chain.name}`,
   )
 
-  const sinceTimestamp = new UnixTime(
+  const sinceTimestamp = UnixTime(
     Math.max(
-      generated.deploymentTimestamp.toNumber(),
-      chain.sinceTimestamp.toNumber(),
-      generated.coingeckoListingTimestamp.toNumber(),
+      generated.deploymentTimestamp,
+      chain.sinceTimestamp,
+      generated.coingeckoListingTimestamp,
     ),
   )
 

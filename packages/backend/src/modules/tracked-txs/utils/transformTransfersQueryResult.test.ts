@@ -242,7 +242,7 @@ function mock({
   subtype: TrackedTxsConfigSubtype
   from: EthereumAddress
   to: EthereumAddress
-  sinceTimestamp: UnixTime
+  sinceTimestamp: number
 }): Configuration<TrackedTxConfigEntry & { params: TrackedTxTransferConfig }> {
   return {
     id,

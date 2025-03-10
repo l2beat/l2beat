@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 21184911,
-  "configHash": "0x0350cd4c6bd7e184e32423199b232caa7b641b1da923771a938c38e015a26e58",
+  "configHash": "0x50b1621d6725972306b4afc594c94fc33500d2852f421448f013699ef35545d8",
   "contracts": [
     {
       "name": "AddressManager",
@@ -21,6 +21,7 @@
         }
       ],
       "sinceTimestamp": 1715334959,
+      "sinceBlock": 19838878,
       "values": {
         "$immutable": true,
         "owner": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948"
@@ -38,6 +39,7 @@
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$immutable": false,
         "$implementation": "0xD09C8E2C6D124bCE71235046B95ab676bE1d5601",
@@ -114,6 +116,7 @@
         }
       ],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$immutable": true,
         "addressManager": "0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C",
@@ -140,6 +143,7 @@
         }
       ],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$implementation": "0x4f30C8A322ab6f84F15B8955B58D295E138B14Ca",
@@ -217,6 +221,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1715334959,
+      "sinceBlock": 19838878,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -259,6 +264,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$implementation": "0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B",
@@ -331,6 +337,7 @@
         }
       ],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$implementation": "0xF3E372Ec07a9Bf0C94ff21ceBe02952F2164996F",
@@ -380,6 +387,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$implementation": "0xa65DE544846795C7eeAd60790197B0EB755547ee",
@@ -405,8 +413,8 @@
         "l2OutputOracle": "0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -458,6 +466,7 @@
         }
       ],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$implementation": "0xe04D088840aE793afd0970fE97FEC6Ac7BaF4AAC",
@@ -492,6 +501,7 @@
         }
       ],
       "sinceTimestamp": 1715334971,
+      "sinceBlock": 19838879,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$implementation": "0xAd8890C1DF1f29f6a26B6eCcc73c299599c40F3d",
@@ -540,6 +550,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1715334983,
+      "sinceBlock": 19838880,
       "values": {
         "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$implementation": "0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61",

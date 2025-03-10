@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('hyphen')
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('hyphen')
 export const hyphen: Bridge = {
   type: 'bridge',
   id: ProjectId('hyphen'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
@@ -37,7 +37,7 @@ export const hyphen: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x2A5c2568b10A0E826BfA892Cf21BA7218310180b'),
-        sinceTimestamp: new UnixTime(1647128990),
+        sinceTimestamp: UnixTime(1647128990),
         tokens: ['ETH', 'USDC', 'USDT', 'MATIC', 'BICO'],
         chain: 'ethereum',
       },

@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21845178,
-  "configHash": "0x1690e28f29da802bb197b48e891a7d015a5c9507904c645e9a8f9a0a0312e992",
+  "configHash": "0xadad246a384380f935d8f37a55e5b30adcf9e237aa9c41e05c0dd818582fd6e6",
   "contracts": [
     {
       "name": "ZKProofVerifier",
@@ -24,6 +24,7 @@
         }
       ],
       "sinceTimestamp": 1737695795,
+      "sinceBlock": 21692210,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x9f2Ec7196596581806218D3D183581b00e5a444E",
@@ -73,6 +74,7 @@
         "nextOutputMinL2Timestamp"
       ],
       "sinceTimestamp": 1693880579,
+      "sinceBlock": 18067271,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b",
@@ -122,7 +124,7 @@
         "0x6bcef64b35598149aee2e622e06fb8e414063ee43de09312ca4bbd0306b0eea9"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A timelock with access control. The current minimum delay is 0s.",
+      "description": "A standard timelock with access control. The current minimum delay is 0s.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -139,7 +141,7 @@
         {
           "permission": "interact",
           "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [
             { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" },
             { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" }
@@ -148,7 +150,7 @@
         {
           "permission": "interact",
           "to": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
         },
         {
@@ -175,7 +177,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles."
+          "description": "manage all access control roles and change the minimum delay."
         },
         {
           "permission": "interact",
@@ -188,6 +190,7 @@
         }
       ],
       "sinceTimestamp": 1693880651,
+      "sinceBlock": 18067277,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3",
@@ -229,15 +232,15 @@
             "members": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
           }
         },
-        "Canceller": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellerAC": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorAC": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "getMinDelay": 0,
-        "getMinDelayFormatted": "0s",
-        "Proposer": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
+        "minDelayFormatted": "0s",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposerAC": ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": [
           "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
@@ -273,6 +276,7 @@
         "nextValidator"
       ],
       "sinceTimestamp": 1729473911,
+      "sinceBlock": 21010651,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1",
@@ -339,6 +343,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1693880555,
+      "sinceBlock": 18067269,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316",
@@ -378,6 +383,7 @@
       ],
       "description": "Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.",
       "sinceTimestamp": 1693288019,
+      "sinceBlock": 18018290,
       "values": {
         "$immutable": true,
         "POSEIDON2": "0xFd234971881a7c72965175fA8E438c97B2Dcd273"
@@ -420,6 +426,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1693880543,
+      "sinceBlock": 18067268,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x2af8a383C395EBa6551E674EeD02344936fE36f5",
@@ -435,8 +442,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true,
+          "isUsingCelestia": false,
           "isUsingEigenDA": false
         },
         "overhead": 0,
@@ -482,6 +489,7 @@
         }
       ],
       "sinceTimestamp": 1720099223,
+      "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
         "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
@@ -550,6 +558,7 @@
         }
       ],
       "sinceTimestamp": 1693880627,
+      "sinceBlock": 18067275,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x61c7C854Dcdf8393230B1242a4c1107f4d023c28",
@@ -615,6 +624,7 @@
       ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1693880591,
+      "sinceBlock": 18067272,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x675924D68200F2C967Ba12349d5d510676C7214c",
@@ -664,6 +674,7 @@
         }
       ],
       "sinceTimestamp": 1693287695,
+      "sinceBlock": 18018264,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9",
@@ -761,6 +772,7 @@
         }
       ],
       "sinceTimestamp": 1693287587,
+      "sinceBlock": 18018255,
       "values": {
         "$immutable": true,
         "owner": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
@@ -787,6 +799,7 @@
         }
       ],
       "sinceTimestamp": 1693287719,
+      "sinceBlock": 18018266,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x4cd05aB629055a449617a28E3466660403eA7126",
@@ -839,6 +852,7 @@
         }
       ],
       "sinceTimestamp": 1693880615,
+      "sinceBlock": 18067274,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC",
@@ -912,6 +926,7 @@
         }
       ],
       "sinceTimestamp": 1700121851,
+      "sinceBlock": 18583133,
       "values": {
         "$admin": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
         "$implementation": "0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3",
@@ -951,6 +966,7 @@
         }
       ],
       "sinceTimestamp": 1693880603,
+      "sinceBlock": 18067273,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4",
@@ -989,6 +1005,7 @@
         }
       ],
       "sinceTimestamp": 1729473899,
+      "sinceBlock": 21010650,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede",
@@ -1051,7 +1068,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles."
+          "description": "manage all access control roles and change the minimum delay."
         },
         {
           "permission": "interact",
@@ -1061,6 +1078,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1693880663,
+      "sinceBlock": 18067278,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3",
@@ -1121,6 +1139,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204135,
+      "sinceBlock": 20573748,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1146,6 +1165,7 @@
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
       "sinceTimestamp": 1729727135,
+      "sinceBlock": 21031662,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
@@ -1248,7 +1268,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [
             { "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
             { "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
@@ -1257,7 +1277,7 @@
         {
           "permission": "interact",
           "from": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-          "description": "manage all access control roles.",
+          "description": "manage all access control roles and change the minimum delay.",
           "via": [{ "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }]
         },
         {
@@ -1437,6 +1457,7 @@
       ],
       "ignoreInWatchMode": ["clock", "ownerOf"],
       "sinceTimestamp": 1693880639,
+      "sinceBlock": 18067276,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C",
@@ -1512,6 +1533,7 @@
       "description": "Escrows a pool of KRO used as validator rewards by the AssetManager.",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722386411,
+      "sinceBlock": 20423009,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1540,6 +1562,7 @@
       ],
       "description": "Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.",
       "sinceTimestamp": 1693288007,
+      "sinceBlock": 18018289,
       "values": { "$immutable": true },
       "derivedName": "",
       "references": [
@@ -1577,6 +1600,7 @@
       ],
       "ignoreInWatchMode": ["nextValidator", "validatorCount"],
       "sinceTimestamp": 1693880567,
+      "sinceBlock": 18067270,
       "values": {
         "$admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
         "$implementation": "0xE36776FFA20a9206dcD742C981402a3f3d81938d",
@@ -2635,7 +2659,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "global/Timelock": "0xe09ef3053ce20980b4ff0f3bb1bf2a3add4269cfcd5921748fe06a7f6a4e9db1",
+    "global/Timelock": "0x63b12b6a368c044f8110c739995963299475aad5416d02a41a689197cb5de026",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
     "opstack/L1ERC721Bridge": "0x75f13310a0c37850676bb421a095318b633336022aeb2fb69c7f961890b6f69c",

@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21938094,
-  "configHash": "0xc81d1077e77af0189595ca0e2fd2bd6643beae042acf739d6ccbc786a093924d",
+  "blockNumber": 21973872,
+  "configHash": "0x90284705c46407271cf2d3b9712e2214ff71c88d26139ec0a667cda60e716f91",
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -11,6 +11,7 @@
         "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
       ],
       "sinceTimestamp": 1714550639,
+      "sinceBlock": 19773966,
       "values": { "$immutable": true }
     },
     {
@@ -37,6 +38,7 @@
         "lastProposedIn"
       ],
       "sinceTimestamp": 1714550627,
+      "sinceBlock": 19773965,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
@@ -195,35 +197,35 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 906511,
-          "blockHash_": "0xe1c0c665a7f137819897bcfc501103b6258c2d1bea7505dabf0e8f1a2bbd6ed5",
-          "stateRoot_": "0x3e363acbfc91e791f79073a8eb63e325ee9de38c12dcf65c36a109550241a463",
-          "verifiedAt_": 1740633467
+          "blockId_": 927263,
+          "blockHash_": "0x9110f268544b8f966ded086a6f09d4557f678aff273adfb3658c7a56bb21e6ac",
+          "stateRoot_": "0x5409aaf066b45675a76f2604d90ae3e1977019ab7fc134e4bfc751983ce6c089",
+          "verifiedAt_": 1741078931
         },
         "getLastVerifiedBlock": {
-          "blockId_": 906513,
-          "blockHash_": "0xc3940878e384418df7b2dfdf0723b4136573f948c92a23ebf1f5d6a5070dca7c",
+          "blockId_": 927272,
+          "blockHash_": "0xe6ce09f4c9f0bc87a087ebd9eaf6363e23e6cb0e7a75d9c12185c00c95165ea3",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1740633467
+          "verifiedAt_": 1741078931
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 906511,
-            "lastSynecdAt": 1740662339
+            "lastSyncedBlockId": 927263,
+            "lastSynecdAt": 1741094891
           },
           {
-            "numBlocks": 908311,
-            "lastVerifiedBlockId": 906513,
+            "numBlocks": 928227,
+            "lastVerifiedBlockId": 927272,
             "provingPaused": false,
-            "lastProposedIn": 21938094,
+            "lastProposedIn": 21973872,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
         "inNonReentrant": false,
-        "lastProposedIn": 21938094,
+        "lastProposedIn": 21973872,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -245,14 +247,14 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 906511,
-            "lastSynecdAt": 1740662339
+            "lastSyncedBlockId": 927263,
+            "lastSynecdAt": 1741094891
           },
           "slotB": {
-            "numBlocks": 908311,
-            "lastVerifiedBlockId": 906513,
+            "numBlocks": 928227,
+            "lastVerifiedBlockId": 927272,
             "provingPaused": false,
-            "lastProposedIn": 21938094,
+            "lastProposedIn": 21973872,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -292,6 +294,7 @@
       ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1714033799,
+      "sinceBlock": 19731197,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xcfe803378D79d1180EbF030455040EA6513869dF",
@@ -324,7 +327,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1740664355,
+        "clock": 1741095503,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -356,6 +359,7 @@
         "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
       ],
       "sinceTimestamp": 1739426099,
+      "sinceBlock": 21835609,
       "values": {
         "$immutable": true,
         "addressManager": "0x0000000000000000000000000000000000000000",
@@ -376,6 +380,7 @@
         "0x05e2fb8e861c4bf4f0175158cc5526c23b8fb0fcec2a6a5a7d12b7a6d891ba2e"
       ],
       "sinceTimestamp": 1740364319,
+      "sinceBlock": 21913221,
       "values": {
         "$immutable": true,
         "active_tiers": [
@@ -485,6 +490,7 @@
         "0x5bf803a773ed2c117313ea970df3b38542eab3522714f18be2b65a75062e0ebf"
       ],
       "sinceTimestamp": 1714550639,
+      "sinceBlock": 19773966,
       "values": { "$immutable": true }
     },
     {
@@ -503,6 +509,7 @@
         }
       ],
       "sinceTimestamp": 1730879519,
+      "sinceBlock": 21127238,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xefe30A0D56a5804F695f971010597262CAd9A2c3",
@@ -540,6 +547,7 @@
         }
       ],
       "sinceTimestamp": 1714550627,
+      "sinceBlock": 19773965,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xB866E9046CAf4D75e2cbCD8b5eA3f07Ea74F7B47",
@@ -622,6 +630,7 @@
         }
       ],
       "sinceTimestamp": 1714550615,
+      "sinceBlock": 19773964,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x0079a79E5d8DDA67029051d505E5A11DE279B36D",
@@ -710,6 +719,7 @@
         }
       ],
       "sinceTimestamp": 1731046547,
+      "sinceBlock": 21141069,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x5f5b83Ca87E2fBc513B800FeD6cCD626536d7219",
@@ -738,6 +748,7 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "sinceTimestamp": 1736742119,
+      "sinceBlock": 21613149,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
@@ -762,6 +773,7 @@
         }
       ],
       "sinceTimestamp": 1716217559,
+      "sinceBlock": 19911920,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x280eAbfd252f017B78e15b69580F249F45FB55Fa",
@@ -851,6 +863,7 @@
         }
       ],
       "sinceTimestamp": 1714550639,
+      "sinceBlock": 19773966,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
@@ -909,6 +922,7 @@
         }
       ],
       "sinceTimestamp": 1714550603,
+      "sinceBlock": 19773963,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63",
@@ -1037,11 +1051,12 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1714192631,
+      "sinceBlock": 19744335,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
+          "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
           "0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
           "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
           "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
@@ -1051,7 +1066,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1072,6 +1087,7 @@
         }
       ],
       "sinceTimestamp": 1714550603,
+      "sinceBlock": 19773963,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3",
@@ -1137,6 +1153,7 @@
       ],
       "ignoreInWatchMode": ["nextInstanceId"],
       "sinceTimestamp": 1714550627,
+      "sinceBlock": 19773965,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x81DFEA931500cdcf0460e9EC45FA283A6B7f0838",
@@ -1179,40 +1196,13 @@
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
         "lastUnpausedAt": 0,
-        "nextInstanceId": 173,
+        "nextInstanceId": 175,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT"
       },
       "derivedName": "MainnetSgxVerifier"
-    },
-    {
-      "name": "Safe",
-      "address": "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1732702979,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2",
-          "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0x4d1471e323401d347b11627cf824dfcf21c5307d1377cffaec145c873dc2550d",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 47,
-        "VERSION": "1.4.1"
-      }
     },
     {
       "name": "TaikoBridge",
@@ -1231,6 +1221,7 @@
       ],
       "ignoreInWatchMode": ["nextMessageId"],
       "sinceTimestamp": 1714550603,
+      "sinceBlock": 19773963,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
@@ -1303,7 +1294,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 36481,
+        "nextMessageId": 36537,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1329,6 +1320,7 @@
         }
       ],
       "sinceTimestamp": 1714550627,
+      "sinceBlock": 19773965,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xB866E9046CAf4D75e2cbCD8b5eA3f07Ea74F7B47",
@@ -1411,6 +1403,7 @@
         }
       ],
       "sinceTimestamp": 1714550603,
+      "sinceBlock": 19773963,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$implementation": "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449",
@@ -1460,6 +1453,7 @@
         "0xa7c7f84404cf32503f02fd83a5400cb3a4131cd1c18109577255d297ff768351"
       ],
       "sinceTimestamp": 1736741831,
+      "sinceBlock": 21613126,
       "values": {
         "$immutable": true,
         "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
@@ -1475,13 +1469,12 @@
     { "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0" },
     { "address": "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33" },
     { "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D" },
+    { "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438" },
     { "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200" },
     { "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6" },
-    { "address": "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2" },
     { "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1" },
     { "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68" },
     { "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87" },
-    { "address": "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C" },
     { "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91" },
     { "address": "0xC384B679c028787166b9B3725aC14A60da205861" },
     { "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51" },
@@ -1678,54 +1671,6 @@
       "function withdrawBond(uint256 _amount)",
       "function withdrawEtherToAdmin(uint256 _amount)",
       "function withdrawToAdmin(uint256 _amount)"
-    ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x44d307a9ec47aA55a7a30849d065686753C86Db6": [
       "constructor(address _daoFallbackProposer)",
@@ -2206,9 +2151,6 @@
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": [
-      "constructor(address _singleton)"
     ],
     "0xB866E9046CAf4D75e2cbCD8b5eA3f07Ea74F7B47": [
       "error FUNC_NOT_IMPLEMENTED()",

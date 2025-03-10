@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -9,11 +9,10 @@ import { orbitStackL2 } from './templates/orbitStack'
 const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 
 export const galxegravity: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
+  addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
-  gasTokens: { tracked: ['G'] },
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -50,7 +49,7 @@ export const galxegravity: Layer2 = orbitStackL2({
     coingeckoPlatform: 'gravity-alpha',
     chainId: 1625,
     explorerUrl: 'https://gscan.xyz',
-    sinceTimestamp: new UnixTime(1716054191), // block 1 TS
+    sinceTimestamp: UnixTime(1716054191), // block 1 TS
     multicallContracts: [
       {
         sinceBlock: 52682,
@@ -59,6 +58,7 @@ export const galxegravity: Layer2 = orbitStackL2({
         version: '3',
       },
     ],
+    gasTokens: ['G'],
     apis: [
       { type: 'rpc', url: 'https://rpc.gravity.xyz', callsPerMinute: 1500 },
       { type: 'blockscout', url: 'https://explorer.gravity.xyz/api' },

@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
   assert,
@@ -18,27 +19,60 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = mapConfig(arbitrum, arbitrum.chainConfig)
+    const result = await mapConfig(arbitrum, Logger.SILENT)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
-    expect(result.tokens[0]).toEqual({
-      id: TokenId('ethereum-native-0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
-      ticker: 'ETH',
+    expect(result.tokens.find((t) => t.id === 'arbitrum-ETH')).toEqual({
+      mode: 'auto',
+      id: TokenId('arbitrum-ETH'),
+      priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ether',
       amount: {
-        type: 'balanceOfEscrow',
-        address: 'native',
-        chain: 'ethereum',
-        escrowAddress: EthereumAddress(
-          '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
-        ),
-        decimals: 18,
+        type: 'calculation',
+        operator: 'sum',
+        arguments: [
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0xcEe284F754E854890e311e3280b767F80797180d',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+            ),
+            decimals: 18,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
+            ),
+            decimals: 18,
+          },
+        ],
       },
-      sinceTimestamp: new UnixTime(1661457944),
-      untilTimestamp: undefined,
+      sinceTimestamp: UnixTime(1661457944),
       category: 'ether',
       source: 'canonical',
       isAssociated: false,
@@ -46,70 +80,37 @@ describe(mapConfig.name, () => {
 
     expect(
       result.tokens.find(
-        (t) =>
-          t.id ===
-          'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1-0xcEe284F754E854890e311e3280b767F80797180d',
+        (t) => t.id === 'arbitrum-ARB' && t.amount.type === 'circulatingSupply',
       ),
     ).toEqual({
-      id: TokenId(
-        'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1-0xcEe284F754E854890e311e3280b767F80797180d',
-      ),
-      ticker: 'ARB',
+      mode: 'auto',
+      id: TokenId('arbitrum-ARB'),
       symbol: 'ARB',
       name: 'Arbitrum',
-      amount: {
-        type: 'balanceOfEscrow',
-        address: EthereumAddress('0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1'),
-        chain: 'ethereum',
-        escrowAddress: EthereumAddress(
-          '0xcEe284F754E854890e311e3280b767F80797180d',
-        ),
-        decimals: 18,
-      },
-      sinceTimestamp: new UnixTime(1623867835),
-      untilTimestamp: undefined,
-      category: 'other',
-      source: 'external',
-      isAssociated: true,
-    })
-
-    expect(
-      result.tokens.find(
-        (t) => t.id === 'arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548',
-      ),
-    ).toEqual({
-      id: TokenId('arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548'),
-      symbol: 'ARB',
-      name: 'Arbitrum',
-      ticker: 'ARB',
+      priceId: 'arbitrum',
       amount: {
         type: 'circulatingSupply',
-        ticker: 'ARB',
+        priceId: 'arbitrum',
       },
-      sinceTimestamp: new UnixTime(1679529600),
-      untilTimestamp: undefined,
+      sinceTimestamp: UnixTime(1679529600),
       category: 'other',
       source: 'native',
       isAssociated: true,
     })
 
-    expect(
-      result.tokens.find(
-        (t) => t.id === 'arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-      ),
-    ).toEqual({
-      id: TokenId('arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
+    expect(result.tokens.find((t) => t.id === 'arbitrum-ATH')).toEqual({
+      mode: 'auto',
+      id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',
       name: 'Aethir Token',
-      ticker: 'ATH',
+      priceId: 'aethir',
       amount: {
         type: 'totalSupply',
         address: EthereumAddress('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
         chain: 'arbitrum',
         decimals: 18,
       },
-      sinceTimestamp: new UnixTime(1718150400),
-      untilTimestamp: undefined,
+      sinceTimestamp: UnixTime(1718150400),
       category: 'other',
       source: 'external',
       isAssociated: false,
@@ -122,7 +123,7 @@ describe(extractPricesAndAmounts.name, () => {
     const tvsConfig = mockObject<TvsConfig>({
       tokens: [
         mockObject<Token>({
-          ticker: 'ARB',
+          priceId: 'price-ARB',
           amount: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(
@@ -139,23 +140,33 @@ describe(extractPricesAndAmounts.name, () => {
           valueForTotal: undefined,
         }),
         mockObject<Token>({
-          ticker: 'ARB',
+          priceId: 'price-ARB',
           amount: {
             type: 'circulatingSupply',
-            ticker: 'ARB',
+            priceId: 'price-ARB',
           },
           valueForProject: undefined,
           valueForTotal: undefined,
         }),
         mockObject<Token>({
-          ticker: 'ATH',
+          priceId: 'price-ATH',
           amount: {
-            type: 'totalSupply',
-            address: EthereumAddress(
-              '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-            ),
-            chain: 'arbitrum',
-            decimals: 18,
+            type: 'calculation',
+            operator: 'max',
+            arguments: [
+              {
+                type: 'const',
+                value: 100,
+              },
+              {
+                type: 'totalSupply',
+                address: EthereumAddress(
+                  '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+                ),
+                chain: 'arbitrum',
+                decimals: 18,
+              },
+            ],
           },
           valueForProject: undefined,
           valueForTotal: undefined,
@@ -179,8 +190,8 @@ describe(extractPricesAndAmounts.name, () => {
           type: 'balanceOfEscrow',
         },
         {
-          id: 'fa28ab16f857',
-          ticker: 'ARB',
+          id: '4ffda8b9b469',
+          priceId: 'price-ARB',
           type: 'circulatingSupply',
         },
         {
@@ -195,10 +206,10 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          ticker: 'ARB',
+          priceId: 'price-ARB',
         },
         {
-          ticker: 'ATH',
+          priceId: 'price-ATH',
         },
       ],
     })
@@ -219,7 +230,7 @@ describe(extractPricesAndAmounts.name, () => {
       tokens: [
         // WBTC with amount formula as totalSupply on L2
         mockObject<Token>({
-          ticker: 'WBTC',
+          priceId: 'price-WBTC',
           amount: {
             type: 'totalSupply',
             address: wBTCContractAddress,
@@ -233,7 +244,7 @@ describe(extractPricesAndAmounts.name, () => {
         // - amount formula as totalSupply on L2
         // - valueForProject formula as totalSupply of solveBTC on L2 - balance of WBTC locked in solvBTC escrow
         mockObject<Token>({
-          ticker: 'SolvBTC',
+          priceId: 'price-SolvBTC',
           amount: {
             type: 'totalSupply',
             address: solvBTCContractAddress,
@@ -252,7 +263,7 @@ describe(extractPricesAndAmounts.name, () => {
                   chain: 'bob',
                   decimals: 18,
                 },
-                ticker: 'SolvBTC',
+                priceId: 'price-SolvBTC',
               },
               {
                 type: 'value',
@@ -263,7 +274,7 @@ describe(extractPricesAndAmounts.name, () => {
                   decimals: 18,
                   escrowAddress: solvBTCEscrowAddress,
                 },
-                ticker: 'WBTC',
+                priceId: 'price-WBTC',
               },
             ],
           },
@@ -300,10 +311,10 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          ticker: 'WBTC',
+          priceId: 'price-WBTC',
         },
         {
-          ticker: 'SolvBTC',
+          priceId: 'price-SolvBTC',
         },
       ],
     })

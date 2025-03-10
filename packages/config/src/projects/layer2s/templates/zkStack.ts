@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
@@ -21,27 +21,29 @@ import {
 } from '../../../common'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { Layer2, Layer2Display } from '../../../internalTypes'
+import type {
+  Layer2TxConfig,
+  ProjectScalingTechnology,
+} from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectContract,
   ProjectDaTrackingConfig,
   ProjectEscrow,
+  ProjectFinalityConfig,
   ProjectPermissions,
+  ProjectScalingCapability,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectTechnology,
-  StageConfig,
   TableReadyValue,
 } from '../../../types'
 import { BADGES } from '../../badges'
@@ -63,7 +65,7 @@ export interface DAProvider {
 
 export interface ZkStackConfigCommon {
   addedAt: UnixTime
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
@@ -78,7 +80,7 @@ export interface ZkStackConfigCommon {
   diamondContract: ContractParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
-  finality?: Layer2FinalityConfig
+  finality?: ProjectFinalityConfig
   l2OutputOracle?: ContractParameters
   portal?: ContractParameters
   milestones?: Milestone[]
@@ -92,19 +94,13 @@ export interface ZkStackConfigCommon {
   chainConfig?: ChainConfig
   usesBlobs?: boolean
   isUnderReview?: boolean
-  stage?: StageConfig
+  stage?: ProjectScalingStage
   additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: {
-    /** Gas tokens that have been added to tokens.jsonc */
-    tracked?: string[]
-    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
-    untracked?: string[]
-  }
-  nonTemplateRiskView?: Partial<ScalingProjectRiskView>
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
@@ -120,6 +116,7 @@ export interface ZkStackConfigCommon {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export type Upgradeability = {
@@ -288,10 +285,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -312,7 +305,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
@@ -576,6 +572,7 @@ ZKsync Era's ChainAdmin differs from the others as it also has the above *Elasti
     },
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
@@ -602,8 +599,8 @@ function getDaTracking(
     'validatorsVTL',
   )
 
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
   return templateVars.usesBlobs
     ? [

@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -23,15 +18,15 @@ import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
-import { delayDescriptionFromString } from '../../utils/delayDescription'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('myria')
 
@@ -42,12 +37,6 @@ const upgradeDelaySeconds = discovery.getContractValue<number>(
 const includingSHARPUpgradeDelaySeconds = Math.min(
   upgradeDelaySeconds,
   getSHARPVerifierUpgradeDelay(),
-)
-const upgradeDelay = formatSeconds(upgradeDelaySeconds)
-
-const verifierAddress = discovery.getAddressFromValue(
-  'GpsFactRegistryAdapter',
-  'gpsContract',
 )
 
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -61,7 +50,7 @@ export const myria: Layer2 = {
   type: 'layer2',
   id: ProjectId('myria'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -104,13 +93,13 @@ export const myria: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
-        sinceTimestamp: new UnixTime(1659542607),
+        sinceTimestamp: UnixTime(1659542607),
         tokens: ['ETH'],
       }),
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1659542607),
+      sinceTimestamp: UnixTime(1659542607),
       resyncLastDays: 7,
     },
   },
@@ -147,41 +136,14 @@ export const myria: Layer2 = {
     exitMechanisms: EXITS.STARKEX_SPOT,
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('StarkExchange'),
-        discovery.getContractDetails(
-          'Committee',
-          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-        ),
-        ...getSHARPVerifierContracts(discovery, verifierAddress),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Governors',
-          getProxyGovernance(discovery, 'StarkExchange'),
-          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromString(upgradeDelay),
-        ),
-        committeePermission,
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-          'Allowed to update the state. When the Operator is down the state cannot be updated.',
-        ),
-      ],
-    },
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'Mainnet Launch',

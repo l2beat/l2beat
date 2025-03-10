@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21786536,
-  "configHash": "0xcdc5a50a6951be4169972b7d1964d628101cd8e634c9a7a9ac133428a018c4d4",
+  "configHash": "0xb8fcbc185bbc6efff49cbe0c98f7d811397a4060ce809d11c6fcc9781b1aad22",
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -13,6 +13,7 @@
       ],
       "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.",
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$immutable": true,
         "pausers": [
@@ -31,6 +32,7 @@
       ],
       "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
       "sinceTimestamp": 1723232219,
+      "sinceBlock": 20493176,
       "values": {
         "$immutable": true,
         "implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
@@ -48,6 +50,7 @@
       "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
       "ignoreInWatchMode": ["latestPress", "canPress"],
       "sinceTimestamp": 1727895695,
+      "sinceBlock": 20879772,
       "values": {
         "$immutable": true,
         "canPress": false,
@@ -119,6 +122,7 @@
       ],
       "ignoreInWatchMode": ["avs"],
       "sinceTimestamp": 1711141931,
+      "sinceBlock": 19492759,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
@@ -220,6 +224,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686681203,
+      "sinceBlock": 17472874,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -282,6 +287,7 @@
         }
       ],
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
@@ -333,6 +339,7 @@
         }
       ],
       "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
       "values": {
         "$immutable": true,
         "owner": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
@@ -481,6 +488,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732236023,
+      "sinceBlock": 21239749,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -518,6 +526,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686325811,
+      "sinceBlock": 17443669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -548,6 +557,7 @@
         "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
       ],
       "sinceTimestamp": 1686348959,
+      "sinceBlock": 17445565,
       "values": {
         "$immutable": true,
         "implementation": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
@@ -598,6 +608,7 @@
         }
       ],
       "sinceTimestamp": 1723232243,
+      "sinceBlock": 20493178,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74",
@@ -624,6 +635,7 @@
         "0xda9b2195cd2d07052198378564d56758772451df9c7849c8d958ef8e2207e059"
       ],
       "sinceTimestamp": 1724181107,
+      "sinceBlock": 20571837,
       "values": {
         "$immutable": true,
         "activeValidatorCount": 0,
@@ -666,6 +678,7 @@
         }
       ],
       "sinceTimestamp": 1732299167,
+      "sinceBlock": 21244979,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -755,6 +768,7 @@
         }
       ],
       "sinceTimestamp": 1721406755,
+      "sinceBlock": 20341793,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x29A954e9e7F12936Db89b183ECdf879fBBB99F14",
@@ -804,6 +818,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1728099143,
+      "sinceBlock": 20896663,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -861,6 +876,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
       "values": {
         "$admin": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
         "$implementation": "0xF2b225815F70c9b327DC9db758A36c92A4279b17",
@@ -950,6 +966,7 @@
         }
       ],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b",
@@ -1026,6 +1043,7 @@
         }
       ],
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
@@ -1077,6 +1095,7 @@
       ],
       "ignoreInWatchMode": ["numPods"],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa",
@@ -1132,6 +1151,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732299383,
+      "sinceBlock": 21244997,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -1158,6 +1178,7 @@
       ],
       "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.",
       "sinceTimestamp": 1727895359,
+      "sinceBlock": 20879744,
       "values": {
         "$immutable": true,
         "amounts": ["321855128516280769230770", "965565385548842307692308"],
@@ -1180,6 +1201,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1697498675,
+      "sinceBlock": 18366203,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1348,6 +1370,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686327791,
+      "sinceBlock": 17443829,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1392,6 +1415,7 @@
         }
       ],
       "sinceTimestamp": 1732234379,
+      "sinceBlock": 21239612,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -1480,6 +1504,7 @@
         }
       ],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xF3234220163a757edf1E11a8a085638D9B236614",
@@ -1518,6 +1543,7 @@
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1723232207,
+      "sinceBlock": 20493175,
       "values": {
         "$immutable": true,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
@@ -1591,6 +1617,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1697499563,
+      "sinceBlock": 18366276,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0",
@@ -1729,6 +1756,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686680867,
+      "sinceBlock": 17472847,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

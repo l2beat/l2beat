@@ -4,10 +4,10 @@ import {
   type DiscoveryConfig,
   type DiscoveryEngine,
   DiscoveryLogger,
+  type DiscoveryOutput,
   flattenDiscoveredSources,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   type AllProviderStats,
   ProviderMeasurement,

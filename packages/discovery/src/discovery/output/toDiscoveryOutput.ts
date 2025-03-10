@@ -1,9 +1,9 @@
+import type { Hash256 } from '@l2beat/shared-pure'
 import type {
   ContractParameters,
   DiscoveryOutput,
   EoaParameters,
-} from '@l2beat/discovery-types'
-import type { Hash256 } from '@l2beat/shared-pure'
+} from './types'
 
 import type { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -99,7 +99,8 @@ export function processAnalysis(
           receivedPermissions,
           directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,
-          sinceTimestamp: x.deploymentTimestamp?.toNumber(),
+          sinceTimestamp: x.deploymentTimestamp,
+          sinceBlock: x.deploymentBlockNumber,
           values:
             Object.keys(x.values).length === 0
               ? undefined

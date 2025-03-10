@@ -6,7 +6,7 @@ const MS_IN_SECOND = 1000
 // Data
 export const LoopringBlock = z.object({
   blockId: z.number(),
-  createdAt: numberAs((n) => new UnixTime(Math.floor(n / MS_IN_SECOND))),
+  createdAt: numberAs((n) => UnixTime(Math.floor(n / MS_IN_SECOND))),
   transactions: z.array(
     z.object({
       txType: z.string(),

@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "ethereum",
   "blockNumber": 21845003,
-  "configHash": "0xc58864b28f22112369a870a2cf6be9fb2161ff963fc995652f4df4cf2f482d87",
+  "configHash": "0xf9cd9814d1e53ec7fc43563009e302a2703b6091f39eadcb2d6630e80fae94ae",
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -11,6 +11,7 @@
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
       "sinceTimestamp": 1705017083,
+      "sinceBlock": 18987060,
       "values": {
         "$immutable": true,
         "additionalBatchSizes": [],
@@ -32,6 +33,7 @@
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
       "sinceTimestamp": 1688036519,
+      "sinceBlock": 17584527,
       "values": {
         "$immutable": true,
         "additionalBatchSizes": [600, 1200],
@@ -56,6 +58,7 @@
         "0xc2565a490312be5d6a5b12bcb700c6fa795caab49384ab6d23343096134df95f"
       ],
       "sinceTimestamp": 1705017431,
+      "sinceBlock": 18987089,
       "values": { "$immutable": true },
       "derivedName": "Verifier"
     },
@@ -66,6 +69,7 @@
         "0x7c8adbb6efe5b3350d779e102d5ae78fd639c4f8ceefafea77344463d5d8cc94"
       ],
       "sinceTimestamp": 1704776987,
+      "sinceBlock": 18967237,
       "values": { "$immutable": true },
       "derivedName": "Verifier"
     },
@@ -76,6 +80,7 @@
         "0x82f68854d52503cd6c6f6ff3c97b47515d8e5b65abc2950508e18059dff0692f"
       ],
       "sinceTimestamp": 1705017371,
+      "sinceBlock": 18987084,
       "values": { "$immutable": true },
       "derivedName": "Verifier"
     },
@@ -86,6 +91,7 @@
         "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
       ],
       "sinceTimestamp": 1688036723,
+      "sinceBlock": 17584544,
       "values": { "$immutable": true }
     },
     {
@@ -95,6 +101,7 @@
         "0xbd34cc0d432d6d6834f925e6553abb9510b448b0eb25d2e40263813ad71f6f86"
       ],
       "sinceTimestamp": 1704777119,
+      "sinceBlock": 18967248,
       "values": { "$immutable": true },
       "derivedName": "Verifier"
     },
@@ -116,6 +123,7 @@
       ],
       "ignoreInWatchMode": ["latestRoot"],
       "sinceTimestamp": 1688671151,
+      "sinceBlock": 17636832,
       "values": {
         "$admin": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
         "$implementation": "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd",
@@ -166,6 +174,7 @@
         "0xca7e21152b6ce21c64fdb15e8d8e9ac03809d3f499f232454a62e8060acbc3b9"
       ],
       "sinceTimestamp": 1704777071,
+      "sinceBlock": 18967244,
       "values": { "$immutable": true },
       "derivedName": "Verifier"
     }

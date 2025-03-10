@@ -13,6 +13,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148739,
+      "sinceBlock": 18679696,
       "values": {
         "$immutable": true,
         "prover0": "0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc",
@@ -30,6 +31,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148715,
+      "sinceBlock": 18679684,
       "values": { "$immutable": true }
     },
     {
@@ -53,6 +55,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0xcA00Db0289131B71A6624f62666bd54305697BB2",
@@ -83,6 +86,7 @@
       ],
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1709320645,
+      "sinceBlock": 11265649,
       "values": { "$immutable": true }
     },
     {
@@ -94,6 +98,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148731,
+      "sinceBlock": 18679692,
       "values": { "$immutable": true }
     },
     {
@@ -112,6 +117,7 @@
         }
       ],
       "sinceTimestamp": 1709053969,
+      "sinceBlock": 11132311,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -152,6 +158,7 @@
       ],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x98DB769A9E15D66EA04665da0dF616596c296BA8",
@@ -232,6 +239,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x5C2950Bd136716540e1F5CF442f2AB0aD2F413A7",
@@ -282,6 +290,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x4326B3755539d35b0A8846bF9b33982A8eA42c93",
@@ -384,6 +393,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1730411695,
+      "sinceBlock": 21811174,
       "values": {
         "$immutable": false,
         "$implementation": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
@@ -413,6 +423,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148707,
+      "sinceBlock": 18679680,
       "values": { "$immutable": true }
     },
     {
@@ -451,6 +462,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x3C4DF76De31816443C207E49F9fE48737C8F2746",
@@ -506,6 +518,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1737507257,
+      "sinceBlock": 25358955,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -569,6 +582,7 @@
         "lastStakeBlock"
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028",
         "$implementation": [
@@ -607,6 +621,7 @@
         "firstUnresolvedNode": 2763,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
+        "isPostBoLD": false,
         "lastStakeBlock": 23492774,
         "latestConfirmed": 2762,
         "latestNodeCreated": 2828,
@@ -702,6 +717,7 @@
         }
       ],
       "sinceTimestamp": 1729063511,
+      "sinceBlock": 21137082,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -729,6 +745,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148725,
+      "sinceBlock": 18679689,
       "values": { "$immutable": true }
     },
     {
@@ -752,6 +769,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0x20fA6358f89Ed16d48F6588a8f500887354Ff56c",
@@ -803,6 +821,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
         "$implementation": "0xc00336Cdf86AE7AD58D8773B0114082C190D28D5",
@@ -824,11 +843,38 @@
           "0xDb8E759859058952c34953c8469f464109826e52"
         ],
         "delayedMessageCount": 148412,
+        "inboxHistory": [
+          "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
+          "0x766DD3A13d17C6D175975C89225bde89F052dBc4",
+          "0x311556934459Cc8037E203Dc8ee5bd2cEcAD38F4"
+        ],
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "outboxHistory": [
+          "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
+          "0xDb8E759859058952c34953c8469f464109826e52"
+        ],
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
         "sequencerMessageCount": 33134,
         "sequencerReportedSubMessageCount": 25378208
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -871,6 +917,7 @@
         }
       ],
       "sinceTimestamp": 1710087441,
+      "sinceBlock": 11649047,
       "values": {
         "$immutable": true,
         "owner": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
@@ -1704,7 +1751,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
@@ -1714,7 +1761,7 @@
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
     "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x3a9246a912d738821e12f469caa2b045470c35e714b11f5761fb5ed8944002af",
+    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
