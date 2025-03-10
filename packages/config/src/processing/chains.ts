@@ -1,7 +1,7 @@
-import { bridges } from '../bridges'
-import { layer2s } from '../layer2s'
-import { layer3s } from '../layer3s'
-import { refactored } from '../refactored'
+import { bridges } from './bridges'
+import { layer2s } from './layer2s'
+import { layer3s } from './layer3s'
+import { refactored } from './refactored'
 
 /** @deprecated */
 export const chains = [

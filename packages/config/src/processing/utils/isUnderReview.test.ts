@@ -4,14 +4,14 @@ import type {
   ProjectScalingConfig,
   ProjectScalingDisplay,
   ScalingProject,
-} from '../../../internalTypes'
-import type { ProjectScalingTechnology } from '../../../internalTypes'
+} from '../../internalTypes'
+import type { ProjectScalingTechnology } from '../../internalTypes'
 import type {
   ProjectContracts,
   ProjectScalingRiskView,
   ProjectScalingStage,
   TableReadyValue,
-} from '../../../types'
+} from '../../types'
 import { isUnderReview } from './isUnderReview'
 
 describe(isUnderReview.name, () => {

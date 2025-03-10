@@ -4,14 +4,10 @@ import {
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, type Token, UnixTime } from '@l2beat/shared-pure'
-import { runConfigAdjustments } from '../../adjustments'
-import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
-import type {
-  Bridge,
-  Layer2TxConfig,
-  ScalingProject,
-} from '../../internalTypes'
-import { getTokenList } from '../../tokens/tokens'
+import { PROJECT_COUNTDOWNS } from '../global/countdowns'
+import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
+import { badgesCompareFn } from '../projects/badges'
+import { getTokenList } from '../tokens/tokens'
 import type {
   BaseProject,
   ProjectCostsInfo,
@@ -20,17 +16,17 @@ import type {
   ProjectLivenessInfo,
   ProjectTvlConfig,
   ProjectTvlEscrow,
-} from '../../types'
+} from '../types'
 import {
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,
-} from '../../utils/discoveryDriven'
-import { isVerified } from '../../verification/isVerified'
-import { badgesCompareFn } from '../badges'
-import { bridges } from '../bridges'
-import { layer2s } from '../layer2s'
-import { layer3s } from '../layer3s'
-import { refactored } from '../refactored'
+} from '../utils/discoveryDriven'
+import { isVerified } from '../verification/isVerified'
+import { runConfigAdjustments } from './adjustments'
+import { bridges } from './bridges'
+import { layer2s } from './layer2s'
+import { layer3s } from './layer3s'
+import { refactored } from './refactored'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'

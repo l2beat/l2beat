@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { layer2s } from '../../layer2s'
+import { layer2s } from '../layer2s'
 
 export function getHostChain(id: ProjectId) {
   if (id === ProjectId.ETHEREUM) {

@@ -1,13 +1,10 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { checkRisk } from '../../test/helpers'
-import { getTokenList } from '../../tokens/tokens'
-import type {
-  ProjectBridgeTechnology,
-  ProjectTechnologyChoice,
-} from '../../types'
-import { chains } from '../chains'
-import { bridges } from './index'
+import { checkRisk } from '../test/helpers'
+import { getTokenList } from '../tokens/tokens'
+import type { ProjectBridgeTechnology, ProjectTechnologyChoice } from '../types'
+import { bridges } from './bridges'
+import { chains } from './chains'
 
 const tokenList = getTokenList(chains)
 

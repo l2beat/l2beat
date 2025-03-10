@@ -1,4 +1,4 @@
-import type { ProjectScalingStage, ProjectStageName } from '../../../types'
+import type { ProjectScalingStage, ProjectStageName } from '../../types'
 
 export function getStage(config: ProjectScalingStage): ProjectStageName {
   if (config.stage === 'NotApplicable') {

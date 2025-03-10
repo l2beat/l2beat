@@ -1,4 +1,4 @@
-import type { Badge } from '../../../types'
+import type { Badge } from '../../types'
 
 export function getRaas(badges: Badge[] | undefined) {
   const badge = badges?.find((b) => b.type === 'RaaS')

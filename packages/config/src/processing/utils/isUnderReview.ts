@@ -1,5 +1,5 @@
-import type { Bridge, ScalingProject } from '../../../internalTypes'
-import type { TableReadyValue } from '../../../types'
+import type { Bridge, ScalingProject } from '../../internalTypes'
+import type { TableReadyValue } from '../../types'
 
 // this function should be updated when new sections that can be under review are added
 export function isUnderReview(project: ScalingProject | Bridge): boolean {
