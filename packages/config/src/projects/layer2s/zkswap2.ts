@@ -9,16 +9,16 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkswap2')
 
-export const zkswap2: Layer2 = {
+export const zkswap2: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zkswap2'),
   capability: 'universal',
-  addedAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
+  addedAt: UnixTime(1629199654), // 2021-08-17T11:27:34Z
   isArchived: true,
   display: {
     name: 'ZKSwap 2.0',
@@ -54,7 +54,7 @@ export const zkswap2: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3'),
-        sinceTimestamp: new UnixTime(1626059966),
+        sinceTimestamp: UnixTime(1626059966),
         tokens: '*',
         chain: 'ethereum',
       },

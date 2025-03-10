@@ -23,6 +23,7 @@ import {
 } from '../utils/extractors'
 import type { TemplateService } from './TemplateService'
 import { resolveCategory } from './category'
+import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import { type ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
@@ -85,7 +86,7 @@ export class AddressAnalyzer {
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
-    if (code.length === 0) {
+    if (codeIsEOA(code)) {
       return {
         type: 'EOA',
         name: config.name,

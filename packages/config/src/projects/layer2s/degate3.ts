@@ -17,12 +17,13 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
+  SOA,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
@@ -97,11 +98,11 @@ const timelockUpgrades2 = {
   ],
 }
 
-export const degate3: Layer2 = {
+export const degate3: ScalingProject = {
   type: 'layer2',
   id: ProjectId('degate3'),
   capability: 'appchain',
-  addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  addedAt: UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.EthereumCalldata,
@@ -153,7 +154,7 @@ export const degate3: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x54D7aE423Edb07282645e740C046B9373970a168'),
-        sinceTimestamp: new UnixTime(1699746983),
+        sinceTimestamp: UnixTime(1699746983),
         tokens: '*',
       }),
     ],
@@ -178,7 +179,7 @@ export const degate3: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1699747007),
+          sinceTimestamp: UnixTime(1699747007),
         },
       },
     ],
@@ -190,11 +191,22 @@ export const degate3: Layer2 = {
     },
     finality: {
       type: 'Degate',
-      minTimestamp: new UnixTime(1699747007),
+      minTimestamp: UnixTime(1699747007),
       lag: 0,
       stateUpdate: 'disabled',
     },
   },
+  scopeOfAssessment: {
+    checked: [SOA.l1Contracts, SOA.gasToken, SOA.derivationSpec],
+    notChecked: [
+      SOA.specToSourceCode,
+      SOA.sourceCodeToVerificationKeys,
+      SOA.trustedSetup,
+      SOA.sequencerPolicy,
+      SOA.nonGasTokens,
+    ],
+  },
+
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,

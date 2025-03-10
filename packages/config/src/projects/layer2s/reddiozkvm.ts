@@ -1,14 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../common'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
-export const reddiozkvm: Layer2 = {
+export const reddiozkvm: ScalingProject = {
   isUpcoming: true,
   type: 'layer2',
   id: ProjectId('reddiozkvm'),
   capability: 'universal',
-  addedAt: new UnixTime(1704460390), // 2024-01-05T13:13:10Z
+  addedAt: UnixTime(1704460390), // 2024-01-05T13:13:10Z
   display: {
     name: 'Reddio zkVM',
     slug: 'reddiozkvm',

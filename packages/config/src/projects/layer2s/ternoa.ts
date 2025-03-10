@@ -7,7 +7,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -29,8 +29,8 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const ternoa: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
+export const ternoa: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1727455020), // 2024-09-27T17:09:00Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
@@ -93,7 +93,7 @@ export const ternoa: Layer2 = polygonCDKStack({
     name: 'ternoa',
     chainId: 752025,
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
-    sinceTimestamp: new UnixTime(1735650935),
+    sinceTimestamp: UnixTime(1735650935),
     apis: [
       {
         type: 'rpc',

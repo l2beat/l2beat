@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('orbiter')
 export const orbiter: Bridge = {
   type: 'bridge',
   id: ProjectId('orbiter'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Orbiter',
     slug: 'orbiter',
@@ -36,25 +36,25 @@ export const orbiter: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x80C67432656d59144cEFf962E8fAF8926599bCF8'),
-        sinceTimestamp: new UnixTime(1649170157),
+        sinceTimestamp: UnixTime(1649170157),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x41d3D33156aE7c62c094AAe2995003aE63f587B3'),
-        sinceTimestamp: new UnixTime(1635067681),
+        sinceTimestamp: UnixTime(1635067681),
         tokens: ['USDC'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC'),
-        sinceTimestamp: new UnixTime(1654853887),
+        sinceTimestamp: UnixTime(1654853887),
         tokens: ['USDT'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x095D2918B03b2e86D68551DCF11302121fb626c9'),
-        sinceTimestamp: new UnixTime(1666335431),
+        sinceTimestamp: UnixTime(1666335431),
         tokens: ['DAI'],
         chain: 'ethereum',
       },

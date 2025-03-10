@@ -1,12 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const henez: Layer3 = underReviewL3({
+export const henez: ScalingProject = underReviewL3({
   id: 'henez',
   capability: 'universal',
-  addedAt: new UnixTime(1737469444), // 2025-01-21T14:24:03+00:00
+  addedAt: UnixTime(1737469444), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     BADGES.RaaS.Caldera,
@@ -49,13 +49,13 @@ export const henez: Layer3 = underReviewL3({
   escrows: [
     {
       address: EthereumAddress('0x66CDC656D5ACf342B2E4dC5a399Ba258Cd3f74c9'), // bridge
-      sinceTimestamp: new UnixTime(1733345653),
+      sinceTimestamp: UnixTime(1733345653),
       tokens: ['ETH'],
       chain: 'arbitrum',
     },
     {
       address: EthereumAddress('0xB6028cb0Ee0021b1879eF6e7D3B2eF2C0ca22719'), // standardGW
-      sinceTimestamp: new UnixTime(1733345657),
+      sinceTimestamp: UnixTime(1733345657),
       tokens: '*',
       chain: 'arbitrum',
     },

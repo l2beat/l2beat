@@ -22,10 +22,11 @@ import {
 } from '../../../common'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
+  ProjectScalingDisplay,
   ProjectScalingTechnology,
+  ScalingProject,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -38,6 +39,7 @@ import type {
   ProjectPermissions,
   ProjectScalingCapability,
   ProjectScalingPurpose,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
@@ -67,7 +69,7 @@ export interface PolygonCDKStackConfig {
   daProvider?: DAProvider
   customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
   stateDerivation?: ProjectScalingStateDerivation
@@ -89,9 +91,12 @@ export interface PolygonCDKStackConfig {
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
-export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
+export function polygonCDKStack(
+  templateVars: PolygonCDKStackConfig,
+): ScalingProject {
   const explorerUrl = EXPLORER_URLS['ethereum']
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
@@ -195,8 +200,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x5e9145c9',
                   functionSignature:
                     'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-                  sinceTimestamp: new UnixTime(1679653163),
-                  untilTimestamp: new UnixTime(1707824735),
+                  sinceTimestamp: UnixTime(1679653163),
+                  untilTimestamp: UnixTime(1707824735),
                 },
               },
               {
@@ -218,8 +223,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x2b0006fa',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
-                  sinceTimestamp: new UnixTime(1679653163),
-                  untilTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1679653163),
+                  untilTimestamp: UnixTime(1707822059),
                 },
               },
               {
@@ -241,8 +246,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x621dd411',
                   functionSignature:
                     'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
-                  sinceTimestamp: new UnixTime(1679653163),
-                  untilTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1679653163),
+                  untilTimestamp: UnixTime(1707822059),
                 },
               },
               {
@@ -264,7 +269,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x1489ed10',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1707822059),
                 },
               },
               {
@@ -286,7 +291,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x87c20c01',
                   functionSignature:
                     'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1707822059),
                 },
               },
             ],
@@ -301,7 +306,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           ? undefined
           : {
               type: 'PolygonZkEvm',
-              minTimestamp: new UnixTime(1679653163),
+              minTimestamp: UnixTime(1679653163),
               lag: 0,
               stateUpdate: 'disabled',
             },
@@ -454,6 +459,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
     ),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 

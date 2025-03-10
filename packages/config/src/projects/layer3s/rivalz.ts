@@ -1,11 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
-export const rivalz: Layer3 = upcomingL3({
+export const rivalz: ScalingProject = upcomingL3({
   id: 'rivalz',
   capability: 'universal',
-  addedAt: new UnixTime(1739605172),
+  addedAt: UnixTime(1739605172),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Rivalz',

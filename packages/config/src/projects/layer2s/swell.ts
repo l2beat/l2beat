@@ -5,10 +5,10 @@ import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('swell')
-const genesisTimestamp = new UnixTime(1732696703)
+const genesisTimestamp = UnixTime(1732696703)
 
 export const swell = opStackL2({
-  addedAt: new UnixTime(1712341625), // 2024-04-05T18:27:05Z
+  addedAt: UnixTime(1712341625), // 2024-04-05T18:27:05Z
   discovery,
   genesisTimestamp,
   additionalBadges: [BADGES.RaaS.AltLayer],
@@ -35,8 +35,8 @@ export const swell = opStackL2({
   },
   finality: {
     type: 'OPStack',
-    minTimestamp: new UnixTime(1732701647),
-    genesisTimestamp: new UnixTime(1732696703),
+    minTimestamp: UnixTime(1732701647),
+    genesisTimestamp: UnixTime(1732696703),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -46,7 +46,7 @@ export const swell = opStackL2({
   chainConfig: {
     name: 'swell',
     chainId: 1923,
-    sinceTimestamp: new UnixTime(1732696703),
+    sinceTimestamp: UnixTime(1732696703),
     apis: [
       {
         type: 'rpc',

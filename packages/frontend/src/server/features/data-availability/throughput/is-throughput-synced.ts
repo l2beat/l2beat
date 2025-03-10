@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 
 export function isThroughputSynced(syncedUntil: UnixTime): boolean {
-  return UnixTime.now().add(-2, 'days').lte(syncedUntil)
+  return UnixTime.now() - 2 * UnixTime.DAY <= syncedUntil
 }
 
 export function getThroughputSyncWarning(
@@ -14,17 +14,14 @@ export function getThroughputSyncWarning(
   }
 
   if (opts?.shorter) {
-    return `Throughput data is not synced since ${formatTimestamp(
-      syncedUntil.toNumber(),
-      {
-        mode: 'datetime',
-        longMonthName: true,
-      },
-    )}.`
+    return `Throughput data is not synced since ${formatTimestamp(syncedUntil, {
+      mode: 'datetime',
+      longMonthName: true,
+    })}.`
   }
 
   return `Throughput data for this item is not synced since ${formatTimestamp(
-    syncedUntil.toNumber(),
+    syncedUntil,
     {
       mode: 'datetime',
       longMonthName: true,

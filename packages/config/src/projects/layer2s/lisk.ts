@@ -2,16 +2,16 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('lisk')
 
-export const lisk: Layer2 = opStackL2({
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+export const lisk: ScalingProject = opStackL2({
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
-  genesisTimestamp: new UnixTime(1714728793),
+  genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -42,8 +42,8 @@ export const lisk: Layer2 = opStackL2({
   nonTemplateExcludedTokens: ['USDC'],
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1714728791),
-    minTimestamp: new UnixTime(1714746983), // first blob
+    genesisTimestamp: UnixTime(1714728791),
+    minTimestamp: UnixTime(1714746983), // first blob
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',

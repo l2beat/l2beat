@@ -21,7 +21,7 @@ import { ESCROW } from '../../common'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
@@ -63,7 +63,7 @@ const sequencerInbox = EthereumAddress(
 
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
-const genesisTimestamp = new UnixTime(1686074603)
+const genesisTimestamp = UnixTime(1686074603)
 const portal = discovery.getContract('OptimismPortal')
 
 const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
@@ -110,11 +110,11 @@ const permissionlessGameMaxClockExtension =
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
   permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
 
-export const base: Layer2 = {
+export const base: ScalingProject = {
   type: 'layer2',
   id: ProjectId('base'),
   capability: 'universal',
-  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
@@ -205,8 +205,8 @@ export const base: Layer2 = {
     ],
     finality: {
       type: 'OPStack',
-      minTimestamp: new UnixTime(1710375515),
-      genesisTimestamp: new UnixTime(1686789347),
+      minTimestamp: UnixTime(1710375515),
+      genesisTimestamp: UnixTime(1686789347),
       l2BlockTimeSeconds: 2,
       lag: 0,
       stateUpdate: 'disabled',
@@ -237,8 +237,8 @@ export const base: Layer2 = {
           selector: '0x9aaab648',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1686793895),
-          untilTimestamp: new UnixTime(1730303471), // before proofs
+          sinceTimestamp: UnixTime(1686793895),
+          untilTimestamp: UnixTime(1730303471), // before proofs
         },
       },
       {
@@ -252,7 +252,7 @@ export const base: Layer2 = {
           selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-          sinceTimestamp: new UnixTime(1730303471), // after proofs
+          sinceTimestamp: UnixTime(1730303471), // after proofs
         },
       },
     ],

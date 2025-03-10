@@ -1,8 +1,9 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
-import type { Layer3 } from '../../../internalTypes'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ProjectScalingDisplay } from '../../../internalTypes'
+import type {
+  ProjectScalingDisplay,
+  ScalingProject,
+} from '../../../internalTypes'
 import type {
   Badge,
   ChainConfig,
@@ -12,7 +13,7 @@ import type {
 export interface UpcomingConfigL2 {
   id: string
   addedAt: UnixTime
-  display: Layer2Display
+  display: ProjectScalingDisplay
   capability: ProjectScalingCapability
   badges?: Badge[]
   chainConfig?: ChainConfig
@@ -23,11 +24,11 @@ export interface UpcomingConfigL3 {
   addedAt: UnixTime
   display: ProjectScalingDisplay
   capability: ProjectScalingCapability
-  hostChain: Layer3['hostChain']
+  hostChain: ScalingProject['hostChain']
   badges?: Badge[]
 }
 
-export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
+export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
   return {
     isUpcoming: true,
     type: 'layer2',
@@ -49,7 +50,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
   }
 }
 
-export function upcomingL3(templateVars: UpcomingConfigL3): Layer3 {
+export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
   return {
     isUpcoming: true,
     type: 'layer3',

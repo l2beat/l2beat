@@ -187,6 +187,7 @@ export interface ChainConfig {
    * January 2021 but the block 1 on November 2021.
    */
   sinceTimestamp?: UnixTime
+  untilTimestamp?: UnixTime
   apis: ChainApiConfig[]
 }
 
@@ -274,6 +275,7 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
+  scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
 }
 
 export type ProjectScalingCategory =
@@ -285,6 +287,11 @@ export type ProjectScalingCategory =
   | 'Other'
 
 export type ProjectScalingCapability = 'universal' | 'appchain'
+
+export type ProjectScalingScopeOfAssessment = {
+  checked: string[]
+  notChecked: string[]
+}
 
 export interface ReasonForBeingInOther {
   label: string
@@ -654,6 +661,7 @@ export interface ProjectTvlInfo {
 /** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
 export interface ProjectTvlConfig {
   escrows: ProjectTvlEscrow[]
+  tokens: Token[]
   associatedTokens: string[]
 }
 

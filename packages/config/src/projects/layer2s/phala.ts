@@ -18,7 +18,7 @@ import {
 } from '../../common'
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
@@ -48,10 +48,10 @@ const upgradeDelay = 0
 const forcedWithdrawalDelay = 0
 const SEQUENCING_WINDOW_SECONDS = 3600 * 12
 
-export const phala: Layer2 = {
+export const phala: ScalingProject = {
   id: ProjectId('phala'),
   capability: 'universal',
-  addedAt: new UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
+  addedAt: UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
   display: {
     name: 'Phala',
     slug: 'phala',
@@ -95,18 +95,28 @@ export const phala: Layer2 = {
         type: 'blockscout',
         url: 'https://explorer.phala.network/api',
       },
+      {
+        type: 'rpc',
+        url: 'https://rpc.phala.network/',
+        callsPerMinute: 1500,
+      },
     ],
   },
   config: {
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521'),
-        sinceTimestamp: new UnixTime(1734388655),
+        sinceTimestamp: UnixTime(1734388655),
         tokens: '*',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A'),
-        sinceTimestamp: new UnixTime(1734388655),
+        sinceTimestamp: UnixTime(1734388655),
         tokens: ['ETH'],
       }),
     ],
@@ -120,7 +130,7 @@ export const phala: Layer2 = {
           formula: 'transfer',
           from: sequencerAddress,
           to: sequencerInbox,
-          sinceTimestamp: new UnixTime(1734388655),
+          sinceTimestamp: UnixTime(1734388655),
         },
       },
       {
@@ -134,7 +144,7 @@ export const phala: Layer2 = {
           selector: '0x9ad84880',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
-          sinceTimestamp: new UnixTime(1734388655),
+          sinceTimestamp: UnixTime(1734388655),
         },
       },
     ],

@@ -1,15 +1,21 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
+import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
+import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { Checkbox } from '~/components/core/checkbox'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
-import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
-import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
+import { formatBytes } from '~/utils/number-format/format-bytes'
 import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
@@ -21,9 +27,9 @@ interface Props {
 export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [range, setRange] = useState<CostsTimeRange>('1y')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const [showDataPosted, setShowDataPosted] = useState(false)
+  const [showDataPosted, setShowDataPosted] = useState(true)
 
-  const { data, isLoading } = api.costs.chartWithDataPosted.useQuery({
+  const { data, isLoading } = api.costs.projectChart.useQuery({
     range,
     projectId,
   })
@@ -33,7 +39,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       return undefined
     }
 
-    return data?.map(
+    return data.chart.map(
       ([
         timestamp,
         overheadGas,
@@ -81,7 +87,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const hasPostedData = chartData?.some((cost) => cost.posted !== null)
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
-
+  const resolution = rangeToResolution(range)
   return (
     <div>
       <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
@@ -109,6 +115,59 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         className="mb-2 mt-4"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
+
+      <HorizontalSeparator className="my-4" />
+      <ChartStats>
+        <ChartStatsItem
+          label={
+            range === 'max'
+              ? `Total ${unitToLabel(unit)}`
+              : `${rangeToLabel(range)} total ${unitToLabel(unit)}`
+          }
+          tooltip="The total cost for the selected time period that the project paid to Ethereum. This includes the costs for calldata, computation, blobs, and overhead."
+          isLoading={isLoading}
+        >
+          {data?.stats.total[unit].total
+            ? formatCostValue(data?.stats.total[unit].total, unit, 'total')
+            : undefined}
+        </ChartStatsItem>
+        <ChartStatsItem
+          label={`Avg ${unitToLabel(unit)} per L2 UOP`}
+          tooltip="The average cost per L2 user operation for the selected time period."
+          isLoading={isLoading}
+        >
+          {data?.stats.perL2Uop?.[unit]?.total && resolution !== 'hourly'
+            ? formatCostValue(
+                data.stats.perL2Uop[unit].total,
+                unit,
+                'per-l2-uop',
+              )
+            : undefined}
+        </ChartStatsItem>
+
+        <ChartStatsItem
+          label={
+            range === 'max'
+              ? 'Total data posted'
+              : `${rangeToLabel(range)} data posted`
+          }
+          tooltip="The total amount of data posted to Ethereum for the selected time period."
+          isLoading={isLoading}
+        >
+          {data?.stats.total.posted
+            ? formatBytes(data.stats.total.posted)
+            : undefined}
+        </ChartStatsItem>
+        <ChartStatsItem
+          label="Avg size per L2 UOP"
+          tooltip="The average posted data size of a L2 user operation for the selected time period."
+          isLoading={isLoading}
+        >
+          {data?.stats.perL2Uop?.posted && resolution !== 'hourly'
+            ? formatBytes(data.stats.perL2Uop.posted)
+            : undefined}
+        </ChartStatsItem>
+      </ChartStats>
     </div>
   )
 }
@@ -129,7 +188,7 @@ function DataPostedCheckbox({
   return (
     <Checkbox
       name="showDataPosted"
-      checked={showDataPosted}
+      checked={hasPostedData ? showDataPosted : false}
       onCheckedChange={(state) => setShowDataPosted(!!state)}
       disabled={!hasPostedData}
       labelTitle={!hasPostedData ? 'No data' : undefined}
@@ -161,4 +220,35 @@ function UnitControls({
       )}
     </div>
   )
+}
+
+function rangeToLabel(range: Exclude<CostsTimeRange, 'max'>) {
+  switch (range) {
+    case '1d':
+      return 'Past day'
+    case '7d':
+      return '7 days'
+    case '30d':
+      return '30 days'
+    case '90d':
+      return '90 days'
+    case '180d':
+      return '180 days'
+    case '1y':
+      return '1 year'
+    default:
+      assertUnreachable(range)
+  }
+}
+
+function unitToLabel(unit: CostsUnit) {
+  switch (unit) {
+    case 'usd':
+    case 'eth':
+      return 'cost'
+    case 'gas':
+      return 'gas'
+    default:
+      assertUnreachable(unit)
+  }
 }

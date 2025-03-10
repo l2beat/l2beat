@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('skale-ima')
 export const skaleIMA: Bridge = {
   type: 'bridge',
   id: ProjectId('skale-ima'),
-  addedAt: new UnixTime(1684437883), // 2023-05-18T19:24:43Z
+  addedAt: UnixTime(1684437883), // 2023-05-18T19:24:43Z
   display: {
     name: 'SKALE IMA Bridge',
     slug: 'skale-ima',
@@ -40,12 +40,12 @@ export const skaleIMA: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x49F583d263e4Ef938b9E09772D3394c71605Df94'),
-        sinceTimestamp: new UnixTime(1626719733),
+        sinceTimestamp: UnixTime(1626719733),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
-        sinceTimestamp: new UnixTime(1626719900),
+        sinceTimestamp: UnixTime(1626719900),
         tokens: '*',
       }),
     ],

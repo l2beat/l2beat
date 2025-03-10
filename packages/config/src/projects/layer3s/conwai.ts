@@ -1,12 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const conwai: Layer3 = underReviewL3({
+export const conwai: ScalingProject = underReviewL3({
   id: 'conwai',
   capability: 'universal',
-  addedAt: new UnixTime(1739364151),
+  addedAt: UnixTime(1739364151),
   badges: [
     BADGES.L3ParentChain.Arbitrum,
     BADGES.Stack.Orbit,

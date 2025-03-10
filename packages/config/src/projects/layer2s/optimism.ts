@@ -13,6 +13,7 @@ import {
   DERIVATION,
   EXITS,
   RISK_VIEW,
+  SOA,
 } from '../../common'
 import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
@@ -21,7 +22,7 @@ import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
@@ -64,7 +65,7 @@ const sequencerInbox = EthereumAddress(
 
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
-const genesisTimestamp = new UnixTime(1686074603)
+const genesisTimestamp = UnixTime(1686074603)
 const portal = discovery.getContract('OptimismPortal')
 
 const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
@@ -111,11 +112,11 @@ const permissionlessGameMaxClockExtension =
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
   permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
 
-export const optimism: Layer2 = {
+export const optimism: ScalingProject = {
   type: 'layer2',
   id: ProjectId('optimism'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
@@ -180,7 +181,7 @@ export const optimism: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
-        sinceTimestamp: new UnixTime(1625675779),
+        sinceTimestamp: UnixTime(1625675779),
         ...ESCROW.CANONICAL_EXTERNAL,
         tokens: ['DAI'],
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
@@ -188,7 +189,7 @@ export const optimism: Layer2 = {
       discovery.getEscrowDetails({
         // current SNX bridge escrow
         address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
-        sinceTimestamp: new UnixTime(1620680982),
+        sinceTimestamp: UnixTime(1620680982),
         tokens: ['SNX'],
         ...ESCROW.CANONICAL_EXTERNAL,
         description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
@@ -196,7 +197,7 @@ export const optimism: Layer2 = {
       {
         // old snx bridge
         address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
-        sinceTimestamp: new UnixTime(1610668212),
+        sinceTimestamp: UnixTime(1610668212),
         tokens: ['SNX'],
         ...ESCROW.CANONICAL_EXTERNAL,
         isHistorical: true,
@@ -205,7 +206,7 @@ export const optimism: Layer2 = {
       {
         // also old snx bridge
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
-        sinceTimestamp: new UnixTime(1620680934),
+        sinceTimestamp: UnixTime(1620680934),
         tokens: ['SNX'],
         ...ESCROW.CANONICAL_EXTERNAL,
         isHistorical: true,
@@ -236,9 +237,9 @@ export const optimism: Layer2 = {
     finality: {
       type: 'OPStack',
       // timestamp of the first blob tx
-      minTimestamp: new UnixTime(1710375155),
+      minTimestamp: UnixTime(1710375155),
       l2BlockTimeSeconds: 2,
-      genesisTimestamp: new UnixTime(1686068903),
+      genesisTimestamp: UnixTime(1686068903),
       lag: 0,
       stateUpdate: 'disabled',
     },
@@ -268,8 +269,8 @@ export const optimism: Layer2 = {
           selector: '0x9aaab648',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1660662182),
-          untilTimestamp: new UnixTime(1718039363),
+          sinceTimestamp: UnixTime(1660662182),
+          untilTimestamp: UnixTime(1718039363),
         },
       },
       {
@@ -283,7 +284,7 @@ export const optimism: Layer2 = {
           selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-          sinceTimestamp: new UnixTime(1718039363), // first create() tx after upgrade https://etherscan.io/tx/0x720954e51b8d5a39475666a54b8087e4b11fcab184eab57e51f821ba14b4c014
+          sinceTimestamp: UnixTime(1718039363), // first create() tx after upgrade https://etherscan.io/tx/0x720954e51b8d5a39475666a54b8087e4b11fcab184eab57e51f821ba14b4c014
         },
       },
     ],
@@ -321,6 +322,16 @@ export const optimism: Layer2 = {
       { type: 'etherscan', url: 'https://api-optimistic.etherscan.io/api' },
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
+  },
+  scopeOfAssessment: {
+    checked: [
+      SOA.l1Contracts,
+      SOA.l2Contracts,
+      SOA.gasToken,
+      SOA.derivationSpec,
+      SOA.sourceCodeToProgramHash,
+    ],
+    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

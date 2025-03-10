@@ -18,12 +18,12 @@ export function getXAxisProps<T extends { timestamp: number }>(
     }
   }
   const timestamps = data.map((point) => point.timestamp)
-  const minTimestamp = new UnixTime(Math.min(...timestamps))
-  const maxTimestamp = new UnixTime(Math.max(...timestamps))
+  const minTimestamp = UnixTime(Math.min(...timestamps))
+  const maxTimestamp = UnixTime(Math.max(...timestamps))
 
   const actualRangeInDays =
-    (maxTimestamp.toStartOf('day').toNumber() -
-      minTimestamp.toStartOf('day').toNumber()) /
+    (UnixTime.toStartOf(maxTimestamp, 'day') -
+      UnixTime.toStartOf(minTimestamp, 'day')) /
     UnixTime.DAY
 
   return {
@@ -35,32 +35,32 @@ export function getXAxisProps<T extends { timestamp: number }>(
 
 function getCondition(actualRangeInDays: number) {
   return (timestamp: number) => {
-    const start = new UnixTime(timestamp)
-    const date = start.toDate()
+    const start = UnixTime(timestamp)
+    const date = UnixTime.toDate(start)
 
     if (actualRangeInDays <= 1) return timestamp % (4 * UnixTime.HOUR) === 0
     if (actualRangeInDays <= 7) return timestamp % UnixTime.DAY === 0
     if (actualRangeInDays <= 30)
-      return start.toNumber() % UnixTime.DAY === 0 && date.getDay() === 1
+      return start % UnixTime.DAY === 0 && date.getDay() === 1
     if (actualRangeInDays <= 90)
       return (timestamp + 3 * UnixTime.DAY) % (21 * UnixTime.DAY) === 0
     if (actualRangeInDays <= 180)
-      return start.toNumber() % UnixTime.DAY === 0 && date.getDate() === 1
+      return start % UnixTime.DAY === 0 && date.getDate() === 1
     if (actualRangeInDays <= 365)
       return (
-        start.toNumber() % UnixTime.DAY === 0 &&
+        start % UnixTime.DAY === 0 &&
         date.getDate() === 1 &&
         date.getMonth() % 2 === 0
       )
     if (actualRangeInDays <= 1095)
       return (
-        start.toNumber() % UnixTime.DAY === 0 &&
+        start % UnixTime.DAY === 0 &&
         date.getDate() === 1 &&
         date.getMonth() % 4 === 0
       )
 
     return (
-      start.toNumber() % UnixTime.DAY === 0 &&
+      start % UnixTime.DAY === 0 &&
       date.getDate() === 1 &&
       date.getMonth() === 0
     )

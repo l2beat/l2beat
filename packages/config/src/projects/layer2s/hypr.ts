@@ -2,15 +2,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('hypr')
 
-export const hypr: Layer2 = opStackL2({
+export const hypr: ScalingProject = opStackL2({
   isArchived: true,
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [BADGES.DA.Celestia],
   discovery,
@@ -33,7 +33,7 @@ export const hypr: Layer2 = opStackL2({
       ],
     },
   },
-  genesisTimestamp: new UnixTime(1705509623),
+  genesisTimestamp: UnixTime(1705509623),
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',

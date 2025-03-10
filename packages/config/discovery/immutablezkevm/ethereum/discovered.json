@@ -1,8 +1,8 @@
 {
   "name": "immutablezkevm",
   "chain": "ethereum",
-  "blockNumber": 20977341,
-  "configHash": "0xbaab60df635e5f9b778d10071ac2154dabb086e70365518eef8876ba38512f72",
+  "blockNumber": 21995404,
+  "configHash": "0xd60ccb154e9f74ac12af4999b6e2efb204c04787055c44f15f6f49a2f526bbdb",
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -195,14 +195,14 @@
           "0xdb6c271060571A96A62E3947E373395C89f765Ba",
           "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
           "0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
-          "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
+          "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
         ],
         "$threshold": 4,
         "domainSeparator": "0x6d4cd80fab6b5f67389fb83fe46f5b27c2fbd48c5c3b58b6979e365d12da62f8",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 30,
+        "nonce": 34,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -242,7 +242,7 @@
     { "address": "0x52A6c53869Ce09a731CD772f245b97A4401d3348" },
     { "address": "0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7" },
     { "address": "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b" },
-    { "address": "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817" },
+    { "address": "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB" },
     { "address": "0xdb6c271060571A96A62E3947E373395C89f765Ba" },
     { "address": "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333" }
   ],

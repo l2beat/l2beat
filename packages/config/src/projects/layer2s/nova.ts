@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import {
   DaEconomicSecurityRisk,
@@ -91,8 +91,8 @@ const maxTimeVariation = discovery.getContractValue<{
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
-export const nova: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+export const nova: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     BADGES.VM.WasmVM,
     BADGES.Stack.Nitro,
@@ -143,7 +143,7 @@ export const nova: Layer2 = orbitStackL2({
     name: 'nova',
     chainId: 42170,
     explorerUrl: 'https://nova.arbiscan.io',
-    sinceTimestamp: new UnixTime(1656122488),
+    sinceTimestamp: UnixTime(1656122488),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -191,7 +191,7 @@ export const nova: Layer2 = orbitStackL2({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
-      sinceTimestamp: new UnixTime(1659620187),
+      sinceTimestamp: UnixTime(1659620187),
       tokens: ['DAI'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -200,7 +200,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
-      sinceTimestamp: new UnixTime(1656305583),
+      sinceTimestamp: UnixTime(1656305583),
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, “wrapped” token will be minted.',
@@ -208,7 +208,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
-      sinceTimestamp: new UnixTime(1659620187),
+      sinceTimestamp: UnixTime(1659620187),
       tokens: '*',
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

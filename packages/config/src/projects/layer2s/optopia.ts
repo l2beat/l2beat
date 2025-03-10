@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('optopia')
 
-export const optopia: Layer2 = opStackL2({
-  addedAt: new UnixTime(1722451042), // 2024-07-31T18:37:22Z
+export const optopia: ScalingProject = opStackL2({
+  addedAt: UnixTime(1722451042), // 2024-07-31T18:37:22Z
   discovery,
   additionalPurposes: ['AI'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -30,12 +30,12 @@ export const optopia: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['OPAI'],
-  genesisTimestamp: new UnixTime(1715333977),
+  genesisTimestamp: UnixTime(1715333977),
   // failing, needs different analyzer?
   // finality: {
   //   type: 'OPStack-blob',
-  //   genesisTimestamp: new UnixTime(1715333977),
-  //   minTimestamp: new UnixTime(1715336651), // first blob
+  //   genesisTimestamp: UnixTime(1715333977),
+  //   minTimestamp: UnixTime(1715336651), // first blob
   //   l2BlockTimeSeconds: 2,
   //   lag: 0,
   //   stateUpdate: 'disabled',

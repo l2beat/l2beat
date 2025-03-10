@@ -2,10 +2,10 @@
   "name": "@l2beat/config",
   "version": "0.1.0",
   "private": true,
-  "main": "build/src/index.js",
-  "types": "build/src/index.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && rm -f build/db.sqlite && node build/build.js",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "clean": "rm -rf build",
     "format:fix": "biome format --write .",
@@ -29,6 +29,7 @@
     "@l2beat/shared-pure": "workspace:*",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
+    "sqlite3": "5.1.7",
     "zod": "^3.22.2"
   },
   "devDependencies": {

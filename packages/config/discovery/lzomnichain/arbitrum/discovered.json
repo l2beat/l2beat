@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "arbitrum",
-  "blockNumber": 300193052,
+  "blockNumber": 313205484,
   "configHash": "0x5a92670a2bf0e971bdfeddb91e3a5195394ff689e152e8cc2ee55c5fe5e4659c",
   "contracts": [
     {
@@ -235,8 +235,12 @@
           "303": 20,
           "312": 20,
           "317": 20,
+          "320": 20,
+          "327": 20,
           "332": 20,
-          "339": 20
+          "335": 20,
+          "339": 20,
+          "362": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -537,11 +541,27 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "320": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "327": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "332": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "335": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "339": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "362": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -1131,6 +1151,22 @@
             "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
+          "320": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
+          },
+          "327": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
+          },
           "332": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
@@ -1139,7 +1175,23 @@
             "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
             "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
           },
+          "335": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xa7b5189bcA84Cd304D8553977c7C614329750d99",
+            "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
+          },
           "339": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"
+          },
+          "362": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
             "outboundProofType": 2,
@@ -1433,11 +1485,27 @@
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
           ],
+          "320": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
+          ],
+          "327": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
+          ],
           "332": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
           ],
+          "335": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
+          ],
           "339": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
+          ],
+          "362": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"
           ]
@@ -1520,8 +1588,12 @@
           "303": [2],
           "312": [2],
           "317": [2],
+          "320": [2],
+          "327": [2],
           "332": [2],
-          "339": [2]
+          "335": [2],
+          "339": [2],
+          "362": [2]
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1599,8 +1671,12 @@
           "303": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "312": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "317": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "320": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "327": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be"
+          "335": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
+          "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be",
+          "362": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       }
     },
@@ -1616,6 +1692,14 @@
         "$immutable": true,
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
+    },
+    {
+      "name": "",
+      "address": "0x6a4C9096F162f0ab3C0517B0a40dc1CE44785e16",
+      "unverified": true,
+      "sinceTimestamp": 1706489546,
+      "sinceBlock": 175216734,
+      "values": { "$immutable": true }
     },
     {
       "name": "FPValidator",
@@ -1687,6 +1771,27 @@
       }
     },
     {
+      "name": "DVN",
+      "address": "0xa7b5189bcA84Cd304D8553977c7C614329750d99",
+      "sourceHashes": [
+        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
+      ],
+      "sinceTimestamp": 1706489552,
+      "sinceBlock": 175216755,
+      "values": {
+        "$immutable": true,
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "paused": false,
+        "priceFeed": "0x9c8D8A224545c15024cB50C7c02cf3EA9AA1bF36",
+        "quorum": 1,
+        "signerSize": 3,
+        "vid": 110,
+        "workerFeeLib": "0x6a4C9096F162f0ab3C0517B0a40dc1CE44785e16"
+      }
+    },
+    {
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "sourceHashes": [
@@ -1744,7 +1849,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 212,
+        "nonce": 230,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -2022,6 +2127,82 @@
       "function implementation() returns (address)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xa7b5189bcA84Cd304D8553977c7C614329750d99": [
+      "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
+      "error DVN_DuplicatedHash(bytes32 executableHash)",
+      "error DVN_InstructionExpired()",
+      "error DVN_InvalidRole(bytes32 role)",
+      "error DVN_InvalidSignatures()",
+      "error DVN_InvalidTarget(address target)",
+      "error DVN_InvalidVid(uint32 vid)",
+      "error DVN_OnlySelf()",
+      "error MultiSig_OnlySigner()",
+      "error MultiSig_QuorumIsZero()",
+      "error MultiSig_SignersSizeIsLessThanQuorum(uint64 signersSize, uint64 quorum)",
+      "error MultiSig_StateAlreadySet(address signer, bool active)",
+      "error MultiSig_UnorderedSigners()",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "error Worker_NotAllowed()",
+      "error Worker_OnlyMessageLib()",
+      "error Worker_RoleRenouncingDisabled()",
+      "event ExecuteFailed(uint256 _index, bytes _data)",
+      "event HashAlreadyUsed(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) param, bytes32 _hash)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] params)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetSupportedOptionTypes(uint32 dstEid, uint8[] optionTypes)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event UpdateQuorum(uint64 _quorum)",
+      "event UpdateSigner(address _signer, bool _active)",
+      "event VerifierFeePaid(uint256 fee)",
+      "event VerifySignaturesFailed(uint256 idx)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(tuple(uint32 dstEid, bytes packetHeader, bytes32 payloadHash, uint64 confirmations, address sender) _param, bytes _options) payable returns (uint256 totalFee)",
+      "function assignJob(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) returns (uint256 totalFee)",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)",
+      "function execute(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures)[] _params)",
+      "function getFee(uint32 _dstEid, uint64 _confirmations, address _sender, bytes _options) view returns (uint256 fee)",
+      "function getFee(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSupportedOptionTypes(uint32 _eid) view returns (uint8[])",
+      "function grantRole(bytes32 _role, address _account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashCallData(uint32 _vid, address _target, bytes _callData, uint256 _expiration) pure returns (bytes32)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function quorum() view returns (uint64)",
+      "function quorumChangeAdmin(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) _param)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 _role, address _account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setQuorum(uint64 _quorum)",
+      "function setSigner(address _signer, bool _active)",
+      "function setSupportedOptionTypes(uint32 _eid, uint8[] _optionTypes)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function signerSize() view returns (uint64)",
+      "function signers(address signer) view returns (bool active)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function usedHashes(bytes32 executableHash) view returns (bool used)",
+      "function verifySignatures(bytes32 _hash, bytes _signatures) view returns (bool, uint8)",
+      "function vid() view returns (uint32)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
     ],
     "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",

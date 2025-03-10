@@ -1,13 +1,15 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens/tokens'
+import { getTokenList } from '../../tokens/tokens'
 import type {
   ProjectBridgeTechnology,
   ProjectTechnologyChoice,
 } from '../../types'
 import { chains } from '../chains'
 import { bridges } from './index'
+
+const tokenList = getTokenList(chains)
 
 describe('bridges', () => {
   describe('links', () => {
@@ -78,8 +80,8 @@ describe('bridges', () => {
             }`,
           )
 
-          expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-            chain.sinceTimestamp.toNumber(),
+          expect(escrow.sinceTimestamp).toBeGreaterThanOrEqual(
+            chain.sinceTimestamp,
           )
         })
       }
@@ -187,7 +189,10 @@ describe('bridges', () => {
         for (const milestone of project.milestones) {
           it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
-              UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+              UnixTime.isFull(
+                UnixTime.fromDate(new Date(milestone.date)),
+                'day',
+              ),
             ).toEqual(true)
           })
         }

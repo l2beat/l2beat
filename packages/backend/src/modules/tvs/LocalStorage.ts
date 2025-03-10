@@ -111,5 +111,5 @@ export class LocalStorage implements DataStorage {
 }
 
 export function key(id: string, timestamp: UnixTime): string {
-  return `${id}-${timestamp.toNumber()}`
+  return `${id}-${timestamp}`
 }

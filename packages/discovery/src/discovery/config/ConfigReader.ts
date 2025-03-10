@@ -210,6 +210,12 @@ export class ConfigReader {
   getProjectChainPath(project: string, chain: string): string {
     return path.join(this.getProjectPath(project), chain)
   }
+
+  getDisplayMode(project: string): 'fromModel' | 'fromDiscovery' {
+    const projectPath = this.getProjectPath(project)
+    const projectPageFactsPath = path.join(projectPath, 'displayUsingModel')
+    return existsSync(projectPageFactsPath) ? 'fromModel' : 'fromDiscovery'
+  }
 }
 
 function formatZodParsingError(error: ZodError, fileName: string): string {

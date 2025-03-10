@@ -7,7 +7,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -29,8 +29,8 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const wirex: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+export const wirex: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
@@ -55,7 +55,7 @@ export const wirex: Layer2 = polygonCDKStack({
     name: 'wirex',
     chainId: 31415,
     explorerUrl: 'https://pay-chain-blockscout.wirexpaychain.com',
-    sinceTimestamp: new UnixTime(1720093223),
+    sinceTimestamp: UnixTime(1720093223),
     apis: [
       {
         type: 'rpc',

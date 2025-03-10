@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x423267bf055c3d07ac6a95958673206d581b7baf
+Generated with discovered.json: 0xa46577b927261558bebb03ccaf50bab146ba85cc
+
+# Diff at Fri, 07 Mar 2025 14:41:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21579626
+- current block number: 21995661
+
+## Description
+
+Owner changes and new plug added.
+
+## Watched changes
+
+```diff
+    contract USDT Vault Zora (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB) {
+    +++ description: None
+      values.owner:
+-        "0xE328a0B1e0bE7043c9141c2073e408D1086E1175"
++        "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
+    }
+```
+
+```diff
+    contract KLAUS Vault Zora (0x528DBFcf6e2cbC62B05d7a74711AA7C44FF43cA2) {
+    +++ description: None
+      values.owner:
+-        "0xE328a0B1e0bE7043c9141c2073e408D1086E1175"
++        "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
+    }
+```
+
+```diff
+    contract USDC Vault Zora (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8) {
+    +++ description: None
+      values.owner:
+-        "0xE328a0B1e0bE7043c9141c2073e408D1086E1175"
++        "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.145:
++        "0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8"
+    }
+```
+
+Generated with discovered.json: 0xa807425a57fd9e401ec905802576a089af0a8078
 
 # Diff at Tue, 04 Mar 2025 10:39:57 GMT:
 

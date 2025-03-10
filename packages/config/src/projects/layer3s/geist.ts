@@ -2,15 +2,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('geist', 'base')
 
-export const geist: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+export const geist: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   additionalPurposes: ['Gaming', 'NFT'],
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   reasonsForBeingOther: [

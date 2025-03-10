@@ -2,14 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
 
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
 
-export const syndicateframe: Layer3 = opStackL3({
-  addedAt: new UnixTime(1711471599), // 2024-03-26T16:46:39Z
+export const syndicateframe: ScalingProject = opStackL3({
+  addedAt: UnixTime(1711471599), // 2024-03-26T16:46:39Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],
@@ -48,6 +48,6 @@ export const syndicateframe: Layer3 = opStackL3({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1707371473),
+  genesisTimestamp: UnixTime(1707371473),
   isNodeAvailable: 'UnderReview',
 })

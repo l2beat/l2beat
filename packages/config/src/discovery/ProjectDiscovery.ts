@@ -31,6 +31,7 @@ import type {
 } from '../types'
 import type { PermissionRegistry } from './PermissionRegistry'
 import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
+import { PermissionsFromModel } from './PermissionsFromModel'
 import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 import {
@@ -47,16 +48,21 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    configReader = new ConfigReader(join(process.cwd(), '../config')),
+    public readonly configReader = new ConfigReader(
+      join(process.cwd(), '../config'),
+    ),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
-    this.permissionRegistry = new PermissionsFromDiscovery(this)
     this.discoveries = [
       discovery,
       ...(discovery.sharedModules ?? []).map((module) =>
         configReader.readDiscovery(module, chain),
       ),
     ]
+    this.permissionRegistry =
+      configReader.getDisplayMode(projectName) === 'fromModel'
+        ? new PermissionsFromModel(this)
+        : new PermissionsFromDiscovery(this)
   }
 
   getEOAName(address: EthereumAddress): string {
@@ -138,9 +144,9 @@ export class ProjectDiscovery {
     sharedEscrow?: SharedEscrow
   }): ProjectEscrow {
     const contractRaw = this.getContract(address.toString())
-    const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
+    const timestamp = sinceTimestamp ?? contractRaw.sinceTimestamp
     assert(
-      timestamp,
+      timestamp !== undefined,
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
 
@@ -154,7 +160,7 @@ export class ProjectDiscovery {
 
     return {
       address,
-      sinceTimestamp: new UnixTime(timestamp),
+      sinceTimestamp: UnixTime(timestamp),
       tokens,
       excludedTokens,
       premintedTokens,
@@ -760,11 +766,39 @@ export class ProjectDiscovery {
     return s
   }
 
+  getPermissionPriority(entry: ContractParameters | EoaParameters): number {
+    if (entry.receivedPermissions === undefined) {
+      return 0
+    }
+
+    const permissions = entry.receivedPermissions.map((p) => p.from)
+    const priority = permissions.reduce((acc, permission) => {
+      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
+    }, 0)
+
+    return priority
+  }
+
   getDiscoveredPermissions(): ProjectPermissions {
-    const relevantContracts = this.permissionRegistry.getPermissionedContracts()
-    const eoas = this.permissionRegistry.getPermissionedEoas()
+    const permissionedContracts = this.permissionRegistry
+      .getPermissionedContracts()
+      .map((address) => this.getContractByAddress(address))
+      .filter(notUndefined)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+    const permissionedEoas = this.permissionRegistry
+      .getPermissionedEoas()
+      .map((address) => this.getEOAByAddress(address))
+      .filter(notUndefined)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+
     const allActors: ProjectPermission[] = []
-    for (const contract of relevantContracts) {
+    for (const contract of permissionedContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
         allActors.push(
@@ -785,10 +819,7 @@ export class ProjectDiscovery {
       }
     }
 
-    for (const eoa of eoas) {
-      if (eoa.receivedPermissions === undefined) {
-        continue
-      }
+    for (const eoa of permissionedEoas) {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
@@ -805,7 +836,10 @@ export class ProjectDiscovery {
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
+    const roles = this.describeRolePermissions([
+      ...permissionedContracts,
+      ...permissionedEoas,
+    ])
 
     // NOTE(radomski): There are two groups of "permissions" we show. Roles and
     // actors.
@@ -836,7 +870,9 @@ export class ProjectDiscovery {
         return true
       }
 
-      const eoa = eoas.find((eoa) => eoa.address === account.address)
+      const eoa = permissionedEoas.find(
+        (eoa) => eoa.address === account.address,
+      )
       assert(eoa?.receivedPermissions !== undefined)
       const hasOnlyRole = eoa.receivedPermissions.every((p) =>
         RolePermissionEntries.map((x) => x.toString()).includes(p.permission),

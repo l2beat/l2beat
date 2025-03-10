@@ -12,6 +12,12 @@
   ],
   "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox"],
   "fields": {
+    "isPostBoLD": {
+      "handler": {
+        "type": "hardcoded",
+        "value": false
+      }
+    },
     "owner": {
       "target": {
         "permissions": [

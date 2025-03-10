@@ -7,7 +7,6 @@ import {
   getEnv,
 } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
-import {} from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
@@ -36,7 +35,8 @@ const cmd = command({
     const ps = new ProjectService()
     const localExecutor = new LocalExecutor(ps, env, logger)
 
-    const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+    const timestamp =
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     const tokens = readConfig(args.project, logger)
     const config = {
@@ -49,7 +49,7 @@ const cmd = command({
     const tvsBreakdown = calculateBreakdown(tvs, timestamp, args.project)
 
     logger.info(`TVS: ${tvsBreakdown.tvs}`)
-    logger.info(`see /src/modules/tvs/breakdown.json for more details`)
+    logger.info(`Go to ./src/modules/tvs/breakdown.json for more details`)
 
     fs.writeFileSync(
       './src/modules/tvs/breakdown.json',
@@ -67,7 +67,7 @@ function calculateBreakdown(
   timestamp: UnixTime,
   project: string,
 ) {
-  const tokens = tvs.get(timestamp.toNumber())
+  const tokens = tvs.get(timestamp)
   assert(tokens, 'No data for timestamp')
 
   const tvsBreakdown: TvsBreakdown = {
@@ -158,7 +158,7 @@ function calculateBreakdown(
 
   return {
     project,
-    timestamp: timestamp.toDate().toISOString(),
+    timestamp: UnixTime.toDate(timestamp).toISOString(),
     tvs: toDollarString(tvsBreakdown.tvs),
     source: {
       canonical: {

@@ -77,6 +77,7 @@ export type AmountConfig =
 
 // token deployed to single chain
 export interface Token {
+  mode: 'auto' | 'custom'
   // unique identifier
   id: TokenId
   // by default it is set to coingeckoId

@@ -3,15 +3,15 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('real')
 
-export const real: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
+export const real: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
@@ -51,7 +51,7 @@ export const real: Layer2 = orbitStackL2({
         version: '3',
       },
     ],
-    sinceTimestamp: new UnixTime(1710580715),
+    sinceTimestamp: UnixTime(1710580715),
     coingeckoPlatform: 're-al',
     apis: [
       { type: 'rpc', url: 'https://real.drpc.org', callsPerMinute: 1500 },

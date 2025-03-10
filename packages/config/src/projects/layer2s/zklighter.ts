@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const zklighter: Layer2 = upcomingL2({
+export const zklighter: ScalingProject = upcomingL2({
   id: 'zklighter',
   capability: 'universal',
-  addedAt: new UnixTime(1711551933), // 2024-03-27T15:05:33Z
+  addedAt: UnixTime(1711551933), // 2024-03-27T15:05:33Z
   display: {
     name: 'zkLighter',
     slug: 'zklighter',

@@ -48,7 +48,8 @@ type TokenTvsChart = Awaited<ReturnType<typeof getCachedTokenTvsChartData>>
 
 export const getCachedTokenTvsChartData = cache(
   async ({ token, range }: TokenTvsChartParams) => {
-    const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
+    const targetTimestamp =
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
     const resolution = rangeToResolution(range)
 
     const project = await ps.getProject({
@@ -62,7 +63,8 @@ export const getCachedTokenTvsChartData = cache(
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
-    const configMapping = getConfigMapping(project, chains)
+    const tokenList = await ps.getTokens()
+    const configMapping = getConfigMapping(project, chains, tokenList)
 
     const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
       project.id,
@@ -95,19 +97,15 @@ export const getCachedTokenTvsChartData = cache(
     const decimals = firstTokenAmountConfig.decimals
     const data: [number, number, number][] = []
     for (const timestamp of timestamps) {
-      const amount = tokenAmounts.amounts[timestamp.toNumber()]
-      const price = tokenPrices.prices[timestamp.toNumber()]
+      const amount = tokenAmounts.amounts[timestamp]
+      const price = tokenPrices.prices[timestamp]
       assert(amount !== undefined && price !== undefined, 'No amount or price')
       const usdValue = calculateValue({
         amount,
         priceUsd: price,
         decimals,
       })
-      data.push([
-        timestamp.toNumber(),
-        asNumber(amount, decimals),
-        asNumber(usdValue, 2),
-      ])
+      data.push([timestamp, asNumber(amount, decimals), asNumber(usdValue, 2)])
     }
 
     return data
@@ -122,10 +120,13 @@ export const getCachedTokenTvsChartData = cache(
 function getMockTokenTvsChartData(params: TokenTvsChartParams): TokenTvsChart {
   const resolution = rangeToResolution(params.range)
   const [from, to] = getRangeWithMax(params.range, 'hourly')
-  const adjustedRange: [UnixTime, UnixTime] = [from ?? to.add(-730, 'days'), to]
+  const adjustedRange: [UnixTime, UnixTime] = [
+    from ?? to - 730 * UnixTime.DAY,
+    to,
+  ]
   const timestamps = generateTimestamps(adjustedRange, resolution)
 
-  return timestamps.map((timestamp) => [timestamp.toNumber(), 30000, 50000])
+  return timestamps.map((timestamp) => [timestamp, 30000, 50000])
 }
 
 function getAdjustedRange(
@@ -137,9 +138,7 @@ function getAdjustedRange(
   const [from, to] = getRangeWithMax(range, resolution, {
     now: targetTimestamp,
   })
-  const sinceTimestamp = tokenSinceTimestamp.toEndOf('day')
-  const adjustedFrom = from
-    ? UnixTime.max(from, sinceTimestamp)
-    : sinceTimestamp
+  const sinceTimestamp = UnixTime.toEndOf(tokenSinceTimestamp, 'day')
+  const adjustedFrom = from ? Math.max(from, sinceTimestamp) : sinceTimestamp
   return [adjustedFrom, to]
 }

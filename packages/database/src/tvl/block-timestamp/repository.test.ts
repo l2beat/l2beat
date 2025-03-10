@@ -15,7 +15,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
     it('adds new row', async () => {
       const newRow = {
         chain: 'chain',
-        timestamp: UnixTime.ZERO,
+        timestamp: 0,
         blockNumber: 0,
       }
 
@@ -32,17 +32,17 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
       const blocks = [
         {
           chain: 'chain',
-          timestamp: new UnixTime(1),
+          timestamp: UnixTime(1),
           blockNumber: 123,
         },
         {
           chain: 'chain',
-          timestamp: new UnixTime(2),
+          timestamp: UnixTime(2),
           blockNumber: 2,
         },
         {
           chain: 'chain-2',
-          timestamp: new UnixTime(1),
+          timestamp: UnixTime(1),
           blockNumber: 1,
         },
       ]
@@ -50,7 +50,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
 
       const blockNumber = await repository.findBlockNumberByChainAndTimestamp(
         'chain',
-        new UnixTime(1),
+        UnixTime(1),
       )
 
       expect(blockNumber).toEqual(123)
@@ -62,23 +62,23 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
       const blocks = [
         {
           chain: 'chain',
-          timestamp: new UnixTime(1),
+          timestamp: UnixTime(1),
           blockNumber: 1,
         },
         {
           chain: 'chain',
-          timestamp: new UnixTime(2),
+          timestamp: UnixTime(2),
           blockNumber: 2,
         },
         {
           chain: 'chain-2',
-          timestamp: new UnixTime(1),
+          timestamp: UnixTime(1),
           blockNumber: 1,
         },
       ]
       await Promise.all(blocks.map((b) => repository.insert(b)))
 
-      await repository.deleteAfterExclusive('chain', new UnixTime(1))
+      await repository.deleteAfterExclusive('chain', UnixTime(1))
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([blocks[0]!, blocks[2]!])
@@ -88,7 +88,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
   it(BlockTimestampRepository.prototype.deleteAll.name, async () => {
     await repository.insert({
       chain: 'chain',
-      timestamp: UnixTime.ZERO,
+      timestamp: 0,
       blockNumber: 0,
     })
 

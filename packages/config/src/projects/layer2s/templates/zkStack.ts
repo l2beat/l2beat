@@ -21,10 +21,11 @@ import {
 } from '../../../common'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
+  ProjectScalingDisplay,
   ProjectScalingTechnology,
+  ScalingProject,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -39,6 +40,7 @@ import type {
   ProjectScalingCapability,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
@@ -67,7 +69,7 @@ export interface ZkStackConfigCommon {
   capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
     upgradableBy: string[] | undefined
@@ -115,13 +117,14 @@ export interface ZkStackConfigCommon {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export type Upgradeability = {
   upgradableBy?: ProjectUpgradeableActor[]
 }
 
-export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
+export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const { discovery, discovery_ZKstackGovL2 } = templateVars
   const daProvider = templateVars.daProvider
   if (daProvider) {
@@ -570,6 +573,7 @@ ZKsync Era's ChainAdmin differs from the others as it also has the above *Elasti
     },
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 

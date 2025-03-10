@@ -2,23 +2,23 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('layer2finance')
 
-export const layer2finance: Layer2 = {
+export const layer2finance: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('layer2finance'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
-    name: 'Layer2.Finance',
+    name: 'ScalingProject.Finance',
     slug: 'layer2finance',
     warning:
       'Currently the TVS is calculated incorrectly, because it does not take assets locked in DeFi into account.',
     description:
-      'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
+      'ScalingProject.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purposes: ['Exchange'],
     category: 'Optimistic Rollup',
     links: {
@@ -39,7 +39,7 @@ export const layer2finance: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05'),
-        sinceTimestamp: new UnixTime(1619011215),
+        sinceTimestamp: UnixTime(1619011215),
         tokens: ['BUSD', 'DAI', 'USDC', 'USDT', 'WETH'],
         chain: 'ethereum',
       },
@@ -56,7 +56,8 @@ export const layer2finance: Layer2 = {
         discovery.getContractDetails('RollupChain', {
           references: [
             {
-              title: 'RollupChain.sol#L460-L496 - Layer2.Finance source code',
+              title:
+                'RollupChain.sol#L460-L496 - ScalingProject.Finance source code',
               url: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
             },
           ],

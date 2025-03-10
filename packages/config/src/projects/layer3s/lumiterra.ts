@@ -1,12 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
-export const lumiterra: Layer3 = upcomingL3({
+export const lumiterra: ScalingProject = upcomingL3({
   id: 'lumiterra',
   capability: 'universal',
-  addedAt: new UnixTime(1728665516),
+  addedAt: UnixTime(1728665516),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Lumiterra',

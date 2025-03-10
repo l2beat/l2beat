@@ -14,15 +14,15 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('zkswap')
 
-export const zkswap: Layer2 = {
+export const zkswap: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zkswap'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {
     name: 'ZKSwap 1.0',
@@ -58,7 +58,7 @@ export const zkswap: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad'),
-        sinceTimestamp: new UnixTime(1613135194),
+        sinceTimestamp: UnixTime(1613135194),
         tokens: '*',
         chain: 'ethereum',
       },

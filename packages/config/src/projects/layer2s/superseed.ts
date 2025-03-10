@@ -1,12 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 
-export const superseed: Layer2 = underReviewL2({
+export const superseed: ScalingProject = underReviewL2({
   id: 'superseed',
   capability: 'universal',
-  addedAt: new UnixTime(1714316238), // 2024-04-28T14:57:18Z
+  addedAt: UnixTime(1714316238), // 2024-04-28T14:57:18Z
   badges: [
     BADGES.Infra.Superchain,
     BADGES.DA.EthereumBlobs,
@@ -52,7 +52,7 @@ export const superseed: Layer2 = underReviewL2({
   escrows: [
     {
       address: EthereumAddress('0x2c2150aa5c75A24fB93d4fD2F2a895D618054f07'), // optiPortal
-      sinceTimestamp: new UnixTime(1726179731),
+      sinceTimestamp: UnixTime(1726179731),
       tokens: ['ETH'],
       chain: 'ethereum',
     },

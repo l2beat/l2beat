@@ -40,7 +40,7 @@ describe(StarknetCounter.name, () => {
   describe(StarknetCounter.prototype.countForBlocks.name, () => {
     it('should return correct stats', () => {
       const end = UnixTime.now()
-      const start = end.add(-1, 'hours')
+      const start = end - 1 * UnixTime.HOUR
       const mockBlocks: Block[] = [
         createBlock(1, start),
         createBlock(2),
@@ -58,8 +58,8 @@ describe(StarknetCounter.name, () => {
 
       const result = counter.countForBlocks(mockBlocks)
       expect(result).toEqual({
-        dateStart: start.toDate(),
-        dateEnd: end.toDate(),
+        dateStart: UnixTime.toDate(start),
+        dateEnd: UnixTime.toDate(end),
         numberOfTransactions: 6,
         numberOfOperations: 15,
         topBlocks: [
@@ -142,7 +142,7 @@ describe(StarknetCounter.name, () => {
 function createBlock(number: number, timestamp?: UnixTime): Block {
   return {
     number,
-    timestamp: timestamp?.toNumber() ?? UnixTime.now().toNumber(),
+    timestamp: timestamp ?? UnixTime.now(),
     hash: `${number}.hash`,
     transactions: [
       {

@@ -1292,7 +1292,7 @@
         "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
         "decimals": 18
       },
-      "sinceTimestamp": 1695199499,
+      "sinceTimestamp": 1696982400,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false

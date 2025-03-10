@@ -26,7 +26,7 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 
@@ -53,12 +53,12 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const reddioex: Layer2 = {
+export const reddioex: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -110,7 +110,7 @@ export const reddioex: Layer2 = {
     transactionApi: {
       type: 'starkex',
       product: ['reddio'],
-      sinceTimestamp: new UnixTime(1615389188),
+      sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
     },
     */
@@ -149,7 +149,7 @@ export const reddioex: Layer2 = {
       [discovery.chain]: [
         discovery.getContractDetails('StarkExchange'),
         discovery.getContractDetails(
-          'Committee',
+          'DACommittee',
           'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
         ),
         ...getSHARPVerifierContracts(discovery, verifierAddress),

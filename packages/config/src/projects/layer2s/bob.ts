@@ -3,14 +3,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
 
-export const bob: Layer2 = opStackL2({
-  addedAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
+export const bob: ScalingProject = opStackL2({
+  addedAt: UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
@@ -46,7 +46,7 @@ export const bob: Layer2 = opStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
   ],
-  genesisTimestamp: new UnixTime(1712861989),
+  genesisTimestamp: UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: 'UnderReview',
   milestones: [
@@ -63,7 +63,7 @@ export const bob: Layer2 = opStackL2({
     chainId: 60808,
     coingeckoPlatform: 'bob-network',
     explorerUrl: 'https://explorer.gobob.xyz',
-    sinceTimestamp: new UnixTime(1712861989),
+    sinceTimestamp: UnixTime(1712861989),
     apis: [
       { type: 'rpc', url: 'https://rpc.gobob.xyz/', callsPerMinute: 1500 },
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },

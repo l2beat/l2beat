@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const intmax: Layer2 = upcomingL2({
+export const intmax: ScalingProject = upcomingL2({
   id: 'intmax',
   capability: 'universal',
-  addedAt: new UnixTime(1722256071), // 2024-07-29T12:27:51Z
+  addedAt: UnixTime(1722256071), // 2024-07-29T12:27:51Z
   display: {
     name: 'INTMAX',
     slug: 'intmax',

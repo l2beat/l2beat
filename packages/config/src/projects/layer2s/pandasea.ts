@@ -1,12 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 
-export const pandasea: Layer2 = underReviewL2({
+export const pandasea: ScalingProject = underReviewL2({
   id: 'pandasea',
   capability: 'universal',
-  addedAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  addedAt: UnixTime(1729797861), // 2024-10-24T21:24:21Z
   badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'PandaSea',

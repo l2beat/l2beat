@@ -29,6 +29,7 @@ import type {
   ProjectScalingDa,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStack,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
@@ -38,11 +39,12 @@ import type {
   WarningWithSentiment,
 } from './types'
 
-/** Base interface for Layer2s and Layer3s. The hope is that Layer2 and Layer3 will dissapear and only this will remain. */
-
+/** Base interface for Layer2s and Layer3s. */
 export interface ScalingProject {
+  type: 'layer2' | 'layer3'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  hostChain?: ProjectId
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
@@ -64,6 +66,8 @@ export interface ScalingProject {
   customDa?: ProjectCustomDa
   /** Risk view values for this layer2 */
   riskView: ProjectScalingRiskView
+  /** Stacked risk view values for this layer3 and it's base chain */
+  stackedRiskView?: ProjectScalingRiskView
   /** Rollup stage */
   stage: ProjectScalingStage
   /** Deep dive into layer2 technology */
@@ -82,32 +86,11 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers */
   discoveryInfo?: ProjectDiscoveryInfo
-}
-
-export interface Layer2 extends ScalingProject {
-  type: 'layer2'
-  display: Layer2Display
-  config: Layer2Config
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
-}
-
-export interface Layer2Display extends ProjectScalingDisplay {
-  /** Tooltip contents for liveness tab for given project */
-  liveness?: ProjectLivenessInfo
-  finality?: ProjectFinalityInfo
-  /** Warning for Costs */
-  costsWarning?: WarningWithSentiment
-}
-
-export interface Layer3 extends ScalingProject {
-  type: 'layer3'
-  /** ProjectId of hostChain */
-  hostChain: ProjectId
-  /** Stacked risk view values for this layer3 and it's base chain */
-  stackedRiskView: ProjectScalingRiskView
 }
 
 export interface ProjectScalingConfig {
@@ -119,9 +102,6 @@ export interface ProjectScalingConfig {
   activityConfig?: ProjectActivityConfig
   /** Data availability tracking config */
   daTracking?: ProjectDaTrackingConfig[]
-}
-
-export interface Layer2Config extends ProjectScalingConfig {
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
@@ -165,6 +145,11 @@ export interface ProjectScalingDisplay {
   upgradesAndGovernanceImage?: string
   /** Name of the sequencing image to show in the sequencing section if present, otherwise use slug */
   sequencingImage?: string
+  /** Tooltip contents for liveness tab for given project */
+  liveness?: ProjectLivenessInfo
+  finality?: ProjectFinalityInfo
+  /** Warning for Costs */
+  costsWarning?: WarningWithSentiment
 }
 
 export interface ProjectScalingTechnology {

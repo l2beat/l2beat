@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x0c99de24fb6eee5f7a407308cf2c0a9c94d4642c
+Generated with discovered.json: 0x7d4a0e302d5b76adf9a257db543cbdc818e92d3b
+
+# Diff at Fri, 07 Mar 2025 13:49:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 20977341
+- current block number: 21995404
+
+## Description
+
+MS: single member change.
+
+## Watched changes
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.5:
+-        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
++        "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+    }
+```
+
+Generated with discovered.json: 0x935be18fc176b80550b19d0fe8fc99bac0d75b05
 
 # Diff at Tue, 04 Mar 2025 10:39:17 GMT:
 

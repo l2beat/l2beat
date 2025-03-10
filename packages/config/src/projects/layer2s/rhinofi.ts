@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -23,15 +18,15 @@ import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
-import { delayDescriptionFromString } from '../../utils/delayDescription'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('deversifi')
 const upgradeDelaySeconds = discovery.getContractValue<number>(
@@ -42,11 +37,6 @@ const includingSHARPUpgradeDelaySeconds = Math.min(
   upgradeDelaySeconds,
   getSHARPVerifierUpgradeDelay(),
 )
-const upgradeDelay = formatSeconds(upgradeDelaySeconds)
-const verifierAddress = discovery.getAddressFromValue(
-  'GpsFactRegistryAdapter',
-  'gpsContract',
-)
 
 const freezeGracePeriod = discovery.getContractValue<number>(
   'StarkExchange',
@@ -55,11 +45,11 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const rhinofi: Layer2 = {
+export const rhinofi: ScalingProject = {
   type: 'layer2',
   id: ProjectId('deversifi'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -107,14 +97,14 @@ export const rhinofi: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
-        sinceTimestamp: new UnixTime(1590491810),
+        sinceTimestamp: UnixTime(1590491810),
         tokens: '*',
         chain: 'ethereum',
       },
     ],
     activityConfig: {
       type: 'day',
-      sinceTimestamp: new UnixTime(1590491810),
+      sinceTimestamp: UnixTime(1590491810),
       resyncLastDays: 7,
     },
     // trackedTxs: [
@@ -131,7 +121,7 @@ export const rhinofi: Layer2 = {
     //       selector: '0x538f9406',
     //       functionSignature:
     //         'function updateState(uint256[] publicInput, uint256[] applicationData)',
-    //       sinceTimestampInclusive: new UnixTime(1590491810),
+    //       sinceTimestampInclusive: UnixTime(1590491810),
     //     },
     //   },
     // ],
@@ -170,50 +160,14 @@ export const rhinofi: Layer2 = {
     exitMechanisms: [...EXITS.STARKEX_PERPETUAL, EXITS.STARKEX_BLOCKLIST],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('StarkExchange'),
-        discovery.getContractDetails(
-          'Committee',
-          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-        ),
-        ...getSHARPVerifierContracts(discovery, verifierAddress),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Governors',
-          getProxyGovernance(discovery, 'StarkExchange'),
-          'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromString(upgradeDelay),
-        ),
-        discovery.getMultisigPermission(
-          'GovernanceMultisig',
-          'Has full power to upgrade the bridge implementation as a Governor.',
-        ),
-        committeePermission,
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-          'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
-        ),
-        discovery.contractAsPermissioned(
-          // this multisig does not get recognized as such (because of the old proxy?)
-          discovery.getContract('DeversiFiTreasuryMultisig'),
-          'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
-        ),
-      ],
-    },
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'Rebranding',

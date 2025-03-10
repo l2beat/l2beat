@@ -5,7 +5,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
@@ -16,8 +16,8 @@ const isForcedBatchDisallowed =
 
 const bridge = discovery.getContract('PolygonSharedBridge')
 
-export const polygonzkevm: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+export const polygonzkevm: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVM'),
   rollupVerifierContract: discovery.getContract('Verifier'),
   display: {
@@ -57,7 +57,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     name: 'polygonzkevm',
     chainId: 1101,
     explorerUrl: 'https://zkevm.polygonscan.com',
-    sinceTimestamp: new UnixTime(1679679015),
+    sinceTimestamp: UnixTime(1679679015),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -88,8 +88,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xecef3f99',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
-        sinceTimestamp: new UnixTime(1707824735),
-        untilTimestamp: new UnixTime(1710419699),
+        sinceTimestamp: UnixTime(1707824735),
+        untilTimestamp: UnixTime(1710419699),
       },
     },
     {
@@ -103,8 +103,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xdef57e54',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
-        sinceTimestamp: new UnixTime(1710419699),
-        untilTimestamp: new UnixTime(1736943371),
+        sinceTimestamp: UnixTime(1710419699),
+        untilTimestamp: UnixTime(1736943371),
       },
     },
     {
@@ -118,7 +118,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xb910e0f9',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
-        sinceTimestamp: new UnixTime(1736943371),
+        sinceTimestamp: UnixTime(1736943371),
       },
     },
   ],

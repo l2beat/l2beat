@@ -1,11 +1,11 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from './templates/underReview'
 
-export const kontos: Layer2 = underReviewL2({
+export const kontos: ScalingProject = underReviewL2({
   id: 'kontos',
   capability: 'universal',
-  addedAt: new UnixTime(1730718191),
+  addedAt: UnixTime(1730718191),
   display: {
     name: 'Kontos',
     slug: 'kontos',
@@ -30,7 +30,7 @@ export const kontos: Layer2 = underReviewL2({
   escrows: [
     {
       address: EthereumAddress('0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD'),
-      sinceTimestamp: new UnixTime(1699939643),
+      sinceTimestamp: UnixTime(1699939643),
       tokens: '*',
       chain: 'ethereum',
     },

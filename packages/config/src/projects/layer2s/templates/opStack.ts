@@ -27,13 +27,11 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
-import type { Layer3 } from '../../../internalTypes'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ScalingProject } from '../../../internalTypes'
-import type { ProjectScalingDisplay } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
+  ProjectScalingDisplay,
   ProjectScalingTechnology,
+  ScalingProject,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -52,6 +50,7 @@ import type {
   ProjectScalingDa,
   ProjectScalingPurpose,
   ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
   ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
@@ -175,12 +174,13 @@ interface OpStackConfigCommon {
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer2Display['category']
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingDisplay['category']
   }
 }
 
@@ -189,7 +189,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 }
 
 function opStackCommon(
-  type: (Layer2 | Layer3)['type'],
+  type: ScalingProject['type'],
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
   hostChainDA?: DAProvider,
@@ -338,6 +338,7 @@ function opStackCommon(
       templateVars.stage ??
       computedStage(templateVars, postsToEthereum(templateVars)),
     dataAvailability: extractDA(daProvider),
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
@@ -403,7 +404,7 @@ function getDaTracking(
         : undefined
 }
 
-export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
+export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
   const common = opStackCommon(
     'layer2',
     templateVars,
@@ -428,8 +429,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
   }
 }
 
-export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
-  const layer2s = require('..').layer2s as Layer2[]
+export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
+  const layer2s = require('..').layer2s as ScalingProject[]
   const hostChain = templateVars.discovery.chain
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
@@ -1237,9 +1238,8 @@ function getTrackedTxs(
               selector: '0x9aaab648',
               functionSignature:
                 'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-              sinceTimestamp: new UnixTime(
-                l2OutputOracle.sinceTimestamp ??
-                  templateVars.genesisTimestamp.toNumber(),
+              sinceTimestamp: UnixTime(
+                l2OutputOracle.sinceTimestamp ?? templateVars.genesisTimestamp,
               ),
             },
           },
@@ -1371,7 +1371,7 @@ function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
 }
 
-function hostChainDAProvider(hostChain: Layer2): DAProvider {
+function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
   const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
   assert(DABadge !== undefined, 'Host chain must have data availability badge')
   assert(
