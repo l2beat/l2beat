@@ -179,9 +179,9 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-ezETH.fraxtal",
+      "id": "fraxtal-ezETH",
       "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH.fraxtal",
+      "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
         "type": "totalSupply",
@@ -192,8 +192,7 @@
       "sinceTimestamp": 1720099543,
       "category": "ether",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "ezETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -395,6 +394,23 @@
       "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "fraxtal",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1710892800,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "fraxtal-sUSDe.ethereum",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe.ethereum",
+      "name": "Staked USDe",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
         "chain": "ethereum",
@@ -404,23 +420,6 @@
       "sinceTimestamp": 1710979200,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "fraxtal-sUSDe.fraxtal",
-      "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe.fraxtal",
-      "name": "Staked USDe",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-        "chain": "fraxtal",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1710892800,
-      "category": "other",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "sUSDe"
     },
@@ -485,6 +484,23 @@
       "symbol": "USDe",
       "name": "USDe",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "fraxtal",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1710280993,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "fraxtal-USDe.ethereum",
+      "priceId": "ethena-usde",
+      "symbol": "USDe.ethereum",
+      "name": "USDe",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
         "chain": "ethereum",
@@ -494,23 +510,6 @@
       "sinceTimestamp": 1706811599,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "fraxtal-USDe.fraxtal",
-      "priceId": "ethena-usde",
-      "symbol": "USDe.fraxtal",
-      "name": "USDe",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-        "chain": "fraxtal",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1710280993,
-      "category": "stablecoin",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "USDe"
     },

@@ -148,6 +148,23 @@
       "symbol": "FRAX",
       "name": "Frax",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
+        "chain": "bobanetwork",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1637882522,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "bobanetwork-FRAX.ethereum",
+      "priceId": "frax",
+      "symbol": "FRAX.ethereum",
+      "name": "Frax",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
         "chain": "ethereum",
@@ -157,23 +174,6 @@
       "sinceTimestamp": 1628793901,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "bobanetwork-FRAX.bobanetwork",
-      "priceId": "frax",
-      "symbol": "FRAX.bobanetwork",
-      "name": "Frax",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
-        "chain": "bobanetwork",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1637882522,
-      "category": "stablecoin",
-      "source": "native",
       "isAssociated": false,
       "displaySymbol": "FRAX"
     },

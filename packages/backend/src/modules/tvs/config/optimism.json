@@ -500,9 +500,9 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-ezETH.optimism",
+      "id": "optimism-ezETH",
       "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH.optimism",
+      "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
         "type": "totalSupply",
@@ -513,8 +513,7 @@
       "sinceTimestamp": 1718371339,
       "category": "ether",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "ezETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -554,9 +553,9 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FPI.optimism",
+      "id": "optimism-FPI",
       "priceId": "frax-price-index",
-      "symbol": "FPI.optimism",
+      "symbol": "FPI",
       "name": "Frax Price Index",
       "amount": {
         "type": "totalSupply",
@@ -567,14 +566,13 @@
       "sinceTimestamp": 1680743131,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPI"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "optimism-FPIS.optimism",
+      "id": "optimism-FPIS",
       "priceId": "frax-price-index-share",
-      "symbol": "FPIS.optimism",
+      "symbol": "FPIS",
       "name": "Frax Price Index Share",
       "amount": {
         "type": "totalSupply",
@@ -585,14 +583,30 @@
       "sinceTimestamp": 1680743131,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPIS"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "optimism-FRAX",
       "priceId": "frax",
       "symbol": "FRAX",
+      "name": "Frax",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
+        "chain": "optimism",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1641759454,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FRAX.ethereum",
+      "priceId": "frax",
+      "symbol": "FRAX.ethereum",
       "name": "Frax",
       "amount": {
         "type": "balanceOfEscrow",
@@ -604,31 +618,14 @@
       "sinceTimestamp": 1624401464,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "optimism-FRAX.optimism",
-      "priceId": "frax",
-      "symbol": "FRAX.optimism",
-      "name": "Frax",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
-        "chain": "optimism",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1641759454,
-      "category": "stablecoin",
-      "source": "native",
       "isAssociated": false,
       "displaySymbol": "FRAX"
     },
     {
       "mode": "auto",
-      "id": "optimism-frxETH.optimism",
+      "id": "optimism-frxETH",
       "priceId": "frax-ether",
-      "symbol": "frxETH.optimism",
+      "symbol": "frxETH",
       "name": "Frax Ether",
       "amount": {
         "type": "totalSupply",
@@ -639,14 +636,30 @@
       "sinceTimestamp": 1673221013,
       "category": "ether",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "frxETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "optimism-FXS",
       "priceId": "frax-share",
       "symbol": "FXS",
+      "name": "Frax Share",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
+        "chain": "optimism",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1641759454,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FXS.ethereum",
+      "priceId": "frax-share",
+      "symbol": "FXS.ethereum",
       "name": "Frax Share",
       "amount": {
         "type": "balanceOfEscrow",
@@ -658,23 +671,6 @@
       "sinceTimestamp": 1624401464,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "optimism-FXS.optimism",
-      "priceId": "frax-share",
-      "symbol": "FXS.optimism",
-      "name": "Frax Share",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
-        "chain": "optimism",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1641759454,
-      "category": "other",
-      "source": "native",
       "isAssociated": false,
       "displaySymbol": "FXS"
     },
@@ -1247,9 +1243,9 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-sFRAX.optimism",
+      "id": "optimism-sFRAX",
       "priceId": "staked-frax",
-      "symbol": "sFRAX.optimism",
+      "symbol": "sFRAX",
       "name": "Staked FRAX",
       "amount": {
         "type": "totalSupply",
@@ -1260,14 +1256,13 @@
       "sinceTimestamp": 1708387200,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "sFRAX"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "optimism-sfrxETH.optimism",
+      "id": "optimism-sfrxETH",
       "priceId": "staked-frax-ether",
-      "symbol": "sfrxETH.optimism",
+      "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
       "amount": {
         "type": "totalSupply",
@@ -1278,8 +1273,7 @@
       "sinceTimestamp": 1673221028,
       "category": "ether",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "sfrxETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1394,9 +1388,9 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-STG.optimism",
+      "id": "optimism-STG",
       "priceId": "stargate-finance",
-      "symbol": "STG.optimism",
+      "symbol": "STG",
       "name": "StargateToken",
       "amount": {
         "type": "totalSupply",
@@ -1407,14 +1401,13 @@
       "sinceTimestamp": 1647561600,
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "STG"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "optimism-STONE.optimism",
+      "id": "optimism-STONE",
       "priceId": "stakestone-ether",
-      "symbol": "STONE.optimism",
+      "symbol": "STONE",
       "name": "StakeStone Ether",
       "amount": {
         "type": "totalSupply",
@@ -1425,14 +1418,13 @@
       "sinceTimestamp": 1719601787,
       "category": "ether",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "STONE"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "optimism-sUSDe.optimism",
+      "id": "optimism-sUSDe",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe.optimism",
+      "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
         "type": "totalSupply",
@@ -1443,8 +1435,7 @@
       "sinceTimestamp": 1710892800,
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "sUSDe"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1501,9 +1492,9 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-tBTC.optimism",
+      "id": "optimism-tBTC",
       "priceId": "tbtc",
-      "symbol": "tBTC.optimism",
+      "symbol": "tBTC",
       "name": "Optimism tBTC v2",
       "amount": {
         "type": "totalSupply",
@@ -1514,8 +1505,7 @@
       "sinceTimestamp": 1681389587,
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "tBTC"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1632,6 +1622,23 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        "chain": "optimism",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1668453318,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USDC.ethereum",
+      "priceId": "usd-coin",
+      "symbol": "USDC.ethereum",
+      "name": "USD Coin",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
@@ -1641,23 +1648,6 @@
       "sinceTimestamp": 1624401464,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "optimism-USDC.optimism",
-      "priceId": "usd-coin",
-      "symbol": "USDC.optimism",
-      "name": "USD Coin",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
-        "chain": "optimism",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1668453318,
-      "category": "stablecoin",
-      "source": "native",
       "isAssociated": false,
       "displaySymbol": "USDC"
     },
@@ -1681,9 +1671,9 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-USDe.optimism",
+      "id": "optimism-USDe",
       "priceId": "ethena-usde",
-      "symbol": "USDe.optimism",
+      "symbol": "USDe",
       "name": "USDe",
       "amount": {
         "type": "totalSupply",
@@ -1694,8 +1684,7 @@
       "sinceTimestamp": 1710186779,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "USDe"
+      "isAssociated": false
     },
     {
       "mode": "auto",

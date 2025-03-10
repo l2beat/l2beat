@@ -330,9 +330,9 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-SolvBTC.scroll",
+      "id": "scroll-SolvBTC",
       "priceId": "solv-btc",
-      "symbol": "SolvBTC.scroll",
+      "symbol": "SolvBTC",
       "name": "Free Bridged SolvBTC.b",
       "amount": {
         "type": "totalSupply",
@@ -343,14 +343,30 @@
       "sinceTimestamp": 1716874538,
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "SolvBTC"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "scroll-STONE",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+        "chain": "scroll",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709920633,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "scroll-STONE.ethereum",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE.ethereum",
       "name": "StakeStone Ether",
       "amount": {
         "type": "balanceOfEscrow",
@@ -362,31 +378,14 @@
       "sinceTimestamp": 1700611200,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "scroll-STONE.scroll",
-      "priceId": "stakestone-ether",
-      "symbol": "STONE.scroll",
-      "name": "StakeStone Ether",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x80137510979822322193FC997d400D5A6C747bf7",
-        "chain": "scroll",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709920633,
-      "category": "ether",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "STONE"
     },
     {
       "mode": "auto",
-      "id": "scroll-sUSDe.scroll",
+      "id": "scroll-sUSDe",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe.scroll",
+      "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
         "type": "totalSupply",
@@ -397,8 +396,7 @@
       "sinceTimestamp": 1710892800,
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "sUSDe"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -488,9 +486,9 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-USDe.scroll",
+      "id": "scroll-USDe",
       "priceId": "ethena-usde",
-      "symbol": "USDe.scroll",
+      "symbol": "USDe",
       "name": "USDe",
       "amount": {
         "type": "totalSupply",
@@ -501,8 +499,7 @@
       "sinceTimestamp": 1710186910,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "USDe"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -547,6 +544,23 @@
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
+        "chain": "scroll",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1718321733,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "scroll-weETH.ethereum",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH.ethereum",
+      "name": "Wrapped eETH",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
         "chain": "ethereum",
@@ -556,23 +570,6 @@
       "sinceTimestamp": 1701648000,
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "scroll-weETH.scroll",
-      "priceId": "wrapped-eeth",
-      "symbol": "weETH.scroll",
-      "name": "Wrapped eETH",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
-        "chain": "scroll",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1718321733,
-      "category": "ether",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "weETH"
     },

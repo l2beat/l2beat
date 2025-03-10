@@ -38,6 +38,25 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-ALI.ethereum",
+      "priceId": "alethea-artificial-liquid-intelligence-token",
+      "symbol": "ALI.ethereum",
+      "name": "Artificial Liquid Intelligence Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B0b3a982b4634aC68dD83a4DBF02311cE324181",
+        "chain": "ethereum",
+        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1676367083,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "displaySymbol": "ALI"
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-ALT",
       "priceId": "altlayer",
       "symbol": "ALT",
@@ -378,9 +397,9 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FPI.zksync2",
+      "id": "zksync2-FPI",
       "priceId": "frax-price-index",
-      "symbol": "FPI.zksync2",
+      "symbol": "FPI",
       "name": "Frax Price Index",
       "amount": {
         "type": "totalSupply",
@@ -391,14 +410,13 @@
       "sinceTimestamp": 1682180023,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPI"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "zksync2-FPIS.zksync2",
+      "id": "zksync2-FPIS",
       "priceId": "frax-price-index-share",
-      "symbol": "FPIS.zksync2",
+      "symbol": "FPIS",
       "name": "Frax Price Index Share",
       "amount": {
         "type": "totalSupply",
@@ -409,31 +427,13 @@
       "sinceTimestamp": 1682180042,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPIS"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "zksync2-FRAX",
       "priceId": "frax",
       "symbol": "FRAX",
-      "name": "Frax",
-      "sinceTimestamp": 1717521479,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x1af86Fc72C4363b1e35e6f79320F94B7aC848050",
-        "chain": "zksync2",
-        "decimals": 18
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-FRAX.zksync2",
-      "priceId": "frax",
-      "symbol": "FRAX.zksync2",
       "name": "Frax",
       "amount": {
         "type": "totalSupply",
@@ -444,14 +444,13 @@
       "sinceTimestamp": 1682179985,
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FRAX"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "zksync2-frxETH.zksync2",
+      "id": "zksync2-frxETH",
       "priceId": "frax-ether",
-      "symbol": "frxETH.zksync2",
+      "symbol": "frxETH",
       "name": "Frax Ether",
       "amount": {
         "type": "totalSupply",
@@ -462,8 +461,7 @@
       "sinceTimestamp": 1682180065,
       "category": "ether",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "frxETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -484,9 +482,9 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FXS.zksync2",
+      "id": "zksync2-FXS",
       "priceId": "frax-share",
-      "symbol": "FXS.zksync2",
+      "symbol": "FXS",
       "name": "Frax Share",
       "amount": {
         "type": "totalSupply",
@@ -497,8 +495,7 @@
       "sinceTimestamp": 1682180004,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FXS"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -997,23 +994,6 @@
       "id": "zksync2-rsETH",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
-      "name": "rsETH",
-      "sinceTimestamp": 1717521479,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xBc3DE055bdDc9466766B0EC79E0bA1Da112a832A",
-        "chain": "zksync2",
-        "decimals": 18
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-rsETH.zksync2",
-      "priceId": "kelp-dao-restaked-eth",
-      "symbol": "rsETH.zksync2",
       "name": "KelpDao Restaked ETH",
       "amount": {
         "type": "totalSupply",
@@ -1024,8 +1004,7 @@
       "sinceTimestamp": 1715792840,
       "category": "ether",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "rsETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1046,9 +1025,9 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-sfrxETH.zksync2",
+      "id": "zksync2-sfrxETH",
       "priceId": "staked-frax-ether",
-      "symbol": "sfrxETH.zksync2",
+      "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
       "amount": {
         "type": "totalSupply",
@@ -1059,8 +1038,7 @@
       "sinceTimestamp": 1682180085,
       "category": "ether",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "sfrxETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1237,23 +1215,6 @@
       "id": "zksync2-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
-      "name": "USD Coin",
-      "sinceTimestamp": 1717521479,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
-        "chain": "zksync2",
-        "decimals": 6
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-USDC.zksync2",
-      "priceId": "usd-coin",
-      "symbol": "USDC.zksync2",
       "name": "USDC",
       "amount": {
         "type": "totalSupply",
@@ -1264,14 +1225,13 @@
       "sinceTimestamp": 1706644361,
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "USDC"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDM.zksync2",
+      "id": "zksync2-USDM",
       "priceId": "mountain-protocol-usdm",
-      "symbol": "USDM.zksync2",
+      "symbol": "USDM",
       "name": "Mountain Protocol USD",
       "amount": {
         "type": "totalSupply",
@@ -1282,14 +1242,13 @@
       "sinceTimestamp": 1728957714,
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "USDM"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDN.zksync2",
+      "id": "zksync2-USDN",
       "priceId": "noon-usn",
-      "symbol": "USDN.zksync2",
+      "symbol": "USDN",
       "name": "USN Token",
       "amount": {
         "type": "totalSupply",
@@ -1300,8 +1259,7 @@
       "sinceTimestamp": 1737763200,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "USDN"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1319,6 +1277,25 @@
         "chain": "zksync2",
         "decimals": 18
       }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-USDP.ethereum",
+      "priceId": "paxos-standard",
+      "symbol": "USDP.ethereum",
+      "name": "Pax Dollar",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
+        "chain": "ethereum",
+        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1676367083,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "displaySymbol": "USDP"
     },
     {
       "mode": "auto",

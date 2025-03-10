@@ -375,9 +375,9 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FPI.polygonzkevm",
+      "id": "polygonzkevm-FPI",
       "priceId": "frax-price-index",
-      "symbol": "FPI.polygonzkevm",
+      "symbol": "FPI",
       "name": "Frax Price Index",
       "amount": {
         "type": "totalSupply",
@@ -388,14 +388,13 @@
       "sinceTimestamp": 1680642322,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPI"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FPIS.polygonzkevm",
+      "id": "polygonzkevm-FPIS",
       "priceId": "frax-price-index-share",
-      "symbol": "FPIS.polygonzkevm",
+      "symbol": "FPIS",
       "name": "Frax Price Index Share",
       "amount": {
         "type": "totalSupply",
@@ -406,31 +405,13 @@
       "sinceTimestamp": 1680642322,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPIS"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "polygonzkevm-FRAX",
       "priceId": "frax",
       "symbol": "FRAX",
-      "name": "Frax",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x95e4e1554a3F20932b559470eb57C56B7A26d10E",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "polygonzkevm-FRAX.polygonzkevm",
-      "priceId": "frax",
-      "symbol": "FRAX.polygonzkevm",
       "name": "Frax",
       "amount": {
         "type": "totalSupply",
@@ -441,14 +422,13 @@
       "sinceTimestamp": 1680642322,
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FRAX"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-frxETH.polygonzkevm",
+      "id": "polygonzkevm-frxETH",
       "priceId": "frax-ether",
-      "symbol": "frxETH.polygonzkevm",
+      "symbol": "frxETH",
       "name": "Frax Ether",
       "amount": {
         "type": "totalSupply",
@@ -459,8 +439,7 @@
       "sinceTimestamp": 1680642322,
       "category": "ether",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "frxETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -481,9 +460,9 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FXS.polygonzkevm",
+      "id": "polygonzkevm-FXS",
       "priceId": "frax-share",
-      "symbol": "FXS.polygonzkevm",
+      "symbol": "FXS",
       "name": "Frax Share",
       "amount": {
         "type": "totalSupply",
@@ -494,8 +473,7 @@
       "sinceTimestamp": 1680642322,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FXS"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1028,9 +1006,9 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-sfrxETH.polygonzkevm",
+      "id": "polygonzkevm-sfrxETH",
       "priceId": "staked-frax-ether",
-      "symbol": "sfrxETH.polygonzkevm",
+      "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
       "amount": {
         "type": "totalSupply",
@@ -1041,8 +1019,7 @@
       "sinceTimestamp": 1680642322,
       "category": "ether",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "sfrxETH"
+      "isAssociated": false
     },
     {
       "mode": "auto",
