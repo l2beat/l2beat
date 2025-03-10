@@ -3,10 +3,10 @@ import {
   DaCommitteeSecurityRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-} from '../../../common'
-import { linkByDA } from '../../../common/linkByDA'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { BaseProject } from '../../../types'
+} from '../../common'
+import { linkByDA } from '../../common/linkByDA'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('vector')
 

@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
-import { MIN_TIMESTAMP_FOR_TVL } from '../../../src/projects/da-beat/ethereum/ethereum'
+import { MIN_TIMESTAMP_FOR_TVL } from '../../projects/ethereum/ethereum'
 import type { ScriptLogger } from './ScriptLogger'
 import { getContractCreationTimestamp } from './getContractCreationTimestamp'
 

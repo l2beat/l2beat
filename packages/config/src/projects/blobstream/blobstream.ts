@@ -3,14 +3,14 @@ import {
   DaCommitteeSecurityRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-} from '../../../common'
-import { linkByDA } from '../../../common/linkByDA'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+} from '../../common'
+import { linkByDA } from '../../common/linkByDA'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from '../../../templates/generateDiscoveryDrivenSections'
-import type { BaseProject } from '../../../types'
+} from '../../templates/generateDiscoveryDrivenSections'
+import type { BaseProject } from '../../types'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
