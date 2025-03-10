@@ -2,13 +2,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('hypr')
 
-export const hypr: Layer2 = opStackL2({
+export const hypr: ScalingProject = opStackL2({
   isArchived: true,
   addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,

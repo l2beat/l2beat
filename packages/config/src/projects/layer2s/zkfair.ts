@@ -19,7 +19,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 
@@ -104,7 +104,7 @@ const dacMembers = discovery
   .getContractValue<string[][]>('ZKFairValidiumDAC', 'members')
   .map((e) => e[1])
 
-export const zkfair: Layer2 = {
+export const zkfair: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zkfair'),
   capability: 'universal',

@@ -22,10 +22,11 @@ import {
 } from '../../../common'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
+  ProjectScalingDisplay,
   ProjectScalingTechnology,
+  ScalingProject,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -68,7 +69,7 @@ export interface PolygonCDKStackConfig {
   daProvider?: DAProvider
   customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
   stateDerivation?: ProjectScalingStateDerivation
@@ -93,7 +94,9 @@ export interface PolygonCDKStackConfig {
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
-export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
+export function polygonCDKStack(
+  templateVars: PolygonCDKStackConfig,
+): ScalingProject {
   const explorerUrl = EXPLORER_URLS['ethereum']
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')

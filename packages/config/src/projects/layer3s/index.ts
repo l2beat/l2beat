@@ -1,4 +1,4 @@
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { alphadune } from './alphadune'
 import { animechain } from './animechain'
 import { anomaly } from './anomaly'
@@ -64,7 +64,7 @@ import { xai } from './xai'
 import { xrone } from './xrone'
 import { zklinknova } from './zklinknova'
 
-export const layer3s: Layer3[] = [
+export const layer3s: ScalingProject[] = [
   anomaly,
   animechain,
   alphadune,

@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
-export const ungaii: Layer3 = upcomingL3({
+export const ungaii: ScalingProject = upcomingL3({
   id: 'ungaii',
   capability: 'universal',
   addedAt: UnixTime(1739539175),

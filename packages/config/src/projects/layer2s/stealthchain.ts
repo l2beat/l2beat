@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const stealthchain: Layer2 = upcomingL2({
+export const stealthchain: ScalingProject = upcomingL2({
   id: 'stealthchain',
   capability: 'universal',
   addedAt: UnixTime(1694778975), // 2023-09-15T11:56:15Z

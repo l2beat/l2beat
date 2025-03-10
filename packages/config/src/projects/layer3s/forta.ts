@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const forta: Layer3 = underReviewL3({
+export const forta: ScalingProject = underReviewL3({
   id: 'forta',
   capability: 'universal',
   addedAt: UnixTime(1738766610), // 2025-02-05T15:43:09Z

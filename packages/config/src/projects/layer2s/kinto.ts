@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -11,7 +11,7 @@ const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
 
-export const kinto: Layer2 = orbitStackL2({
+export const kinto: ScalingProject = orbitStackL2({
   capability: 'appchain',
   addedAt: UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,

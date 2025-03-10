@@ -12,13 +12,13 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierContracts } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 
 const upgradeDelay = 0
 
-export const layer2financezk: Layer2 = {
+export const layer2financezk: ScalingProject = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
   capability: 'universal',
@@ -28,9 +28,9 @@ export const layer2financezk: Layer2 = {
     name: 'L2.Finance-zk',
     slug: 'layer2financezk',
     warning:
-      'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
+      'ScalingProject.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
-      'Celer’s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
+      'Celer’s ScalingProject.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
     purposes: ['Exchange'],
     stack: 'StarkEx',
     category: 'Validium',

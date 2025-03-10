@@ -18,7 +18,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
@@ -83,7 +83,7 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
   'minDelay',
 )
 
-export const zklinknova: Layer3 = {
+export const zklinknova: ScalingProject = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
   capability: 'universal',

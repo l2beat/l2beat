@@ -2,14 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('reya')
 
-export const reya: Layer2 = orbitStackL2({
+export const reya: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],

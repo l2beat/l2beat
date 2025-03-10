@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const skynet: Layer3 = underReviewL3({
+export const skynet: ScalingProject = underReviewL3({
   id: 'skynet',
   capability: 'universal',
   addedAt: UnixTime(1739372930), // 2025-02-12T15:08:50Z

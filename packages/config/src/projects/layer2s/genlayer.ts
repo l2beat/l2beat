@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const genlayer: Layer2 = upcomingL2({
+export const genlayer: ScalingProject = upcomingL2({
   id: 'genlayer',
   capability: 'universal',
   addedAt: UnixTime(1740073213), // 2025-01-20T17:40:13Z

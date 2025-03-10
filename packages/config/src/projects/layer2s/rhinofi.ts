@@ -20,7 +20,7 @@ import {
   getCommittee,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import {
@@ -45,7 +45,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const rhinofi: Layer2 = {
+export const rhinofi: ScalingProject = {
   type: 'layer2',
   id: ProjectId('deversifi'),
   capability: 'appchain',

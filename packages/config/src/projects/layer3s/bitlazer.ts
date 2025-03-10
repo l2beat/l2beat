@@ -1,9 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const bitlazer: Layer3 = underReviewL3({
+export const bitlazer: ScalingProject = underReviewL3({
   id: 'bitlazer',
   capability: 'universal',
   addedAt: UnixTime(1737636289), // 2025-01-21T14:24:03+00:00

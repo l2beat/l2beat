@@ -2,7 +2,7 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -45,7 +45,7 @@ assert(
   )}`,
 )
 
-export const zksyncera: Layer2 = zkStackL2({
+export const zksyncera: ScalingProject = zkStackL2({
   addedAt: UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,

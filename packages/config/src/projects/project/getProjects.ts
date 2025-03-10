@@ -8,9 +8,8 @@ import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type {
   Bridge,
-  Layer2,
   Layer2TxConfig,
-  Layer3,
+  ScalingProject,
 } from '../../internalTypes'
 import { getTokenList } from '../../tokens/tokens'
 import type {
@@ -52,8 +51,8 @@ export function getProjects(): BaseProject[] {
 }
 
 function layer2Or3ToProject(
-  p: Layer2 | Layer3,
-  layer2s: Layer2[],
+  p: ScalingProject,
+  layer2s: ScalingProject[],
   tokenList: Token[],
 ): BaseProject {
   return {
@@ -94,9 +93,7 @@ function layer2Or3ToProject(
         p.display.category === 'Other' ||
         (PROJECT_COUNTDOWNS.otherMigration < UnixTime.now() &&
           !!p.reasonsForBeingOther),
-      hostChain: getHostChain(
-        p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
-      ),
+      hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.stack,
       raas: getRaas(p.badges),
@@ -156,13 +153,13 @@ function layer2Or3ToProject(
   }
 }
 
-function getLivenessInfo(p: Layer2 | Layer3): ProjectLivenessInfo | undefined {
+function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
   if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
     return p.display.liveness ?? {}
   }
 }
 
-function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
+function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
   if (
     p.type === 'layer2' &&
     (p.display.category === 'Optimistic Rollup' ||
@@ -176,7 +173,7 @@ function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
 }
 
 function getFinality(
-  p: Layer2 | Layer3,
+  p: ScalingProject,
 ): Pick<BaseProject, 'finalityConfig' | 'finalityInfo'> {
   if (
     p.type === 'layer2' &&
@@ -308,7 +305,7 @@ function toBackendTrackedTxsConfig(
 }
 
 function getTvlConfig(
-  project: Layer2 | Layer3 | Bridge,
+  project: ScalingProject | Bridge,
   tokenList: Token[],
 ): ProjectTvlConfig {
   const tokens = project.chainConfig
@@ -326,7 +323,7 @@ function getTvlConfig(
 }
 
 export function getDiscoveryInfo(
-  project: Layer2 | Layer3 | Bridge,
+  project: ScalingProject | Bridge,
 ): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
   const permissionsDiscoDriven = arePermissionsDiscoveryDriven(

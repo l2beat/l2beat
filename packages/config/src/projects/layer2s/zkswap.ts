@@ -14,11 +14,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('zkswap')
 
-export const zkswap: Layer2 = {
+export const zkswap: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zkswap'),
   capability: 'universal',

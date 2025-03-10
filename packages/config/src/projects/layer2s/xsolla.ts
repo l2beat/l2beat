@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const xsolla: Layer2 = upcomingL2({
+export const xsolla: ScalingProject = upcomingL2({
   id: 'xsolla',
   capability: 'universal',
   addedAt: UnixTime(1740072617), // 2025-01-20T17:30:17Z

@@ -1,12 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('parallel')
 
-export const parallel: Layer2 = orbitStackL2({
+export const parallel: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1704289654), // 2024-01-03T13:47:34Z
   isArchived: true,
   discovery,
