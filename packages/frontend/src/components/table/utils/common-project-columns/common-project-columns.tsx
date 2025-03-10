@@ -15,7 +15,7 @@ export interface CommonProjectColumnsOptions {
 
 export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
   columnHelper: ColumnHelper<T>,
-  getHref: (row: T) => string,
+  getHref: (row: T) => string | undefined,
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
@@ -38,8 +38,8 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
     }),
     columnHelper.display({
       id: 'logo',
-      cell: (ctx) => (
-        <LinkWithOnHoverPrefetch href={getHref(ctx.row.original)}>
+      cell: (ctx) => {
+        const image = (
           <Image
             className="min-h-[20px] min-w-[20px]"
             src={`/icons/${ctx.row.original.slug}.png`}
@@ -47,8 +47,14 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
             height={20}
             alt={`${ctx.row.original.name} logo`}
           />
-        </LinkWithOnHoverPrefetch>
-      ),
+        )
+        const href = getHref(ctx.row.original)
+        if (!href) return image
+
+        return (
+          <LinkWithOnHoverPrefetch href={href}>{image}</LinkWithOnHoverPrefetch>
+        )
+      },
       meta: {
         headClassName: 'w-0',
         cellClassName: 'lg:!pr-1.5',

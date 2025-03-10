@@ -8,7 +8,7 @@ import { getCommonProjectColumns } from './common-project-columns'
 
 export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
   columnHelper: ColumnHelper<T>,
-  getHref: (row: T) => string,
+  getHref: (row: T) => string | undefined,
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
