@@ -23,10 +23,10 @@ export type ThroughputTableData = Awaited<
 const getCachedDaThroughputTableData = cache(
   async (daLayerIds: string[]) => {
     const db = getDb()
-    const lastDay = UnixTime.now().toStartOf('day').add(-1, 'days')
+    const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
     const [values, daLayers] = await Promise.all([
       db.dataAvailability.getByDaLayersAndTimeRange(daLayerIds, [
-        lastDay.add(-7, 'days'),
+        lastDay - 7 * UnixTime.DAY,
         lastDay,
       ]),
       ps.getProjects({
@@ -86,7 +86,7 @@ const getCachedDaThroughputTableData = cache(
               daLayer.id,
               {
                 totalSize: Number(lastRecord.totalSize),
-                syncedUntil: lastRecord.timestamp.toNumber(),
+                syncedUntil: lastRecord.timestamp,
                 pastDayAvgThroughputPerSecond,
                 largestPoster: largestPoster
                   ? {
@@ -133,8 +133,9 @@ function getMockDaThroughputTableData(
               totalSize: 101312,
               syncedUntil:
                 daLayerId === 'avail'
-                  ? UnixTime.now().toStartOf('day').add(-2, 'days').toNumber()
-                  : UnixTime.now().toStartOf('day').add(-1, 'days').toNumber(),
+                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
+                  : UnixTime.toStartOf(UnixTime.now(), 'day') -
+                    1 * UnixTime.DAY,
               pastDayAvgThroughputPerSecond: 1.5,
               maxThroughputPerSecond: 4.3,
               largestPoster: {
@@ -158,8 +159,9 @@ function getMockDaThroughputTableData(
               totalSize: 601312,
               syncedUntil:
                 daLayerId === 'avail'
-                  ? UnixTime.now().toStartOf('day').add(-2, 'days').toNumber()
-                  : UnixTime.now().toStartOf('day').add(-1, 'days').toNumber(),
+                  ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
+                  : UnixTime.toStartOf(UnixTime.now(), 'day') -
+                    1 * UnixTime.DAY,
               pastDayAvgThroughputPerSecond: 1.0,
               maxThroughputPerSecond: 4.3,
               largestPoster: {
@@ -198,7 +200,7 @@ function sumByTimestamp(
       const totalSize = values.reduce((acc, v) => acc + v.totalSize, 0n)
       return {
         projectId: daLayer,
-        timestamp: new UnixTime(Number(timestamp)),
+        timestamp: UnixTime(Number(timestamp)),
         totalSize,
         daLayer,
       }
@@ -221,8 +223,8 @@ async function getLargestPosters(
           return undefined
         }
 
-        const filteredValues = values.filter((v) =>
-          v.timestamp.equals(lastTimestamp),
+        const filteredValues = values.filter(
+          (v) => v.timestamp === lastTimestamp,
         )
 
         for (const value of filteredValues) {

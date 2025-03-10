@@ -96,40 +96,6 @@ export const scalingTvsColumns = [
       headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
     },
   }),
-  columnHelper.accessor('tvs.data.breakdown.external', {
-    id: 'external',
-    header: 'External',
-    cell: (ctx) => {
-      const data = ctx.row.original.tvs.data
-      if (!data) {
-        return <NoDataBadge />
-      }
-      const children = (
-        <ValueSecuredCell
-          value={data.breakdown.external}
-          change={data.change.external}
-        />
-      )
-      return (
-        <TableLink
-          href={
-            data.breakdown.external > 0
-              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`
-              : undefined
-          }
-        >
-          {children}
-        </TableLink>
-      )
-    },
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      tooltip:
-        'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
-      headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
-    },
-  }),
   columnHelper.accessor('tvs.data.breakdown.native', {
     id: 'native',
     header: 'Native',
@@ -164,4 +130,39 @@ export const scalingTvsColumns = [
       headClassName: getColumnHeaderUnderline('before:bg-pink-100'),
     },
   }),
+  columnHelper.accessor('tvs.data.breakdown.external', {
+    id: 'external',
+    header: 'External',
+    cell: (ctx) => {
+      const data = ctx.row.original.tvs.data
+      if (!data) {
+        return <NoDataBadge />
+      }
+      const children = (
+        <ValueSecuredCell
+          value={data.breakdown.external}
+          change={data.change.external}
+        />
+      )
+      return (
+        <TableLink
+          href={
+            data.breakdown.external > 0
+              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`
+              : undefined
+          }
+        >
+          {children}
+        </TableLink>
+      )
+    },
+    sortUndefined: 'last',
+    meta: {
+      align: 'right',
+      tooltip:
+        'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
+      headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
+    },
+  }),
+  ,
 ]

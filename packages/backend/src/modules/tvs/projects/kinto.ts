@@ -13,7 +13,7 @@ export async function getKintoConfig(regenerate: boolean = false) {
       select: ['tvlConfig', 'chainConfig'],
     })
     assert(kinto, 'Kinto project not found')
-    return mapConfig(kinto, kinto.chainConfig, Logger.INFO)
+    return mapConfig(kinto, Logger.INFO)
   }
 
   const filePath = path.join(__dirname, 'kinto-config.json')

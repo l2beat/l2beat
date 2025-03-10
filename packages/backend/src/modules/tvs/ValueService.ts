@@ -1,6 +1,6 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
-import { createAmountConfig, createPriceConfig } from './mapConfig'
+import { createAmountConfig } from './mapConfig'
 import type {
   AmountFormula,
   CalculationFormula,
@@ -49,7 +49,7 @@ export class ValueService {
         })
       }
 
-      result.set(timestamp.toNumber(), values)
+      result.set(timestamp, values)
     }
 
     return await Promise.resolve(result)
@@ -73,9 +73,8 @@ export class ValueService {
     formula: ValueFormula,
     timestamp: UnixTime,
   ): Promise<number> {
-    const priceConfig = createPriceConfig(formula)
-    const price = await this.storage.getPrice(priceConfig.priceId, timestamp)
-    assert(price !== undefined, `Price not found for ${priceConfig.priceId}`)
+    const price = await this.storage.getPrice(formula.priceId, timestamp)
+    assert(price !== undefined, `Price not found for ${formula.priceId}`)
 
     const amount = await this.executeFormula(formula.amount, timestamp)
     const value = amount * price

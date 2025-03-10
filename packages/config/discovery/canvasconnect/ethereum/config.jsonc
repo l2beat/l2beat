@@ -4,52 +4,5 @@
   "name": "canvasconnect",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"],
-  "names": {
-    "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d": "StarkExchange",
-    "0x8B3A6662809195453645e37C2005d655f57ca818": "Committee"
-  },
-  "sharedModules": ["shared-sharp-verifier"],
-  "overrides": {
-    "StarkExchange": {
-      "ignoreMethods": [
-        "configurationHash",
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "isAssetRegistered",
-        "validatedSelectors",
-        "getAssetInfo",
-        "getActionCount",
-        "getActionHashByIndex",
-        "initializerSize",
-        "UPGRADE_DELAY_SLOT"
-      ],
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getValidiumVaultRoot"
-      ],
-      "fields": {
-        "OPERATORS": {
-          "handler": {
-            "type": "event",
-            "select": "operator",
-            "add": { "event": "event LogOperatorAdded(address operator)" },
-            "remove": { "event": "event LogOperatorRemoved(address operator)" }
-          }
-        }
-      }
-    },
-    "Committee": {
-      "fields": {
-        "constructorArgs": {
-          "handler": {
-            "type": "constructorArgs"
-          }
-        }
-      }
-    }
-  }
+  "sharedModules": ["shared-sharp-verifier"]
 }

@@ -1,4 +1,4 @@
-import type { StageConfig } from '@l2beat/config'
+import type { ProjectScalingStage } from '@l2beat/config'
 
 import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import {
@@ -16,7 +16,7 @@ import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
 
 export interface StageCellProps {
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
   isAppchain: boolean
   href?: string
 }

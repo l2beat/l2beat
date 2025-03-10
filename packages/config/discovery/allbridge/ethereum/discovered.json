@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 21723681,
-  "configHash": "0x40f08c144f5a6b7896c0baec7873d7e810f9d9cae676c20173cd086056a55f29",
+  "configHash": "0xa19e8985ce61821cb197f4b5f4346a3b2dfe9dba73de1f9428140e7c3dcc5f20",
   "contracts": [
     {
       "name": "GasOracle",

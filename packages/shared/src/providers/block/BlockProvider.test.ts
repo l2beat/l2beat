@@ -82,7 +82,7 @@ describe(BlockProvider.name, () => {
       const provider = new BlockProvider('chain', [client])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
-        new UnixTime(800 * 100),
+        UnixTime(800 * 100),
       )
 
       expect(blockNumber).toEqual(800)
@@ -116,7 +116,7 @@ describe(BlockProvider.name, () => {
       const provider = new BlockProvider('chain', [client, client2])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
-        new UnixTime(800 * 100),
+        UnixTime(800 * 100),
       )
 
       expect(blockNumber).toEqual(800)
@@ -140,7 +140,7 @@ describe(BlockProvider.name, () => {
       const provider = new BlockProvider('chain', [client, client2, client3])
 
       await expect(
-        async () => await provider.getBlockNumberAtOrBefore(new UnixTime(800)),
+        async () => await provider.getBlockNumberAtOrBefore(UnixTime(800)),
       ).toBeRejectedWith('3')
 
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)

@@ -7,7 +7,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -30,7 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const lumia: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1718181773), // 2024-06-12T08:42:53Z
+  addedAt: UnixTime(1718181773), // 2024-06-12T08:42:53Z
   additionalBadges: [BADGES.DA.DAC],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Restaking', 'RWA'],
@@ -79,8 +79,8 @@ export const lumia: Layer2 = polygonCDKStack({
       references: [
         {
           title:
-            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
     },
@@ -92,7 +92,7 @@ export const lumia: Layer2 = polygonCDKStack({
     name: 'lumia',
     chainId: 994873017,
     explorerUrl: 'https://explorer.lumia.org',
-    sinceTimestamp: new UnixTime(1719499031),
+    sinceTimestamp: UnixTime(1719499031),
     apis: [
       {
         type: 'rpc',

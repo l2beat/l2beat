@@ -2,7 +2,7 @@
   "name": "hypr",
   "chain": "ethereum",
   "blockNumber": 21637077,
-  "configHash": "0xdbe134be7f10092d3ba5be5efcb96b05b1c099da40f9109be031d8e2191d1018",
+  "configHash": "0xad470c317d67219bf5cb9dbba11284308353c5f3448aa610cdfa0ab22e4e26f3",
   "contracts": [
     {
       "name": "L1StandardBridge",

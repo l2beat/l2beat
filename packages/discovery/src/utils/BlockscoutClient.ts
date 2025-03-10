@@ -60,7 +60,7 @@ export class BlockscoutClient implements IEtherscanClient {
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
-    let current = new UnixTime(timestamp.toNumber())
+    let current = UnixTime(timestamp)
 
     let counter = 1
     while (counter <= MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP) {
@@ -83,7 +83,7 @@ export class BlockscoutClient implements IEtherscanClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-1, 'minutes')
+        current = current - 1 * UnixTime.MINUTE
       }
 
       counter++
@@ -181,7 +181,7 @@ export class BlockscoutClient implements IEtherscanClient {
     const resp = OneTransactionListResult.parse(response)[0]
     assert(resp)
 
-    return new UnixTime(parseInt(resp.timeStamp, 10))
+    return UnixTime(parseInt(resp.timeStamp, 10))
   }
 
   async getAtMost10RecentOutgoingTxs(

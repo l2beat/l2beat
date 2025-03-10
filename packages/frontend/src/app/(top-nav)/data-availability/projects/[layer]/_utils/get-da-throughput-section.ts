@@ -22,7 +22,7 @@ export async function getDaThroughputSection(
   if (!projectData) return undefined
 
   const notSyncedStatus = getThroughputSyncWarning(
-    new UnixTime(projectData.syncedUntil),
+    UnixTime(projectData.syncedUntil),
     { shorter: true },
   )
 

@@ -41,7 +41,7 @@ export function toRow(
   return {
     projectId: record.projectId,
     daLayer: record.daLayer,
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
     totalSize: record.totalSize.toString(),
   }
 }

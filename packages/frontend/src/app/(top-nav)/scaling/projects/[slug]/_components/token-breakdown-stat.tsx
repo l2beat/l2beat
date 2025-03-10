@@ -13,11 +13,11 @@ import {
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 
 interface Props {
   tokenTvs:
-    | NonNullable<ScalingProjectEntry['header']['tvs']>['tokens']
+    | NonNullable<ProjectScalingEntry['header']['tvs']>['tokens']
     | undefined
   gasTokens?: string[]
 }

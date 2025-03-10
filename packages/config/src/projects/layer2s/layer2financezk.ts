@@ -12,7 +12,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierContracts } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { Layer2 } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 
@@ -22,7 +22,7 @@ export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
   capability: 'universal',
-  addedAt: new UnixTime(1654522914), // 2022-06-06T13:41:54Z
+  addedAt: UnixTime(1654522914), // 2022-06-06T13:41:54Z
   isArchived: true,
   display: {
     name: 'L2.Finance-zk',
@@ -54,25 +54,25 @@ export const layer2financezk: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x82123571C8a5e0910280C066bc634c4945FFcbC8'),
-        sinceTimestamp: new UnixTime(1645130774),
+        sinceTimestamp: UnixTime(1645130774),
         tokens: ['ETH', 'USDC', 'USDT'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x8581cd55ff53F1F85A237fa9D60E72a79f0973b6'),
-        sinceTimestamp: new UnixTime(1648621885),
+        sinceTimestamp: UnixTime(1648621885),
         tokens: ['cETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x4455E4435Cf7e6B6A4Df17bEAE1A413ef3663B90'),
-        sinceTimestamp: new UnixTime(1647862894),
+        sinceTimestamp: UnixTime(1647862894),
         tokens: ['cETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x3F3b821243E5664822c0babBA2B4f37bf294e7a0'),
-        sinceTimestamp: new UnixTime(1648621976),
+        sinceTimestamp: UnixTime(1648621976),
         tokens: ['cUSDC'],
         chain: 'ethereum',
       },
@@ -96,7 +96,7 @@ export const layer2financezk: Layer2 = {
   contracts: {
     addresses: {
       [discovery.chain]: [
-        discovery.getContractDetails('Proxy', {
+        discovery.getContractDetails('StarkExchange', {
           name: 'StarkExchange',
         }),
         discovery.getContractDetails('Committee'),

@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
+import type { Layer3 } from '../../internalTypes'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const forta: Layer3 = underReviewL3({
   id: 'forta',
   capability: 'universal',
-  addedAt: new UnixTime(1738766610), // 2025-02-05T15:43:09Z
+  addedAt: UnixTime(1738766610), // 2025-02-05T15:43:09Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Forta',
@@ -45,7 +45,7 @@ export const forta: Layer3 = underReviewL3({
   escrows: [
     {
       address: EthereumAddress('0x9afa3dac8a88b56a7dafe9b300d65fd039b8e4c7'), // Bridge
-      sinceTimestamp: new UnixTime(1730862045),
+      sinceTimestamp: UnixTime(1730862045),
       tokens: ['FORT'],
       includeInTotal: false,
       chain: 'arbitrum',

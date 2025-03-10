@@ -13,7 +13,7 @@ export async function getBobConfig(regenerate: boolean = false) {
       select: ['tvlConfig', 'chainConfig'],
     })
     assert(bob, 'Bob project not found')
-    return mapConfig(bob, bob.chainConfig, Logger.INFO)
+    return mapConfig(bob, Logger.INFO)
   }
 
   const filePath = path.join(__dirname, 'bob-config.json')

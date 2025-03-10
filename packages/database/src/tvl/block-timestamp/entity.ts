@@ -23,7 +23,7 @@ export function toRow(
 ): Insertable<BlockTimestamp> {
   return {
     chain: blockTimestamp.chain,
-    timestamp: blockTimestamp.timestamp.toDate(),
+    timestamp: UnixTime.toDate(blockTimestamp.timestamp),
     blockNumber: blockTimestamp.blockNumber,
   }
 }

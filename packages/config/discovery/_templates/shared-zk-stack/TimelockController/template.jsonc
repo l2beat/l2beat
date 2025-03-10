@@ -15,6 +15,21 @@
         "type": "accessControl"
       }
     },
+    "timelockAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "delay": "{{getMinDelay}}",
+            "description": "manage all access control roles and change the minimum delay."
+          }
+        ]
+      }
+    },
     "Proposer": {
       "handler": {
         "type": "accessControl",

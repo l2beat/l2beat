@@ -1,8 +1,8 @@
 {
   "name": "edgeless",
   "chain": "ethereum",
-  "blockNumber": 21766618,
-  "configHash": "0x6738e1b00e52642a4fd18f272f948eb26d344c890d6bc79d9d3bd358b12c2041",
+  "blockNumber": 21993999,
+  "configHash": "0x61a1f56ff605304e55774614787119d77b896704cc20be13d24eca01927f777c",
   "contracts": [
     {
       "name": "StakingManager",
@@ -423,12 +423,35 @@
           "0xFa213CdA43f879FfaF17170B6E3b3AbE9900cAB1"
         ],
         "allowedOutboxList": ["0x5e8749760c5051fF80b73319cCf4d05ef9959563"],
-        "delayedMessageCount": 480,
+        "delayedMessageCount": 481,
+        "inboxHistory": [
+          "0xf51551afD112a50Fc5EDa0454111078fE6E6096E",
+          "0xFa213CdA43f879FfaF17170B6E3b3AbE9900cAB1"
+        ],
         "nativeToken": "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7",
+        "outboxHistory": ["0x5e8749760c5051fF80b73319cCf4d05ef9959563"],
         "rollup": "0x890025891508a463A636f81D2f532a97210240de",
         "sequencerInbox": "0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086",
-        "sequencerMessageCount": 233,
-        "sequencerReportedSubMessageCount": 1429
+        "sequencerMessageCount": 234,
+        "sequencerReportedSubMessageCount": 1430
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -542,12 +565,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 213,
+        "firstUnresolvedNode": 214,
         "inbox": "0xf51551afD112a50Fc5EDa0454111078fE6E6096E",
         "isERC20Enabled": false,
+        "isPostBoLD": false,
         "lastStakeBlock": 19487060,
-        "latestConfirmed": 212,
-        "latestNodeCreated": 212,
+        "latestConfirmed": 213,
+        "latestNodeCreated": 213,
         "loserStakeEscrow": "0xa43ce4721Ac0faB33E8636e0DDB55E76e3EFF461",
         "minimumAssertionPeriod": 75,
         "outbox": "0x5e8749760c5051fF80b73319cCf4d05ef9959563",
@@ -875,11 +899,11 @@
         ],
         "$upgradeCount": 1,
         "autoStake": true,
-        "ethUnderWithdrawal": "16564000000000000000",
+        "ethUnderWithdrawal": 0,
         "owner": "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "stakingManager": "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227",
-        "underlyingAssetAmount": "20087109180255472306",
+        "underlyingAssetAmount": "11215238111094636602",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       }
     },
@@ -967,7 +991,7 @@
         "minter": "0x7E0bc314535f430122caFEF18eAbd508d62934bf",
         "name": "Edgeless Wrapped Eth",
         "symbol": "ewEth",
-        "totalSupply": "20047291572099348805"
+        "totalSupply": "11175288176598671397"
       }
     },
     {
@@ -1108,7 +1132,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 233,
+        "batchCount": 234,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x4e4aC6F04106964b5B69FDA5EcC207295bCae81f"],
         "bridge": "0x6B595398152999bBc759D5D8ed8169793F915488",
@@ -2216,7 +2240,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/CustomGateway": "0xe610ed6acda2c607b2801da142ad354c7f16661baeaf0a026c2618b04da0f018",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
@@ -2229,7 +2253,7 @@
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
     "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x3a9246a912d738821e12f469caa2b045470c35e714b11f5761fb5ed8944002af",
+    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"

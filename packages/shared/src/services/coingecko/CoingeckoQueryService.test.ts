@@ -28,11 +28,9 @@ describe(CoingeckoQueryService.name, () => {
       expect(coingeckoClient.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
         CoingeckoId('weth'),
         'usd',
-        UnixTime.fromDate(new Date('2021-01-01')).add(-14, 'days'),
-        UnixTime.fromDate(new Date('2021-01-01')).add(
-          MAX_DAYS_FOR_HOURLY_PRECISION - 14,
-          'days',
-        ),
+        UnixTime.fromDate(new Date('2021-01-01')) - 14 * UnixTime.DAY,
+        UnixTime.fromDate(new Date('2021-01-01')) +
+          (MAX_DAYS_FOR_HOURLY_PRECISION - 14) * UnixTime.DAY,
       )
     })
 
@@ -42,9 +40,15 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.toDate(), value: 1200 },
-            { date: START.add(1, 'hours').toDate(), value: 1000 },
-            { date: START.add(2, 'hours').toDate(), value: 1100 },
+            { date: UnixTime.toDate(START), value: 1200 },
+            {
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 1000,
+            },
+            {
+              date: UnixTime.toDate(START + 2 * UnixTime.HOUR),
+              value: 1100,
+            },
           ],
           marketCaps: [mock(), mock(), mock()],
         }),
@@ -53,12 +57,12 @@ describe(CoingeckoQueryService.name, () => {
       const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
         CoingeckoId('weth'),
         START,
-        START.add(2, 'hours'),
+        START + 2 * UnixTime.HOUR,
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200 },
-        { timestamp: START.add(1, 'hours'), value: 1000 },
-        { timestamp: START.add(2, 'hours'), value: 1100 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
+        { timestamp: START + 2 * UnixTime.HOUR, value: 1100 },
       ])
     })
 
@@ -68,13 +72,15 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn()
           .returnsOnce({
-            prices: [{ date: START.toDate(), value: 1200 }],
+            prices: [{ date: UnixTime.toDate(START), value: 1200 }],
             marketCaps: [mock()],
           })
           .returnsOnce({
             prices: [
               {
-                date: START.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
+                date: UnixTime.toDate(
+                  START + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
+                ),
                 value: 1800,
               },
             ],
@@ -83,10 +89,9 @@ describe(CoingeckoQueryService.name, () => {
           .returnsOnce({
             prices: [
               {
-                date: START.add(
-                  2 * MAX_DAYS_FOR_HOURLY_PRECISION,
-                  'days',
-                ).toDate(),
+                date: UnixTime.toDate(
+                  START + 2 * MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
+                ),
                 value: 2400,
               },
             ],
@@ -97,21 +102,25 @@ describe(CoingeckoQueryService.name, () => {
       const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
         CoingeckoId('weth'),
         START,
-        START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'hours'),
+        START + 2 * MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.HOUR,
       )
 
       const timestamps = getHourlyTimestamps(
         START,
-        START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'hours'),
+        START + 2 * MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.HOUR,
       )
       const constPrices = [
-        { date: START.toDate(), value: 1200 },
+        { date: UnixTime.toDate(START), value: 1200 },
         {
-          date: START.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
+          date: UnixTime.toDate(
+            START + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
+          ),
           value: 2400,
         },
         {
-          date: START.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toDate(),
+          date: UnixTime.toDate(
+            START + 2 * MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
+          ),
           value: 2600,
         },
       ]
@@ -125,13 +134,28 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.toDate(), value: 1200 },
-            { date: START.toDate(), value: 1200 },
-            { date: START.add(1, 'hours').toDate(), value: 1000 },
-            { date: START.add(1, 'hours').toDate(), value: 1000 },
-            { date: START.add(1, 'hours').toDate(), value: 1000 },
-            { date: START.add(2, 'hours').toDate(), value: 1100 },
-            { date: START.add(2, 'hours').toDate(), value: 1100 },
+            { date: UnixTime.toDate(START), value: 1200 },
+            { date: UnixTime.toDate(START), value: 1200 },
+            {
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 1000,
+            },
+            {
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 1000,
+            },
+            {
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 1000,
+            },
+            {
+              date: UnixTime.toDate(START + 2 * UnixTime.HOUR),
+              value: 1100,
+            },
+            {
+              date: UnixTime.toDate(START + 2 * UnixTime.HOUR),
+              value: 1100,
+            },
           ],
           marketCaps: Array(7).fill(mock()),
         }),
@@ -140,12 +164,12 @@ describe(CoingeckoQueryService.name, () => {
       const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
         CoingeckoId('weth'),
         START,
-        START.add(2, 'hours'),
+        START + 2 * UnixTime.HOUR,
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200 },
-        { timestamp: START.add(1, 'hours'), value: 1000 },
-        { timestamp: START.add(2, 'hours'), value: 1100 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
+        { timestamp: START + 2 * UnixTime.HOUR, value: 1100 },
       ])
     })
 
@@ -155,10 +179,18 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.add(-2, 'minutes').toDate(), value: 1200 },
-            { date: START.add(1, 'hours').toDate(), value: 1000 },
             {
-              date: START.add(2, 'hours').add(2, 'minutes').toDate(),
+              date: UnixTime.toDate(START - 2 * UnixTime.MINUTE),
+              value: 1200,
+            },
+            {
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 1000,
+            },
+            {
+              date: UnixTime.toDate(
+                START + 2 * UnixTime.HOUR + 2 * UnixTime.MINUTE,
+              ),
               value: 1100,
             },
           ],
@@ -169,13 +201,13 @@ describe(CoingeckoQueryService.name, () => {
       const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
         CoingeckoId('weth'),
         START,
-        START.add(2, 'hours'),
+        START + 2 * UnixTime.HOUR,
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200 },
-        { timestamp: START.add(1, 'hours'), value: 1000 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
         {
-          timestamp: START.add(2, 'hours'),
+          timestamp: START + 2 * UnixTime.HOUR,
           value: 1100,
         },
       ])
@@ -187,10 +219,13 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.add(1, 'hours').toDate(), value: 1000 },
-            { date: START.toDate(), value: 1200 },
             {
-              date: START.add(2, 'hours').toDate(),
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 1000,
+            },
+            { date: UnixTime.toDate(START), value: 1200 },
+            {
+              date: UnixTime.toDate(START + 2 * UnixTime.HOUR),
               value: 1100,
             },
           ],
@@ -201,12 +236,12 @@ describe(CoingeckoQueryService.name, () => {
       const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
         CoingeckoId('weth'),
         START,
-        START.add(2, 'hours'),
+        START + 2 * UnixTime.HOUR,
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1200 },
-        { timestamp: START.add(1, 'hours'), value: 1000 },
-        { timestamp: START.add(2, 'hours'), value: 1100 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
+        { timestamp: START + 2 * UnixTime.HOUR, value: 1100 },
       ])
     })
   })
@@ -218,51 +253,59 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
-            { date: START.toDate(), value: 101.2 },
-            { date: START.add(1, 'hours').toDate(), value: 110.3 },
-            { date: START.add(2, 'hours').toDate(), value: 120.4 },
+            { date: UnixTime.toDate(START), value: 101.2 },
+            {
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 110.3,
+            },
+            {
+              date: UnixTime.toDate(START + 2 * UnixTime.HOUR),
+              value: 120.4,
+            },
           ],
           marketCaps: [
-            { date: START.toDate(), value: 123456789 },
-            { date: START.add(1, 'hours').toDate(), value: 234567891 },
-            { date: START.add(2, 'hours').toDate(), value: 345678912 },
+            { date: UnixTime.toDate(START), value: 123456789 },
+            {
+              date: UnixTime.toDate(START + 1 * UnixTime.HOUR),
+              value: 234567891,
+            },
+            {
+              date: UnixTime.toDate(START + 2 * UnixTime.HOUR),
+              value: 345678912,
+            },
           ],
         }),
       })
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getCirculatingSupplies(
         CoingeckoId('weth'),
-        { from: START, to: START.add(2, 'hours') },
+        { from: START, to: START + 2 * UnixTime.HOUR },
       )
       expect(prices).toEqual([
         { timestamp: START, value: 1219900 },
-        { timestamp: START.add(1, 'hours'), value: 2126600 },
-        { timestamp: START.add(2, 'hours'), value: 2871100 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 2126600 },
+        { timestamp: START + 2 * UnixTime.HOUR, value: 2871100 },
       ])
     })
   })
 
   describe(CoingeckoQueryService.calculateAdjustedTo.name, () => {
     it('adjust range for coingecko hourly query range', () => {
-      const from = new UnixTime(0)
-      const to = from.add(
-        CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * 2,
-        'days',
-      )
+      const from = 0
+      const to =
+        from + CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * 2 * UnixTime.DAY
 
       const result = CoingeckoQueryService.calculateAdjustedTo(from, to)
 
       expect(result).toEqual(
-        from.add(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days'),
+        from + CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY,
       )
     })
 
     it('does not adjust if the range is smaller than MAX_DAYS_FOR_ONE_CALL', () => {
-      const from = new UnixTime(0)
-      const to = from.add(
-        CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL - 1,
-        'days',
-      )
+      const from = 0
+      const to =
+        from + (CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL - 1) * UnixTime.DAY
 
       const result = CoingeckoQueryService.calculateAdjustedTo(from, to)
 
@@ -272,135 +315,155 @@ describe(CoingeckoQueryService.name, () => {
 })
 
 describe(pickClosestValues.name, () => {
-  const START = new UnixTime(1517961600)
+  const START = UnixTime(1517961600)
 
   it('works for hours', () => {
     const prices = [
-      { value: 1000, date: START.toDate() },
-      { value: 1100, date: START.add(1, 'hours').toDate() },
-      { value: 1200, date: START.add(2, 'hours').toDate() },
+      { value: 1000, date: UnixTime.toDate(START) },
+      { value: 1100, date: UnixTime.toDate(START + 1 * UnixTime.HOUR) },
+      { value: 1200, date: UnixTime.toDate(START + 2 * UnixTime.HOUR) },
     ]
-    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
-      { value: 1100, timestamp: START.add(1, 'hours') },
-      { value: 1200, timestamp: START.add(2, 'hours') },
+      { value: 1100, timestamp: START + 1 * UnixTime.HOUR },
+      { value: 1200, timestamp: START + 2 * UnixTime.HOUR },
     ])
   })
 
   it('adjusts dates for slightly off timestamps', () => {
     const prices = [
-      { value: 1000, date: START.add(2, 'minutes').toDate() },
-      { value: 1100, date: START.add(1, 'hours').add(1, 'minutes').toDate() },
-      { value: 1200, date: START.add(2, 'hours').add(3, 'minutes').toDate() },
+      { value: 1000, date: UnixTime.toDate(START + 2 * UnixTime.MINUTE) },
+      {
+        value: 1100,
+        date: UnixTime.toDate(START + 1 * UnixTime.HOUR + 1 * UnixTime.MINUTE),
+      },
+      {
+        value: 1200,
+        date: UnixTime.toDate(START + 2 * UnixTime.HOUR + 3 * UnixTime.MINUTE),
+      },
     ]
-    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1100,
-        timestamp: START.add(1, 'hours'),
+        timestamp: START + 1 * UnixTime.HOUR,
       },
       {
         value: 1200,
-        timestamp: START.add(2, 'hours'),
+        timestamp: START + 2 * UnixTime.HOUR,
       },
     ])
   })
 
   it('adjusts dates before the first timestamp', () => {
     const prices = [
-      { value: 1000, date: START.add(-2, 'minutes').toDate() },
-      { value: 1100, date: START.add(1, 'hours').toDate() },
-      { value: 1200, date: START.add(2, 'hours').toDate() },
+      { value: 1000, date: UnixTime.toDate(START - 2 * UnixTime.MINUTE) },
+      { value: 1100, date: UnixTime.toDate(START + 1 * UnixTime.HOUR) },
+      { value: 1200, date: UnixTime.toDate(START + 2 * UnixTime.HOUR) },
     ]
-    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1100,
-        timestamp: START.add(1, 'hours'),
+        timestamp: START + 1 * UnixTime.HOUR,
       },
-      { value: 1200, timestamp: START.add(2, 'hours') },
+      { value: 1200, timestamp: START + 2 * UnixTime.HOUR },
     ])
   })
 
   it('discards unnecessary data', () => {
     const prices = [
-      { value: 1100, date: START.add(-2, 'minutes').toDate() },
-      { value: 1200, date: START.add(1, 'minutes').toDate() },
-      { value: 1300, date: START.add(1, 'hours').toDate() },
-      { value: 1400, date: START.add(1, 'hours').add(2, 'minutes').toDate() },
-      { value: 1500, date: START.add(2, 'hours').add(-1, 'minutes').toDate() },
-      { value: 1600, date: START.add(2, 'hours').add(2, 'minutes').toDate() },
+      { value: 1100, date: UnixTime.toDate(START - 2 * UnixTime.MINUTE) },
+      { value: 1200, date: UnixTime.toDate(START + 1 * UnixTime.MINUTE) },
+      { value: 1300, date: UnixTime.toDate(START + 1 * UnixTime.HOUR) },
+      {
+        value: 1400,
+        date: UnixTime.toDate(START + 1 * UnixTime.HOUR + 2 * UnixTime.MINUTE),
+      },
+      {
+        value: 1500,
+        date: UnixTime.toDate(START + 2 * UnixTime.HOUR - 1 * UnixTime.MINUTE),
+      },
+      {
+        value: 1600,
+        date: UnixTime.toDate(START + 2 * UnixTime.HOUR + 2 * UnixTime.MINUTE),
+      },
     ]
-    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1200, timestamp: START },
-      { value: 1300, timestamp: START.add(1, 'hours') },
+      { value: 1300, timestamp: START + 1 * UnixTime.HOUR },
       {
         value: 1500,
-        timestamp: START.add(2, 'hours'),
+        timestamp: START + 2 * UnixTime.HOUR,
       },
     ])
   })
 
   it('manufactures single missing datapoint', () => {
     const prices = [
-      { value: 1000, date: START.toDate() },
-      { value: 1200, date: START.add(2, 'hours').add(-1, 'minutes').toDate() },
+      { value: 1000, date: UnixTime.toDate(START) },
+      {
+        value: 1200,
+        date: UnixTime.toDate(START + 2 * UnixTime.HOUR - 1 * UnixTime.MINUTE),
+      },
     ]
-    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1200,
-        timestamp: START.add(1, 'hours'),
+        timestamp: START + 1 * UnixTime.HOUR,
       },
-      { value: 1200, timestamp: START.add(2, 'hours') },
+      { value: 1200, timestamp: START + 2 * UnixTime.HOUR },
     ])
   })
 
   it('manufactures multiple missing datapoints', () => {
     const prices = [
-      { value: 1000, date: START.toDate() },
-      { value: 1400, date: START.add(4, 'hours').toDate() },
+      { value: 1000, date: UnixTime.toDate(START) },
+      { value: 1400, date: UnixTime.toDate(START + 4 * UnixTime.HOUR) },
     ]
-    const timestamps = getHourlyTimestamps(START, START.add(4, 'hours'))
+    const timestamps = getHourlyTimestamps(START, START + 4 * UnixTime.HOUR)
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1000,
-        timestamp: START.add(1, 'hours'),
+        timestamp: START + 1 * UnixTime.HOUR,
       },
       {
         value: 1400,
-        timestamp: START.add(2, 'hours'),
+        timestamp: START + 2 * UnixTime.HOUR,
       },
       {
         value: 1400,
-        timestamp: START.add(3, 'hours'),
+        timestamp: START + 3 * UnixTime.HOUR,
       },
-      { value: 1400, timestamp: START.add(4, 'hours') },
+      { value: 1400, timestamp: START + 4 * UnixTime.HOUR },
     ])
   })
 
   it('manufactures start and end datapoints', () => {
-    const prices = [{ value: 1100, date: START.add(1, 'hours').toDate() }]
-    const timestamps = getHourlyTimestamps(START, START.add(2, 'hours'))
+    const prices = [
+      { value: 1100, date: UnixTime.toDate(START + 1 * UnixTime.HOUR) },
+    ]
+    const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
     expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1100, timestamp: START },
-      { value: 1100, timestamp: START.add(1, 'hours') },
+      { value: 1100, timestamp: START + 1 * UnixTime.HOUR },
       {
         value: 1100,
-        timestamp: START.add(2, 'hours'),
+        timestamp: START + 2 * UnixTime.HOUR,
       },
     ])
   })
@@ -410,10 +473,12 @@ describe(generateRangesToCallHourly.name, () => {
   it('30 days', () => {
     const start = UnixTime.fromDate(new Date('2021-07-01T00:00:00Z'))
 
-    expect(generateRangesToCallHourly(start, start.add(30, 'days'))).toEqual([
+    expect(
+      generateRangesToCallHourly(start, start + 30 * UnixTime.DAY),
+    ).toEqual([
       {
         start: start,
-        end: start.add(30, 'days'),
+        end: start + 30 * UnixTime.DAY,
       },
     ])
   })
@@ -421,14 +486,16 @@ describe(generateRangesToCallHourly.name, () => {
   it('90 days', () => {
     const start = UnixTime.fromDate(new Date('2021-07-01T00:00:00Z'))
 
-    expect(generateRangesToCallHourly(start, start.add(90, 'days'))).toEqual([
+    expect(
+      generateRangesToCallHourly(start, start + 90 * UnixTime.DAY),
+    ).toEqual([
       {
         start: start,
-        end: start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
+        end: start + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
       },
       {
-        start: start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
-        end: start.add(90, 'days'),
+        start: start + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
+        end: start + 90 * UnixTime.DAY,
       },
     ])
   })
@@ -436,18 +503,20 @@ describe(generateRangesToCallHourly.name, () => {
   it('180 days', () => {
     const start = UnixTime.fromDate(new Date('2021-07-01T00:00:00Z'))
 
-    expect(generateRangesToCallHourly(start, start.add(180, 'days'))).toEqual([
+    expect(
+      generateRangesToCallHourly(start, start + 180 * UnixTime.DAY),
+    ).toEqual([
       {
         start: start,
-        end: start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
+        end: start + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
       },
       {
-        start: start.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
-        end: start.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
+        start: start + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
+        end: start + 2 * MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
       },
       {
-        start: start.add(2 * MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
-        end: start.add(180, 'days'),
+        start: start + 2 * MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
+        end: start + 180 * UnixTime.DAY,
       },
     ])
   })
