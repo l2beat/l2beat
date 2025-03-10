@@ -1,7 +1,6 @@
 import type {
-  ContractParameters,
   DiscoveryOutput,
-  EoaParameters,
+  EntryParameters,
   ReceivedPermission,
 } from '../output/types'
 import type { ContractValue } from '../output/types'
@@ -10,7 +9,7 @@ import {
   interpolateModelTemplate,
 } from './interpolate'
 
-type ContractOrEoa = (ContractParameters | EoaParameters) & { isEoa?: boolean }
+type ContractOrEoa = EntryParameters & { isEoa?: boolean }
 
 const RELATIONS_FILENAME = 'relations.lp'
 interface InlineTemplate {
@@ -86,10 +85,11 @@ export function buildRelationsModels(
   addressToNameMap: Record<string, string>,
 ): Record<string, string[]> {
   const relationsModel: string[] = []
-  const contractsAndEOAs = [
-    ...discoveryOutput.contracts,
-    ...discoveryOutput.eoas.map((eoa) => ({ ...eoa, isEoa: true })),
-  ]
+  const contractsAndEOAs = discoveryOutput.entries.map((e) => ({
+    ...e,
+    isEoa: e.type === 'EOA',
+  }))
+
   for (const contractOrEoa of contractsAndEOAs) {
     const contractValues = contractValuesForInterpolation(
       discoveryOutput.chain,
@@ -145,7 +145,7 @@ export function buildRelationsModels(
 }
 
 export function findAllDirectlyReceivedPermissions(
-  contractOrEoa: ContractParameters | EoaParameters,
+  contractOrEoa: EntryParameters,
 ) {
   return [
     ...(contractOrEoa.directlyReceivedPermissions ?? []),

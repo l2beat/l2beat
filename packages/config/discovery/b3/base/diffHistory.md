@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe8a3a2488e055b467c05f843634d1434020f5127
+Generated with discovered.json: 0xc32873ffec167a282d70863fe8547e7c911c5682
 
-# Diff at Mon, 10 Mar 2025 14:10:59 GMT:
+# Diff at Mon, 10 Mar 2025 16:46:47 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@6b2ef2ec787be68c879ee9da0acd22d1ce397cb8 block: 27283267
-- current block number: 27413249
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 27283267
+- current block number: 27417923
 
 ## Description
 
@@ -21,7 +21,7 @@ Base fee increase.
     }
 ```
 
-Generated with discovered.json: 0x968fb79aee35d2a794926574b75d41ed374540ce
+Generated with discovered.json: 0xa6a63cf64bb24804e470c0e4d1a239fb4e50cdb7
 
 # Diff at Fri, 07 Mar 2025 13:58:14 GMT:
 

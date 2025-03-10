@@ -1,16 +1,40 @@
-Generated with discovered.json: 0xe7199f7dc87f57372be349ef39d20703dadb2248
+Generated with discovered.json: 0x3c949608d77cd1795ed6fb02b6993faa3f98eb98
 
-# Diff at Mon, 10 Mar 2025 13:53:04 GMT:
+# Diff at Mon, 10 Mar 2025 16:48:04 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@6b2ef2ec787be68c879ee9da0acd22d1ce397cb8 block: 313221510
-- current block number: 314240925
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 313221510
+- current block number: 314282927
 
 ## Description
 
 Add 4 validators.
 
 ## Watched changes
+
+```diff
+    contract undefined (0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract undefined (0x834999E1D729Ead48Ae1Db1dAa11463102EccB77) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract undefined (0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
 
 ```diff
     contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) {
@@ -35,7 +59,7 @@ Add 4 validators.
 +        8
       values.stakerCount:
 -        2
-+        6
++        4
       values.validators.5:
 +        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
       values.validators.4:
@@ -53,7 +77,15 @@ Add 4 validators.
     }
 ```
 
-Generated with discovered.json: 0x590bee814c85203c7036e7c8f6380725924113c2
+```diff
+    contract undefined (0xedbFE5493367F8fBc340276503D3c18D2C02E9AE) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+Generated with discovered.json: 0xff58ecc47c1ba0e7fa37a7fd5e33f296766f40cc
 
 # Diff at Fri, 07 Mar 2025 14:52:25 GMT:
 

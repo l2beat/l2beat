@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x96ac559b907e2d6d242dc94eb1167a57975266e1
+Generated with discovered.json: 0x3a42555a8df827988f2587425c71462031c465ba
 
-# Diff at Mon, 10 Mar 2025 14:09:32 GMT:
+# Diff at Mon, 10 Mar 2025 16:52:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@6b2ef2ec787be68c879ee9da0acd22d1ce397cb8 block: 19378036
-- current block number: 27412788
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 19378036
+- current block number: 27418087
 
 ## Description
 
@@ -21,7 +21,7 @@ zklink core contract paused. this only prevents deposits/ on the affected chains
     }
 ```
 
-Generated with discovered.json: 0x76a08971916fed146d9df206dee3dcddf409aa0d
+Generated with discovered.json: 0x84c57019a2b0b7aecae082cb8c1b176dbc9893ea
 
 # Diff at Tue, 04 Mar 2025 10:40:36 GMT:
 

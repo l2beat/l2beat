@@ -1,8 +1,7 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import {
-  type ContractParameters,
-  type EoaParameters,
+  type EntryParameters,
   KnowledgeBase,
   ModelIdRegistry,
   type Permission,
@@ -80,7 +79,7 @@ export class PermissionsFromModel implements PermissionRegistry {
   }
 
   describePermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ): string[] {
     const id = this.modelIdRegistry.getModelId(

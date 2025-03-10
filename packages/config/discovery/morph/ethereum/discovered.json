@@ -2,11 +2,54 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0xffeabda4befa810911c6f710e6ebd6b7ce6c5fda272fb7c66ffb51952898c3d9",
-  "contracts": [
+  "configHash": "0x8294f4084f4fc3ab589e0ac4b9cc025f8719c3a2f52c278e1673775b09a3cfad",
+  "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0092bC49078f130D27e70dBeee441E227280B97D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x05e1d4694041aF987Af6F8402D902686018E2136",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0659dF9D53A987e3aDaa9019407431413A101eF3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0B3d220254e407a780EA7498d51b6d4fef807Bd0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "L1Staking",
       "address": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
@@ -110,8 +153,25 @@
       }
     },
     {
+      "address": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ETHGateway",
       "address": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
@@ -150,12 +210,30 @@
       }
     },
     {
+      "address": "0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -198,8 +276,37 @@
       }
     },
     {
+      "address": "0x323a78C1c910b282dE98a557d735628A02E00983",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots"
+        }
+      ]
+    },
+    {
+      "address": "0x35B98995048b320f2DaFFAD5BaD5884F16e488A9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1MessageQueueWithGasPriceOracle",
       "address": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
@@ -249,8 +356,14 @@
       }
     },
     {
+      "address": "0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1StandardERC20Gateway",
       "address": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
@@ -291,11 +404,70 @@
       }
     },
     {
+      "address": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x5300000000000000000000000000000000000006",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5300000000000000000000000000000000000007",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5300000000000000000000000000000000000008",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x530000000000000000000000000000000000000D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x530000000000000000000000000000000000000e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5300000000000000000000000000000000000015",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
       "name": "MultipleVersionRollupVerifier",
       "address": "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "type": "Contract",
       "sourceHashes": [
         "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7"
       ],
+      "proxyType": "immutable",
       "description": "Used to update the verifier and keep track of current and old versions.",
       "sinceTimestamp": 1737359447,
       "sinceBlock": 21664323,
@@ -314,8 +486,77 @@
       }
     },
     {
+      "address": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots"
+        }
+      ]
+    },
+    {
+      "address": "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots"
+        }
+      ]
+    },
+    {
+      "address": "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
       "name": "L1GatewayRouter",
       "address": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
@@ -357,6 +598,7 @@
     {
       "name": "MorphRollup",
       "address": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xdbd7245a43b9bfda69e999525405cc2d3a44e2a5d60c8fcbc75bb2d4987837be"
@@ -622,8 +864,120 @@
       "derivedName": "Rollup"
     },
     {
+      "address": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots"
+        }
+      ]
+    },
+    {
+      "address": "0xa79fEE4418338B59B8C6c93b87777A89F57c0Fd3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAD249861A911717fE74FA329fEC3c619f55DfFDf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots"
+        }
+      ]
+    },
+    {
       "name": "MorphOpsMultisig",
       "address": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -673,8 +1027,65 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose state roots"
+        }
+      ]
+    },
+    {
+      "address": "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xC412B4e6399F694CfF21D038d225373Fd6596811",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xC4db900F76293042349448D1Ba30F71518325Bb3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
       "name": "EnforcedTxGateway",
       "address": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6"
@@ -729,8 +1140,47 @@
       }
     },
     {
+      "address": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "address": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
@@ -780,11 +1230,35 @@
       }
     },
     {
+      "address": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
       "name": "ZkEvmVerifierV1",
       "address": "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154",
+      "type": "Contract",
       "sourceHashes": [
         "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
       ],
+      "proxyType": "immutable",
       "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.",
       "sinceTimestamp": 1736755163,
       "sinceBlock": 21614228,
@@ -797,6 +1271,7 @@
     {
       "name": "MorphUpgradeMultisig",
       "address": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -878,345 +1353,9 @@
       "derivedName": "Safe"
     },
     {
-      "name": "Whitelist",
-      "address": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
-      "sourceHashes": [
-        "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
-      ],
-      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.",
-      "sinceTimestamp": 1729328435,
-      "sinceBlock": 20998580,
-      "values": {
-        "$immutable": true,
-        "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
-      }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    {
-      "address": "0x0092bC49078f130D27e70dBeee441E227280B97D",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    { "address": "0x05e1d4694041aF987Af6F8402D902686018E2136" },
-    { "address": "0x0659dF9D53A987e3aDaa9019407431413A101eF3" },
-    { "address": "0x0B3d220254e407a780EA7498d51b6d4fef807Bd0" },
-    {
-      "address": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    { "address": "0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6" },
-    { "address": "0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb" },
-    {
-      "address": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x323a78C1c910b282dE98a557d735628A02E00983",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
-        }
-      ]
-    },
-    { "address": "0x35B98995048b320f2DaFFAD5BaD5884F16e488A9" },
-    { "address": "0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F" },
-    {
-      "address": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    { "address": "0x5300000000000000000000000000000000000006" },
-    { "address": "0x5300000000000000000000000000000000000007" },
-    { "address": "0x5300000000000000000000000000000000000008" },
-    { "address": "0x530000000000000000000000000000000000000D" },
-    { "address": "0x530000000000000000000000000000000000000e" },
-    { "address": "0x5300000000000000000000000000000000000015" },
-    { "address": "0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5" },
-    {
-      "address": "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
-        }
-      ]
-    },
-    {
-      "address": "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
-        }
-      ]
-    },
-    {
-      "address": "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
-        }
-      ]
-    },
-    { "address": "0xa79fEE4418338B59B8C6c93b87777A89F57c0Fd3" },
-    { "address": "0xAD249861A911717fE74FA329fEC3c619f55DfFDf" },
-    {
-      "address": "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
-        }
-      ]
-    },
-    {
-      "address": "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
-        }
-      ]
-    },
-    {
-      "address": "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xC412B4e6399F694CfF21D038d225373Fd6596811",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xC4db900F76293042349448D1Ba30F71518325Bb3",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    { "address": "0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0" },
-    {
-      "address": "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
-      "address": "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
-        }
-      ]
-    },
-    {
       "address": "0xF2FF0509520fAf35B511074466A509e00d73C307",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "challenge",
@@ -1224,9 +1363,15 @@
         }
       ]
     },
-    { "address": "0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e" },
+    {
+      "address": "0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "challenge",
@@ -1236,6 +1381,8 @@
     },
     {
       "address": "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "challenge",
@@ -1245,6 +1392,8 @@
     },
     {
       "address": "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "sequence",
@@ -1252,6 +1401,22 @@
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
+    },
+    {
+      "name": "Whitelist",
+      "address": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.",
+      "sinceTimestamp": 1729328435,
+      "sinceBlock": 20998580,
+      "values": {
+        "$immutable": true,
+        "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
+      }
     }
   ],
   "abis": {

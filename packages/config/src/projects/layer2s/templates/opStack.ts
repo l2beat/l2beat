@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -132,9 +132,9 @@ interface OpStackConfigCommon {
   activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
   finality?: ProjectFinalityConfig
-  l2OutputOracle?: ContractParameters
-  disputeGameFactory?: ContractParameters
-  portal?: ContractParameters
+  l2OutputOracle?: EntryParameters
+  disputeGameFactory?: EntryParameters
+  portal?: EntryParameters
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
@@ -1028,13 +1028,13 @@ function getTechnologyExitMechanism(
     case 'Permissionless': {
       const disputeGameFinalityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          portal.name,
+          portal.name ?? portal.address,
           'disputeGameFinalityDelaySeconds',
         )
 
       const proofMaturityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          portal.name,
+          portal.name ?? portal.address,
           'proofMaturityDelaySeconds',
         )
 
@@ -1307,9 +1307,7 @@ function ifPostsToEthereum<T>(
   }
 }
 
-function getOptimismPortal(
-  templateVars: OpStackConfigCommon,
-): ContractParameters {
+function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
   if (templateVars.portal !== undefined) {
     return templateVars.portal
   }
@@ -1331,7 +1329,7 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
         templateVars.discovery.getContract('L2OutputOracle')
 
       return templateVars.discovery.getContractValue<number>(
-        l2OutputOracle.name,
+        l2OutputOracle.name ?? l2OutputOracle.address,
         'FINALIZATION_PERIOD_SECONDS',
       )
     }
@@ -1354,7 +1352,7 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
 
   const respectedGameType = templateVars.discovery.getContractValue<number>(
-    portal.name,
+    portal.name ?? portal.address,
     'respectedGameType',
   )
 

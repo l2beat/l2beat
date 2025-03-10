@@ -2,14 +2,16 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 21944318,
-  "configHash": "0x87a00246041cdf2ff132aa66689a6e3cc11ea66cad0fc3672eee411be94ed6b7",
-  "contracts": [
+  "configHash": "0x258cbe985accc76e33eb6269b1b71b8e4b985dd518e46a4c848d967d4913e8bf",
+  "entries": [
     {
       "name": "Treasurer",
       "address": "0x1041D127b2d4BC700F0F563883bC689502606918",
+      "type": "Contract",
       "sourceHashes": [
         "0x3857982ba9867dfe0d878491a8f43962a5ae20721e924738425e3e6902cf9097"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837503,
       "sinceBlock": 19963243,
       "values": {
@@ -20,8 +22,14 @@
       }
     },
     {
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LayerZero Executor",
       "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -60,9 +68,11 @@
     {
       "name": "EndpointV2",
       "address": "0x1a44076050125825900e736c501f859c50fE728c",
+      "type": "Contract",
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
       ],
+      "proxyType": "immutable",
       "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
@@ -101,9 +111,11 @@
     {
       "name": "BlockedMessageLib",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+      "type": "Contract",
       "sourceHashes": [
         "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -117,11 +129,18 @@
       }
     },
     {
+      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StargatePool",
       "address": "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -160,11 +179,23 @@
       }
     },
     {
+      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StargateMultiRewarder",
       "address": "0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
+      "type": "Contract",
       "sourceHashes": [
         "0xc36d2c5087e47e6fad11a1bea54e8da1eba1b67863c32a5961968d43a77b2f0b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837491,
       "sinceBlock": 19963242,
       "values": {
@@ -177,9 +208,11 @@
     {
       "name": "Treasury",
       "address": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
+      "type": "Contract",
       "sourceHashes": [
         "0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307779,
       "sinceBlock": 19093724,
       "values": {
@@ -193,6 +226,7 @@
     {
       "name": "Stargate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -226,9 +260,11 @@
     {
       "name": "CreditMessaging",
       "address": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+      "type": "Contract",
       "sourceHashes": [
         "0xb151141227bb08ead5b1a7d464402bf23feaf60625a773cb8ced48745eb66fe6"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837383,
       "sinceBlock": 19963233,
       "values": {
@@ -274,9 +310,11 @@
     {
       "name": "TokenMessaging",
       "address": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
+      "proxyType": "immutable",
       "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes",
       "sinceTimestamp": 1716837371,
       "sinceBlock": 19963232,
@@ -296,11 +334,18 @@
       }
     },
     {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ReadLib1002",
       "address": "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
+      "type": "Contract",
       "sourceHashes": [
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730488859,
       "sinceBlock": 21094853,
       "values": {
@@ -315,11 +360,23 @@
       }
     },
     {
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StargatePoolNative",
       "address": "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931",
+      "type": "Contract",
       "sourceHashes": [
         "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -358,11 +415,23 @@
       }
     },
     {
+      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Stargate Verifier",
       "address": "0x8FafAE7Dd957044088b3d0F67359C327c6200d18",
+      "type": "Contract",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716344279,
       "sinceBlock": 19922400,
       "values": {
@@ -382,9 +451,11 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0x933597a323Eb81cAe705C5bC29985172fd5A3973",
+      "type": "Contract",
       "sourceHashes": [
         "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -427,7 +498,9 @@
     {
       "name": "",
       "address": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -439,11 +512,18 @@
       "values": { "$immutable": true }
     },
     {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+      "type": "Contract",
       "sourceHashes": [
         "0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -460,9 +540,11 @@
     {
       "name": "Nethermind Verifier",
       "address": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+      "type": "Contract",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706489567,
       "sinceBlock": 19108732,
       "values": {
@@ -480,11 +562,18 @@
       "derivedName": "DVN"
     },
     {
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SendUln302",
       "address": "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+      "type": "Contract",
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
       ],
+      "proxyType": "immutable",
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307839,
       "sinceBlock": 19093729,
@@ -508,9 +597,11 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
+      "type": "Contract",
       "sourceHashes": [
         "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -553,9 +644,11 @@
     {
       "name": "ReceiveUln302",
       "address": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+      "type": "Contract",
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
       ],
+      "proxyType": "immutable",
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "sinceTimestamp": 1706307863,
       "sinceBlock": 19093731,
@@ -585,6 +678,7 @@
     {
       "name": "",
       "address": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -622,6 +716,7 @@
     {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -654,9 +749,11 @@
     {
       "name": "StargatePool",
       "address": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -697,27 +794,23 @@
     {
       "name": "",
       "address": "0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1716344279,
       "sinceBlock": 19922400,
       "values": { "$immutable": true }
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
-    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
-    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
-    { "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" },
-    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" },
-    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" }
   ],
   "abis": {
     "0x1041D127b2d4BC700F0F563883bC689502606918": [

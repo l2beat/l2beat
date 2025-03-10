@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8f18017b8f980c59d8552ebc69c4c7378eff785e
+Generated with discovered.json: 0xb4d6877399660d540ae13abf57dd50a8d46a8b7f
 
-# Diff at Mon, 10 Mar 2025 13:50:21 GMT:
+# Diff at Mon, 10 Mar 2025 16:49:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@6b2ef2ec787be68c879ee9da0acd22d1ce397cb8 block: 21665493
-- current block number: 22016879
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 21665493
+- current block number: 22017767
 
 ## Description
 
@@ -21,7 +21,7 @@ Validator set -1.
     }
 ```
 
-Generated with discovered.json: 0x4246365a36aa1295c7d5b2749285413b95041e14
+Generated with discovered.json: 0x262d9ae9c6f6b24b594087bd2a994b8aa0c809f4
 
 # Diff at Tue, 04 Mar 2025 10:39:37 GMT:
 
