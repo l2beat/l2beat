@@ -66,7 +66,9 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-        aggLayerL2Tokens.forEach((token) => tokens.set(token.id, token))
+        aggLayerL2Tokens.forEach((token) =>
+          escrowTokens.set(token.id, { token, chain: escrow.chain }),
+        )
       }
 
       if (escrow.sharedEscrow.type === 'ElasticChain') {
@@ -78,7 +80,9 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-        elasticChainTokens.forEach((token) => tokens.set(token.id, token))
+        elasticChainTokens.forEach((token) =>
+          escrowTokens.set(token.id, { token, chain: escrow.chain }),
+        )
       }
     } else {
       for (const legacyToken of escrow.tokens) {
@@ -90,7 +94,7 @@ export async function mapConfig(
         }
         const chain = getChain(escrow.chain)
         const token = createEscrowToken(project, escrow, chain, legacyToken)
-        const previousToken = tokens.get(token.id)
+        const previousToken = escrowTokens.get(token.id)
 
         if (previousToken === undefined) {
           escrowTokens.set(token.id, { token, chain: escrow.chain })
@@ -137,8 +141,7 @@ export async function mapConfig(
   }
 
   for (const legacyToken of project.tvlConfig.tokens) {
-    const token = createToken(project, legacyToken)
-    addToken(tokens, token, legacyToken.chainName)
+    tokens.push(createToken(project, legacyToken))
   }
 
   const uniqueTokens: Map<string, Token> = new Map()
