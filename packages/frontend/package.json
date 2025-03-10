@@ -87,8 +87,7 @@
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",
-    "tsx": "^4.9.3",
-    "type-fest": "^4.26.1"
+    "tsx": "^4.9.3"
   },
   "overrides": {
     "react-is": "19.0.0",
