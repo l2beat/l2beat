@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22014788,
-  "configHash": "0x91f3b927ead3fd9700e4db36d2a2427aff27361b09c9fe4d041bdfa537131173",
+  "configHash": "0xbfd75c31a1a1e8e5c445fc642f6bf206c7913a44917288f028a887c619090078",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -527,7 +527,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Guardians_deprecated",
+      "name": "Guardians",
       "address": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
       "template": "shared-zk-stack/Guardians",
       "sourceHashes": [
@@ -574,17 +574,16 @@
         "PROTOCOL_UPGRADE_HANDLER": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
-      "derivedName": "Guardians",
       "references": [
         {
           "text": "Guardians - ZK Nation docs",
           "href": "https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians"
         }
       ],
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "SecurityCouncil_deprecated",
+      "name": "SecurityCouncil",
       "address": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
       "template": "shared-zk-stack/SecurityCouncil",
       "sourceHashes": [
@@ -649,14 +648,13 @@
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
         }
       },
-      "derivedName": "SecurityCouncil",
       "references": [
         {
           "text": "Security Council members - ZK Nation docs",
           "href": "https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"
         }
       ],
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GnosisSafe",
@@ -977,7 +975,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "SecurityCouncil",
+      "name": "SecurityCouncil_deprecated",
       "address": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
       "template": "shared-zk-stack/SecurityCouncil",
       "sourceHashes": [
@@ -1042,13 +1040,14 @@
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
         }
       },
+      "derivedName": "SecurityCouncil",
       "references": [
         {
           "text": "Security Council members - ZK Nation docs",
           "href": "https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"
         }
       ],
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ProxyAdmin",
@@ -1215,7 +1214,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Guardians",
+      "name": "Guardians_deprecated",
       "address": "0xD677e09324F8Bb3cC64F009973693f751c33A888",
       "template": "shared-zk-stack/Guardians",
       "sourceHashes": [
@@ -1262,13 +1261,14 @@
         "PROTOCOL_UPGRADE_HANDLER": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
+      "derivedName": "Guardians",
       "references": [
         {
           "text": "Guardians - ZK Nation docs",
           "href": "https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians"
         }
       ],
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "L1SharedBridge",

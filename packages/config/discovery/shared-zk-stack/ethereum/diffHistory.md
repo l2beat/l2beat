@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7f13ecd5fb849d23534eb373a5df897d9bf53def
+Generated with discovered.json: 0x61c8715260126439ef215ab2207a646c17dad859
 
-# Diff at Mon, 10 Mar 2025 11:08:42 GMT:
+# Diff at Mon, 10 Mar 2025 11:25:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@4892f7ed52cf565bcd89411616616ca517b2dc9e block: 21944239
@@ -97,13 +97,13 @@ Since the old governance contracts on L1 only have the 'owner' role in the share
 
 ```diff
 +   Status: CREATED
-    contract Guardians_deprecated (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8)
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8)
     +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
 ```
 
 ```diff
 +   Status: CREATED
-    contract SecurityCouncil_deprecated (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410)
+    contract SecurityCouncil (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410)
     +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
 ```
 
@@ -123,12 +123,12 @@ Since the old governance contracts on L1 only have the 'owner' role in the share
 
 ```diff
 .../ethereum/.flat/EmergencyUpgradeBoard.sol       | 1233 +++++++++++++++++
- .../ethereum/.flat/Guardians_deprecated.sol        | 1439 ++++++++++++++++++++
+ .../shared-zk-stack/ethereum/.flat/Guardians.sol   | 1439 ++++++++++++++++++++
  .../ProtocolUpgradeHandler.sol                     |  791 +++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  581 ++++++++
  ...-0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e.sol |  132 ++
  ...0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1.sol} |    0
- .../ethereum/.flat/SecurityCouncil_deprecated.sol  | 1389 +++++++++++++++++++
+ .../ethereum/.flat/SecurityCouncil.sol             | 1389 +++++++++++++++++++
  7 files changed, 5565 insertions(+)
 ```
 
@@ -149,6 +149,36 @@ discovery. Values are for block 21944239 (main branch discovery), not current.
 +        "Spam"
       category.priority:
 -        4
++        -1
+    }
+```
+
+```diff
+    contract SecurityCouncil_deprecated (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      name:
+-        "SecurityCouncil"
++        "SecurityCouncil_deprecated"
+      category.name:
+-        "Governance"
++        "Spam"
+      category.priority:
+-        3
++        -1
+    }
+```
+
+```diff
+    contract Guardians_deprecated (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      name:
+-        "Guardians"
++        "Guardians_deprecated"
+      category.name:
+-        "Governance"
++        "Spam"
+      category.priority:
+-        3
 +        -1
     }
 ```
