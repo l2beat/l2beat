@@ -62,23 +62,6 @@
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
-        "chain": "blast",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1710255749,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "blast-ezETH-duplicate",
-      "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH",
-      "name": "Renzo Restaked ETH",
-      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
         "chain": "ethereum",
@@ -89,6 +72,24 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-ezETH.blast",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH.blast",
+      "name": "Renzo Restaked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "blast",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1710255749,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "displaySymbol": "ezETH"
     },
     {
       "mode": "auto",
@@ -110,9 +111,9 @@
     },
     {
       "mode": "auto",
-      "id": "blast-rsETH",
+      "id": "blast-rsETH.blast",
       "priceId": "kelp-dao-restaked-eth",
-      "symbol": "rsETH",
+      "symbol": "rsETH.blast",
       "name": "KelpDao Restaked ETH",
       "amount": {
         "type": "totalSupply",
@@ -123,7 +124,8 @@
       "sinceTimestamp": 1710823563,
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "rsETH"
     },
     {
       "mode": "auto",
@@ -159,9 +161,9 @@
     },
     {
       "mode": "auto",
-      "id": "blast-sUSDe",
+      "id": "blast-sUSDe.blast",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe",
+      "symbol": "sUSDe.blast",
       "name": "Staked USDe",
       "amount": {
         "type": "totalSupply",
@@ -172,7 +174,8 @@
       "sinceTimestamp": 1713651093,
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "sUSDe"
     },
     {
       "mode": "auto",
@@ -229,9 +232,9 @@
     },
     {
       "mode": "auto",
-      "id": "blast-USDe",
+      "id": "blast-USDe.blast",
       "priceId": "ethena-usde",
-      "symbol": "USDe",
+      "symbol": "USDe.blast",
       "name": "USDe",
       "amount": {
         "type": "totalSupply",
@@ -242,7 +245,8 @@
       "sinceTimestamp": 1713651041,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "USDe"
     },
     {
       "mode": "auto",
@@ -282,9 +286,9 @@
     },
     {
       "mode": "auto",
-      "id": "blast-weETH",
+      "id": "blast-weETH.blast",
       "priceId": "wrapped-eeth",
-      "symbol": "weETH",
+      "symbol": "weETH.blast",
       "name": "Wrapped eETH",
       "amount": {
         "type": "totalSupply",
@@ -295,7 +299,8 @@
       "sinceTimestamp": 1712897077,
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "weETH"
     },
     {
       "mode": "auto",
