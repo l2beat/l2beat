@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 21988484,
-  "configHash": "0x3a12d33414df7516e6ee1e536a8878f64a08079ecd901c62bc221ff8b96ffc14",
+  "blockNumber": 22017648,
+  "configHash": "0xcf8e247f1bab8365ba6050184fb94d2ea71d9afff18509265fcb765e1585ef2d",
   "contracts": [
     {
       "name": "Bridger",
@@ -371,13 +371,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2519,
+        "firstUnresolvedNode": 2527,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2518,
-        "latestNodeCreated": 2531,
+        "latestConfirmed": 2526,
+        "latestNodeCreated": 2539,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -822,7 +822,7 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 5245,
+        "delayedMessageCount": 5309,
         "inboxHistory": [
           "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
@@ -830,8 +830,8 @@
         "outboxHistory": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 4268,
-        "sequencerReportedSubMessageCount": 763480
+        "sequencerMessageCount": 4292,
+        "sequencerReportedSubMessageCount": 765178
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1093,7 +1093,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 4268,
+        "batchCount": 4292,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1121,7 +1121,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 5241,
+        "totalDelayedMessagesRead": 5307,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1217,7 +1217,7 @@
       ]
     },
     {
-      "name": "MamoriLabs2",
+      "name": "KintsugiFoundation",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E"
     },
     { "address": "0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185" },
