@@ -64,7 +64,7 @@ export interface ExtendedTemplate {
   templateHash: Hash256
 }
 
-type AnalyzedEOA = {
+export type AnalyzedEOA = {
   type: 'EOA'
   name: string | undefined
 } & AnalyzedCommon

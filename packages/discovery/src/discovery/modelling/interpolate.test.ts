@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ContractParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,
@@ -46,7 +46,8 @@ describe(interpolateModelTemplate.name, () => {
       myName("#$.name").
       myDescription("#$.description")
     `
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress.from('0x123'),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
@@ -104,7 +105,8 @@ describe(interpolateModelTemplate.name, () => {
       one(#one).
       two(#two).
     `
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress.from('0x123'),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
@@ -122,7 +124,8 @@ describe(interpolateModelTemplate.name, () => {
 
 describe(contractValuesForInterpolation.name, () => {
   it('properly prepares values for interpolation', () => {
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress('0x00000000000000000000000000000000DeaDBeef'),
       name: 'ContractA',
       description: 'Description of ContractA',
