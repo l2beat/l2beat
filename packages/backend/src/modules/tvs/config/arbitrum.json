@@ -304,9 +304,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ARB.arbitrum",
+      "id": "arbitrum-ARB",
       "priceId": "arbitrum",
-      "symbol": "ARB.arbitrum",
+      "symbol": "ARB",
       "name": "Arbitrum",
       "amount": {
         "type": "circulatingSupply",
@@ -316,8 +316,7 @@
       "sinceTimestamp": 1679529600,
       "category": "other",
       "source": "native",
-      "isAssociated": true,
-      "displaySymbol": "ARB"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -571,6 +570,22 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-BOOP",
+      "priceId": "boop-2",
+      "symbol": "BOOP",
+      "name": "Boop",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "boop-2",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1703116800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BTC.b",
       "priceId": "bitcoin-avalanche-bridged-btc-b",
       "symbol": "BTC.b",
@@ -622,9 +637,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-cbBTC.arbitrum",
+      "id": "arbitrum-cbBTC",
       "priceId": "coinbase-wrapped-btc",
-      "symbol": "cbBTC.arbitrum",
+      "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
       "amount": {
         "type": "totalSupply",
@@ -635,8 +650,7 @@
       "sinceTimestamp": 1731094732,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "cbBTC"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -672,6 +686,23 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-CHEESE",
+      "priceId": "cheese-2",
+      "symbol": "CHEESE",
+      "name": "CHEESE",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1717472231,
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -1015,6 +1046,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-DIVI",
+      "priceId": "divi",
+      "symbol": "DIVI",
+      "name": "Divi",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1648055734,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-DMT",
       "priceId": "dream-machine-token",
       "symbol": "DMT",
@@ -1043,6 +1092,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-DOG",
+      "priceId": "the-doge-nft",
+      "symbol": "DOG",
+      "name": "The Doge NFT",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBAac2B4491727D78D2b78815144570b9f2Fe8899",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1630540800,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -1197,6 +1264,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA2085073878152aC3090eA13D1e41bD69e60Dc99",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-ELON",
+      "priceId": "dogelon-mars",
+      "symbol": "ELON",
+      "name": "Dogelon",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3",
         "chain": "ethereum",
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18
@@ -1375,6 +1460,23 @@
       "symbol": "ETHFI",
       "name": "ether.fi governance token",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1718638923,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-ETHFI.ethereum",
+      "priceId": "ether-fi",
+      "symbol": "ETHFI.ethereum",
+      "name": "ether.fi governance token",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
         "chain": "ethereum",
@@ -1384,24 +1486,6 @@
       "sinceTimestamp": 1710720000,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "ETHFI"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-ETHFI.arbitrum",
-      "priceId": "ether-fi",
-      "symbol": "ETHFI.arbitrum",
-      "name": "ether.fi governance token",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
-        "chain": "arbitrum",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1718638923,
-      "category": "other",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "ETHFI"
     },
@@ -1538,6 +1622,23 @@
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709142061,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-ezETH.ethereum",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH.ethereum",
+      "name": "Renzo Restaked ETH",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
         "chain": "ethereum",
@@ -1547,24 +1648,6 @@
       "sinceTimestamp": 1706140800,
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "ezETH"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-ezETH.arbitrum",
-      "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH.arbitrum",
-      "name": "Renzo Restaked ETH",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
-        "chain": "arbitrum",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709142061,
-      "category": "ether",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "ezETH"
     },
@@ -1606,6 +1689,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-FFM.ext",
+      "priceId": "florence-finance-medici",
+      "symbol": "FFM.ext",
+      "displaySymbol": "FFM",
+      "name": "Florence Finance Medici",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1704758400,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-FIS",
       "priceId": "stafi",
       "symbol": "FIS",
@@ -1636,6 +1738,42 @@
         "decimals": 18
       },
       "sinceTimestamp": 1730073600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-FOOM",
+      "priceId": "foom",
+      "symbol": "FOOM",
+      "name": "FOOM",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd0D56273290D339aaF1417D9bfa1bb8cFe8A0933",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1692316800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1689552000,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -1683,6 +1821,23 @@
       "symbol": "FPI",
       "name": "Frax Price Index",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1677013204,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-FPI.ethereum",
+      "priceId": "frax-price-index",
+      "symbol": "FPI.ethereum",
+      "name": "Frax Price Index",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
         "chain": "ethereum",
@@ -1697,27 +1852,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FPI.arbitrum",
-      "priceId": "frax-price-index",
-      "symbol": "FPI.arbitrum",
-      "name": "Frax Price Index",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
-        "chain": "arbitrum",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1677013204,
-      "category": "other",
-      "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPI"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-FPIS.arbitrum",
+      "id": "arbitrum-FPIS",
       "priceId": "frax-price-index-share",
-      "symbol": "FPIS.arbitrum",
+      "symbol": "FPIS",
       "name": "Frax Price Index Share",
       "amount": {
         "type": "totalSupply",
@@ -1728,14 +1865,30 @@
       "sinceTimestamp": 1677013206,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FPIS"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "arbitrum-FRAX",
       "priceId": "frax",
       "symbol": "FRAX",
+      "name": "Frax",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632766868,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-FRAX.ethereum",
+      "priceId": "frax",
+      "symbol": "FRAX.ethereum",
       "name": "Frax",
       "amount": {
         "type": "balanceOfEscrow",
@@ -1752,25 +1905,24 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FRAX.arbitrum",
-      "priceId": "frax",
-      "symbol": "FRAX.arbitrum",
-      "name": "Frax",
+      "id": "arbitrum-frxETH",
+      "priceId": "frax-ether",
+      "symbol": "frxETH",
+      "name": "Frax Ether",
       "amount": {
         "type": "totalSupply",
-        "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+        "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
         "chain": "arbitrum",
         "decimals": 18
       },
-      "sinceTimestamp": 1632766868,
-      "category": "stablecoin",
+      "sinceTimestamp": 1673211956,
+      "category": "ether",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "FRAX"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-frxETH",
+      "id": "arbitrum-frxETH.ethereum",
       "priceId": "frax-ether",
       "symbol": "frxETH.ethereum",
       "name": "Frax Ether",
@@ -1784,24 +1936,6 @@
       "sinceTimestamp": 1669161600,
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "frxETH"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-frxETH.arbitrum",
-      "priceId": "frax-ether",
-      "symbol": "frxETH.arbitrum",
-      "name": "Frax Ether",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
-        "chain": "arbitrum",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1673211956,
-      "category": "ether",
-      "source": "native",
       "isAssociated": false,
       "displaySymbol": "frxETH"
     },
@@ -1830,6 +1964,23 @@
       "symbol": "FXS",
       "name": "Frax Share",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632766868,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-FXS.ethereum",
+      "priceId": "frax-share",
+      "symbol": "FXS.ethereum",
+      "name": "Frax Share",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
         "chain": "ethereum",
@@ -1839,24 +1990,6 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "FXS"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-FXS.arbitrum",
-      "priceId": "frax-share",
-      "symbol": "FXS.arbitrum",
-      "name": "Frax Share",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
-        "chain": "arbitrum",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1632766868,
-      "category": "other",
-      "source": "native",
       "isAssociated": false,
       "displaySymbol": "FXS"
     },
@@ -1872,6 +2005,22 @@
         "decimals": 18
       },
       "sinceTimestamp": 1712620800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-G7",
+      "priceId": "game7",
+      "symbol": "G7",
+      "name": "Game7",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "game7",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1739404800,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -1909,9 +2058,45 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GHO.arbitrum",
+      "id": "arbitrum-GEAR",
+      "priceId": "gearbox",
+      "symbol": "GEAR",
+      "name": "Gearbox",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBa3335588D9403515223F109EdC4eB7269a9Ab5D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1671408000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-GENE",
+      "priceId": "genomesdao",
+      "symbol": "GENE",
+      "name": "GenomesDAO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1637798400,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-GHO",
       "priceId": "gho",
-      "symbol": "GHO.arbitrum",
+      "symbol": "GHO",
       "name": "Gho Token",
       "amount": {
         "type": "totalSupply",
@@ -1922,8 +2107,7 @@
       "sinceTimestamp": 1719102305,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "GHO"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1974,6 +2158,24 @@
       "sinceTimestamp": 1672175006,
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-GOB",
+      "priceId": "goons-of-balatroon",
+      "symbol": "GOB",
+      "name": "Goons of Balatroon",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x830eB1204380E9c44434Db8700257025358707c6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1693241255,
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2035,6 +2237,23 @@
       "symbol": "GRT",
       "name": "Graph Token",
       "amount": {
+        "type": "totalSupply",
+        "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1669815527,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-GRT.ethereum",
+      "priceId": "the-graph",
+      "symbol": "GRT.ethereum",
+      "name": "Graph Token",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
         "chain": "ethereum",
@@ -2044,24 +2263,6 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "GRT"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-GRT.arbitrum",
-      "priceId": "the-graph",
-      "symbol": "GRT.arbitrum",
-      "name": "Graph Token",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
-        "chain": "arbitrum",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1669815527,
-      "category": "other",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "GRT"
     },
@@ -2131,6 +2332,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1654819200,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-HOT",
+      "priceId": "holotoken",
+      "symbol": "HOT",
+      "name": "HoloToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -2242,6 +2461,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-KIBSHI",
+      "priceId": "kiboshib",
+      "symbol": "KIBSHI",
+      "name": "KiboShib",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x02e7F808990638E9e67E1f00313037EDe2362361",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1678147200,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-KNC",
       "priceId": "kyber-network-crystal",
       "symbol": "KNC",
@@ -2310,6 +2547,22 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-LODE",
+      "priceId": "lodestar",
+      "symbol": "LODE",
+      "name": "Lodestar",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "lodestar",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1669075200,
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -2478,6 +2731,24 @@
       },
       "sinceTimestamp": 1623784100,
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-LYRA",
+      "priceId": "lyra-finance",
+      "symbol": "LYRA",
+      "name": "Lyra Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1639612800,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -2699,6 +2970,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-Mog",
+      "priceId": "mog-coin",
+      "symbol": "Mog",
+      "name": "Mog Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1689897600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-MOLTEN",
       "priceId": "molten-2",
       "symbol": "MOLTEN",
@@ -2716,6 +3005,37 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-MOON",
+      "priceId": "moonflow",
+      "symbol": "MOON",
+      "name": "Moonflow",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xb2490e357980cE57bF5745e181e537a64Eb367B1",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1723714163,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-MOR",
       "priceId": "morpheusai",
       "symbol": "MOR",
@@ -2729,6 +3049,75 @@
       "sinceTimestamp": 1716163200,
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-MOZ",
+      "priceId": "mozaic",
+      "symbol": "MOZ",
+      "name": "Mozaic Token",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "mozaic",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1694131200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-MXC",
+      "priceId": "mxc",
+      "symbol": "MXC",
+      "name": "MXC Token",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "mxc",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1687777847,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-MXC.ethereum",
+      "priceId": "mxc",
+      "symbol": "MXC.ethereum",
+      "name": "MXCToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "displaySymbol": "MXC"
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-MYRIA",
+      "priceId": "myria",
+      "symbol": "MYRIA",
+      "name": "Myria",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1680739200,
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2893,6 +3282,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-OMI",
+      "priceId": "ecomi",
+      "symbol": "OMI",
+      "name": "OMI Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632037514,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-ONDO",
       "priceId": "ondo-finance",
       "symbol": "ONDO",
@@ -2947,6 +3354,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-PBX",
+      "priceId": "paribus",
+      "symbol": "PBX",
+      "name": "Paribus",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1631750400,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-PENDLE",
       "priceId": "pendle",
       "symbol": "PENDLE",
@@ -2977,6 +3402,41 @@
         "decimals": 18
       },
       "sinceTimestamp": 1637280000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1683328069,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-PEPU",
+      "priceId": "pepe-unchained",
+      "symbol": "PEPU",
+      "name": "Pepe Unchained",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1733961600,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -3110,6 +3570,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-PORK",
+      "priceId": "pepefork",
+      "symbol": "PORK",
+      "name": "PepeFork",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb9f599ce614Feb2e1BBe58F180F370D05b39344E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1706592167,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-PREMIA",
       "priceId": "premia",
       "symbol": "PREMIA",
@@ -3176,6 +3654,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-RACA",
+      "priceId": "radio-caca",
+      "symbol": "RACA",
+      "name": "Radio Caca V2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1633573008,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -3504,9 +4000,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sFRAX.arbitrum",
+      "id": "arbitrum-sFRAX",
       "priceId": "staked-frax",
-      "symbol": "sFRAX.arbitrum",
+      "symbol": "sFRAX",
       "name": "Staked FRAX",
       "amount": {
         "type": "totalSupply",
@@ -3517,14 +4013,30 @@
       "sinceTimestamp": 1708387200,
       "category": "other",
       "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "sFRAX"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "arbitrum-sfrxETH",
       "priceId": "staked-frax-ether",
       "symbol": "sfrxETH",
+      "name": "Staked Frax Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1673211957,
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-sfrxETH.ethereum",
+      "priceId": "staked-frax-ether",
+      "symbol": "sfrxETH.ethereum",
       "name": "Staked Frax Ether",
       "amount": {
         "type": "balanceOfEscrow",
@@ -3541,21 +4053,21 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sfrxETH.arbitrum",
-      "priceId": "staked-frax-ether",
-      "symbol": "sfrxETH.arbitrum",
-      "name": "Staked Frax Ether",
+      "id": "arbitrum-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18
       },
-      "sinceTimestamp": 1673211957,
-      "category": "ether",
-      "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "sfrxETH"
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3632,6 +4144,23 @@
     {
       "mode": "auto",
       "id": "arbitrum-SOL",
+      "priceId": "solana",
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+        "chain": "arbitrum",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1671137208,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-SOL.ethereum",
       "priceId": "sol-wormhole",
       "symbol": "SOL.ethereum",
       "name": "Wrapped SOL",
@@ -3645,24 +4174,6 @@
       "sinceTimestamp": 1642723200,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "SOL"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-SOL.arbitrum",
-      "priceId": "solana",
-      "symbol": "SOL.arbitrum",
-      "name": "Wrapped SOL",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
-        "chain": "arbitrum",
-        "decimals": 9
-      },
-      "sinceTimestamp": 1671137208,
-      "category": "other",
-      "source": "external",
       "isAssociated": false,
       "displaySymbol": "SOL"
     },
@@ -3696,6 +4207,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1714953600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-SPELL",
+      "priceId": "spell-token",
+      "symbol": "SPELL",
+      "name": "Spell Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x090185f2135308BaD17527004364eBcC2D37e5F6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -3754,9 +4283,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-STG.arbitrum",
+      "id": "arbitrum-STG",
       "priceId": "stargate-finance",
-      "symbol": "STG.arbitrum",
+      "symbol": "STG",
       "name": "StargateToken",
       "amount": {
         "type": "totalSupply",
@@ -3767,14 +4296,13 @@
       "sinceTimestamp": 1647561600,
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "STG"
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-STONE.arbitrum",
+      "id": "arbitrum-STONE",
       "priceId": "stakestone-ether",
-      "symbol": "STONE.arbitrum",
+      "symbol": "STONE",
       "name": "StakeStone Ether",
       "amount": {
         "type": "totalSupply",
@@ -3785,8 +4313,25 @@
       "sinceTimestamp": 1719602078,
       "category": "ether",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "STONE"
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-stTAO",
+      "priceId": "tensorplex-staked-tao",
+      "symbol": "stTAO",
+      "name": "Tensorplex Staked TAO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB60acD2057067DC9ed8c083f5aa227a244044fD6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1708214400,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3808,9 +4353,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sUSDe.arbitrum",
+      "id": "arbitrum-sUSDe",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe.arbitrum",
+      "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
         "type": "totalSupply",
@@ -3821,8 +4366,7 @@
       "sinceTimestamp": 1710892800,
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "sUSDe"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -4149,6 +4693,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-uniETH",
+      "priceId": "universal-eth",
+      "symbol": "uniETH",
+      "name": "Universal ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1700092800,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-UOS",
       "priceId": "ultra",
       "symbol": "UOS",
@@ -4172,6 +4734,23 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
+        "type": "totalSupply",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1667248932,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-USDC.ethereum",
+      "priceId": "usd-coin",
+      "symbol": "USDC.ethereum",
+      "name": "USD Coin",
+      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
@@ -4181,24 +4760,6 @@
       "sinceTimestamp": 1623784100,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "USDC"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-USDC.arbitrum",
-      "priceId": "usd-coin",
-      "symbol": "USDC.arbitrum",
-      "name": "USD Coin",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "chain": "arbitrum",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1667248932,
-      "category": "stablecoin",
-      "source": "native",
       "isAssociated": false,
       "displaySymbol": "USDC"
     },
@@ -4241,9 +4802,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USDe.arbitrum",
+      "id": "arbitrum-USDe",
       "priceId": "ethena-usde",
-      "symbol": "USDe.arbitrum",
+      "symbol": "USDe",
       "name": "USDe",
       "amount": {
         "type": "totalSupply",
@@ -4254,14 +4815,30 @@
       "sinceTimestamp": 1710118453,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "USDe"
+      "isAssociated": false
     },
     {
       "mode": "auto",
       "id": "arbitrum-USDM",
       "priceId": "mountain-protocol-usdm",
       "symbol": "USDM",
+      "name": "Mountain Protocol USD",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1700232777,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-USDM.ethereum",
+      "priceId": "mountain-protocol-usdm",
+      "symbol": "USDM.ethereum",
       "name": "Mountain Protocol USD",
       "amount": {
         "type": "balanceOfEscrow",
@@ -4278,27 +4855,9 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USDM.arbitrum",
-      "priceId": "mountain-protocol-usdm",
-      "symbol": "USDM.arbitrum",
-      "name": "Mountain Protocol USD",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
-        "chain": "arbitrum",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1700232777,
-      "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false,
-      "displaySymbol": "USDM"
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-USDT.arbitrum",
+      "id": "arbitrum-USDT",
       "priceId": "tether",
-      "symbol": "USDT.arbitrum",
+      "symbol": "USDT",
       "name": "Tether USD",
       "amount": {
         "type": "totalSupply",
@@ -4309,8 +4868,7 @@
       "sinceTimestamp": 1706918400,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "displaySymbol": "USDT"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -4646,6 +5204,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-WXT",
+      "priceId": "wirex",
+      "symbol": "WXT",
+      "name": "Wirex Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa02120696c7B8fE16C09C749E4598819b2B0E915",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-XAI",
       "priceId": "xai-blockchain",
       "symbol": "XAI",
@@ -4747,6 +5323,25 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-YBR.ext",
+      "priceId": "yieldbricks",
+      "symbol": "YBR.ext",
+      "displaySymbol": "YBR",
+      "name": "YieldBricks",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1731369600,
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {
