@@ -2,9 +2,16 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21845178,
-  "configHash": "0xadad246a384380f935d8f37a55e5b30adcf9e237aa9c41e05c0dd818582fd6e6",
-  "contracts": [
+  "configHash": "0x7de3ef8d8aefe115e5aad37814f6459e1aaab659ddf5cce5767e0c30318696d1",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ZKProofVerifier",
       "address": "0x005DDC466C804c79adB079c120347dDE48132105",
       "sourceHashes": [
@@ -46,6 +53,26 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x16876e5c608cec36968517A9Eb345269D308D94a",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "L2OutputOracle",
       "address": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
       "sourceHashes": [
@@ -116,6 +143,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1Timelock",
       "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
       "template": "global/Timelock",
@@ -251,6 +279,7 @@
       "derivedName": "TimeLock"
     },
     {
+      "type": "Contract",
       "name": "ValidatorManager",
       "address": "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363",
       "sourceHashes": [
@@ -317,6 +346,20 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x27EFE61C5266e461995141f57b4D13F13c83f786",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "KromaPortal",
       "address": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
       "sourceHashes": [
@@ -376,11 +419,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ZKMerkleTrie",
       "address": "0x339208824010425cBE73201ceD4372308ACD610B",
       "sourceHashes": [
         "0x90927c331f5a5d562d23263a9343eb8828b5dc83798239506f42fcd382b903a4"
       ],
+      "proxyType": "immutable",
       "description": "Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.",
       "sinceTimestamp": 1693288019,
       "sinceBlock": 18018290,
@@ -390,6 +435,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SystemConfig",
       "address": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
       "template": "opstack/SystemConfig",
@@ -473,12 +519,42 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "EOA",
+      "address": "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "name": "KromaOperator",
+      "address": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ],
+      "derivedName": ""
+    },
+    {
+      "type": "Contract",
       "name": "SP1VerifierGateway",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
+      "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
       "issuedPermissions": [
         {
@@ -522,6 +598,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "KromaSecurityCouncil",
       "address": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
       "sourceHashes": [
@@ -602,6 +679,32 @@
       ]
     },
     {
+      "type": "EOA",
+      "address": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
       "template": "opstack/L1CrossDomainMessenger",
@@ -653,6 +756,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "Contract",
       "name": "L1ERC721Bridge",
       "address": "0x46d07221dfC313afe1BF104F4bB1f185301D65B9",
       "template": "opstack/L1ERC721Bridge",
@@ -698,12 +802,33 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "EOA",
+      "address": "0x547fc089E9f2971d27b9780214ED891F6d154faa",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x82e048446e41433c990a710c946cb691f4cde26f99023a0afcfda2d22e1f30d0"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -779,6 +904,20 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "ZkVerifier",
       "address": "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7",
       "sourceHashes": [
@@ -826,6 +965,7 @@
       "derivedName": "ZKVerifier"
     },
     {
+      "type": "Contract",
       "name": "Colosseum",
       "address": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
       "sourceHashes": [
@@ -908,6 +1048,26 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "USDCBridge",
       "address": "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e",
       "sourceHashes": [
@@ -944,6 +1104,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0x827962404D7104202C5aaa6b929115C8211d9596",
       "template": "opstack/L1StandardBridge",
@@ -985,6 +1146,32 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "EOA",
+      "address": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "AssetManager",
       "address": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
       "sourceHashes": [
@@ -1031,6 +1218,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "UpgradeGovernor",
       "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
       "sourceHashes": [
@@ -1122,6 +1310,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "template": "GnosisSafe",
@@ -1159,11 +1360,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "SP1Verifier",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1729727135,
       "sinceBlock": 21031662,
       "values": {
@@ -1173,6 +1376,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SecurityCouncilTokenOwners",
       "address": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
       "sourceHashes": [
@@ -1522,6 +1726,7 @@
       "derivedName": "SecurityCouncilToken"
     },
     {
+      "type": "Contract",
       "name": "KromaRewardVaultMultisig",
       "address": "0xe57E217d8ed498992452791622711B866403E950",
       "template": "GnosisSafe",
@@ -1555,11 +1760,38 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0xEEE06120a1861102D69Aa69535091a8FE72D9e43",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xF5624B7E74C4Ed876C9793C7895184747a8D2310",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Poseidon2",
       "address": "0xFd234971881a7c72965175fA8E438c97B2Dcd273",
       "sourceHashes": [
         "0xa3600b2900d8b1fef0f3e6e58b0a56f5639eee39776eb2d7bce841b245fdf288"
       ],
+      "proxyType": "immutable",
       "description": "Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.",
       "sinceTimestamp": 1693288007,
       "sinceBlock": 18018289,
@@ -1573,6 +1805,7 @@
       ]
     },
     {
+      "type": "Contract",
       "name": "ValidatorPool",
       "address": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
       "sourceHashes": [
@@ -1643,140 +1876,13 @@
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.1.0"
       }
+    },
+    {
+      "type": "EOA",
+      "address": "0xfF00000000000000000000000000000000000255",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ]
-    },
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848" },
-    {
-      "address": "0x16876e5c608cec36968517A9Eb345269D308D94a",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    {
-      "address": "0x27EFE61C5266e461995141f57b4D13F13c83f786",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    {
-      "address": "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    {
-      "name": "KromaOperator",
-      "address": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    {
-      "address": "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
-        }
-      ]
-    },
-    {
-      "address": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    { "address": "0x547fc089E9f2971d27b9780214ED891F6d154faa" },
-    {
-      "address": "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    {
-      "address": "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
-    {
-      "address": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    {
-      "address": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
-    { "address": "0x994C074BD9503e4f01CB834e2c409FA16b41E587" },
-    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" },
-    { "address": "0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3" },
-    {
-      "address": "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    { "address": "0xEEE06120a1861102D69Aa69535091a8FE72D9e43" },
-    { "address": "0xF5624B7E74C4Ed876C9793C7895184747a8D2310" },
-    { "address": "0xfF00000000000000000000000000000000000255" }
   ],
   "abis": {
     "0x005DDC466C804c79adB079c120347dDE48132105": [

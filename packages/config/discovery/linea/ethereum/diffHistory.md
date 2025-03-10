@@ -1,3 +1,183 @@
+Generated with discovered.json: 0xd6346fe97c97e2b135cefbd208066a4763332d4b
+
+# Diff at Mon, 10 Mar 2025 08:27:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21434844
+- current block number: 21434844
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319)
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1111111111111111111111111111111111111111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x353012dc4a9A6cF55c941bADC267f82004A8ceB9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D)
+    +++ description: A proxy contract forwarding calls to a predefined (immutable) target contract.
+```
+
+```diff
++   Status: CREATED
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDCBridgeProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x46d2F319fd42165D4318F099E143dEA8124E9E3e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5822D8457c00FB82203918ED92907b935B9D40AE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9376c137AF5124FFc39bD8940A3D88D1cd508992)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20UpgradableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultiSend (0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB4dAebe4D01f467701F95f0196fc29033c54dBcb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierProofType3 (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F)
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574)
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9a295b1c24a6946cb954971a0d72c3e3b537248a
 
 # Diff at Thu, 06 Mar 2025 15:18:48 GMT:

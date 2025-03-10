@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x033a3bfaf9a7b0ff813e30dfaac9036f1829a596
+
+# Diff at Mon, 10 Mar 2025 08:28:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 68652420
+- current block number: 68652420
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 68652420 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x321Ce902eDFC6466B224ce5D9A7Bc16858855272)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleProxyAdmin (0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1f80ee0694707233fa2020ffcebecb864d60ed0a
 
 # Diff at Tue, 04 Mar 2025 10:42:43 GMT:

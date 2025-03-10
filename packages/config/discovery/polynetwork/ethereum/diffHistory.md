@@ -1,3 +1,135 @@
+Generated with discovered.json: 0xed436d8d5210dc9c48a901e05bc669db0d5e57e2
+
+# Diff at Mon, 10 Mar 2025 08:27:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 20675914
+- current block number: 20675914
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675914 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C)
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 1 (0x250e76987d838a75310c34bf422ea9f1AC4Cc906)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 3 (0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 7 (0x51ba447DaD1de30b91286471BcB570F69ECE968D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x52D858ef5e0A768C80C38617eB8a7680f4D4d459)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 4 (0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb)
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 6 (0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 2 (0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2)
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xdf408d52A717F7CF0c629CF8a8807f2455eAa671)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 8 (0xead16Ae2c301C48Ea011A36Eef9337507673DFc0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xeF86b2c8740518548ae449c4C3892B4be0475d8c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 5 (0xf6378141BC900020a438F3914e4C3ceA29907b27)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0f2c5a7a8a59877921b4c7f1476da6952c54bd8e
 
 # Diff at Tue, 04 Mar 2025 10:39:38 GMT:

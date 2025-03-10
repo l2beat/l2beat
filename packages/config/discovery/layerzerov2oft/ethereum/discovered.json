@@ -2,14 +2,16 @@
   "name": "layerzerov2oft",
   "chain": "ethereum",
   "blockNumber": 21943925,
-  "configHash": "0x86e8067fc3b9f4602826d2137b2c06153968a5aa403971b662dbc0dbd7cd3eca",
-  "contracts": [
+  "configHash": "0xb776e8e420d63fb223e1c1675ef3595f5e44cb5d973df3df3b616e899899e0a9",
+  "entries": [
     {
+      "type": "Contract",
       "name": "WTIA_OFTAdapter",
       "address": "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
       "sourceHashes": [
         "0xc645ae3293eef96881a8a34ad011853701ce0fc0f84f1e16be21348243dc23cd"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1710000539,
       "sinceBlock": 19398639,
       "values": {
@@ -30,6 +32,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x1082E92A0b92e15212fD5879C1dd672AB548302c",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "",
       "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "unverified": true,
@@ -67,11 +82,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "TBankOFT",
       "address": "0x1762c17f671FA27cE6C59256f5F28242de9274d0",
       "sourceHashes": [
         "0xba83e8b07a793eb94956a82d951d156b8192e46d2ec4a546c0582ec3012caca4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1709311259,
       "sinceBlock": 19341581,
       "values": {
@@ -92,11 +109,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "TRESTLE_OFTAdapter",
       "address": "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
       "sourceHashes": [
         "0x545dea510da54ad1f4ef1409aa1b7b6c39ffa522331dfcfdbaba275722af5b12"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716569111,
       "sinceBlock": 19941017,
       "values": {
@@ -116,11 +135,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "EndpointV2",
       "address": "0x1a44076050125825900e736c501f859c50fE728c",
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -162,11 +183,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "BlockedMessageLib",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
       "sourceHashes": [
         "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -180,11 +203,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "DineroOFTLockbox",
       "address": "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
       "sourceHashes": [
         "0xd0900deb37eddc5cdfd57b8661fdc3ce4992abe9370076218206793aa712f44c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1709176895,
       "sinceBlock": 19330462,
       "values": {
@@ -205,11 +230,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "StakedFraxEtherOFTAdapter",
       "address": "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
       "sourceHashes": [
         "0x4a403198a2a3bcd35a947c909f95e42965212a8cfee7b7f0a492a81b290343cb"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1710884675,
       "sinceBlock": 19471548,
       "values": {
@@ -230,11 +263,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "StakedUSDeOFTAdapter",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
       "sourceHashes": [
         "0x24c3e4cbee746bcb3966b274859dcf02dd148b892f0b42a8ce393052c55e2066"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1709929547,
       "sinceBlock": 19392822,
       "values": {
@@ -257,11 +292,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "FraxSharesOFTAdapter",
       "address": "0x23432452B720C80553458496D4D9d7C5003280d0",
       "sourceHashes": [
         "0x3bced0e183d2d8be858477bfefec195b6ff414c579fba5e35fc6ba6f67dd7296"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1710884099,
       "sinceBlock": 19471501,
       "values": {
@@ -282,21 +319,25 @@
       }
     },
     {
+      "type": "Contract",
       "name": "EvmZkMptValidator",
       "address": "0x276816F1931aFac123BdaeA54afF02BE6fd73e14",
       "sourceHashes": [
         "0xe952102137467d854c3f913999e558ec3ae8f0eb75955df935bcf96bd5d0400d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730280551,
       "sinceBlock": 21077569,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "HorizenDVN",
       "address": "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706495231,
       "sinceBlock": 19109198,
       "values": {
@@ -314,11 +355,13 @@
       "derivedName": "DVN"
     },
     {
+      "type": "Contract",
       "name": "EvmMptValidator",
       "address": "0x38C967856d17E900042Af447B3346bfF26C8ed4B",
       "sourceHashes": [
         "0x890745d1e6feaede421414da4e2b6d09e77e94fdd377fcbbc5d57be308788bce"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730280539,
       "sinceBlock": 21077568,
       "values": {
@@ -328,11 +371,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "CyberTokenAdapter",
       "address": "0x3d2fe83ea885C2E43A422C82C738847669708210",
       "sourceHashes": [
         "0xe07dd12133eb1c78e9a2cb67f7cb405dbbedc163d62174b5ffe3357666572473"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716878123,
       "sinceBlock": 19966610,
       "values": {
@@ -352,11 +397,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "MysoOFTAdapter",
       "address": "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6",
       "sourceHashes": [
         "0x89688d13ddfdb2a91fb45b3eac55658cc0cd5b58fd0924e24cad003ba9b04758"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1713954323,
       "sinceBlock": 19724628,
       "values": {
@@ -376,11 +423,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ENAOFTAdapter",
       "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
       "sourceHashes": [
         "0x40d7122474d8afc304e108f00e9254fe8ef72f42c28ee634f42aa1ea6b8499cf"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1712705747,
       "sinceBlock": 19621397,
       "values": {
@@ -403,11 +452,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LayerZeroDVN",
       "address": "0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307995,
       "sinceBlock": 19093742,
       "values": {
@@ -425,11 +476,13 @@
       "derivedName": "DVN"
     },
     {
+      "type": "Contract",
       "name": "USDeOFTAdapter",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "sourceHashes": [
         "0xccd3f36cc1147f6282362915f6dfbd4ad890475203975c33b3733ee32c3f75cf"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1709926703,
       "sinceBlock": 19392586,
       "values": {
@@ -452,11 +505,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Treasury",
       "address": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
       "sourceHashes": [
         "0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307779,
       "sinceBlock": 19093724,
       "values": {
@@ -468,11 +523,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ParamOFTAdapter",
       "address": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
       "sourceHashes": [
         "0xf5e370b31bd00c58182289a46e61d7a01400ad2073e75d0d64108c27cbfebf8f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716348011,
       "sinceBlock": 19922710,
       "values": {
@@ -493,11 +550,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ReadLib1002",
       "address": "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
       "sourceHashes": [
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730488859,
       "sinceBlock": 21094853,
       "values": {
@@ -512,11 +577,31 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MyOFTAdapter",
       "address": "0x801642B6efB861fE624dAD704b7A747779d9B433",
       "sourceHashes": [
         "0x8f58c00c46fa24ad1de2834e09eb6c9113cb1bd0f3f93e317d41848b4267aed5"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1710380783,
       "sinceBlock": 19430083,
       "values": {
@@ -537,11 +622,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "RSETH_OFTAdapter",
       "address": "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
       "sourceHashes": [
         "0x846cd86e3fbb7c7164e6107fcf83b92b24b0f4cf399c4b7b39e01cc88f44c91a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1707185231,
       "sinceBlock": 19166120,
       "values": {
@@ -562,6 +649,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "PolyhedraDVN",
       "address": "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
       "sourceHashes": [
@@ -611,19 +699,29 @@
       "derivedName": "ZkBridgeOracleV2"
     },
     {
+      "type": "Contract",
       "name": "",
       "address": "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1706495219,
       "sinceBlock": 19109197,
       "values": { "$immutable": true }
     },
     {
+      "type": "EOA",
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
       "sourceHashes": [
         "0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -638,6 +736,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7",
       "template": "GnosisSafe",
@@ -669,11 +768,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "WooTokenOFTAdapter",
       "address": "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
       "sourceHashes": [
         "0xf00fd4e6de8da1f5359ed1cbafdbeaf3ca5063b2099fd4eb70d150876d908e33"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1714491611,
       "sinceBlock": 19769079,
       "values": {
@@ -693,19 +794,29 @@
       }
     },
     {
+      "type": "Contract",
       "name": "",
       "address": "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307983,
       "sinceBlock": 19093741,
       "values": { "$immutable": true }
     },
     {
+      "type": "EOA",
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SendUln302",
       "address": "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307839,
       "sinceBlock": 19093729,
       "values": {
@@ -769,11 +880,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ReceiveUln302",
       "address": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706307863,
       "sinceBlock": 19093731,
       "values": {
@@ -784,11 +897,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "CyberTokenAdapter",
       "address": "0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
       "sourceHashes": [
         "0xdce3b87706451ccc7b085067f6799a004de54f2f3a9a58acc51b736e8c5b50c5"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1718263967,
       "sinceBlock": 20081436,
       "values": {
@@ -808,6 +923,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
@@ -840,11 +956,19 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0xd1846C61A063edA820305A5e568A12a570420cf6",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "GoogleCloudDVN",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217107,
       "sinceBlock": 18095084,
       "values": {
@@ -862,11 +986,13 @@
       "derivedName": "VerifierNetwork"
     },
     {
+      "type": "Contract",
       "name": "KinetixFinanceTokenOFTAdapter",
       "address": "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf",
       "sourceHashes": [
         "0xbdb5d856720cc4b696952d51301dd3c0e81cff33f44b2b099679d8fe2d343861"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1715945063,
       "sinceBlock": 19889373,
       "values": {
@@ -886,21 +1012,25 @@
       }
     },
     {
+      "type": "Contract",
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217119,
       "sinceBlock": 18095085,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "ZkBridgeAdmin",
       "address": "0xe16d201cA134345601631D327a971A3741646B0d",
       "sourceHashes": [
         "0x062ac536d5e166756d049e5291a179675915fffdd3c12bd2d98cc2d83f77403c"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -915,11 +1045,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "StakedFraxOFTAdapter",
       "address": "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
       "sourceHashes": [
         "0x4e7c9ed835cefe312e55b3bec6bd77fca1a30058b4bb1a6b1d32ce2968bd0e3e"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1710884663,
       "sinceBlock": 19471547,
       "values": {
@@ -940,11 +1072,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "MaviaOFTAdapter",
       "address": "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
       "sourceHashes": [
         "0xa6367e87486cfaf6777e95cef7398c1ad3fc2c50bdbdec7e25af7d2494eb448f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1708744931,
       "sinceBlock": 19294730,
       "values": {
@@ -965,11 +1099,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xF94b16157948E10597481Da0523927c8BA0bd182",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "EtherFiOFTAdapter",
       "address": "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D",
       "sourceHashes": [
         "0xfc3378db03fff87c68201589b229f1bb65fea0d487f8f4e41aa8f0381a7e0465"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1712811983,
       "sinceBlock": 19630191,
       "values": {
@@ -988,20 +1130,6 @@
         "sharedDecimals": 6
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x1082E92A0b92e15212fD5879C1dd672AB548302c" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" },
-    { "address": "0xd1846C61A063edA820305A5e568A12a570420cf6" },
-    { "address": "0xF94b16157948E10597481Da0523927c8BA0bd182" }
   ],
   "abis": {
     "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2": [

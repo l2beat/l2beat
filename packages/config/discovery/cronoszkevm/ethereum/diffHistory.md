@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x1e56d4fb2dd2abef7fa78b589584ff76f8806d39
+
+# Diff at Mon, 10 Mar 2025 08:26:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21766582
+- current block number: 21766582
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766582 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x149f3850AcfC5caa3ecF31dCF922A75eD2944a5e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5628D5EF2bAd701617b4003F6a2e34eeB89F2ADa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc)
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransactionFiltererDenyList (0xA8998F231a660Eca365B382943c71ad9b7619139)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAaC5b858d10107900e642681a97887D33FC3c9E9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TxFiltererOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc7e3F37766627b5DAF734f5bb5e43Ae9327011D8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE9A03EB4C2262A7d01981cAD1f2c1FFa05CB64Fb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfD7a03Cdb68E6488F950108A4d24f15519b87339)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb91b39e73a92f7945502fc7e37ba9527f8ee9ffb
 
 # Diff at Tue, 04 Mar 2025 10:39:02 GMT:

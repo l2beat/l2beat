@@ -2,16 +2,24 @@
   "name": "silicon",
   "chain": "ethereum",
   "blockNumber": 21766766,
-  "configHash": "0x388aec9985ba57b28922f18601185711cdb0ea9a6f9db45869d4eaab38895989",
+  "configHash": "0x816bc2c5240714b4a1ae5cc495b6a67d448cb129a464c4209f6663eeae23c021",
   "sharedModules": ["shared-polygon-cdk"],
-  "contracts": [
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
+      "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
       "sinceBlock": 19505052,
@@ -20,6 +28,27 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "EOA",
+      "address": "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+          "description": "sole address that can force batches."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "PolygonDataCommittee",
       "address": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
       "template": "polygon-cdk/PolygonDataCommittee",
@@ -78,12 +107,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -98,6 +129,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Validium",
       "address": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
       "template": "polygon-cdk/PolygonZkEVM",
@@ -182,24 +214,12 @@
       },
       "derivedName": "PolygonValidiumStorageMigration",
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    }
-  ],
-  "eoas": [
-    { "address": "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0" },
-    { "address": "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb" },
-    {
-      "address": "0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "sole address that can force batches."
-        }
-      ]
     },
     {
+      "type": "EOA",
       "address": "0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
+      "sourceHashes": [],
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "sequence",
@@ -207,9 +227,17 @@
         }
       ]
     },
-    { "address": "0x88eb99475d70cCdB891171344c7Ee90688Fa134c" },
     {
+      "type": "EOA",
+      "address": "0x88eb99475d70cCdB891171344c7Ee90688Fa134c",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
       "address": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+      "sourceHashes": [],
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",

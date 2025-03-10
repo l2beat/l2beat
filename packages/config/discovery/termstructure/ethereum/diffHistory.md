@@ -1,3 +1,135 @@
+Generated with discovered.json: 0x9696fed70b98fc98a03ea25e7b4db9fee9a61818
+
+# Diff at Mon, 10 Mar 2025 08:27:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Rolluper (0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x50E6298795C412B26e54FdD87825Bc6ffa94B80d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x83d4814307088732528A53D8DF75fd6F2f5be398)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x85e500dF81F10B539E16Dd717e24C41465D10D82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvacuationFacet (0x882aBFb2F6A67d36350499991638044e8Bd83a72)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AccountFacet (0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupFacet (0x955cdD2E56Ca2776a101a552A318d28fe311398D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvacuVerifier (0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Operator (0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8d2e97b225634e0d6a944c180b6dd2bb67e06992
 
 # Diff at Tue, 04 Mar 2025 10:40:07 GMT:

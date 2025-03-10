@@ -1,3 +1,177 @@
+Generated with discovered.json: 0x9037494a16cd950da8995c0ffba0f434bc822aca
+
+# Diff at Mon, 10 Mar 2025 08:27:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21637087
+- current block number: 21637087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637087 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract BalanceClaimer (0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21)
+    +++ description: Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PgnMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x50930d652266EF4127FA3A1906B7Cb9951076628)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7916D35b57c2E4AffCaB46C3E5C8d76D3b44d1F7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x97BAf688E5d0465E149d1d5B497Ca99392a6760e)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA0737fea60F0601A192E3d2c98865A883ab0bda2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0xA38d0c4E6319F9045F20318BA5f04CDe94208608)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc2E2B715d9e302947Ec7e312fd2384b5a1296099)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF3313C48BD8E17b823d5498D62F37019dFEA647D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3bf1d973aba73d4538fc4235ee082a9bc445c2f0
 
 # Diff at Tue, 04 Mar 2025 11:26:11 GMT:

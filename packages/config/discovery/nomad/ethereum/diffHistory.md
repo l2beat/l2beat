@@ -1,3 +1,201 @@
+Generated with discovered.json: 0x57dbe66459013e20d678096cd8f4bd14836b83b9
+
+# Diff at Mon, 10 Mar 2025 08:27:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21937195
+- current block number: 21937195
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21937195 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract ReplicaBeaconProxy (0x049b51e531Fd8f90da6d92EA83dC4125002F20EF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HomeUpgradeBeacon (0x063e871f8DB991CEAd34B557A00B157B360084cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x06D8902cfae8235047DC7783875279311798c715)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReplicaUpgradeBeacon (0x0876dFe4AcAe0e1c0a43302716483f5752298b71)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconProxy (0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x25270d2e6980C5b343C4866Aea904a9A9bCA733F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceRouterBeaconProxy (0x3009C99D370B780304D2098196f1EBF779a4777a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceUpgradeBeacon (0x67833a48b3F509d4252ac2c19cd604556eD6c981)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x83865712c50f702fA4650C7fadEd90A54242046e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeRouterBeaconProxy (0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpdaterManager (0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HomeBeaconProxy (0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governor (0x93277b8f5939975b9E6694d5Fd2837143afBf68A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9782A3C8128f5D1BD3C9655d03181ba5b420883E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconProxy (0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa728bE5Be33E60D9c65677EBa569555536e587E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeUpgradeBeacon (0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC69b66cc2811B509829448FBFfb2553c4CBb627e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xCc20f031B2F06374e4986Af33A36bDda55bed21d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RecoveryManager (0xda2f881f7f4e9D2b9559F97c7670472A85C1986A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDE9cfb1216889Dee0cAB8afB04c63911427659E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xea24Ac04DEFb338CA8595C3750E20166F3b4998A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XAppConnectionManager (0xFe8874778f946Ac2990A29eba3CFd50760593B2F)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2d692ecebdfb9516dc50c2703c9705428931968c
 
 # Diff at Tue, 04 Mar 2025 10:39:28 GMT:

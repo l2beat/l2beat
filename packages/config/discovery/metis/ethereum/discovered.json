@@ -2,9 +2,22 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0x2f7cb7e5fbcd49a7573b5d176218b294ad89877857eb15ae3c46d927faaeae2b",
-  "contracts": [
+  "configHash": "0x2669d380bf47a8ff1b88eebfb43cb970c6c11044c9ab31f7e2549a3edde60c61",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x02058Bb1d98D88087008F2ac1273584591380e3F",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
       "sourceHashes": [
@@ -33,6 +46,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LockingInfo",
       "address": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
       "sourceHashes": [
@@ -80,11 +94,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ChainStorageContainer-SCC-batches",
       "address": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "getGlobalMetadata",
         "length",
@@ -106,11 +122,43 @@
       "derivedName": "ChainStorageContainer"
     },
     {
+      "type": "EOA",
+      "address": "0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x1A9da0aedA630dDf2748a453BF6d92560762D914",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ChainStorageContainer-CTC-batches",
       "address": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1637047500,
       "sinceBlock": 13625270,
       "values": {
@@ -122,6 +170,7 @@
       "derivedName": "ChainStorageContainer"
     },
     {
+      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
       "sourceHashes": [
@@ -151,6 +200,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x4200000000000000000000000000000000000007",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x4200000000000000000000000000000000000010",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Metis Multisig",
       "address": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
       "template": "GnosisSafe",
@@ -235,11 +297,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "CanonicalTransactionChain",
       "address": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
       "sourceHashes": [
         "0x70010b1d5bb98964174a28e3c3a229763fb65df55575104adbec0bc0552cd31d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "getLastBlockNumber",
         "getLastTimestamp",
@@ -273,11 +337,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "BondManager",
       "address": "0x595801b85628ec6979C420988b8843A40F850528",
       "sourceHashes": [
         "0xe429226928e3766e14dbbf6391a4caa68cf9e4c12cb9e81ef04b84a38747449a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1713873023,
       "sinceBlock": 19717907,
       "values": {
@@ -286,14 +352,17 @@
       }
     },
     {
+      "type": "Contract",
       "name": "",
       "address": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1637083067,
       "sinceBlock": 13627861,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "RewardEscrowerMultisig",
       "address": "0x62478E4eeb4070fE399866aB05e821AB97200947",
       "template": "GnosisSafe",
@@ -325,6 +394,7 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "MVM_CanonicalTransaction",
       "address": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
       "sourceHashes": [
@@ -364,11 +434,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x7a9059F4A6e50090e4f55994d465918200AB4454",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MVM_DiscountOracle",
       "address": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
       "sourceHashes": [
         "0x8406419ac446023c37b27d0154da77b664a20b7da231802e32193c8883d32d06"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1649859244,
       "sinceBlock": 14577582,
       "values": {
@@ -382,12 +460,14 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -406,12 +486,14 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Lib_AddressManager",
       "address": "0x918778e825747a892b17C66fe7D24C618262867d",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
+      "proxyType": "immutable",
       "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
@@ -453,11 +535,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "MToken",
       "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
       "sourceHashes": [
         "0xd0f9d9680beb2766f32df8f35302771cde6d0ccb5c3e7f32fdacd13bf5c58203"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1607734167,
       "sinceBlock": 11434969,
       "values": {
@@ -470,6 +554,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "StateCommitmentChain",
       "address": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
       "sourceHashes": [
@@ -514,11 +599,19 @@
       "derivedName": "MVM_StateCommitmentChain"
     },
     {
+      "type": "EOA",
+      "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ChainStorageContainer-CTC-queue",
       "address": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1637047833,
       "sinceBlock": 13625297,
       "values": {
@@ -535,6 +628,31 @@
       "derivedName": "ChainStorageContainer"
     },
     {
+      "type": "EOA",
+      "address": "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xB961047013F974C5b6B6F8dA4402379525316550",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xcDf02971871B7736874E20B8487c019D28090019",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "LockingPool",
       "address": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
       "sourceHashes": [
@@ -650,6 +768,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MVM_Verifier",
       "address": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
       "sourceHashes": [
@@ -684,6 +815,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MVM_L2ChainManagerOnL1",
       "address": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
       "sourceHashes": [
@@ -710,27 +848,6 @@
         "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751" },
-    { "address": "0x02058Bb1d98D88087008F2ac1273584591380e3F" },
-    { "address": "0x1577D2b835f561BD021E3219Cd786181D0e17ff5" },
-    { "address": "0x1A9da0aedA630dDf2748a453BF6d92560762D914" },
-    { "address": "0x217fD54d336f710F8aee19572dBfBf0B2297ed69" },
-    { "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6" },
-    { "address": "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01" },
-    { "address": "0x4200000000000000000000000000000000000007" },
-    { "address": "0x4200000000000000000000000000000000000010" },
-    { "address": "0x7a9059F4A6e50090e4f55994d465918200AB4454" },
-    { "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E" },
-    { "address": "0xB383E1331dEE29864b68f7D84b0dC289F770d846" },
-    { "address": "0xB961047013F974C5b6B6F8dA4402379525316550" },
-    { "address": "0xcDf02971871B7736874E20B8487c019D28090019" },
-    { "address": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b" },
-    { "address": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377" },
-    { "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000" },
-    { "address": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040" }
   ],
   "abis": {
     "0x081D1101855bD523bA69A9794e0217F0DB6323ff": [

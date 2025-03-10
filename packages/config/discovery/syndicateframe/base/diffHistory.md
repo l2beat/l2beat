@@ -1,3 +1,123 @@
+Generated with discovered.json: 0xd011e2bff288ec4190b3d0ad94d1bd0df7121b7a
+
+# Diff at Mon, 10 Mar 2025 08:28:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 26809248
+- current block number: 26809248
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26809248 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x0ED44be59Ea62a9960CB97f8aC54088304D05791)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Caldera (0x356000Cec4fC967f8FC372381D983426760A0391)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x52fA397D799f1CE416a2089B964Aa293c347994F)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Caldera Multisig 2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x97395dd253E2d096A0CaA62a574895c3C2F2b2e0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xADE1F8C181934052fD1958F06B63Ef0D875803C5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x066db5ddfee3b9a629fa2012e8a04cda82d54bcd
 
 # Diff at Tue, 04 Mar 2025 11:27:15 GMT:

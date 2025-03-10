@@ -2,14 +2,22 @@
   "name": "polynetwork",
   "chain": "ethereum",
   "blockNumber": 20675914,
-  "configHash": "0xa21555d5a1e1c6d5f76bb43e02454f0a005f0a2b50693b9818da03251ef3f0dc",
-  "contracts": [
+  "configHash": "0xa2986d01b5b186322acef84ccd55f3938b4876f8e155c201a37e117be171168a",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "EthCrossChainManager",
       "address": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
       "sourceHashes": [
         "0x221889e435e2f64e82619837d394394a6179db1932bfbbdedc0782fe358dffda"
       ],
+      "proxyType": "immutable",
       "description": "Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.",
       "sinceTimestamp": 1634543659,
       "sinceBlock": 13440588,
@@ -24,11 +32,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Lock Proxy 1",
       "address": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
       "sourceHashes": [
         "0x2d120f7fb68dde6641e58f5786c8afcdb63926871f15f20ea7f9da917c31e255"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1599099893,
       "sinceBlock": 10785630,
       "values": {
@@ -40,9 +50,11 @@
       "derivedName": "LockProxy"
     },
     {
+      "type": "Contract",
       "name": "Lock Proxy 3",
       "address": "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1651740937,
       "sinceBlock": 14716305,
       "values": {
@@ -53,11 +65,13 @@
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "Lock Proxy 7",
       "address": "0x51ba447DaD1de30b91286471BcB570F69ECE968D",
       "sourceHashes": [
         "0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1692602387,
       "sinceBlock": 17961570,
       "values": {
@@ -69,11 +83,19 @@
       "derivedName": "LockProxy"
     },
     {
+      "type": "EOA",
+      "address": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Lock Proxy 4",
       "address": "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
       "sourceHashes": [
         "0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1666256303,
       "sinceBlock": 15788266,
       "values": {
@@ -85,11 +107,13 @@
       "derivedName": "LockProxy"
     },
     {
+      "type": "Contract",
       "name": "EthCrossChainManagerProxy",
       "address": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
       "sourceHashes": [
         "0x59a4969b8c2f837444e679b13cbaec4730cc5ffe789f3e3e7b038b7e8d4a79d5"
       ],
+      "proxyType": "immutable",
       "description": "Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.",
       "sinceTimestamp": 1597302116,
       "sinceBlock": 10650143,
@@ -102,20 +126,36 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Lock Proxy 6",
       "address": "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1691038067,
       "sinceBlock": 17832183,
       "values": { "$immutable": true },
       "derivedName": ""
     },
     {
+      "type": "EOA",
+      "address": "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Lock Proxy 2",
       "address": "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
       "sourceHashes": [
         "0x51007159d79f6f899952b6b5996a46b210e9b041665c5da2408c4f528b000bc3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1643007876,
       "sinceBlock": 14066867,
       "values": {
@@ -128,11 +168,13 @@
       "derivedName": "LockProxyWithLP"
     },
     {
+      "type": "Contract",
       "name": "PolyWrapper",
       "address": "0x81910675DbaF69deE0fD77570BFD07f8E436386A",
       "sourceHashes": [
         "0xfbfc2095ce2f12ed5539dc7b6b1ee656eaf477f144685f6bb185c9aa8d6b4d42"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1643008142,
       "sinceBlock": 14066885,
       "values": {
@@ -166,11 +208,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "EthCrossChainData",
       "address": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
       "sourceHashes": [
         "0xd8a7f029fa8e1dabfbc9c64632f1959334147be1d784e585f99ad1e307ba11f7"
       ],
+      "proxyType": "immutable",
       "description": "Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.",
       "ignoreInWatchMode": ["getEthTxHashIndex", "EthToPolyTxHashIndex"],
       "sinceTimestamp": 1597287911,
@@ -185,11 +235,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Lock Proxy 8",
       "address": "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0",
       "sourceHashes": [
         "0xba13e21f4e7ec8692a18d58c1a21540ef7c2bcfd9a72466af608976c7bc65081"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1710730871,
       "sinceBlock": 19458874,
       "values": {
@@ -201,11 +259,19 @@
       "derivedName": "LockProxy"
     },
     {
+      "type": "EOA",
+      "address": "0xeF86b2c8740518548ae449c4C3892B4be0475d8c",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Lock Proxy 5",
       "address": "0xf6378141BC900020a438F3914e4C3ceA29907b27",
       "sourceHashes": [
         "0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1669106303,
       "sinceBlock": 16024409,
       "values": {
@@ -216,15 +282,6 @@
       },
       "derivedName": "LockProxy"
     }
-  ],
-  "eoas": [
-    { "address": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57" },
-    { "address": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459" },
-    { "address": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E" },
-    { "address": "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725" },
-    { "address": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02" },
-    { "address": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671" },
-    { "address": "0xeF86b2c8740518548ae449c4C3892B4be0475d8c" }
   ],
   "abis": {
     "0x14413419452Aaf089762A0c5e95eD2A13bBC488C": [

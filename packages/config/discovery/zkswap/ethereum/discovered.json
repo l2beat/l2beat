@@ -2,9 +2,10 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 20311131,
-  "configHash": "0x14993058ffb7253619f7722262be4f2ba0a94b971be8fca837af839826bb3088",
-  "contracts": [
+  "configHash": "0xf18cffed3f256a9fa091061c63851f44e0141f91fe8eb7a0ea87282492d1dda7",
+  "entries": [
     {
+      "type": "Contract",
       "name": "Governance",
       "address": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
       "sourceHashes": [
@@ -34,6 +35,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Verifier",
       "address": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
       "unverified": true,
@@ -58,11 +66,13 @@
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "ZkSyncCommitBlock",
       "address": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
       "sourceHashes": [
         "0x423fde4a6b6351d8f7f10a2e073dedc2c2250adb57d53e7cb226a30202e62863"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1613135141,
       "sinceBlock": 11841959,
       "values": {
@@ -84,6 +94,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "PairManager",
       "address": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
       "unverified": true,
@@ -108,11 +119,13 @@
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "UpgradeGatekeeper",
       "address": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
       "sourceHashes": [
         "0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -154,15 +167,24 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ZkSyncExit",
       "address": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1613135171,
       "sinceBlock": 11841961,
       "values": { "$immutable": true },
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "ZkSync",
       "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
       "sourceHashes": [
@@ -214,6 +236,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "VerifierExit",
       "address": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
       "unverified": true,
@@ -237,11 +260,6 @@
       },
       "derivedName": ""
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3" },
-    { "address": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037" }
   ],
   "abis": {
     "0x02ecef526f806f06357659fFD14834fe82Ef4B04": [

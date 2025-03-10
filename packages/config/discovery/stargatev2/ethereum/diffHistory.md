@@ -1,3 +1,243 @@
+Generated with discovered.json: 0xf6c2aa8b0d5b311019248f9b4261692565cf51d3
+
+# Diff at Mon, 10 Mar 2025 08:27:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21944318
+- current block number: 21944318
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Treasurer (0x1041D127b2d4BC700F0F563883bC689502606918)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x565cFd7224bbc2a81a6e2a1464892ecB27efB070)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargateMultiRewarder (0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CreditMessaging (0x6b8aD17795d89B283e6D0362A87A403f3544bb9d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980)
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Verifier (0x8FafAE7Dd957044088b3d0F67359C327c6200d18)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB981a2664f5f547291Df5F8dCD4505f7015912CF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+```
+
+```diff
++   Status: CREATED
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x80b7bb830ad357bfb6f7cdec75c6a7ae38e5c1ea
 
 # Diff at Thu, 06 Mar 2025 15:20:39 GMT:

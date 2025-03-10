@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x6c5017d2c0ae3651ce09c8ecab58bf7f9fc865f0
+
+# Diff at Mon, 10 Mar 2025 08:27:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 20920155
+- current block number: 20920155
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920155 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x0a23342520Aa8Ca963c4201801F4D3E95e731637)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x282DB123D1cbf5437c295EA0df0137E5FaDbD117)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KarakMultisig (0x28A227d4faF0f4f75897438E24C43EF1CDABb920)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2964E7dE071467217f642AEe0f5A3a2b8c3193A6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4179f43f3b994e97090557363b09F403138a729e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x622333688CC1878C7ff4205c89bDe051798788A7)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7E973c8f8aCDb71E4e00A19631739FFBF9748Cd0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x952851CecB07705A5bb483C1CE080F97e1E7491E)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x988378eD49F538104fDBaC1A0ac2Edf9890EA4f2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAb86E21e9BFA559B93ca6f783362BFf5504f2cac)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBcB3EaB21eCe8864aFcC07f7613bD6D8bB5C28d3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xff00000000000000000000000000000000002410)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5c1d9af8f4bc3d4907f098bd5681f96680806b9c
 
 # Diff at Tue, 04 Mar 2025 11:25:52 GMT:

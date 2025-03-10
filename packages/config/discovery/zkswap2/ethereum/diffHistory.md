@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x89b0bf73fd1a0ce06dad4e6c2dfcb5e47d691283
+
+# Diff at Mon, 10 Mar 2025 08:28:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 16767881
+- current block number: 16767881
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16767881 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x38101ae98196C8BCf7dF1835Bf3983B384272ae4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSync (0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x961B513dfD3e363c238E0f98219eE02552A847BD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9D7397204F32e0Ee919Ea3475630cdf131086255)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSwapListing (0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierExit (0xb56878d21F6b101f48bb55f1AA9D3F624f04E513)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSyncExit (0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV2Factory (0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSyncCommitBlock (0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZksToken (0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb834b68dbc594a31f71ecc41d03ef3ced88ac108
 
 # Diff at Tue, 04 Mar 2025 10:40:18 GMT:

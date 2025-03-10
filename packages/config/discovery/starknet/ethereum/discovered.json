@@ -2,10 +2,11 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21973410,
-  "configHash": "0x69eab4b210b8132ba7cf47a2bf0fad9249c5ae2daa35a065c1fcd693d62d44c1",
+  "configHash": "0x438164b4c622d8cc183ca81a4f9b3b3e3395e1a54f59c2dd7ecb0c9770a33a96",
   "sharedModules": ["shared-sharp-verifier"],
-  "contracts": [
+  "entries": [
     {
+      "type": "Contract",
       "name": "StarkgateBridgeMultisig",
       "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
       "template": "GnosisSafe",
@@ -313,12 +314,14 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "LORDSBridge",
       "address": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
       "template": "starknet/LordsL1Bridge",
       "sourceHashes": [
         "0x2f705f817a66ebdf99961fe9f40d30fe99be28e3a316d15a490048e7cb149b67"
       ],
+      "proxyType": "immutable",
       "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
       "sinceTimestamp": 1687524587,
       "sinceBlock": 17542373,
@@ -332,12 +335,26 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0x030ceEE5D4CBc304287234720B11E00f47695755",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DAIBridge",
       "address": "0x0437465dfb5B79726e35F08559B0cBea55bb585C",
       "template": "maker/L1Escrow",
       "sourceHashes": [
         "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
       ],
+      "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1652101038,
       "sinceBlock": 14742550,
@@ -352,6 +369,7 @@
       "derivedName": "L1Escrow"
     },
     {
+      "type": "Contract",
       "name": "StarkgateManager",
       "address": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
       "template": "starknet/StarkgateManager",
@@ -473,6 +491,13 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "StarkgateRegistry",
       "address": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
       "template": "starknet/StarkgateRegistry",
@@ -539,6 +564,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "Contract",
       "name": "StarknetSecurityCouncil",
       "address": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
       "template": "GnosisSafe",
@@ -589,6 +615,13 @@
       "derivedName": "Safe"
     },
     {
+      "type": "EOA",
+      "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "WBTCBridge",
       "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
       "template": "starknet/StarknetERC20Bridge",
@@ -772,6 +805,56 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "FXSBridge",
       "address": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
       "template": "starknet/StarknetERC20Bridge",
@@ -928,6 +1011,19 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "StarkgateSecurityAgentMultisig",
       "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
       "template": "GnosisSafe",
@@ -958,6 +1054,25 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "StarknetAdminMultisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "template": "GnosisSafe",
@@ -1020,12 +1135,20 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "L1DaiGateway",
       "address": "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
       "template": "starknet/L1EscrowDAI",
       "sourceHashes": [
         "0xea3ba1600e1949cef23ec7d1ebcf724de2bb6be9602c2339dd29582e6c00c9f5"
       ],
+      "proxyType": "immutable",
       "displayName": "L1EscrowDAI",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
       "sinceTimestamp": 1666446647,
@@ -1049,6 +1172,13 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ETHBridge",
       "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
       "template": "starknet/StarknetEthBridge",
@@ -1227,6 +1357,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "Contract",
       "name": "USDTBridge",
       "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
       "template": "starknet/StarknetERC20Bridge",
@@ -1410,6 +1541,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "Contract",
       "name": "wstETHBridge",
       "address": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
       "template": "starknet/StarknetERC20Bridge",
@@ -1573,6 +1705,13 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Starknet",
       "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
       "template": "starknet/Starknet",
@@ -1771,12 +1910,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "DelayedExecutor",
       "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
       "template": "starknet/DelayedExecutor",
       "sourceHashes": [
         "0x6a59350278d90840dff5cb37a714e105c3003955a6c304046fb1222f61374eed"
       ],
+      "proxyType": "immutable",
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
       "severity": "HIGH",
       "directlyReceivedPermissions": [
@@ -1801,6 +1942,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "type": "Contract",
       "name": "STRKBridge",
       "address": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
       "template": "starknet/StarknetERC20Bridge",
@@ -1981,6 +2123,13 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "rETHBridge",
       "address": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
       "template": "starknet/StarknetERC20Bridge",
@@ -2142,6 +2291,13 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "sfrxETHBridge",
       "address": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
       "template": "starknet/StarknetERC20Bridge",
@@ -2298,6 +2454,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "Contract",
       "name": "FRAXBridge",
       "address": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
       "template": "starknet/StarknetERC20Bridge",
@@ -2454,6 +2611,13 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "LUSDBridge",
       "address": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
       "template": "starknet/StarknetERC20Bridge",
@@ -2609,6 +2773,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "Contract",
       "name": "MultiBridge",
       "address": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
       "template": "starknet/StarknetMultiBridge",
@@ -2784,6 +2949,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "Contract",
       "name": "USDCBridge",
       "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
       "template": "starknet/StarknetERC20Bridge",
@@ -2967,6 +3133,13 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "EOA",
+      "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "StarknetSCMinorityMultisig",
       "address": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
       "template": "GnosisSafe",
@@ -3012,6 +3185,7 @@
       "derivedName": "Safe"
     },
     {
+      "type": "Contract",
       "name": "UNIBridge",
       "address": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
       "template": "starknet/StarknetERC20Bridge",
@@ -3166,116 +3340,19 @@
         }
       ],
       "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "type": "EOA",
+      "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "deactivate bridging for deposits into the escrow."
-        }
-      ]
-    },
-    { "address": "0x030ceEE5D4CBc304287234720B11E00f47695755" },
-    { "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2" },
-    { "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac" },
-    { "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD" },
-    { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
-    {
-      "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
-        }
-      ]
-    },
-    { "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b" },
-    {
-      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
-        }
-      ]
-    },
-    { "address": "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C" },
-    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
-    { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
-    { "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0" },
-    { "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560" },
-    { "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E" },
-    { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
-    { "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874" },
-    { "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5" },
-    { "address": "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc" },
-    { "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7" },
-    { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
-    { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
-    { "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645" },
-    { "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b" },
-    { "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0" },
-    { "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90" }
   ],
   "abis": {
     "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": [

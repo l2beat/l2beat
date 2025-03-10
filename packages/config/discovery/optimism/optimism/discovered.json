@@ -2,9 +2,16 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 132493968,
-  "configHash": "0x0570b4bdcac8d73e80e1babe758f382255451ebfe4d7e28fdd984ab380409b4a",
-  "contracts": [
+  "configHash": "0x2b33dce623308f02a45bacfc71bea5627ad9f1adad5ab57ce369910b19486fd7",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MintManagerOwner",
       "address": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
       "template": "GnosisSafe",
@@ -44,6 +51,13 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "type": "EOA",
+      "address": "0x3041BA32f451F5850c147805F5521AC206421623",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DeployerWhitelist",
       "address": "0x4200000000000000000000000000000000000002",
       "sourceHashes": [
@@ -71,6 +85,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2CrossDomainMessenger",
       "address": "0x4200000000000000000000000000000000000007",
       "template": "opstack/Layer2/L2CrossDomainMessenger",
@@ -110,6 +125,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GasPriceOracle",
       "address": "0x420000000000000000000000000000000000000F",
       "template": "opstack/Layer2/GasPriceOracle",
@@ -159,6 +175,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2StandardBridge",
       "address": "0x4200000000000000000000000000000000000010",
       "template": "opstack/Layer2/L2StandardBridge",
@@ -190,6 +207,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SequencerFeeVault",
       "address": "0x4200000000000000000000000000000000000011",
       "template": "opstack/Layer2/SequencerFeeVault",
@@ -220,6 +238,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OptimismMintableERC20Factory",
       "address": "0x4200000000000000000000000000000000000012",
       "template": "opstack/Layer2/OptimismMintableERC20Factory",
@@ -248,6 +267,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1BlockNumber",
       "address": "0x4200000000000000000000000000000000000013",
       "template": "opstack/Layer2/L1BlockNumber",
@@ -275,6 +295,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2ERC721Bridge",
       "address": "0x4200000000000000000000000000000000000014",
       "template": "opstack/Layer2/L2ERC721Bridge",
@@ -312,6 +333,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1Block",
       "address": "0x4200000000000000000000000000000000000015",
       "template": "opstack/Layer2/L1Block",
@@ -365,6 +387,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2ToL1MessagePasser",
       "address": "0x4200000000000000000000000000000000000016",
       "template": "opstack/Layer2/L2ToL1MessagePasser",
@@ -393,6 +416,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OptimismMintableERC721Factory",
       "address": "0x4200000000000000000000000000000000000017",
       "template": "opstack/Layer2/OptimismMintableERC721Factory",
@@ -422,6 +446,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x4200000000000000000000000000000000000018",
       "template": "global/ProxyAdmin",
@@ -516,6 +541,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "BaseFeeVault",
       "address": "0x4200000000000000000000000000000000000019",
       "template": "opstack/Layer2/BaseFeeVault",
@@ -545,6 +571,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1FeeVault",
       "address": "0x420000000000000000000000000000000000001A",
       "template": "opstack/Layer2/L1FeeVault",
@@ -574,6 +601,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SchemaRegistry",
       "address": "0x4200000000000000000000000000000000000020",
       "template": "opstack/Layer2/SchemaRegistry",
@@ -607,6 +635,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "EAS",
       "address": "0x4200000000000000000000000000000000000021",
       "template": "opstack/Layer2/EAS",
@@ -645,11 +674,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OPToken",
       "address": "0x4200000000000000000000000000000000000042",
       "sourceHashes": [
         "0xbaac8c2c26ae66ca5f26a277a6fc9ad2cac1d8e638fae5ab2589b8fec8262316"
       ],
+      "proxyType": "immutable",
       "description": "The OP token contract. The minting policy is controlled by the 0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1650979836,
@@ -666,11 +697,19 @@
       "derivedName": "GovernanceToken"
     },
     {
+      "type": "EOA",
+      "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MintManager",
       "address": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
       "sourceHashes": [
         "0x132b4ddf43264613a6251435ddd7443efbd8ed51129af51edb5c6ab298471b3d"
       ],
+      "proxyType": "immutable",
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
       "issuedPermissions": [
         {
@@ -691,15 +730,12 @@
         "mintPermittedAfter": 0,
         "owner": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
       }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1" },
-    { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
-    { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
+    },
     {
+      "type": "EOA",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+      "sourceHashes": [],
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -789,12 +825,42 @@
         }
       ]
     },
-    { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
-    { "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1" },
-    { "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa" },
-    { "address": "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94" },
-    { "address": "0xdb203D7f00fF435dA107543B33495f9cA2c484C6" },
-    { "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001" }
+    {
+      "type": "EOA",
+      "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xdb203D7f00fF435dA107543B33495f9cA2c484C6",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff": [

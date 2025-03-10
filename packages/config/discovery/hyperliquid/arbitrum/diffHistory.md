@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xbb6d19cd2fe95f9321cb4103504d66cd0b5e47dd
+
+# Diff at Mon, 10 Mar 2025 08:28:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 300202969
+- current block number: 300202969
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 300202969 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x263294039413B96D25E4173a5F7599F8b3801504)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HyperliquidBridge (0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7)
+    +++ description: Single contract containing all the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x45C3bbc5cA908ab49441FFe9742b919fC6dDb10A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x58E1b0E63C905D5982324FCd9108582623b8132e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x720237467c57cDF4bf9A501c77a27b5076d76E04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8003FD297a7Aa477B746825E7A506675bF590E91)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x86d6AE3032732F27239075D77a1317989B52F628)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xda6816df552c3f9e0FB64979fb357800d690d79B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE346B41B47296153A21E64D6bFc857C27874C6e7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf9d2282A4A4C216f624717C0747D23146FC048c5)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2ce919aedd4854911178c0fd553e7a050a4bedfd
 
 # Diff at Tue, 04 Mar 2025 10:40:25 GMT:

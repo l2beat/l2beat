@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x18e88e7a8420122dd7b1b8d2a2ea21eaee984865
+
+# Diff at Mon, 10 Mar 2025 08:28:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 19378036
+- current block number: 19378036
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19378036 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa03248B029b4e348F156f4b1d93CB433a4e1361e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x76a08971916fed146d9df206dee3dcddf409aa0d
 
 # Diff at Tue, 04 Mar 2025 10:40:36 GMT:

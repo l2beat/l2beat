@@ -2,14 +2,22 @@
   "name": "zklinknova",
   "chain": "arbitrum",
   "blockNumber": 249925893,
-  "configHash": "0x9eb7e79c45acdbc7eddd86e860fb456575877a3215af7ba7876d6faed8444fce",
-  "contracts": [
+  "configHash": "0xb3986a3e288db7ec3510d49c4c1984dc7e95f8f452a6d8259bacd90e47b5c80b",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ArbitrumProxyAdmin",
       "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -26,6 +34,31 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "type": "EOA",
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ArbitrumL2Gateway",
       "address": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
       "template": "zklinknova/secondaryGateway",
@@ -66,6 +99,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ArbitrumOwner",
       "address": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
       "template": "GnosisSafe",
@@ -111,6 +145,37 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "type": "EOA",
+      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "L1ERC20Bridge",
       "address": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
       "sourceHashes": [
@@ -149,6 +214,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "zkLink",
       "address": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
       "template": "zklinknova/secondaryZkLink",
@@ -223,18 +289,6 @@
       },
       "derivedName": "ZkLink"
     }
-  ],
-  "eoas": [
-    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
-    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
-    { "address": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4" },
-    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
-    { "address": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01" },
-    { "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7" },
-    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
-    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
-    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
-    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],
   "abis": {
     "0x1202e0557A23531D09015C802e993d6423685FfB": [

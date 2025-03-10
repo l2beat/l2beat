@@ -1,3 +1,249 @@
+Generated with discovered.json: 0x736b390ef2dce0ad854924f122e02ebb5e758f54
+
+# Diff at Mon, 10 Mar 2025 08:27:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x001088E383A00ff4ab36F37f7021Cb6d7B415751)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x02058Bb1d98D88087008F2ac1273584591380e3F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1577D2b835f561BD021E3219Cd786181D0e17ff5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1A9da0aedA630dDf2748a453BF6d92560762D914)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x217fD54d336f710F8aee19572dBfBf0B2297ed69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x36B892a31b311E5e9960739A69D2dF0aa0F81A01)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4200000000000000000000000000000000000007)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4200000000000000000000000000000000000010)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21)
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x5fF5316CD1C015970eEC83D34a69E504B577a5bb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7a9059F4A6e50090e4f55994d465918200AB4454)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract MToken (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa6D8941F935932a531A856C2e48046DA73a1098E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB383E1331dEE29864b68f7D84b0dC289F770d846)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB961047013F974C5b6B6F8dA4402379525316550)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcDf02971871B7736874E20B8487c019D28090019)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDD6FFC7D9a4Fb420b637747edc6456340d12d377)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd0ecbbe837131f87ec768318c406fc5fdd60eef3
 
 # Diff at Tue, 04 Mar 2025 10:39:26 GMT:

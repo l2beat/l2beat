@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xb6761026f181a55e4d5c10394635603c99db54e4
+
+# Diff at Mon, 10 Mar 2025 08:26:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21372994
+- current block number: 21372994
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21372994 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458)
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf4b7676d9EC86D2011aB87855424219a97DEB40c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x782fa52b56254792da338e85b79b22867e6afaac
 
 # Diff at Tue, 04 Mar 2025 10:39:07 GMT:

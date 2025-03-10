@@ -1,3 +1,111 @@
+Generated with discovered.json: 0xc8e27975d8ba2fb85e90590e3c1237500ec369e0
+
+# Diff at Mon, 10 Mar 2025 08:27:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21981156
+- current block number: 21981156
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981156 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5918481F777dBe437De249492B90AffB4e655de4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x63881ac44293E22F3c3183a0C4113586ABb3e653)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6EBCb783E53C072e9b1C8786942aefc145C6Df75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DACommittee (0x879cD57975d596004863D30c59d579ef78BBbe32)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9bC546c5741d31b3510D3B240bDB4c517030E318)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GpsFactRegistryAdapter (0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1)
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+```
+
+```diff
++   Status: CREATED
+    contract SorareAdminMultisig (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xefaaf3A5D0D795C7c1f92cBeDE868C273790026e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarkExchange (0xF5C9F957705bea56a7e806943f98F7777B995826)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
 Generated with discovered.json: 0x6e51afa79ae0a76181d2def631982c2c506ae469
 
 # Diff at Thu, 06 Mar 2025 15:20:35 GMT:

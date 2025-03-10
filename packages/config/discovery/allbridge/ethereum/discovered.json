@@ -2,14 +2,22 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 21723681,
-  "configHash": "0xa19e8985ce61821cb197f4b5f4346a3b2dfe9dba73de1f9428140e7c3dcc5f20",
-  "contracts": [
+  "configHash": "0xa203c6e325dfbb9d0e627b8748f4c00ef5b761259c1b5216a9a2382c00ac839d",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x01a494079DCB715f622340301463cE50cd69A4D0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "GasOracle",
       "address": "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0",
       "sourceHashes": [
         "0x61437d07b213292a6639ca58a2549f8fec70a7497940aba88e8d137a2b23e5a1"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1685102099,
       "sinceBlock": 17343106,
       "values": {
@@ -19,11 +27,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "AllbridgeMessenger",
       "address": "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA",
       "sourceHashes": [
         "0xb232ad1147747fd0ac80fb67952fcf5297e1a534c2009196849b29ac950afdcf"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1685102279,
       "sinceBlock": 17343121,
       "values": {
@@ -35,20 +45,42 @@
       "derivedName": "Messenger"
     },
     {
+      "type": "EOA",
+      "address": "0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "OldAllbridgeMessenger",
       "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1662595853,
       "sinceBlock": 15493337,
       "values": { "$immutable": true },
       "derivedName": ""
     },
     {
+      "type": "EOA",
+      "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "LPBridge",
       "address": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
       "sourceHashes": [
         "0x814861bc3f9f100efbeb6a574409097f4080e9c4765d678fca86ffa46e453d7f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1685102447,
       "sinceBlock": 17343135,
       "values": {
@@ -63,12 +95,20 @@
       "derivedName": "Bridge"
     },
     {
+      "type": "EOA",
+      "address": "0x7234dB900E907398EdfAdA744d5Bf8A842B335BA",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Pool",
       "address": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
       "template": "allbridge/pool",
       "sourceHashes": [
         "0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "accRewardPerShareP",
         "adminFeeAmount",
@@ -114,11 +154,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "WormholeMessenger",
       "address": "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74",
       "sourceHashes": [
         "0xd907a740abab7d5003a704cad4c8273b66cd185386078939c9c8abccec6ec131"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1685102363,
       "sinceBlock": 17343128,
       "values": {
@@ -129,20 +171,30 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Validator",
       "address": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1636666899,
       "sinceBlock": 13597354,
       "values": { "$immutable": true },
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "OldLPBridge",
       "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
       "sourceHashes": [
         "0x227ed0f9173e33afccdd9e79a6d7d760104d62875552f49b4ef2a9c7c7431ba6"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1662596119,
       "sinceBlock": 15493360,
       "values": {
@@ -155,12 +207,14 @@
       "derivedName": "Bridge"
     },
     {
+      "type": "Contract",
       "name": "Pool",
       "address": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
       "template": "allbridge/pool",
       "sourceHashes": [
         "0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "accRewardPerShareP",
         "adminFeeAmount",
@@ -208,9 +262,17 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xb7C522Adb3429e2C7474df324c7a3744A5803414",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "FeeOracle",
       "address": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1636634854,
       "sinceBlock": 13594973,
       "values": {
@@ -220,11 +282,13 @@
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "TokenBridge",
       "address": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
       "sourceHashes": [
         "0x130012988c91475c96e6c32d27893406b8a1837f48f56d47571e53852d863a6d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1636635220,
       "sinceBlock": 13595007,
       "values": {
@@ -258,11 +322,13 @@
       "derivedName": "Bridge"
     },
     {
+      "type": "Contract",
       "name": "CctpBridge",
       "address": "0xC51397b75B783E31469bFaADE79913F3f82210d6",
       "sourceHashes": [
         "0x2953fb7cbb1c9e0950eac2b3e6206de8087063655779e90a024f7aaf8f31d55c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1711380611,
       "sinceBlock": 19512388,
       "values": {
@@ -274,25 +340,22 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OldWormholeMessenger",
       "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1662998060,
       "sinceBlock": 15521726,
       "values": { "$immutable": true },
       "derivedName": ""
+    },
+    {
+      "type": "EOA",
+      "address": "0xF62e459Aa6a959c4224A7315F85e4703f462918A",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x01a494079DCB715f622340301463cE50cd69A4D0" },
-    { "address": "0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5" },
-    { "address": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622" },
-    { "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074" },
-    { "address": "0x7234dB900E907398EdfAdA744d5Bf8A842B335BA" },
-    { "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E" },
-    { "address": "0xb7C522Adb3429e2C7474df324c7a3744A5803414" },
-    { "address": "0xF62e459Aa6a959c4224A7315F85e4703f462918A" }
   ],
   "abis": {
     "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": [

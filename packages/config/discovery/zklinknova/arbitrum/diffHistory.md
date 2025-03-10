@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x8c5c8e0a38f0a9fc8a20d059346e2eb2295ad652
+
+# Diff at Mon, 10 Mar 2025 08:28:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 249925893
+- current block number: 249925893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 249925893 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7804969714BF5Ff6356E25acF2Bcb657368c8A01)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL2Gateway (0x7bd79DEd935B542fb22c74305a4d2A293C18483a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC75EFCffEE930706daec5CaCA012551f6a1845D7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8653b5422b89f05d3dc098c2d4ac47408ec677b3
 
 # Diff at Tue, 04 Mar 2025 10:40:30 GMT:

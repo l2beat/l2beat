@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x3a3b3ed93708c50ae88290263b36f6e1a7ae2787
+
+# Diff at Mon, 10 Mar 2025 08:26:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21981345
+- current block number: 21981345
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981345 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract StarkExchange (0x1390f521A79BaBE99b69B37154D63D431da27A07)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x303775491494a08b07365938787274F742a81F63)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4a5e124201c38bf7a618388A8185D3f5C8E9133f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DACommittee (0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GpsFactRegistryAdapter (0x5339AB7557b3152b91A57D10B0Caf5da88Db5143)
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+```
+
+```diff
++   Status: CREATED
+    contract OrderRegistry (0x806d435a82B0381bD884540c2235147c13B97fe6)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC37a598468A59D5d6DCeb889847B5824aD61697e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9ce3718f0281b23b8842fb38c40c3570a8317a2b
 
 # Diff at Thu, 06 Mar 2025 15:18:11 GMT:

@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x1be1b58ea0f1ddc0b65c17280778d4056b4b1127
+
+# Diff at Mon, 10 Mar 2025 08:28:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 8983528
+- current block number: 8983528
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8983528 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x45b62A07c525278F2ecd7915130E797B04B05C48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC97c5E43c14D4F524347795410C299db1FA331b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x11052f435956db5778583985b67156d005981ce1
 
 # Diff at Tue, 04 Mar 2025 10:42:44 GMT:

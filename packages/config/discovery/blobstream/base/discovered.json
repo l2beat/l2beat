@@ -2,14 +2,34 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 25417811,
-  "configHash": "0x1aa7b1f040ab9a30faa8d3387216d98c896afb0e629c197eeac0caaebf907a46",
-  "contracts": [
+  "configHash": "0xf2c025c77a61acf54cd6c287bb7d20133f57664e2895228e53b6d8c7cc37cc9b",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SuccinctFeeVault",
       "address": "0x296666e937b270193B960a7cEC526B351F353166",
       "sourceHashes": [
         "0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706573417,
       "sinceBlock": 9892035,
       "values": {
@@ -18,12 +38,27 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
+      "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
       "issuedPermissions": [
         {
@@ -74,6 +109,25 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
+      "type": "EOA",
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "BlobstreamMultisig",
       "address": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
       "template": "GnosisSafe",
@@ -118,12 +172,14 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "type": "Contract",
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
       "template": "succinct/SuccinctGateway",
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
       ],
+      "proxyType": "immutable",
       "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
       "issuedPermissions": [
         {
@@ -171,6 +227,50 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Blobstream",
       "address": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
       "template": "succinct/SP1Blobstream",
@@ -274,6 +374,13 @@
       "derivedName": "SP1Blobstream"
     },
     {
+      "type": "EOA",
+      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "template": "GnosisSafe",
@@ -311,11 +418,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "SP1Verifier",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1729727159,
       "sinceBlock": 21468906,
       "values": {
@@ -325,6 +434,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SuccinctGatewayMultisig",
       "address": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
       "template": "GnosisSafe",
@@ -363,11 +473,13 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "type": "Contract",
       "name": "SP1Verifier",
       "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -384,11 +496,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "NextHeaderVerifier",
       "address": "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1711140063,
       "sinceBlock": 12175358,
       "values": {
@@ -399,11 +513,13 @@
       "derivedName": "FunctionVerifier"
     },
     {
+      "type": "Contract",
       "name": "HeaderRangeVerifier",
       "address": "0xF2415C44F47983F7dD22003B46A034B1F1d04e44",
       "sourceHashes": [
         "0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1711140011,
       "sinceBlock": 12175332,
       "values": {
@@ -413,41 +529,6 @@
       },
       "derivedName": "FunctionVerifier"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9" },
-    { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
-    { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
-    {
-      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
-        }
-      ]
-    },
-    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
-    { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
-    { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
-    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
-    { "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899" },
-    { "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15" },
-    { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
-    {
-      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
-        }
-      ]
-    },
-    { "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65" },
-    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" }
   ],
   "abis": {
     "0x296666e937b270193B960a7cEC526B351F353166": [

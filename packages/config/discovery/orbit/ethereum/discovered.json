@@ -2,9 +2,10 @@
   "name": "orbit",
   "chain": "ethereum",
   "blockNumber": 20792032,
-  "configHash": "0x02eaded62ef32cd45ac59d1c1bf2a6b590ef88ee8d090c18fe5464ad373da1ed",
-  "contracts": [
+  "configHash": "0x3b77b8de328ca6b19e15646249225f330d0979f97cac4152c236e16131b39109",
+  "entries": [
     {
+      "type": "Contract",
       "name": "",
       "address": "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8",
       "unverified": true,
@@ -47,6 +48,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ETH Vault",
       "address": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
       "sourceHashes": [
@@ -135,6 +137,19 @@
       "derivedName": "EthVaultImpl"
     },
     {
+      "type": "EOA",
+      "address": "0x1e3B165817b0f2935E1599eD5449a28f67D399EC",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "USDT Farm",
       "address": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
       "unverified": true,
@@ -159,6 +174,19 @@
       "derivedName": ""
     },
     {
+      "type": "EOA",
+      "address": "0x501A0F1436555E124c14ad9c1E48742F734B5179",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x8257E89eaBAFb01589351e431EB328E0dDc51fcD",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "USDC Farm",
       "address": "0x830433dE03ABedE062660CC629e1A2c714272474",
       "unverified": true,
@@ -183,6 +211,25 @@
       "derivedName": ""
     },
     {
+      "type": "EOA",
+      "address": "0x86cec292d5d5DB6bA16722F0B01291426C4b61E2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DAI Farm",
       "address": "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
       "unverified": true,
@@ -207,9 +254,11 @@
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "",
       "address": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
       "unverified": true,
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -221,6 +270,7 @@
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "WBTC Farm",
       "address": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
       "unverified": true,
@@ -245,12 +295,32 @@
       "derivedName": ""
     },
     {
+      "type": "EOA",
+      "address": "0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xFb504CD4eD46024B83c4337044995CF112205f18",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -276,19 +346,6 @@
         "owner": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x1e3B165817b0f2935E1599eD5449a28f67D399EC" },
-    { "address": "0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba" },
-    { "address": "0x501A0F1436555E124c14ad9c1E48742F734B5179" },
-    { "address": "0x8257E89eaBAFb01589351e431EB328E0dDc51fcD" },
-    { "address": "0x86cec292d5d5DB6bA16722F0B01291426C4b61E2" },
-    { "address": "0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214" },
-    { "address": "0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0" },
-    { "address": "0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930" },
-    { "address": "0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704" },
-    { "address": "0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E" }
   ],
   "abis": {
     "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a": [

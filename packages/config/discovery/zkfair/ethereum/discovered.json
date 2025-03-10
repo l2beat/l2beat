@@ -2,9 +2,10 @@
   "name": "zkfair",
   "chain": "ethereum",
   "blockNumber": 21086404,
-  "configHash": "0x914b1351746688236250f169fbd364be0cf65e0273a5bef5987a713435aeb155",
-  "contracts": [
+  "configHash": "0xe6da7f44bdbe6205835b55fb5511cab23ecc2028508934c255f8eda524a5ef82",
+  "entries": [
     {
+      "type": "Contract",
       "name": "ZKFairAdmin",
       "address": "0x0110B1B231aA3b96a94c900eb3056297526AB725",
       "template": "GnosisSafe",
@@ -36,6 +37,19 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x061D273bEf947BD0ef2B828526e710eEa0f297ae",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ZKFairValidium",
       "address": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
       "sourceHashes": [
@@ -89,11 +103,49 @@
       "derivedName": "CDKValidium"
     },
     {
+      "type": "EOA",
+      "address": "0x3226ECf79dc7007063599A334832d015B48aBDBc",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x39FcAEb9870cB015f2165e93c51f4663AE970953",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x4dba6F06597Ea29A330C06806FA284610c810295",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Timelock",
       "address": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
       "sourceHashes": [
         "0x1946b3da4b7b9101624b6f56e88c5546848e9acadd62375f5cc8772c0f11f92c"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -157,6 +209,19 @@
       "derivedName": "CDKValidiumTimelock"
     },
     {
+      "type": "EOA",
+      "address": "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x689752C198f0cEbe9993ee3E13AF0e565C068c25",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "GlobalExitRoot",
       "address": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
       "sourceHashes": [
@@ -190,16 +255,25 @@
       "derivedName": "PolygonZkEVMGlobalExitRoot"
     },
     {
+      "type": "EOA",
+      "address": "0x75575Dc1adD71eA794A52D83f836a13F7891C527",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "FflonkVerifier",
       "address": "0x769E285d2120472c3400A09684B82A842012F46d",
       "sourceHashes": [
         "0x2a8d8b10f3b85cd700a19db2ebb050c5acc6bdfd7bbd10f8b8229541fd5264ab"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1702879247,
       "sinceBlock": 18810958,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "ZKFairOwner",
       "address": "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88",
       "template": "GnosisSafe",
@@ -231,6 +305,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0x9231622437bD57349cC9a15CDEc5383627DEbA17",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ZKFairValidiumDAC",
       "address": "0x997CfB0838544f68E59f877EDc905001456F125b",
       "sourceHashes": [
@@ -292,6 +373,7 @@
       "derivedName": "CDKDataCommittee"
     },
     {
+      "type": "Contract",
       "name": "Bridge",
       "address": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
       "sourceHashes": [
@@ -333,12 +415,38 @@
       "derivedName": "PolygonZkEVMBridge"
     },
     {
+      "type": "EOA",
+      "address": "0x9d8616545C9941138832EebC58Cb498E0ef21a13",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -365,6 +473,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "BridgeAdminMultiSig",
       "address": "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
       "template": "GnosisSafe",
@@ -394,31 +503,37 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "type": "EOA",
+      "address": "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xFe1da7CAd939805d4A889822357c348177a5118d",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2" },
-    { "address": "0x061D273bEf947BD0ef2B828526e710eEa0f297ae" },
-    { "address": "0x3226ECf79dc7007063599A334832d015B48aBDBc" },
-    { "address": "0x39FcAEb9870cB015f2165e93c51f4663AE970953" },
-    { "address": "0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292" },
-    { "address": "0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976" },
-    { "address": "0x4dba6F06597Ea29A330C06806FA284610c810295" },
-    { "address": "0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e" },
-    { "address": "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba" },
-    { "address": "0x689752C198f0cEbe9993ee3E13AF0e565C068c25" },
-    { "address": "0x75575Dc1adD71eA794A52D83f836a13F7891C527" },
-    { "address": "0x9231622437bD57349cC9a15CDEc5383627DEbA17" },
-    { "address": "0x9d8616545C9941138832EebC58Cb498E0ef21a13" },
-    { "address": "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c" },
-    { "address": "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7" },
-    { "address": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70" },
-    { "address": "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87" },
-    { "address": "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027" },
-    { "address": "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF" },
-    { "address": "0xFe1da7CAd939805d4A889822357c348177a5118d" },
-    { "address": "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D" }
   ],
   "abis": {
     "0x0110B1B231aA3b96a94c900eb3056297526AB725": [

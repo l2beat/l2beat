@@ -1,3 +1,303 @@
+Generated with discovered.json: 0x85aa03ebae1c7c30a2d0f9eb3d39fa8016190cdf
+
+# Diff at Mon, 10 Mar 2025 08:27:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21880791
+- current block number: 21880791
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21880791 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x070165FA21c612FE7f1Be90Bc16D0fd11574C0cA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0F753619d5CAd05C6e0cDFA5f992914Ee22E1e89)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HyperlaneMultisig (0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UnknownIsm (0x3ed820384Dd2Af9b937803bdE6aE5F7a5689D835)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x478be6076f31E9666123B9721D0B6631baD944AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_default (0x57e1787fbdCCf7516721DC621CE17C45509cc2DB)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0x3ed820384Dd2Af9b937803bdE6aE5F7a5689D835,0xc72f634784EA020b703E11e88582Beb5903792b9] ISM contracts successfully verify a message.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A)
+    +++ description: Escrow for WBTC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5b73A98165778BCCE72979B4EE3faCdb31728b8E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5dd9a0814022A61777938263308EBB336174f13D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0x647C621CEb36853Ef6A907E397Adf18568E70543)
+    +++ description: Escrow for USDT that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7C96179df8619E49B389784ECDBBcA7090a5D08F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x95A2115018b84cfe0630C16CCA277E1569a84BEf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x9Fca159607687AE26367d66166e680A930af0780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xaC011Fe273794Ab1E07538CFA8099f2599103F64)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
++   Status: CREATED
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239)
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xc2495f3183F043627CAECD56dAaa726e3B2D9c09)
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0xc72f634784EA020b703E11e88582Beb5903792b9)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcb3bD5d7C40844fb599c14413F281A0241C45DFB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xCEA8039076E35a825854c5C2f85659430b06ec96)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c)
+    +++ description: Escrow for apxETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xe1De9910fe71cC216490AC7FCF019e13a34481D7)
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xEa83086a62617A7228ce4206FAe2ea8b0ab23513)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2)
+    +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticMessageIdMultisigIsm (0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
+```
+
 Generated with discovered.json: 0xdca7d3502f06dbabea50675cc14a18e5672074fe
 
 # Diff at Tue, 04 Mar 2025 10:39:16 GMT:

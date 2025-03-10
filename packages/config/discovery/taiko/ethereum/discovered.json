@@ -2,19 +2,34 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 21973872,
-  "configHash": "0x90284705c46407271cf2d3b9712e2214ff71c88d26139ec0a667cda60e716f91",
-  "contracts": [
+  "configHash": "0xc1ba8b0922010f664c0ac256fa52c6bf70ec02711b8fcfc65e669025ff9a931f",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "PEMCertChainLib",
       "address": "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
       "sourceHashes": [
         "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "TaikoL1Contract",
       "address": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
       "sourceHashes": [
@@ -278,6 +293,19 @@
       "derivedName": "MainnetTaikoL1"
     },
     {
+      "type": "EOA",
+      "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TaikoToken",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
       "sourceHashes": [
@@ -353,11 +381,25 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MainnetProverSet",
       "address": "0x280eAbfd252f017B78e15b69580F249F45FB55Fa",
       "sourceHashes": [
         "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1739426099,
       "sinceBlock": 21835609,
       "values": {
@@ -374,11 +416,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MainnetTierRouter",
       "address": "0x44d307a9ec47aA55a7a30849d065686753C86Db6",
       "sourceHashes": [
         "0x05e2fb8e861c4bf4f0175158cc5526c23b8fb0fcec2a6a5a7d12b7a6d891ba2e"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1740364319,
       "sinceBlock": 21913221,
       "values": {
@@ -484,16 +534,19 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SigVerifyLib",
       "address": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9",
       "sourceHashes": [
         "0x5bf803a773ed2c117313ea970df3b38542eab3522714f18be2b65a75062e0ebf"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "Risc0Verifier",
       "address": "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc",
       "sourceHashes": [
@@ -531,6 +584,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GuardianMinorityProver",
       "address": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
       "sourceHashes": [
@@ -615,6 +669,7 @@
       "derivedName": "MainnetGuardianProver"
     },
     {
+      "type": "Contract",
       "name": "L1RollupAddressManager",
       "address": "0x579f40D0BE111b823962043702cabe6Aaa290780",
       "sourceHashes": [
@@ -704,6 +759,7 @@
       "derivedName": "MainnetRollupAddressManager"
     },
     {
+      "type": "Contract",
       "name": "SP1Verifier",
       "address": "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452",
       "sourceHashes": [
@@ -742,11 +798,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SP1RemoteVerifier",
       "address": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1736742119,
       "sinceBlock": 21613149,
       "values": {
@@ -757,6 +821,7 @@
       "derivedName": "SP1Verifier"
     },
     {
+      "type": "Contract",
       "name": "DAOFallbackProposer",
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
       "sourceHashes": [
@@ -848,6 +913,19 @@
       "derivedName": "MainnetProverSet"
     },
     {
+      "type": "EOA",
+      "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "AutomataDcapV3Attestation",
       "address": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
       "sourceHashes": [
@@ -907,6 +985,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SharedERC20Vault",
       "address": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
       "sourceHashes": [
@@ -983,6 +1062,7 @@
       "derivedName": "MainnetERC20Vault"
     },
     {
+      "type": "Contract",
       "name": "TaikoAdmin",
       "address": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
       "template": "GnosisSafe",
@@ -1072,6 +1152,7 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "SignalService",
       "address": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
       "sourceHashes": [
@@ -1136,6 +1217,7 @@
       "derivedName": "MainnetSignalService"
     },
     {
+      "type": "Contract",
       "name": "SgxVerifier",
       "address": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
       "sourceHashes": [
@@ -1205,6 +1287,19 @@
       "derivedName": "MainnetSgxVerifier"
     },
     {
+      "type": "EOA",
+      "address": "0xC384B679c028787166b9B3725aC14A60da205861",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TaikoBridge",
       "address": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
       "sourceHashes": [
@@ -1304,6 +1399,19 @@
       "derivedName": "MainnetBridge"
     },
     {
+      "type": "EOA",
+      "address": "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "GuardianProver",
       "address": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
       "sourceHashes": [
@@ -1388,6 +1496,7 @@
       "derivedName": "MainnetGuardianProver"
     },
     {
+      "type": "Contract",
       "name": "L1SharedAddressManager",
       "address": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
       "sourceHashes": [
@@ -1447,11 +1556,13 @@
       "derivedName": "MainnetSharedAddressManager"
     },
     {
+      "type": "Contract",
       "name": "RiscZeroGroth16Verifier",
       "address": "0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9",
       "sourceHashes": [
         "0xa7c7f84404cf32503f02fd83a5400cb3a4131cd1c18109577255d297ff768351"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1736741831,
       "sinceBlock": 21613126,
       "values": {
@@ -1463,23 +1574,6 @@
         "VERSION": "1.2.0"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0" },
-    { "address": "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33" },
-    { "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D" },
-    { "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438" },
-    { "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200" },
-    { "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6" },
-    { "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1" },
-    { "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68" },
-    { "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87" },
-    { "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91" },
-    { "address": "0xC384B679c028787166b9B3725aC14A60da205861" },
-    { "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51" },
-    { "address": "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf" },
-    { "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" }
   ],
   "abis": {
     "0x0079a79E5d8DDA67029051d505E5A11DE279B36D": [

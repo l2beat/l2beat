@@ -2,9 +2,22 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 20826378,
-  "configHash": "0x24681e9b859a180722b8afdae4ded5175be72d6ad6e42aa4341019fd76119942",
-  "contracts": [
+  "configHash": "0x8e6d5280085e3b4b7f1da1a23e83ed7861b1fbb34ae81ae836c090c1566946fe",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x36105564a3e70f3FB525Cd825d42393F9aD64AA3",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "UpaVerifier",
       "address": "0x3B946743DEB7B6C97F05B7a31B23562448047E3E",
       "sourceHashes": [
@@ -70,6 +83,25 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7545b173780F07BF9EFA7e1561bb35B52907974D",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x937094ae4Cc930DBF387CA55d80e03586435E002",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "NebraOwner",
       "address": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
       "template": "GnosisSafe",
@@ -110,24 +142,39 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "type": "EOA",
+      "address": "0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xBb9A51256d4ae71dE356e83058C69bc9a33e4324",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xCA5C66933149d95fbA1050AAF7046b08A7F28AE5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xE3ac80DAe2a6e100A74bB179aBB65383e1B21B3D",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "",
       "address": "0xE990F8e3505391d2b42C80683d403A8371Ee88B9",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1723652291,
       "sinceBlock": 20528013,
       "values": { "$immutable": true }
     }
-  ],
-  "eoas": [
-    { "address": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4" },
-    { "address": "0x36105564a3e70f3FB525Cd825d42393F9aD64AA3" },
-    { "address": "0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7" },
-    { "address": "0x7545b173780F07BF9EFA7e1561bb35B52907974D" },
-    { "address": "0x937094ae4Cc930DBF387CA55d80e03586435E002" },
-    { "address": "0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e" },
-    { "address": "0xBb9A51256d4ae71dE356e83058C69bc9a33e4324" },
-    { "address": "0xCA5C66933149d95fbA1050AAF7046b08A7F28AE5" },
-    { "address": "0xE3ac80DAe2a6e100A74bB179aBB65383e1B21B3D" }
   ],
   "abis": {
     "0x3B946743DEB7B6C97F05B7a31B23562448047E3E": [

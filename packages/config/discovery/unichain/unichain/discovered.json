@@ -2,9 +2,16 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 9916035,
-  "configHash": "0xd7900d9a8307f89e14f07a6b752577fbe3ca3d8c693ad4de9f7e39f6c5c9e14e",
-  "contracts": [
+  "configHash": "0xed5383b6fecbb618e19b0153a3507ba2cf2672d271ddd0047ea235cf8c4ef35c",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DeployerWhitelist",
       "address": "0x4200000000000000000000000000000000000002",
       "sourceHashes": [
@@ -32,6 +39,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2CrossDomainMessenger",
       "address": "0x4200000000000000000000000000000000000007",
       "template": "opstack/Layer2/L2CrossDomainMessenger",
@@ -73,6 +81,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GasPriceOracle",
       "address": "0x420000000000000000000000000000000000000F",
       "template": "opstack/Layer2/GasPriceOracle",
@@ -111,6 +120,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2StandardBridge",
       "address": "0x4200000000000000000000000000000000000010",
       "template": "opstack/Layer2/L2StandardBridge",
@@ -144,6 +154,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SequencerFeeVault",
       "address": "0x4200000000000000000000000000000000000011",
       "template": "opstack/Layer2/SequencerFeeVault",
@@ -184,6 +195,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OptimismMintableERC20Factory",
       "address": "0x4200000000000000000000000000000000000012",
       "template": "opstack/Layer2/OptimismMintableERC20Factory",
@@ -213,6 +225,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1BlockNumber",
       "address": "0x4200000000000000000000000000000000000013",
       "template": "opstack/Layer2/L1BlockNumber",
@@ -240,6 +253,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2ERC721Bridge",
       "address": "0x4200000000000000000000000000000000000014",
       "template": "opstack/Layer2/L2ERC721Bridge",
@@ -272,6 +286,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1Block",
       "address": "0x4200000000000000000000000000000000000015",
       "template": "opstack/Layer2/L1Block",
@@ -326,6 +341,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2ToL1MessagePasser",
       "address": "0x4200000000000000000000000000000000000016",
       "template": "opstack/Layer2/L2ToL1MessagePasser",
@@ -354,6 +370,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OptimismMintableERC721Factory",
       "address": "0x4200000000000000000000000000000000000017",
       "template": "opstack/Layer2/OptimismMintableERC721Factory",
@@ -383,6 +400,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2ProxyAdmin",
       "address": "0x4200000000000000000000000000000000000018",
       "template": "opstack/Layer2/L2ProxyAdmin",
@@ -479,6 +497,7 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "type": "Contract",
       "name": "BaseFeeVault",
       "address": "0x4200000000000000000000000000000000000019",
       "template": "opstack/Layer2/BaseFeeVault",
@@ -518,6 +537,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1FeeVault",
       "address": "0x420000000000000000000000000000000000001A",
       "template": "opstack/Layer2/L1FeeVault",
@@ -557,6 +577,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SchemaRegistry",
       "address": "0x4200000000000000000000000000000000000020",
       "template": "opstack/Layer2/SchemaRegistry",
@@ -584,6 +605,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "EAS",
       "address": "0x4200000000000000000000000000000000000021",
       "template": "opstack/Layer2/EAS",
@@ -616,11 +638,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x4200000000000000000000000000000000000042",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "FeeSplitter",
       "address": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
       "sourceHashes": [
         "0x1f2b6fc2c60f9146209fc5eb2dacd47f042450f4348d6656802b5b561c6325ea"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
@@ -631,11 +661,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1Splitter",
       "address": "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002",
       "sourceHashes": [
         "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
@@ -649,11 +681,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1Splitter",
       "address": "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003",
       "sourceHashes": [
         "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
@@ -667,23 +701,23 @@
       }
     },
     {
+      "type": "Contract",
       "name": "NetFeeSplitter",
       "address": "0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004",
       "sourceHashes": [
         "0x3ce35b9a968810e9a9f15e947ea37fd6403fb3feb01252004814d90926556ea1"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": { "$immutable": true }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd" },
-    { "address": "0x4200000000000000000000000000000000000042" },
+    },
     {
+      "type": "EOA",
       "name": "UnichainProxyAdminOwner_L2Alias",
       "address": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+      "sourceHashes": [],
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -771,16 +805,57 @@
           "permission": "act",
           "from": "0x4200000000000000000000000000000000000018"
         }
-      ]
+      ],
+      "derivedName": ""
     },
-    { "address": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA" },
-    { "address": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6" },
-    { "address": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2" },
-    { "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa" },
-    { "address": "0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB" },
-    { "address": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf" },
-    { "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001" },
-    { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" }
+    {
+      "type": "EOA",
+      "address": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x4200000000000000000000000000000000000002": [

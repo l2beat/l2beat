@@ -1,3 +1,231 @@
+Generated with discovered.json: 0x9fea670885130ada768e65555b85f6b9e91a96f7
+
+# Diff at Mon, 10 Mar 2025 08:26:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21084957
+- current block number: 21084957
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DSRYieldProvider (0x0733F618118bF420b6b604c969498ecf143681a8)
+    +++ description: Yield Provider for DAI investing DAI into the MakerDAO DSR.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x082b616Ec99167B2FEdee053F07db6795D4dA821)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x164768144C688BF2bDa28E4072B2b30Ab705d568)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1f97306039530ADB4173C3786e86fab5e6b90F41)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x364289230b8cc7d9120eF962AF37ebCFe23cE883)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1BlastBridge (0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115)
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x415c8893D514F9BC5211d36eEDA4183226b84AA7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4300000000000000000000000000000000000005)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LidoYieldProvider (0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db)
+    +++ description: Yield Provider for ETH investing ETH into stETH.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x480Ea8bA8De8d05A30F4f4CBedE1e28E05aE1B2C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x49d495DE356259458120bfd7bCB463CFb6D6c6BA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastMultisig (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract LaunchBridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6520ad883d3D76f0120443c72AD7463cab2439a4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeOwner (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x697402166Fbf2F22E970df8a6486Ef171dbfc524)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6a356C0EAA560f00127Adf5108FfAf503b9f1e11)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x6B916DcCa661d23794e78509723A6f4348564847)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE)
+    +++ description: Contract managing Yield Providers for ETH.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438)
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAb5972612e8CEe66f246feaCB8D500DF3C6cfADA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xE064B565Cf2A312a3e66Fe4118890583727380C0)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF0218c491421B5830cbf96804CD9680b56ef70BD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf97eC9b92Efda3afe52945B4e9adE0394C9E705d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFf00000000000000000000000000000000081457)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5c45eaf30a8c46c32ee27b289425123ad6622a6c
 
 # Diff at Tue, 04 Mar 2025 11:25:29 GMT:

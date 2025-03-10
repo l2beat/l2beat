@@ -1,3 +1,297 @@
+Generated with discovered.json: 0xcea76c98610d7d2d453bfc790d467d16138c0e13
+
+# Diff at Mon, 10 Mar 2025 08:27:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21845178
+- current block number: 21845178
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21845178 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKProofVerifier (0x005DDC466C804c79adB079c120347dDE48132105)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x16876e5c608cec36968517A9Eb345269D308D94a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6)
+    +++ description: The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time).
+```
+
+```diff
++   Status: CREATED
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1)
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363)
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x27EFE61C5266e461995141f57b4D13F13c83f786)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de)
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ZKMerkleTrie (0x339208824010425cBE73201ceD4372308ACD610B)
+    +++ description: Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KromaOperator (0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract KromaSecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4)
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x547fc089E9f2971d27b9780214ED891F6d154faa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5ddcf494A8b6EeE4904934E829109cCF584EAF80)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x66FA82F4AEA284d1d208437F179dFE13d8118f3A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7)
+    +++ description: ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block.
+```
+
+```diff
++   Status: CREATED
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a)
+    +++ description: Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the 0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x72Ff26D9517324eEFA89A48B75c5df41132c4f54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8ECF028Cd647379E580DaA6701A11154750fcd3c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9395e83720bf2D8ac6435f9c520b48E289Cb8885)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x994C074BD9503e4f01CB834e2c409FA16b41E587)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AssetManager (0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3)
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537)
+    +++ description: A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c)
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+```
+
+```diff
++   Status: CREATED
+    contract KromaRewardVaultMultisig (0xe57E217d8ed498992452791622711B866403E950)
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xECe4AAf6A41aa81A164363Ec6C420510617Fc998)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xEEE06120a1861102D69Aa69535091a8FE72D9e43)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF5624B7E74C4Ed876C9793C7895184747a8D2310)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Poseidon2 (0xFd234971881a7c72965175fA8E438c97B2Dcd273)
+    +++ description: Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103)
+    +++ description: Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfF00000000000000000000000000000000000255)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc25c2649349071a117f0b3e609fd41073d897589
 
 # Diff at Thu, 06 Mar 2025 15:18:45 GMT:

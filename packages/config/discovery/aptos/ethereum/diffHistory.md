@@ -1,3 +1,183 @@
+Generated with discovered.json: 0xc06778064f54bf1a2fffdacd9c3b9ee65bed049c
+
+# Diff at Mon, 10 Mar 2025 08:26:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21723791
+- current block number: 21723791
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723791 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract LayerZero Proof Library (0x07245eEa05826F5984c7c3C8F478b04892e4df89)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x565cFd7224bbc2a81a6e2a1464892ecB27efB070)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Oracle (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Aptos Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB981a2664f5f547291Df5F8dCD4505f7015912CF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6dcbdcee6b52aa470db636eda8ca2ca05442812d
 
 # Diff at Tue, 04 Mar 2025 10:38:56 GMT:

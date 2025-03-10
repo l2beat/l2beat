@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xa66cd83a5e214a5f19d58a14b4d3748fba7a57b8
+
+# Diff at Mon, 10 Mar 2025 08:27:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21979760
+- current block number: 21979760
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21979760 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x0000000000000000000000000000000000000020)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ParadexAdminMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2871B956bC19D25961E9a7519f32D7fDaA21B403)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x64F4396bb0669C72858Cc50C779b48EB25F45770)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x804d60CB1ade94511f7915A2062948685Ca8C81f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640)
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
 Generated with discovered.json: 0xae327b8ad330d0e70016f95d3872b2492c67de34
 
 # Diff at Thu, 06 Mar 2025 15:19:41 GMT:

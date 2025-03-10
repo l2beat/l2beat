@@ -1,3 +1,273 @@
+Generated with discovered.json: 0x92d615c1173ede15664708738c67c53948c68f23
+
+# Diff at Mon, 10 Mar 2025 08:27:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21723798
+- current block number: 21723798
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723798 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Factory (0x06D538690AF257Da524f25D0CD52fD85b1c2173E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Pool (0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SG-ETH Pool (0x101816545F6bd2b1076434B54383a1E633390A2E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WOO Pool (0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Pool (0x38EA452219524Bb87e18dE1C24D3bB59510BD783)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Pool2 (0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x565cFd7224bbc2a81a6e2a1464892ecB27efB070)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSD Pool (0x590d4f8A68583639f215f675F3a259Ed84790580)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarGate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDD Pool (0x692953e758c3669290cb1677180c64183cEe374e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Router (0x8731d54E9D02c286767d56ac03e8037C07e01e98)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarGateFeeLibrary7 (0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MAI Pool (0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract mETH Pool (0xA572d137666DCbAdFA47C3fC41F15e90134C618c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB981a2664f5f547291Df5F8dCD4505f7015912CF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Google Cloud Oracle (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract METIS Pool (0xd8772edBF88bBa2667ed011542343b0eDDaCDa47)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Pool (0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LUSD Pool (0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Frax Pool (0xfA0F307783AC21C39E939ACFF795e27b650F6e68)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8d05cf68ee50b22b7d4139898796e10420bb5f0d
 
 # Diff at Tue, 04 Mar 2025 10:40:01 GMT:

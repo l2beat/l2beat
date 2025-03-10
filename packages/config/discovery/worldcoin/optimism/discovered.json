@@ -2,9 +2,10 @@
   "name": "worldcoin",
   "chain": "optimism",
   "blockNumber": 127729542,
-  "configHash": "0x6f28a4eb3f99f827366bb2495326b1312cd1eed7d407834e3a6614a6581f0b34",
-  "contracts": [
+  "configHash": "0xfd74c365adf6722f5deff1c2ff8db9933df3bd94667aa57acbe7e795d4e6cffa",
+  "entries": [
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
       "template": "GnosisSafe",
@@ -30,6 +31,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
       "template": "GnosisSafe",
@@ -55,31 +57,55 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SemaphoreVerifier",
       "address": "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
       "sourceHashes": [
         "0x84c58f013e225f23f2b87640ea9cda83b40b4ba02f9cc37633a373399e4ffc39"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721036137,
       "sinceBlock": 122718680,
       "values": { "$immutable": true }
     },
     {
+      "type": "EOA",
+      "address": "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SemaphoreVerifier",
       "address": "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF",
       "sourceHashes": [
         "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1695411619,
       "sinceBlock": 109906421,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "OpWorldID_Zero",
       "address": "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02",
       "sourceHashes": [
         "0x72bde70cebd2ab71bea5390a3c0bc9625c3785a0e8538082fa12bb3dc181f91c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689065805,
       "sinceBlock": 106733514,
       "values": {
@@ -94,6 +120,19 @@
       "derivedName": "OpWorldID"
     },
     {
+      "type": "EOA",
+      "address": "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x57c72EB3f74e3A1c95656253214A018818818ec3",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "WorldIDRouterV1",
       "address": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
       "sourceHashes": [
@@ -132,6 +171,7 @@
       "derivedName": "WorldIDRouterImplV1"
     },
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0x59a0f98345f54bAB245A043488ECE7FCecD7B596",
       "template": "GnosisSafe",
@@ -157,16 +197,25 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SemaphoreVerifier",
       "address": "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB",
       "sourceHashes": [
         "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689065805,
       "sinceBlock": 106733514,
       "values": { "$immutable": true }
     },
     {
+      "type": "EOA",
+      "address": "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6",
       "template": "GnosisSafe",
@@ -195,22 +244,44 @@
       }
     },
     {
+      "type": "Contract",
       "name": "WLDGrant",
       "address": "0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674",
       "sourceHashes": [
         "0x7572e98d419aaac0254e8a40e14d4957b4eab4c899cc4c6a45a5017520faee58"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1722153659,
       "sinceBlock": 123277441,
       "values": { "$immutable": true, "calculateId": [], "getCurrentId": 46 }
     },
     {
+      "type": "EOA",
+      "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x79b998ded1f4503CE3A0A76993c72a65449f4590",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "RecurringGrantDrop",
       "address": "0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d",
       "sourceHashes": [
         "0xccc2e81b4a40bed984ee0f48b74a4d292a5644906628aa7d04258a97b84d1c90"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1698621911,
       "sinceBlock": 111511567,
       "values": {
@@ -225,6 +296,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GnosisSafeL2",
       "address": "0x7f26A7572E8B877654eeDcBc4E573657619FA3CE",
       "template": "GnosisSafe",
@@ -254,6 +326,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "WorldIDIdentityManagerV2",
       "address": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
       "sourceHashes": [
@@ -305,21 +378,47 @@
       "derivedName": "WorldIDIdentityManagerImplV2"
     },
     {
+      "type": "EOA",
+      "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x997c96386A7D0A491170742346570eb8E8A4E96E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Verifier",
       "address": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
       "sourceHashes": [
         "0xaf7a518594f31dbc23c534719916ed50d7548b82bd675415a1a697555b68f471"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730982513,
       "sinceBlock": 127691868,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "VerifierLookupTable",
       "address": "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb",
       "sourceHashes": [
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721036135,
       "sinceBlock": 122718679,
       "values": {
@@ -330,11 +429,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OpWorldID_One",
       "address": "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d",
       "sourceHashes": [
         "0xf3dd037dddfc31db7402a4f10bf7c4e6ef8a682fceaf2a57fc131f05c8f4dc47"
       ],
+      "proxyType": "immutable",
       "description": "A contract that manages the root history of the Semaphore identity merkle tree on Optimism.",
       "sinceTimestamp": 1695411619,
       "sinceBlock": 109906421,
@@ -349,6 +450,7 @@
       "derivedName": "OpWorldID"
     },
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xb67ac19693fB89880Ca5873f6a890E865b259c26",
       "template": "GnosisSafe",
@@ -377,6 +479,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
       "template": "GnosisSafe",
@@ -409,11 +518,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "WLD token",
       "address": "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
       "sourceHashes": [
         "0xd6334e346e2c0970559b615252d84f9d22a0d674a54f14db1dbc30a9db50c2f3"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1689774709,
       "sinceBlock": 107087966,
@@ -434,6 +545,7 @@
       "derivedName": "OptimismMintableERC20"
     },
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
       "template": "GnosisSafe",
@@ -459,6 +571,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
       "template": "GnosisSafe",
@@ -484,11 +597,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "VerifierLookupTable",
       "address": "0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86",
       "sourceHashes": [
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721036135,
       "sinceBlock": 122718679,
       "values": {
@@ -498,34 +619,6 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x163f8C2467924be0ae7B5347228CABF260318753" },
-    { "address": "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7" },
-    { "address": "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be" },
-    { "address": "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188" },
-    { "address": "0x57c72EB3f74e3A1c95656253214A018818818ec3" },
-    { "address": "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04" },
-    { "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421" },
-    { "address": "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde" },
-    { "address": "0x79b998ded1f4503CE3A0A76993c72a65449f4590" },
-    {
-      "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
-        }
-      ]
-    },
-    { "address": "0x997c96386A7D0A491170742346570eb8E8A4E96E" },
-    { "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011" },
-    { "address": "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09" }
   ],
   "abis": {
     "0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [

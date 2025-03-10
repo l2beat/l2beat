@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x18d12b51c3d006ead9724a2736b582e4e2192240
+
+# Diff at Mon, 10 Mar 2025 08:28:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21786543
+- current block number: 21786543
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786543 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1c68007a9A7E5Adc862da9b54938112352B97f17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1ee4324F7BD44A4c7c335C2D4e758639B60E8726)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2572835e02b59078711aa0800490e80975e4169d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasureChainAdminMultisig (0x282370D1e925ee897CB29Cb3beC13aAe0743067C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x58244EA236D2ff57c023A4028E228f77dc328894)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879)
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract TreasureZkEvmAdmin (0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBAe65c4bA62799F68817Cbb2bB353Da4572C23Ae)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe25AdA29FA5873A24afEe1342422BD14e5809e03)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x820d301792f2aeb1a3b07e1ce849d94589d32929
 
 # Diff at Tue, 04 Mar 2025 10:40:11 GMT:

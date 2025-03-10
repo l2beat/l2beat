@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xaf975d5a4386e3e35a7483b73dc39e76452527cc
+
+# Diff at Mon, 10 Mar 2025 08:27:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 19531990
+- current block number: 19531990
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531990 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract NearProver (0x051AD3F020274910065Dcb421629cd2e6E5b46c4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1180c536465413eE05b206b3a99d4C6a9934D2b7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Locker (0x23Ddd3e3692d1861Ed57EDE224608875809e127f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeAdminMultisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NearBridge (0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCustodian (0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xed9cB50304991951Cbee747900484E9a041DA464)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF58096A602C960c841Bd83A29DE21c808a9c1ac9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa10158a5a2606c5c6e4a5a3c6292db3b1d19a760
 
 # Diff at Tue, 04 Mar 2025 10:39:28 GMT:

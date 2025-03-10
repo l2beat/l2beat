@@ -2,10 +2,34 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21979760,
-  "configHash": "0x22d506fa301f134e601e3665234fec480ff6b089603c64ef277e0de1f35113c0",
+  "configHash": "0xfd12425177bb22eef1444448ad1b41750c59fe9c7a02cf958b5ef00c75705650",
   "sharedModules": ["shared-sharp-verifier"],
-  "contracts": [
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x0000000000000000000000000000000000000020",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "ParadexAdminMultisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "template": "GnosisSafe",
@@ -49,6 +73,88 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "USDC Bridge",
       "address": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
       "template": "starknet/StarknetERC20Bridge",
@@ -242,6 +348,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "type": "Contract",
       "name": "Paradex",
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
       "template": "starknet/Starknet",
@@ -389,91 +496,6 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "deactivate bridging for deposits into the escrow."
-        }
-      ]
-    },
-    {
-      "address": "0x0000000000000000000000000000000000000020",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        }
-      ]
-    },
-    { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
-    {
-      "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
-        }
-      ]
-    },
-    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
-    { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
-    { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
-    {
-      "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
-        }
-      ]
-    },
-    { "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6" },
-    {
-      "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
-        }
-      ]
     }
   ],
   "abis": {

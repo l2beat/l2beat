@@ -2,14 +2,16 @@
   "name": "stargatev2",
   "chain": "metis",
   "blockNumber": 19714541,
-  "configHash": "0x1ba7c04c850626d8bde7e98cbaf01d37c414d3b31c46a9d29af993c72566822c",
-  "contracts": [
+  "configHash": "0xf9b568fbb23c9fc534ec7636a8c540b31764dd9d0e5bff1f3eaf7338935fa987",
+  "entries": [
     {
+      "type": "Contract",
       "name": "StargatePool",
       "address": "0x36ed193dc7160D3858EC250e69D12B03Ca087D08",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -48,11 +50,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "StargatePoolMigratable",
       "address": "0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125",
       "sourceHashes": [
         "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -93,11 +97,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "TokenMessaging",
       "address": "0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837030,
       "sinceBlock": 17182943,
       "values": {
@@ -140,11 +146,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "StargatePool",
       "address": "0xD9050e7043102a0391F81462a3916326F86331F0",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -181,11 +189,13 @@
         "treasuryFee": 0,
         "tvl": "9354386000000000000"
       }
+    },
+    {
+      "type": "EOA",
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x36ed193dc7160D3858EC250e69D12B03Ca087D08": [

@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xa520c31fd7e7ff5690ba87151b976f0d329542b1
+
+# Diff at Mon, 10 Mar 2025 08:28:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 43367152
+- current block number: 43367152
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 43367152 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC75EFCffEE930706daec5CaCA012551f6a1845D7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x06b42920714b7489ef95ec0b7ff9e5f3075341c1
 
 # Diff at Tue, 04 Mar 2025 10:40:21 GMT:

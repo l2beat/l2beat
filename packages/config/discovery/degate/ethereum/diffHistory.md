@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x5404b733cef73b716c8451039f0914ee22afea92
+
+# Diff at Mon, 10 Mar 2025 08:26:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 18939731
+- current block number: 18939731
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18939731 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract BlockVerifier (0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringOwner (0x2028834B2c0A36A918c10937EeA71BE4f932da52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringV3 (0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringIOExchangeOwner (0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeVault (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultDepositContract (0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x84A00D39C3c95e839202E19F892F17743d6370a0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB7093FC2d926ADdE48122B70991fe68374879adf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC715b8501039d3514787dC55BC09f89c293351e9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8C695DfAab475f55327Ce269096923EFECa2e0F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeV3 (0xe63602a9B3DFE983187525AC985Fec4F57B24eD5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xeD530f3b8675B0a576DaAe64C004676c65368DfD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf5020ADf433645c451A4809eac0d6F680709f11B)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc590b14f370a7e64a4180e1afb6dc68f597ac441
 
 # Diff at Tue, 04 Mar 2025 10:39:04 GMT:

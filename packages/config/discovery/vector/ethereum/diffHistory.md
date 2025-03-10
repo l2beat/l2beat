@@ -1,3 +1,123 @@
+Generated with discovered.json: 0xd37eabe00107050e610d81e47e8f2a59f0214303
+
+# Diff at Mon, 10 Mar 2025 08:28:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21635855
+- current block number: 21635855
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635855 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d)
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x72Ff26D9517324eEFA89A48B75c5df41132c4f54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9395e83720bf2D8ac6435f9c520b48E289Cb8885)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAD379D3275a18bd4BB741C3b291a3778D51c3304)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDEd0000E32f8F40414d3ab3a830f735a3553E18e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE458b870F2F59a49915591282f1Bb688901767AD)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8daed4e2ed25be14f3a17f2af2d4101452c674a8
 
 # Diff at Tue, 04 Mar 2025 10:40:11 GMT:

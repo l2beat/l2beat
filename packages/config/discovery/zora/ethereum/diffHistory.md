@@ -1,3 +1,375 @@
+Generated with discovered.json: 0xbfbcb544fc26b9be11e309dbf17b83433b83f5a8
+
+# Diff at Mon, 10 Mar 2025 08:28:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21829679
+- current block number: 21829679
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829679 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x07dC0893cAfbF810e3E72505041f2865726Fd073)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainGuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0aA384EB2fedD2741277A0f72909A0d7275575D7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x1a0ad011913A150f69f6A19DF447A0CfD9551054)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3041BA32f451F5850c147805F5521AC206421623)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x3e2Ea9B92B7E48A52296fD261dc26fd995284631)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4665374939642965EfD8357D4568D2A77f677429)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4A7322258c9E690e4CB8Cea6e5251443E956e61E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x51aCb8e1205De850D1b512584FeE9C29C3813dDa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x625726c858dBF78c0125436C943Bf4b4bE9d9033)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x652BC529E171847E2fFddCeA13567643C84ccB5f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7cB07FE039a92B3D784f284D919503A381BEC54f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x92827223f6b397CE9F208eE352bacA710765cACb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x9E6204F750cD866b299594e2aC9eA824E2e5f95c)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9Eb11A55132c851b9991F148b3Af791ca498fD7A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA0737fea60F0601A192E3d2c98865A883ab0bda2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZoraMultisig2 (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0xdC40a14d9abd6F410226f1E6de71aE03441ca506)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE7dEA1306D9F829bA469d1904c50903b46ebd02e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xEF9A98511939eEe6Ec69af62082E3F2ff606877c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF3313C48BD8E17b823d5498D62F37019dFEA647D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x70992e549eecf6fb7502437c3e92c88f501fd5c1
 
 # Diff at Tue, 04 Mar 2025 11:26:56 GMT:

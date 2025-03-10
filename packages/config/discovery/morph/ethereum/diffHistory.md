@@ -1,3 +1,441 @@
+Generated with discovered.json: 0x5e524adb0268cbf63fae6b3917800f957a57f282
+
+# Diff at Mon, 10 Mar 2025 08:27:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21716626
+- current block number: 21716626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21716626 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0092bC49078f130D27e70dBeee441E227280B97D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x05e1d4694041aF987Af6F8402D902686018E2136)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0659dF9D53A987e3aDaa9019407431413A101eF3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0B3d220254e407a780EA7498d51b6d4fef807Bd0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7)
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ETHGateway (0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68)
+    +++ description: Contract used to bridge ETH from L1 to L2.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x323a78C1c910b282dE98a557d735628A02E00983)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x35B98995048b320f2DaFFAD5BaD5884F16e488A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF)
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5300000000000000000000000000000000000006)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5300000000000000000000000000000000000007)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5300000000000000000000000000000000000008)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x530000000000000000000000000000000000000D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x530000000000000000000000000000000000000e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5300000000000000000000000000000000000015)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x61F2945d4bc9E40B66a6376d1094a50438f613e2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6aB0E960911b50f6d14f249782ac12EC3E7584A0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x71C10870dC38E54d987C22e96aB32b46cc08564F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x74204e3801E9394848AbDBAd6f378d0b11e9a091)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a)
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+```
+
+```diff
++   Status: CREATED
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60)
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x77B29534738E3F0F297d36635d7884965C7c8cE1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x95417708f67f4a5dF1A447efe40c6C74e38Ab832)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x95C373754C66feF1Eb2dbb6934aF821C551D9738)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa79fEE4418338B59B8C6c93b87777A89F57c0Fd3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAD249861A911717fE74FA329fEC3c619f55DfFDf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb4A20D473e8C378aE742a8017DD67756a358eAB6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MorphOpsMultisig (0xB822319ab7848b7cC4537c8409e50f85BFb04377)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC412B4e6399F694CfF21D038d225373Fd6596811)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC4db900F76293042349448D1Ba30F71518325Bb3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7)
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd11f9c4F5d9b1feC2d14581d3674066442B68772)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304)
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154)
+    +++ description: Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.
+```
+
+```diff
++   Status: CREATED
+    contract MorphUpgradeMultisig (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF2FF0509520fAf35B511074466A509e00d73C307)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Whitelist (0xFFafDd9167777C0e5421e0B6789D6d7A5E386984)
+    +++ description: Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.
+```
+
 Generated with discovered.json: 0x6f0a3757a09ce063b17053e0cf52ed82aa7a2c43
 
 # Diff at Tue, 04 Mar 2025 10:39:27 GMT:

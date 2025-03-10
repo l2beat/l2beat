@@ -2,14 +2,16 @@
   "name": "cbridge",
   "chain": "ethereum",
   "blockNumber": 21628437,
-  "configHash": "0xbba7cc1a51b069822483f37e034aa9ca39b81500d921c36744272d3b8fd4c31d",
-  "contracts": [
+  "configHash": "0xddc139598756864715f5108d31df4ceb452157e871255b92fad62bea8a225283",
+  "entries": [
     {
+      "type": "Contract",
       "name": "PeggedTokenBridge",
       "address": "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
       "sourceHashes": [
         "0x3434f13a03ea3f4494cedceb0a2fe1054473c529ae3c067ba96d7102c3225852"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1639581534,
       "sinceBlock": 13810512,
       "values": {
@@ -22,6 +24,27 @@
       }
     },
     {
+      "type": "EOA",
+      "name": "SentinelAdmin",
+      "address": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
+      "type": "EOA",
+      "address": "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MessageBus",
       "address": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
       "sourceHashes": [
@@ -67,11 +90,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -86,11 +117,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "PeggedTokenBridgeV2",
       "address": "0x52E4f244f380f8fA51816c8a10A63105dd4De084",
       "sourceHashes": [
         "0xa8ad65c174f2e76f58ba6abc073545979d712d31810b818fa4ff50bfa9cffc09"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1650529338,
       "sinceBlock": 14627208,
       "values": {
@@ -103,11 +136,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Liquidity Network",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
       "sourceHashes": [
         "0x28057aec4ce9e7459369838e4a925c15a3b424afd948d070512e8a54c2870ec8"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"],
       "sinceTimestamp": 1638346811,
       "sinceBlock": 13719989,
@@ -141,11 +176,13 @@
       "derivedName": "Bridge"
     },
     {
+      "type": "Contract",
       "name": "MessageBusOwner",
       "address": "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
       "sourceHashes": [
         "0x208be8f798080de1d60fcd5cba233b86c43f382ace673f95ad32b633d98be2dd"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1676671175,
       "sinceBlock": 16651238,
       "values": {
@@ -166,11 +203,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OriginalTokenVaultV2",
       "address": "0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
       "sourceHashes": [
         "0x66b162a0fe8e04147d94a9ec40e3cf9a69114ed6e3fca427cc303eeb2d223fb9"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1651661389,
       "sinceBlock": 14710499,
       "values": {
@@ -184,12 +223,26 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x83039377ddD862821d92d416b2DDB9EFb5BA9000",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SentinelProxyAdmin",
       "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -206,11 +259,19 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "type": "EOA",
+      "address": "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TransferAgent",
       "address": "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
       "sourceHashes": [
         "0xa8c0aeb1e8c7671f05a401b4d5b518a38e96dc6378d59e3f2b13ea55ea9f7f9f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1666193927,
       "sinceBlock": 15783099,
       "values": {
@@ -219,11 +280,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "OriginalTokenVault",
       "address": "0xB37D31b2A74029B5951a2778F959282E2D518595",
       "sourceHashes": [
         "0xf4773d39e3c19f28a41b1b526474a51db5a28bb3fa5ea530f6af164e5263f209"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1639553135,
       "sinceBlock": 13808358,
       "values": {
@@ -249,6 +318,25 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Sentinel",
       "address": "0xF140024969F6c76494a78518D9a99c8776B55f70",
       "sourceHashes": [
@@ -319,11 +407,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "SimpleGovernance",
       "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
       "sourceHashes": [
         "0xd51a863b498f5cbb3e78ed94d7e69fa4cd246b862a12894d80ec1dedad934361"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -359,23 +449,6 @@
         "THRESHOLD_DECIMAL": 100
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    {
-      "name": "SentinelAdmin",
-      "address": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
-    },
-    { "address": "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2" },
-    { "address": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9" },
-    { "address": "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0" },
-    { "address": "0x83039377ddD862821d92d416b2DDB9EFb5BA9000" },
-    { "address": "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1" },
-    { "address": "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C" },
-    { "address": "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823" },
-    { "address": "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2" },
-    { "address": "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3" },
-    { "address": "0xED9fdF5B16F9F254bec5Ad389B80B48225186655" }
   ],
   "abis": {
     "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB": [

@@ -2,15 +2,29 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 21988681,
-  "configHash": "0xf32c99b9f2861e5023123679c77e8bf3d3dd41c0ce60c455900a3d1dd9a6727e",
-  "contracts": [
+  "configHash": "0x74f9345db7d9646da76d5e9c19dfac1a09557f1da3f9c06c42a3c3d9335ea5a8",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -35,6 +49,25 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "type": "EOA",
+      "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x21887c89368bf918346c62460e0c339113801C28",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "PolygonAdminMultisig",
       "address": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
       "template": "GnosisSafe",
@@ -154,6 +187,7 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "PolygonSharedBridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "template": "polygon-cdk/PolygonSharedBridge",
@@ -217,6 +251,13 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "type": "EOA",
+      "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "PolygonSecurityCouncil",
       "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
       "template": "GnosisSafe",
@@ -259,6 +300,25 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "template": "polygon-cdk/PolygonRollupManager_pessimistic",
@@ -727,6 +787,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "type": "Contract",
       "name": "PolygonGlobalExitRootV2",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "template": "polygon-cdk/PolygonGlobalExitRootV2",
@@ -783,6 +844,55 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "type": "EOA",
+      "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "PolygonCreateRollupMultisig",
       "address": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
       "template": "GnosisSafe",
@@ -825,12 +935,38 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Timelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
       "template": "polygon-cdk/Timelock",
       "sourceHashes": [
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
       ],
+      "proxyType": "immutable",
       "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
       "issuedPermissions": [
         {
@@ -1219,46 +1355,13 @@
       },
       "derivedName": "PolygonZkEVMTimelock",
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "type": "EOA",
+      "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6" },
-    { "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77" },
-    {
-      "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-        }
-      ]
-    },
-    { "address": "0x21887c89368bf918346c62460e0c339113801C28" },
-    { "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5" },
-    { "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622" },
-    { "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86" },
-    { "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891" },
-    {
-      "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-        }
-      ]
-    },
-    { "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496" },
-    { "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0" },
-    { "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227" },
-    { "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31" },
-    { "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D" },
-    { "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf" },
-    { "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9" },
-    { "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc" },
-    { "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC" },
-    { "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2" },
-    { "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b" }
   ],
   "abis": {
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [

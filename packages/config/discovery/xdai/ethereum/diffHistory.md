@@ -1,3 +1,207 @@
+Generated with discovered.json: 0x20aab510d538001c9594a5a30397887ac56305d0
+
+# Diff at Mon, 10 Mar 2025 08:28:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21778563
+- current block number: 21778563
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21778563 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x10DD75875a2a8a284529Ae7223B1aCE410d606bd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1312E98995bbCc30fc63Db3cef807e20CDd33dca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisBridgeGovernanceMultisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4743BA328C28dbC2b8B4e083b92cB4baA047494b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SDaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x587C0d02B40822f15f05301d87c16f6a08AaDDde)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5b10cE4DDD27F57d4D432D409A5321219cbA7893)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x839395e20bbB182fa440d08F850E6c7A8f6F0780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x90776017057b84bc47D7e7383b65C463C80a6cdd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x97630E2aE609D4104aBdA91F3066C556403182dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA07888742c18d7e658132AE0148fF205fFF46481)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb8173f558f75EE263013fd6294177bf75279a21e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc44caeb7F0724A156806664d2361fD6f32a2d2C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd945325557f1FB4374fBf10Ae86D385632Df870A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DaiForeignBridge (0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfA98B60E02A61B6590f073cAD56e68326652d094)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe41c442a914f60c83f4ab23b1b5e162cdd4a6d5f
 
 # Diff at Tue, 04 Mar 2025 10:40:13 GMT:

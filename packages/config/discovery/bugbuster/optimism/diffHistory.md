@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x00807c4d2b7e702115886e83b2be7e335f395bd8
+
+# Diff at Mon, 10 Mar 2025 08:28:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 125928338
+- current block number: 125928338
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 125928338 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract History (0x04395d494624D2B6e30C0dfDB74498a2839f805d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BugBuster (0x3FF5C7383F614256053c3F6B86A47bA974937299)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Authority (0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD330C12e8DBD00570616D9406614106e2B3A1cf5)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1de23efce890896da882de7a220bcb23f8741e3d
 
 # Diff at Tue, 04 Mar 2025 10:40:36 GMT:

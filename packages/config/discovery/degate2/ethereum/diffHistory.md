@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x6dd16fb29efa51317a07730726c6ed0e0ac5b5a8
+
+# Diff at Mon, 10 Mar 2025 08:26:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 18554408
+- current block number: 18554408
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18554408 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract LoopringIOExchangeOwner (0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4e3FE240B50A445fc6137a6363aC3593Af173b8a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringV3 (0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockVerifier (0x707B12e8921b442D4015eb03c86E66F3b8042Dd2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeVault (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeV3 (0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringOwner (0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB7093FC2d926ADdE48122B70991fe68374879adf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC715b8501039d3514787dC55BC09f89c293351e9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xeD530f3b8675B0a576DaAe64C004676c65368DfD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultDepositContract (0xF13e21653AEB763595D5E4baA1dC115689Da49b9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf5020ADf433645c451A4809eac0d6F680709f11B)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xce0cc560eba415fed05467241f718db97e8c59ad
 
 # Diff at Tue, 04 Mar 2025 10:39:04 GMT:

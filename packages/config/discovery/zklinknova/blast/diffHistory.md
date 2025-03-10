@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x872f7cc012d52f0bddebd4951b89b70493fe3b4b
+
+# Diff at Mon, 10 Mar 2025 08:28:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 8312690
+- current block number: 8312690
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8312690 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x17887788E01A1192a26F636Cfcfc033c7Bb42348)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC75EFCffEE930706daec5CaCA012551f6a1845D7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe022a1427389cbff5e7e9a99a53a53afc968eabc
 
 # Diff at Tue, 04 Mar 2025 10:42:45 GMT:

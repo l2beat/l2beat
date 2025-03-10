@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xf750ca2bed22bc8a86b847b91768063a8926dcf1
+
+# Diff at Mon, 10 Mar 2025 08:28:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21766584
+- current block number: 21766584
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766584 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZeroNetworkChainAdminMultisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3Bc72A56F9036B94ad14BF082bF93731e0545255)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x479B7c95b9509E1A834C994fc94e3581aA8A73B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc858a504d6c267fe2d462D240b68A7D939B1fEC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9)
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF322467cec88d3CDFa9376B19bD5AD40da665277)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4152bc6ec8c5dd28038a79a6d35b8e4fe0f99230
 
 # Diff at Tue, 04 Mar 2025 10:40:14 GMT:

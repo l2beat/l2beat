@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x350eaf31670a0dbc0514cbec828fb498dd5d31bd
+
+# Diff at Mon, 10 Mar 2025 08:28:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 124973335
+- current block number: 124973335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 124973335 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe1056a1216ee07174e348a7f99b4f8f4ce1ae398
 
 # Diff at Tue, 04 Mar 2025 10:40:39 GMT:

@@ -1,3 +1,147 @@
+Generated with discovered.json: 0x1f49e41a05d41865a3660376f6c2cb278569dd4b
+
+# Diff at Mon, 10 Mar 2025 08:26:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21121371
+- current block number: 21121371
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21121371 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0706Ffc1722D53a85ba90f32807880ccee968Fed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1a84163249B2909f746C725F23D5ae2a66D7C4fE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridge (0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3392fd462d9710Fbf3A5703818b9920C119DC080)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x45894CeBad0a1298D44aF2B528490693E58B322E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AuthorityMultisig (0x4720342419C1D316B948690d12C86D5b485C64E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryOwner (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x825e868F5561352bC875E0C9D08d32e94F915E6b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x950815d0e585095B06111CD101440fb1E95AB2a5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBb534A6Bd0440727cb5883D037DEd7358059D547)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xCD2fA978D163c0068167dDff8b6951f0E626e6A4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Upgrader0to1 (0xD02f545d57536BC1E8F12D867731F006AacE71E3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDecF20b9213f5d7f16196420377d37ef5f8F9686)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xacdf9c9ee9436de7537088c2ceb3ac918a1c105a
 
 # Diff at Tue, 04 Mar 2025 10:39:06 GMT:

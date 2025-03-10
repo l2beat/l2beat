@@ -2,14 +2,22 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "blockNumber": 20420398,
-  "configHash": "0xd96c835ef8a272087286fbfffe00c19e40cec0ca44bdb12a32a7054bc3ff1a7c",
-  "contracts": [
+  "configHash": "0x7ad2a972b8c6cb5a4bf0b993559cbeee500ed00349268411f1a5f531fb89e81f",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x0000000000000000000000000000000000000001",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ERC20 Vault V1",
       "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
       "sourceHashes": [
         "0xdf2e47952904a5d0bc18604cdb2be843cfbc6ae2be79ca98e0d1fcf9f69d70d4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1620212602,
       "sinceBlock": 12373839,
       "values": {
@@ -19,6 +27,13 @@
       "derivedName": "Erc20Vault"
     },
     {
+      "type": "EOA",
+      "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "pNetworkDAOVoting",
       "address": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
       "sourceHashes": [
@@ -117,6 +132,7 @@
       "derivedName": "DandelionVoting"
     },
     {
+      "type": "Contract",
       "name": "Kernel",
       "address": "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b",
       "sourceHashes": [
@@ -147,6 +163,31 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "EVMScriptRegistry",
       "address": "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478",
       "template": "tokens/Lido/EVMScriptRegistry",
@@ -175,11 +216,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "UOS Vault",
       "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
       "sourceHashes": [
         "0xe6b0ad564ecf0ee4b47b19a605101ce2c680b5e451c154acaaabb25f454aed1a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1626265622,
       "sinceBlock": 12825127,
       "values": {
@@ -189,16 +238,19 @@
       "derivedName": "Erc20Vault"
     },
     {
+      "type": "Contract",
       "name": "MiniMeTokenFactory",
       "address": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
       "sourceHashes": [
         "0xab441847b55bfdc5cf90792906cf0effcd43d3390a7cc05e690aad5fb349c19b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1564624915,
       "sinceBlock": 8262062,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
       "template": "GnosisSafe",
@@ -230,11 +282,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -249,6 +303,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TokenManager",
       "address": "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254",
       "sourceHashes": [
@@ -283,11 +344,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "PProxyAdmin",
       "address": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
       "sourceHashes": [
         "0x90607504d5e8f365803601eeade9548daa56d981da3ce27d42acb6d7e01150b2"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -302,6 +365,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
       "sourceHashes": [
@@ -362,12 +432,14 @@
       "derivedName": "Erc20Vault"
     },
     {
+      "type": "Contract",
       "name": "MiniMeToken",
       "address": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
       "template": "tokens/Lido/MiniMeToken",
       "sourceHashes": [
         "0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1596178410,
       "sinceBlock": 10565808,
@@ -387,6 +459,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "EthPntv2",
       "address": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
       "sourceHashes": [
@@ -451,6 +524,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ACL",
       "address": "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe",
       "sourceHashes": [
@@ -479,20 +553,13 @@
         "NO_PERMISSION": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "proxyType": 2
       }
+    },
+    {
+      "type": "EOA",
+      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0000000000000000000000000000000000000001" },
-    { "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9" },
-    { "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b" },
-    { "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496" },
-    { "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262" },
-    { "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f" },
-    { "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45" },
-    { "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20" },
-    { "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132" },
-    { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
   ],
   "abis": {
     "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": [

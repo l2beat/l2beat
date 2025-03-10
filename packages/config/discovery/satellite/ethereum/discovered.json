@@ -2,9 +2,22 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0xb2b1dad4803b37678649f32dc544bd8ded98d9dbe270686e7dd9319f0309a7a6",
-  "contracts": [
+  "configHash": "0x7cc15d5aafdbf2429a283282a52d08df86ecc3468c0ea0ed6ce3dd9084e5c540",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x027c1882B975E2cd771AE068b0389FA38B9dda73",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "AxelarGasService",
       "address": "0x2d5d7d31F671F86C782533cc367F14109a082712",
       "sourceHashes": [
@@ -45,6 +58,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Gateway",
       "address": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
       "sourceHashes": [
@@ -115,11 +141,25 @@
       "derivedName": "AxelarGateway"
     },
     {
+      "type": "EOA",
+      "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x2d5d7d31F671F86C782533cc367F14109a082712"
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "AxelarGasServiceOperators",
       "address": "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
       "sourceHashes": [
         "0xa898c8df7706ef8117978fb0d8653aea9d509fa5e96475894390689c93b28187"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1702533995,
       "sinceBlock": 18782489,
       "values": {
@@ -130,21 +170,31 @@
       "derivedName": "Operators"
     },
     {
+      "type": "EOA",
+      "address": "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TokenDeployer",
       "address": "0xb28478319B64f8D47e19A120209A211D902F8b8f",
       "sourceHashes": [
         "0xb697944037f1be572b23ca3eabbb455b59abdb05b45851313635da227ccc52c3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1697785883,
       "sinceBlock": 18389965,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "Multisig",
       "address": "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68",
       "sourceHashes": [
         "0xfca353778b820ad49261c7887cf13ab259a89edab86eef4aeb90e1b2b2a948f5"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1697769227,
       "sinceBlock": 18388582,
       "values": {
@@ -163,11 +213,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "AxelarAuthWeighted",
       "address": "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0",
       "sourceHashes": [
         "0xc6735e0060a5046f6ed1ea96805049e3e5167271060aa505f72fbade315a82cb"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["currentEpoch"],
       "sinceTimestamp": 1697785871,
       "sinceBlock": 18389964,
@@ -179,11 +231,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "InterchainGovernance",
       "address": "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66",
       "sourceHashes": [
         "0x36106df3599f7c698c4c70652810248df4da03bd579b99553e2852b368632ff6"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1697842379,
       "sinceBlock": 18394640,
       "values": {
@@ -196,24 +256,6 @@
         "minimumTimeLockDelay": 604800
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x027c1882B975E2cd771AE068b0389FA38B9dda73" },
-    { "address": "0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b" },
-    { "address": "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821" },
-    { "address": "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4" },
-    {
-      "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x2d5d7d31F671F86C782533cc367F14109a082712"
-        }
-      ]
-    },
-    { "address": "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC" },
-    { "address": "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f" }
   ],
   "abis": {
     "0x2d5d7d31F671F86C782533cc367F14109a082712": [

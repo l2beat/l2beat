@@ -2,14 +2,16 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21723798,
-  "configHash": "0x6be3e5ac6242b364602978e7f59de66f10d5b4a61c11614532d1a62ee5f42ec7",
-  "contracts": [
+  "configHash": "0x5f75cfc74caac0001420c6271b8f6829448b4d07cfbc8686533d35d5e5dcd17b",
+  "entries": [
     {
+      "type": "Contract",
       "name": "Factory",
       "address": "0x06D538690AF257Da524f25D0CD52fD85b1c2173E",
       "sourceHashes": [
         "0xbc704e600b52db9b8f9530b3e75e45a8f0561c0d52beab8121e42c3fa18aefaf"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647504676,
       "sinceBlock": 14402871,
       "values": {
@@ -36,11 +38,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "DAI Pool",
       "address": "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -89,11 +93,13 @@
       "derivedName": "Pool"
     },
     {
+      "type": "Contract",
       "name": "SG-ETH Pool",
       "address": "0x101816545F6bd2b1076434B54383a1E633390A2E",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -183,11 +189,19 @@
       "derivedName": "Pool"
     },
     {
+      "type": "EOA",
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "WOO Pool",
       "address": "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -294,11 +308,19 @@
       "derivedName": "Pool"
     },
     {
+      "type": "EOA",
+      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Bridge",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
       "sourceHashes": [
         "0xcfc56af1501e5fdb6791848b058bbdd819db31eb1e168d31c30743c57eb88a41"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647504669,
       "sinceBlock": 14402868,
       "values": {
@@ -310,11 +332,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
       "sourceHashes": [
         "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661529370,
       "sinceBlock": 15416287,
       "values": {
@@ -328,11 +358,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "USDT Pool",
       "address": "0x38EA452219524Bb87e18dE1C24D3bB59510BD783",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -450,11 +482,13 @@
       "derivedName": "Pool"
     },
     {
+      "type": "Contract",
       "name": "USDT Pool2",
       "address": "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -502,11 +536,13 @@
       "derivedName": "Pool"
     },
     {
+      "type": "Contract",
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
       "sourceHashes": [
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661529280,
       "sinceBlock": 15416271,
       "values": {
@@ -550,11 +586,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "sUSD Pool",
       "address": "0x590d4f8A68583639f215f675F3a259Ed84790580",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -602,6 +646,7 @@
       "derivedName": "Pool"
     },
     {
+      "type": "Contract",
       "name": "TSS Oracle",
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
       "unverified": true,
@@ -635,11 +680,13 @@
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
       "sourceHashes": [
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661280206,
       "sinceBlock": 15398311,
       "values": {
@@ -648,6 +695,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "StarGate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "template": "GnosisSafe",
@@ -681,11 +729,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "sourceHashes": [
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647316591,
       "sinceBlock": 14388880,
       "values": {
@@ -705,11 +755,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "USDD Pool",
       "address": "0x692953e758c3669290cb1677180c64183cEe374e",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -767,11 +819,49 @@
       "derivedName": "Pool"
     },
     {
+      "type": "EOA",
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Router",
       "address": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
       "sourceHashes": [
         "0xaca03a3990b02abbdfb3479c15740adb67918d89a2b2ba4a789156a84a23895f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647504658,
       "sinceBlock": 14402864,
       "values": {
@@ -784,11 +874,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "StarGateFeeLibrary7",
       "address": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
       "sourceHashes": [
         "0xa8c87025dca83b0d7859efc30fa933d23dc2c4a29483706d9123f2c0248ff35e"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1686244907,
       "sinceBlock": 17437020,
       "values": {
@@ -816,6 +908,7 @@
       "derivedName": "StargateFeeLibraryV07"
     },
     {
+      "type": "Contract",
       "name": "LayerZero Relayer",
       "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
       "unverified": true,
@@ -869,11 +962,13 @@
       "derivedName": ""
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -888,11 +983,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "MAI Pool",
       "address": "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -945,11 +1042,19 @@
       "derivedName": "Pool"
     },
     {
+      "type": "EOA",
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "mETH Pool",
       "address": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1006,11 +1111,13 @@
       "derivedName": "Pool"
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1025,6 +1132,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
@@ -1057,11 +1171,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "Google Cloud Oracle",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217107,
       "sinceBlock": 18095084,
       "values": {
@@ -1079,11 +1195,13 @@
       "derivedName": "VerifierNetwork"
     },
     {
+      "type": "Contract",
       "name": "METIS Pool",
       "address": "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1150,21 +1268,25 @@
       "derivedName": "Pool"
     },
     {
+      "type": "Contract",
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217119,
       "sinceBlock": 18095085,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "USDC Pool",
       "address": "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1255,11 +1377,13 @@
       "derivedName": "Pool"
     },
     {
+      "type": "Contract",
       "name": "LUSD Pool",
       "address": "0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1308,11 +1432,19 @@
       "derivedName": "Pool"
     },
     {
+      "type": "EOA",
+      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Frax Pool",
       "address": "0xfA0F307783AC21C39E939ACFF795e27b650F6e68",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1361,22 +1493,6 @@
       },
       "derivedName": "Pool"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
-    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
-    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
-    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
-    { "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" },
-    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" }
   ],
   "abis": {
     "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": [

@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xb5b6e4bf91b1cec2d401f2e1a8a5efb8daa63e95
+
+# Diff at Mon, 10 Mar 2025 08:28:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21764788
+- current block number: 21764788
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21764788 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507)
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x491619874b866c3cDB7C8553877da223525ead01)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa90B4C8B8807569980F6cC958c8905383136B5eA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc9d88a8d832df7851de702adeefe5313733cee15
 
 # Diff at Tue, 04 Mar 2025 10:40:14 GMT:

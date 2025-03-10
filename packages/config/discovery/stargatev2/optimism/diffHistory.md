@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x319899e6a79b27ef2b0ddb7ac78b0e0ec80b4d71
+
+# Diff at Mon, 10 Mar 2025 08:28:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 131964914
+- current block number: 131964914
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 131964914 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (0x19cFCE47eD54a88614648DC3f19A5980097007dD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessaging (0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6a49320226a083aa3af03b78135a8bae743385a6
 
 # Diff at Tue, 04 Mar 2025 10:40:39 GMT:

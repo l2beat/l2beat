@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x39fd123c096b1a33510258d66068e547d91ba61f
+
+# Diff at Mon, 10 Mar 2025 08:27:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21766583
+- current block number: 21766583
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766583 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0b114d4675Cb79507e68F2616c93e124122c6ef0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x58D14960E0a2be353eDdE61ad719196A2b816522)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x85deE82d32d78eaa59588B6574Df420ef2A74098)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8E2A969f6685e27439D9F25630E62c8A2203B5Db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65)
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+```
+
+```diff
++   Status: CREATED
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E)
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0xe81d64195072e4d09639b31Abb257d0096FEa9d1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF29bFff344c7ef0186432fE30C39fda0cca0550b)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x615fe88d16b659ad6b35f3107f57eaacc10a79e1
 
 # Diff at Tue, 04 Mar 2025 10:39:13 GMT:

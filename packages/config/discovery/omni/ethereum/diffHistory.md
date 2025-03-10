@@ -1,3 +1,291 @@
+Generated with discovered.json: 0x93e6bcd155e74f42dc60330fcfc1a4935228d1d4
+
+# Diff at Mon, 10 Mar 2025 08:27:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21981875
+- current block number: 21981875
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981875 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x10DD75875a2a8a284529Ae7223B1aCE410d606bd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x258667E543C913264388B33328337257aF208a8f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OmniBridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x459A3bd49F1ff109bc90b76125533699AaAAf9A6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4743BA328C28dbC2b8B4e083b92cB4baA047494b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5b10cE4DDD27F57d4D432D409A5321219cbA7893)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x670a3e447F4DE92C012777Ac5591D81E12aD0957)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenFactory (0x71d5ba4e37de72415F685490B684538Aae8f0424)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermittableToken (0x7c24d0061b484B267F286aa2DCe891220Db254b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x839395e20bbB182fa440d08F850E6c7A8f6F0780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AAVEInterestERC20 (0x87D48c565D0D85770406D248efd7dc3cbd41e729)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA07888742c18d7e658132AE0148fF205fFF46481)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB1dD1828794075f7521365163A93DE9e68e3c49f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb8173f558f75EE263013fd6294177bf75279a21e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBF3d6f830CE263CAE987193982192Cd990442B53)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc44caeb7F0724A156806664d2361fD6f32a2d2C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd945325557f1FB4374fBf10Ae86D385632Df870A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfA98B60E02A61B6590f073cAD56e68326652d094)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7f7fc1282016dd973d5f75a9e870d66e72093468
 
 # Diff at Thu, 06 Mar 2025 15:19:18 GMT:

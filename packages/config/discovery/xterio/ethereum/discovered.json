@@ -2,9 +2,16 @@
   "name": "xterio",
   "chain": "ethereum",
   "blockNumber": 21235438,
-  "configHash": "0x91653ba5f1158b7d3b85f7b82d5a267cf5b3c9368b3a415aee775d85af5f1743",
-  "contracts": [
+  "configHash": "0xe92fbe4c6d741b2f964489fe22b6acbbf632e3621d6359f4744321a12d52789e",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DataAvailabilityChallenge",
       "address": "0x16193e14197c10109F3e81b938153A04A2a00190",
       "template": "opstack/DataAvailabilityChallenge",
@@ -53,6 +60,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "L1ERC721Bridge",
       "address": "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b",
       "template": "opstack/L1ERC721Bridge",
@@ -93,6 +101,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
       "template": "opstack/L1StandardBridge",
@@ -129,6 +138,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "Contract",
       "name": "OptimismMintableERC20Factory",
       "address": "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f",
       "template": "opstack/OptimismMintableERC20Factory",
@@ -164,6 +174,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L2OutputOracle",
       "address": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
       "template": "opstack/L2OutputOracle",
@@ -239,6 +250,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "SystemConfig",
       "address": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
       "template": "opstack/SystemConfig",
@@ -330,6 +342,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C",
       "template": "opstack/L1CrossDomainMessenger",
@@ -375,12 +388,45 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "EOA",
+      "address": "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x7d6251D49A102a330CfB46d132982781620700Cb",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x8B6341E18B2DC644cA94eD85173691873626fc7F",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -431,6 +477,25 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "OptimismPortal",
       "address": "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A",
       "template": "opstack/OptimismPortal",
@@ -485,12 +550,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "AddressManager",
       "address": "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
+      "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -508,6 +575,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xcbdD38Ce74BA96F0ae3D2E608DA96Ec744c80A7E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SuperchainConfig",
       "address": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
       "template": "opstack/SuperchainConfigFake",
@@ -551,6 +625,60 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "type": "EOA",
+      "address": "0xCf06c459AE59d4f47469BcE535afC3485Ce89dBf",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x16193e14197c10109F3e81b938153A04A2a00190",
+          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+        },
+        {
+          "permission": "interact",
+          "from": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
+        },
+        {
+          "permission": "guard",
+          "from": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0xfF00000000000000000000000000000000293b30",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "XterioMultisig",
       "address": "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574",
       "template": "GnosisSafe",
@@ -636,72 +764,6 @@
       },
       "derivedName": "GnosisSafe"
     }
-  ],
-  "eoas": [
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    {
-      "address": "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
-        }
-      ]
-    },
-    {
-      "address": "0x7d6251D49A102a330CfB46d132982781620700Cb",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
-        }
-      ]
-    },
-    { "address": "0x8B6341E18B2DC644cA94eD85173691873626fc7F" },
-    { "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7" },
-    { "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48" },
-    { "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2" },
-    { "address": "0xcbdD38Ce74BA96F0ae3D2E608DA96Ec744c80A7E" },
-    {
-      "address": "0xCf06c459AE59d4f47469BcE535afC3485Ce89dBf",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x16193e14197c10109F3e81b938153A04A2a00190",
-          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
-        },
-        {
-          "permission": "interact",
-          "from": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-        }
-      ]
-    },
-    {
-      "address": "0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
-        },
-        {
-          "permission": "guard",
-          "from": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
-        }
-      ]
-    },
-    {
-      "address": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
-        }
-      ]
-    },
-    { "address": "0xfF00000000000000000000000000000000293b30" }
   ],
   "abis": {
     "0x16193e14197c10109F3e81b938153A04A2a00190": [

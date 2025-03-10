@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xac7fcfe2771b2b34e643f3b8360c08877c426ed7
+
+# Diff at Mon, 10 Mar 2025 08:27:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21778467
+- current block number: 21778467
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21778467 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HermezAuctionProtocol (0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1DBA1131000664b884A1Ba238464159892252D3a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier2048 (0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WithdrawalDelayer (0x392361427Ef5e17b69cFDd1294F31ab555c86124)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier400 (0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierWithdraw (0x4464A1E499cf5443541da6728871af1D5C4920ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hermez2 (0x6D85D79D69b7e190E671C16e8611997152bD3e95)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x839395e20bbB182fa440d08F850E6c7A8f6F0780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HermezAuctionProtocol2 (0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hermez (0xA68D85dF56E733A06443306A095646317B5Fa633)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xe1bbC673E537053c3536310851C6554BcfcF11Cd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HermezGovernance (0xf1B3b124842555782F98bE08d1357ABb8013F11c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd95a4abc7d5c5fbda3651cce8de9c842893a82fd
 
 # Diff at Tue, 04 Mar 2025 10:39:14 GMT:

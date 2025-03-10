@@ -1,3 +1,381 @@
+Generated with discovered.json: 0x0de937242d1770c3df633c37c33297bf765572ef
+
+# Diff at Mon, 10 Mar 2025 08:27:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21872493
+- current block number: 21872493
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x00da2F87c56C3a19BD863613995705095F55b524)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (0x075a48633dc6845f92339741E9c96b88f1b2A86f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67)
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x207E804758e28F2b3fD6E4219671B327100b82f8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd)
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354)
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x47D58744D8515d9aaEAf961bc03625118bd91EBb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry2 (0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x50dCf0B40E593301aA75DcB54f36f379607595CE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1)
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x630E93130809c4acE55249229Ee6B043b929A9Ad)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6667961f5e9C98A76a48767522150889703Ed77D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x915dc866e2e5E64f912A5ac1D40E3be4597F172a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5)
+    +++ description: Basic do-nothing investment strategy.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB61298691FE0df10634A67dd83b2253E74cbF7fb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC37642355c18ec9c3b3268AAC67e33516aa115eb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc4143711aA5bd6d37F1b0A690120AA5859e32A93)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1)
+    +++ description: Basic do-nothing investment strategy.
+```
+
+```diff
++   Status: CREATED
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xdC3644e172813ADbF6D130262e2416975Ac48Af3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe75D7324d6BC4E70A200c5E268160332F43b2d2B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8ba8881bcbdf24b9879bff9b68cf4af8dbdb3edd
 
 # Diff at Tue, 04 Mar 2025 11:25:58 GMT:

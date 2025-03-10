@@ -2,15 +2,23 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 21938183,
-  "configHash": "0x3779589cbbf504a17ac248331d6b2e3ab48788ededb88fa38097ff2b11e113b7",
-  "contracts": [
+  "configHash": "0xf88703ec362520746136ff6938f548d69071d9411e7d8a15d680db69b67f7ecf",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x0000000000000000000000000000000000000001",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DepositContract",
       "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
       "template": "global/DepositContract",
       "sourceHashes": [
         "0x50e829416130215b875975340a7567d915ecf66f25070a50813ca972a4322191"
       ],
+      "proxyType": "immutable",
       "description": "Ethereum Beacon Chain deposit contract.",
       "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
       "sinceTimestamp": 1602667372,
@@ -22,6 +30,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ValidatorsExitBusOracle",
       "address": "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
       "template": "tokens/Lido/ValidatorsExitBusOracle",
@@ -98,6 +119,37 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x140Bd8FbDc884f48dA7cb1c09bE8A2fAdfea776E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x14D5d5B71E048d2D75a39FfC5B407e3a3AB6F314",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x294ED1f214F4e0ecAE31C3Eae4F04EBB3b36C9d0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Voting",
       "address": "0x2e59A20f205bB85a89C53f1936454680651E618e",
       "template": "tokens/Lido/Voting",
@@ -143,11 +195,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LidoExecutionLayerRewardsVault",
       "address": "0x388C818CA8B9251b393131C08a736A67ccB19297",
       "sourceHashes": [
         "0xd7305a2d008e26be8f8e72e060e9781b7b5e8b3037fad9d367b5ae5d624d08c1"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1653382011,
       "sinceBlock": 14834805,
       "values": {
@@ -157,11 +211,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "CSEarlyAdoption",
       "address": "0x3D5148ad93e2ae5DedD1f7A8B3C19E7F67F90c0E",
       "sourceHashes": [
         "0x5e36c7f26b71bb611cc2a2b83eb557ff3593363fc3ba1c59ff2a32a5c2565122"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1728566351,
       "sinceBlock": 20935463,
       "values": {
@@ -172,6 +228,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LidoDaoAgent",
       "address": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "sourceHashes": [
@@ -248,6 +305,13 @@
       "derivedName": "Agent"
     },
     {
+      "type": "EOA",
+      "address": "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "LegacyOracle",
       "address": "0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
       "template": "tokens/Lido/LegacyOracle",
@@ -303,6 +367,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "CSAccounting",
       "address": "0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
       "template": "tokens/Lido/CSAccounting",
@@ -363,6 +428,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "NodeOperatorsRegistry",
       "address": "0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5",
       "template": "tokens/Lido/NodeOperatorsRegistry",
@@ -413,12 +479,26 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x59232aC80E6d403b6381393e52f4665ECA328558",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "MiniMeToken",
       "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
       "template": "tokens/Lido/MiniMeToken",
       "sourceHashes": [
         "0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -437,12 +517,26 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "OracleReportSanityChecker",
       "address": "0x6232397ebac4f5772e53285B26c47914E9461E75",
       "template": "tokens/Lido/OracleReportSanityChecker",
       "sourceHashes": [
         "0xd50222dc8dfe7cd169366ab34979e2962975f9b018fa27dc1443d09a8698dc92"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1728395495,
       "sinceBlock": 20921274,
       "values": {
@@ -480,12 +574,50 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "wstETH_tokenContract",
       "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "template": "tokens/Lido/wstETH",
       "sourceHashes": [
         "0x6b938c3d38678ebb00f3860def4bdf9d5d8ab7008a6d598cc109fdf7a6c34e0e"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["tokensPerStEth", "stEthPerToken", "totalSupply"],
       "sinceTimestamp": 1613752640,
       "sinceBlock": 11888477,
@@ -503,12 +635,14 @@
       "derivedName": "WstETH"
     },
     {
+      "type": "Contract",
       "name": "HashConsensus",
       "address": "0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
       "template": "tokens/Lido/HashConsensus",
       "sourceHashes": [
         "0xdcb2da84a44fbac1b8d7ea814fd34325ac06bb8169fad7507a00835a3ffb25de"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "getConsensusState",
         "getCurrentFrame",
@@ -597,6 +731,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "AccountingOracle",
       "address": "0x852deD011285fe67063a08005c71a85690503Cee",
       "template": "tokens/Lido/AccountingOracle",
@@ -675,6 +816,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "EVMScriptRegistry",
       "address": "0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
       "template": "tokens/Lido/EVMScriptRegistry",
@@ -703,6 +845,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "WithdrawalQueueERC721",
       "address": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
       "template": "tokens/Lido/WithdrawalQueueERC721",
@@ -776,26 +919,31 @@
       }
     },
     {
+      "type": "Contract",
       "name": "EIP712StETH",
       "address": "0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
       "sourceHashes": [
         "0x15185b2d9f11dcf2ea4d005741fa941922e233e89fc5742793ebfb0ca05897c4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1683023915,
       "sinceBlock": 17172546,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "MiniMeTokenFactory",
       "address": "0x909d05F384D0663eD4BE59863815aB43b4f347Ec",
       "sourceHashes": [
         "0xab441847b55bfdc5cf90792906cf0effcd43d3390a7cc05e690aad5fb349c19b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1540644725,
       "sinceBlock": 6593191,
       "values": { "$immutable": true }
     },
     {
+      "type": "Contract",
       "name": "Safe",
       "address": "0x909d0CB383Ecc77e44daE5d0146cF476f611f62b",
       "template": "GnosisSafe",
@@ -840,6 +988,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "ACL",
       "address": "0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
       "sourceHashes": [
@@ -870,6 +1031,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "stETH_tokenContract",
       "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
       "template": "tokens/Lido/stETH",
@@ -957,6 +1131,7 @@
       "derivedName": "Lido"
     },
     {
+      "type": "Contract",
       "name": "NodeOperatorsRegistry",
       "address": "0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433",
       "template": "tokens/Lido/NodeOperatorsRegistry",
@@ -1007,6 +1182,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4",
       "template": "GnosisSafe",
@@ -1037,6 +1213,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Kernel",
       "address": "0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
       "sourceHashes": [
@@ -1067,6 +1244,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "WithdrawalVault",
       "address": "0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
       "sourceHashes": [
@@ -1103,11 +1281,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "OracleDaemonConfig",
       "address": "0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09",
       "sourceHashes": [
         "0x6f38bad385eb6769def612742a8a4ab65d19921bffe96d1ee9241121e2ae1aba"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1683022991,
       "sinceBlock": 17172469,
       "values": {
@@ -1117,6 +1297,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "LidoLocator",
       "address": "0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
       "sourceHashes": [
@@ -1216,12 +1403,20 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "STRK_tokenContract",
       "address": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
       "template": "tokens/STRK",
       "sourceHashes": [
         "0x23af76dab677f190c20ba297bc76c209cffb68653221079dd83fd167ae158753"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1668610211,
       "sinceBlock": 15983290,
@@ -1248,6 +1443,7 @@
       "derivedName": "StarkNetToken"
     },
     {
+      "type": "Contract",
       "name": "MintManager",
       "address": "0xCa14076A3cec95448BaD179cc19B351A4204B88B",
       "sourceHashes": [
@@ -1295,12 +1491,20 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Burner",
       "address": "0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
       "template": "tokens/Lido/Burner",
       "sourceHashes": [
         "0x10157e5d64980dbfd1f7d94307306bb86c3e3a9bb481af9253f4df368a6542f2"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "getCoverSharesBurnt",
         "getExcessStETH",
@@ -1323,12 +1527,20 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "OpStackTokenRatePusher",
       "address": "0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
       "template": "tokens/Lido/OpStackTokenRatePusher",
       "sourceHashes": [
         "0x914444eb1e15eba41dafc9099a1e9e51a554ff786ce9f7b5159cb306f4779477"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1724328047,
       "sinceBlock": 20584007,
       "values": {
@@ -1344,12 +1556,14 @@
       }
     },
     {
+      "type": "Contract",
       "name": "HashConsensus",
       "address": "0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
       "template": "tokens/Lido/HashConsensus",
       "sourceHashes": [
         "0xdcb2da84a44fbac1b8d7ea814fd34325ac06bb8169fad7507a00835a3ffb25de"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "getConsensusState",
         "getCurrentFrame",
@@ -1438,6 +1652,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "CSFeeDistributor",
       "address": "0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
       "template": "tokens/Lido/CSFeeDistributor",
@@ -1485,6 +1700,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "CSModule",
       "address": "0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
       "template": "tokens/Lido/CSModule",
@@ -1556,11 +1772,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TokenRateNotifier",
       "address": "0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
       "sourceHashes": [
         "0x6f6c2b5fe89e476b4a6700268156a2f5e028a4e7607ae4e93223d77f95fcb7d2"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1724328035,
       "sinceBlock": 20584006,
       "values": {
@@ -1575,6 +1799,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "TokenManager",
       "address": "0xf73a1260d222f447210581DDf212D915c09a3249",
       "sourceHashes": [
@@ -1609,6 +1840,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xf82D88217C249297C6037BA77CE34b3d8a90ab43",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "StakingRouter",
       "address": "0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
       "template": "tokens/Lido/StakingRouter",
@@ -1830,12 +2074,20 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DepositSecurityModule",
       "address": "0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "template": "tokens/Lido/DepositSecurityModule",
       "sourceHashes": [
         "0xec602317aa2fc4de0a89b5c910911635f678fb88b51a6a46f12d8b1148d95d71"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1728395471,
       "sinceBlock": 20921272,
       "values": {
@@ -1861,44 +2113,13 @@
         "UNVET_MESSAGE_PREFIX": "0x7f941492e2f49621da669504b9b681d897c2d2917c1edc4009f4121a0a25ed9c",
         "VERSION": 3
       }
+    },
+    {
+      "type": "EOA",
+      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0000000000000000000000000000000000000001" },
-    { "address": "0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5" },
-    { "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2" },
-    { "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac" },
-    { "address": "0x140Bd8FbDc884f48dA7cb1c09bE8A2fAdfea776E" },
-    { "address": "0x14D5d5B71E048d2D75a39FfC5B407e3a3AB6F314" },
-    { "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD" },
-    { "address": "0x294ED1f214F4e0ecAE31C3Eae4F04EBB3b36C9d0" },
-    { "address": "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2" },
-    { "address": "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C" },
-    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
-    { "address": "0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1" },
-    { "address": "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8" },
-    { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
-    { "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0" },
-    { "address": "0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12" },
-    { "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560" },
-    { "address": "0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF" },
-    { "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E" },
-    { "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874" },
-    { "address": "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78" },
-    { "address": "0x955B978F3ee7818dA71fA25c676062E6BC462Fec" },
-    { "address": "0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8" },
-    { "address": "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186" },
-    { "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7" },
-    { "address": "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf" },
-    { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
-    { "address": "0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f" },
-    { "address": "0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9" },
-    { "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645" },
-    { "address": "0xf82D88217C249297C6037BA77CE34b3d8a90ab43" },
-    { "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0" },
-    { "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90" },
-    { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
   ],
   "abis": {
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": [

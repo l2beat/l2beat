@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "eip7702",
+  "chain": "sepolia",
+  "initialAddresses": ["0x7dd7Ee2f39fc8C164519816243a5D5c6E2Bf745C"]
+}

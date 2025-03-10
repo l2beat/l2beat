@@ -1,3 +1,129 @@
+Generated with discovered.json: 0x8406dd4eab8ea3bf049cfbf61574c7fc285dfda1
+
+# Diff at Mon, 10 Mar 2025 08:28:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 9010064
+- current block number: 9010064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9010064 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x34788Df312acC671E62C9aB15523F7CDC4D29BA9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4732015b3B1712A4FC5C059195300D12d529bb77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x509ff56c152315EdeE91A2e0f059195519507e01)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x902C3806A84f4e855a8746e92d7F1C9a51400458)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC75EFCffEE930706daec5CaCA012551f6a1845D7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xF801886AE2e127A269B0F11892edb54F692d02dF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x660977543a0a793ce463774244ceb58e18e8d73a
 
 # Diff at Tue, 04 Mar 2025 10:41:19 GMT:

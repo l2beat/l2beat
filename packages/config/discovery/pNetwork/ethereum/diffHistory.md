@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x83f3c30804d6dd4e0a6b26297a6242717a1b354f
+
+# Diff at Mon, 10 Mar 2025 08:27:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x0000000000000000000000000000000000000001)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20 Vault V1 (0x112334f50Cb6efcff4e35Ae51A022dBE41a48135)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pNetworkDAOVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Kernel (0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x341aA660fD5c280F5a9501E3822bB4a98E816D1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UOS Vault (0x9f8622b11984AfC8f0a42A394928702017c5968D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MiniMeTokenFactory (0xA29EF584c389c67178aE9152aC9C543f9156E2B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenManager (0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ACL (0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8ff104dd1002909f283a8f00d77049dd61ed5f36
 
 # Diff at Tue, 04 Mar 2025 10:39:35 GMT:

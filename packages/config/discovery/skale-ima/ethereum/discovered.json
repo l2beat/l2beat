@@ -2,9 +2,10 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 21744185,
-  "configHash": "0x8dbdfc8953040bddcb6180aa79571ca3d57316c4403700ef5a530b3e187a05fb",
-  "contracts": [
+  "configHash": "0xbb972bd1365561bd591c7eff2ad140fb39c73e0e6df06fa1e4195b7be1c95169",
+  "entries": [
     {
+      "type": "Contract",
       "name": "ProxyAdminOwner",
       "address": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
       "template": "GnosisSafe",
@@ -37,6 +38,13 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "EOA",
+      "address": "0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DepositBoxERC1155",
       "address": "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
       "sourceHashes": [
@@ -108,6 +116,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DepositBoxEth",
       "address": "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
       "sourceHashes": [
@@ -179,6 +194,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "CommunityPool",
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
       "sourceHashes": [
@@ -257,6 +273,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Linker",
       "address": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
       "sourceHashes": [
@@ -316,6 +333,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "DepositBoxERC721",
       "address": "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
       "sourceHashes": [
@@ -387,6 +405,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "MessageProxyForMainnet",
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
       "sourceHashes": [
@@ -485,6 +504,13 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "DepositBoxERC20",
       "address": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
       "sourceHashes": [
@@ -562,6 +588,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "DepositBoxERC721WithMetadata",
       "address": "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
       "sourceHashes": [
@@ -613,11 +640,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -658,15 +687,25 @@
         "$immutable": true,
         "owner": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
       }
+    },
+    {
+      "type": "EOA",
+      "address": "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x315537a8004A7E598f807e8e0ce2F92e6a497E18" },
-    { "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245" },
-    { "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F" },
-    { "address": "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd" },
-    { "address": "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e" },
-    { "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A" }
   ],
   "abis": {
     "0x0AE92a5105111281151b980A0aD680b890bf1944": [

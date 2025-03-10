@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xe729f781ca739581a12797dda4aa5f6ef9a74ddd
+
+# Diff at Mon, 10 Mar 2025 08:26:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21686332
+- current block number: 21686332
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21686332 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract NextHeaderVerifier (0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0449689f2ce80fE45B32092e0d878ad87F0156a9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x19abbcEC005D4D83692f7A180125bF0FBd24253D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctFeeVault (0x296666e937b270193B960a7cEC526B351F353166)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776)
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x72Ff26D9517324eEFA89A48B75c5df41132c4f54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x793979789Ec179183E396e76c1e241bE0c9eE899)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe)
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+```
+
+```diff
++   Status: CREATED
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x91D456f83f4a117B07866fdEdC29306f7E974e15)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9395e83720bf2D8ac6435f9c520b48E289Cb8885)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewayMultisig (0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HeaderRangeVerifier (0xF33a22dFf8017813b95E5a05c9a97BaFE693001E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd19cfb54e296eeaa34ed9e28f36f2d352beb699e
 
 # Diff at Tue, 04 Mar 2025 10:39:00 GMT:

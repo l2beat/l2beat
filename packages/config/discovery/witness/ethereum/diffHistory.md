@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x2c5645df500409a04c288d2ca73eaccd73e73a46
+
+# Diff at Mon, 10 Mar 2025 08:28:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21736867
+- current block number: 21736867
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x353800524721e11B453f73f523dD8840c215a213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238)
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb8605297399baEb6628C9E8F5D3E52A056492cfe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xcc543F5a2052eDf584216093A0547c4Acd84B80b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xef5F06e5C0493601829DacFA23f2fe30303b0166)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x81b4c16dca1dd640e82b416633ce64647f02cefb
 
 # Diff at Tue, 04 Mar 2025 10:40:12 GMT:

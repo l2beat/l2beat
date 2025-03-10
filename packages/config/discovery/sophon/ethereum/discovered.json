@@ -2,10 +2,11 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 21786541,
-  "configHash": "0x65d97fc7cb21e775b9e990524b2be63954fa6371694c7a77a21befa48779adc2",
+  "configHash": "0xc6e0556c4e16ca1e9f693a87d47a024d8cb5c0ea49513f8dcb1c0efb35db3024",
   "sharedModules": ["shared-zk-stack"],
-  "contracts": [
+  "entries": [
     {
+      "type": "Contract",
       "name": "SophonZkEvm",
       "address": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
       "template": "shared-zk-stack/Diamond",
@@ -229,12 +230,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "proxyType": "immutable",
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
       "sinceBlock": 21081436,
@@ -245,12 +248,44 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "EOA",
+      "address": "0x14574dfC6B7aF658c5033BA95673864947956521",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x3b6036d410cA018661324766680674921a8b2d89",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
+      "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
@@ -290,12 +325,45 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "type": "EOA",
+      "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x90E10C37d8d9e854e7775B0069728642A1F88610",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+          "description": "set the conversion factor for gas token deposits."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "SophonZkEvmAdmin",
       "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
+      "proxyType": "immutable",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -331,6 +399,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "type": "Contract",
       "name": "SophonChainAdminMultisig",
       "address": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
       "template": "GnosisSafe",
@@ -378,6 +447,19 @@
       "derivedName": "Safe"
     },
     {
+      "type": "EOA",
+      "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "L1USDCBridge",
       "address": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987",
       "template": "shared-zk-stack/L1USDCBridge",
@@ -413,43 +495,6 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x14574dfC6B7aF658c5033BA95673864947956521" },
-    { "address": "0x20719Abd2E63518e68D30a295388cAd6B542dCEf" },
-    { "address": "0x3b6036d410cA018661324766680674921a8b2d89" },
-    {
-      "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
-    },
-    { "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3" },
-    { "address": "0x90E10C37d8d9e854e7775B0069728642A1F88610" },
-    { "address": "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69" },
-    {
-      "address": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
-          "description": "set the conversion factor for gas token deposits."
-        }
-      ]
-    },
-    {
-      "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
     }
   ],
   "abis": {

@@ -1,3 +1,363 @@
+Generated with discovered.json: 0xb14e9eb5f2178b20fb05b929ccb44789edfa333a
+
+# Diff at Mon, 10 Mar 2025 08:27:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21829671
+- current block number: 21829671
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829671 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x000000000000000000000000000000000000dEaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x07dC0893cAfbF810e3E72505041f2865726Fd073)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0aA384EB2fedD2741277A0f72909A0d7275575D7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1DAITokenBridge (0x10E6593CDda8c58a1d0f14C5164B376352a55f2F)
+    +++ description: Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH_PermissionedGames (0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x27B81db41F586016694632193b99E45b1a27B8f8)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3041BA32f451F5850c147805F5521AC206421623)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH_PermissionlessGames (0x323dFC63c9B83CB83f40325AaB74b245937cbdF0)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4665374939642965EfD8357D4568D2A77f677429)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1DAIEscrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65)
+    +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x473300df21D047806A082244b417f96b32f13A33)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4A7322258c9E690e4CB8Cea6e5251443E956e61E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x51aCb8e1205De850D1b512584FeE9C29C3813dDa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract SynthetixBridgeEscrow (0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f)
+    +++ description: Custom escrow for SNX bridged via canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x652BC529E171847E2fFddCeA13567643C84ccB5f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6887246668a3b87F54DeB3b94Ba47a6f63F32985)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract wstETHEscrow (0x76943C0D61395d8F2edF9060e1533529cAe05dE6)
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7cB07FE039a92B3D784f284D919503A381BEC54f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x91a661891248d8C4916FB4a1508492a5e2CBcb87)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x92827223f6b397CE9F208eE352bacA710765cACb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9Eb11A55132c851b9991F148b3Af791ca498fD7A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)
+    +++ description: Collecting sequencer, base- and L1 fees from L2.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAAAA45d9549EDA09E70937013520214382Ffc4A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed)
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE7dEA1306D9F829bA469d1904c50903b46ebd02e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xEF9A98511939eEe6Ec69af62082E3F2ff606877c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFF00000000000000000000000000000000000010)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x018016f85b207f224eef38e8d159d482cb5a8603
 
 # Diff at Tue, 04 Mar 2025 11:26:05 GMT:

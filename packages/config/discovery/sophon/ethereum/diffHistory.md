@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x9df149baada750bd578209f47c147a765f426cf5
+
+# Diff at Mon, 10 Mar 2025 08:27:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@78bcb6383f4f7e8dd3a6cfb20645e1e526af32ba block: 21786541
+- current block number: 21786541
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786541 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3)
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x14574dfC6B7aF658c5033BA95673864947956521)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x20719Abd2E63518e68D30a295388cAd6B542dCEf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x3b6036d410cA018661324766680674921a8b2d89)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4cc87B0A504047967CeD9A955431B3229237e7de)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7f413262Cb811B034d077d9184b5Efda6943f2c3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x90E10C37d8d9e854e7775B0069728642A1F88610)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe14828E4405239dD331F194F1B7883eeD73bCBF3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x768341f49c6b409bf3298fab67bcf91367760935
 
 # Diff at Tue, 04 Mar 2025 10:40:00 GMT:

@@ -2,9 +2,28 @@
   "name": "swan",
   "chain": "ethereum",
   "blockNumber": 20413034,
-  "configHash": "0x6957d7c93e9c1e93300cd017f3249cae95849084bd41462ccd817e23e18d8689",
-  "contracts": [
+  "configHash": "0x0f829ca741927c88211570097bd1e658e0202670b206c9976117b3ccff75b194",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x04E1b8f517aF7dcD75a95B46DAdCc2c6f486502D",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2",
       "template": "opstack/L1CrossDomainMessenger",
@@ -50,6 +69,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "Contract",
       "name": "L2OutputOracle",
       "address": "0x1c22740A0B4511E11D76434A424487862b593901",
       "template": "opstack/L2OutputOracle",
@@ -125,6 +145,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "L1ERC721Bridge",
       "address": "0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32",
       "template": "opstack/L1ERC721Bridge",
@@ -165,6 +186,39 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "EOA",
+      "address": "0x2c1877cDFa3649122CC0F41423A2a185217a2E23",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x1c22740A0B4511E11D76434A424487862b593901"
+        },
+        {
+          "permission": "guard",
+          "from": "0xadE916De67511E5C24af4174Be67143d0dA94959"
+        },
+        {
+          "permission": "guard",
+          "from": "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
+        },
+        {
+          "permission": "interact",
+          "from": "0x504D56cf68f791B45E3A2e895B0e1562f3431328",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "SystemConfig",
       "address": "0x504D56cf68f791B45E3A2e895B0e1562f3431328",
       "template": "opstack/SystemConfig",
@@ -256,12 +310,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "AddressManager",
       "address": "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
+      "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -279,6 +335,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Swan Network Multisig",
       "address": "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c",
       "template": "GnosisSafe",
@@ -360,6 +417,7 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "SuperchainConfig",
       "address": "0xadE916De67511E5C24af4174Be67143d0dA94959",
       "template": "opstack/SuperchainConfigFake",
@@ -403,6 +461,26 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "type": "EOA",
+      "address": "0xB12bd496383288A3c7916AEF8e40197d61e07815",
+      "sourceHashes": [],
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x1c22740A0B4511E11D76434A424487862b593901"
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "OptimismPortal",
       "address": "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15",
       "template": "opstack/OptimismPortal",
@@ -457,12 +535,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -509,6 +589,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xde794bEc196832474f2F218135bFd0f7cA7fb038",
+      "sourceHashes": [],
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x504D56cf68f791B45E3A2e895B0e1562f3431328"
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "OptimismMintableERC20Factory",
       "address": "0xE9614162C6128ABD7790C65D711CfC43ea842153",
       "template": "opstack/OptimismMintableERC20Factory",
@@ -544,6 +637,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0xed7525946A09056C6AaE29941b8323017382050e",
       "template": "opstack/L1StandardBridge",
@@ -578,57 +672,13 @@
         "version": "2.1.0"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "type": "EOA",
+      "address": "0xfF00000000000000000000000000000000000254",
+      "sourceHashes": [],
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x04E1b8f517aF7dcD75a95B46DAdCc2c6f486502D" },
-    { "address": "0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0" },
-    { "address": "0x2c1877cDFa3649122CC0F41423A2a185217a2E23" },
-    {
-      "address": "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x1c22740A0B4511E11D76434A424487862b593901"
-        },
-        {
-          "permission": "guard",
-          "from": "0xadE916De67511E5C24af4174Be67143d0dA94959"
-        },
-        {
-          "permission": "guard",
-          "from": "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
-        },
-        {
-          "permission": "interact",
-          "from": "0x504D56cf68f791B45E3A2e895B0e1562f3431328",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-        }
-      ]
-    },
-    { "address": "0xB12bd496383288A3c7916AEF8e40197d61e07815" },
-    {
-      "address": "0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0x1c22740A0B4511E11D76434A424487862b593901"
-        }
-      ]
-    },
-    {
-      "address": "0xde794bEc196832474f2F218135bFd0f7cA7fb038",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x504D56cf68f791B45E3A2e895B0e1562f3431328"
-        }
-      ]
-    },
-    { "address": "0xfF00000000000000000000000000000000000254" }
   ],
   "abis": {
     "0x0092400cf9cbAC5ABD8518960Cb1F90663607630": [
