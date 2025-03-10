@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const hemi: Layer2 = upcomingL2({
+export const hemi: ScalingProject = upcomingL2({
   id: 'hemi',
   capability: 'universal',
   addedAt: UnixTime(1727449740), // 2024-09-27T17:09:00Z

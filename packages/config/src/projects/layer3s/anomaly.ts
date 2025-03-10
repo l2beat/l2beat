@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
-export const anomaly: Layer3 = upcomingL3({
+export const anomaly: ScalingProject = upcomingL3({
   id: 'anomaly',
   capability: 'universal',
   addedAt: UnixTime(1719939717), // 2024-07-02T17:01:57Z

@@ -1,13 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('aevo')
 
-export const aevo: Layer2 = opStackL2({
+export const aevo: ScalingProject = opStackL2({
   addedAt: UnixTime(1694090052), // 2023-09-07T12:34:12Z
   additionalBadges: [BADGES.DA.EigenDA, BADGES.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER,

@@ -2,7 +2,7 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -29,7 +29,7 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const xterio: Layer2 = opStackL2({
+export const xterio: ScalingProject = opStackL2({
   addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
   additionalBadges: [BADGES.DA.CustomDA, BADGES.RaaS.AltLayer],

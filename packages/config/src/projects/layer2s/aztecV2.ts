@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const aztecV2: Layer2 = upcomingL2({
+export const aztecV2: ScalingProject = upcomingL2({
   id: 'aztec-v2',
   addedAt: UnixTime(1700568758), // '2023-11-21T12:12:38Z'
   capability: 'universal',

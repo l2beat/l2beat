@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../global/milestones'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
@@ -214,7 +214,7 @@ import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
 
-export const layer2s: Layer2[] = [
+export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
   aiechain,

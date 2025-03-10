@@ -1,9 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const pmon: Layer3 = underReviewL3({
+export const pmon: ScalingProject = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   id: ProjectId('pmon'),
   capability: 'universal',

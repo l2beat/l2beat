@@ -19,7 +19,7 @@ import {
   getCommittee,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -54,7 +54,7 @@ const requiredHonestMembersPercentage = (
   100
 ).toFixed(0)
 
-export const immutablex: Layer2 = {
+export const immutablex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('immutablex'),
   capability: 'appchain',

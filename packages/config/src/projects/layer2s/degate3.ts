@@ -23,7 +23,7 @@ import {
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
@@ -98,7 +98,7 @@ const timelockUpgrades2 = {
   ],
 }
 
-export const degate3: Layer2 = {
+export const degate3: ScalingProject = {
   type: 'layer2',
   id: ProjectId('degate3'),
   capability: 'appchain',

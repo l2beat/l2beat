@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const superposition: Layer3 = underReviewL3({
+export const superposition: ScalingProject = underReviewL3({
   id: 'superposition',
   capability: 'universal',
   addedAt: UnixTime(1720082709), // 2024-07-04T08:45:09Z

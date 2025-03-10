@@ -5,7 +5,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
@@ -16,7 +16,7 @@ const isForcedBatchDisallowed =
 
 const bridge = discovery.getContract('PolygonSharedBridge')
 
-export const polygonzkevm: Layer2 = polygonCDKStack({
+export const polygonzkevm: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVM'),
   rollupVerifierContract: discovery.getContract('Verifier'),

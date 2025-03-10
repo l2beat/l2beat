@@ -3,13 +3,13 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('rss3')
 
-export const rss3: Layer2 = opStackL2({
+export const rss3: ScalingProject = opStackL2({
   addedAt: UnixTime(1705391231), // 2024-01-16T07:47:11Z
   daProvider: {
     layer: DA_LAYERS.NEAR_DA,
@@ -65,7 +65,7 @@ export const rss3: Layer2 = opStackL2({
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
     description:
-      'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack, handling the value and ownership of AI and Open Information.',
+      'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum ScalingProject built with OP Stack, handling the value and ownership of AI and Open Information.',
     links: {
       websites: ['https://rss3.io'],
       apps: [

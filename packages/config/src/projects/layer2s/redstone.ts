@@ -2,7 +2,7 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -28,7 +28,7 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const redstone: Layer2 = opStackL2({
+export const redstone: ScalingProject = opStackL2({
   addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
   additionalPurposes: ['Gaming'],

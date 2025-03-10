@@ -9,12 +9,12 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkswap2')
 
-export const zkswap2: Layer2 = {
+export const zkswap2: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zkswap2'),
   capability: 'universal',

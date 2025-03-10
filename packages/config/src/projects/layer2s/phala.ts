@@ -18,7 +18,7 @@ import {
 } from '../../common'
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
@@ -48,7 +48,7 @@ const upgradeDelay = 0
 const forcedWithdrawalDelay = 0
 const SEQUENCING_WINDOW_SECONDS = 3600 * 12
 
-export const phala: Layer2 = {
+export const phala: ScalingProject = {
   id: ProjectId('phala'),
   capability: 'universal',
   addedAt: UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC

@@ -2,14 +2,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('degen', 'base')
 
-export const degen: Layer3 = orbitStackL3({
+export const degen: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1712135735), // 2024-04-03T09:15:35Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
