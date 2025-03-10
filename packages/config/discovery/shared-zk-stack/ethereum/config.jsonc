@@ -12,9 +12,19 @@
     "0x2cf3bD6a9056b39999F3883955E183F655345063": "EraAdminProxy",
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZkFoundationMultisig",
     "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "ProtocolTimelockController(L2->L1)",
-    "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub"
+    "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub",
+    "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": "ProtocolUpgradeHandler_deprecated",
+    "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6": "EmergencyUpgradeBoard_deprecated",
+    "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410": "SecurityCouncil_deprecated",
+    "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": "Guardians_deprecated"
   },
   "overrides": {
+    // old Governance contracts (will be deprecated in next upgrade)
+    "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": { "category": "spam" },
+    "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6": { "category": "spam" },
+    "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410": { "category": "spam" },
+    "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": { "category": "spam" },
+
     // Security Council members
     "0x13f07d9BF17615f6a17F272fe1A913168C275A66": { "category": "spam" },
     "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a": { "category": "spam" },
