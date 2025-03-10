@@ -121,16 +121,16 @@ async function generateConfigForProject(
   const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
   const rpc = rpcApi
     ? new RpcClient({
-      http: new HttpClient(),
-      callsPerMinute: env.integer(
-        `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        rpcApi.callsPerMinute ?? 120,
-      ),
-      retryStrategy: 'RELIABLE',
-      logger,
-      url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
-      sourceName: project.id,
-    })
+        http: new HttpClient(),
+        callsPerMinute: env.integer(
+          `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+          rpcApi.callsPerMinute ?? 120,
+        ),
+        retryStrategy: 'RELIABLE',
+        logger,
+        url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
+        sourceName: project.id,
+      })
     : undefined
 
   return mapConfig(project, logger, rpc)

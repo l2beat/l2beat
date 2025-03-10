@@ -28,7 +28,9 @@ BigIntWithDecimals.fromNumber = function fromNumber(
   return BigInt(Math.round(value * 10 ** DECIMALS))
 }
 
-BigIntWithDecimals.toNumber = function toNumber(value: bigint): number {
+BigIntWithDecimals.toNumber = function toNumber(
+  value: BigIntWithDecimals,
+): number {
   return Number(value) / 10 ** DECIMALS
 }
 
