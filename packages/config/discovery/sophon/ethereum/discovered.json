@@ -6,9 +6,9 @@
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
-      "type": "Contract",
       "name": "SophonZkEvm",
       "address": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+      "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
@@ -230,9 +230,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "type": "Contract",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
@@ -248,23 +248,23 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x14574dfC6B7aF658c5033BA95673864947956521",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x3b6036d410cA018661324766680674921a8b2d89",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -274,9 +274,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
@@ -321,23 +321,23 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "type": "EOA",
       "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x90E10C37d8d9e854e7775B0069728642A1F88610",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -348,9 +348,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "SophonZkEvmAdmin",
       "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+      "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
@@ -391,9 +391,9 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "Contract",
       "name": "SophonChainAdminMultisig",
       "address": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -439,8 +439,8 @@
       "derivedName": "Safe"
     },
     {
-      "type": "EOA",
       "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -450,9 +450,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "L1USDCBridge",
       "address": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987",
+      "type": "Contract",
       "template": "shared-zk-stack/L1USDCBridge",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",

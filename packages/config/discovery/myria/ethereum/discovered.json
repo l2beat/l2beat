@@ -6,9 +6,9 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "type": "Contract",
       "name": "DACommittee",
       "address": "0x1e601435E181423e7A8430813d7500012a6169cB",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
@@ -42,9 +42,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "StarkExchange",
       "address": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
+      "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
@@ -207,19 +207,19 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
@@ -265,9 +265,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+      "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
@@ -283,8 +283,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x86ED881374a81efcc1Aa9f82cA9740B40F0FCbfe",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -295,8 +295,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -317,13 +317,13 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xC7544ad893710Bd0bf780bf78dE5547706da75c5",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xe997ece81cb8A686206ea6042886B594Ecf6DdED",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -333,13 +333,13 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xf365CDB8C33849d3684AcFf5475E7B6F075F9F0F",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xfBA93b5f744c853648d62C1357532582f77ed394",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

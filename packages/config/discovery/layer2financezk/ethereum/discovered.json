@@ -6,8 +6,8 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -31,14 +31,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
@@ -54,9 +54,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "StrategyCompound",
       "address": "0x5b000954F70B0410685193B0afd3074B744B5C97",
+      "type": "Contract",
       "sourceHashes": [
         "0xd4db48e0b7efb71ded88f8c4a839b0175d98cfd365e8beaf4630e60dfb8ea404"
       ],
@@ -73,9 +73,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "GpsFactRegistryAdapter",
       "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
@@ -121,9 +121,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "StarkExchange",
       "address": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+      "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0x87045c081a3bd84c271153c36a9a503f84bc3035077d34144332c329d3fcb92d",
@@ -292,8 +292,8 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -303,9 +303,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "Comp",
       "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+      "type": "Contract",
       "sourceHashes": [
         "0xface33f588d07cf7b8c64c6200efc11c45d45332a47c27e8c49859d6bc5c8001"
       ],
@@ -323,20 +323,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
-        }
-      ]
-    },
-    {
       "type": "EOA",
-      "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -347,9 +335,21 @@
       ]
     },
     {
-      "type": "Contract",
+      "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
+    },
+    {
       "name": "Broker",
       "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+      "type": "Contract",
       "sourceHashes": [
         "0xd9040d82f39aa8ff258f35b318bdf0fc513f4d8844c61c34f6c8ce81eee40b55"
       ],
@@ -367,9 +367,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "Committee",
       "address": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
       "sinceTimestamp": 1650870230,

@@ -5,9 +5,9 @@
   "configHash": "0x3bf54ba30efa92afea17543854ea645eda54195e72e8d6324c80b7c74ac7e026",
   "entries": [
     {
-      "type": "Contract",
       "name": "TokenBridge",
       "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+      "type": "Contract",
       "template": "linea/TokenBridge",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -128,29 +128,29 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x1111111111111111111111111111111111111111",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CallForwardingProxy",
       "address": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
+      "type": "Contract",
       "sourceHashes": [
         "0x51e1fd21b79473438268845d5f9025c91fd69c6feb26e25f97f932e174e7ce1e"
       ],
@@ -164,9 +164,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "BridgedToken",
       "address": "0x36f274C1C197F277EA3C57859729398FCc8a3763",
+      "type": "Contract",
       "sourceHashes": [
         "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
       ],
@@ -194,9 +194,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "USDCBridgeProxyAdmin",
       "address": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
@@ -216,13 +216,13 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "type": "EOA",
       "address": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -232,19 +232,19 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "USDCBridge",
       "address": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x27a9694e3bfad3a6ec23be7f15d8e6093b4d3a12eba4d10de0d9c660f5a47d30"
@@ -286,8 +286,8 @@
       "derivedName": "L1USDCBridge"
     },
     {
-      "type": "EOA",
       "address": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -297,14 +297,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x5822D8457c00FB82203918ED92907b935B9D40AE",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "LineaAdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -383,14 +383,14 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ERC20UpgradableBeacon",
       "address": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
+      "type": "Contract",
       "sourceHashes": [
         "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
       ],
@@ -405,9 +405,9 @@
       "derivedName": "UpgradeableBeacon"
     },
     {
-      "type": "Contract",
       "name": "MultiSend",
       "address": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
+      "type": "Contract",
       "sourceHashes": [
         "0x3b1182a0432445f884d447d11823ec4b120a198eeaa3d9f3024384d87ee77cf1"
       ],
@@ -417,24 +417,24 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "VerifierProofType3",
       "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
+      "type": "Contract",
       "sourceHashes": [
         "0x47f89dc90dfffe4c8914bdac8b7c92bc4cbee0df1bf52f3926e43fe0934a2ff4"
       ],
@@ -445,9 +445,9 @@
       "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
     },
     {
-      "type": "Contract",
       "name": "LineaRollup",
       "address": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "type": "Contract",
       "template": "linea/LineaRollup",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -692,9 +692,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "Timelock",
       "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
+      "type": "Contract",
       "template": "global/Timelock",
       "sourceHashes": [
         "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
@@ -807,9 +807,9 @@
       "derivedName": "TimeLock"
     },
     {
-      "type": "Contract",
       "name": "Roles",
       "address": "0xF24f1DC519d88246809B660eb56D94048575d083",
+      "type": "Contract",
       "sourceHashes": [
         "0x699a67bde09c0d73c29ec9de66133bfee484544494865d954ac01f9736efed30"
       ],
@@ -932,9 +932,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"

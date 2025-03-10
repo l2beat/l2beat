@@ -5,19 +5,19 @@
   "configHash": "0x9b7e2e5def46a17956949887a86871c993cff2c283d776b88f7d726fa16ef3ed",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x1606f9a327baDb924B1E67CbB4Bd3227EcC7ad9a",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x1606f9a327baDb924B1E67CbB4Bd3227EcC7ad9a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StakingManager",
       "address": "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227",
+      "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0xae4f01314954d6bf92eaca0c3e5c760f63db6376d826d9cb3d41136003123856"
@@ -59,9 +59,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "OneStepProofEntry",
       "address": "0x1F58949AB4C6A65C4055f45fdF9297C5F216CD95",
+      "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
@@ -79,9 +79,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "OneStepProverHostIo",
       "address": "0x251E34E4644D06b319AD39c602b857E47cCa13C3",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
@@ -93,8 +93,8 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0x282e630b33B684DF61e3459316BAe4f27a28dE29",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -105,9 +105,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "ValidatorUtils",
       "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
+      "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
@@ -119,21 +119,21 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "name": "Caldera",
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x37ac40B07AC1148EEbb0919C63767aBfF533Db1D",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OrbitProxyAdmin",
       "address": "0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
@@ -191,9 +191,9 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "type": "Contract",
       "name": "EdgelessMultisig",
       "address": "0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -322,8 +322,8 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x4e4aC6F04106964b5B69FDA5EcC207295bCae81f",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -334,9 +334,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "Outbox",
       "address": "0x5e8749760c5051fF80b73319cCf4d05ef9959563",
+      "type": "Contract",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -382,9 +382,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "OneStepProverMemory",
       "address": "0x6119D59799E83329847de25Dc787A0D9ab4c0323",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
@@ -396,9 +396,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "ERC20Gateway",
       "address": "0x6a1B2ea25c3099CAFcbd4E60a3Ae251E52B69e78",
+      "type": "Contract",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -440,9 +440,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "Bridge",
       "address": "0x6B595398152999bBc759D5D8ed8169793F915488",
+      "type": "Contract",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -518,9 +518,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "EdgelessDeposit",
       "address": "0x7E0bc314535f430122caFEF18eAbd508d62934bf",
+      "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0xc29a00d40454333c33bef95b7bf7c77adf0ed23d17de616fa962e665b386ca2e"
@@ -555,9 +555,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "RollupProxy",
       "address": "0x890025891508a463A636f81D2f532a97210240de",
+      "type": "Contract",
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
@@ -709,9 +709,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "ChallengeManager",
       "address": "0x893057442A952E3254CA53d007AD6BBB502f557e",
+      "type": "Contract",
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -761,14 +761,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x9860207d8786Df59ebB220C6a747802100D0bCf2",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "CustomGateway",
       "address": "0x99790790B030CF116efed1c7577e2262072EfCc9",
+      "type": "Contract",
       "template": "orbitstack/CustomGateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -809,14 +809,14 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "EOA",
       "address": "0xa43ce4721Ac0faB33E8636e0DDB55E76e3EFF461",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "StrategiesProxyAdmin",
       "address": "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
@@ -850,14 +850,14 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "type": "EOA",
       "address": "0xA61A62352FAF6AD883A8D36975cf39cDEB477D25",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OneStepProver0",
       "address": "0xaac292Cb9a205A140003775529181787fdbc4DC6",
+      "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
@@ -869,9 +869,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "GatewayRouter",
       "address": "0xb47D14b4282DF795E036e9Ea43E54C31FCB0eCAC",
+      "type": "Contract",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -913,9 +913,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "RenzoStrategy",
       "address": "0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9",
+      "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0xad43639684e818ceea7a4da925f6ac94c1005d69a423f65afcc40461fa2f16d2"
@@ -955,9 +955,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "EthStrategy",
       "address": "0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b",
+      "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0xe44c1094ba5445d7a4760ceeae485cef71bc9c9b38a30d781d128eb8ac93caf7"
@@ -995,9 +995,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "UpgradeExecutor",
       "address": "0xc213d433802ea473e23623476b26FB12e9B4eFe6",
+      "type": "Contract",
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -1065,13 +1065,13 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "EOA",
       "address": "0xC616EA9D34ec12D6879A9DE7910CA9Bf5f28C9E7",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -1103,9 +1103,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "WrappedToken",
       "address": "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7",
+      "type": "Contract",
       "sourceHashes": [
         "0x153b6efe4e6ab2b68b61be626944cbd2bd163bbe29c7d290c19e47b32831a4a0"
       ],
@@ -1123,9 +1123,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "OneStepProverMath",
       "address": "0xE6068c35d4FB1899b9419cE3e7B66D318C652847",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
@@ -1137,19 +1137,19 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0xE7CeeAd21Ba7891AC86F75AfEB7BD1945127a72f",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Inbox",
       "address": "0xf51551afD112a50Fc5EDa0454111078fE6E6096E",
+      "type": "Contract",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -1191,9 +1191,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "RollupEventInbox",
       "address": "0xFa213CdA43f879FfaF17170B6E3b3AbE9900cAB1",
+      "type": "Contract",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -1230,9 +1230,9 @@
       "derivedName": "ERC20RollupEventInbox"
     },
     {
-      "type": "Contract",
       "name": "SequencerInbox",
       "address": "0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086",
+      "type": "Contract",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",

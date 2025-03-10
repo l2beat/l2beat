@@ -5,14 +5,14 @@
   "configHash": "0x7ad2a972b8c6cb5a4bf0b993559cbeee500ed00349268411f1a5f531fb89e81f",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x0000000000000000000000000000000000000001",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ERC20 Vault V1",
       "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+      "type": "Contract",
       "sourceHashes": [
         "0xdf2e47952904a5d0bc18604cdb2be843cfbc6ae2be79ca98e0d1fcf9f69d70d4"
       ],
@@ -26,14 +26,14 @@
       "derivedName": "Erc20Vault"
     },
     {
-      "type": "EOA",
       "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "pNetworkDAOVoting",
       "address": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
+      "type": "Contract",
       "sourceHashes": [
         "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
         "0xeec9883cfc8cce2215f09608d831b1e64c31e57e4daf63da14701cdbe8b2a291"
@@ -130,9 +130,9 @@
       "derivedName": "DandelionVoting"
     },
     {
-      "type": "Contract",
       "name": "Kernel",
       "address": "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b",
+      "type": "Contract",
       "sourceHashes": [
         "0x3ef00bf119dbb1f46a05a35111f35da84bb45cac1abfa574989211677d16787a",
         "0x452458b35204910fe71376b423bd8d2887a1e82d22843fd79880d4ac0dce2a33"
@@ -161,29 +161,29 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EVMScriptRegistry",
       "address": "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478",
+      "type": "Contract",
       "template": "tokens/Lido/EVMScriptRegistry",
       "sourceHashes": [
         "0x3cab9c9a12a52c625f55b2d3d9693f8eb062cb0d41841589b557888ad01afced",
@@ -210,14 +210,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "UOS Vault",
       "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
+      "type": "Contract",
       "sourceHashes": [
         "0xe6b0ad564ecf0ee4b47b19a605101ce2c680b5e451c154acaaabb25f454aed1a"
       ],
@@ -231,9 +231,9 @@
       "derivedName": "Erc20Vault"
     },
     {
-      "type": "Contract",
       "name": "MiniMeTokenFactory",
       "address": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
+      "type": "Contract",
       "sourceHashes": [
         "0xab441847b55bfdc5cf90792906cf0effcd43d3390a7cc05e690aad5fb349c19b"
       ],
@@ -243,9 +243,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -275,9 +275,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
@@ -296,14 +296,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "TokenManager",
       "address": "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254",
+      "type": "Contract",
       "sourceHashes": [
         "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
         "0x07aae7f3026cf9986df7e9587978c4a61f37310b62ac418c63e182d2fdb51fef"
@@ -336,9 +336,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "PProxyAdmin",
       "address": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
+      "type": "Contract",
       "sourceHashes": [
         "0x90607504d5e8f365803601eeade9548daa56d981da3ce27d42acb6d7e01150b2"
       ],
@@ -357,14 +357,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
+      "type": "Contract",
       "sourceHashes": [
         "0x421304ff20b039c820bfc9af779d8ec7444153822c329251f1bbaec68febf02c",
         "0x9a4dab9a6c79e6054401f76b1b8df918bf8b24d341078c87aef7d619f3787d3c"
@@ -423,9 +423,9 @@
       "derivedName": "Erc20Vault"
     },
     {
-      "type": "Contract",
       "name": "MiniMeToken",
       "address": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
+      "type": "Contract",
       "template": "tokens/Lido/MiniMeToken",
       "sourceHashes": [
         "0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46"
@@ -450,9 +450,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "EthPntv2",
       "address": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xf9ab1306492850c52f787f8af996c1c4df97d8c382b73d65e0e8e60fd346c056"
@@ -515,9 +515,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ACL",
       "address": "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe",
+      "type": "Contract",
       "sourceHashes": [
         "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
         "0xe780841a8c7ccdd14b49db877aa5f4c96632a8a751af71424973cb40b5a8a726"
@@ -546,8 +546,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

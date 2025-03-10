@@ -5,31 +5,31 @@
   "configHash": "0x31f7ca06717d5181c9ab8a5d1a092c2adbb1527ad50b24ac67a5f8291e9ca106",
   "entries": [
     {
-      "type": "EOA",
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x07D4692291B9E30E326fd31706f686f83f331B82",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x096760F208390250649E3e8763348E783AEF5562",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Outbox",
       "address": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+      "type": "Contract",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -313,8 +313,8 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "EOA",
       "address": "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -325,9 +325,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "wstETHEscrow",
       "address": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+      "type": "Contract",
       "sourceHashes": [
         "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
         "0xbd9ad3a060bba138bf31ab27d9c9a59159aeddab49620a728f0485165d7cb05d"
@@ -395,9 +395,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "UpgradeableBeacon",
       "address": "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b",
+      "type": "Contract",
       "sourceHashes": [
         "0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"
       ],
@@ -412,9 +412,9 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "type": "Contract",
       "name": "SequencerInbox",
       "address": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+      "type": "Contract",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -554,21 +554,21 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "Contract",
       "name": "OneStepProver0",
       "address": "0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731",
+      "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x549b7c350bf6e1da7e8aa5fda9440889a76d5611ed7c6e37411d364ee36f8d5b"
@@ -580,19 +580,19 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UpgradeExecutor",
       "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+      "type": "Contract",
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
@@ -693,9 +693,9 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "Contract",
       "name": "ParentToChildRewardRouter",
       "address": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
+      "type": "Contract",
       "template": "orbitstack/ParentToChildRewardRouter",
       "sourceHashes": [
         "0xc88bb6c32f0ba67edea5bee7a5b31a2d0b854654eb753fca6ede5467024b68eb"
@@ -715,9 +715,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "OneStepProofEntry",
       "address": "0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6",
+      "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0xfdda77bfcb4ee6e1d88939c755d6eda90f3250c8053b15b511ad9148cce8a787"
@@ -735,28 +735,28 @@
       }
     },
     {
-      "type": "EOA",
       "name": "AleksanderKryukov-Certora",
       "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "name": "yoav.eth-EF",
       "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "Inbox",
       "address": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+      "type": "Contract",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
@@ -855,9 +855,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "RollupProxy",
       "address": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
+      "type": "Contract",
       "template": "orbitstack/RollupProxyBoLD",
       "sourceHashes": [
         "0x951637f3a8787d8273dbd619921f256bd87a38b9d955e65c2e520772c2e0a642",
@@ -1007,14 +1007,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ArbitrumProxyAdmin",
       "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
@@ -1065,9 +1065,9 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "type": "Contract",
       "name": "UpgradeExecutorAdmin",
       "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
@@ -1094,9 +1094,9 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "type": "Contract",
       "name": "RollupEventInbox",
       "address": "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
+      "type": "Contract",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -1150,35 +1150,35 @@
       }
     },
     {
-      "type": "EOA",
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "name": "fred-Arbitrum",
       "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OutboxV0",
       "address": "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+      "type": "Contract",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
         "0x20497774f6f2ef1febbb63646e0eb3b2ed5190f6a53f178032f86d972f0ca99d"
@@ -1240,9 +1240,9 @@
       "derivedName": "OldOutbox"
     },
     {
-      "type": "Contract",
       "name": "LPTL1Escrow",
       "address": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+      "type": "Contract",
       "sourceHashes": [
         "0x4f07cd3e0e2a2e8245a865324089db39bdb6d4831707d7dcee18af0545c716c3"
       ],
@@ -1257,9 +1257,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "GatewayRouter",
       "address": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+      "type": "Contract",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
@@ -1349,9 +1349,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "OutboxV1",
       "address": "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
+      "type": "Contract",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
         "0x00ef6edf5319c5f35e60c03df0fb64df6d630fb23373f9a084d86a868812b4ed"
@@ -1408,21 +1408,21 @@
       "derivedName": "Outbox"
     },
     {
-      "type": "EOA",
       "name": "JohnMorrow-Gauntlet",
       "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "Bridge",
       "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+      "type": "Contract",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -1541,30 +1541,30 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "name": "GriffGreen-Giveth",
       "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "name": "StevenThornton-OpenZeppelin",
       "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "name": "GoncaloMagalhaes-Immunefi",
       "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "Contract",
       "name": "GatewaysAdmin",
       "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
@@ -1595,9 +1595,9 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "type": "Contract",
       "name": "OneStepProverHostIo",
       "address": "0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x95e26ae3077f12aa3b383e87c553884e67eaf30c17ca083768d76822d0916cb8"
@@ -1609,9 +1609,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "L1Escrow",
       "address": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+      "type": "Contract",
       "sourceHashes": [
         "0x0169e3ff6f3a2faeac5a4c76b30fbf87198a211ee683a1b22d33db036f863ee8"
       ],
@@ -1622,9 +1622,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "L1ERC20Gateway",
       "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "type": "Contract",
       "template": "orbitstack/ERC20Gateway2",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
@@ -1708,9 +1708,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "EdgeChallengeManager",
       "address": "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0",
+      "type": "Contract",
       "template": "orbitstack/EdgeChallengeManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
@@ -1769,14 +1769,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OneStepProverMath",
       "address": "0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0xeb0b77a8bbbb65eabcb1e26f29f9eac4db26d0b5974e37d9cc57ffc03b7be0e1"
@@ -1788,13 +1788,13 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -1805,9 +1805,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "OutboxEntry",
       "address": "0xc4940069140142236D4065b866018f7b2BeC77fD",
+      "type": "Contract",
       "sourceHashes": [
         "0xf27ca2839702248340daceb1e5c995144cb5ad3f636f7bc4057e20e142aeb2fe"
       ],
@@ -1823,9 +1823,9 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "type": "Contract",
       "name": "L1CustomGateway",
       "address": "0xcEe284F754E854890e311e3280b767F80797180d",
+      "type": "Contract",
       "template": "orbitstack/CustomGateway2",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
@@ -1913,9 +1913,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "BatchPosterManagerMultisig",
       "address": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1954,9 +1954,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "L1DaiGateway",
       "address": "0xD3B5b60020504bc3489D6949d545893982BA3011",
+      "type": "Contract",
       "template": "orbitstack/L1DaiGateway",
       "sourceHashes": [
         "0x2bfb3c9871d8a7db172d350d7b4678c49eb33a98483f71cb89d3d059a7322efb"
@@ -1979,9 +1979,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "OneStepProverMemory",
       "address": "0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x9da1c11f886667abb57a92659891b066372dde4fe1a3eebce72c722ecf872874"
@@ -1993,16 +1993,16 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "name": "gzeon-OffchainLabs",
       "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "Contract",
       "name": "L1Timelock",
       "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+      "type": "Contract",
       "template": "orbitstack/Timelock",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
@@ -3772,14 +3772,14 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "EOA",
       "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "SecurityCouncil",
       "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
+      "type": "Contract",
       "template": "orbitstack/SecurityCouncil",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -3953,8 +3953,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

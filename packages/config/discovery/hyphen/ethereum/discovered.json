@@ -5,14 +5,14 @@
   "configHash": "0xb5e30105f7d05d6bef1c61860e267f26fb50468d77bc6294e55e5375dceebcec",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
@@ -39,14 +39,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "LiquidityPool",
       "address": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x2704718af75269b1336700ebb7c17f20b7c71a8cfda9618bf04f5c3b6c1ed995"
@@ -101,19 +101,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x600Be30999eB256F2BEf451b69950f7dC84aC6b1",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x600Be30999eB256F2BEf451b69950f7dC84aC6b1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ExecutorManager",
       "address": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
+      "type": "Contract",
       "sourceHashes": [
         "0x892e396c29b5c992295525eefa7f4625709df8fd34d319dcc638eb61bacef0d6"
       ],
@@ -132,14 +132,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "TokenManager",
       "address": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xb4b188b21027295cc23be58bdfb8244712968fff71cb2dd2af67a5b10df99202"
@@ -170,9 +170,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "LiquidityProviders",
       "address": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xbf180146f00753d63babbadf58b1dd574f2f626ca5e0f02e65e2ab5a4975fbe5"
@@ -214,8 +214,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xEEFD474e80B6CAEA43F212D964409c473684E3fe",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

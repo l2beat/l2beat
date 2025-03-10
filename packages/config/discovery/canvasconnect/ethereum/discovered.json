@@ -6,8 +6,8 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x107691bD4F590270B9793c807cB912DD278e8cB5",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -17,8 +17,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x3e10FD04BfCE4dBF496d72F39172347Bf887ac1D",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -29,9 +29,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
@@ -77,8 +77,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -88,9 +88,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "StarkExchange",
       "address": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+      "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
@@ -247,14 +247,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x7e1BBDbE450e9f5988AE3d10a99911A20C138063",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+      "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
@@ -270,9 +270,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "DACommittee",
       "address": "0x8B3A6662809195453645e37C2005d655f57ca818",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"
@@ -304,8 +304,8 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -325,8 +325,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xE00A7D799A60495ce50f188348498E500C9016ea",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

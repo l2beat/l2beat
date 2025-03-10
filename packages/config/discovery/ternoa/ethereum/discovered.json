@@ -6,8 +6,8 @@
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x129A94208bb3030D809c36849d43b50d13e0cACf",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -17,8 +17,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -51,14 +51,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "Validium",
       "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+      "type": "Contract",
       "unverified": true,
       "template": "polygon-cdk/PolygonZkEVM",
       "proxyType": "EIP1967 proxy",
@@ -140,9 +140,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "Verifier",
       "address": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
@@ -156,9 +156,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "PolygonDataCommittee",
       "address": "0xB408a216927d31A27fd96176dbF1B825630f0301",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -207,9 +207,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"

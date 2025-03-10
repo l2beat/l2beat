@@ -5,9 +5,9 @@
   "configHash": "0xaba0d817b0b40ea4ed564568a7f689b539c222bf920feaa78f1a3d55151c8832",
   "entries": [
     {
-      "type": "Contract",
       "name": "BlockVerifier",
       "address": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
+      "type": "Contract",
       "sourceHashes": [
         "0x034de7052cf5e10120ac3d5f4432bd52f50acc4c6d7d51d04aeaeffb45f9b87d"
       ],
@@ -21,9 +21,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "LoopringOwner",
       "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+      "type": "Contract",
       "sourceHashes": [
         "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
       ],
@@ -48,14 +48,14 @@
       "derivedName": "MultiSigWallet"
     },
     {
-      "type": "EOA",
       "address": "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "LoopringV3",
       "address": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
+      "type": "Contract",
       "sourceHashes": [
         "0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"
       ],
@@ -76,9 +76,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "LoopringIOExchangeOwner",
       "address": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
+      "type": "Contract",
       "sourceHashes": [
         "0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"
       ],
@@ -98,14 +98,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+      "type": "Contract",
       "sourceHashes": [
         "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
       ],
@@ -130,9 +130,9 @@
       "derivedName": "MultiSigWallet"
     },
     {
-      "type": "Contract",
       "name": "DefaultDepositContract",
       "address": "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
+      "type": "Contract",
       "sourceHashes": [
         "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
       ],
@@ -147,29 +147,29 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x84A00D39C3c95e839202E19F892F17743d6370a0",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xB7093FC2d926ADdE48122B70991fe68374879adf",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xC715b8501039d3514787dC55BC09f89c293351e9",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ExchangeV3",
       "address": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
+      "type": "Contract",
       "sourceHashes": [
         "0xfe68945beed1d671d49de42310f9808862fb79dd5fe0a529fe1a43b93aab8f03"
       ],
@@ -258,18 +258,18 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xf5020ADf433645c451A4809eac0d6F680709f11B",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

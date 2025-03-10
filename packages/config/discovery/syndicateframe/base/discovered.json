@@ -5,14 +5,14 @@
   "configHash": "0x8ce072a1fb128bf417919307078ab5320ffdf6f26e23e6e4b1f87227e12dc9f5",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
@@ -57,21 +57,21 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "EOA",
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "name": "Caldera",
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
+      "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "Contract",
       "name": "L2OutputOracle",
       "address": "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
+      "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
@@ -140,9 +140,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "OptimismPortal",
       "address": "0x52fA397D799f1CE416a2089B964Aa293c347994F",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
@@ -191,8 +191,8 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -202,9 +202,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "Caldera Multisig 2",
       "address": "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -268,14 +268,14 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "type": "EOA",
       "address": "0x97395dd253E2d096A0CaA62a574895c3C2F2b2e0",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "AddressManager",
       "address": "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
@@ -298,8 +298,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -309,9 +309,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "SystemConfig",
       "address": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
@@ -385,13 +385,13 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -410,9 +410,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
@@ -452,9 +452,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
@@ -486,8 +486,8 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "EOA",
       "address": "0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

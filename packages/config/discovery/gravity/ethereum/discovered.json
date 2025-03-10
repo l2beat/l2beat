@@ -5,9 +5,9 @@
   "configHash": "0xb12fd2709f18d04068bd6f5e3c83b7fd2e353d674369d40166dbaf73fc8fdea5",
   "entries": [
     {
-      "type": "Contract",
       "name": "Gravity",
       "address": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+      "type": "Contract",
       "sourceHashes": [
         "0x73614d88ab67bc498a05ec1978414a688122d352f1d0cb7d58e2e2bb2cce483b"
       ],

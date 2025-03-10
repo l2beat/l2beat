@@ -5,24 +5,24 @@
   "configHash": "0x6f4193cf8a1f0699cb1417617fb448cb8bd0c108907115b74eb0979977e031b1",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "type": "Contract",
       "template": "gnosisSafeModules/LivenessModule",
       "sourceHashes": [
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
@@ -58,14 +58,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "SuperchainGuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -96,9 +96,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "PermissionedDisputeGame",
       "address": "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963",
+      "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
         "0x6aa2de634fc13396d9ea0b7d9d0869633db9d2bfc5b834f530fdc61ab1184bf6"
@@ -184,14 +184,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "DisputeGameFactory",
       "address": "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
+      "type": "Contract",
       "template": "opstack/DisputeGameFactory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -236,9 +236,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "DelayedWETH",
       "address": "0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38",
+      "type": "Contract",
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -278,9 +278,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "MIPS",
       "address": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
+      "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
         "0x8144cb5736a5296d5afc2433b58a1fcb99f995c2836fd16aeca18eda86fb2f91"
@@ -296,14 +296,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "LivenessGuard",
       "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "type": "Contract",
       "sourceHashes": [
         "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
       ],
@@ -324,24 +324,24 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x3041BA32f451F5850c147805F5521AC206421623",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DelayedWETH",
       "address": "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50",
+      "type": "Contract",
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -381,9 +381,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -410,23 +410,23 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x4665374939642965EfD8357D4568D2A77f677429",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -436,14 +436,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
@@ -472,14 +472,14 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "type": "EOA",
       "address": "0x547D0F472309e4239b296D01e03bEDc101241a26",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "SuperchainProxyAdminOwner",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -582,14 +582,14 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OptimismPortal2",
       "address": "0x5d66C1782664115999C47c9fA5cd031f495D3e4F",
+      "type": "Contract",
       "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -651,9 +651,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "SystemConfig",
       "address": "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -749,24 +749,24 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x652BC529E171847E2fFddCeA13567643C84ccB5f",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x65436ddCbc026F34118954F229f7F132b696b3B4",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x65436ddCbc026F34118954F229f7F132b696b3B4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ERC721Bridge",
       "address": "0x661235a238B11191211fa95D4Dd9E423d521E0Be",
+      "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -805,14 +805,14 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "EOA",
       "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
@@ -856,9 +856,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "FaultDisputeGame",
       "address": "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD",
+      "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
         "0x6a8cfd738d026b64f2e5aaaf5faac411dcdc8c0d8ef834587d82144340812a2c"
@@ -942,24 +942,24 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x7D056B99AA2021864c42E25B4F8cE3BdEAc9463C",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OpFoundationUpgradeSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1014,14 +1014,14 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0x88FF1e5b602916615391F55854588EFcBB7663f0",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
@@ -1056,14 +1056,14 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "EOA",
       "address": "0x92827223f6b397CE9F208eE352bacA710765cACb",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "SuperchainConfig",
       "address": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "type": "Contract",
       "template": "opstack/SuperchainConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -1138,9 +1138,9 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "type": "Contract",
       "name": "AddressManager",
       "address": "0x9b7C9BbD6d540A8A4dEDd935819fC4408Ba71153",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
@@ -1163,9 +1163,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "OpFoundationOperationsSafe",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -1219,14 +1219,14 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "PreimageOracle",
       "address": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
+      "type": "Contract",
       "template": "opstack/PreimageOracle",
       "sourceHashes": [
         "0xda65cfcdd58c88318ad76812d92be7f0d10716f389549846646b82ceecf47b2b"
@@ -1249,14 +1249,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OptimismMintableERC20Factory",
       "address": "0xA8B389A82e088b164cD03230e900980CcED34d29",
+      "type": "Contract",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -1290,24 +1290,24 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GelatoMultisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1350,19 +1350,19 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SecurityCouncilMultisig",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1408,9 +1408,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "DeputyGuardianModule",
       "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+      "type": "Contract",
       "template": "gnosisSafeModules/DeputyGuardianModule",
       "sourceHashes": [
         "0x9624d67fb3738cf1ce1e1f48e2cf433e9373345386943d12f1d751d6b8475cd6"
@@ -1434,9 +1434,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
@@ -1496,14 +1496,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
@@ -1527,9 +1527,9 @@
       "derivedName": "Lib_AddressManager"
     },
     {
-      "type": "Contract",
       "name": "AnchorStateRegistry",
       "address": "0xde744491BcF6b2DD2F32146364Ea1487D75E2509",
+      "type": "Contract",
       "template": "opstack/AnchorStateRegistry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -1573,18 +1573,18 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

@@ -6,9 +6,9 @@
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
-      "type": "Contract",
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "type": "Contract",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
@@ -24,9 +24,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "Governance",
       "address": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
+      "type": "Contract",
       "sourceHashes": [
         "0x33d82f6564cf2a54b6bf9c51d42620b2702ccfa9393f498a5bee57c108a66055"
       ],
@@ -51,8 +51,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -62,9 +62,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea",
@@ -460,8 +460,8 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -471,9 +471,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "L1ERC20Bridge_wstETH",
       "address": "0x41527B2d03844dB6b0945f25702cB958b6d55989",
+      "type": "Contract",
       "sourceHashes": [
         "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
         "0x8d6377528b46831d215e352a53f276acbd18ec4bc66c04894dd72dad36288c4d"
@@ -512,9 +512,9 @@
       "derivedName": "L1ERC20Bridge"
     },
     {
-      "type": "Contract",
       "name": "L1ERC20Bridge",
       "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
@@ -581,9 +581,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
@@ -628,9 +628,9 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "type": "Contract",
       "name": "ValidatorTimelockOld",
       "address": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
+      "type": "Contract",
       "sourceHashes": [
         "0x2aff1337a5d8a9be27e6d384ec8a2efd746fb4b73195773c82f3e42e2210c8ed"
       ],

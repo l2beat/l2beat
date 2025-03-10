@@ -5,9 +5,9 @@
   "configHash": "0xce06d85d79f0e42ac6789a5c9be5fbfdd0d2bfe0be6198bbfd09f15de150734a",
   "entries": [
     {
-      "type": "Contract",
       "name": "NextHeaderVerifier",
       "address": "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06",
+      "type": "Contract",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
       ],
@@ -22,24 +22,24 @@
       "derivedName": "FunctionVerifier"
     },
     {
-      "type": "EOA",
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuccinctFeeVault",
       "address": "0x296666e937b270193B960a7cEC526B351F353166",
+      "type": "Contract",
       "sourceHashes": [
         "0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"
       ],
@@ -52,8 +52,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -64,9 +64,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Contract",
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
@@ -122,24 +122,24 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
-      "type": "EOA",
       "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+      "type": "Contract",
       "template": "succinct/SuccinctGateway",
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
@@ -192,19 +192,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Blobstream",
       "address": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+      "type": "Contract",
       "template": "succinct/SP1Blobstream",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
@@ -301,9 +301,9 @@
       "derivedName": "SP1Blobstream"
     },
     {
-      "type": "Contract",
       "name": "BlobstreamMultisig",
       "address": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -346,18 +346,18 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -368,19 +368,19 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -416,9 +416,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "SuccinctGatewayMultisig",
       "address": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -455,9 +455,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "SP1Verifier",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+      "type": "Contract",
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
@@ -471,9 +471,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "SP1Verifier",
       "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "type": "Contract",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
@@ -494,9 +494,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "HeaderRangeVerifier",
       "address": "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
       "sinceTimestamp": 1717613795,

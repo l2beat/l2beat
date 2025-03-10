@@ -5,19 +5,19 @@
   "configHash": "0x90f8f45ffbb76edd001c3b4a76787c74a56e31eb5375e234275490f40479d1b6",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x000000000000000000000000000000000000dEaD",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x00000000000000000000000000000000000FacE7",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x00000000000000000000000000000000000FacE7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FacetEtherBridgeV6",
       "address": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
+      "type": "Contract",
       "template": "facet/FacetEtherBridge",
       "sourceHashes": [
         "0x60cd8a11d99e2d3ed98fa2bbd47ef1096acb4bc535c5520343ae45cea6436e7b",
@@ -68,8 +68,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -84,14 +84,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x1673540243E793B0e77C038D4a88448efF524DcE",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "AddressManager",
       "address": "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
@@ -114,8 +114,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x314d660b083675f415cCAA9c545FeedF377d1006",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -126,9 +126,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "FacetSafeModule",
       "address": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+      "type": "Contract",
       "template": "facet/FacetSafeModule",
       "sourceHashes": [
         "0xe72f875e22302b6f4ba7cf79658f0038ab2f434e188a6a5cf5db5dc59475f168"
@@ -149,19 +149,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x77610267a344Eb39955c20908978830f61e2373C",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x77610267a344Eb39955c20908978830f61e2373C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismPortal",
       "address": "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -211,9 +211,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge_facet",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
@@ -252,9 +252,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0xa1233c2DB638D41893a101B0e9dd44cb681270E8",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
@@ -299,9 +299,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "FacetMultisig",
       "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -391,9 +391,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "SystemConfig",
       "address": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
+      "type": "Contract",
       "template": "opstack/SystemConfig_facet",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -484,9 +484,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "FacetSafeProxy",
       "address": "0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25",
+      "type": "Contract",
       "template": "facet/FacetSafeProxy",
       "sourceHashes": [
         "0xeeb64378c57fe40198d92b6136616a0243788e51e4d363d57f38a4c6ad891ff8"
@@ -498,9 +498,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "L2OutputOracle",
       "address": "0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6",
+      "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -574,14 +574,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "EthscriptionsSafeModule",
       "address": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+      "type": "Contract",
       "template": "facet/EthscriptionsSafeModule",
       "sourceHashes": [
         "0x3b42bbbb2e985d16af9ccbee812a73e53882232fc47dab8cf43369b5b853df33"
@@ -602,9 +602,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
@@ -648,9 +648,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "SuperchainConfig",
       "address": "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59",
+      "type": "Contract",
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -692,9 +692,9 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "Contract",
       "name": "EthscriptionsSafeProxy",
       "address": "0xeEd444Fc821b866b002f30f502C53e88E15d5095",
+      "type": "Contract",
       "template": "facet/EthscriptionsSafeProxy",
       "sourceHashes": [
         "0x09dadea0389245a8882bad041f0349cda9669a53f590677017514fdbe7ec0c8a"

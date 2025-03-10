@@ -6,8 +6,8 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x0000000000000000000000000000000000000020",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -28,9 +28,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "ParadexAdminMultisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -72,13 +72,13 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -93,18 +93,18 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -130,13 +130,13 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -146,9 +146,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "USDC Bridge",
       "address": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
@@ -340,9 +340,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "Paradex",
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+      "type": "Contract",
       "template": "starknet/Starknet",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",

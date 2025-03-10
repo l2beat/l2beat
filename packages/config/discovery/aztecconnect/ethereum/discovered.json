@@ -5,14 +5,14 @@
   "configHash": "0xc5ab65885f13e85bb05cf2048bc433cbc4087917b740f0a98185b126ca3f0ebe",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "AztecFeeDistributor",
       "address": "0x4cf32670a53657596E641DFCC6d40f01e4d64927",
+      "type": "Contract",
       "sourceHashes": [
         "0xf15c9cfd9eb12a3556a88221df34d944dd453922d9b9b9f7c3d50d41b027b06a"
       ],
@@ -29,19 +29,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DefiBridgeProxy",
       "address": "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
+      "type": "Contract",
       "sourceHashes": [
         "0x4c3447f738f38931105bfe030716b1bdc26c6e9ca0bbed38fff31afccabc90fb"
       ],
@@ -51,9 +51,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "Verifier28x32",
       "address": "0xb7baA1420f88b7758E341c93463426A2b7651CFB",
+      "type": "Contract",
       "sourceHashes": [
         "0x55fc1304c184842e528edeff31d00322f57295e9f369b6e457f0c9944bc77de9"
       ],
@@ -66,9 +66,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
@@ -88,14 +88,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "Aztec Multisig",
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -123,9 +123,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "RollupProcessorV3",
       "address": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455",
+      "type": "Contract",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xca3afcf92a9c12ce307d9de265b57fe02f7022f6a5f0eab38511eccafbfff478"

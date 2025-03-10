@@ -5,14 +5,14 @@
   "configHash": "0x725010ec574a0cea774278d954364cd48af8ffb57bdcd4314230acefb85b8fca",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x263294039413B96D25E4173a5F7599F8b3801504",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "HyperliquidBridge",
       "address": "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+      "type": "Contract",
       "sourceHashes": [
         "0x8c22d9d0e8dc4b87b77a97aca8a01a2050b5c416ff894e2b0c18daf22c76b122"
       ],
@@ -96,53 +96,53 @@
       "derivedName": "Bridge2"
     },
     {
-      "type": "EOA",
       "address": "0x45C3bbc5cA908ab49441FFe9742b919fC6dDb10A",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x58E1b0E63C905D5982324FCd9108582623b8132e",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x720237467c57cDF4bf9A501c77a27b5076d76E04",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x8003FD297a7Aa477B746825E7A506675bF590E91",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x86d6AE3032732F27239075D77a1317989B52F628",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xda6816df552c3f9e0FB64979fb357800d690d79B",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xE346B41B47296153A21E64D6bFc857C27874C6e7",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xf9d2282A4A4C216f624717C0747D23146FC048c5",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

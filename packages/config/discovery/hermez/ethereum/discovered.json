@@ -5,9 +5,9 @@
   "configHash": "0x8ab3981e6b1e9d2eb855b7baf5f6d9afc3aaa87541869f9c9ec3038794233354",
   "entries": [
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+      "type": "Contract",
       "sourceHashes": [
         "0x228d39e9354fb4359c868bd34cc144e1f4449270e99b6b6c29077f7cdc43b6ac"
       ],
@@ -30,9 +30,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "HermezAuctionProtocol",
       "address": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+      "type": "Contract",
       "sourceHashes": [
         "0xdb3bef89a228d50af48f4cf15733111b6aafeed38fb487368076047f0272b282",
         "0x476ed86f075a8dece66465dd7b3861cbdafe66b401883c61cb0a73d9b01dde22"
@@ -69,14 +69,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x1DBA1131000664b884A1Ba238464159892252D3a",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "Verifier2048",
       "address": "0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342",
+      "type": "Contract",
       "sourceHashes": [
         "0xf51a7f57b93c2b8b3a62b0b15a896614822a2eeedc4b52a8758d8b0028b5f18c"
       ],
@@ -86,14 +86,14 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "WithdrawalDelayer",
       "address": "0x392361427Ef5e17b69cFDd1294F31ab555c86124",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb5db1557fd4c8a14866a14626b87afcfdfc2738ea4efdb0ea9c87ec09240233"
       ],
@@ -115,14 +115,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "Verifier400",
       "address": "0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2",
+      "type": "Contract",
       "sourceHashes": [
         "0x2d871d2a619c09cbe52344e2d3ce4cf8c55ae1a347abd9ea45a4bda5a7381b46"
       ],
@@ -132,9 +132,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "VerifierWithdraw",
       "address": "0x4464A1E499cf5443541da6728871af1D5C4920ca",
+      "type": "Contract",
       "sourceHashes": [
         "0x1470a04ef17f2a5136c4d367b0e3f4cba6f020f03a73a27eaae5f22e65aa44a7"
       ],
@@ -144,9 +144,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "Hermez2",
       "address": "0x6D85D79D69b7e190E671C16e8611997152bD3e95",
+      "type": "Contract",
       "sourceHashes": [
         "0xe05e5b424accc7b17ae5ca45336522f973eef578dd74429d02aed898b86a59f2"
       ],
@@ -186,14 +186,14 @@
       "derivedName": "Hermez"
     },
     {
-      "type": "EOA",
       "address": "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "HermezAuctionProtocol2",
       "address": "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6",
+      "type": "Contract",
       "sourceHashes": [
         "0x476ed86f075a8dece66465dd7b3861cbdafe66b401883c61cb0a73d9b01dde22"
       ],
@@ -220,9 +220,9 @@
       "derivedName": "HermezAuctionProtocol"
     },
     {
-      "type": "Contract",
       "name": "Hermez",
       "address": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+      "type": "Contract",
       "sourceHashes": [
         "0xdb3bef89a228d50af48f4cf15733111b6aafeed38fb487368076047f0272b282",
         "0xe05e5b424accc7b17ae5ca45336522f973eef578dd74429d02aed898b86a59f2"
@@ -280,14 +280,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xe1bbC673E537053c3536310851C6554BcfcF11Cd",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -318,14 +318,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "HermezGovernance",
       "address": "0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+      "type": "Contract",
       "sourceHashes": [
         "0x3bedb01d2286bb466957d9f521a78ce6f362ce7e6dc31764db9db2a96bf4203d"
       ],
@@ -338,9 +338,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "Timelock",
       "address": "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3",
+      "type": "Contract",
       "sourceHashes": [
         "0x4b401c52fd30ceef4f84c7f5910ab91f15b73d9292a0cccb6fc59ab6a7cc8a1a"
       ],

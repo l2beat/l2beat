@@ -6,13 +6,13 @@
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x099198353446A9E3a20672eDC1Bd461E978842c3",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -22,9 +22,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "daiBridge",
       "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+      "type": "Contract",
       "sourceHashes": [
         "0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa",
         "0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"
@@ -75,19 +75,19 @@
       "derivedName": "L1Escrow"
     },
     {
-      "type": "EOA",
       "address": "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x4E83124eD15b13265240B61EC9627797CCE1032E",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x4E83124eD15b13265240B61EC9627797CCE1032E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonZkEVM",
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
@@ -177,9 +177,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "usdcBridge",
       "address": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+      "type": "Contract",
       "sourceHashes": [
         "0x74f36c1c292d2992d00c72ffd2ff8a4b8648a1c9058e63210c2742186a9daf50",
         "0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"
@@ -216,24 +216,24 @@
       "derivedName": "L1Escrow"
     },
     {
-      "type": "EOA",
       "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Verifier",
       "address": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x1b9299553467d8c5557640b4aa02efa58c4fd2cec8e008db1a70ce0a1c5a131b"
@@ -247,29 +247,29 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "wstETHBridge",
       "address": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+      "type": "Contract",
       "sourceHashes": [
         "0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa",
         "0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"
@@ -318,19 +318,19 @@
       "derivedName": "WstETHBridgeL1"
     },
     {
-      "type": "EOA",
       "address": "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xf56AE6520776934127AB68438d1b4652BCe07F8f",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xf56AE6520776934127AB68438d1b4652BCe07F8f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonZkEvmEscrowsMultisig",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",

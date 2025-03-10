@@ -6,8 +6,8 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -17,9 +17,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "DACommittee",
       "address": "0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"
@@ -51,9 +51,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
@@ -99,8 +99,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -110,8 +110,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -131,8 +131,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -143,9 +143,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+      "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
@@ -161,19 +161,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x9eA52Cf33f7e52D24E205EF5fc5Fc425e9BeB8a0",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x9eA52Cf33f7e52D24E205EF5fc5Fc425e9BeB8a0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarkExchange",
       "address": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+      "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",

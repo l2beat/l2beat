@@ -5,14 +5,14 @@
   "configHash": "0x26571a69c96cfb2ccfd4d34e8d507f93283446cc61d5a42f79e5360f5b5c00e9",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "TransitionDisputer",
       "address": "0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f",
+      "type": "Contract",
       "sourceHashes": [
         "0x6ef430d51894cfb8e777520f64a1df14975bcd0d02c642bc3a7230a0c9407a33"
       ],
@@ -25,14 +25,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "RollupChain",
       "address": "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05",
+      "type": "Contract",
       "sourceHashes": [
         "0x4e59983723a2311ff5ff300ba5aa1533dca94726b04932b57697741b294d47c3"
       ],
@@ -57,9 +57,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "Registry",
       "address": "0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8",
+      "type": "Contract",
       "sourceHashes": [
         "0xebb65e547192b3206d06923231dcd1eed98be7f1c64c6ded8b96f7cc248f5708"
       ],

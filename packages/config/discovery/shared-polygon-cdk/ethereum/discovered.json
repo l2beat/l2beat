@@ -5,19 +5,19 @@
   "configHash": "0x74f9345db7d9646da76d5e9c19dfac1a09557f1da3f9c06c42a3c3d9335ea5a8",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
@@ -47,8 +47,8 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "type": "EOA",
       "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -58,14 +58,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x21887c89368bf918346c62460e0c339113801C28",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "PolygonAdminMultisig",
       "address": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -183,9 +183,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "PolygonSharedBridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonSharedBridge",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
@@ -247,14 +247,14 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "type": "EOA",
       "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "PolygonSecurityCouncil",
       "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -295,24 +295,24 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonRollupManager_pessimistic",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -779,9 +779,9 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "type": "Contract",
       "name": "PolygonGlobalExitRootV2",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonGlobalExitRootV2",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -836,8 +836,8 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "type": "EOA",
       "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -847,39 +847,39 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonCreateRollupMultisig",
       "address": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -920,29 +920,29 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Timelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+      "type": "Contract",
       "template": "polygon-cdk/Timelock",
       "sourceHashes": [
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
@@ -1338,8 +1338,8 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "EOA",
       "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

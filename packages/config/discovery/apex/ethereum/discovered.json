@@ -6,24 +6,24 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x17094A7Cc09686787E0dF95604fd1F9da94B9501",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x22c89137525b593Dd2A18434348b550ffA5984Fe",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CommitteeUSDC",
       "address": "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5"
@@ -59,9 +59,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "FinalizableGpsFactAdapterUSDT",
       "address": "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
@@ -110,13 +110,13 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x4F753A937318A64b2867b16a55f5aea83A4C44dB",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -137,8 +137,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -148,8 +148,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -173,14 +173,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x696cC7615A50CF12d1d1B38bF18A5606e9708296",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "CommitteeUSDT",
       "address": "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a"
@@ -215,8 +215,8 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -226,19 +226,19 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarkPerpetualUSDC",
       "address": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+      "type": "Contract",
       "template": "starkex/StarkPerpetual",
       "sourceHashes": [
         "0xb5e622bd6406dd3d2188cae22f160599ee0953d520795bb86831c4c266e45587",
@@ -446,14 +446,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "PerpetualEscapeVerifier",
       "address": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
+      "type": "Contract",
       "sourceHashes": [
         "0xb56ab8d20ca2ce7897c0448957f5ad2bb634a2019411b1cb0453afe5c86f4f5f"
       ],
@@ -468,19 +468,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xb557219DC53Af7Da9777540426DEe9c196842420",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xb557219DC53Af7Da9777540426DEe9c196842420",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ApexAdminMultisig",
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -525,9 +525,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "StarkPerpetualUSDT",
       "address": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+      "type": "Contract",
       "template": "starkex/StarkPerpetual",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
@@ -683,9 +683,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "FinalizableGpsFactAdapterUSDC",
       "address": "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
@@ -734,8 +734,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+      "type": "EOA",
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [

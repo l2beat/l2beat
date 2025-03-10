@@ -6,14 +6,14 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "type": "EOA",
       "address": "0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "DACommittee",
       "address": "0x28780349A33eEE56bb92241bAAB8095449e24306",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0x83a4f7af4e5a371aadb57903aed1b1f96556a0b3eb4665044a65ad8f70a89edc"
@@ -49,14 +49,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "GpsFactRegistryAdapter",
       "address": "0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
@@ -102,24 +102,24 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x478615F37FcCB0DF69C191a8674233f6899D092e",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x478615F37FcCB0DF69C191a8674233f6899D092e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
@@ -135,14 +135,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "StarkExchange",
       "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+      "type": "Contract",
       "template": "starkex/StarkExchangeOld",
       "sourceHashes": [
         "0x46eae4f2e7b6b0f5096ba403f113ff3c86205368a36af081ab280441d64942fc",
@@ -477,33 +477,33 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6Db55792263D558d9c98B740f8cB5E8a2e02Ec05",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x8501cFEE1715F5BC771cC65997F2A655f234e9Ef",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -513,20 +513,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x8fDEC5EE435501571034A78a7F3AA167185969b3",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
-        }
-      ]
-    },
-    {
       "type": "EOA",
-      "address": "0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -537,9 +525,21 @@
       ]
     },
     {
-      "type": "Contract",
+      "address": "0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
+    },
+    {
       "name": "RhinofiAdminMultisig",
       "address": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -588,13 +588,13 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0xf872Cf881873029B8955b582c29b66347f3f1326",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

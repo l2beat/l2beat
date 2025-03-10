@@ -5,9 +5,9 @@
   "configHash": "0x23e8e15b70fae242646e428dc2076e9a412367f36319a5150f4a01405eafdb10",
   "entries": [
     {
-      "type": "Contract",
       "name": "StargatePoolUSDC",
       "address": "0x3Fc69CC4A842838bCDC9499178740226062b14E4",
+      "type": "Contract",
       "sourceHashes": [
         "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
       ],
@@ -52,9 +52,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "TokenMessaging",
       "address": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
@@ -97,9 +97,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "StargatePoolNative",
       "address": "0xC2b638Cb5042c1B3c5d5C969361fB50569840583",
+      "type": "Contract",
       "sourceHashes": [
         "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
       ],
@@ -142,8 +142,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

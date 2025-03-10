@@ -5,9 +5,9 @@
   "configHash": "0x50e73c39beae66b17410876369b7df6eb402773c8f4a6450173d18e0e4ec1562",
   "entries": [
     {
-      "type": "Contract",
       "name": "EthereumL1Messenger",
       "address": "0x12B8489913E2afBCed131d52c345C380BBB65baf",
+      "type": "Contract",
       "sourceHashes": [
         "0x53a70d11cd7796a36186bc6faf5761365984bd862be2a0a8e30f96d0510e40bc"
       ],
@@ -20,9 +20,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "EthereumL2Messenger",
       "address": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
+      "type": "Contract",
       "sourceHashes": [
         "0x8ce69cb7eef1745342d1a5730155558e6a15cf3530e4d28816fb4d7c7301cea9"
       ],
@@ -36,14 +36,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OptimismL1Messenger",
       "address": "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
+      "type": "Contract",
       "sourceHashes": [
         "0x4b9b7280455da961659b45ac59c98334d9cef746991718d2ec48b8e9a90a69d3"
       ],
@@ -57,9 +57,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ArbitrumL1Messenger",
       "address": "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
+      "type": "Contract",
       "sourceHashes": [
         "0x95eb429107814a5f14a897acd61975d017790ae60ad9314ae5e35524a3ec1a5c"
       ],
@@ -74,9 +74,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "EthereumRequestManager",
       "address": "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
+      "type": "Contract",
       "sourceHashes": [
         "0xa82fa8fc1e5ff96f0cfb766de691af0d8f797facacd18dd6b472ac890c1f9ab9"
       ],
@@ -130,9 +130,9 @@
       "derivedName": "RequestManager"
     },
     {
-      "type": "Contract",
       "name": "Resolver",
       "address": "0xCb60516819a28431233195A8b7E0227C288B61AD",
+      "type": "Contract",
       "sourceHashes": [
         "0x6f0996aaa83416e4ef529a91847760e8b44f88c827adfeb579723ed0b708cbf3"
       ],
@@ -145,9 +145,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "EthereumFillManager",
       "address": "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
+      "type": "Contract",
       "sourceHashes": [
         "0xb8bd718248dbf8a521e10a055b52eb5ddcf6ddedf62a4259dbdf50574289ea5b"
       ],
@@ -164,8 +164,8 @@
       "derivedName": "FillManager"
     },
     {
-      "type": "EOA",
       "address": "0xdC256EC77E97448d29D88118e55C82067150b768",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

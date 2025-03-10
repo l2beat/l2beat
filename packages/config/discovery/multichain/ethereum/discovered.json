@@ -5,19 +5,19 @@
   "configHash": "0x281d285a562086b4172865bf5360f1bc50293dfe89126879b3ab6a630bd8201f",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AnyswapV4Router",
       "address": "0x6b7a87899490EcE95443e979cA9485CBE7E71522",
+      "type": "Contract",
       "sourceHashes": [
         "0xb0a988b45b574080d5e8d605dfd609faf6df08d7e16a57eb2f754e278224f66f"
       ],
@@ -33,9 +33,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "AnyswapV6Router",
       "address": "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705",
+      "type": "Contract",
       "sourceHashes": [
         "0xa42a1ba17ff7ccbd5f17722cec7254e3a5f29a6b808de5fab73eeb7d7696a756"
       ],

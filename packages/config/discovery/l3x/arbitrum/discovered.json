@@ -5,9 +5,9 @@
   "configHash": "0xff38d14bc7aedb0cdfbea204a76d12586c61c823af6735ff6a7633c69e7312c0",
   "entries": [
     {
-      "type": "Contract",
       "name": "Outbox",
       "address": "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
+      "type": "Contract",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -51,9 +51,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "ChallengeManager",
       "address": "0x211C9893653Aea2088E34765e7039617E95fD8fD",
+      "type": "Contract",
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -93,9 +93,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
@@ -147,14 +147,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x460E0a28a1DcE5a15811C3F5775D1e8fd0a08278",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "UpgradeExecutor",
       "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
+      "type": "Contract",
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -222,9 +222,9 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "Contract",
       "name": "ERC20Gateway",
       "address": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
+      "type": "Contract",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -266,9 +266,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "OneStepProverMemory",
       "address": "0x526a6E634aD36bB0007c4422586c135F1F9B525a",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"
@@ -280,9 +280,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "Bridge",
       "address": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
+      "type": "Contract",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -356,8 +356,8 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x5e31608B400F45846043E93747D72A1a02c5a2f5",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -452,9 +452,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "ValidatorUtils",
       "address": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+      "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
@@ -466,14 +466,14 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0x76df9F5004F38aC74D0cE664027a1E718AA45E97",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OneStepProver0",
       "address": "0x800dA62bE6626127F71B34E795286C34C04D6712",
+      "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"
@@ -485,9 +485,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "Inbox",
       "address": "0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F",
+      "type": "Contract",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -528,9 +528,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "type": "Contract",
       "name": "GatewayRouter",
       "address": "0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf",
+      "type": "Contract",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -572,9 +572,9 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "type": "Contract",
       "name": "OneStepProofEntry",
       "address": "0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8",
+      "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"
@@ -592,9 +592,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "RollupProxy",
       "address": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
+      "type": "Contract",
       "template": "orbitstack/RollupProxy",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
@@ -737,9 +737,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "SequencerInbox",
       "address": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
+      "type": "Contract",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -819,9 +819,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "RollupEventInbox",
       "address": "0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15",
+      "type": "Contract",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -857,9 +857,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "OneStepProverHostIo",
       "address": "0xc555b2F1D559Fbb854569b33640990D178F94747",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x5b0a5e16100b7e163dcf39dc6a9034f12a7bad7a475cdffc73054b937be0683d"
@@ -871,13 +871,13 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0xcEF5F518d69F0DAf71b8Daa27B570FC48eE51bC8",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xd987004738Ae33732ecf68613b1b7aFd1df7C11c",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -888,9 +888,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "OneStepProverMath",
       "address": "0xe8709022B9C9D7347856c75910fe07e10C904446",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"
@@ -902,8 +902,8 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0xfc48f0786b3fA7353F63Acc40973857554A51cA2",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {

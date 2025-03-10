@@ -5,9 +5,9 @@
   "configHash": "0xeb564b3cf5eeee346086fea4d3558c536257d2d5664c0f76d7a21002929f57db",
   "entries": [
     {
-      "type": "Contract",
       "name": "Honeypot",
       "address": "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
+      "type": "Contract",
       "sourceHashes": [
         "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
       ],
@@ -23,9 +23,9 @@
       "derivedName": "CartesiDApp"
     },
     {
-      "type": "Contract",
       "name": "History",
       "address": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+      "type": "Contract",
       "sourceHashes": [
         "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
       ],
@@ -38,9 +38,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "InputBox",
       "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
+      "type": "Contract",
       "sourceHashes": [
         "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
       ],
@@ -50,14 +50,14 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ERC20Portal",
       "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "type": "Contract",
       "sourceHashes": [
         "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
       ],
@@ -70,9 +70,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "Authority",
       "address": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+      "type": "Contract",
       "sourceHashes": [
         "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
       ],

@@ -5,14 +5,14 @@
   "configHash": "0x4d00d003ece4c8c3fb90301d6ae01d8660695dde5a34dc08761bb2b41079e29c",
   "entries": [
     {
-      "type": "EOA",
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "MainnetSpokeConnector",
       "address": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
+      "type": "Contract",
       "sourceHashes": [
         "0xafd1330f5a43ba6b2a2db1315900ef6a75051e339fa9194fe9f671742c237a57"
       ],
@@ -65,14 +65,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x048a5EcC705C280b2248aefF88fd581AbbEB8587",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "VotingToken",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+      "type": "Contract",
       "sourceHashes": [
         "0x349b0f612f02a8599667c43efe1e547bf4f18a46732001b3afb6b425a87325e9"
       ],
@@ -96,32 +96,32 @@
       }
     },
     {
-      "type": "EOA",
       "name": "Relayer2",
       "address": "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2",
+      "type": "EOA",
       "template": "amarok/Relayer",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x151Ea574C62b505aEe2F89f33D8c152E28A956b0",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x1660846ee9A3023034924FB02F85F632AEd66810",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x1660846ee9A3023034924FB02F85F632AEd66810",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimisticGovernor",
       "address": "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460",
+      "type": "Contract",
       "sourceHashes": [
         "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"
       ],
@@ -160,19 +160,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BaseHubConnector",
       "address": "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94",
+      "type": "Contract",
       "sourceHashes": [
         "0xe1e1cddf981135f49c5ed0fd4a3ec66db79e2bb91e3cfea59e69f5da6ab165df"
       ],
@@ -198,9 +198,9 @@
       "derivedName": "OptimismHubConnector"
     },
     {
-      "type": "Contract",
       "name": "xLayerZkHubConnector",
       "address": "0x279fDA9AdDB854541f0bb86733d924e28c24c625",
+      "type": "Contract",
       "sourceHashes": [
         "0x8481f131a096c9d34bb43b220f73a7469f938128e441e7f5009eef26a021b104"
       ],
@@ -224,9 +224,9 @@
       "derivedName": "PolygonZkHubConnector"
     },
     {
-      "type": "Contract",
       "name": "UpgradeBeaconProxy",
       "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
+      "type": "Contract",
       "sourceHashes": [
         "0x096b81df0c8f5335503eff3f349aa3136ee8cc6a502b3929f5112ae8b164ee0a"
       ],
@@ -236,49 +236,49 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x32D63da9F776891843C90787CEC54ADA23ABd4C2",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x334CE923420ff1aA4f272e92BF68013D092aE7B4",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x33b2aD85f7DbA818e719FB52095dC768E0eD93ec",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x3d7dF98257E5CEe5f032fd06a0aA510F89A19A2e",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x3e11aa01A7eFdD428487ae75F5F4Fe0e5CeCeF06",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x3e11aa01A7eFdD428487ae75F5F4Fe0e5CeCeF06",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Finder",
       "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+      "type": "Contract",
       "sourceHashes": [
         "0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb"
       ],
@@ -292,9 +292,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "Relayer3",
       "address": "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
+      "type": "Contract",
       "template": "amarok/Relayer",
       "sourceHashes": [
         "0x71fef919ee98513b92f3201b728bedde3148dcf73156bc42ab0fb2273a0ddd50"
@@ -311,27 +311,27 @@
       "derivedName": "Relay"
     },
     {
-      "type": "EOA",
       "name": "Relayer8",
       "address": "0x43728A95386D64384C76Afd416Dcc8118869BA6c",
+      "type": "EOA",
       "template": "amarok/Relayer",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Connext Multisig",
       "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -366,14 +366,14 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ProposerV2",
       "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+      "type": "Contract",
       "sourceHashes": [
         "0x28c93f7b68e31548857633c6cb61284d9d2860cc0fbbcaaede8f631d364d66a4"
       ],
@@ -392,9 +392,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "RootManager",
       "address": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A",
+      "type": "Contract",
       "sourceHashes": [
         "0x2ca55720c3cf2b2da110bcd8d47329f5a7924e3de8b3324c8b55b45f99eb94fd"
       ],
@@ -473,9 +473,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "LineaHubConnector",
       "address": "0x56Ab287e5c33Ee70158c951f34818bd095446255",
+      "type": "Contract",
       "sourceHashes": [
         "0xa7941f612635ebe90bf4c5a4dbbb4a7aff8c388f20ac06c5f881670d8554004c"
       ],
@@ -498,29 +498,29 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x58507fed0Cb11723dFb6848c92C59Cf0BBEB9927",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x5aA748326f03C651749E7998D88647e59Ee386Bc",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x5aA748326f03C651749E7998D88647e59Ee386Bc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MantleHubConnector",
       "address": "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24",
+      "type": "Contract",
       "sourceHashes": [
         "0x874db65420d6ae87b7f30ff1947bd1ee09a2498028cb98e58d43ad47ff6e936f"
       ],
@@ -545,9 +545,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "OptimismHubConnector",
       "address": "0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A",
+      "type": "Contract",
       "sourceHashes": [
         "0xe1e1cddf981135f49c5ed0fd4a3ec66db79e2bb91e3cfea59e69f5da6ab165df"
       ],
@@ -572,61 +572,61 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x5d527765252003AceE6545416F6a9C8D15ae8402",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x5f4E31F4F402E368743bF29954f80f7C4655EA68",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6273c0965A1dB4F8A6277d490B4fD48715a42b96",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "name": "Relayer9",
       "address": "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6",
+      "type": "EOA",
       "template": "amarok/Relayer",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6892d4D1f73A65B03063B7d78174dC6350Fcc406",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6B44Dba00e92DD035976607CBF62bf1CC6320EC5",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -636,9 +636,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "Relayer10",
       "address": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+      "type": "Contract",
       "template": "amarok/Relayer",
       "sourceHashes": [
         "0xa6d83a80925fe1691f6728fa40c68d4d4996842aafd7f34a7190f9b575d12206",
@@ -670,9 +670,9 @@
       "derivedName": "GelatoRelay1Balance"
     },
     {
-      "type": "Contract",
       "name": "RelayerProxyHub1",
       "address": "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
+      "type": "Contract",
       "template": "amarok/RelayerProxyHub",
       "sourceHashes": [
         "0x293656e6300059a6f65d693963085275a4b36a5e375b6101ce937d0f2938207e"
@@ -696,14 +696,14 @@
       "derivedName": "RelayerProxyHub"
     },
     {
-      "type": "EOA",
       "address": "0x76CF58cE587bC928fcc5aD895555fd040E06C61a",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "WatcherManager",
       "address": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d",
+      "type": "Contract",
       "sourceHashes": [
         "0x291566f24c232f7b88a3772c2a88517ba7bf4aeb4224c9053aabaa34ae92f50c"
       ],
@@ -732,19 +732,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x79EfFa11d95931A7e1717f9Eb655eE43e35Ef265",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x7AE8b0D6353F0931EB9FaC0A3562fA9e4C6Ff933",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x7AE8b0D6353F0931EB9FaC0A3562fA9e4C6Ff933",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GovernorV2",
       "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+      "type": "Contract",
       "sourceHashes": [
         "0xdf7f17e5c8ba1f0103fcfaf495da624089f8bfb3d5052217537bb064ca8c60b9"
       ],
@@ -764,9 +764,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ModeHubConnector",
       "address": "0x7b2bE683266909A6a4068e743083dd40621d663E",
+      "type": "Contract",
       "sourceHashes": [
         "0xe1e1cddf981135f49c5ed0fd4a3ec66db79e2bb91e3cfea59e69f5da6ab165df"
       ],
@@ -792,9 +792,9 @@
       "derivedName": "OptimismHubConnector"
     },
     {
-      "type": "Contract",
       "name": "Connext Fee Multisig",
       "address": "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -825,14 +825,14 @@
       "derivedName": "SafeL2"
     },
     {
-      "type": "EOA",
       "address": "0x7ce49752fFA7055622f444df3c69598748cb2E5f",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "UpgradeBeaconProxy",
       "address": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
+      "type": "Contract",
       "sourceHashes": [
         "0x096b81df0c8f5335503eff3f349aa3136ee8cc6a502b3929f5112ae8b164ee0a"
       ],
@@ -842,9 +842,9 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "Contract",
       "name": "PolygonZkHubConnector",
       "address": "0x7ed49D0a13255802A281C08688563bd8D5f726b1",
+      "type": "Contract",
       "sourceHashes": [
         "0x8481f131a096c9d34bb43b220f73a7469f938128e441e7f5009eef26a021b104"
       ],
@@ -867,14 +867,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -903,9 +903,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "ArbitrumHubConnector",
       "address": "0x83096c7455f24E593aaC9A7c73f849d36d3EEb82",
+      "type": "Contract",
       "sourceHashes": [
         "0xec9f14911fa9c31669685bd1b89abbfa1a6a8bdd87f11af719c41ff7ec03987e"
       ],
@@ -933,14 +933,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ConnextBridge",
       "address": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
+      "type": "Contract",
       "sourceHashes": [
         "0xddff88cf097843837c49f9ed19ac3343d4f1950d3e0508e63669fbd972e4100c",
         "0x72a9f0d6928e2ccb1a94e23690974a84ecc5be50d3be866e39469534323eebed",
@@ -1267,24 +1267,24 @@
       "derivedName": "ConnextDiamond"
     },
     {
-      "type": "EOA",
       "address": "0x8B85EA591d41F29F5c741ea22Ed6B4ad71a750ba",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x8cb19CE8EEDF740389D428879a876A3B030B9170",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x8D09e20b835009E5320cC11E6a6F00aF451aD669",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x8D09e20b835009E5320cC11E6a6F00aF451aD669",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EmergencyProposer",
       "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+      "type": "Contract",
       "sourceHashes": [
         "0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"
       ],
@@ -1303,37 +1303,37 @@
       }
     },
     {
-      "type": "EOA",
       "name": "Relayer4",
       "address": "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47",
+      "type": "EOA",
       "template": "amarok/Relayer",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "EOA",
       "address": "0x9584Eb0356a380b25D7ED2C14c54De58a25f2581",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x96D38b113b1bC6a21d1137676f2f05DfcAce24e8",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x975574980a5Da77f5C90bC92431835D91B73669e",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Relayer5",
       "address": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
+      "type": "Contract",
       "template": "amarok/Relayer",
       "sourceHashes": [
         "0x1f6a82111d640c20ee2127f1d7a191745a277728d9fea40ae3debdc0e516be80",
@@ -1360,14 +1360,14 @@
       "derivedName": "RelayTransit"
     },
     {
-      "type": "EOA",
       "address": "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "MetisHubConnector",
       "address": "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa",
+      "type": "Contract",
       "sourceHashes": [
         "0x8260bb2699f6ede98283b1bd9e2d1fdd52e11144aca41b7ba56f4257cee0dd9d"
       ],
@@ -1393,14 +1393,14 @@
       "derivedName": "OptimismV0HubConnector"
     },
     {
-      "type": "EOA",
       "address": "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "Relayer1",
       "address": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+      "type": "Contract",
       "template": "amarok/Relayer",
       "sourceHashes": [
         "0xa6d83a80925fe1691f6728fa40c68d4d4996842aafd7f34a7190f9b575d12206",
@@ -1432,14 +1432,14 @@
       "derivedName": "GelatoRelay"
     },
     {
-      "type": "EOA",
       "address": "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "WormholeHubConnector",
       "address": "0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA",
+      "type": "Contract",
       "sourceHashes": [
         "0xa4857ef08af1733cc8a6fb1ce54561fe834c6dae2d6a2be176506833af7d6f9f"
       ],
@@ -1465,9 +1465,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "RelayerProxyHub3",
       "address": "0xB4F8D176466f5F544bAd53737bffAaeA17185c05",
+      "type": "Contract",
       "template": "amarok/RelayerProxyHub",
       "sourceHashes": [
         "0x6c908f2cfba26c3f8579904361d66ac752f7d6e58a7dade2ca752d80de50ee30"
@@ -1499,24 +1499,24 @@
       "derivedName": "RelayerProxyHub"
     },
     {
-      "type": "EOA",
       "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xb71C02f99c42424257745827F1C2beBD7Fa1e936",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xBa11aA59645a56031fedBcCF60D4f111534f2502",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xBa11aA59645a56031fedBcCF60D4f111534f2502",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1543,39 +1543,39 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xbe8109517300c78f2bbdC00d9EA8Cf597160017E",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RelayerProxyHub2",
       "address": "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28",
+      "type": "Contract",
       "template": "amarok/RelayerProxyHub",
       "sourceHashes": [
         "0x2caa39c242be8054678e58b07c53f52a796a2d1c50f065af98ccb92de4275ff7"
@@ -1604,9 +1604,9 @@
       "derivedName": "RelayerProxyHub"
     },
     {
-      "type": "Contract",
       "name": "AllowanceModule",
       "address": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+      "type": "Contract",
       "sourceHashes": [
         "0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"
       ],
@@ -1641,37 +1641,37 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xDbDcFbA39D6ace2DaC9Cf5E8fc0Fe80a074FD81b",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "name": "Relayer6",
       "address": "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE",
+      "type": "EOA",
       "template": "amarok/Relayer",
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
-      "type": "Contract",
       "name": "Relayer7",
       "address": "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
+      "type": "Contract",
       "template": "amarok/Relayer",
       "sourceHashes": [
         "0x06a889d020b7a23683b5ac7ead2e75691788f53221e130558d8fb7d7c343ed57"
@@ -1686,9 +1686,9 @@
       "derivedName": "RelayTransit"
     },
     {
-      "type": "Contract",
       "name": "PolygonHubConnector",
       "address": "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116",
+      "type": "Contract",
       "sourceHashes": [
         "0x801d3cc7883546ac5e0bbb1c4872555739352f0ecf116f9f317f51732c9d08f6"
       ],
@@ -1715,19 +1715,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xebD4919C075417a86F19713dADe101852867A04F",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -1774,24 +1774,24 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xf0c1d7d38972c117F899Ea190afd6FeEee04E5fd",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xf0c1d7d38972c117F899Ea190afd6FeEee04E5fd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisHubConnector",
       "address": "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe5ddf3ceaa76404a16ca4237ea9850cc76d59636c8de1526fab611e7d70ae6f"
       ],
@@ -1817,14 +1817,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "GnosisSafe",
       "address": "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1854,9 +1854,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "NewWormholeHubConnector",
       "address": "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b",
+      "type": "Contract",
       "sourceHashes": [
         "0xa4857ef08af1733cc8a6fb1ce54561fe834c6dae2d6a2be176506833af7d6f9f"
       ],
@@ -1883,19 +1883,19 @@
       "derivedName": "WormholeHubConnector"
     },
     {
-      "type": "EOA",
       "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Relayer11",
       "address": "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0",
+      "type": "Contract",
       "template": "amarok/Relayer",
       "sourceHashes": [
         "0x70de0f52f9c98e17b083184c29d00c0c7ba199299d2758c1ec88e6af3428b060"
@@ -1907,14 +1907,14 @@
       "derivedName": "GelatoRelay1BalanceV2"
     },
     {
-      "type": "EOA",
       "address": "0xFaAB88015477493cFAa5DFAA533099C590876F21",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "OptimisticOracleV3",
       "address": "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+      "type": "Contract",
       "sourceHashes": [
         "0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"
       ],

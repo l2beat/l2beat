@@ -5,9 +5,9 @@
   "configHash": "0xca126e4907b314d340bc948a304fa63e2007fc5ad43ca7233a9dbdcf8bb0ec78",
   "entries": [
     {
-      "type": "Contract",
       "name": "zkLink",
       "address": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
+      "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -70,14 +70,14 @@
       "derivedName": "ZkLink"
     },
     {
-      "type": "EOA",
       "address": "0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "L1ERC20Bridge",
       "address": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+      "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
         "0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"
@@ -109,29 +109,29 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x45b62A07c525278F2ecd7915130E797B04B05C48",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ScrollProxyAdmin",
       "address": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
+      "type": "Contract",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
@@ -152,19 +152,19 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "type": "EOA",
       "address": "0xC97c5E43c14D4F524347795410C299db1FA331b3",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ScrollL2Gateway",
       "address": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+      "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -200,14 +200,14 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ScrollOwner",
       "address": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -250,8 +250,8 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "type": "EOA",
       "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "type": "EOA",
       "proxyType": "EOA"
     }
   ],

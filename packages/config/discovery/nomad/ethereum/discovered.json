@@ -5,9 +5,9 @@
   "configHash": "0x6653cae8fc6466aaf556ab8bced06175f4440494c618bf763100991d69eadaa6",
   "entries": [
     {
-      "type": "Contract",
       "name": "ReplicaBeaconProxy",
       "address": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
         "0x5a213a8e0ec856d7338e82299deea6e024ae062e3529eba107f202a6d8600857"
@@ -61,9 +61,9 @@
       "derivedName": "Replica"
     },
     {
-      "type": "Contract",
       "name": "HomeUpgradeBeacon",
       "address": "0x063e871f8DB991CEAd34B557A00B157B360084cc",
+      "type": "Contract",
       "sourceHashes": [
         "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
       ],
@@ -74,14 +74,14 @@
       "derivedName": "UpgradeBeacon"
     },
     {
-      "type": "EOA",
       "address": "0x06D8902cfae8235047DC7783875279311798c715",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "ReplicaUpgradeBeacon",
       "address": "0x0876dFe4AcAe0e1c0a43302716483f5752298b71",
+      "type": "Contract",
       "sourceHashes": [
         "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
       ],
@@ -92,9 +92,9 @@
       "derivedName": "UpgradeBeacon"
     },
     {
-      "type": "Contract",
       "name": "UpgradeBeaconProxy",
       "address": "0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
       ],
@@ -104,14 +104,14 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "GovernanceRouterBeaconProxy",
       "address": "0x3009C99D370B780304D2098196f1EBF779a4777a",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
         "0xa84df7e66da3df341f1c36dbdb91392d9fa74a77013330c97f73274f59d0be15"
@@ -162,14 +162,14 @@
       "derivedName": "GovernanceRouter"
     },
     {
-      "type": "EOA",
       "address": "0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "GovernanceUpgradeBeacon",
       "address": "0x67833a48b3F509d4252ac2c19cd604556eD6c981",
+      "type": "Contract",
       "sourceHashes": [
         "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
       ],
@@ -180,19 +180,19 @@
       "derivedName": "UpgradeBeacon"
     },
     {
-      "type": "EOA",
       "address": "0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x83865712c50f702fA4650C7fadEd90A54242046e",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x83865712c50f702fA4650C7fadEd90A54242046e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BridgeRouterBeaconProxy",
       "address": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
         "0x2e0076ec20cd768884b443f77a4c1a9b0e7532b23d3f961c0d2d3160f8057fe9"
@@ -239,9 +239,9 @@
       "derivedName": "EthereumBridgeRouter"
     },
     {
-      "type": "Contract",
       "name": "UpdaterManager",
       "address": "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
+      "type": "Contract",
       "sourceHashes": [
         "0x4ac3e27d1d1ef6c9a05335874ae7286f305ae29a71c239cd1095617d01efbaf0"
       ],
@@ -255,9 +255,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "HomeBeaconProxy",
       "address": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388",
         "0x49bd5136e54546da3f230903b88d542e5e2f6ceedb105ba13642063f86972ab3"
@@ -316,9 +316,9 @@
       "derivedName": "Home"
     },
     {
-      "type": "Contract",
       "name": "Governor",
       "address": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -349,24 +349,24 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "EOA",
       "address": "0x9782A3C8128f5D1BD3C9655d03181ba5b420883E",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UpgradeBeaconProxy",
       "address": "0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe5d364ff65b55d089681036cc772258083d96100d71309b7cd76d6f69ced388"
       ],
@@ -376,19 +376,19 @@
       "values": { "$immutable": true }
     },
     {
-      "type": "EOA",
       "address": "0xa728bE5Be33E60D9c65677EBa569555536e587E4",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BridgeUpgradeBeacon",
       "address": "0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00",
+      "type": "Contract",
       "sourceHashes": [
         "0x22841c972728a5327e28da1a887ae68b6db4dc5f1d658e516abcba1a265b21d8"
       ],
@@ -399,24 +399,24 @@
       "derivedName": "UpgradeBeacon"
     },
     {
-      "type": "EOA",
       "address": "0xC69b66cc2811B509829448FBFfb2553c4CBb627e",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0xCc20f031B2F06374e4986Af33A36bDda55bed21d",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RecoveryManager",
       "address": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -445,9 +445,9 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "type": "Contract",
       "name": "UpgradeBeaconController",
       "address": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+      "type": "Contract",
       "sourceHashes": [
         "0x12e387edec9bf90c8c2ee351a4b607488ae3e01f861eb7dabbf3e4fdd078ad48"
       ],
@@ -478,19 +478,19 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0xea24Ac04DEFb338CA8595C3750E20166F3b4998A",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0xea24Ac04DEFb338CA8595C3750E20166F3b4998A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "XAppConnectionManager",
       "address": "0xFe8874778f946Ac2990A29eba3CFd50760593B2F",
+      "type": "Contract",
       "sourceHashes": [
         "0xb64e5af8c508ce86c29728805a64c3b45bf37a0a28c4ea602902a3e23de80dfd"
       ],

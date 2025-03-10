@@ -77,9 +77,9 @@ export function processAnalysis(
         ])
 
         return withoutUndefinedKeys({
-          type: x.type,
           name: x.name,
           address: x.address,
+          type: x.type,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
           sourceHashes: x.isVerified

@@ -6,9 +6,9 @@
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
-      "type": "Contract",
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "type": "Contract",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
@@ -24,8 +24,8 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "EOA",
       "address": "0x0b114d4675Cb79507e68F2616c93e124122c6ef0",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -35,14 +35,14 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
       "name": "GrvtChainAdminMultisig",
       "address": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -98,9 +98,9 @@
       "derivedName": "Safe"
     },
     {
-      "type": "Contract",
       "name": "GRVTTransactionFilterer",
       "address": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x1aa0c6d334201fd66596305e4bb950e80a12be8e6cbad011dcb90a7ca7f49bd5"
@@ -185,8 +185,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0x58D14960E0a2be353eDdE61ad719196A2b816522",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -196,8 +196,8 @@
       ]
     },
     {
-      "type": "EOA",
       "address": "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -208,9 +208,9 @@
       ]
     },
     {
-      "type": "Contract",
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
@@ -255,9 +255,9 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "type": "Contract",
       "name": "GrvtZkEvmAdmin",
       "address": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D",
+      "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
@@ -298,24 +298,24 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "type": "EOA",
       "address": "0x85deE82d32d78eaa59588B6574Df420ef2A74098",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "type": "EOA",
       "address": "0x8E2A969f6685e27439D9F25630E62c8A2203B5Db",
-      "proxyType": "EOA"
-    },
-    {
       "type": "EOA",
-      "address": "0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
       "proxyType": "EOA"
     },
     {
-      "type": "Contract",
+      "address": "0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GRVTBridgeProxy",
       "address": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x79513625ec2b512bdcda0464cd8ee1528e0a641d809e74259c3da9f25766647d"
@@ -372,9 +372,9 @@
       }
     },
     {
-      "type": "Contract",
       "name": "GrvtZkEvm",
       "address": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
+      "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
@@ -602,9 +602,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "type": "Contract",
       "name": "Governance",
       "address": "0xe81d64195072e4d09639b31Abb257d0096FEa9d1",
+      "type": "Contract",
       "sourceHashes": [
         "0x200762223206dfe40a648627db22f3403b1bdb04c59d8753a1e7525591876fda"
       ],
@@ -627,8 +627,8 @@
       }
     },
     {
-      "type": "EOA",
       "address": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
+      "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
