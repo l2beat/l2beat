@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import type { ProjectCustomDa } from '../../types'
 import { BADGES } from '../badges'
 import {
@@ -80,7 +80,7 @@ The confirmDataStore() function verify the signatures and if the quorum is reach
   },
 }
 
-export const mantle: Layer2 = opStackL2({
+export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   daProvider: {
     layer: DA_LAYERS.MANTLE_DA,

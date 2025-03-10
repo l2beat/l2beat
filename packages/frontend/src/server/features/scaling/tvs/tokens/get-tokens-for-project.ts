@@ -1,5 +1,4 @@
-import { safeGetTokenByAssetId } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId, Token } from '@l2beat/shared-pure'
 import {
   assert,
   AssetId,
@@ -31,15 +30,22 @@ type ProjectTokenSource = 'native' | 'canonical' | 'external'
 export async function getTokensForProject(
   projectId: ProjectId,
 ): Promise<ProjectTokens> {
+  const tokenList = await ps.getTokens()
+  const tokenMap = new Map(tokenList.map((t) => [t.id, t]))
   if (env.MOCK) {
-    return toDisplayableTokens(projectId, getMockTokensDataForProject())
+    return toDisplayableTokens(
+      projectId,
+      getMockTokensDataForProject(),
+      tokenMap,
+    )
   }
-  const cachedTokens = await getTokensDataForProject(projectId)
-  return toDisplayableTokens(projectId, cachedTokens)
+  const cachedTokens = await getTokensDataForProject(projectId, tokenList)
+  return toDisplayableTokens(projectId, cachedTokens, tokenMap)
 }
 
 async function getTokensDataForProject(
   id: ProjectId,
+  tokenList: Token[],
 ): Promise<Record<ProjectTokenSource, AssetId[]>> {
   const project = await ps.getProject({
     id,
@@ -51,7 +57,7 @@ async function getTokensDataForProject(
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const configMapping = getConfigMapping(project, chains)
+  const configMapping = getConfigMapping(project, chains, tokenList)
   const targetTimestamp =
     UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
@@ -143,16 +149,17 @@ function groupBySource(
 function toDisplayableTokens(
   projectId: ProjectId,
   tokens: Record<ProjectTokenSource, AssetId[]>,
+  tokenMap: Map<AssetId, Token>,
 ): ProjectTokens {
   return {
     canonical: tokens.canonical.map((assetId) =>
-      toDisplayableToken(projectId, { assetId, source: 'canonical' }),
+      toDisplayableToken(projectId, { assetId, source: 'canonical' }, tokenMap),
     ),
     native: tokens.native.map((assetId) =>
-      toDisplayableToken(projectId, { assetId, source: 'native' }),
+      toDisplayableToken(projectId, { assetId, source: 'native' }, tokenMap),
     ),
     external: tokens.external.map((assetId) =>
-      toDisplayableToken(projectId, { assetId, source: 'external' }),
+      toDisplayableToken(projectId, { assetId, source: 'external' }, tokenMap),
     ),
   }
 }
@@ -166,8 +173,9 @@ function toDisplayableToken(
     assetId: AssetId
     source: 'native' | 'canonical' | 'external'
   },
+  tokenMap: Map<AssetId, Token>,
 ): ProjectToken {
-  const token = safeGetTokenByAssetId(assetId)
+  const token = tokenMap.get(assetId)
   assert(token, 'Token not found for asset id ' + assetId.toString())
   let symbol = token.symbol
   if (symbol === 'USDC' && source === 'canonical') {

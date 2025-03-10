@@ -12,13 +12,13 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
-export const bugbuster: Layer3 = {
+export const bugbuster: ScalingProject = {
   type: 'layer3',
   id: ProjectId('bugbuster'),
   capability: 'appchain',

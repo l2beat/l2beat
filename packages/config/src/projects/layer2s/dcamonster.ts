@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../layer2s/templates/upcoming'
 
-export const dcamonster: Layer2 = upcomingL2({
+export const dcamonster: ScalingProject = upcomingL2({
   id: 'dcamonster',
   capability: 'universal',
   addedAt: UnixTime(1712577740), // 2024-04-08T12:02:20Z

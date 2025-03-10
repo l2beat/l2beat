@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
 
 const discovery = new ProjectDiscovery('stack', 'base')
 
-export const stack: Layer3 = opStackL3({
+export const stack: ScalingProject = opStackL3({
   addedAt: UnixTime(1710853988), // 2024-03-19T13:13:08Z
   discovery,
   additionalBadges: [

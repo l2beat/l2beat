@@ -7,7 +7,7 @@ import {
 import { DA_LAYERS, DA_MODES, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { generateDiscoveryDrivenContracts } from '../layer2s/templates/generateDiscoveryDrivenSections'
 
@@ -45,7 +45,7 @@ const lockerThreshold = discovery.getContractValue<number>(
   'lockerThreshold',
 )
 
-export const hyperliquid: Layer3 = {
+export const hyperliquid: ScalingProject = {
   type: 'layer3',
   id: ProjectId('hyperliquid'),
   capability: 'appchain',

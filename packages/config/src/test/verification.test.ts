@@ -6,9 +6,7 @@ import {
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
-import type { Layer3 } from '../internalTypes'
-import type { Layer2 } from '../internalTypes'
-import type { Bridge } from '../internalTypes'
+import type { Bridge, ScalingProject } from '../internalTypes'
 import { bridges } from '../projects/bridges'
 import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
@@ -100,7 +98,7 @@ function getImplementations(contract: ContractParameters): EthereumAddress[] {
   return [EthereumAddress(implementations.toString())]
 }
 
-type Project = Layer2 | Layer3 | Bridge | BaseProject
+type Project = ScalingProject | Bridge | BaseProject
 
 function withoutDuplicates<T>(arr: T[]): T[] {
   return uniqBy(arr, JSON.stringify)

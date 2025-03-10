@@ -1,14 +1,12 @@
 import type { WarningWithSentiment } from '@l2beat/config'
-import { ChartStats } from '~/components/core/chart/chart-stats'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { InfoIcon } from '~/icons/info'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
 type ValueWithChange = {
@@ -27,120 +25,102 @@ type Props = {
 export function TvsBreakdownSummaryBox(props: Props) {
   return (
     <ChartStats>
-      <StatsItem
-        title="Total value secured"
+      <ChartStatsItem
+        label={
+          <>
+            <span className="max-xs:hidden">Total value secured</span>
+            <span className="xs:hidden">Total</span>
+          </>
+        }
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Total value secured"
-        smallMobileTitle="Total"
-        value={props.total.value}
-        change={props.total.change}
-        warning={props.warning}
-        big
-      />
-      <StatsItem
-        title="Canonically Bridged"
+      >
+        <StatItemContent
+          value={props.total.value}
+          change={props.total.change}
+          warning={props.warning}
+        />
+      </ChartStatsItem>
+      <ChartStatsItem
+        label={
+          <>
+            <span className="max-md:hidden">Canonically Bridged</span>
+            <span className="max-sm:hidden md:hidden">
+              Canonically Bridged Value
+            </span>
+            <span className="xs:hidden">Canonical</span>
+          </>
+        }
         tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Canonically Bridged Value"
-        smallMobileTitle="Canonical"
-        value={props.canonical.value}
-        change={props.canonical.change}
-      />
-      <StatsItem
-        title="Natively Minted"
+      >
+        <StatItemContent
+          value={props.canonical.value}
+          change={props.canonical.change}
+        />
+      </ChartStatsItem>
+      <ChartStatsItem
+        label={
+          <>
+            <span className="max-md:hidden">Natively Minted</span>
+            <span className="max-sm:hidden md:hidden">
+              Natively Minted Tokens
+            </span>
+            <span className="xs:hidden">Native</span>
+          </>
+        }
         tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Natively Minted Tokens"
-        smallMobileTitle="Native"
-        value={props.native.value}
-        change={props.native.change}
-      />
-      <StatsItem
-        title="Externally Bridged"
+      >
+        <StatItemContent
+          value={props.native.value}
+          change={props.native.change}
+        />
+      </ChartStatsItem>
+      <ChartStatsItem
+        label={
+          <>
+            <span className="max-md:hidden">Externally Bridged</span>
+            <span className="max-sm:hidden md:hidden">
+              Externally Bridged Value
+            </span>
+            <span className="xs:hidden">External</span>
+          </>
+        }
         tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Externally Bridged Value"
-        smallMobileTitle="External"
-        value={props.external.value}
-        change={props.external.change}
-      />
+      >
+        <StatItemContent
+          value={props.external.value}
+          change={props.external.change}
+        />
+      </ChartStatsItem>
     </ChartStats>
   )
 }
 
 interface StatsItemProps {
-  title: string
-  mobileTitle: string
-  smallMobileTitle: string
   value: number
   change: number
-  tooltip: string
-  big?: boolean
   warning?: WarningWithSentiment
 }
 
-function StatsItem(props: StatsItemProps) {
+function StatItemContent(props: StatsItemProps) {
   return (
-    <div
-      className={cn(
-        'flex items-center justify-between md:flex-col md:items-start',
-        props.big && 'mb-1',
-      )}
-    >
-      <div className="flex items-center gap-1">
-        <span className="hidden text-xs font-medium text-secondary md:inline">
-          {props.title}
-        </span>
-        <span
-          className={cn(
-            'font-medium max-xs:hidden md:hidden',
-            props.big ? 'text-lg text-primary' : 'text-xs text-secondary',
-          )}
-        >
-          {props.mobileTitle}
-        </span>
-        <span
-          className={cn(
-            'font-medium xs:hidden',
-            props.big ? 'text-lg text-primary' : 'text-xs text-secondary',
-          )}
-        >
-          {props.smallMobileTitle}
-        </span>
-
+    <div className="flex items-center gap-1">
+      <ValueWithPercentageChange
+        change={props.change}
+        className="font-bold text-primary md:text-lg"
+      >
+        {formatCurrency(props.value, 'usd')}
+      </ValueWithPercentageChange>
+      {props.warning && (
         <Tooltip>
-          <TooltipTrigger className="ml-0.5 -translate-y-px md:translate-y-0">
-            <InfoIcon
-              className={cn(
-                'md:size-3.5',
-                props.big
-                  ? 'fill-black dark:fill-white md:!fill-secondary'
-                  : 'fill-secondary',
-              )}
+          <TooltipTrigger>
+            <RoundedWarningIcon
+              sentiment={props.warning.sentiment}
+              className="size-5"
             />
           </TooltipTrigger>
-          <TooltipContent>{props.tooltip}</TooltipContent>
+          <TooltipContent>{props.warning.value}</TooltipContent>
         </Tooltip>
-      </div>
-      <div className="flex items-center gap-1">
-        <ValueWithPercentageChange
-          change={props.change}
-          className={cn(
-            'font-bold text-primary md:text-lg',
-            props.big ? 'text-lg' : 'text-base',
-          )}
-        >
-          {formatCurrency(props.value, 'usd')}
-        </ValueWithPercentageChange>
-        {props.warning && (
-          <Tooltip>
-            <TooltipTrigger>
-              <RoundedWarningIcon
-                sentiment={props.warning.sentiment}
-                className="size-5"
-              />
-            </TooltipTrigger>
-            <TooltipContent>{props.warning.value}</TooltipContent>
-          </Tooltip>
-        )}
-      </div>
+      )}
     </div>
   )
 }

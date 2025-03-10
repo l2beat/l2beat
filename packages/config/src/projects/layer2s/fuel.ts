@@ -18,7 +18,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -40,7 +40,7 @@ const challengePeriod = discovery.getContractValue<number>(
   'TIME_TO_FINALIZE',
 )
 
-export const fuel: Layer2 = {
+export const fuel: ScalingProject = {
   id: ProjectId('fuel'),
   capability: 'universal',
   addedAt: UnixTime(1729589660), // 2024-10-22T09:34:20Z

@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const layerai: Layer2 = upcomingL2({
+export const layerai: ScalingProject = upcomingL2({
   id: 'layerai',
   capability: 'universal',
   addedAt: UnixTime(1722861199), // 2024-08-05T12:33:19Z

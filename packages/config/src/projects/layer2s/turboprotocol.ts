@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const turboprotocol: Layer2 = upcomingL2({
+export const turboprotocol: ScalingProject = upcomingL2({
   id: 'turboprotocol',
   capability: 'universal',
   addedAt: UnixTime(1728666437),

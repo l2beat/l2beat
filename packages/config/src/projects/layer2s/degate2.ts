@@ -20,7 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('degate2')
@@ -58,7 +58,7 @@ assert(owner1 === owner2 && owner2 === owner3 && owner3, 'DeGate')
 const permissionedAccount = discovery.formatPermissionedAccounts([owner1])
 assert(permissionedAccount[0].type === 'EOA', 'DeGate')
 
-export const degate2: Layer2 = {
+export const degate2: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate2'),

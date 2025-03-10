@@ -19,7 +19,7 @@ import {
 } from '../../common'
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
@@ -76,7 +76,7 @@ const longTimelockUpgradeability = {
 }
 const finalizationPeriod = 0
 
-export const dydx: Layer2 = {
+export const dydx: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('dydx'),

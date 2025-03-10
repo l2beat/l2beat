@@ -12,12 +12,21 @@ import { describe } from 'mocha'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../../internalTypes'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens/tokens'
+import { getTokenList } from '../../tokens/tokens'
 import type { ProjectTechnologyChoice, ReferenceLink } from '../../types'
 import { chains } from '../chains'
 import { layer2s, milestonesLayer2s } from './index'
 
+const tokenList = getTokenList(chains)
+
 describe('layer2s', () => {
+  it('l2s do not have a host chain', () => {
+    for (const layer2 of layer2s) {
+      expect(layer2.hostChain).toEqual(undefined)
+      expect(layer2.stackedRiskView).toEqual(undefined)
+    }
+  })
+
   describe('links', () => {
     describe('all links do not contain spaces', () => {
       for (const layer2 of layer2s) {

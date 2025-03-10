@@ -1,5 +1,5 @@
 'use client'
-import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/global/countdowns'
+import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
 import { externalLinks } from '~/consts/external-links'
 import { cn } from '~/utils/cn'
 import { TextCountdown } from '../countdown'

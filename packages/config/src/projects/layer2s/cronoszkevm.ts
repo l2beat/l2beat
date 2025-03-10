@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { zkStackL2 } from './templates/zkStack'
 
@@ -14,7 +14,7 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
 
-export const cronoszkevm: Layer2 = zkStackL2({
+export const cronoszkevm: ScalingProject = zkStackL2({
   addedAt: UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,

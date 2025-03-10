@@ -19,7 +19,7 @@ import {
   getCommittee,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import {
@@ -45,7 +45,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const tanx: Layer2 = {
+export const tanx: ScalingProject = {
   type: 'layer2',
   id: ProjectId('brine'),
   capability: 'appchain',

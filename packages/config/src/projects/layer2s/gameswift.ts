@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const gameswift: Layer2 = upcomingL2({
+export const gameswift: ScalingProject = upcomingL2({
   id: 'gameswift',
   capability: 'universal',
   addedAt: UnixTime(1740488671),

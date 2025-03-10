@@ -146,6 +146,26 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
+  async getSummedUopsCountForProjectAndTimeRange(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<number | undefined> {
+    const [from, to] = timeRange
+    const row = await this.db
+      .selectFrom('Activity')
+      .select((eb) =>
+        eb.fn
+          .sum(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+          .as('count'),
+      )
+      .where('projectId', '=', projectId.toString())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .executeTakeFirst()
+
+    return row ? Number(row.count) : undefined
+  }
+
   async getSummedUopsCountForProjectsAndTimeRange(
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],

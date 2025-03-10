@@ -2,10 +2,12 @@ import { expect } from 'earl'
 
 import { assert } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { tokenList } from '../../tokens/tokens'
+import { getTokenList } from '../../tokens/tokens'
 import { chains } from '../chains'
 import { layer2s } from '../layer2s'
 import { layer3s } from './index'
+
+const tokenList = getTokenList(chains)
 
 describe('layer3s', () => {
   describe('links', () => {
@@ -31,11 +33,19 @@ describe('layer3s', () => {
     })
   })
 
-  it('every layer3 has a valid host chain', () => {
+  it('every layer3 has a valid config', () => {
     for (const layer3 of layer3s) {
       expect(layer3.hostChain).not.toBeNullish()
       const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
       expect(hostChain).not.toBeNullish()
+
+      expect(layer3.stackedRiskView).not.toBeNullish()
+
+      expect(layer3.config.trackedTxs).toEqual(undefined)
+      expect(layer3.config.liveness).toEqual(undefined)
+      expect(layer3.display.liveness).toEqual(undefined)
+      expect(layer3.config.finality).toEqual(undefined)
+      expect(layer3.display.finality).toEqual(undefined)
     }
   })
 

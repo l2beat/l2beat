@@ -13,7 +13,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('eclipse')
@@ -23,7 +23,7 @@ const withdrawalDelaySeconds = discovery.getContractValue<number>(
   'fraudWindowDuration',
 )
 
-export const eclipse: Layer2 = {
+export const eclipse: ScalingProject = {
   type: 'layer2',
   id: ProjectId('eclipse'),
   capability: 'universal',

@@ -1,4 +1,8 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
+import {
+  type AssetId,
+  type Token,
+  assertUnreachable,
+} from '@l2beat/shared-pure'
 import sqlite3 from 'sqlite3'
 import type { BaseProject } from './types'
 
@@ -80,9 +84,13 @@ export class ProjectDatabase {
     await this.query(`
       CREATE TABLE IF NOT EXISTS projects (
         ${entries}
-      );
-      CREATE INDEX projects_slug projects(slug)
-    `)
+      )`)
+    await this.query(`CREATE INDEX projects_slug ON projects(slug)`)
+    await this.query(`
+      CREATE TABLE IF NOT EXISTS tokens (
+        id TEXT PRIMARY KEY,
+        data TEXT NOT NULL
+      )`)
   }
 
   async saveProject(project: BaseProject) {
@@ -158,6 +166,26 @@ export class ProjectDatabase {
     return rows.map((row) =>
       toBaseProject(row as Record<keyof BaseProject, unknown>),
     )
+  }
+
+  async saveToken(token: Token) {
+    await this.query(`INSERT INTO tokens(id, data) VALUES(?, ?)`, [
+      token.id,
+      JSON.stringify(token),
+    ])
+  }
+
+  async getToken(id: AssetId): Promise<Token | undefined> {
+    const rows = await this.query(`SELECT data FROM tokens WHERE id = ?`, [id])
+    const row = rows[0]
+    if (row) {
+      return JSON.parse((row as { data: string }).data) as Token
+    }
+  }
+
+  async getTokens(): Promise<Token[]> {
+    const rows = await this.query(`SELECT data FROM tokens`)
+    return rows.map((row): Token => JSON.parse((row as { data: string }).data))
   }
 
   private query(query: string, values?: unknown[]): Promise<unknown[]> {

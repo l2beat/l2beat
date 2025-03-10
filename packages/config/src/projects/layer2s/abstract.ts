@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from './templates/zkStack'
 
 const genesisTimestamp = UnixTime(1729881083)
@@ -12,7 +12,7 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 )
 const bridge = discovery.getContract('L1SharedBridge')
 
-export const abstract: Layer2 = zkStackL2({
+export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1724863689), // 2024-08-28T16:48:09Z
   display: {
     name: 'Abstract',
