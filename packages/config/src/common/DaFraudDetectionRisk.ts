@@ -1,4 +1,4 @@
-import type { TableReadyValue } from '../../../types'
+import type { TableReadyValue } from '../types'
 
 function DasWithBlobsReconstruction(erasureCoding: boolean): TableReadyValue {
   return {

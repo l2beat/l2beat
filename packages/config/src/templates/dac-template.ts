@@ -2,9 +2,9 @@ import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
+  DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-} from '../projects/da-beat/common'
-import { DaRelayerFailureRisk } from '../projects/da-beat/common/DaRelayerFailureRisk'
+} from '../common'
 import type {
   DaBridgeRisks,
   DaLayerRisks,

@@ -1,4 +1,4 @@
-import type { TableReadyValue } from '../../../types'
+import type { TableReadyValue } from '../types'
 
 const SelfVerify: TableReadyValue = {
   value: 'Self-verify',

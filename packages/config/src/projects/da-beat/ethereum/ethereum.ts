@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../../../common'
+import { linkByDA } from '../../../common/linkByDA'
 import type { BaseProject } from '../../../types'
-import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../common'
-import { linkByDA } from '../common/linkByDA'
 
 // Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(

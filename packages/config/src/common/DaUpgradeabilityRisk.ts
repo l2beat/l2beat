@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { TableReadyValue } from '../../../types'
+import type { TableReadyValue } from '../types'
 
 const Immutable: TableReadyValue = {
   value: 'Immutable',

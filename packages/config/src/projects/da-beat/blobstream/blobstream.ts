@@ -1,14 +1,16 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  DaCommitteeSecurityRisk,
+  DaRelayerFailureRisk,
+  DaUpgradeabilityRisk,
+} from '../../../common'
+import { linkByDA } from '../../../common/linkByDA'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../../templates/generateDiscoveryDrivenSections'
 import type { BaseProject } from '../../../types'
-import { DaCommitteeSecurityRisk } from '../common/DaCommitteeSecurityRisk'
-import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import { linkByDA } from '../common/linkByDA'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')

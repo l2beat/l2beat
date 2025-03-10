@@ -1,6 +1,11 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
+import {
+  DaEconomicSecurityRisk,
+  DaRelayerFailureRisk,
+  DaUpgradeabilityRisk,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,11 +15,6 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from '../../templates/orbitStack'
-import {
-  DaEconomicSecurityRisk,
-  DaRelayerFailureRisk,
-  DaUpgradeabilityRisk,
-} from '../da-beat/common'
 
 const discovery = new ProjectDiscovery('nova')
 const l2Discovery = new ProjectDiscovery('nova', 'nova')

@@ -1,8 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
+import { DaRelayerFailureRisk, DaUpgradeabilityRisk } from '../common'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { type CommitteeResult, getCommittee } from '../discovery/starkware'
-import { DaUpgradeabilityRisk } from '../projects/da-beat/common'
-import { DaRelayerFailureRisk } from '../projects/da-beat/common/DaRelayerFailureRisk'
 import type {
   DaBridgeRisks,
   DaLayerRisks,

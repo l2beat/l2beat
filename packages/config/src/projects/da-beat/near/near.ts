@@ -1,8 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../../../common'
+import { linkByDA } from '../../../common/linkByDA'
 import type { BaseProject } from '../../../types'
-import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
-import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { linkByDA } from '../common/linkByDA'
 
 export const near: BaseProject = {
   id: ProjectId('near-da'), // TODO: merge with near bridge in the future

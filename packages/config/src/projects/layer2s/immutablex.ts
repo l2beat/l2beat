@@ -13,6 +13,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DaCommitteeSecurityRisk, DaEconomicSecurityRisk } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -26,10 +27,6 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { StarkexDAC } from '../../templates/starkex-template'
-import {
-  DaCommitteeSecurityRisk,
-  DaEconomicSecurityRisk,
-} from '../da-beat/common'
 
 const discovery = new ProjectDiscovery('immutablex')
 

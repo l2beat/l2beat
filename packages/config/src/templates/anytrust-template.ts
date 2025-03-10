@@ -1,5 +1,5 @@
+import { DaUpgradeabilityRisk } from '../common'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { DaUpgradeabilityRisk } from '../projects/da-beat/common'
 import type {
   DaBridgeRisks,
   DaLayerRisks,

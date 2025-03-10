@@ -1,8 +1,8 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { ScalingProject } from '../../../internalTypes'
-import { layer2s } from '../../../processing/layer2s'
-import { layer3s } from '../../../processing/layer3s'
-import type { UsedInProject } from '../../../types'
+import type { ScalingProject } from '../internalTypes'
+import { layer2s } from '../processing/layer2s'
+import { layer3s } from '../processing/layer3s'
+import type { UsedInProject } from '../types'
 
 /**
  * Helper function to select the layer2s and layer3s that use a specific layer and bridge

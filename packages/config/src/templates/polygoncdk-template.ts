@@ -1,4 +1,4 @@
-import { DaUpgradeabilityRisk } from '../projects/da-beat/common'
+import { DaUpgradeabilityRisk } from '../common'
 import type { DaTechnology, DacInfo, ProjectCustomDa } from '../types'
 import { DAC } from './dac-template'
 

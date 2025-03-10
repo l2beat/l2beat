@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../../../common'
+import { linkByDA } from '../../../common/linkByDA'
 import type { BaseProject } from '../../../types'
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { linkByDA } from '../common/linkByDA'
 
 export const memo: BaseProject = {
   id: ProjectId('memo'),

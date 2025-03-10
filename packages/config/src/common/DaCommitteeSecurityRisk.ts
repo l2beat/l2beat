@@ -1,4 +1,4 @@
-import type { DacInfo, TableReadyValue } from '../../../types'
+import type { DacInfo, TableReadyValue } from '../types'
 
 function RobustAndDiverseCommittee(value?: string): TableReadyValue {
   return {
