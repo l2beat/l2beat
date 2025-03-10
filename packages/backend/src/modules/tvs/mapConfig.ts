@@ -190,6 +190,19 @@ export function createEscrowToken(
 
   const id = TokenId.create(project.id, symbol)
 
+  let valueForTotal: CalculationFormula | ValueFormula | undefined = undefined
+  if (escrow.chain !== 'ethereum') {
+    valueForTotal = {
+      type: 'value',
+      amount: {
+        type: 'const',
+        value: '0',
+        decimals: 0,
+      },
+      priceId: legacyToken.coingeckoId,
+    }
+  }
+
   return {
     mode: 'auto',
     id,
@@ -198,6 +211,7 @@ export function createEscrowToken(
     ...(displaySymbol ? { displaySymbol } : {}),
     name: legacyToken.name,
     amount: amountFormula,
+    ...(valueForTotal ? { valueForTotal } : {}),
     sinceTimestamp,
     ...(untilTimestamp ? { untilTimestamp } : {}),
     category: legacyToken.category,
