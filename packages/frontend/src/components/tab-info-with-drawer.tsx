@@ -26,7 +26,7 @@ export function TabInfoWithDrawer({
               <DrawerTitle className="text-[18px] font-semibold text-zinc-800 dark:text-primary">
                 {title}
               </DrawerTitle>
-              <DrawerDescription className="text-sm font-normal text-zinc-500 dark:text-primary">
+              <DrawerDescription className="font-normal text-zinc-500 dark:text-primary">
                 {content}
               </DrawerDescription>
             </DrawerHeader>

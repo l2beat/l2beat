@@ -4,6 +4,7 @@ import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scal
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
+import { CostsDescription } from './_components/costs-description'
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
@@ -33,6 +34,7 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
+              <CostsDescription />
               <ScalingCostsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>
