@@ -12,10 +12,12 @@ import { describe } from 'mocha'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../../internalTypes'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens/tokens'
+import { getTokenList } from '../../tokens/tokens'
 import type { ProjectTechnologyChoice, ReferenceLink } from '../../types'
 import { chains } from '../chains'
 import { layer2s, milestonesLayer2s } from './index'
+
+const tokenList = getTokenList(chains)
 
 describe('layer2s', () => {
   describe('links', () => {

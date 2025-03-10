@@ -62,9 +62,11 @@ export const getCachedRecategorisedTvsChartData = cache(
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
+    const tokenList = await ps.getTokens()
     const tvsProjects = await getTvsProjects(
       projectsFilter,
       chains,
+      tokenList,
       previewRecategorisation,
     )
 

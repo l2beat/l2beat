@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x244a574b9a4d6307ad77725ccf42d8c20512d361
+
+# Diff at Fri, 07 Mar 2025 13:48:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21981175
+- current block number: 21995398
+
+## Description
+
+MS: single member change.
+
+## Watched changes
+
+```diff
+    contract IMXAdminMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.5:
+-        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
++        "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+    }
+```
+
 Generated with discovered.json: 0xe701381bf94f5120bc4d92ab3b175a717573316d
 
 # Diff at Thu, 06 Mar 2025 15:18:38 GMT:

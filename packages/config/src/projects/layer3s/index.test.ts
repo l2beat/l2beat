@@ -2,10 +2,12 @@ import { expect } from 'earl'
 
 import { assert } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { tokenList } from '../../tokens/tokens'
+import { getTokenList } from '../../tokens/tokens'
 import { chains } from '../chains'
 import { layer2s } from '../layer2s'
 import { layer3s } from './index'
+
+const tokenList = getTokenList(chains)
 
 describe('layer3s', () => {
   describe('links', () => {

@@ -41,7 +41,8 @@ const cmd = command({
     logger.info('Executing token script')
     const sourceFilePath = '../../packages/config/src/tokens/tokens.jsonc'
     const outputFilePath = '../../packages/config/src/tokens/generated.json'
-    await getTokenData(sourceFilePath, outputFilePath)
+    const dbPath = '../../packages/config/build/db.sqlite'
+    await getTokenData(sourceFilePath, outputFilePath, dbPath)
 
     const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 

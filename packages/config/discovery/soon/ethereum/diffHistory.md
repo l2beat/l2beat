@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x00ed59de9d5543c9b8ea659eb8dad57e86efe447
+
+# Diff at Fri, 07 Mar 2025 14:39:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21931798
+- current block number: 21995453
+
+## Description
+
+`SequencerPubkeyInfos` struct added to the SystemConfig. This is not used by anything but assumed to store sequencer pubkeys for their EigenDA sequencer.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xe25c80e0504b1ab9202b66f81f2f479e695d2440a0b5fe1ad31a300a75e64f2a"
++        "0xc55288826f56a35e98165958789bfe8d6d7b222e1d4b406ef195bb4a390bfd71"
+      values.$implementation:
+-        "0x9711256c6F2dFFabff9671dBaf1B4A3F7FB3Cffb"
++        "0x2B0634e5b534BA765e24640281b4eB636d446dF3"
+      values.$pastUpgrades.1:
++        ["2025-03-06T04:22:47.000Z","0x56dec8be0d5584f5dc8bce241414c6ee8e9df12ffab1bb6f31d4a2ea33218bf3",["0x2B0634e5b534BA765e24640281b4eB636d446dF3"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.sequencerPubkeyInfos:
++        []
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 56 ++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0xa27dadb0a62ab11102240bdfa0729bf469482769
 
 # Diff at Tue, 04 Mar 2025 11:26:34 GMT:
