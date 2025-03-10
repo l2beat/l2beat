@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const quarkchain: Layer2 = upcomingL2({
+export const quarkchain: ScalingProject = upcomingL2({
   id: 'quarkchain',
   capability: 'universal',
-  addedAt: new UnixTime(1741356345),
+  addedAt: new UnixTime(1741609623),
   display: {
     name: 'QuarkChain',
     slug: 'quarkchain',
