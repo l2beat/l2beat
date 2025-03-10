@@ -170,12 +170,12 @@ export const RoleDescriptions: {
       'Permissioned to disable the withdrawal limit on some Starknet token bridges.',
   },
   govAdminACStarknetETHBridge: {
-    name: 'Security Admin (ETH Bridge)',
+    name: 'Governance Admin (ETH Bridge)',
     description:
       'Permissioned to manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.',
   },
   govAdminACStarknetERC20Bridge: {
-    name: 'Security Admin (ERC-20 Bridges)',
+    name: 'Governance Admin (ERC-20 Bridges)',
     description:
       'Permissioned to manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.',
   },
@@ -190,7 +190,7 @@ export const RoleDescriptions: {
       'Permissioned to disable the withdrawal limit on the Starknet Multibridge.',
   },
   govAdminACStarknetMultibridge: {
-    name: 'Security Admin (Multibridge)',
+    name: 'Governance Admin (Multibridge)',
     description:
       'Permissioned to manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.',
   },
