@@ -19,7 +19,7 @@ export class CirculatingSupplyProvider {
       `${priceId}: Too many supplies fetched ${JSON.stringify(supplies)}`,
     )
 
-    return BigInt(Math.round(supplies[0].value * 10 ** decimals))
+    return BigInt(supplies[0].value * 10 ** decimals)
   }
 
   async getLatestCirculatingSupplies(
@@ -34,10 +34,7 @@ export class CirculatingSupplyProvider {
     for (const token of tokens) {
       const data = latestMarketData.get(CoingeckoId(token.priceId))
       assert(data !== undefined, `${token.priceId}: Price not found`)
-      result.set(
-        token.priceId,
-        BigInt(Math.round(data.circulating * 10 ** token.decimals)),
-      )
+      result.set(token.priceId, BigInt(data.circulating * 10 ** token.decimals))
     }
 
     return result

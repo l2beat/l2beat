@@ -4,7 +4,7 @@ import type { DataStorage } from './DataStorage'
 
 interface LocalStorageJSON {
   prices: Record<string, number>
-  amounts: Record<string, bigint>
+  amounts: Record<string, string>
   blocks: Record<string, number>
 }
 
@@ -80,9 +80,7 @@ export class LocalStorage implements DataStorage {
         prices: new Map(
           Object.entries(data.prices).map(([k, v]) => [k, Number(v)]),
         ),
-        amounts: new Map(
-          Object.entries(data.amounts).map(([k, v]) => [k, Number(v)]),
-        ),
+        amounts: new Map(Object.entries(data.amounts).map(([k, v]) => [k, v])),
         blocks: new Map(
           Object.entries(data.blocks).map(([k, v]) => [k, Number(v)]),
         ),
@@ -100,7 +98,7 @@ export class LocalStorage implements DataStorage {
     const data = {
       prices: Object.fromEntries(this.prices),
       amounts: Object.fromEntries(
-        Array.from(this.amounts.entries()).map(([k, v]) => [k, v.toString()]),
+        Array.from(this.amounts.entries()).map(([k, v]) => [k, v]),
       ),
       blocks: Object.fromEntries(
         Array.from(this.blocks.entries()).map(([k, v]) => [k, v.toString()]),
