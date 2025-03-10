@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 
 // all calculations will be done with this precision
-const DECIMALS = 2
+const DECIMALS = 18
 
 export type BigIntWithDecimals = bigint
 

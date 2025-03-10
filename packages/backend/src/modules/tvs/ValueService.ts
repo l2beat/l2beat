@@ -43,10 +43,14 @@ export class ValueService {
         values.push({
           tokenConfig: token,
           projectId: config.projectId,
-          amount: BigIntWithDecimals.toNumber(amount),
-          value: BigIntWithDecimals.toNumber(value),
-          valueForProject: BigIntWithDecimals.toNumber(valueForProject),
-          valueForTotal: BigIntWithDecimals.toNumber(valueForTotal),
+          amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+          value: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
+          valueForProject: Number(
+            BigIntWithDecimals.toNumber(valueForProject).toFixed(2),
+          ),
+          valueForTotal: Number(
+            BigIntWithDecimals.toNumber(valueForTotal).toFixed(2),
+          ),
         })
       }
 

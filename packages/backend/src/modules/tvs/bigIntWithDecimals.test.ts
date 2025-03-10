@@ -4,48 +4,40 @@ import { BigIntWithDecimals } from './bigIntWithDecimals'
 describe(BigIntWithDecimals.name, () => {
   describe(BigIntWithDecimals.name, () => {
     it('aligns to the desired precision - from higher', async () => {
-      // 100.1234
       const value = 1001234n
       const decimals = 4
 
       const result = BigIntWithDecimals(value, decimals)
 
-      // 100.12
-      expect(result).toEqual(10012n)
+      expect(result).toEqual(100123400000000000000n)
     })
 
     it('aligns to the desired precision - from lower', async () => {
-      // 100
       const value = 100n
       const decimals = 0
 
       const result = BigIntWithDecimals(value, decimals)
 
-      // 100.00
-      expect(result).toEqual(10000n)
+      expect(result).toEqual(100000000000000000000n)
     })
   })
 
   describe(BigIntWithDecimals.fromNumber.name, () => {
     it('converts from number with desired precision', async () => {
-      // 100.1234
       const value = 100.1234
 
       const result = BigIntWithDecimals.fromNumber(value)
 
-      // 100.12
-      expect(result).toEqual(10012n)
+      expect(result).toEqual(100123400000000000000n)
     })
   })
 
   describe(BigIntWithDecimals.toNumber.name, () => {
     it('converts to number with desired precision', async () => {
-      // 100.12
       const value = BigIntWithDecimals(10012n, 2)
 
       const result = BigIntWithDecimals.toNumber(value)
 
-      // 100.12
       expect(result).toEqual(100.12)
     })
   })
