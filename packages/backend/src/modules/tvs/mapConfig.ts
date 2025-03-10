@@ -40,7 +40,14 @@ export async function mapConfig(
     return chain
   }
 
-  const tokens: Map<string, Token> = new Map()
+  const tokens: Token[] = []
+  const escrowTokens: Map<
+    string,
+    {
+      token: Token
+      chain: string
+    }
+  > = new Map()
 
   for (const escrow of project.tvlConfig.escrows) {
     if (escrow.sharedEscrow) {
@@ -86,33 +93,42 @@ export async function mapConfig(
         const previousToken = tokens.get(token.id)
 
         if (previousToken === undefined) {
-          tokens.set(token.id, token)
+          escrowTokens.set(token.id, { token, chain: escrow.chain })
           continue
         }
 
-        if (previousToken?.amount.type === 'balanceOfEscrow') {
-          assert(previousToken.source === token.source, `Source mismatch`)
-          tokens.set(token.id, {
-            ...previousToken,
-            amount: {
-              type: 'calculation',
-              operator: 'sum',
-              arguments: [previousToken.amount, token.amount],
+        assert(previousToken?.chain === escrow.chain, 'Chain mismatch')
+
+        if (previousToken?.token.amount.type === 'balanceOfEscrow') {
+          assert(previousToken.token.source === token.source, `Source mismatch`)
+          escrowTokens.set(token.id, {
+            token: {
+              ...previousToken.token,
+              amount: {
+                type: 'calculation',
+                operator: 'sum',
+                arguments: [previousToken.token.amount, token.amount],
+              },
             },
+            chain: escrow.chain,
           })
           continue
         }
 
-        if (previousToken?.amount.type === 'calculation') {
-          tokens.set(token.id, {
-            ...previousToken,
-            amount: {
-              ...(previousToken.amount as CalculationFormula),
-              arguments: [
-                ...(previousToken.amount as CalculationFormula).arguments,
-                token.amount,
-              ],
+        if (previousToken.token.amount.type === 'calculation') {
+          escrowTokens.set(token.id, {
+            token: {
+              ...previousToken.token,
+              amount: {
+                ...(previousToken.token.amount as CalculationFormula),
+                arguments: [
+                  ...(previousToken.token.amount as CalculationFormula)
+                    .arguments,
+                  token.amount,
+                ],
+              },
             },
+            chain: escrow.chain,
           })
           continue
         }
@@ -125,9 +141,29 @@ export async function mapConfig(
     addToken(tokens, token, legacyToken.chainName)
   }
 
+  const uniqueTokens: Map<string, Token> = new Map()
+
+  for (const token of tokens) {
+    uniqueTokens.set(token.id, token)
+  }
+
+  for (const { token, chain } of Array.from(escrowTokens.values())) {
+    if (!uniqueTokens.has(token.id)) {
+      uniqueTokens.set(token.id, token)
+    } else {
+      const suffix = `.${chain}`
+      uniqueTokens.set(TokenId(token.id + suffix), {
+        ...token,
+        id: TokenId(token.id + suffix),
+        symbol: token.symbol + suffix,
+        displaySymbol: token.symbol,
+      })
+    }
+  }
+
   return {
     projectId: project.id,
-    tokens: [...Array.from(tokens.values())],
+    tokens: Array.from(uniqueTokens.values()),
   }
 }
 

@@ -1384,7 +1384,8 @@
       "sinceTimestamp": 1710720000,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "ETHFI"
     },
     {
       "mode": "auto",
@@ -1546,7 +1547,8 @@
       "sinceTimestamp": 1706140800,
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "ezETH"
     },
     {
       "mode": "auto",
@@ -1690,7 +1692,8 @@
       "sinceTimestamp": 1649462400,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "FPI"
     },
     {
       "mode": "auto",
@@ -1744,7 +1747,8 @@
       "sinceTimestamp": 1623784100,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "FRAX"
     },
     {
       "mode": "auto",
@@ -1768,7 +1772,7 @@
       "mode": "auto",
       "id": "arbitrum-frxETH",
       "priceId": "frax-ether",
-      "symbol": "frxETH",
+      "symbol": "frxETH.ethereum",
       "name": "Frax Ether",
       "amount": {
         "type": "balanceOfEscrow",
@@ -1780,7 +1784,8 @@
       "sinceTimestamp": 1669161600,
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "frxETH"
     },
     {
       "mode": "auto",
@@ -1834,7 +1839,8 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "FXS"
     },
     {
       "mode": "auto",
@@ -2038,7 +2044,8 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "GRT"
     },
     {
       "mode": "auto",
@@ -2303,22 +2310,6 @@
       "sinceTimestamp": 1623784100,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-LODE",
-      "priceId": "lodestar",
-      "symbol": "LODE",
-      "name": "Lodestar",
-      "amount": {
-        "type": "circulatingSupply",
-        "priceId": "lodestar",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1669075200,
-      "category": "other",
-      "source": "native",
       "isAssociated": false
     },
     {
@@ -3545,7 +3536,8 @@
       "sinceTimestamp": 1669852800,
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "sfrxETH"
     },
     {
       "mode": "auto",
@@ -3641,7 +3633,7 @@
       "mode": "auto",
       "id": "arbitrum-SOL",
       "priceId": "sol-wormhole",
-      "symbol": "SOL",
+      "symbol": "SOL.ethereum",
       "name": "Wrapped SOL",
       "amount": {
         "type": "balanceOfEscrow",
@@ -3653,7 +3645,8 @@
       "sinceTimestamp": 1642723200,
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "SOL"
     },
     {
       "mode": "auto",
@@ -4188,7 +4181,8 @@
       "sinceTimestamp": 1623784100,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "USDC"
     },
     {
       "mode": "auto",
@@ -4279,7 +4273,8 @@
       "sinceTimestamp": 1696982400,
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "USDM"
     },
     {
       "mode": "auto",
