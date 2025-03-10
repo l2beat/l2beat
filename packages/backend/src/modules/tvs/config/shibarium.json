@@ -53,6 +53,24 @@
     },
     {
       "mode": "auto",
+      "id": "shibarium-KNINE",
+      "priceId": "k9-finance-dao",
+      "symbol": "KNINE",
+      "name": "K9 Finance DAO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+        "chain": "ethereum",
+        "escrowAddress": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709856000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "shibarium-LEASH",
       "priceId": "leash",
       "symbol": "LEASH",
@@ -60,6 +78,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x27C70Cd1946795B66be9d954418546998b546634",
+        "chain": "ethereum",
+        "escrowAddress": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1691475539,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "shibarium-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
         "chain": "ethereum",
         "escrowAddress": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
         "decimals": 18

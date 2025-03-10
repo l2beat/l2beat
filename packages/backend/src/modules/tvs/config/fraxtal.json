@@ -389,6 +389,24 @@
     },
     {
       "mode": "auto",
+      "id": "fraxtal-stETH",
+      "priceId": "staked-ether",
+      "symbol": "stETH",
+      "name": "Liquid staked Ether 2.0",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "chain": "ethereum",
+        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1706811599,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "fraxtal-sUSDe",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
@@ -422,6 +440,24 @@
       "source": "canonical",
       "isAssociated": false,
       "displaySymbol": "sUSDe"
+    },
+    {
+      "mode": "auto",
+      "id": "fraxtal-tBTC",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "tBTC v2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+        "chain": "ethereum",
+        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1706811599,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",

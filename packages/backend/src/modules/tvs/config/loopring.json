@@ -40,6 +40,24 @@
     },
     {
       "mode": "auto",
+      "id": "loopring-AMP",
+      "priceId": "amp-token",
+      "symbol": "AMP",
+      "name": "Amp",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+        "chain": "ethereum",
+        "escrowAddress": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1603949642,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "loopring-BADGER",
       "priceId": "badger-dao",
       "symbol": "BADGER",
@@ -726,6 +744,24 @@
     },
     {
       "mode": "auto",
+      "id": "loopring-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1681776000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "loopring-PNK",
       "priceId": "kleros",
       "symbol": "PNK",
@@ -733,6 +769,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d",
+        "chain": "ethereum",
+        "escrowAddress": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1603949642,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "loopring-PNT",
+      "priceId": "pnetwork",
+      "symbol": "PNT",
+      "name": "pNetwork Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
         "chain": "ethereum",
         "escrowAddress": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
         "decimals": 18

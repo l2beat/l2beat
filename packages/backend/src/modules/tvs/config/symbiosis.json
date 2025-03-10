@@ -130,6 +130,24 @@
     },
     {
       "mode": "auto",
+      "id": "symbiosis-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1668373200,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "symbiosis-WETH",
       "priceId": "weth",
       "symbol": "WETH",

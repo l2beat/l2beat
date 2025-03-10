@@ -38,6 +38,23 @@
     },
     {
       "mode": "auto",
+      "id": "cronoszkevm-FRTN",
+      "priceId": "ebisusbay-fortune",
+      "symbol": "FRTN",
+      "name": "Fortune",
+      "sinceTimestamp": 1723511591,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x96e03FA6c5aB3a7F2e7098Dd07c8935493294E26",
+        "chain": "cronoszkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "cronoszkevm-FUL",
       "priceId": "fulcrom",
       "symbol": "FUL",

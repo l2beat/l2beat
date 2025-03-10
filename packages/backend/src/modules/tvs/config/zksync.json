@@ -22,6 +22,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync-AMP",
+      "priceId": "amp-token",
+      "symbol": "AMP",
+      "name": "Amp",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+        "chain": "ethereum",
+        "escrowAddress": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1599609600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync-APE",
       "priceId": "apecoin",
       "symbol": "APE",
@@ -467,6 +485,24 @@
       },
       "sinceTimestamp": 1592218707,
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync-HOT",
+      "priceId": "holotoken",
+      "symbol": "HOT",
+      "name": "HoloToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2",
+        "chain": "ethereum",
+        "escrowAddress": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1592218707,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -940,6 +976,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync-RLY",
+      "priceId": "rally-2",
+      "symbol": "RLY",
+      "name": "Rally",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xf1f955016EcbCd7321c7266BccFB96c68ea5E49b",
+        "chain": "ethereum",
+        "escrowAddress": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1602979200,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync-RNDR",
       "priceId": "render-token",
       "symbol": "RNDR",
@@ -970,6 +1024,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1597363200,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1596240000,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

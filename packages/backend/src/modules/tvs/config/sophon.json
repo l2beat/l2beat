@@ -38,6 +38,40 @@
     },
     {
       "mode": "auto",
+      "id": "sophon-OPN",
+      "priceId": "open-ticketing-ecosystem",
+      "symbol": "OPN",
+      "name": "Open Ecosystem Token",
+      "sinceTimestamp": 1729531437,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA96aD8EC6A83F23e0A75E5d8c9cE13C1042c4295",
+        "chain": "sophon",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "sophon-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "sinceTimestamp": 1729531437,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x06432e41131B70708c1C46814c2fcE9e720edd8A",
+        "chain": "sophon",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "sophon-sDAI",
       "priceId": "savings-dai",
       "symbol": "sDAI",

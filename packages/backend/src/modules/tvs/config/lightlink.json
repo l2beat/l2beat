@@ -94,6 +94,24 @@
     },
     {
       "mode": "auto",
+      "id": "lightlink-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1692185219,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lightlink-UNI",
       "priceId": "uniswap",
       "symbol": "UNI",
@@ -143,6 +161,24 @@
       },
       "sinceTimestamp": 1692185219,
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lightlink-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1692185219,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     }

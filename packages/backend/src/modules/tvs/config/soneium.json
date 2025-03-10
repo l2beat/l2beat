@@ -52,6 +52,23 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-PIPO",
+      "priceId": "pipo-2",
+      "symbol": "PIPO",
+      "name": "Pipo",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
+        "chain": "soneium",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1739923200,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-pufETH",
       "priceId": "pufeth",
       "symbol": "pufETH",

@@ -58,6 +58,37 @@
     },
     {
       "mode": "auto",
+      "id": "pNetwork-PNT",
+      "priceId": "pnetwork",
+      "symbol": "PNT",
+      "name": "pNetwork Token",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
+            "chain": "ethereum",
+            "escrowAddress": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
+            "chain": "ethereum",
+            "escrowAddress": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1640867581,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "pNetwork-ZRX",
       "priceId": "0x",
       "symbol": "ZRX",

@@ -22,6 +22,24 @@
     },
     {
       "mode": "auto",
+      "id": "skale-ima-DIVI",
+      "priceId": "divi",
+      "symbol": "DIVI",
+      "name": "Divi",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77",
+        "chain": "ethereum",
+        "escrowAddress": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1648055734,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "skale-ima-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -71,6 +89,24 @@
     },
     {
       "mode": "auto",
+      "id": "skale-ima-HMKR",
+      "priceId": "hitmakr",
+      "symbol": "HMKR",
+      "name": "HITMAKR",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3300b02efa180c99a2F61f4731665b51e4E254C4",
+        "chain": "ethereum",
+        "escrowAddress": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1712016000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "skale-ima-LINK",
       "priceId": "chainlink",
       "symbol": "LINK",
@@ -78,6 +114,42 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1626719900,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "skale-ima-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1681776000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "skale-ima-RAZOR",
+      "priceId": "razor-network",
+      "symbol": "RAZOR",
+      "name": "RAZOR",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd",
         "chain": "ethereum",
         "escrowAddress": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
         "decimals": 18

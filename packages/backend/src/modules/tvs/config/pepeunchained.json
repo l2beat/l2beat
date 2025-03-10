@@ -4,6 +4,37 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "pepeunchained-PEPU",
+      "priceId": "pepe-unchained",
+      "symbol": "PEPU",
+      "name": "Pepe Unchained",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+            "chain": "ethereum",
+            "escrowAddress": "0x34Ef4B527DB3F4AcfAE7Fdc7Db0f9981F48Cd23F",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+            "chain": "ethereum",
+            "escrowAddress": "0x384e3AE4D5efC9471201039b555EAe496b2A7240",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1733961600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "pepeunchained-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

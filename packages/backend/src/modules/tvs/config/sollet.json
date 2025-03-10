@@ -4,6 +4,24 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "sollet-ALEPH",
+      "priceId": "aleph",
+      "symbol": "ALEPH",
+      "name": "aleph.im v2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x27702a26126e0B3702af63Ee09aC4d1A084EF628",
+        "chain": "ethereum",
+        "escrowAddress": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1601134720,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "sollet-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",

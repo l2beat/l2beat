@@ -827,6 +827,24 @@
     },
     {
       "mode": "auto",
+      "id": "degate3-HOT",
+      "priceId": "holotoken",
+      "symbol": "HOT",
+      "name": "HoloToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2",
+        "chain": "ethereum",
+        "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1699746983,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "degate3-ILV",
       "priceId": "illuvium",
       "symbol": "ILV",
@@ -1205,6 +1223,24 @@
     },
     {
       "mode": "auto",
+      "id": "degate3-OGN",
+      "priceId": "origin-protocol",
+      "symbol": "OGN",
+      "name": "OriginToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8207c1FfC5B6804F6024322CcF34F29c3541Ae26",
+        "chain": "ethereum",
+        "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1699746983,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "degate3-OMG",
       "priceId": "omisego",
       "symbol": "OMG",
@@ -1266,6 +1302,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71",
+        "chain": "ethereum",
+        "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1699746983,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "degate3-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
         "chain": "ethereum",
         "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
         "decimals": 18
@@ -1446,6 +1500,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0",
+        "chain": "ethereum",
+        "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1699746983,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "degate3-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
         "chain": "ethereum",
         "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
         "decimals": 18
@@ -1914,6 +1986,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
+        "chain": "ethereum",
+        "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1699746983,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "degate3-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
         "chain": "ethereum",
         "escrowAddress": "0x54D7aE423Edb07282645e740C046B9373970a168",
         "decimals": 18

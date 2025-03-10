@@ -31,6 +31,46 @@
     },
     {
       "mode": "auto",
+      "id": "game7-G7",
+      "priceId": "game7",
+      "symbol": "G7",
+      "name": "Game7",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xF18e4466F26B4cA55bbAb890b314a54976E45B17",
+            "chain": "arbitrum",
+            "escrowAddress": "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xF18e4466F26B4cA55bbAb890b314a54976E45B17",
+            "chain": "arbitrum",
+            "escrowAddress": "0xe41363751bd1C305384375F428585C20e3dF516A",
+            "decimals": 18
+          }
+        ]
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "game7"
+      },
+      "sinceTimestamp": 1739404800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "game7-USDC.ext",
       "priceId": "usd-coin",
       "symbol": "USDC.ext",
@@ -81,6 +121,33 @@
       },
       "sinceTimestamp": 1728557217,
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "game7-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "chain": "arbitrum",
+        "escrowAddress": "0xe41363751bd1C305384375F428585C20e3dF516A",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "weth"
+      },
+      "sinceTimestamp": 1728557217,
+      "category": "ether",
       "source": "canonical",
       "isAssociated": false
     }

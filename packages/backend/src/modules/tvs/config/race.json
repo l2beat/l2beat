@@ -68,6 +68,24 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "race-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1720427195,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     }
   ]
 }

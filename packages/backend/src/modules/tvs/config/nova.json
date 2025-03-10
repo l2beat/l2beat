@@ -393,6 +393,42 @@
     },
     {
       "mode": "auto",
+      "id": "nova-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "chain": "ethereum",
+        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1656305583,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nova-stETH",
+      "priceId": "staked-ether",
+      "symbol": "stETH",
+      "name": "Liquid staked Ether 2.0",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "chain": "ethereum",
+        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1656305583,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "nova-STG",
       "priceId": "stargate-finance",
       "symbol": "STG",
@@ -548,6 +584,24 @@
         "chain": "ethereum",
         "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "decimals": 8
+      },
+      "sinceTimestamp": 1656305583,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nova-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+        "chain": "ethereum",
+        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "decimals": 18
       },
       "sinceTimestamp": 1656305583,
       "category": "other",

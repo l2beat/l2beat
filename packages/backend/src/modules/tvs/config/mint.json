@@ -51,6 +51,22 @@
     },
     {
       "mode": "auto",
+      "id": "mint-MST",
+      "priceId": "mintswaptoken",
+      "symbol": "MST",
+      "name": "MintSwap404NFT",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "mintswaptoken",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1725321600,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "mint-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

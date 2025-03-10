@@ -112,6 +112,24 @@
     },
     {
       "mode": "auto",
+      "id": "cbridge-LYRA",
+      "priceId": "lyra-finance",
+      "symbol": "LYRA",
+      "name": "Lyra Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1639612800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "cbridge-MASK",
       "priceId": "mask-network",
       "symbol": "MASK",
@@ -142,6 +160,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1651661389,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "cbridge-RLY",
+      "priceId": "rally-2",
+      "symbol": "RLY",
+      "name": "Rally",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xf1f955016EcbCd7321c7266BccFB96c68ea5E49b",
+        "chain": "ethereum",
+        "escrowAddress": "0xB37D31b2A74029B5951a2778F959282E2D518595",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1639553135,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -261,6 +297,24 @@
       },
       "sinceTimestamp": 1638346811,
       "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "cbridge-WXT",
+      "priceId": "wirex",
+      "symbol": "WXT",
+      "name": "Wirex Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa02120696c7B8fE16C09C749E4598819b2B0E915",
+        "chain": "ethereum",
+        "escrowAddress": "0xB37D31b2A74029B5951a2778F959282E2D518595",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1639553135,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     }

@@ -127,6 +127,24 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zkspace-ZKS",
+      "priceId": "zkspace",
+      "symbol": "ZKS",
+      "name": "Zks",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+        "chain": "ethereum",
+        "escrowAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1639569183,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
     }
   ]
 }

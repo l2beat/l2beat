@@ -176,6 +176,24 @@
     },
     {
       "mode": "auto",
+      "id": "mode-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1700167631,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "mode-M-BTC",
       "priceId": "merlin-s-seal-btc",
       "symbol": "M-BTC",
@@ -190,6 +208,22 @@
       "category": "other",
       "source": "external",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mode-MODE",
+      "priceId": "mode",
+      "symbol": "MODE",
+      "name": "Mode",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "mode",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1715126400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -292,6 +326,24 @@
       "sinceTimestamp": 1710892800,
       "category": "other",
       "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mode-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1700167631,
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {

@@ -22,6 +22,24 @@
     },
     {
       "mode": "auto",
+      "id": "mantle-BabyDoge",
+      "priceId": "baby-doge-coin",
+      "symbol": "BabyDoge",
+      "name": "Baby Doge Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
+        "chain": "ethereum",
+        "escrowAddress": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1687954103,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "mantle-BEL",
       "priceId": "bella-protocol",
       "symbol": "BEL",
@@ -375,6 +393,24 @@
     },
     {
       "mode": "auto",
+      "id": "mantle-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1687954103,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "mantle-Puff",
       "priceId": "puff-the-dragon",
       "symbol": "Puff",
@@ -387,6 +423,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1710201600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantle-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1687954103,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

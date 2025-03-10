@@ -4,6 +4,40 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "xlayer-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "sinceTimestamp": 1712620800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x68791CFE079814c46e0E25C19Bcc5BFC71A744f7",
+        "chain": "xlayer",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "xlayer-CAPS",
+      "priceId": "coin-capsule",
+      "symbol": "CAPS",
+      "name": "Capsule Coin",
+      "sinceTimestamp": 1712620800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3ec5D3873eABBB312316B2E3eb8950fe743a9B39",
+        "chain": "xlayer",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "xlayer-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
@@ -158,6 +192,23 @@
     },
     {
       "mode": "auto",
+      "id": "xlayer-rsETH",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "rsETH",
+      "sinceTimestamp": 1712620800,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8C7D118B5c47a5BCBD47cc51789558B98dAD17c5",
+        "chain": "xlayer",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "xlayer-SUSHI",
       "priceId": "sushi",
       "symbol": "SUSHI",
@@ -169,6 +220,23 @@
       "amount": {
         "type": "totalSupply",
         "address": "0xc32cB86aE7921f45C0aa44f638d0ee8B67C98b98",
+        "chain": "xlayer",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "xlayer-uniETH",
+      "priceId": "universal-eth",
+      "symbol": "uniETH",
+      "name": "Universal ETH",
+      "sinceTimestamp": 1712620800,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x99AeFE6472844aC06A2c49990Bbb5684333F2687",
         "chain": "xlayer",
         "decimals": 18
       }
@@ -237,6 +305,23 @@
       "amount": {
         "type": "totalSupply",
         "address": "0xb584516c8d90f133A48af5cC445cc5d924cf9863",
+        "chain": "xlayer",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "xlayer-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "sinceTimestamp": 1712620800,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5D8cfF95D7A57c0BF50B30b43c7CC0D52825D4a9",
         "chain": "xlayer",
         "decimals": 18
       }

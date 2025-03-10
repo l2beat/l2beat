@@ -118,6 +118,33 @@
     },
     {
       "mode": "auto",
+      "id": "across-v3-BLAST",
+      "priceId": "blast",
+      "symbol": "BLAST",
+      "name": "Blast",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
+        "chain": "blast",
+        "escrowAddress": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "blast"
+      },
+      "sinceTimestamp": 1719958375,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "across-v3-BOBA",
       "priceId": "boba-network",
       "symbol": "BOBA",
@@ -150,6 +177,58 @@
         ]
       },
       "sinceTimestamp": 1653124620,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "across-v3-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "ethereum",
+            "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+            "decimals": 8
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "ethereum",
+            "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+            "decimals": 8
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "ethereum",
+            "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+            "decimals": 8
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "arbitrum",
+            "escrowAddress": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
+            "decimals": 8
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "base",
+            "escrowAddress": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
+            "decimals": 8
+          }
+        ]
+      },
+      "sinceTimestamp": 1726099200,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -341,6 +420,44 @@
         ]
       },
       "sinceTimestamp": 1715865407,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "across-v3-PEPU",
+      "priceId": "pepe-unchained",
+      "symbol": "PEPU",
+      "name": "Pepe Unchained",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+            "chain": "ethereum",
+            "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+            "chain": "ethereum",
+            "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+            "chain": "ethereum",
+            "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1733961600,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

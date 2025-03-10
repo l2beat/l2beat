@@ -40,6 +40,24 @@
     },
     {
       "mode": "auto",
+      "id": "immutablex-OMI",
+      "priceId": "ecomi",
+      "symbol": "OMI",
+      "name": "OMI Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e",
+        "chain": "ethereum",
+        "escrowAddress": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632037514,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "immutablex-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

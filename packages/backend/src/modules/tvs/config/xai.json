@@ -31,6 +31,60 @@
     },
     {
       "mode": "auto",
+      "id": "xai-BOOP",
+      "priceId": "boop-2",
+      "symbol": "BOOP",
+      "name": "Boop",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
+        "chain": "arbitrum",
+        "escrowAddress": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "boop-2"
+      },
+      "sinceTimestamp": 1704476020,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "xai-GRAIL",
+      "priceId": "camelot-token",
+      "symbol": "GRAIL",
+      "name": "Camelot token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8",
+        "chain": "arbitrum",
+        "escrowAddress": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "camelot-token"
+      },
+      "sinceTimestamp": 1704476020,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "xai-PMON",
       "priceId": "polychain-monsters",
       "symbol": "PMON",

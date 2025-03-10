@@ -4,6 +4,23 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "astarzkevm-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "sinceTimestamp": 1708632059,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x68791CFE079814c46e0E25C19Bcc5BFC71A744f7",
+        "chain": "astarzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "astarzkevm-DAI",
       "priceId": "dai",
       "symbol": "DAI",
@@ -148,6 +165,23 @@
         "address": "0x1E4a5963aBFD975d8c9021ce480b42188849D41d",
         "chain": "astarzkevm",
         "decimals": 6
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "astarzkevm-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "sinceTimestamp": 1708632059,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1",
+        "chain": "astarzkevm",
+        "decimals": 8
       }
     },
     {

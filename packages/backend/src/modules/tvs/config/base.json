@@ -109,6 +109,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-AMP",
+      "priceId": "amp-token",
+      "symbol": "AMP",
+      "name": "Amp",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-APW",
       "priceId": "apwine",
       "symbol": "APW",
@@ -337,6 +355,23 @@
     },
     {
       "mode": "auto",
+      "id": "base-CONVO",
+      "priceId": "prefrontal-cortex-convo-agent-by-virtuals",
+      "symbol": "CONVO",
+      "name": "Prefrontal Cortex Convo Agent by Virtuals",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
+        "chain": "base",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1729900800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-COW",
       "priceId": "cow-protocol",
       "symbol": "COW",
@@ -445,6 +480,22 @@
     },
     {
       "mode": "auto",
+      "id": "base-DEGEN",
+      "priceId": "degen-base",
+      "symbol": "DEGEN",
+      "name": "Degen",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "degen-base",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1705276800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-DHT",
       "priceId": "dhedge-dao",
       "symbol": "DHT",
@@ -470,6 +521,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-DOG",
+      "priceId": "the-doge-nft",
+      "symbol": "DOG",
+      "name": "The Doge NFT",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBAac2B4491727D78D2b78815144570b9f2Fe8899",
         "chain": "ethereum",
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18
@@ -758,6 +827,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-GENE",
+      "priceId": "genomesdao",
+      "symbol": "GENE",
+      "name": "GenomesDAO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-GENOME",
       "priceId": "genomesdao-genome",
       "symbol": "GENOME",
@@ -878,6 +965,40 @@
       "sinceTimestamp": 1740009600,
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-KEYCAT",
+      "priceId": "keyboard-cat-base",
+      "symbol": "KEYCAT",
+      "name": "Keyboard Cat",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "keyboard-cat-base",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1711929600,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-KIBSHI",
+      "priceId": "kiboshib",
+      "symbol": "KIBSHI",
+      "name": "KiboShib",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x02e7F808990638E9e67E1f00313037EDe2362361",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1023,6 +1144,40 @@
     },
     {
       "mode": "auto",
+      "id": "base-MOCHI",
+      "priceId": "mochi-thecatcoin",
+      "symbol": "MOCHI",
+      "name": "Mochi",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "mochi-thecatcoin",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1700524800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-Mog",
+      "priceId": "mog-coin",
+      "symbol": "Mog",
+      "name": "Mog Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1689897600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-MORPHO",
       "priceId": "morpho",
       "symbol": "MORPHO",
@@ -1113,6 +1268,42 @@
     },
     {
       "mode": "auto",
+      "id": "base-OMI",
+      "priceId": "ecomi",
+      "symbol": "OMI",
+      "name": "OMI Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-OPN",
+      "priceId": "open-ticketing-ecosystem",
+      "symbol": "OPN",
+      "name": "Open Ecosystem Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1711929600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-OVR",
       "priceId": "ovr",
       "symbol": "OVR",
@@ -1138,6 +1329,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x808507121B80c02388fAd14726482e061B8da827",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
         "chain": "ethereum",
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18
@@ -1192,6 +1401,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-RAZOR",
+      "priceId": "razor-network",
+      "symbol": "RAZOR",
+      "name": "RAZOR",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd",
         "chain": "ethereum",
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18
@@ -1310,6 +1537,23 @@
     },
     {
       "mode": "auto",
+      "id": "base-SAINT",
+      "priceId": "satoshi-ai-agent-by-virtuals",
+      "symbol": "SAINT",
+      "name": "Satoshi AI agent by Virtuals",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7588880d9c78E81FAde7b7e8DC0781E95995a792",
+        "chain": "base",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1733097600,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-scrvUSD",
       "priceId": "savings-crvusd",
       "symbol": "scrvUSD",
@@ -1373,6 +1617,23 @@
         "decimals": 18
       },
       "sinceTimestamp": 1702339200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-SEKOIA",
+      "priceId": "sekoia-by-virtuals",
+      "symbol": "SEKOIA",
+      "name": "sekoia by Virtuals",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1185cB5122Edad199BdBC0cbd7a0457E448f23c7",
+        "chain": "base",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1731974400,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -1650,6 +1911,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-tBTC",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "tBTC v2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-TEL",
       "priceId": "telcoin",
       "symbol": "TEL",
@@ -1686,6 +1965,38 @@
     },
     {
       "mode": "auto",
+      "id": "base-TN100X",
+      "priceId": "tn100x",
+      "symbol": "TN100X",
+      "name": "The Next 100x Memecoin on Base",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "tn100x",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709596800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-TOSHI",
+      "priceId": "toshi",
+      "symbol": "TOSHI",
+      "name": "Toshi",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "toshi",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1696863767,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-TRAC",
       "priceId": "origintrail",
       "symbol": "TRAC",
@@ -1718,6 +2029,22 @@
       "sinceTimestamp": 1686793895,
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-TYBG",
+      "priceId": "base-god",
+      "symbol": "TYBG",
+      "name": "Base God",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "base-god",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1705363200,
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -1964,6 +2291,43 @@
       "sinceTimestamp": 1713838717,
       "category": "ether",
       "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-weETH.ethereum",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH.ethereum",
+      "name": "Wrapped eETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1701648000,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "displaySymbol": "weETH"
+    },
+    {
+      "mode": "auto",
+      "id": "base-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1686793895,
+      "category": "ether",
+      "source": "canonical",
       "isAssociated": false
     },
     {

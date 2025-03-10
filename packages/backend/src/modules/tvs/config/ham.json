@@ -4,6 +4,33 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "ham-DEGEN",
+      "priceId": "degen-base",
+      "symbol": "DEGEN",
+      "name": "Degen",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "chain": "base",
+        "escrowAddress": "0x936c137699230c4732d534c7E968cC7cEAa6Cf45",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "degen-base"
+      },
+      "sinceTimestamp": 1716592053,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "ham-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -39,6 +66,33 @@
       },
       "sinceTimestamp": 1716592039,
       "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "ham-TN100X",
+      "priceId": "tn100x",
+      "symbol": "TN100X",
+      "name": "The Next 100x Memecoin on Base",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5B5dee44552546ECEA05EDeA01DCD7Be7aa6144A",
+        "chain": "base",
+        "escrowAddress": "0x936c137699230c4732d534c7E968cC7cEAa6Cf45",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "tn100x"
+      },
+      "sinceTimestamp": 1716592053,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },

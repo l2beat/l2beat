@@ -20,6 +20,57 @@
     },
     {
       "mode": "auto",
+      "id": "blast-BAG",
+      "priceId": "bag",
+      "symbol": "BAG",
+      "name": "Bag",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x808688c820AB080A6Ff1019F03E5EC227D9b522B",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709251200,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-BLAST",
+      "priceId": "blast",
+      "symbol": "BLAST",
+      "name": "Blast",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "blast",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1719446400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "blast-bWOOL",
+      "priceId": "wolf-game-wool",
+      "symbol": "bWOOL",
+      "name": "bWOOL",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+        "chain": "blast",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1715703713,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "blast-DOLA",
       "priceId": "dola-usd",
       "symbol": "DOLA",
@@ -93,6 +144,56 @@
     },
     {
       "mode": "auto",
+      "id": "blast-JUICE",
+      "priceId": "juice-finance",
+      "symbol": "JUICE",
+      "name": "Juice",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "juice-finance",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1711584000,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-OLE",
+      "priceId": "openleverage",
+      "symbol": "OLE",
+      "name": "OpenLeverage Token V2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1B6e9c73beE68102d9dd4A2627f97bFf4183ab0A",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1708812911,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-PAC",
+      "priceId": "pacmoon",
+      "symbol": "PAC",
+      "name": "PacMoon",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "pacmoon",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1711497600,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "blast-PSTAKE",
       "priceId": "pstake-finance",
       "symbol": "PSTAKE",
@@ -100,6 +201,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1708812911,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-RBX",
+      "priceId": "rabbitx",
+      "symbol": "RBX",
+      "name": "RabbitX",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e",
         "chain": "ethereum",
         "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
         "decimals": 18

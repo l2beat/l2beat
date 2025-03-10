@@ -4,6 +4,33 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "degen-DEGEN",
+      "priceId": "degen-base",
+      "symbol": "DEGEN",
+      "name": "Degen",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "chain": "base",
+        "escrowAddress": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "degen-base"
+      },
+      "sinceTimestamp": 1710087441,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "degen-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

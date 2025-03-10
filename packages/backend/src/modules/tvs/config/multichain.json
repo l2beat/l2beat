@@ -85,6 +85,44 @@
     },
     {
       "mode": "auto",
+      "id": "multichain-AMP",
+      "priceId": "amp-token",
+      "symbol": "AMP",
+      "name": "Amp",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+            "chain": "ethereum",
+            "escrowAddress": "0x533e3c0e6b48010873B947bddC4721b1bDFF9648",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+            "chain": "ethereum",
+            "escrowAddress": "0x668b9734FfE9eE8a01d4Ade3362De71E8989EA87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+            "chain": "ethereum",
+            "escrowAddress": "0x820A9eb227BF770A9dd28829380d53B76eAf1209",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1615021976,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "multichain-ANKR",
       "priceId": "ankr",
       "symbol": "ANKR",
@@ -116,6 +154,24 @@
     },
     {
       "mode": "auto",
+      "id": "multichain-AURORA",
+      "priceId": "aurora-near",
+      "symbol": "AURORA",
+      "name": "Aurora",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xAaAAAA20D9E0e2461697782ef11675f668207961",
+        "chain": "ethereum",
+        "escrowAddress": "0x37C24675E4a0DFCE683c51e1746599F1E2517Eb5",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1669713143,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "multichain-AXS",
       "priceId": "axie-infinity",
       "symbol": "AXS",
@@ -128,6 +184,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1647364526,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "multichain-BabyDoge",
+      "priceId": "baby-doge-coin",
+      "symbol": "BabyDoge",
+      "name": "Baby Doge Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
+        "chain": "ethereum",
+        "escrowAddress": "0x8b92eA35171e29948Cc9e49c52AC8dB0549B7D6B",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1636439817,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -794,6 +868,24 @@
     },
     {
       "mode": "auto",
+      "id": "multichain-FEG",
+      "priceId": "feg-token-2",
+      "symbol": "FEG",
+      "name": "FEGtoken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x389999216860AB8E0175387A0c90E5c52522C945",
+        "chain": "ethereum",
+        "escrowAddress": "0x533e3c0e6b48010873B947bddC4721b1bDFF9648",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1680300000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "multichain-FRAX",
       "priceId": "frax",
       "symbol": "FRAX",
@@ -1359,6 +1451,24 @@
     },
     {
       "mode": "auto",
+      "id": "multichain-RACA",
+      "priceId": "radio-caca",
+      "symbol": "RACA",
+      "name": "Radio Caca V2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+        "chain": "ethereum",
+        "escrowAddress": "0x16abA2d28329620F31D44748EC82FA08daA50B86",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1639040499,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "multichain-RAI",
       "priceId": "rai",
       "symbol": "RAI",
@@ -1477,6 +1587,24 @@
     },
     {
       "mode": "auto",
+      "id": "multichain-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1613816964,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "multichain-SNX",
       "priceId": "havven",
       "symbol": "SNX",
@@ -1509,6 +1637,24 @@
         ]
       },
       "sinceTimestamp": 1630665650,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "multichain-SPELL",
+      "priceId": "spell-token",
+      "symbol": "SPELL",
+      "name": "Spell Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x090185f2135308BaD17527004364eBcC2D37e5F6",
+        "chain": "ethereum",
+        "escrowAddress": "0x4e840AADD28DA189B9906674B4Afcb77C128d9ea",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1631162492,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

@@ -467,6 +467,24 @@
     },
     {
       "mode": "auto",
+      "id": "lyra-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1700021675,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lyra-wBTC.ext",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC.ext",

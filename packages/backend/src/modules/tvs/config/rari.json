@@ -91,6 +91,46 @@
     },
     {
       "mode": "auto",
+      "id": "rari-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
+            "chain": "arbitrum",
+            "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
+            "chain": "arbitrum",
+            "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
+            "decimals": 18
+          }
+        ]
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "chainlink"
+      },
+      "sinceTimestamp": 1705716148,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "rari-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

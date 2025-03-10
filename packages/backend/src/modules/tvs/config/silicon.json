@@ -220,6 +220,23 @@
     },
     {
       "mode": "auto",
+      "id": "silicon-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "sinceTimestamp": 1724183531,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD4F7452A70D9b22A7342ec3B4590F7542681316F",
+        "chain": "silicon",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "silicon-TUSD",
       "priceId": "true-usd",
       "symbol": "TUSD",

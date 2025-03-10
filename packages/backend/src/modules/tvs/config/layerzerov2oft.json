@@ -107,6 +107,24 @@
     },
     {
       "mode": "auto",
+      "id": "layerzerov2oft-PARAM",
+      "priceId": "param",
+      "symbol": "PARAM",
+      "name": "Param",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x69A1e699f562D7Af66Fc6cc473d99f4430C3AcD2",
+        "chain": "ethereum",
+        "escrowAddress": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1716940800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "layerzerov2oft-PEAS",
       "priceId": "peapods-finance",
       "symbol": "PEAS",
@@ -227,6 +245,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1709311259,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "layerzerov2oft-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1716569111,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

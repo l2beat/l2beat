@@ -133,6 +133,34 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-DEGEN.ext",
+      "priceId": "degen-base",
+      "symbol": "DEGEN.ext",
+      "displaySymbol": "DEGEN",
+      "name": "Degen",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "chain": "base",
+        "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "degen-base"
+      },
+      "sinceTimestamp": 1711098033,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -393,6 +421,33 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-FOXY",
+      "priceId": "foxy",
+      "symbol": "FOXY",
+      "name": "Foxy",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5FBDF89403270a1846F5ae7D113A989F850d1566",
+        "chain": "linea",
+        "escrowAddress": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "foxy"
+      },
+      "sinceTimestamp": 1712880000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-GNS.ext",
       "priceId": "gains-network",
       "symbol": "GNS.ext",
@@ -421,6 +476,23 @@
     },
     {
       "mode": "auto",
+      "id": "zklinknova-M-BTC",
+      "priceId": "merlin-s-seal-btc",
+      "symbol": "M-BTC",
+      "name": "Merlin BTC",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
+        "chain": "zklinknova",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1715322228,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zklinknova-MANTA.ext",
       "priceId": "manta-network",
       "symbol": "MANTA.ext",
@@ -443,6 +515,34 @@
         "priceId": "manta-network"
       },
       "sinceTimestamp": 1709295839,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-MEOW.ext",
+      "priceId": "zeek-coin",
+      "symbol": "MEOW.ext",
+      "displaySymbol": "MEOW",
+      "name": "Zeek Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x79db8c67d0c33203da4Efb58F7D325E1e0d4d692",
+        "chain": "zksync2",
+        "escrowAddress": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "zeek-coin"
+      },
+      "sinceTimestamp": 1709297040,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -788,6 +888,34 @@
       "sinceTimestamp": 1709295323,
       "category": "ether",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-SolvBTC.ext",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC.ext",
+      "displaySymbol": "SolvBTC",
+      "name": "Solv BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "solv-btc"
+      },
+      "sinceTimestamp": 1712448000,
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {

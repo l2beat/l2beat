@@ -58,6 +58,24 @@
     },
     {
       "mode": "auto",
+      "id": "omni-AMP",
+      "priceId": "amp-token",
+      "symbol": "AMP",
+      "name": "Amp",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1599609600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omni-ANT",
       "priceId": "aragon",
       "symbol": "ANT",
@@ -796,6 +814,24 @@
     },
     {
       "mode": "auto",
+      "id": "omni-HOT",
+      "priceId": "holotoken",
+      "symbol": "HOT",
+      "name": "HoloToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1596501090,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omni-HT",
       "priceId": "huobi-token",
       "symbol": "HT",
@@ -1372,6 +1408,24 @@
     },
     {
       "mode": "auto",
+      "id": "omni-renBTC",
+      "priceId": "renbtc",
+      "symbol": "renBTC",
+      "name": "renBTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1596501090,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omni-rETH",
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
@@ -1402,6 +1456,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1603324800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "omni-RLY",
+      "priceId": "rally-2",
+      "symbol": "RLY",
+      "name": "Rally",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xf1f955016EcbCd7321c7266BccFB96c68ea5E49b",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1602979200,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -1457,6 +1529,24 @@
       },
       "sinceTimestamp": 1696982400,
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "omni-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1596501090,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1835,6 +1925,24 @@
       },
       "sinceTimestamp": 1596501090,
       "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "omni-WOO",
+      "priceId": "woo-network",
+      "symbol": "WOO",
+      "name": "Wootrade Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1604016000,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },

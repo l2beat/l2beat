@@ -382,6 +382,24 @@
     },
     {
       "mode": "auto",
+      "id": "hermez-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1616482490,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "hermez-WETH",
       "priceId": "weth",
       "symbol": "WETH",
@@ -412,6 +430,24 @@
         "decimals": 6
       },
       "sinceTimestamp": 1635679310,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1616482490,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

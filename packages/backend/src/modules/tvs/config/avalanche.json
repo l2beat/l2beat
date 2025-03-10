@@ -221,6 +221,37 @@
     },
     {
       "mode": "auto",
+      "id": "avalanche-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0xE78388b4CE79068e89Bf8aA7f218eF6b9AB0e9d0",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x8EB8a3b98659Cce290402893d0123abb75E3ab28",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1634135918,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "avalanche-SUSHI",
       "priceId": "sushi",
       "symbol": "SUSHI",

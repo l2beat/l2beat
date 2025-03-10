@@ -128,6 +128,24 @@
     },
     {
       "mode": "auto",
+      "id": "ronin-SLP",
+      "priceId": "smooth-love-potion",
+      "symbol": "SLP",
+      "name": "Smooth Love Potion",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCC8Fa225D80b9c7D42F96e9570156c65D6cAAa25",
+        "chain": "ethereum",
+        "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+        "decimals": 0
+      },
+      "sinceTimestamp": 1655883630,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "ronin-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

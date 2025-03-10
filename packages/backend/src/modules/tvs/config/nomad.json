@@ -58,6 +58,42 @@
     },
     {
       "mode": "auto",
+      "id": "nomad-renBTC",
+      "priceId": "renbtc",
+      "symbol": "renBTC",
+      "name": "renBTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
+        "chain": "ethereum",
+        "escrowAddress": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1641899423,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nomad-tBTC",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "tBTC v2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+        "chain": "ethereum",
+        "escrowAddress": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1641899423,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "nomad-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

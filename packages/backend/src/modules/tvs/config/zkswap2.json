@@ -166,6 +166,24 @@
     },
     {
       "mode": "auto",
+      "id": "zkswap2-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1626059966,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zkswap2-SNX",
       "priceId": "havven",
       "symbol": "SNX",
@@ -289,6 +307,24 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zkswap2-ZKS",
+      "priceId": "zkspace",
+      "symbol": "ZKS",
+      "name": "Zks",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+        "chain": "ethereum",
+        "escrowAddress": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1626059966,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
     }
   ]
 }

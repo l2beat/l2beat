@@ -269,6 +269,24 @@
     },
     {
       "mode": "auto",
+      "id": "omgnetwork-renBTC",
+      "priceId": "renbtc",
+      "symbol": "renBTC",
+      "name": "renBTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
+        "chain": "ethereum",
+        "escrowAddress": "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1591574400,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omgnetwork-TUSD",
       "priceId": "true-usd",
       "symbol": "TUSD",

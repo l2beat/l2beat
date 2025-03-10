@@ -53,6 +53,24 @@
     },
     {
       "mode": "auto",
+      "id": "hashkey-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x2171E6d3B7964fA9654Ce41dA8a8fFAff2Cc70be",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1734346823,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "hashkey-WETH",
       "priceId": "weth",
       "symbol": "WETH",

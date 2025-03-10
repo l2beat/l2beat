@@ -365,6 +365,24 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-DOG",
+      "priceId": "the-doge-nft",
+      "symbol": "DOG",
+      "name": "The Doge NFT",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBAac2B4491727D78D2b78815144570b9f2Fe8899",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1630540800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "optimism-DOLA",
       "priceId": "dola-usd",
       "symbol": "DOLA",
@@ -676,6 +694,24 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-GEAR",
+      "priceId": "gearbox",
+      "symbol": "GEAR",
+      "name": "Gearbox",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBa3335588D9403515223F109EdC4eB7269a9Ab5D",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1671408000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "optimism-GTC",
       "priceId": "gitcoin",
       "symbol": "GTC",
@@ -706,6 +742,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1680048000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-HAN",
+      "priceId": "hanchain",
+      "symbol": "HAN",
+      "name": "HanChain",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0c90C57aaf95A3A87eadda6ec3974c99D786511F",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1663718400,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -852,6 +906,24 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-LYRA",
+      "priceId": "lyra-finance",
+      "symbol": "LYRA",
+      "name": "Lyra Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1639612800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "optimism-MANA",
       "priceId": "decentraland",
       "symbol": "MANA",
@@ -970,6 +1042,24 @@
         "decimals": 18
       },
       "sinceTimestamp": 1624401464,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1681776000,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

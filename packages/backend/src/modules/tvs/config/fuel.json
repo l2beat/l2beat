@@ -89,6 +89,24 @@
     },
     {
       "mode": "auto",
+      "id": "fuel-mBTC",
+      "priceId": "manta-mbtc",
+      "symbol": "mBTC",
+      "name": "mBTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4041381e947CFD3D483d67a25C6aa9Dc924250c5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1725464663,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "fuel-mETH",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",

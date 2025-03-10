@@ -35,6 +35,42 @@
     },
     {
       "mode": "auto",
+      "id": "polynetwork-RACA",
+      "priceId": "radio-caca",
+      "symbol": "RACA",
+      "name": "Radio Caca V2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1633573008,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynetwork-renBTC",
+      "priceId": "renbtc",
+      "symbol": "renBTC",
+      "name": "renBTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1599099893,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polynetwork-TRIBE",
       "priceId": "tribe-2",
       "symbol": "TRIBE",

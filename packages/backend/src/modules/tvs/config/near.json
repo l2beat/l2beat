@@ -40,6 +40,24 @@
     },
     {
       "mode": "auto",
+      "id": "near-AMP",
+      "priceId": "amp-token",
+      "symbol": "AMP",
+      "name": "Amp",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2",
+        "chain": "ethereum",
+        "escrowAddress": "0x23Ddd3e3692d1861Ed57EDE224608875809e127f",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1615826693,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "near-AURORA",
       "priceId": "aurora-near",
       "symbol": "AURORA",
@@ -708,6 +726,24 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
+        "chain": "ethereum",
+        "escrowAddress": "0x23Ddd3e3692d1861Ed57EDE224608875809e127f",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1615826693,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "near-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
         "chain": "ethereum",
         "escrowAddress": "0x23Ddd3e3692d1861Ed57EDE224608875809e127f",
         "decimals": 18

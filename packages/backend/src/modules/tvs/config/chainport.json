@@ -598,6 +598,72 @@
     },
     {
       "mode": "auto",
+      "id": "chainport-BRKL",
+      "priceId": "brokoli",
+      "symbol": "BRKL",
+      "name": "Brokoli Token",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1633392000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "chainport-BUSD",
       "priceId": "binance-usd",
       "symbol": "BUSD",
@@ -862,6 +928,72 @@
     },
     {
       "mode": "auto",
+      "id": "chainport-CREDI",
+      "priceId": "credefi",
+      "symbol": "CREDI",
+      "name": "CREDI",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1639008000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "chainport-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
@@ -1120,6 +1252,72 @@
         ]
       },
       "sinceTimestamp": 1636416000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-EPIK",
+      "priceId": "epik-prime",
+      "symbol": "EPIK",
+      "name": "Epik Prime",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1630022400,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -1637,6 +1835,72 @@
     },
     {
       "mode": "auto",
+      "id": "chainport-gOHM",
+      "priceId": "governance-ohm",
+      "symbol": "gOHM",
+      "name": "Governance OHM",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1638316800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "chainport-GRT",
       "priceId": "the-graph",
       "symbol": "GRT",
@@ -1967,6 +2231,72 @@
     },
     {
       "mode": "auto",
+      "id": "chainport-NFTD",
+      "priceId": "nftrade",
+      "symbol": "NFTD",
+      "name": "NFTrade Token",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1632441600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "chainport-NUM",
       "priceId": "numbers-protocol",
       "symbol": "NUM",
@@ -2027,6 +2357,138 @@
         ]
       },
       "sinceTimestamp": 1637193600,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-OBI",
+      "priceId": "orbofi-ai",
+      "symbol": "OBI",
+      "name": "ORBOFI",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1685318400,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-ORION",
+      "priceId": "orion-money",
+      "symbol": "ORION",
+      "name": "Orion Money Token",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1632960000,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -2099,6 +2561,138 @@
     },
     {
       "mode": "auto",
+      "id": "chainport-PBX",
+      "priceId": "paribus",
+      "symbol": "PBX",
+      "name": "Paribus",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1631750400,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1681776000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "chainport-PMON",
       "priceId": "polychain-monsters",
       "symbol": "PMON",
@@ -2159,6 +2753,72 @@
         ]
       },
       "sinceTimestamp": 1627899254,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-PORTX",
+      "priceId": "chainport",
+      "symbol": "PORTX",
+      "name": "ChainPort Token",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1663632000,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -2291,6 +2951,72 @@
         ]
       },
       "sinceTimestamp": 1627899254,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-RACA",
+      "priceId": "radio-caca",
+      "symbol": "RACA",
+      "name": "Radio Caca V2",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1633573008,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -2482,6 +3208,72 @@
           {
             "type": "balanceOfEscrow",
             "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1627899254,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
             "chain": "ethereum",
             "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
             "decimals": 18
@@ -2754,6 +3546,72 @@
       },
       "sinceTimestamp": 1627899254,
       "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "chainport-VENT",
+      "priceId": "vent-finance",
+      "symbol": "VENT",
+      "name": "VENT",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
+            "chain": "ethereum",
+            "escrowAddress": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
+            "chain": "ethereum",
+            "escrowAddress": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
+            "chain": "ethereum",
+            "escrowAddress": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
+            "chain": "ethereum",
+            "escrowAddress": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
+            "chain": "ethereum",
+            "escrowAddress": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
+            "chain": "ethereum",
+            "escrowAddress": "0x894107B7b5051409f279E8300774B2f62Febe057",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624",
+            "chain": "ethereum",
+            "escrowAddress": "0xfE83475880d3592833249BAAacfEC5eD51E29D82",
+            "decimals": 18
+          }
+        ]
+      },
+      "sinceTimestamp": 1631232000,
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },

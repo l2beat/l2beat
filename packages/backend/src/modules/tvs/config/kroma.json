@@ -177,6 +177,24 @@
     },
     {
       "mode": "auto",
+      "id": "kroma-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x827962404D7104202C5aaa6b929115C8211d9596",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1693880555,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "kroma-WEMIX.e",
       "priceId": "wemix-token",
       "symbol": "WEMIX.e",

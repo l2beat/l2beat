@@ -38,25 +38,6 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ALI.ethereum",
-      "priceId": "alethea-artificial-liquid-intelligence-token",
-      "symbol": "ALI.ethereum",
-      "name": "Artificial Liquid Intelligence Token",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B0b3a982b4634aC68dD83a4DBF02311cE324181",
-        "chain": "ethereum",
-        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1676367083,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "ALI"
-    },
-    {
-      "mode": "auto",
       "id": "zksync2-ALT",
       "priceId": "altlayer",
       "symbol": "ALT",
@@ -68,6 +49,23 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x67075857e2FCfb4C523da24C32dadBe8CFC04cFb",
+        "chain": "zksync2",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-API3",
+      "priceId": "api3",
+      "symbol": "API3",
+      "name": "API3",
+      "sinceTimestamp": 1717521479,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x426D679a0e111F96A39F44D9dAA545898Efb600B",
         "chain": "zksync2",
         "decimals": 18
       }
@@ -104,6 +102,23 @@
         "address": "0x380c05c9c08DF62BaaFcf86218b37950f127bf32",
         "chain": "zksync2",
         "decimals": 6
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-BAG",
+      "priceId": "bag",
+      "symbol": "BAG",
+      "name": "Bag",
+      "sinceTimestamp": 1717521479,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x38C8140D77980C9729c1A68616AAdfFEda120e97",
+        "chain": "zksync2",
+        "decimals": 18
       }
     },
     {
@@ -312,6 +327,23 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-ELON",
+      "priceId": "dogelon-mars",
+      "symbol": "ELON",
+      "name": "Dogelon",
+      "sinceTimestamp": 1717521479,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x716066c632032b8285E57724c9A94de13B57bbDC",
+        "chain": "zksync2",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -445,6 +477,24 @@
       "category": "stablecoin",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-FRAX.ethereum",
+      "priceId": "frax",
+      "symbol": "FRAX.ethereum",
+      "name": "Frax",
+      "sinceTimestamp": 1717521479,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1af86Fc72C4363b1e35e6f79320F94B7aC848050",
+        "chain": "zksync2",
+        "decimals": 18
+      },
+      "displaySymbol": "FRAX"
     },
     {
       "mode": "auto",
@@ -651,6 +701,23 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-KOI",
+      "priceId": "koi-3",
+      "symbol": "KOI",
+      "name": "Koi",
+      "sinceTimestamp": 1717521479,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa995ad25Ce5eB76972ab356168f5e1D9257E4d05",
+        "chain": "zksync2",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-LDO",
       "priceId": "lido-dao",
       "symbol": "LDO",
@@ -770,6 +837,22 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-MEOW",
+      "priceId": "zeek-coin",
+      "symbol": "MEOW",
+      "name": "Zeek Coin",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "zeek-coin",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1703894400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-Metis",
       "priceId": "metis-token",
       "symbol": "Metis",
@@ -866,6 +949,23 @@
       "amount": {
         "type": "totalSupply",
         "address": "0xb77269C22066E7F3B5E18298866Ef96eeadb4d1e",
+        "chain": "zksync2",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "sinceTimestamp": 1717521479,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFD282F16a64c6D304aC05d1A58Da15bed0467c71",
         "chain": "zksync2",
         "decimals": 18
       }
@@ -1008,6 +1108,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-rsETH.ethereum",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH.ethereum",
+      "name": "rsETH",
+      "sinceTimestamp": 1717521479,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xBc3DE055bdDc9466766B0EC79E0bA1Da112a832A",
+        "chain": "zksync2",
+        "decimals": 18
+      },
+      "displaySymbol": "rsETH"
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-rswETH",
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
@@ -1039,6 +1157,23 @@
       "category": "ether",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "sinceTimestamp": 1717521479,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5B09802d62d213c4503B4b1Ef5F727ef62c9F4eF",
+        "chain": "zksync2",
+        "decimals": 18
+      }
     },
     {
       "mode": "auto",
@@ -1229,6 +1364,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-USDC.ethereum",
+      "priceId": "usd-coin",
+      "symbol": "USDC.ethereum",
+      "name": "USD Coin",
+      "sinceTimestamp": 1717521479,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+        "chain": "zksync2",
+        "decimals": 6
+      },
+      "displaySymbol": "USDC"
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-USDM",
       "priceId": "mountain-protocol-usdm",
       "symbol": "USDM",
@@ -1277,25 +1430,6 @@
         "chain": "zksync2",
         "decimals": 18
       }
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-USDP.ethereum",
-      "priceId": "paxos-standard",
-      "symbol": "USDP.ethereum",
-      "name": "Pax Dollar",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
-        "chain": "ethereum",
-        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1676367083,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "USDP"
     },
     {
       "mode": "auto",
@@ -1505,6 +1639,22 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-ZF",
+      "priceId": "zkswap-finance",
+      "symbol": "ZF",
+      "name": "zkSwap Finance",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "zkswap-finance",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1694476800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-ZK",
       "priceId": "zksync",
       "symbol": "ZK",
@@ -1518,6 +1668,39 @@
       "category": "other",
       "source": "native",
       "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-ZKS",
+      "priceId": "zkspace",
+      "symbol": "ZKS",
+      "name": "Zks",
+      "sinceTimestamp": 1717521479,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA51710195Cdc29c43d3BeeEb6B255cFd97B3Dd88",
+        "chain": "zksync2",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-ZORRO",
+      "priceId": "zorro",
+      "symbol": "ZORRO",
+      "name": "Zorro",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "zorro",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1704758400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
     }
   ]
 }
