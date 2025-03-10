@@ -14,7 +14,7 @@ interface ChainConfig {
     url: string
     unsupported?: EtherscanUnsupportedMethods
   }
-  multicall?: MulticallConfig
+  multicall: MulticallConfig | undefined
 }
 
 export const chains: ChainConfig[] = [

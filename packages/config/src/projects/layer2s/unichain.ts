@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION } from '../../common'
+import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
@@ -32,6 +32,16 @@ export const unichain: Layer2 = opStackL2({
         'https://discord.com/invite/uniswap',
       ],
     },
+  },
+  scopeOfAssessment: {
+    checked: [
+      SOA.l1Contracts,
+      SOA.l2Contracts,
+      SOA.gasToken,
+      SOA.derivationSpec,
+      SOA.sourceCodeToProgramHash,
+    ],
+    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   stage: getStage(
     {

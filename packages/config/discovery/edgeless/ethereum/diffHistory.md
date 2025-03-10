@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x5c1624ca40b7d79a6754885a44571589afe2e850
+Generated with discovered.json: 0x65460b014da54a5f3f33cc9a8819fb03e523e865
+
+# Diff at Fri, 07 Mar 2025 09:07:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@454ef41fea41bcea030780b23fd1f11519ff78d2 block: 21766618
+- current block number: 21993999
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766618 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x890025891508a463A636f81D2f532a97210240de) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
+Generated with discovered.json: 0xf9c61cef7e0f9dbe41d1fe7076a18eabb8a97407
 
 # Diff at Thu, 06 Mar 2025 09:38:59 GMT:
 

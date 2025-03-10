@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xf0e814792edc3dc0abf2af01767b40cb0891c19e
+
+# Diff at Fri, 07 Mar 2025 13:45:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21723814
+- current block number: 21995383
+
+## Description
+
+DVN / Verifier for ZKsync Era added.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract DVN (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../lzomnichain/ethereum/.flat/DVN.sol             | 2116 ++++++++++++++++++++
+ 1 file changed, 2116 insertions(+)
+```
+
 Generated with discovered.json: 0x563d1c3b6a1e7b96711ecf73b11827c2d3f7ae58
 
 # Diff at Tue, 04 Mar 2025 10:39:24 GMT:

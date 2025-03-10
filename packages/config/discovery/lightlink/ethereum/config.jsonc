@@ -19,7 +19,8 @@
     "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": "Challenge",
     "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": "ChainOracle",
     "0x670E1C42A7A5962348138110E3ede3F422c10e2f": "SystemConfig",
-    "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": "L1StandardBridge"
+    "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": "L1StandardBridge",
+    "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": "LightLinkMultisig2"
   },
   "overrides": {
     //    "SystemConfig": {
