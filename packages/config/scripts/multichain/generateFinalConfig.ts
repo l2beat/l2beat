@@ -1,10 +1,13 @@
 import { notUndefined } from '@l2beat/shared-pure'
 
-import { tokenList } from '../../src'
+import { ProjectService } from '../../src'
 import { escrowTimestamps } from './escrowTimestamps'
 import type { IntermediateConfig } from './generateIntermediateConfig'
 
-export function generateFinalConfig(config: IntermediateConfig) {
+export async function generateFinalConfig(config: IntermediateConfig) {
+  const ps = new ProjectService('build/db.sqlite')
+  const tokenList = await ps.getTokens()
+
   const destinations = config.chains.map((x) => x.name).filter(notUndefined)
 
   const escrows = config.escrows

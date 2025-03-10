@@ -1,7 +1,7 @@
 {
   "name": "soneium",
   "chain": "ethereum",
-  "blockNumber": 21967100,
+  "blockNumber": 21995440,
   "configHash": "0x7948da76b2e2eca088809cd6303cf3b0396c981db5a2666fa7ff7037f6ecae97",
   "contracts": [
     {
@@ -323,6 +323,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0xd45F9F3990C48AfA5C90404c7a748b4c23FB2cba",
           "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E",
           "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B",
           "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452",
@@ -333,8 +334,8 @@
         "domainSeparator": "0xfec9c20e9a1f1dc2de8e49ee266be73bafbca115021f1de122ef95419b35297d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -370,7 +371,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 1126,
+        "gameCount": 1173,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x42D15f045159Ce4adE9EDC7da5704eF36056c936",
@@ -380,7 +381,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 1126,
+        "permissionedGamesTotal": 1173,
         "version": "1.0.0"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -800,7 +801,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21967049
+          "prevBlockNum": 21995409
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1101,7 +1102,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292661926",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292662631",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1391,6 +1392,7 @@
     { "address": "0xba1a565d2bF6D27F451a459308f423219478c5cB" },
     { "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8" },
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
+    { "address": "0xd45F9F3990C48AfA5C90404c7a748b4c23FB2cba" },
     { "address": "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90" },
     { "address": "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a" },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },

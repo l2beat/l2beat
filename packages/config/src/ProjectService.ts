@@ -1,5 +1,5 @@
 import { join } from 'path'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { AssetId, ProjectId, Token } from '@l2beat/shared-pure'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject } from './types'
 
@@ -14,8 +14,8 @@ export type Project<K extends Key = never, O extends Key = never> = Simplify<
     OptionalToUndefined<Pick<BaseProject, O | BasicKeys>>
 >
 
-// we are in build/src/ProjectService.js and we want build/db.sqlite
-const DEFAULT_DB_LOCATION = join(__dirname, '../db.sqlite')
+// we are in build/ProjectService.js and we want build/db.sqlite
+const DEFAULT_DB_LOCATION = join(__dirname, 'db.sqlite')
 
 export class ProjectService {
   db: ProjectDatabase
@@ -58,5 +58,13 @@ export class ProjectService {
       whereNull: query.whereNot ?? [],
     })
     return result as Project<K, O>[]
+  }
+
+  async getToken(id: AssetId): Promise<Token | undefined> {
+    return await this.db.getToken(id)
+  }
+
+  async getTokens(): Promise<Token[]> {
+    return await this.db.getTokens()
   }
 }

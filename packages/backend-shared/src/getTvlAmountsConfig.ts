@@ -1,9 +1,4 @@
-import {
-  type ChainConfig,
-  type Project,
-  type ProjectTvlEscrow,
-  tokenList,
-} from '@l2beat/config'
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import { assert, type AmountConfigEntry, type Token } from '@l2beat/shared-pure'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'
@@ -16,6 +11,7 @@ import { getTotalSupplyEntry } from './amounts/totalSupply'
 export function getTvlAmountsConfig(
   projects: Project<'tvlConfig', 'chainConfig'>[],
   chains: ChainConfig[],
+  tokenList: Token[],
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
 
@@ -56,6 +52,7 @@ export function getTvlAmountsConfig(
             escrow,
             project,
             aggLayerIncludedL1Tokens,
+            tokenList,
           )
           entries.push(...aggLayerEntries)
           break
@@ -66,6 +63,7 @@ export function getTvlAmountsConfig(
             project,
             elasticChainIncludedL1Tokens,
             chains,
+            tokenList,
           )
           entries.push(...elasticChainEntries)
           break
@@ -100,6 +98,7 @@ export function getTvlAmountsConfig(
 export function getTvlAmountsConfigForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
   chains: ChainConfig[],
+  tokenList: Token[],
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
 
@@ -130,6 +129,7 @@ export function getTvlAmountsConfigForProject(
           escrow,
           project,
           escrow.sharedEscrow.tokensToAssignFromL1 ?? [],
+          tokenList,
         )
         entries.push(...aggLayerEntries)
         break
@@ -140,6 +140,7 @@ export function getTvlAmountsConfigForProject(
           project,
           escrow.sharedEscrow.tokensToAssignFromL1 ?? [],
           chains,
+          tokenList,
         )
         entries.push(...elasticChainEntries)
         break

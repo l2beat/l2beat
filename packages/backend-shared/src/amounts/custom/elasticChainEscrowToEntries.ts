@@ -1,10 +1,10 @@
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
-  type ChainConfig,
-  type Project,
-  type ProjectTvlEscrow,
-  tokenList,
-} from '@l2beat/config'
-import { assert, type AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
+  assert,
+  type AmountConfigEntry,
+  AssetId,
+  type Token,
+} from '@l2beat/shared-pure'
 import { getElasticChainEtherEntry } from '../elasticChainEther'
 import { getElasticChainL2TokenEntry } from '../elasticChainL2Tokens'
 
@@ -13,6 +13,7 @@ export function elasticChainEscrowToEntries(
   project: Project<'tvlConfig', 'chainConfig'>,
   elasticChainIncludedL1Tokens: string[],
   chains: ChainConfig[],
+  tokenList: Token[],
 ) {
   assert(
     escrow.sharedEscrow?.type === 'ElasticChain',
