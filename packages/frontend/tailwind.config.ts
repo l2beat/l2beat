@@ -255,16 +255,27 @@ const config: Config = {
           },
           to: { height: '0', opacity: '0%' },
         },
+        // 500+300+500+500+500+1000+500 = 3800ms
         'row-highlight': {
           '0%': { backgroundColor: 'transparent' },
-          '50%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '12.5%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '20%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '32.5%': { backgroundColor: 'transparent' },
+          '45%': { backgroundColor: 'transparent' },
+          '57.5%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '82.5%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '95%': { backgroundColor: 'transparent' },
           '100%': { backgroundColor: 'transparent' },
         },
         'row-highlight-no-opacity': {
           '0%': { backgroundColor: 'hsl(var(--surface-primary))' },
-          '50%': {
-            backgroundColor: 'hsl(var(--row-highlight-no-opacity))',
-          },
+          '12.5%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '20%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '32.5%': { backgroundColor: 'hsl(var(--surface-primary))' },
+          '45%': { backgroundColor: 'hsl(var(--surface-primary))' },
+          '57.5%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '82.5%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '95%': { backgroundColor: 'hsl(var(--surface-primary))' },
           '100%': { backgroundColor: 'hsl(var(--surface-primary))' },
         },
       },
@@ -274,9 +285,8 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'collapsible-down': 'collapsible-down 0.3s ease-out',
         'collapsible-up': 'collapsible-up 0.3s ease-out',
-        'row-highlight': 'row-highlight 1.5s ease-in-out infinite',
-        'row-highlight-no-opacity':
-          'row-highlight-no-opacity 1.5s ease-in-out infinite',
+        'row-highlight': 'row-highlight 4s ease-in-out',
+        'row-highlight-no-opacity': 'row-highlight-no-opacity 4s ease-in-out',
       },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],

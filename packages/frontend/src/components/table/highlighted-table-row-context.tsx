@@ -33,15 +33,7 @@ export function HighlightedTableRowProvider({
     setHighlightedSlug(highlight ?? undefined)
   }, [])
 
-  useEffect(() => {
-    handleHighlightChange()
-
-    const timeoutId = setTimeout(() => {
-      setHighlightedSlug(undefined)
-    }, 3000)
-
-    return () => clearTimeout(timeoutId)
-  }, [handleHighlightChange])
+  useEffect(handleHighlightChange, [handleHighlightChange])
 
   return (
     <HighlightedTableRowContext.Provider value={{ highlightedSlug }}>
