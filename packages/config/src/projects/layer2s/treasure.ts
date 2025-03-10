@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import { zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('treasure')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -59,7 +59,7 @@ export const treasure: ScalingProject = zkStackL2({
     ],
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['MAGIC'],
@@ -75,7 +75,6 @@ export const treasure: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: ['MAGIC'], // will apparently be bridged externally at a later point
       },
-      ...zkStackUpgrades,
     }),
   ],
   daProvider: {

@@ -127,6 +127,17 @@
         {
           "permission": "upgrade",
           "from": "0x3f64e2e09732969813904a8473074CFADeE66AF1"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+          "via": [{ "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -166,8 +177,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
-          "via": []
+          "to": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
+          "via": [{ "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19" }]
         }
       ],
       "sinceTimestamp": 1710427013,
@@ -196,10 +207,12 @@
     {
       "name": "BlastProxyAdmin",
       "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
@@ -439,6 +452,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076",
     "zklinknova/secondaryZkLink": "0xdbd6b1ed71a07098ec5947baced2c9b3f0ac9fc11b1f3b9e9dce0ef3116a752e"

@@ -87,8 +87,8 @@ export interface ZkStackConfigCommon {
   milestones?: Milestone[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
-  nonTemplateContracts?: (upgrades: Upgradeability) => ProjectContract[]
-  nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
+  nonTemplateContracts?: ProjectContract[]
+  nonTemplateEscrows?: ProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -228,17 +228,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const scThresholdString = `${scMainThreshold} / ${scMemberCount}`
   const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
 
-  const upgrades: Upgradeability = {
-    upgradableBy: [
-      {
-        name: 'ProtocolUpgradeHandler',
-        delay: `${formatSeconds(
-          upgradeDelayWithScApprovalS,
-        )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
-      },
-    ],
-  }
-
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
   return {
     type: 'layer2',
@@ -288,7 +277,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
-          ? templateVars.nonTemplateEscrows(upgrades)
+          ? templateVars.nonTemplateEscrows
           : []),
       ],
       activityConfig: getActivityConfig(

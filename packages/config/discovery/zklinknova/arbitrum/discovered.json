@@ -7,10 +7,12 @@
     {
       "name": "ArbitrumProxyAdmin",
       "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
@@ -81,7 +83,18 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+          "via": [{ "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917" }]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x48698A17D193bFc882395AC06a1DEdbb222F2917"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -121,8 +134,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
-          "via": []
+          "to": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+          "via": [{ "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917" }]
         }
       ],
       "sinceTimestamp": 1709296973,
@@ -447,6 +460,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076",
     "zklinknova/secondaryZkLink": "0xdbd6b1ed71a07098ec5947baced2c9b3f0ac9fc11b1f3b9e9dce0ef3116a752e"
