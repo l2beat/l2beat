@@ -6,5 +6,6 @@ export const EXPLORER_URLS: Record<string, string> = {
   kinto: 'https://explorer.kinto.xyz/address/',
   ink: 'https://explorer.inkonchain.com/address/',
   unichain: 'https://uniscan.xyz/address/',
-  zksync2: 'https://era.zksync.network/',
+  zksync2: 'https://era.zksync.network/address/',
+  everclear: 'https://scan.everclear.org/address/',
 }
