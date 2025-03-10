@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22014788,
-  "configHash": "0xbfd75c31a1a1e8e5c445fc642f6bf206c7913a44917288f028a887c619090078",
+  "configHash": "0x3c496438d783e68a691c0b640528c4e1cfb1e8e0d314f491e592d493667a067f",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -1559,6 +1559,7 @@
     },
     { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
     {
+      "name": "ProtocolTimelockController(L2->L1)",
       "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
       "receivedPermissions": [
         {
@@ -1584,7 +1585,7 @@
     { "address": "0x3133781381bC58564D5e9888c208ED0b7BD7721F" },
     { "address": "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f" },
     {
-      "name": "ProtocolTimelockController(L2->L1)",
+      "name": "ProtocolTimelockController(L2->L1)_deprecated",
       "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
       "receivedPermissions": [
         {
@@ -1592,7 +1593,8 @@
           "from": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
           "description": "start (queue) upgrades."
         }
-      ]
+      ],
+      "category": { "name": "Spam", "priority": -1 }
     },
     { "address": "0x371F6E45784E7DFBEA2dc18Edb68cD90aD530E6c" },
     { "address": "0x3766Ae19984f845bb149E05b6F7E14FFB4f85a1A" },
