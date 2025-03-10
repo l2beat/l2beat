@@ -729,6 +729,9 @@ importers:
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
