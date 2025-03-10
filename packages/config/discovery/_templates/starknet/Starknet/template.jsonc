@@ -15,6 +15,9 @@
           },
           {
             "type": "governStarknet"
+          },
+          {
+            "type": "upgraderStarknet"
           }
         ]
       }

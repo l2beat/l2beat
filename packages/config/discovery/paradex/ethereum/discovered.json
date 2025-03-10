@@ -23,6 +23,10 @@
         {
           "permission": "upgrade",
           "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        },
+        {
+          "permission": "upgraderStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -60,6 +64,16 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
+          "permission": "govAdminACStarknetERC20Bridge",
+          "to": "0x0000000000000000000000000000000000000020",
+          "via": []
+        },
+        {
+          "permission": "govAdminACStarknetERC20Bridge",
+          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "via": []
+        },
+        {
           "permission": "interact",
           "to": "0x0000000000000000000000000000000000000020",
           "description": "disable the withdrawal limit.",
@@ -74,7 +88,7 @@
         {
           "permission": "interact",
           "to": "0x0000000000000000000000000000000000000020",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
           "via": []
         },
         {
@@ -92,7 +106,27 @@
         {
           "permission": "interact",
           "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "via": []
+        },
+        {
+          "permission": "secAdminACStarknetERC20Bridge",
+          "to": "0x0000000000000000000000000000000000000020",
+          "via": []
+        },
+        {
+          "permission": "secAdminACStarknetERC20Bridge",
+          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "via": []
+        },
+        {
+          "permission": "secAgentACStarknetERC20Bridge",
+          "to": "0x0000000000000000000000000000000000000020",
+          "via": []
+        },
+        {
+          "permission": "secAgentACStarknetERC20Bridge",
+          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
           "via": []
         },
         {
@@ -277,6 +311,16 @@
           "permission": "upgrade",
           "to": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
           "via": []
+        },
+        {
+          "permission": "upgraderStarknet",
+          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+          "via": []
+        },
+        {
+          "permission": "upgraderStarknet",
+          "to": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -406,6 +450,10 @@
       "address": "0x0000000000000000000000000000000000000020",
       "receivedPermissions": [
         {
+          "permission": "govAdminACStarknetERC20Bridge",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+        },
+        {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "disable the withdrawal limit."
@@ -418,7 +466,15 @@
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+        },
+        {
+          "permission": "secAdminACStarknetERC20Bridge",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+        },
+        {
+          "permission": "secAgentACStarknetERC20Bridge",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
         }
       ]
     },
@@ -434,6 +490,10 @@
         {
           "permission": "upgrade",
           "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+        },
+        {
+          "permission": "upgraderStarknet",
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
         }
       ]
     },
@@ -444,6 +504,10 @@
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "govAdminACStarknetERC20Bridge",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+        },
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
@@ -457,7 +521,15 @@
         {
           "permission": "interact",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+        },
+        {
+          "permission": "secAdminACStarknetERC20Bridge",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+        },
+        {
+          "permission": "secAgentACStarknetERC20Bridge",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
         },
         {
           "permission": "upgrade",
@@ -721,7 +793,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starknet/Starknet": "0xebe5ae41eaeb1d93c4e851cda25f1a4d64b70f6622f4de1aa5d92f744e813262",
-    "starknet/StarknetERC20Bridge": "0x44547f029ed96803504a04745eecd15111d42373717f3f6b7e16bf251255ec25"
+    "starknet/Starknet": "0xd571963400d7864e5db3306315af54fbd1eebdabb464e2c146b60a7a307da7b5",
+    "starknet/StarknetERC20Bridge": "0xccb994af6cc757d565ea0609eb7ccfbc884805e200d66c36fc1de22556f91b18"
   }
 }

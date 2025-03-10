@@ -66,6 +66,9 @@
           {
             "type": "interact",
             "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually)."
+          },
+          {
+            "type": "managerStarknetMultibridge"
           }
         ]
       }
@@ -122,6 +125,9 @@
           {
             "type": "interact",
             "description": "manage critical access control roles and the role that can upgrade the implementation."
+          },
+          {
+            "type": "govAdminACStarknetMultibridge"
           }
         ]
       }
@@ -139,6 +145,9 @@
           {
             "type": "interact",
             "description": "disable the withdrawal limit."
+          },
+          {
+            "type": "secAdminACStarknetMultibridge"
           }
         ]
       }
@@ -156,6 +165,9 @@
           {
             "type": "interact",
             "description": "enable the withdrawal limit."
+          },
+          {
+            "type": "secAgentACStarknetMultibridge"
           }
         ]
       }

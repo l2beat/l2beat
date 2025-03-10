@@ -29,6 +29,10 @@
           {
             "type": "upgrade",
             "delay": "{{getUpgradeActivationDelay}}"
+          },
+          {
+            "type": "upgraderStarknetETHBridge",
+            "delay": "{{getUpgradeActivationDelay}}"
           }
         ]
       }
@@ -143,6 +147,9 @@
           {
             "type": "interact",
             "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          },
+          {
+            "type": "govAdminACStarknetETHBridge"
           }
         ]
       }
@@ -160,6 +167,9 @@
           {
             "type": "interact",
             "description": "disable the withdrawal limit."
+          },
+          {
+            "type": "secAdminACStarknetETHBridge"
           }
         ]
       }
@@ -177,6 +187,9 @@
           {
             "type": "interact",
             "description": "enable the withdrawal limit."
+          },
+          {
+            "type": "secAgentACStarknetETHBridge"
           }
         ]
       }
