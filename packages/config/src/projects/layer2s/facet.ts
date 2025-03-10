@@ -83,6 +83,7 @@ export const facet: Layer2 = opStackL2({
   chainConfig: {
     name: 'facet',
     chainId: 1027303,
+    gasTokens: ['FCT'],
     apis: [
       {
         type: 'rpc',
