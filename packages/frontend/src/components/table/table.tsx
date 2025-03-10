@@ -124,7 +124,7 @@ const TableCell = ({
       <LinkWithOnHoverPrefetch
         href={href}
         className={cn(
-          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
+          'flex h-[calc(100%_-_1px)] w-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
           align === 'center' && 'justify-center',
           align === 'right' && 'justify-end',
           className,
