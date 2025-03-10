@@ -92,6 +92,7 @@ export async function mapConfig(
         }
 
         if (previousToken?.amount.type === 'balanceOfEscrow') {
+          assert(previousToken.source === token.source, `Source mismatch`)
           escrowTokens.set(token.id, {
             ...previousToken,
             amount: {
@@ -144,7 +145,6 @@ export function createEscrowToken(
     chainOfEscrow.name === escrow.chain,
     `${legacyToken.symbol}: chain mismatch`,
   )
-  const id = TokenId.create(project.id, legacyToken.symbol)
 
   let amountFormula: CalculationFormula | AmountFormula
 
@@ -184,12 +184,18 @@ export function createEscrowToken(
   )
 
   const source = escrow.source ?? 'canonical'
+  const symbol =
+    source === 'external' ? legacyToken.symbol + '.ext' : legacyToken.symbol
+  const displaySymbol = source === 'external' ? legacyToken.symbol : undefined
+
+  const id = TokenId.create(project.id, symbol)
 
   return {
     mode: 'auto',
     id,
     priceId: legacyToken.coingeckoId,
-    symbol: legacyToken.symbol,
+    symbol,
+    ...(displaySymbol ? { displaySymbol } : {}),
     name: legacyToken.name,
     amount: amountFormula,
     sinceTimestamp,

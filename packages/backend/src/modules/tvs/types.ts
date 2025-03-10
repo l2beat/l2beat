@@ -85,6 +85,7 @@ export interface Token {
   // by default it is set to coingeckoId
   priceId: string
   symbol: string
+  displaySymbol?: string
   name: string
   amount: CalculationFormula | AmountFormula
   // we need this formula to handle relations between tokens on the same chain
