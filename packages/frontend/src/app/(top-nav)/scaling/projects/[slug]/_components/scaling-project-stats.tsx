@@ -28,6 +28,7 @@ export function ProjectScalingStats({ project, className }: Props) {
       key="tokens"
       title="Tokens"
       className="md:gap-2"
+      valueClassName="max-md:mt-px"
       value={
         <TokenBreakdownStat
           tokenTvs={project.header.tvs?.tokens}
@@ -74,7 +75,8 @@ export function ProjectScalingStats({ project, className }: Props) {
     project.stageConfig.stage !== 'NotApplicable' ? (
       <ProjectStat
         title="Stage"
-        className="md:gap-2"
+        className="md:gap-[11px]"
+        valueClassName="max-md:mt-px"
         value={
           <a href="#stage">
             <StageCell
@@ -134,6 +136,7 @@ interface ProjectStat {
   value: ReactNode
   tooltip?: string
   className?: string
+  valueClassName?: string
 }
 
 function ProjectStat(props: ProjectStat) {
@@ -159,7 +162,12 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:font-bold">
+      <span
+        className={cn(
+          'text-lg font-medium !leading-none md:font-bold',
+          props.valueClassName,
+        )}
+      >
         {props.value}
       </span>
     </li>
