@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('layerzerov2oft')
 const enaExecutor = EthereumAddress(
@@ -59,7 +59,7 @@ export const layerzerov2oft: Bridge = {
         'Omnichain tokens can be individually upgradable and their security assumptions must be individually assessed for each token contract / OApp.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: [

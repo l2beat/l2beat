@@ -1,4 +1,4 @@
-import type { TableReadyValue } from '../../../types'
+import type { TableReadyValue } from '../types'
 
 function NATIVE_AND_CANONICAL(
   gasTokens: string[],
@@ -38,7 +38,7 @@ const UPGRADABLE_NO: TableReadyValue = {
   sentiment: 'good',
 }
 
-export const RISK_VIEW = {
+export const BRIDGE_RISK_VIEW = {
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_OR_WRAPPED,

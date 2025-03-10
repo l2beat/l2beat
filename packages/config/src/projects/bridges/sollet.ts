@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('sollet')
 
@@ -72,11 +72,11 @@ export const sollet: Bridge = {
       description: 'Withdrawals need to be signed by an EOA account.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
+    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: {
-      ...RISK_VIEW.WRAPPED,
+      ...BRIDGE_RISK_VIEW.WRAPPED,
       description:
-        RISK_VIEW.WRAPPED.description +
+        BRIDGE_RISK_VIEW.WRAPPED.description +
         ' Sollet Bridge and its wrapped asset are deprecated in favor of assets bridged via Wormhole.',
     },
   },

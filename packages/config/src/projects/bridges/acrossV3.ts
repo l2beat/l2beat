@@ -7,7 +7,7 @@ import {
 import { utils } from 'ethers'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -145,8 +145,8 @@ export const acrossV3: Bridge = {
       description: `Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout used here is ${finalizationDelay}.`,
       sentiment: 'warning',
     },
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
-    destinationToken: RISK_VIEW.CANONICAL,
+    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: [

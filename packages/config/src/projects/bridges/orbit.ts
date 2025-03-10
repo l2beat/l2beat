@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('orbit')
 
@@ -162,9 +162,9 @@ export const orbit: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: {
-      ...RISK_VIEW.WRAPPED,
+      ...BRIDGE_RISK_VIEW.WRAPPED,
       description:
-        RISK_VIEW.WRAPPED.description +
+        BRIDGE_RISK_VIEW.WRAPPED.description +
         ' Tokens are minted as Orbit Bridge specific oTokens.',
     },
   },

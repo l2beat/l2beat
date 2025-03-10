@@ -8,7 +8,7 @@ import {
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('nomad')
 const challengeWindowSeconds = discovery.getContractValue<number>(
@@ -111,7 +111,7 @@ export const nomad: Bridge = {
       description: 'Bridge can be upgraded by the Governor MultiSig.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.WRAPPED,
+    destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   contracts: {
     addresses: {

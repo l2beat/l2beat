@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('near')
 
@@ -81,9 +81,9 @@ export const near: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: {
-      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
+      ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
       description:
-        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
+        BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED.description +
         ' Tokens minted on AURORA do not appear to be verified on explorer.aurora.dev.', // TBC
       sentiment: 'bad',
     },

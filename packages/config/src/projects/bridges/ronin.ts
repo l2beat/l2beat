@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('ronin')
 
@@ -82,9 +82,9 @@ export const ronin: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: {
-      ...RISK_VIEW.CANONICAL,
+      ...BRIDGE_RISK_VIEW.CANONICAL,
       description:
-        RISK_VIEW.CANONICAL.description +
+        BRIDGE_RISK_VIEW.CANONICAL.description +
         ' The Ronin explorer does not show contract source code!',
       sentiment: 'warning',
     },

@@ -6,7 +6,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const PROJECT_ID = ProjectId('hyperlane')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -102,7 +102,7 @@ export const hyperlane: Bridge = {
         'System and token contracts can be changed arbitrarily and without notice.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: [

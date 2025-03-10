@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 import config from './multichain-config.json'
 
 const discovery = new ProjectDiscovery('multichain')
@@ -101,9 +101,9 @@ export const multichain: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: {
-      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
+      ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
       description:
-        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
+        BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED.description +
         ' Depending on the router configuration either Multichain tokens or Any tokens are minted.',
     },
   },

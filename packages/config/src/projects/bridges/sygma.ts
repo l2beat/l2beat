@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('sygma')
 
@@ -55,7 +55,7 @@ export const sygma: Bridge = {
         'Contracts are not upgradable, however they are modular and configurable via a MultiSig.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {
     destination: [

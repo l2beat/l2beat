@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('cbridge')
 
@@ -151,8 +151,8 @@ export const cBridge: Bridge = {
     },
   },
   riskView: {
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
-    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
+    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
     validatedBy: {
       value: 'Third Party',
       description:

@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 export const wormholeV1: Bridge = {
   type: 'bridge',
@@ -48,7 +48,7 @@ export const wormholeV1: Bridge = {
         'Transfers need to be signed offchain by a set of 2/3 of Guardians and then in a permissionless way relayed to the destination chain.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
-    destinationToken: RISK_VIEW.WRAPPED,
+    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
+    destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
 }

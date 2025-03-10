@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('aptos')
 
@@ -47,7 +47,7 @@ export const aptos: Bridge = {
         'Token Bridge contracts are not upgradable but the owner (EOA) can remove all the funds after 1 week delay. LayerZero contracts are upgradable without delay.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: ['Aptos'],

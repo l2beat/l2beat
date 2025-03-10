@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('hop')
 
@@ -124,7 +124,7 @@ export const hop: Bridge = {
         'Messages are relayed to the destination chain and assumed to be correct unless challenged within the 24 hour fraud proof window.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
+    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: {
       value: 'Canonical',
       description:

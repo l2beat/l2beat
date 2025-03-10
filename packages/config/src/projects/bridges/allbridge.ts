@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('allbridge')
 
@@ -181,7 +181,7 @@ export const allbridge: Bridge = {
       description: `Allbridge contracts are immutable but all critical parameters can be changed by an EOA`,
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   contracts: {
     addresses: {

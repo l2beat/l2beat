@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('transporter')
 const upgradeDelay = discovery.getContractValue<number>(
@@ -57,8 +57,8 @@ export const transporter: Bridge = {
       sentiment: 'warning',
     },
     destinationToken: {
-      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
-      description: RISK_VIEW.CANONICAL_OR_WRAPPED.description + ' ',
+      ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
+      description: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED.description + ' ',
     },
   },
   technology: {

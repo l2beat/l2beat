@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('gravity')
 
@@ -51,8 +51,8 @@ export const gravity: Bridge = {
         'Transfers need to be approved by 2/3 of the validator set operating in Cosmos Gravity Bridge blockchain.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
-    destinationToken: RISK_VIEW.WRAPPED,
+    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
+    destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   technology: {
     destination: ['Cosmos'],

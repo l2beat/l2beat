@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const PROJECT_ID = ProjectId('beamer-bridge-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -53,8 +53,8 @@ export const beamerbridgev2: Bridge = {
         'Claims are considered valid if no challenge is submitted within the claim period (24h). The dispute can either be resolved by the participants or escalated by making use of the canonical bridge.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
-    destinationToken: RISK_VIEW.CANONICAL,
+    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: ['Mainnet', 'Optimism', 'Arbitrum'],

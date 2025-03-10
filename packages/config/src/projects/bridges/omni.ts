@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('omni')
 const threshold = discovery.getContractValue<number>(
@@ -88,9 +88,9 @@ export const omni: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: {
-      ...RISK_VIEW.CANONICAL,
+      ...BRIDGE_RISK_VIEW.CANONICAL,
       description:
-        RISK_VIEW.CANONICAL.description +
+        BRIDGE_RISK_VIEW.CANONICAL.description +
         ' Tokens transferred end up as wrapped ERC677.',
     },
   },

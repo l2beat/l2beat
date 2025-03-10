@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('pNetwork')
 
@@ -70,7 +70,7 @@ export const pNetwork: Bridge = {
         'The code that secures the system can be changed arbitrarily and without notice.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.WRAPPED,
+    destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   technology: {
     destination: [

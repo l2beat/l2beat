@@ -4,7 +4,7 @@ import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { languageJoin } from '../../utils/languageJoin'
-import { RISK_VIEW } from './common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 import {
   INBOUND_PROOF_LIBRARIES,
   OMNICHAIN_ESCROWS,
@@ -60,7 +60,7 @@ export const lzOmnichain: Bridge = {
         "Omnichain tokens can be individually upgradable and it's security assumptions must be individually assessed for each individual token.",
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: ['Various'],
