@@ -29,9 +29,10 @@ function Content({
     <Component
       className={cn(
         'group/primary-card relative bg-surface-primary p-4 primary-card md:rounded-xl md:px-6 md:py-5',
+        'before:absolute before:inset-0 before:rounded-lg before:transition-all',
         highlightedId &&
           props.id === highlightedId &&
-          'before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-brand before:shadow-[0px_4px_12px_10px] before:shadow-[#FF5FFB40]',
+          'before:border-2 before:border-brand before:shadow-[0px_4px_12px_10px] before:shadow-[#FF5FFB40]',
         className,
       )}
       {...props}
