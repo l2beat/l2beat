@@ -3,13 +3,16 @@ import {
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type Token, UnixTime } from '@l2beat/shared-pure'
 import { runConfigAdjustments } from '../../adjustments'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
-import type { Layer3 } from '../../internalTypes'
-import type { Layer2 } from '../../internalTypes'
-import type { Bridge, Layer2TxConfig } from '../../internalTypes'
-import { tokenList } from '../../tokens/tokens'
+import type {
+  Bridge,
+  Layer2,
+  Layer2TxConfig,
+  Layer3,
+} from '../../internalTypes'
+import { getTokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
   ProjectCostsInfo,
@@ -37,15 +40,21 @@ import { isUnderReview } from './utils/isUnderReview'
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
+  const chains = [...refactored, ...layer2s, ...layer3s, ...bridges]
+    .map((p) => p.chainConfig)
+    .filter((c) => c !== undefined)
+  const tokenList = getTokenList(chains)
+
   return refactored
-    .concat(layer2s.map((p) => layer2Or3ToProject(p, [])))
-    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s)))
-    .concat(bridges.map(bridgeToProject))
+    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], tokenList)))
+    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, tokenList)))
+    .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
 }
 
 function layer2Or3ToProject(
   p: Layer2 | Layer3,
   layer2s: Layer2[],
+  tokenList: Token[],
 ): BaseProject {
   return {
     id: p.id,
@@ -124,7 +133,7 @@ function layer2Or3ToProject(
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
-    tvlConfig: getTvlConfig(p),
+    tvlConfig: getTvlConfig(p, tokenList),
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
@@ -184,7 +193,7 @@ function getFinality(
   return {}
 }
 
-function bridgeToProject(p: Bridge): BaseProject {
+function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -220,7 +229,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
-    tvlConfig: getTvlConfig(p),
+    tvlConfig: getTvlConfig(p, tokenList),
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags
@@ -298,7 +307,10 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
+function getTvlConfig(
+  project: Layer2 | Layer3 | Bridge,
+  tokenList: Token[],
+): ProjectTvlConfig {
   const tokens = project.chainConfig
     ? tokenList.filter(
         (t) =>
@@ -307,7 +319,7 @@ function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
     : []
 
   return {
-    escrows: project.config.escrows.map(toProjectEscrow),
+    escrows: project.config.escrows.map((e) => toProjectEscrow(e, tokenList)),
     tokens,
     associatedTokens: project.config.associatedTokens ?? [],
   }
@@ -328,7 +340,10 @@ export function getDiscoveryInfo(
   }
 }
 
-function toProjectEscrow(escrow: ProjectEscrow): ProjectTvlEscrow {
+function toProjectEscrow(
+  escrow: ProjectEscrow,
+  tokenList: Token[],
+): ProjectTvlEscrow {
   return {
     address: escrow.address,
     sinceTimestamp: escrow.sinceTimestamp,

@@ -11,9 +11,7 @@ import { ps } from '~/server/projects'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import { getTvsBreakdown } from './get-tvs-breakdown'
 
-export type ProjectTvsBreakdown = Awaited<
-  ReturnType<ReturnType<typeof getTvsBreakdown>>
->
+export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 
 export async function getTvsBreakdownForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
@@ -32,10 +30,15 @@ export const getCachedTvsBreakdownForProjectData = cache(
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
+    const tokenList = await ps.getTokens()
+    const tokenMap = new Map(tokenList.map((t) => [t.id, t]))
 
-    const configMapping = getConfigMapping(project, chains)
-    return getTvsBreakdown(configMapping, chains)(
+    const configMapping = getConfigMapping(project, chains, tokenList)
+    return getTvsBreakdown(
+      configMapping,
+      chains,
       project.id,
+      tokenMap,
       project.chainConfig?.gasTokens,
     )
   },

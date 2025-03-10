@@ -3,7 +3,7 @@ import {
   getTvlAmountsConfigForProject,
 } from '@l2beat/backend-shared'
 import type { ChainConfig, Project } from '@l2beat/config'
-import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
+import type { AmountConfigEntry, ProjectId, Token } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
@@ -26,8 +26,9 @@ export interface TvsProject {
 export async function toTvsProject(
   project: Project<'tvlConfig', 'chainConfig'>,
   chains: ChainConfig[],
+  tokenList: Token[],
 ): Promise<TvsProject> {
-  const amounts = getTvlAmountsConfigForProject(project, chains)
+  const amounts = getTvlAmountsConfigForProject(project, chains, tokenList)
 
   const minTimestamp = amounts
     .map((x) => x.sinceTimestamp)
@@ -54,6 +55,7 @@ export async function toTvsProject(
 export async function getTvsProjects(
   filter: (p: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean,
   chains: ChainConfig[],
+  tokenList: Token[],
   previewRecategorisation?: boolean,
 ): Promise<TvsProject[]> {
   const projects = await ps.getProjects({
@@ -65,7 +67,7 @@ export async function getTvsProjects(
     .filter((p) => filter(p))
     .filter((project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.id))
 
-  const tvsAmounts = getTvlAmountsConfig(projects, chains)
+  const tvsAmounts = getTvlAmountsConfig(projects, chains, tokenList)
   const tvsAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
     tvsAmounts,
     (e) => e.project,

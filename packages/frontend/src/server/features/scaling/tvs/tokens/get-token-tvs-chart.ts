@@ -63,7 +63,8 @@ export const getCachedTokenTvsChartData = cache(
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
-    const configMapping = getConfigMapping(project, chains)
+    const tokenList = await ps.getTokens()
+    const configMapping = getConfigMapping(project, chains, tokenList)
 
     const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
       project.id,

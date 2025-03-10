@@ -1,5 +1,5 @@
 import { join } from 'path'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { AssetId, ProjectId, Token } from '@l2beat/shared-pure'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject } from './types'
 
@@ -58,5 +58,13 @@ export class ProjectService {
       whereNull: query.whereNot ?? [],
     })
     return result as Project<K, O>[]
+  }
+
+  async getToken(id: AssetId): Promise<Token | undefined> {
+    return await this.db.getToken(id)
+  }
+
+  async getTokens(): Promise<Token[]> {
+    return await this.db.getTokens()
   }
 }

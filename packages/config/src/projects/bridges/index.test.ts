@@ -1,13 +1,15 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens/tokens'
+import { getTokenList } from '../../tokens/tokens'
 import type {
   ProjectBridgeTechnology,
   ProjectTechnologyChoice,
 } from '../../types'
 import { chains } from '../chains'
 import { bridges } from './index'
+
+const tokenList = getTokenList(chains)
 
 describe('bridges', () => {
   describe('links', () => {
