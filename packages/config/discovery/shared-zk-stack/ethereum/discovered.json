@@ -85,10 +85,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
@@ -1395,11 +1396,18 @@
         },
         {
           "permission": "upgrade",
-          "to": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
-          "via": []
+          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "via": [
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
+            { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+        },
         {
           "permission": "act",
           "from": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
@@ -1473,6 +1481,14 @@
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "via": [
+            { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         }
