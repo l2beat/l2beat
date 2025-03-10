@@ -57,12 +57,11 @@ export const rhinofi: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
-  isArchived: true,
   display: {
     name: 'rhino.fi',
     slug: 'rhinofi',
     headerWarning:
-      'The RhinofiAdminMultisig upgraded the implementation of the core contract and subsequently [withdrew all funds](https://etherscan.io/tx/0x9c1692398b107161c7af2c1c02316d449bdf03b15e84b69170373b2864dba754). The Validium is no longer operational and funds are currently held in a multisig on Ethereum (2025/03/10).',
+      'The [RhinoFi StarkEx Validium is being deprecated](https://support.rhino.fi/en/article/important-upgrade-rhino-revamp-is-coming-cuks7m/). The RhinofiAdminMultisig upgraded the implementation of the core contract and subsequently [withdrew all funds](https://etherscan.io/tx/0x9c1692398b107161c7af2c1c02316d449bdf03b15e84b69170373b2864dba754). The Validium is no longer operational and funds are currently held in a multisig on Ethereum (2025/03/10).',
     description: 'rhino.fi is a Validium based on the StarkEx technology.',
     purposes: ['Exchange'],
     stack: 'StarkEx',
