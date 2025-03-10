@@ -60,7 +60,9 @@ TableHeaderRow.displayName = 'TableHeaderRow'
 const TableRow = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLTableRowElement> & { slug: string }) => {
+}: React.HTMLAttributes<HTMLTableRowElement> & {
+  slug: string | undefined
+}) => {
   const { highlightedSlug } = useHighlightedTableRowContext()
   return (
     <TableHeaderRow

@@ -164,5 +164,4 @@ export const scalingTvsColumns = [
       headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
     },
   }),
-  ,
 ]
