@@ -28,6 +28,52 @@ describe(ProxyDetector.name, () => {
     },
   }
 
+  it('detects eoa when no code', async () => {
+    const detector = new ProxyDetector([
+      async () => undefined,
+      async () => undefined,
+    ])
+
+    const provider = mockObject<IProvider>({
+      getBytecode: mockFn().returns(Bytes.EMPTY),
+      getDeployment: mockFn().returns(undefined),
+    })
+    const result = await detector.detectProxy(provider, address)
+
+    expect(result).toEqual({
+      type: 'EOA',
+      deployment: undefined,
+      values: {},
+      addresses: [],
+    })
+  })
+
+  it('detects EIP7702 eoa', async () => {
+    const detector = new ProxyDetector([
+      async () => undefined,
+      async () => undefined,
+    ])
+
+    const provider = mockObject<IProvider>({
+      getBytecode: mockFn().returns(
+        Bytes.fromHex(`0xef0100`).concat(
+          Bytes.fromHex(implementation.toString()),
+        ),
+      ),
+      getDeployment: mockFn().returns(undefined),
+    })
+    const result = await detector.detectProxy(provider, address)
+
+    expect(result).toEqual({
+      type: 'EIP7702 EOA',
+      deployment: undefined,
+      values: {
+        $implementation: implementation,
+      },
+      addresses: [implementation],
+    })
+  })
+
   it('detects no proxy as immutable', async () => {
     const detector = new ProxyDetector([
       async () => undefined,
