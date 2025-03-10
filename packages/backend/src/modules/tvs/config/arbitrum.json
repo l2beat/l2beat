@@ -3582,22 +3582,6 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LODE",
-      "priceId": "lodestar",
-      "symbol": "LODE",
-      "name": "Lodestar",
-      "amount": {
-        "type": "circulatingSupply",
-        "priceId": "lodestar",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1669075200,
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "arbitrum-LOGX",
       "priceId": "logx-2",
       "symbol": "LOGX",
@@ -7339,48 +7323,6 @@
         ]
       },
       "sinceTimestamp": 1623867835,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-YBR",
-      "priceId": "yieldbricks",
-      "symbol": "YBR",
-      "name": "YieldBricks",
-      "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
-            "chain": "ethereum",
-            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
-            "decimals": 18
-          },
-          {
-            "type": "calculation",
-            "operator": "min",
-            "arguments": [
-              {
-                "type": "circulatingSupply",
-                "priceId": "yieldbricks",
-                "decimals": 18
-              },
-              {
-                "type": "balanceOfEscrow",
-                "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
-                "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-                "chain": "ethereum",
-                "decimals": 18
-              }
-            ]
-          }
-        ]
-      },
-      "sinceTimestamp": 1731369600,
       "category": "other",
       "source": "external",
       "isAssociated": false

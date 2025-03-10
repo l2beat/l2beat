@@ -135,23 +135,6 @@
     },
     {
       "mode": "auto",
-      "id": "silicon-LRC",
-      "priceId": "loopring",
-      "symbol": "LRC",
-      "name": "LoopringCoin V2",
-      "sinceTimestamp": 1724183531,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x4B6DAf5b636E7E3F3E286a424371d856F873eaCf",
-        "chain": "silicon",
-        "decimals": 18
-      }
-    },
-    {
-      "mode": "auto",
       "id": "silicon-MATIC",
       "priceId": "matic-network",
       "symbol": "MATIC",
