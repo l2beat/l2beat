@@ -8,7 +8,7 @@ import {
 } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 // TODO: This script should probably be part of config
-import { getTokenData } from '@l2beat/config/build/tokens/getTokenData'
+import { getTokenData } from '@l2beat/config/src/tokens/getTokenData'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
@@ -41,7 +41,8 @@ const cmd = command({
     logger.info('Executing token script')
     const sourceFilePath = '../../packages/config/src/tokens/tokens.jsonc'
     const outputFilePath = '../../packages/config/src/tokens/generated.json'
-    await getTokenData(sourceFilePath, outputFilePath)
+    const dbPath = '../../packages/config/build/db.sqlite'
+    await getTokenData(sourceFilePath, outputFilePath, dbPath)
 
     const tvsConfig = await generateConfigForProject(ps, args.project, logger)
 
