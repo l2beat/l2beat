@@ -10,7 +10,7 @@ export const quarkchain: ScalingProject = upcomingL2({
     name: 'QuarkChain',
     slug: 'quarkchain',
     description:
-      'QuarkChain is a Fully Decentralized L2 Delivering Unmatched Scalability, Security, and On-Chain Verifiable Storage - The Ultimate Infrastructure for AI and dApps.',
+      'QuarkChain is an L2 that aims to serve as infrastructure for AI and dApps. It is planning to integrate EthStorage to open up new possibilities for fully on-chain AI with all models and training data stored there.',
     purposes: ['AI'],
     category: 'Optimistic Rollup',
     links: {
