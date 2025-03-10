@@ -921,6 +921,7 @@ const mockProject: DiscoveryOutput = {
 
 function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
+    type: 'Contract',
     name,
     address,
     values: {
