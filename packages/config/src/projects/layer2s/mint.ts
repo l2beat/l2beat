@@ -36,6 +36,7 @@ export const mint: Layer2 = opStackL2({
     name: 'mint',
     chainId: 185,
     explorerUrl: 'https://explorer.mintchain.io',
+    coingeckoPlatform: 'mint',
     multicallContracts: [
       {
         sinceBlock: 19861572,
