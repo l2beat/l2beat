@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../internalTypes'
-import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import { zkStackL2 } from './templates/zkStack'
 
 const genesisTimestamp = UnixTime(1729881083)
 const chainId = 2741

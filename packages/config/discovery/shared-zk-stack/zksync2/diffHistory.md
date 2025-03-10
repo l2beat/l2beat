@@ -8,7 +8,7 @@ Generated with discovered.json: 0x828126c4bfa98d760d3b4d5ebf890c6943514590
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Onchain execution of [[ZIP-5] Upgrade Governance Contracts](https://www.tally.xyz/gov/zksync/proposal/32477831455745537024214395992964479454779258818502397012096084176779102554510?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f). See also `packages/config/discovery/shared-zk-stack/ethereum/diffHistory.md`.
 
 ## Watched changes
 

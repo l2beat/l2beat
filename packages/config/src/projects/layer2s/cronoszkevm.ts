@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import { zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
