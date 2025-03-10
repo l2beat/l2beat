@@ -764,7 +764,7 @@ export class ProjectDiscovery {
     return s
   }
 
-  getPermissionPriority(entry: ContractParameters | EoaParameters): number {
+  getPermissionPriority(entry: EntryParameters): number {
     if (entry.receivedPermissions === undefined) {
       return 0
     }

@@ -86,7 +86,8 @@ describe(interpolateModelTemplate.name, () => {
 
   it('properly casts to lowercase', () => {
     const modelTemplate = `msg1("#msg|lower").msg2("#msg:raw|lower").`
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress.from('0x123'),
       name: 'ContractA',
       description: 'Description of ContractA',
