@@ -1,8 +1,8 @@
 import path from 'node:path'
 import {
   ConfigReader,
-  type ContractParameters,
   type DiscoveryOutput,
+  type EntryParameters,
 } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
@@ -82,18 +82,18 @@ function buildKnowledgeBase(
   const relations: TemplateFieldRelation[] = []
 
   for (const discovery of discoveries) {
-    for (const contract of discovery.contracts) {
-      if (!contract.template) continue
+    for (const entry of discovery.entries) {
+      if (!entry.template) continue
 
-      for (const [field, value] of Object.entries(contract.values ?? {})) {
-        const targetContract = discovery.contracts.find(
+      for (const [field, value] of Object.entries(entry.values ?? {})) {
+        const targetContract = discovery.entries.find(
           (c) => c.address.toString() === value,
         )
         if (!targetContract?.template) continue
 
         updateRelations(
           relations,
-          contract.template,
+          entry.template,
           field,
           targetContract.template,
           discovery,
@@ -140,28 +140,24 @@ function generateSuggestions(
 ): string[] {
   const suggestions: string[] = []
 
-  for (const contract of discovery.contracts) {
-    if (!contract.template) continue
+  for (const entry of discovery.entries) {
+    if (!entry.template) continue
 
     const potentialRelations = relations
-      .filter((r) => r.sourceTemplate === contract.template)
+      .filter((r) => r.sourceTemplate === entry.template)
       .filter((r) => r.foundIn.length > 1)
 
     for (const relation of potentialRelations) {
-      const fieldValue = contract.values?.[relation.sourceField]
-      const targetContract = discovery.contracts.find(
+      const fieldValue = entry.values?.[relation.sourceField]
+      const targetContract = discovery.entries.find(
         (c) => c.address.toString() === fieldValue,
       )
 
       if (!targetContract) {
-        suggestions.push(generateMissingContractSuggestion(contract, relation))
+        suggestions.push(generateMissingContractSuggestion(entry, relation))
       } else if (targetContract.template !== relation.targetTemplate) {
         suggestions.push(
-          generateMismatchedTemplateSuggestion(
-            contract,
-            targetContract,
-            relation,
-          ),
+          generateMismatchedTemplateSuggestion(entry, targetContract, relation),
         )
       }
     }
@@ -171,12 +167,12 @@ function generateSuggestions(
 }
 
 function generateMissingContractSuggestion(
-  contract: ContractParameters,
+  entry: EntryParameters,
   relation: TemplateFieldRelation,
 ): string {
-  let suggestion = `\nContract ${contract.name} (${contract.address}, template: ${contract.template}):\n`
-  suggestion += `  - field "${relation.sourceField}" is not pointing to a contract,\n`
-  suggestion += `  - but in these projects points at a contract with template ${relation.targetTemplate}. Please investigate.\n`
+  let suggestion = `\nContract ${entry.name} (${entry.address}, template: ${entry.template}):\n`
+  suggestion += `  - field "${relation.sourceField}" is not pointing to a entry,\n`
+  suggestion += `  - but in these projects points at a entry with template ${relation.targetTemplate}. Please investigate.\n`
   suggestion += relation.foundIn
     .map(({ project, chain }) => `    - ${project} on ${chain}`)
     .join('\n')
@@ -184,13 +180,13 @@ function generateMissingContractSuggestion(
 }
 
 function generateMismatchedTemplateSuggestion(
-  contract: ContractParameters,
-  targetContract: ContractParameters,
+  entry: EntryParameters,
+  targetContract: EntryParameters,
   relation: TemplateFieldRelation,
 ): string {
-  let suggestion = `\nContract ${contract.name} (${contract.address}, template: ${contract.template}):\n`
+  let suggestion = `\nContract ${entry.name} (${entry.address}, template: ${entry.template}):\n`
   suggestion += `  - field "${relation.sourceField}" points at ${targetContract.name} with template ${targetContract.template}\n`
-  suggestion += `  - but in these projects it points at a contract with template ${relation.targetTemplate}. Please investigate.\n`
+  suggestion += `  - but in these projects it points at a entry with template ${relation.targetTemplate}. Please investigate.\n`
   suggestion += relation.foundIn
     .map(({ project, chain }) => `    - ${project} on ${chain}`)
     .join('\n')

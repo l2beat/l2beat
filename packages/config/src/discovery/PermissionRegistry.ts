@@ -5,7 +5,7 @@ export interface PermissionRegistry {
   getPermissionedContracts(): EthereumAddress[]
   getPermissionedEoas(): EthereumAddress[]
   describePermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean,
   ): string[]
 }

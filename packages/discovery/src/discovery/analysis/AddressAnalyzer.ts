@@ -127,22 +127,13 @@ export class AddressAnalyzer {
       address,
       config.proxyType,
     )
-    const implementations = get$Implementations(proxy?.values)
-    const beacons = get$Beacons(proxy?.values)
-    const pastUpgrades = get$PastUpgrades(proxy?.values)
-
-    const addresses = []
-    let deployment
-    // TODO(radomski): Maybe this should be rolled into some other place
-    if (!isEOA) {
-      addresses.push(address)
-      deployment = await provider.getDeployment(address)
-    }
-    addresses.push(...implementations)
+    const implementations = get$Implementations(proxy.values)
+    const beacons = get$Beacons(proxy.values)
+    const pastUpgrades = get$PastUpgrades(proxy.values)
 
     const sources = await this.sourceCodeService.getSources(
       provider,
-      addresses,
+      proxy.addresses,
       config.manualSourcePaths,
     )
 
@@ -172,7 +163,7 @@ export class AddressAnalyzer {
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(provider, address, sources.abi, config)
 
-    const proxyResults = Object.entries(proxy?.values ?? {}).map(
+    const proxyResults = Object.entries(proxy.values).map(
       ([field, value]): HandlerResult => ({ field, value }),
     )
 
@@ -189,11 +180,11 @@ export class AddressAnalyzer {
     )
 
     const mergedValues = {
-      ...(!proxy ? { $immutable: true } : {}),
-      ...(proxy?.values ?? {}),
+      ...proxy.values,
       ...(values ?? {}),
     }
 
+    const deployment = proxy.deployment
     const analysisWithoutMeta: Omit<Analysis, 'selfMeta' | 'targetsMeta'> = {
       type: isEOA ? 'EOA' : 'Contract',
       name: isEOA ? config.name : (config.name ?? sources.name),

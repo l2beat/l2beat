@@ -1,10 +1,9 @@
 import { join } from 'path'
 import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import type {
-  ContractParameters,
   ContractValue,
   DiscoveryOutput,
-  EoaParameters,
+  EntryParameters,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
 import {
@@ -94,7 +93,8 @@ export class ProjectDiscovery {
     }
 
     return {
-      name: contract.name,
+      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
+      name: contract.name!,
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
@@ -178,11 +178,9 @@ export class ProjectDiscovery {
   }
 
   isEOA(address: EthereumAddress): boolean {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
-    return (
-      eoas.find((x) => x.address.toString() === address.toString()) !==
-      undefined
-    )
+    const eoas = this.discoveries.flatMap((discovery) => discovery.entries)
+    const entry = eoas.find((x) => x.address.toString() === address.toString())
+    return entry?.type === 'EOA'
   }
 
   getMultisigDescription(identifier: string): string[] {
@@ -248,7 +246,8 @@ export class ProjectDiscovery {
     ]
 
     return {
-      name: contract.name,
+      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
+      name: contract.name!,
       description: descriptionWithContractNames,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
@@ -265,7 +264,7 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(members)
   }
 
-  getContract(identifier: string): ContractParameters {
+  getContract(identifier: string): EntryParameters {
     try {
       identifier = utils.getAddress(identifier)
     } catch {
@@ -304,7 +303,7 @@ export class ProjectDiscovery {
     return contract !== undefined
   }
 
-  getEOA(identifier: string): EoaParameters {
+  getEOA(identifier: string): EntryParameters {
     try {
       identifier = utils.getAddress(identifier)
     } catch {
@@ -455,7 +454,8 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       isVerified: isEntryVerified(contract),
-      name: contract.name,
+      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
+      name: contract.name!,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
@@ -463,11 +463,12 @@ export class ProjectDiscovery {
   }
 
   contractAsPermissioned(
-    contract: ContractParameters,
+    contract: EntryParameters,
     description: string,
   ): ProjectPermission {
     return {
-      name: contract.name,
+      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
+      name: contract.name!,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
@@ -479,7 +480,7 @@ export class ProjectDiscovery {
   }
 
   eoaAsPermissioned(
-    eoa: EoaParameters,
+    eoa: EntryParameters,
     description: string,
   ): ProjectPermission {
     return {
@@ -554,9 +555,7 @@ export class ProjectDiscovery {
   }
 
   getAllContractAddresses(): EthereumAddress[] {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
+    const contracts = this.getContracts()
     const addressesWithinUpgradeability = contracts.flatMap((contract) =>
       get$Implementations(contract.values),
     )
@@ -566,10 +565,8 @@ export class ProjectDiscovery {
 
   getContractByAddress(
     address: string | EthereumAddress,
-  ): ContractParameters | undefined {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
+  ): EntryParameters | undefined {
+    const contracts = this.getContracts()
     return contracts.find(
       (contract) => contract.address === EthereumAddress(address.toString()),
     )
@@ -577,8 +574,10 @@ export class ProjectDiscovery {
 
   getEOAByAddress(
     address: string | EthereumAddress,
-  ): EoaParameters | undefined {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+  ): EntryParameters | undefined {
+    const eoas = this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'EOA')
     return eoas.find(
       (contract) => contract.address === EthereumAddress(address.toString()),
     )
@@ -586,36 +585,41 @@ export class ProjectDiscovery {
 
   getEntryByAddress(
     address: string | EthereumAddress,
-  ): EoaParameters | ContractParameters | undefined {
-    const entries = this.discoveries.flatMap((discovery) => {
-      return [...discovery.contracts, ...discovery.eoas]
-    })
+  ): EntryParameters | undefined {
+    const entries = this.discoveries.flatMap((discovery) => discovery.entries)
     return entries.find(
       (entry) => entry.address === EthereumAddress(address.toString()),
     )
   }
 
-  private getContractByName(name: string): ContractParameters[] {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
+  private getContractByName(name: string): EntryParameters[] {
+    const contracts = this.discoveries.flatMap((discovery) =>
+      discovery.entries.filter((e) => e.type === 'Contract'),
     )
     return contracts.filter((contract) => contract.name === name)
   }
 
-  private getEOAByName(name: string): EoaParameters[] {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+  private getEOAByName(name: string): EntryParameters[] {
+    const eoas = this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'EOA')
+
     return eoas.filter((eoa) => eoa.name === name)
   }
 
-  getContracts(): ContractParameters[] {
-    return this.discoveries.flatMap((discovery) => discovery.contracts)
+  getContracts(): EntryParameters[] {
+    return this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'Contract')
   }
 
-  getEoas(): EoaParameters[] {
-    return this.discoveries.flatMap((discovery) => discovery.eoas)
+  getEoas(): EntryParameters[] {
+    return this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'EOA')
   }
 
-  getContractsAndEoas(): (ContractParameters | EoaParameters)[] {
+  getContractsAndEoas(): EntryParameters[] {
     return [...this.getContracts(), ...this.getEoas()]
   }
 
@@ -631,11 +635,9 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(addresses)
   }
 
-  describeGnosisSafeMembership(
-    contractOrEoa: ContractParameters | EoaParameters,
-  ): string[] {
+  describeGnosisSafeMembership(contractOrEoa: EntryParameters): string[] {
     const safesWithThisMember = this.discoveries
-      .flatMap((discovery) => discovery.contracts)
+      .flatMap((discovery) => discovery.entries)
       .filter((contract) => isMultisigLike(contract))
       .filter((contract) =>
         toAddressArray(contract.values?.$members).includes(
@@ -649,7 +651,7 @@ export class ProjectDiscovery {
   }
 
   describeRolePermissions(
-    relevantContracts: (ContractParameters | EoaParameters)[],
+    relevantContracts: EntryParameters[],
   ): ProjectPermission[] {
     const result: ProjectPermission[] = []
     for (const role of RolePermissionEntries) {
@@ -740,7 +742,7 @@ export class ProjectDiscovery {
   }
 
   describeContractOrEoa(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ): string[] {
     return [
@@ -760,7 +762,8 @@ export class ProjectDiscovery {
     for (const address of addresses) {
       const contract = this.getContractByAddress(address)
       if (contract !== undefined) {
-        s = s.replace(address, contract.name)
+        // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined
+        s = s.replace(address, contract.name!)
       }
     }
     return s
@@ -941,7 +944,9 @@ export class ProjectDiscovery {
 
   getDiscoveredContracts(): ProjectContract[] {
     const contracts = this.discoveries
-      .flatMap((discovery) => discovery.contracts)
+      .flatMap((discovery) =>
+        discovery.entries.filter((e) => e.type === 'Contract'),
+      )
       .filter((contract) => contract.category?.priority !== -1)
       .sort((a, b) => {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
@@ -1005,7 +1010,7 @@ export class ProjectDiscovery {
 }
 
 function getUpgradeability(
-  contract: ContractParameters,
+  contract: EntryParameters,
 ): ProjectContractUpgradeability | undefined {
   if (!contract.proxyType) {
     return undefined
@@ -1033,7 +1038,7 @@ export function formatAsBulletPoints(description: string[]): string {
     : description.join(' ')
 }
 
-function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
+function isEntryVerified(entry: EntryParameters): boolean {
   if ('unverified' in entry) {
     return entry.unverified !== true
   }
