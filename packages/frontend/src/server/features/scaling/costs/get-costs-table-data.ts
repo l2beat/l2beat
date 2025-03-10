@@ -22,13 +22,18 @@ export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 export const getCachedCostsTableData = cache(
   async (timeRange: CostsTimeRange) => {
     const projects = (await getCostsProjects()).filter((p) => !p.isArchived)
-    const [projectsCosts, projectsActivity] = await Promise.all([
-      getCostsForProjects(projects, timeRange),
-      getSummedActivityForProjects(
-        projects.map((p) => p.id),
-        timeRange,
-      ),
-    ])
+
+    const projectsCosts = await getCostsForProjects(projects, timeRange)
+    const rangeByProject = Object.fromEntries(
+      Object.entries(projectsCosts).map(([projectId, data]) => {
+        return [projectId, data.range]
+      }),
+    )
+    const projectsActivity = await getSummedActivityForProjects(
+      projects.map((p) => p.id),
+      timeRange,
+      rangeByProject,
+    )
 
     return Object.fromEntries(
       Object.entries(projectsCosts).map(([projectId, costs]) => {

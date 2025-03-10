@@ -18,7 +18,7 @@ type ProjectLatestCosts = Omit<LatestCostsProjectResponse, 'syncedUntil'> & {
 }
 
 export async function getProjectCostsChart(params: ProjectCostsChartParams) {
-  const [costsChart, costs, da, uopsCount] = await Promise.all([
+  const [costsChart, costs, throughput] = await Promise.all([
     getCostsChart({
       previewRecategorisation: false,
       filter: { type: 'projects', projectIds: [params.projectId] },
@@ -26,10 +26,21 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     }),
     getCostsForProject(params.projectId, params.range),
     getProjectDaThroughputChart(params),
-    getSummedActivityForProject(params.projectId, params.range),
   ])
 
-  const timestampedDaData = Object.fromEntries(da ?? [])
+  const costsRange = getRange(costsChart.map(([timestamp]) => timestamp))
+  const costsUopsCount = await getSummedActivityForProject(
+    params.projectId,
+    costsRange,
+  )
+
+  const throughputRange = getRange(throughput.map(([timestamp]) => timestamp))
+  const throughputUopsCount = await getSummedActivityForProject(
+    params.projectId,
+    throughputRange,
+  )
+
+  const timestampedDaData = Object.fromEntries(throughput ?? [])
   const chart = costsChart.map((cost) => {
     const dailyTimestamp = UnixTime.toStartOf(cost[0], 'day')
     const isHourlyRange = params.range === '1d' || params.range === '7d'
@@ -40,15 +51,24 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     ] as const
   })
 
-  const summedThroughput = da.reduce((acc, [_, throughput]) => {
+  const summedThroughput = throughput.reduce((acc, [_, throughput]) => {
     return acc + throughput
   }, 0)
   const total = withTotal({ ...costs, posted: summedThroughput })
-  const perL2Uop = uopsCount ? mapToPerL2UopsCost(total, uopsCount) : undefined
+  const perL2Uop =
+    throughputUopsCount !== undefined &&
+    costsUopsCount !== undefined &&
+    params.range !== '1d' &&
+    params.range !== '7d'
+      ? mapToPerL2UopsCost(total, {
+          costs: costsUopsCount,
+          throughput: throughputUopsCount,
+        })
+      : undefined
 
   return {
     chart,
-    stats: { total, perL2Uop, uopsCount },
+    stats: { total, perL2Uop },
   }
 }
 
@@ -84,34 +104,44 @@ function withTotal(data: ProjectLatestCosts) {
 
 function mapToPerL2UopsCost(
   data: ReturnType<typeof withTotal>,
-  uopsCount: number,
+  uops: {
+    costs: number
+    throughput: number
+  },
 ) {
   return {
-    overhead: data.gas.total / uopsCount,
+    overhead: data.gas.total / uops.costs,
     gas: {
-      overhead: data.gas.overhead / uopsCount,
-      calldata: data.gas.calldata / uopsCount,
-      compute: data.gas.compute / uopsCount,
+      overhead: data.gas.overhead / uops.costs,
+      calldata: data.gas.calldata / uops.costs,
+      compute: data.gas.compute / uops.costs,
       blobs:
-        data.gas.blobs !== undefined ? data.gas.blobs / uopsCount : undefined,
-      total: data.gas.total / uopsCount,
+        data.gas.blobs !== undefined ? data.gas.blobs / uops.costs : undefined,
+      total: data.gas.total / uops.costs,
     },
     eth: {
-      overhead: data.eth.overhead / uopsCount,
-      calldata: data.eth.calldata / uopsCount,
-      compute: data.eth.compute / uopsCount,
+      overhead: data.eth.overhead / uops.costs,
+      calldata: data.eth.calldata / uops.costs,
+      compute: data.eth.compute / uops.costs,
       blobs:
-        data.eth.blobs !== undefined ? data.eth.blobs / uopsCount : undefined,
-      total: data.eth.total / uopsCount,
+        data.eth.blobs !== undefined ? data.eth.blobs / uops.costs : undefined,
+      total: data.eth.total / uops.costs,
     },
     usd: {
-      overhead: data.usd.overhead / uopsCount,
-      calldata: data.usd.calldata / uopsCount,
-      compute: data.usd.compute / uopsCount,
+      overhead: data.usd.overhead / uops.costs,
+      calldata: data.usd.calldata / uops.costs,
+      compute: data.usd.compute / uops.costs,
       blobs:
-        data.usd.blobs !== undefined ? data.usd.blobs / uopsCount : undefined,
-      total: data.usd.total / uopsCount,
+        data.usd.blobs !== undefined ? data.usd.blobs / uops.costs : undefined,
+      total: data.usd.total / uops.costs,
     },
-    posted: data.posted !== undefined ? data.posted / uopsCount : undefined,
+    posted:
+      data.posted !== undefined ? data.posted / uops.throughput : undefined,
   }
+}
+
+function getRange(timestamps: UnixTime[]): [UnixTime, UnixTime] {
+  const from = Math.min(...timestamps)
+  const to = Math.max(...timestamps)
+  return [from, to]
 }

@@ -10,6 +10,7 @@ export interface LatestCostsProjectResponse {
   gas: LatestCostsValues
   eth: LatestCostsValues
   usd: LatestCostsValues
+  range: [UnixTime, UnixTime]
   syncedUntil: UnixTime
 }
 
