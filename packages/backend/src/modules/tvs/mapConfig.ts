@@ -101,8 +101,6 @@ export async function mapConfig(
           continue
         }
 
-        assert(previousToken?.chain === escrow.chain, 'Chain mismatch')
-
         if (previousToken?.token.amount.type === 'balanceOfEscrow') {
           assert(previousToken.token.source === token.source, `Source mismatch`)
           escrowTokens.set(token.id, {
