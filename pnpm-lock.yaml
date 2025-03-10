@@ -488,9 +488,6 @@ importers:
 
   packages/frontend:
     dependencies:
-      '@l2beat/backend':
-        specifier: workspace:*
-        version: link:../backend
       '@l2beat/backend-shared':
         specifier: workspace:*
         version: link:../backend-shared
@@ -590,6 +587,9 @@ importers:
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
+      kysely:
+        specifier: ^0.27.3
+        version: 0.27.4
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -608,6 +608,9 @@ importers:
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
+      pg:
+        specifier: ^8.8.0
+        version: 8.13.1
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -617,6 +620,9 @@ importers:
       recharts:
         specifier: ^2.15.1
         version: 2.15.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      rimraf:
+        specifier: ^5.0.0
+        version: 5.0.10
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -690,9 +696,6 @@ importers:
       tsx:
         specifier: ^4.9.3
         version: 4.19.2
-      type-fest:
-        specifier: ^4.26.1
-        version: 4.26.1
 
   packages/l2b:
     dependencies:

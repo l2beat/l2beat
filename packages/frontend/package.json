@@ -20,7 +20,6 @@
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
-    "@l2beat/backend": "workspace:*",
     "@l2beat/backend-shared": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -54,15 +53,18 @@
     "fuzzysort": "^3.1.0",
     "gray-matter": "^4.0.3",
     "js-cookie": "^3.0.5",
+    "kysely": "^0.27.3",
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
     "next": "15.0.1",
     "next-plausible": "^3.12.0",
     "next-themes": "^0.3.0",
     "nprogress": "^0.2.0",
+    "pg": "^8.8.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "recharts": "^2.15.1",
+    "rimraf": "^5.0.0",
     "sharp": "^0.33.5",
     "sqlite3": "5.1.7",
     "superjson": "^2.2.1",
@@ -88,8 +90,7 @@
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",
-    "tsx": "^4.9.3",
-    "type-fest": "^4.26.1"
+    "tsx": "^4.9.3"
   },
   "overrides": {
     "react-is": "19.0.0",
