@@ -1,5 +1,11 @@
 import { unlinkSync } from 'fs'
-import { ProjectId } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  ProjectId,
+  type Token,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject } from './types'
@@ -77,5 +83,25 @@ describe(ProjectDatabase.name, () => {
     })
 
     expect(result).toEqual([{ ...projectA, isScaling: undefined }, projectB])
+  })
+
+  it('can add and retrieve a token', async () => {
+    const token: Token = {
+      id: AssetId('foo'),
+      name: 'Foo',
+      coingeckoId: CoingeckoId('foo'),
+      symbol: 'FOO',
+      decimals: 18,
+      sinceTimestamp: 0,
+      category: 'ether',
+      chainId: ChainId(1),
+      chainName: 'ethereum',
+      source: 'canonical',
+      supply: 'totalSupply',
+    }
+
+    await db.saveToken(token)
+    expect(await db.getToken(token.id)).toEqual(token)
+    expect(await db.getTokens()).toEqual([token])
   })
 })
