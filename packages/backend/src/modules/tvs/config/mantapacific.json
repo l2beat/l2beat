@@ -123,9 +123,9 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-mBTC",
+      "id": "mantapacific-mBTC.mantapacific",
       "priceId": "manta-mbtc",
-      "symbol": "mBTC",
+      "symbol": "mBTC.mantapacific",
       "name": "mBTC",
       "amount": {
         "type": "totalSupply",
@@ -136,13 +136,14 @@
       "sinceTimestamp": 1717113600,
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "mBTC"
     },
     {
       "mode": "auto",
-      "id": "mantapacific-mETH",
+      "id": "mantapacific-mETH.mantapacific",
       "priceId": "manta-meth",
-      "symbol": "mETH",
+      "symbol": "mETH.mantapacific",
       "name": "mETH",
       "amount": {
         "type": "totalSupply",
@@ -153,13 +154,14 @@
       "sinceTimestamp": 1717113600,
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "mETH"
     },
     {
       "mode": "auto",
-      "id": "mantapacific-mUSD",
+      "id": "mantapacific-mUSD.mantapacific",
       "priceId": "manta-musd",
-      "symbol": "mUSD",
+      "symbol": "mUSD.mantapacific",
       "name": "mUSD",
       "amount": {
         "type": "totalSupply",
@@ -170,7 +172,8 @@
       "sinceTimestamp": 1717113600,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "mUSD"
     },
     {
       "mode": "auto",
@@ -233,23 +236,6 @@
       "symbol": "STONE",
       "name": "StakeStone Ether",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
-        "chain": "mantapacific",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1700611200,
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "mantapacific-STONE-duplicate",
-      "priceId": "stakestone-ether",
-      "symbol": "STONE",
-      "name": "StakeStone Ether",
-      "amount": {
         "type": "balanceOfEscrow",
         "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
         "chain": "ethereum",
@@ -263,9 +249,27 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-sUSDe",
+      "id": "mantapacific-STONE.mantapacific",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE.mantapacific",
+      "name": "StakeStone Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
+        "chain": "mantapacific",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1700611200,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "displaySymbol": "STONE"
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-sUSDe.mantapacific",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe",
+      "symbol": "sUSDe.mantapacific",
       "name": "Staked USDe",
       "amount": {
         "type": "totalSupply",
@@ -276,7 +280,8 @@
       "sinceTimestamp": 1710892800,
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "sUSDe"
     },
     {
       "mode": "auto",
@@ -369,9 +374,9 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-USDe",
+      "id": "mantapacific-USDe.mantapacific",
       "priceId": "ethena-usde",
-      "symbol": "USDe",
+      "symbol": "USDe.mantapacific",
       "name": "USDe",
       "amount": {
         "type": "totalSupply",
@@ -382,7 +387,8 @@
       "sinceTimestamp": 1709926649,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "USDe"
     },
     {
       "mode": "auto",
