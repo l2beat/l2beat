@@ -137,7 +137,6 @@ function getRisks(
   const daBridgeProject = daBridges.find(
     (daBridge) => daBridge.id === project.scalingDa.bridge.projectId,
   )
-
   if (!daLayerProject) {
     return undefined
   }
