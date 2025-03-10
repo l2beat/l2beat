@@ -16,8 +16,7 @@ export interface DiscoveryOutput {
   name: string
   chain: string
   blockNumber: number
-  contracts: ContractParameters[]
-  eoas: EoaParameters[]
+  entries: EntryParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
   sharedModules?: string[]
@@ -72,18 +71,15 @@ export interface Meta {
   category?: ContractCategory
 }
 
-export type EoaParameters = {
-  name?: string
-  address: EthereumAddress
-} & Meta
-
 export interface ContractCategory {
   name: string
   priority: number
 }
 
-export type ContractParameters = {
-  name: string
+export type EntryParameters = {
+  type: 'Contract' | 'EOA'
+  name?: string
+  address: EthereumAddress
   displayName?: string
   description?: string
   derivedName?: string
@@ -92,7 +88,6 @@ export type ContractParameters = {
   unverified?: true
   sinceTimestamp?: number
   sinceBlock?: number
-  address: EthereumAddress
   proxyType?: string
   values?: Record<string, ContractValue | undefined>
   errors?: Record<string, string>

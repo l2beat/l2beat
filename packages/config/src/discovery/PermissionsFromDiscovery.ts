@@ -1,6 +1,5 @@
 import type {
-  ContractParameters,
-  EoaParameters,
+  EntryParameters,
   Permission,
   ReceivedPermission,
   ResolvedPermissionPath,
@@ -50,7 +49,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describePermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ) {
     return [
@@ -62,7 +61,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeDirectlyReceivedPermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
   ): string[] {
     return Object.entries(
       groupBy(
@@ -109,7 +108,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeUltimatelyReceivedPermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
   ): string[] {
     const formatVia = (via: ResolvedPermissionPath[]) =>
       `- acting via ${via.map((p) => this.projectDiscovery.formatViaPath(p)).join(', ')}`

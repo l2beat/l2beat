@@ -2,14 +2,21 @@
   "name": "portal",
   "chain": "ethereum",
   "blockNumber": 20089055,
-  "configHash": "0xaba90ac9ad335b62f57ff42ac6162f13f373dc7e11af6c669729c0ce93739adf",
-  "contracts": [
+  "configHash": "0x7eebfe7204216e6dc47d37f1d9804014d85e6ba0ffd3a93a044d2b695c65d7b5",
+  "entries": [
+    {
+      "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "TokenImplementation",
       "address": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
+      "type": "Contract",
       "sourceHashes": [
         "0xbc51a6f7503c2dccc97bd5b0fe777fa354d9c7f8a017bffcdb16119f293f0619"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1663610147,
       "sinceBlock": 15569178,
       "values": {
@@ -34,8 +41,34 @@
       }
     },
     {
+      "address": "0x107A0086b32d7A0977926A205131d8731D39cbEB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x114De8460193bdf3A2fCf81f86a09765F4762fD1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x11b39756C042441BE6D8650b69b54EbE715E2343",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "WormholeRelayer",
       "address": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+      "type": "Contract",
       "sourceHashes": [
         "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
@@ -70,6 +103,7 @@
     {
       "name": "TokenBridge",
       "address": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+      "type": "Contract",
       "sourceHashes": [
         "0x7576cd5bf86b934451cc67ed4b42d74b94ea9ecd6e990ec3dca27d9d339c35cd",
         "0x06093cab28394b5790c0a8281474cd818235258958a294ecad796fb89e7d017c"
@@ -147,8 +181,45 @@
       "derivedName": "BridgeImplementation"
     },
     {
+      "address": "0x53207E216540125e322CdA8A693b0b89576DEb46",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
+        }
+      ]
+    },
+    {
+      "address": "0x5E1487F35515d02A92753504a8D75471b9f49EdB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "NFTBridge",
       "address": "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE",
+      "type": "Contract",
       "sourceHashes": [
         "0x5314b46db0c40bea82cf9911a6e5095ae83c56a23e45191a1768a647210cc2b6",
         "0xe8f857d15277c4009dd17c5e936579a00645b4b99609769258bc629c3ea1821b"
@@ -200,8 +271,19 @@
       "derivedName": "NFTBridgeImplementation"
     },
     {
+      "address": "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x74a3bf913953D695260D88BC1aA25A4eeE363ef0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DeliveryProviderImplementation",
       "address": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
+      "type": "Contract",
       "sourceHashes": [
         "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
@@ -248,8 +330,19 @@
       }
     },
     {
+      "address": "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "WormholeCore",
       "address": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+      "type": "Contract",
       "sourceHashes": [
         "0xbc0d1c916444d8aca6243193c89589feac3c1a53cef31ddc8516d094fc6d33bd",
         "0xb51bdb80364d69b22f5cafd3aee42a605a60f5fc3116509bea8352fbfa04c532"
@@ -320,6 +413,7 @@
     {
       "name": "CircleIntegration",
       "address": "0xAaDA05BD399372f0b0463744C09113c137636f6a",
+      "type": "Contract",
       "sourceHashes": [
         "0xf187201e5a871c786c5af625380fa89f1c530c0458b5b697b29219ed50cf0ea8",
         "0xc5187968f2cb1166db32924199e148c88684177ee3c51e0b7ceb5905febb2bcd"
@@ -358,11 +452,33 @@
       "derivedName": "CircleIntegrationImplementation"
     },
     {
+      "address": "0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD2CC37A4dc036a8D232b48f62cDD4731412f4890",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "NFTImplementation",
       "address": "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc",
+      "type": "Contract",
       "sourceHashes": [
         "0xbd754d5f19a23f887be96d26d6641438fa86acafaf29bb3828188cef3fd571e6"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1632218833,
       "sinceBlock": 13268489,
       "values": {
@@ -376,64 +492,17 @@
         "symbol": "",
         "tokenURI": []
       }
+    },
+    {
+      "address": "0xf93124b7c738843CBB89E864c862c38cddCccF95",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xAaDA05BD399372f0b0463744C09113c137636f6a"
-        }
-      ]
-    },
-    { "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e" },
-    { "address": "0x107A0086b32d7A0977926A205131d8731D39cbEB" },
-    { "address": "0x114De8460193bdf3A2fCf81f86a09765F4762fD1" },
-    { "address": "0x11b39756C042441BE6D8650b69b54EbE715E2343" },
-    { "address": "0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20" },
-    { "address": "0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8" },
-    { "address": "0x53207E216540125e322CdA8A693b0b89576DEb46" },
-    { "address": "0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd" },
-    { "address": "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3" },
-    {
-      "address": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
-        }
-      ]
-    },
-    { "address": "0x5E1487F35515d02A92753504a8D75471b9f49EdB" },
-    { "address": "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d" },
-    { "address": "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3" },
-    { "address": "0x74a3bf913953D695260D88BC1aA25A4eeE363ef0" },
-    { "address": "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf" },
-    { "address": "0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2" },
-    { "address": "0xAF45Ced136b9D9e24903464AE889F5C8a723FC14" },
-    { "address": "0xD2CC37A4dc036a8D232b48f62cDD4731412f4890" },
-    { "address": "0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811" },
-    { "address": "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD" },
-    { "address": "0xf93124b7c738843CBB89E864c862c38cddCccF95" },
-    { "address": "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157" }
   ],
   "abis": {
     "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": [
