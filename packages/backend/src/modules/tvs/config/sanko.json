@@ -1,0 +1,143 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sanko",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sanko-ARB",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "chain": "arbitrum",
+        "escrowAddress": "0xb4951c0C41CFceB0D195A95FE66280457A80a990",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "arbitrum"
+      },
+      "sinceTimestamp": 1712958611,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sanko-DMT",
+      "priceId": "dream-machine-token",
+      "symbol": "DMT",
+      "name": "DMT",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
+            "chain": "arbitrum",
+            "escrowAddress": "0x2f285781B8d58678a3483de52D618198E4d27532",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
+            "chain": "arbitrum",
+            "escrowAddress": "0xb4951c0C41CFceB0D195A95FE66280457A80a990",
+            "decimals": 18
+          }
+        ]
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "dream-machine-token"
+      },
+      "sinceTimestamp": 1712958598,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "sanko-SP",
+      "priceId": "smoovie-phone",
+      "symbol": "SP",
+      "name": "Smoovie Phone",
+      "amount": {
+        "type": "circulatingSupply",
+        "priceId": "smoovie-phone",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1724198400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sanko-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "escrowAddress": "0xb4951c0C41CFceB0D195A95FE66280457A80a990",
+        "decimals": 6
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "usd-coin"
+      },
+      "sinceTimestamp": 1712958611,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sanko-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "chain": "arbitrum",
+        "escrowAddress": "0xb4951c0C41CFceB0D195A95FE66280457A80a990",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "weth"
+      },
+      "sinceTimestamp": 1712958611,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

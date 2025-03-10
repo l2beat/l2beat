@@ -1,0 +1,125 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "ternoa",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "ternoa-ANKR",
+      "priceId": "ankr",
+      "symbol": "ANKR",
+      "name": "Ankr Network",
+      "sinceTimestamp": 1735650935,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa9F2988D152f193b1B36bCeDDECC9C4f622E0904",
+        "chain": "ternoa",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "sinceTimestamp": 1735650935,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4",
+        "chain": "ternoa",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "sinceTimestamp": 1735650935,
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5A77f1443D16ee5761d310e38b62f77f726bC71c",
+        "chain": "ternoa",
+        "decimals": 18
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "sinceTimestamp": 1735650935,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa2036f0538221a77A3937F1379699f44945018d0",
+        "chain": "ternoa",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-POL",
+      "priceId": "polygon-ecosystem-token",
+      "symbol": "POL",
+      "name": "Polygon Ecosystem Token",
+      "sinceTimestamp": 1735650935,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x22B21BedDef74FE62F031D2c5c8F7a9F8a4b304D",
+        "chain": "ternoa",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-SAND",
+      "priceId": "the-sandbox",
+      "symbol": "SAND",
+      "name": "SAND",
+      "sinceTimestamp": 1735650935,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2e28B04Bed55F89d867c0966Dcd5dD2C61236349",
+        "chain": "ternoa",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "sinceTimestamp": 1735650935,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1E4a5963aBFD975d8c9021ce480b42188849D41d",
+        "chain": "ternoa",
+        "decimals": 6
+      }
+    }
+  ]
+}

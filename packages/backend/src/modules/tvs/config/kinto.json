@@ -4,52 +4,43 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "kinto-cbBTC",
+      "id": "kinto-cbBTC.ext",
       "priceId": "coinbase-wrapped-btc",
-      "symbol": "cbBTC",
+      "symbol": "cbBTC.ext",
+      "displaySymbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 8
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
-            "chain": "base",
-            "escrowAddress": "0xbE60CC82A67AC7BBA8F41408B0C6833cE73e0E4D",
-            "decimals": 8
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "base",
+        "escrowAddress": "0xbE60CC82A67AC7BBA8F41408B0C6833cE73e0E4D",
+        "decimals": 8
       },
-      "sinceTimestamp": 1726099200,
-      "category": "other",
-      "source": "canonical",
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "coinbase-wrapped-btc"
+      },
+      "sinceTimestamp": 1730657767,
+      "category": "stablecoin",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-DAI",
+      "id": "kinto-DAI.ext",
       "priceId": "dai",
-      "symbol": "DAI",
+      "symbol": "DAI.ext",
+      "displaySymbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -73,71 +64,47 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1715972567,
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-EIGEN",
+      "id": "kinto-EIGEN.ext",
       "priceId": "eigenlayer",
-      "symbol": "EIGEN",
+      "symbol": "EIGEN.ext",
+      "displaySymbol": "EIGEN",
       "name": "Eigen",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-            "chain": "ethereum",
-            "escrowAddress": "0xdb161cdc9c11892922F7121a409b196f3b00e640",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "chain": "ethereum",
+        "escrowAddress": "0xdb161cdc9c11892922F7121a409b196f3b00e640",
+        "decimals": 18
       },
       "sinceTimestamp": 1727740800,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-ENA",
+      "id": "kinto-ENA.ext",
       "priceId": "ethena",
-      "symbol": "ENA",
+      "symbol": "ENA.ext",
+      "displaySymbol": "ENA",
       "name": "ENA",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
-            "chain": "ethereum",
-            "escrowAddress": "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
+        "chain": "ethereum",
+        "escrowAddress": "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
+        "decimals": 18
       },
-      "sinceTimestamp": 1712016000,
+      "sinceTimestamp": 1716142919,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -173,52 +140,34 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-ETHFI",
+      "id": "kinto-ETHFI.ext",
       "priceId": "ether-fi",
-      "symbol": "ETHFI",
+      "symbol": "ETHFI.ext",
+      "displaySymbol": "ETHFI",
       "name": "ether.fi governance token",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
-            "chain": "ethereum",
-            "escrowAddress": "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
+        "chain": "ethereum",
+        "escrowAddress": "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
+        "decimals": 18
       },
-      "sinceTimestamp": 1710720000,
+      "sinceTimestamp": 1716216227,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-LINK",
+      "id": "kinto-LINK.ext",
       "priceId": "chainlink",
-      "symbol": "LINK",
+      "symbol": "LINK.ext",
+      "displaySymbol": "LINK",
       "name": "ChainLink Token",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
@@ -235,71 +184,47 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1730655983,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-MKR",
+      "id": "kinto-MKR.ext",
       "priceId": "maker",
-      "symbol": "MKR",
+      "symbol": "MKR.ext",
+      "displaySymbol": "MKR",
       "name": "Maker",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
-            "chain": "ethereum",
-            "escrowAddress": "0x0fC783f611A888A2cAbC3dA482Add3215334dCc2",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "chain": "ethereum",
+        "escrowAddress": "0x0fC783f611A888A2cAbC3dA482Add3215334dCc2",
+        "decimals": 18
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1721252735,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-PAXG",
+      "id": "kinto-PAXG.ext",
       "priceId": "pax-gold",
-      "symbol": "PAXG",
+      "symbol": "PAXG.ext",
+      "displaySymbol": "PAXG",
       "name": "Paxos Gold",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
-            "chain": "ethereum",
-            "escrowAddress": "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
+        "chain": "ethereum",
+        "escrowAddress": "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2",
+        "decimals": 18
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1721253827,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -309,24 +234,11 @@
       "symbol": "sDAI",
       "name": "Savings Dai",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-            "chain": "ethereum",
-            "escrowAddress": "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
+        "decimals": 18
       },
       "sinceTimestamp": 1710248135,
       "category": "stablecoin",
@@ -335,83 +247,81 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-SOL",
+      "id": "kinto-sDAI.ext",
+      "priceId": "savings-dai",
+      "symbol": "sDAI.ext",
+      "displaySymbol": "sDAI",
+      "name": "Savings Dai",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1716143807,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kinto-SOL.ext",
       "priceId": "sol-wormhole",
-      "symbol": "SOL",
+      "symbol": "SOL.ext",
+      "displaySymbol": "SOL",
       "name": "Wrapped SOL",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 9
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
-            "chain": "ethereum",
-            "escrowAddress": "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8",
-            "decimals": 9
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+        "chain": "ethereum",
+        "escrowAddress": "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8",
+        "decimals": 9
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1725992651,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-SolvBTC",
+      "id": "kinto-SolvBTC.ext",
       "priceId": "solv-btc",
-      "symbol": "SolvBTC",
+      "symbol": "SolvBTC.ext",
+      "displaySymbol": "SolvBTC",
       "name": "Solv BTC",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
-            "chain": "arbitrum",
-            "escrowAddress": "0x25a1baC7314Ff40Ee8CD549251924D066D7d5bC6",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+        "chain": "arbitrum",
+        "escrowAddress": "0x25a1baC7314Ff40Ee8CD549251924D066D7d5bC6",
+        "decimals": 18
       },
-      "sinceTimestamp": 1719475619,
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "solv-btc"
+      },
+      "sinceTimestamp": 1718367579,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-SPX",
+      "id": "kinto-SPX.ext",
       "priceId": "spx6900",
-      "symbol": "SPX",
+      "symbol": "SPX.ext",
+      "displaySymbol": "SPX",
       "name": "SPX6900",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 8
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
@@ -428,59 +338,41 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1730147723,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-sUSDe",
+      "id": "kinto-sUSDe.ext",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe",
+      "symbol": "sUSDe.ext",
+      "displaySymbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-            "chain": "ethereum",
-            "escrowAddress": "0x43b718Aa5e678b08615CA984cbe25f690B085b32",
-            "decimals": 18
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "chain": "ethereum",
+        "escrowAddress": "0x43b718Aa5e678b08615CA984cbe25f690B085b32",
+        "decimals": 18
       },
-      "sinceTimestamp": 1710979200,
+      "sinceTimestamp": 1716143855,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-USDC",
+      "id": "kinto-USDC.ext",
       "priceId": "usd-coin",
-      "symbol": "USDC",
+      "symbol": "USDC.ext",
+      "displaySymbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 6
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -504,28 +396,22 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1716142595,
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-USDe",
+      "id": "kinto-USDe.ext",
       "priceId": "ethena-usde",
-      "symbol": "USDe",
+      "symbol": "USDe.ext",
+      "displaySymbol": "USDe",
       "name": "USDe",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
@@ -542,28 +428,22 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1716143207,
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-weETH",
+      "id": "kinto-weETH.ext",
       "priceId": "wrapped-eeth",
-      "symbol": "weETH",
+      "symbol": "weETH.ext",
+      "displaySymbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
@@ -587,28 +467,22 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1716143951,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-WETH",
+      "id": "kinto-WETH.ext",
       "priceId": "weth",
-      "symbol": "WETH",
+      "symbol": "WETH.ext",
+      "displaySymbol": "WETH",
       "name": "Wrapped Ether",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -632,28 +506,22 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1716142367,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-wstETH",
+      "id": "kinto-wstETH.ext",
       "priceId": "wrapped-steth",
-      "symbol": "wstETH",
+      "symbol": "wstETH.ext",
+      "displaySymbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -677,28 +545,22 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1716128303,
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-wUSDM",
+      "id": "kinto-wUSDM.ext",
       "priceId": "mountain-protocol-usdm",
-      "symbol": "wUSDM",
+      "symbol": "wUSDM.ext",
+      "displaySymbol": "wUSDM",
       "name": "Wrapped Mountain Protocol USD",
       "amount": {
         "type": "calculation",
         "operator": "sum",
         "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18
-          },
           {
             "type": "balanceOfEscrow",
             "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
@@ -715,40 +577,28 @@
           }
         ]
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1716143903,
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "kinto-XAUt",
+      "id": "kinto-XAUt.ext",
       "priceId": "tether-gold",
-      "symbol": "XAUt",
+      "symbol": "XAUt.ext",
+      "displaySymbol": "XAUt",
       "name": "Tether Gold",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 6
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
-            "chain": "ethereum",
-            "escrowAddress": "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
-            "decimals": 6
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+        "chain": "ethereum",
+        "escrowAddress": "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
+        "decimals": 6
       },
-      "sinceTimestamp": 1710248135,
+      "sinceTimestamp": 1721253935,
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     }
   ]
