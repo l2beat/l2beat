@@ -59,6 +59,7 @@ TableHeaderRow.displayName = 'TableHeaderRow'
 
 const TableRow = ({
   className,
+  slug,
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement> & {
   slug: string | undefined
@@ -68,7 +69,7 @@ const TableRow = ({
     <TableHeaderRow
       className={cn(
         'group/row border-b border-b-divider',
-        highlightedSlug === props.slug && 'animate-row-highlight',
+        highlightedSlug && highlightedSlug === slug && 'animate-row-highlight',
         className,
       )}
       {...props}
