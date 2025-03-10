@@ -93,8 +93,7 @@ export class ProjectDiscovery {
     }
 
     return {
-      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
-      name: contract.name!,
+      name: contract.name ?? contract.address,
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
@@ -246,8 +245,7 @@ export class ProjectDiscovery {
     ]
 
     return {
-      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
-      name: contract.name!,
+      name: contract.name ?? contract.address,
       description: descriptionWithContractNames,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
@@ -454,8 +452,7 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       isVerified: isEntryVerified(contract),
-      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
-      name: contract.name!,
+      name: contract.name ?? contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
@@ -467,8 +464,7 @@ export class ProjectDiscovery {
     description: string,
   ): ProjectPermission {
     return {
-      // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
-      name: contract.name!,
+      name: contract.name ?? contract.address,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
@@ -761,9 +757,8 @@ export class ProjectDiscovery {
 
     for (const address of addresses) {
       const contract = this.getContractByAddress(address)
-      if (contract !== undefined) {
-        // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined
-        s = s.replace(address, contract.name!)
+      if (contract !== undefined && contract.name !== undefined) {
+        s = s.replace(address, contract.name)
       }
     }
     return s

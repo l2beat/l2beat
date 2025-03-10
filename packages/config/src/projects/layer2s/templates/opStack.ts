@@ -1028,15 +1028,13 @@ function getTechnologyExitMechanism(
     case 'Permissionless': {
       const disputeGameFinalityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): name should be undefined?
-          portal.name!,
+          portal.name ?? portal.address,
           'disputeGameFinalityDelaySeconds',
         )
 
       const proofMaturityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): name should be undefined?
-          portal.name!,
+          portal.name ?? portal.address,
           'proofMaturityDelaySeconds',
         )
 
@@ -1331,8 +1329,7 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
         templateVars.discovery.getContract('L2OutputOracle')
 
       return templateVars.discovery.getContractValue<number>(
-        // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): undefined name
-        l2OutputOracle.name!,
+        l2OutputOracle.name ?? l2OutputOracle.address,
         'FINALIZATION_PERIOD_SECONDS',
       )
     }
@@ -1355,8 +1352,7 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
 
   const respectedGameType = templateVars.discovery.getContractValue<number>(
-    // biome-ignore lint/style/noNonNullAssertion: TODO(radomski): name should be undefined?
-    portal.name!,
+    portal.name ?? portal.address,
     'respectedGameType',
   )
 
