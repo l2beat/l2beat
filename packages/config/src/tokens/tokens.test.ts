@@ -10,8 +10,8 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
-import { bridges } from '../projects/bridges'
-import { chains } from '../projects/chains'
+import { bridges } from '../processing/bridges'
+import { chains } from '../processing/chains'
 import { getTokenList } from './tokens'
 
 const tokenList = getTokenList(chains)

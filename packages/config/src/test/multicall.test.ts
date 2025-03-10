@@ -1,7 +1,7 @@
 import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import { expect } from 'earl'
-import { layer2s } from '../projects/layer2s'
+import { layer2s } from '../processing/layer2s'
 
 describe('update-monitor project has multicall configured', () => {
   const configReader = new ConfigReader(join(process.cwd(), '../config'))

@@ -16,7 +16,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { isString, sum, uniq } from 'lodash'
-import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
+import { EXPLORER_URLS } from '../common/explorerUrls'
 import type {
   ProjectContract,
   ProjectContractUpgradeability,

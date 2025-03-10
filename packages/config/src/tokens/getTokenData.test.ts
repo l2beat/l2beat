@@ -1,6 +1,6 @@
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
-import { chains } from '../projects/chains'
+import { chains } from '../processing/chains'
 import type { GeneratedToken } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
