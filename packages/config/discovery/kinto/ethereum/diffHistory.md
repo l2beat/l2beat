@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x99ebcf0ad52a4b2262f7f7a3c78012109623925e
+
+# Diff at Mon, 10 Mar 2025 16:53:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 21988484
+- current block number: 21988484
+
+## Description
+
+changed EOA signer of the Kinto SecurityCouncil.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21988484 (main branch discovery), not current.
+
+```diff
+    contract KintsugiFoundation (0x94561e98DD5E55271f91A103e4979aa6C493745E) {
+    +++ description: None
+      name:
+-        "MamoriLabs2"
++        "KintsugiFoundation"
+    }
+```
+
 Generated with discovered.json: 0x4d18726190c34736596855ef23ed853f1b25431c
 
 # Diff at Fri, 07 Mar 2025 09:06:25 GMT:

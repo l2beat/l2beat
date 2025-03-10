@@ -7,6 +7,7 @@
     "getTotalELRewardsCollected"
   ],
   "ignoreInWatchMode": [
+    "getFeeDistribution",
     "totalSupply",
     "getBeaconStat",
     "getBufferedEther",
