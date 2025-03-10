@@ -1,3 +1,303 @@
+Generated with discovered.json: 0xc607c35a29f1b1313eea420b5ec347c5b89c074a
+
+# Diff at Mon, 10 Mar 2025 12:40:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 21988484
+- current block number: 21988484
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21988484 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Hypernative (0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KintoFoundation (0x08E674c4538caE03B6c05405881dDCd95DcaF5a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C)
+    +++ description: Bridger gateway that can swap assets to 'L2 final assets' defined by the admin before bridging them to the L2. It does not have a function to bridge via the canonical bridge and uses the external socket bridge by default.
+```
+
+```diff
++   Status: CREATED
+    contract Kinto SecurityCouncil (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract Ankr (0x2bfDA59220413DEd39dD0E443620b5277EcE6348)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x340487b92808B84c2bd97C87B590EE81267E04a7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Caldera (0x356000Cec4fC967f8FC372381D983426760A0391)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4a3BB34aDE10127752015A6aF6136da15fde636A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x551E2501074D80E22c5FfB69b5fd8ba2939593b7)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Hypernative2 (0x58028fFbc25aE2e12b96276bDB125955F41D41f3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5D973Ea995d14799E528B14472346bfDE21eAe2e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Certora (0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract Caldera2 (0x64Cf65036a76E3827e448cadbc53D31EefDCE04a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x655761AD5FC251F414D6993A73184B0669F278c8)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x74C717C01425eb475A5fC55d2A4a9045fC9800df)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x778ca912Bd8b35dDA84852B47BA8624e08f640A6)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0x7870D5398DB488c669B406fBE57b8d05b6A35e42)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x87799989341A07F495287B1433eea98398FD73aA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x8A577165f8ef813296043d5f75fF2F2F2349afFd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MamoriLabs3 (0x944eB0a2829A859959586b10D54229278534a696)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MamoriLabs2 (0x94561e98DD5E55271f91A103e4979aa6C493745E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xacED35d61f71A804E7627b5622c267C8Ac31d38e)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xad40f1440544475f4B70573a106F41dF1860598b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract MamoriLabs (0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc31C4549356d46c37021393EeEb6f704B38061eC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD253b62108d1831aEd298Fc2434A5A8e4E418053)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract TurnkeyMultisig (0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xe27f3f6db6824def1738b2aACe2672aC59046a39)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Venn2 (0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Venn/Ironblocks (0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xEd696D87C351C2ef687c1c484c3e297B276a40d1)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
 Generated with discovered.json: 0xe0eb9b1c6d69b4dcc92ec76f78293755f163d34f
 
 # Diff at Fri, 07 Mar 2025 09:06:25 GMT:

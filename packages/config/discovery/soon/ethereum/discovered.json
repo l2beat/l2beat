@@ -2,9 +2,10 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 21995453,
-  "configHash": "0x0b2f36d05bd2c64e4769f4385651121616367d44d2de16d26cd10cd97acd9757",
-  "contracts": [
+  "configHash": "0xe85a747558d45f1920da6cf9a6ddca9211988454a9a78791e9abe31bb881860f",
+  "entries": [
     {
+      "type": "Contract",
       "name": "L2OutputOracle",
       "address": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
       "template": "opstack/L2OutputOracle",
@@ -85,6 +86,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "SystemConfig",
       "address": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
       "template": "opstack/SystemConfig",
@@ -193,6 +195,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "Contract",
       "name": "OptimismPortal",
       "address": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
       "template": "opstack/OptimismPortal_soon",
@@ -262,6 +265,29 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "type": "EOA",
+      "address": "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+        }
+      ]
+    },
+    {
+      "type": "EOA",
+      "address": "0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "L1ERC721Bridge",
       "address": "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2",
       "template": "opstack/L1ERC721Bridge",
@@ -302,12 +328,34 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "EOA",
+      "address": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
+        },
+        {
+          "permission": "guard",
+          "from": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
+        },
+        {
+          "permission": "interact",
+          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "freeze specific withdrawals."
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -350,12 +398,19 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "AddressManager",
       "address": "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
+      "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -373,6 +428,18 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
+        }
+      ]
+    },
+    {
+      "type": "Contract",
       "name": "L1CrossDomainMessenger",
       "address": "0xbB138cE37870443d5b2B02a36619D3478738E0f6",
       "template": "opstack/L1CrossDomainMessenger",
@@ -419,6 +486,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "type": "Contract",
       "name": "SuperchainConfig",
       "address": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
       "template": "opstack/SuperchainConfigFake",
@@ -467,6 +535,12 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "type": "EOA",
+      "address": "0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "SoonMultisig",
       "address": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
       "template": "GnosisSafe",
@@ -553,6 +627,7 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "type": "Contract",
       "name": "L1StandardBridge",
       "address": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
       "template": "opstack/L1StandardBridge_soon",
@@ -589,51 +664,12 @@
         "version": "2.2.0"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "type": "EOA",
+      "address": "0xfF000000000000000000000000000000000000FF",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643" },
-    {
-      "address": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
-        }
-      ]
-    },
-    { "address": "0x7b4d0e4d7C961CF967e88f600399d610736DeE51" },
-    {
-      "address": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
-        },
-        {
-          "permission": "guard",
-          "from": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
-        },
-        {
-          "permission": "interact",
-          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
-          "description": "freeze specific withdrawals."
-        }
-      ]
-    },
-    { "address": "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B" },
-    {
-      "address": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
-        }
-      ]
-    },
-    { "address": "0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8" },
-    { "address": "0xfF000000000000000000000000000000000000FF" }
   ],
   "abis": {
     "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448": [

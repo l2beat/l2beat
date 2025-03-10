@@ -579,20 +579,17 @@
     {
       "type": "EOA",
       "address": "0x661235a238B11191211fa95D4Dd9E423d521E0Be",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -682,25 +679,21 @@
     {
       "type": "EOA",
       "address": "0x88FF1e5b602916615391F55854588EFcBB7663f0",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xa6f0F94C13C4255231958079E7331694205F6c93",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-      "sourceHashes": [],
       "proxyType": "EOA"
     }
   ],

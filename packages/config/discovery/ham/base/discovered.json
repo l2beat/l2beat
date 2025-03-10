@@ -7,13 +7,11 @@
     {
       "type": "EOA",
       "address": "0x000000000000000000000000000000000000dEaD",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0x0458F33fEE56BE44f3e8482eE3009aAB27a19022",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -26,7 +24,6 @@
     {
       "type": "EOA",
       "address": "0x0A6F4A53a014774da6698Ed6C90b8c7a4f934eDC",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -38,13 +35,11 @@
     {
       "type": "EOA",
       "address": "0x115Fc56fFcdE2A24100524a610b89040cb29D501",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -133,7 +128,6 @@
       "type": "EOA",
       "name": "Caldera",
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -298,7 +292,6 @@
     {
       "type": "EOA",
       "address": "0x4919167EA334BE84B1604Cbc82A26A7746D5943e",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -358,7 +351,6 @@
     {
       "type": "EOA",
       "address": "0x78c6285Cc98Ec52De9Cf2E40b763D509489C47fB",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -495,7 +487,6 @@
     {
       "type": "EOA",
       "address": "0xa620962E8Ea00aeE66ACea179CdAb8Dc1BbD641B",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -618,7 +609,6 @@
     {
       "type": "EOA",
       "address": "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {

@@ -405,7 +405,6 @@
     {
       "type": "EOA",
       "address": "0xa213e1A202C49C4AC17C43Fc57aA469ebd897F40",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -418,7 +417,6 @@
     {
       "type": "EOA",
       "address": "0xa91279538ADfcD8E47ec74e50Cd02d9498cD039a",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -507,7 +505,6 @@
     {
       "type": "EOA",
       "address": "0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {

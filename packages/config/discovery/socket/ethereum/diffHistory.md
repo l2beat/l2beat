@@ -1,3 +1,525 @@
+Generated with discovered.json: 0x460cfbbac8abe4cafebe3bce51f708188de984c9
+
+# Diff at Mon, 10 Mar 2025 12:40:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 21995661
+- current block number: 21995661
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995661 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KintoFoundation (0x08E674c4538caE03B6c05405881dDCd95DcaF5a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sdeUSD Vault Reya (0x0A5A19376064fED2A0A9f3120B2426c957BC289D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract deUSD Vault Reya (0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MKR Vault Kinto (0x0fC783f611A888A2cAbC3dA482Add3215334dCc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Vault Kinto (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault Zora (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault Kinto (0x1D18263107a138C7fb0De65b4a78d193ff9664c1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Vault Reya (0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LyraMultisig (0x246d38588b16Dd877c558b245e6D5a711C649fCF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract eBTC Vault Derive (0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PAXG Vault Kinto (0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault Derive (0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KINTO Vault Kinto (0x2f87464d5F5356dB350dcb302FE28040986783a7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ENA Vault Kinto (0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract rsETH Vault Derive (0x35d4D9bc79B0a543934b1769304B90d752691caD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Vault Derive (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Kinto (0x43b718Aa5e678b08615CA984cbe25f690B085b32)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract rswETH Vault Derive (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4cEa25e9c999E69F45765539783D149024f99F12)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KLAUS Vault Zora (0x528DBFcf6e2cbC62B05d7a74711AA7C44FF43cA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Zora (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault Kinto (0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5D973Ea995d14799E528B14472346bfDE21eAe2e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault Derive (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x5ECfd6968593159e5b4f06832857943409122849)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbBTC Vault Derive (0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Reya (0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault Derive (0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault Polynomial (0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault Reya (0x64dF894688c5052BeAdC35371cF69151Ebc5D658)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Derive (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LBTC Vault Derive (0x76624ff43D610F64177Bb9c194A2503642e9B803)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SNX Vault Derive (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Vault Derive (0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault Derive (0x8180EcCC825b692ef65FF099a0A387743788bf78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbBTC Vault Kinto (0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MamoriLabs2 (0x94561e98DD5E55271f91A103e4979aa6C493745E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ETHFI Vault Kinto (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9eab2223d84060E212354BfA620BF687b6E9Ae20)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SOL Vault Kinto (0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LINK Vault Kinto (0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LOOKS Vault Blast (0xa83B4006c16DAeAb2718294696c0122519195137)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault Reya (0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb69F2341F008f673F757B49104c165C8022CD0df)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MamoriLabs (0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc31C4549356d46c37021393EeEb6f704B38061eC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETH Vault Kinto (0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Polynomial (0xC6cfb996A7CFEB89813A68CD13942CD75553032b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LooksRareMultisig (0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XAUt Vault Kinto (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SPX Vault Kinto (0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault Derive (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xDA9854b190A54c6c5088AB43a274caFAFF7cF369)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract eUSD Vault Kinto (0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN Vault Kinto (0xdb161cdc9c11892922F7121a409b196f3b00e640)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Polynomial (0xDE1617Ddb7C8A250A409D986930001985cfad76F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault Kinto (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USD0++ Vault Polynomial (0xDf9Fa2b420689384E8DD55a706262DC0ED37020F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Derive (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault Kinto (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETH Vault Derive (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xeeF6520437A6545b4F325F6675C4CD49812d457b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa46577b927261558bebb03ccaf50bab146ba85cc
 
 # Diff at Fri, 07 Mar 2025 14:41:44 GMT:

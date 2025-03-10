@@ -2,9 +2,15 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 21995407,
-  "configHash": "0x6efceb705f550e80e80fdb76f75befaeb93bcab52d8cfaf35f5242883797d270",
-  "contracts": [
+  "configHash": "0x8124bbb03cb91b8f14969eed6366866dba69e3eca470229a3f583ad590edc019",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "Challenge",
       "address": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
       "sourceHashes": [
@@ -60,6 +66,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ChainOracle",
       "address": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
       "sourceHashes": [
@@ -96,11 +103,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LightLinkMultisig",
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
       "sourceHashes": [
         "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -133,6 +142,7 @@
       "derivedName": "Multisig"
     },
     {
+      "type": "Contract",
       "name": "LightLinkBridge",
       "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
       "sourceHashes": [
@@ -169,6 +179,12 @@
       "derivedName": "L1NativeTokenPredicate"
     },
     {
+      "type": "EOA",
+      "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
       "sourceHashes": [
@@ -212,6 +228,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LightLinkERC20Bridge",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
       "sourceHashes": [
@@ -248,6 +265,7 @@
       "derivedName": "L1ERC20Predicate"
     },
     {
+      "type": "Contract",
       "name": "CanonicalStateChain",
       "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
       "sourceHashes": [
@@ -321,6 +339,27 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x6F17201F241231f183CE52212e4C47B009036421",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x6f933814903561F79137099587737DFB24c6E86D",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7F17A74942c5b22b340688f099c99A79426447e1",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "LightLinkMultisig2",
       "address": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
       "template": "GnosisSafe",
@@ -365,28 +404,37 @@
       "derivedName": "Safe"
     },
     {
+      "type": "EOA",
+      "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "RLPReader",
       "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
       "sourceHashes": [
         "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1717522283,
       "sinceBlock": 20019965,
       "values": { "$immutable": true }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118" },
-    { "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC" },
-    { "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91" },
-    { "address": "0x6F17201F241231f183CE52212e4C47B009036421" },
-    { "address": "0x6f933814903561F79137099587737DFB24c6E86D" },
-    { "address": "0x7F17A74942c5b22b340688f099c99A79426447e1" },
-    { "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9" },
-    { "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df" },
-    { "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938" },
-    { "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590" }
   ],
   "abis": {
     "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": [

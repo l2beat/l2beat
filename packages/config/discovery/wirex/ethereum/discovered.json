@@ -46,7 +46,6 @@
     {
       "type": "EOA",
       "address": "0x49a191471F248f7c86cA29477e6E969970BaEAdA",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -200,7 +199,6 @@
     {
       "type": "EOA",
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -219,19 +217,16 @@
     {
       "type": "EOA",
       "address": "0xBf5B50887F0B2b3160A3a097EBA4edEd8A9dDed1",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xCEb82CC6e0C2541a19E4b6E2DBF237fF2d8E96f8",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [

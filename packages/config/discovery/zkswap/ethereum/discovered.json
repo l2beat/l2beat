@@ -37,7 +37,6 @@
     {
       "type": "EOA",
       "address": "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -169,7 +168,6 @@
     {
       "type": "EOA",
       "address": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {

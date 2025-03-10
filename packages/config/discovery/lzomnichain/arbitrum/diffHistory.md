@@ -1,3 +1,153 @@
+Generated with discovered.json: 0x0ebc8f4e46fa88f4e62ac84f088d4411234e32f3
+
+# Diff at Mon, 10 Mar 2025 12:41:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 313205484
+- current block number: 313205484
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 313205484 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x177d36dBE2271A4DdB2Ad8304d82628eb921d790)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x6a4C9096F162f0ab3C0517B0a40dc1CE44785e16)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FPValidator (0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xB981a2664f5f547291Df5F8dCD4505f7015912CF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xFE22f5D2755b06b9149656C5793Cb15A08d09847)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf9cee52ee33a4c0de577dfabf9929de1708ef941
 
 # Diff at Fri, 07 Mar 2025 13:45:33 GMT:

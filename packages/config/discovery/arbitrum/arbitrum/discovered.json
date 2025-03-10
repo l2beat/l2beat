@@ -7,20 +7,17 @@
     {
       "type": "EOA",
       "address": "0x0000000000000000000000000000000000000001",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0x00000000000000000000000000000000000A4B86",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -145,7 +142,6 @@
       "type": "EOA",
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -464,7 +460,6 @@
       "type": "EOA",
       "name": "AleksanderKryukov-Certora",
       "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -495,7 +490,6 @@
       "type": "EOA",
       "name": "yoav.eth-EF",
       "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -560,7 +554,6 @@
       "type": "EOA",
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -568,7 +561,6 @@
       "type": "EOA",
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -576,14 +568,12 @@
       "type": "EOA",
       "name": "fred-Arbitrum",
       "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
       "type": "EOA",
       "address": "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -770,7 +760,6 @@
       "type": "EOA",
       "name": "JohnMorrow-Gauntlet",
       "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -778,7 +767,6 @@
       "type": "EOA",
       "name": "GriffGreen-Giveth",
       "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -848,7 +836,6 @@
       "type": "EOA",
       "name": "StevenThornton-OpenZeppelin",
       "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -856,7 +843,6 @@
       "type": "EOA",
       "name": "GoncaloMagalhaes-Immunefi",
       "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
@@ -882,7 +868,6 @@
     {
       "type": "EOA",
       "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -942,7 +927,6 @@
     {
       "type": "EOA",
       "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -1055,7 +1039,6 @@
     {
       "type": "EOA",
       "address": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -1195,7 +1178,6 @@
     {
       "type": "EOA",
       "address": "0xD3B5b60020504bc3489D6949d545893982BA3011",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -1362,7 +1344,6 @@
     {
       "type": "EOA",
       "address": "0xd92023E9d9911199a6711321D1277285e6d4e2db",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -1421,14 +1402,12 @@
       "type": "EOA",
       "name": "gzeon-OffchainLabs",
       "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
       "type": "EOA",
       "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -1538,7 +1517,6 @@
       "type": "EOA",
       "name": "L1Timelock_l2alias",
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {

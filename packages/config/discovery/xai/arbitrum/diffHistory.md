@@ -1,3 +1,309 @@
+Generated with discovered.json: 0x25b35e22660df53311047ebb1736e82ece7a6c5f
+
+# Diff at Mon, 10 Mar 2025 12:41:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 299816283
+- current block number: 299816283
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 299816283 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract XaiMultisig2 (0x000d8C5A70B8805DF02f409F2715d05B9A63E871)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x041F85dD87c46B941dc9b15c6628B19ee5358485)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x08a361fE449b1371cC21b286d88F69eF6d205809)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x1E400568AD4840dbE50FB32f306B842e9ddeF726)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x33c1514Bf90e202d242C299b37C60f908aa206D4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract XaiMultisig (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x54E0923782b701044444De5d8c3A45aC890b0881)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract PoolProxyDeployer (0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD)
+    +++ description: Manages beacon addresses for the v2 staking pools.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0x6c21303F5986180B1394d2C89f3e883890E2867b)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7F68dba68E72a250004812fe04F1123Fca89aBa9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x90D77E3a3B660E54E04cD622937765d2375FB2e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GasSubsidy (0x94F4aBC83eae00b693286B6eDCa09e1D76183C97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa2E7768789921a36eCFe8c239dBd8213120fFF83)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0xb591cE747CF19cF30e11d656EB94134F523A9e77)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xbBE90F6748C82623F130A4486722a436c5a72440)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66)
+    +++ description: This is the contract where Xai Sentry Keys for running a sentry node are minted.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RefereeCalculations (0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd427165292B2E39cdac102eD963B14fFBACc964a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd4318D959B46d555143f56E03077028aB94D85d2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xD766Abf27CEc67393FF475f7fE969902f5D0A80A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xD89d54007079071cBA859127318b9F34eeB78049)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xE529a3271f9CC84B1FE9107ab4764a8dF177782a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5)
+    +++ description: The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XaiFundsReiceiverMultisig (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878)
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+```
+
+```diff
++   Status: CREATED
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198)
+    +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+```
+
 Generated with discovered.json: 0x0933f84482123107624f7fe747d6b2165a2dff79
 
 # Diff at Thu, 06 Mar 2025 14:25:40 GMT:

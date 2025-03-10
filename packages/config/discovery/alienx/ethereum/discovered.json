@@ -7,7 +7,6 @@
     {
       "type": "EOA",
       "address": "0x0060621AFB2583db1c7b31406a2A3a6d15d9252f",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -105,7 +104,6 @@
     {
       "type": "EOA",
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -167,7 +165,6 @@
     {
       "type": "EOA",
       "address": "0x26F185382413c6289511E5e94e30222D2122622c",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -187,7 +184,6 @@
     {
       "type": "EOA",
       "address": "0x32AD06477129F4470294Fbaf11C0FC682d92E4A3",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -327,14 +323,12 @@
       "type": "EOA",
       "name": "Caldera",
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "derivedName": ""
     },
     {
       "type": "EOA",
       "address": "0x4c024d26c6Fe9577BA715700D0A944621239D66C",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -480,7 +474,6 @@
     {
       "type": "EOA",
       "address": "0x6ec8357b0fd80508ba50bBBDF0f09f60b5D5e469",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -645,7 +638,6 @@
     {
       "type": "EOA",
       "address": "0x740Eb3db7f1BF918acFa4840D47f06e8C81C666e",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -722,7 +714,6 @@
     {
       "type": "EOA",
       "address": "0xa179bB7DbA00815007866F20539D39116B36b052",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -810,7 +801,6 @@
     {
       "type": "EOA",
       "address": "0xbD8133A664bF0F13e2EFf9AA930021741F228186",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -976,13 +966,11 @@
     {
       "type": "EOA",
       "address": "0xF72721A266184cf93f593FCCa734DD23783cA469",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xff309E0c74874a3efeAAff630A818fd9c6DE4f25",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {

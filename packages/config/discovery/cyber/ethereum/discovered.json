@@ -7,13 +7,11 @@
     {
       "type": "EOA",
       "address": "0x000000000000000000000000000000000000dEaD",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0x0C883f622b4ccbF1e8ce86217998f87e6d36BCE4",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -150,7 +148,6 @@
     {
       "type": "EOA",
       "address": "0x1a76Ed328600489811F819959a74043f106CF0f9",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -528,7 +525,6 @@
     {
       "type": "EOA",
       "address": "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -617,25 +613,21 @@
     {
       "type": "EOA",
       "address": "0xa7A4D6d5920b93D0FE590f9524Ef17f24EE1F5B8",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
@@ -728,7 +720,6 @@
     {
       "type": "EOA",
       "address": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -746,7 +737,6 @@
     {
       "type": "EOA",
       "address": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -758,7 +748,6 @@
     {
       "type": "EOA",
       "address": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
@@ -771,7 +760,6 @@
     {
       "type": "EOA",
       "address": "0xfF00000000000000000000000000000000001d88",
-      "sourceHashes": [],
       "proxyType": "EOA"
     }
   ],

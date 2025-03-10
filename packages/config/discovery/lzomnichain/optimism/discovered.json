@@ -2,14 +2,21 @@
   "name": "lzomnichain",
   "chain": "optimism",
   "blockNumber": 132878181,
-  "configHash": "0xf7dbc89de588579c3fbd1fcd6c320a977ac8ea383106d237693d32b1a90a2dd3",
-  "contracts": [
+  "configHash": "0x3aa13f8e4c2a878e0543aaa4546a9d223e34ef645ff1592e27eec64f167be4ee",
+  "entries": [
     {
+      "type": "EOA",
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "FPValidator",
       "address": "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044",
       "sourceHashes": [
         "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1665890286,
       "sinceBlock": 29610042,
       "values": {
@@ -23,6 +30,7 @@
       }
     },
     {
+      "type": "Contract",
       "name": "LayerZero Multisig",
       "address": "0x2458BAAbfb21aE1da11D9dD6AD4E48aB2fBF9959",
       "template": "GnosisSafe",
@@ -55,11 +63,13 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "type": "Contract",
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
       "sourceHashes": [
         "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661528314,
       "sinceBlock": 20668106,
       "values": {
@@ -73,11 +83,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -92,11 +104,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "Endpoint",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
       "sourceHashes": [
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1647316965,
       "sinceBlock": 4457253,
@@ -123,11 +137,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "MPTValidator01",
       "address": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
       "sourceHashes": [
         "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661528296,
       "sinceBlock": 20668078,
       "values": {
@@ -142,11 +158,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
       "sourceHashes": [
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -1565,11 +1583,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
       "sourceHashes": [
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661279306,
       "sinceBlock": 20320188,
       "values": {
@@ -1578,6 +1598,27 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "EOA",
+      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "",
       "address": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017",
       "unverified": true,
@@ -1630,11 +1671,13 @@
       }
     },
     {
+      "type": "Contract",
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1649,6 +1692,12 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "",
       "address": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
       "unverified": true,
@@ -1681,11 +1730,18 @@
       }
     },
     {
+      "type": "EOA",
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "proxyType": "EOA"
+    },
+    {
+      "type": "Contract",
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217097,
       "sinceBlock": 109309160,
       "values": {
@@ -1702,25 +1758,17 @@
       }
     },
     {
+      "type": "Contract",
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217101,
       "sinceBlock": 109309162,
       "values": { "$immutable": true }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" }
   ],
   "abis": {
     "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044": [

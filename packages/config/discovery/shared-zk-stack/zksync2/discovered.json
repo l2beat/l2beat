@@ -604,7 +604,6 @@
       "type": "EOA",
       "name": "ProtocolUpgradeHandler_l2Alias",
       "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -720,7 +719,6 @@
       "type": "EOA",
       "name": "ZKFoundationMultisig_l2Alias",
       "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -759,7 +757,6 @@
       "type": "EOA",
       "name": "Guardians_l2Alias",
       "address": "0xe788e09324F8bb3cc64f009973693f751C33b999",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {

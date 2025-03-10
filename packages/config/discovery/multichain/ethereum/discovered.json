@@ -7,13 +7,11 @@
     {
       "type": "EOA",
       "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
       "type": "EOA",
       "address": "0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {

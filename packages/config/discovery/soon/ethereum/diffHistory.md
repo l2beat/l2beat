@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xf0591fe015429d09e61d37929f3b8e5a215395b9
+
+# Diff at Mon, 10 Mar 2025 12:40:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 21995453
+- current block number: 21995453
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995453 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7b4d0e4d7C961CF967e88f600399d610736DeE51)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7fFB604c57FAFbAeaE6587DF035a0DB032301593)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0xbB138cE37870443d5b2B02a36619D3478738E0f6)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0xD02631b334FfDCD5674217e57fe524c44B341DD4)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SoonMultisig (0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9)
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xfF000000000000000000000000000000000000FF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x00ed59de9d5543c9b8ea659eb8dad57e86efe447
 
 # Diff at Fri, 07 Mar 2025 14:39:01 GMT:

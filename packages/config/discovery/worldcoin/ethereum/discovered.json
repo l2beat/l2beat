@@ -71,7 +71,6 @@
     {
       "type": "EOA",
       "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
-      "sourceHashes": [],
       "proxyType": "EOA",
       "receivedPermissions": [
         {
@@ -121,7 +120,6 @@
     {
       "type": "EOA",
       "address": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
-      "sourceHashes": [],
       "proxyType": "EOA"
     },
     {
