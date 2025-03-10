@@ -21,9 +21,9 @@ import {
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,
 } from '../utils/discoveryDriven'
-import { isVerified } from '../verification/isVerified'
 import { runConfigAdjustments } from './adjustments'
 import { bridges } from './bridges'
+import { isVerified } from './isVerified'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
