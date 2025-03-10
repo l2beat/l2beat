@@ -43,7 +43,9 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
         )}
         {stageConfig.stage !== 'NotApplicable' &&
           stageConfig.stage !== 'UnderReview' &&
-          stageConfig.downgradePending && <StopwatchIcon />}
+          stageConfig.downgradePending && (
+            <StopwatchIcon className="mt-px md:mt-[3px]" />
+          )}
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
