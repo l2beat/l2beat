@@ -159,7 +159,7 @@ export const eigenda: BaseProject = {
       ],
     },
     usedWithoutBridgeIn: linkByDA({
-      layer: ProjectId('eigen-da'),
+      layer: ProjectId('eigenda'),
       bridge: undefined,
     }),
     risks: {
@@ -221,7 +221,7 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
       membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
     },
     usedIn: linkByDA({
-      layer: ProjectId('eigen-da'),
+      layer: ProjectId('eigenda'),
       bridge: ProjectId('eigenda'),
     }),
     risks: {

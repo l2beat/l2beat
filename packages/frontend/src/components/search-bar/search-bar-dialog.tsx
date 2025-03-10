@@ -5,7 +5,6 @@ import fuzzysort from 'fuzzysort'
 import { groupBy } from 'lodash'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { Entries } from 'type-fest'
 import {
   Command,
   CommandDialog,
@@ -78,7 +77,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const grouped = useMemo(() => {
     return Object.entries(
       groupBy([...filteredProjects, ...filteredPages], (p) => p.category),
-    ) as Entries<Record<SearchBarCategory, AnySearchBarEntry[]>>
+    )
   }, [filteredProjects, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
@@ -152,7 +151,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             grouped.length > 0 &&
             grouped.map(([group, items], groupIndex) => (
               <CommandGroup
-                heading={searchBarCategories[group].name}
+                heading={searchBarCategories[group as SearchBarCategory].name}
                 key={group}
               >
                 {items.map((item, index) => {
