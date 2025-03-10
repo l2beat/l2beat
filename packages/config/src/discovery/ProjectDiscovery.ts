@@ -12,11 +12,10 @@ import {
   EthereumAddress,
   type TokenBridgedUsing,
   UnixTime,
-  formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { isString, sum, uniq } from 'lodash'
+import { isString, uniq } from 'lodash'
 import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   ProjectContract,
@@ -955,39 +954,13 @@ export class ProjectDiscovery {
       .filter((contract) => contract.receivedPermissions === undefined)
       .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {
-        const upgradersWithDelay: Record<string, number> = Object.fromEntries(
-          contract.issuedPermissions
-            ?.filter((p) => p.permission === 'upgrade')
-            .map((p) => {
-              const entry = this.getEntryByAddress(p.to)
-              const address =
-                entry?.name ??
-                (this.isEOA(p.to) ? this.getEOAName(p.to) : p.to.toString())
-              const delay =
-                (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
-              return [address, delay]
-            }) ?? [],
-        )
-
-        const upgraders = Object.keys(upgradersWithDelay)
-        const upgradableBy =
-          upgraders.length === 0
-            ? {}
-            : {
-                upgradableBy: upgraders.map((actor) => ({
-                  name: actor,
-                  delay:
-                    upgradersWithDelay[actor] === 0
-                      ? 'no'
-                      : formatSeconds(upgradersWithDelay[actor]),
-                })),
-              }
+        const upgradableBy = this.permissionRegistry.getUpgradableBy(contract)
 
         return this.getContractDetails(contract.address.toString(), {
           description: formatAsBulletPoints(
             this.describeContractOrEoa(contract, true),
           ),
-          ...upgradableBy,
+          ...(upgradableBy.length > 0 ? { upgradableBy } : {}),
           discoveryDrivenData: true,
         })
       })

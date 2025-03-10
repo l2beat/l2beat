@@ -9,7 +9,7 @@ import {
   parseExportedFacts,
 } from '@l2beat/discovery'
 import { groupFacts } from '@l2beat/discovery/dist/discovery/modelling/KnowledgeBase'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {
@@ -143,6 +143,36 @@ export class PermissionsFromModel implements PermissionRegistry {
       )
     }
     return result.join(' ') + '.'
+  }
+
+  getUpgradableBy(
+    contract: ContractParameters,
+  ): { name: string; delay: string }[] {
+    const id = this.modelIdRegistry.getModelId(
+      this.projectDiscovery.chain,
+      contract.address,
+    )
+    const facts = this.knowledgeBase.getFacts('filteredTransitivePermission', [
+      undefined,
+      'upgrade',
+      id,
+    ])
+    if (facts.length === 0) {
+      return []
+    }
+    const upgradersWithDelay = facts
+      .filter((fact) => fact.params[7] === 'isFinal')
+      .map((fact) => {
+        const name = this.modelIdRegistry.getAddressData(
+          fact.params[0] as string,
+        ).name as string
+        const totalDelay = fact.params[5] as number
+        return {
+          name,
+          delay: totalDelay === 0 ? 'no' : formatSeconds(totalDelay),
+        }
+      })
+    return upgradersWithDelay
   }
 }
 

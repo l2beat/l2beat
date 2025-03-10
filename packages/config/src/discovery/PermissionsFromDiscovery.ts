@@ -5,8 +5,12 @@ import type {
   ReceivedPermission,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
-import { type EthereumAddress, notUndefined } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import {
+  type EthereumAddress,
+  formatSeconds,
+  notUndefined,
+} from '@l2beat/shared-pure'
+import { groupBy, sum } from 'lodash'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {
@@ -165,5 +169,33 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
         .join(' ')
         .trim()}.`
     })
+  }
+
+  getUpgradableBy(
+    contract: ContractParameters,
+  ): { name: string; delay: string }[] {
+    const upgradersWithDelay: Record<string, number> = Object.fromEntries(
+      contract.issuedPermissions
+        ?.filter((p) => p.permission === 'upgrade')
+        .map((p) => {
+          const entry = this.projectDiscovery.getEntryByAddress(p.to)
+          const address =
+            entry?.name ??
+            (this.projectDiscovery.isEOA(p.to)
+              ? this.projectDiscovery.getEOAName(p.to)
+              : p.to.toString())
+          const delay =
+            (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
+          return [address, delay]
+        }) ?? [],
+    )
+
+    return Object.keys(upgradersWithDelay).map((actor) => ({
+      name: actor,
+      delay:
+        upgradersWithDelay[actor] === 0
+          ? 'no'
+          : formatSeconds(upgradersWithDelay[actor]),
+    }))
   }
 }
