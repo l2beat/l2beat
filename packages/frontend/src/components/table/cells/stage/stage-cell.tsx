@@ -27,11 +27,12 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger
-        className="flex gap-1 max-md:pb-[5px] max-md:pt-2"
-        disabledOnMobile
-      >
-        <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
+      <TooltipTrigger className="flex gap-1" disabledOnMobile>
+        <StageBadge
+          stage={stageConfig.stage}
+          isAppchain={isAppchain}
+          className="flex flex-col gap-px"
+        />
         {hasNotice && (
           <CircleQuestionMarkIcon
             className={cn(

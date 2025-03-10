@@ -78,6 +78,7 @@ export const scalingSummaryColumns = [
       sortUndefined: 'last',
       meta: {
         hash: 'stage',
+        cellClassName: 'h-10',
       },
     },
   ),
