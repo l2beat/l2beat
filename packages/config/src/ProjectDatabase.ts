@@ -179,13 +179,13 @@ export class ProjectDatabase {
     const rows = await this.query(`SELECT data FROM tokens WHERE id = ?`, [id])
     const row = rows[0]
     if (row) {
-      return JSON.parse(row as string) as Token
+      return JSON.parse((row as { data: string }).data) as Token
     }
   }
 
   async getTokens(): Promise<Token[]> {
     const rows = await this.query(`SELECT data FROM tokens`)
-    return rows.map((row): Token => JSON.parse(row as string))
+    return rows.map((row): Token => JSON.parse((row as { data: string }).data))
   }
 
   private query(query: string, values?: unknown[]): Promise<unknown[]> {
