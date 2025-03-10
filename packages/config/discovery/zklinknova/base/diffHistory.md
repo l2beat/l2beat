@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x21f1a86da38ffb4ea3cd0b1285cf3c7639f341ad
+
+# Diff at Mon, 10 Mar 2025 11:46:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 19378036
+- current block number: 19378036
+
+## Description
+
+add proxyadmin template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19378036 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
++        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      issuedPermissions.0.via.0:
++        {"address":"0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"}
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x80d12A78EfE7604F00ed07aB2f16F643301674D5"}]
+      template:
++        "global/ProxyAdmin"
+      displayName:
++        "ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x80d12A78EfE7604F00ed07aB2f16F643301674D5"}]
+    }
+```
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"}
+      receivedPermissions.0.from:
+-        "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
++        "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"
+      receivedPermissions.0.via:
++        [{"address":"0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"}]
+    }
+```
+
 Generated with discovered.json: 0x76a08971916fed146d9df206dee3dcddf409aa0d
 
 # Diff at Tue, 04 Mar 2025 10:40:36 GMT:
