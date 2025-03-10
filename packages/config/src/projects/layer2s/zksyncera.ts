@@ -101,7 +101,7 @@ export const zksyncera: Layer2 = zkStackL2({
     ],
   },
   associatedTokens: ['ZK'],
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
@@ -116,7 +116,6 @@ export const zksyncera: Layer2 = zkStackL2({
           '0x000000000000000000000000000000000000800A',
         ),
       },
-      ...zkStackUpgrades,
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x41527B2d03844dB6b0945f25702cB958b6d55989'),
@@ -132,7 +131,6 @@ export const zksyncera: Layer2 = zkStackL2({
       sinceTimestamp: UnixTime(1676268575),
       tokens: ['ETH'],
       description: 'Main rollup contract of ZKsync Era.',
-      ...zkStackUpgrades,
       isHistorical: true,
       untilTimestamp: UnixTime(1717922458),
     }),
@@ -142,7 +140,6 @@ export const zksyncera: Layer2 = zkStackL2({
       tokens: '*',
       description:
         'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
-      ...zkStackUpgrades,
     }),
   ],
   nonTemplateTrackedTxs: [

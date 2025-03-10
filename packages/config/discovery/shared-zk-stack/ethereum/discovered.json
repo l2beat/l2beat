@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22014788,
-  "configHash": "0x85200421c62ace0e88e169569d84ac8db2e0822ab34c2127a374e7dc534a474b",
+  "configHash": "0x91f3b927ead3fd9700e4db36d2a2427aff27361b09c9fe4d041bdfa537131173",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -793,7 +793,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "ProtocolUpgradeHandler",
+      "name": "ProtocolUpgradeHandler_deprecated",
       "address": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
       "template": "shared-zk-stack/ProtocolUpgradeHandler",
       "sourceHashes": [
@@ -847,7 +847,8 @@
           "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
         }
       },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "derivedName": "ProtocolUpgradeHandler",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -1329,7 +1330,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "EmergencyUpgradeBoard",
+      "name": "EmergencyUpgradeBoard_deprecated",
       "address": "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29",
       "template": "shared-zk-stack/EmergencyUpgradeBoard",
       "sourceHashes": [
@@ -1360,10 +1361,11 @@
         "SECURITY_COUNCIL": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "derivedName": "EmergencyUpgradeBoard",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "ProtocolUpgradeHandler_deprecated",
+      "name": "ProtocolUpgradeHandler",
       "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
       "template": "shared-zk-stack/ProtocolUpgradeHandler",
       "sourceHashes": [
@@ -1439,11 +1441,10 @@
           "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
         }
       },
-      "derivedName": "ProtocolUpgradeHandler",
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "EmergencyUpgradeBoard_deprecated",
+      "name": "EmergencyUpgradeBoard",
       "address": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
       "template": "shared-zk-stack/EmergencyUpgradeBoard",
       "sourceHashes": [
@@ -1500,8 +1501,7 @@
         "SECURITY_COUNCIL": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       },
-      "derivedName": "EmergencyUpgradeBoard",
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GnosisSafe",

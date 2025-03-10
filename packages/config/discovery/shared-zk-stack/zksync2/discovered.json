@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 57411116,
-  "configHash": "0xe7da29e1c76cdf109a6376dfb6c5a60e68f666a49862e05d86a1e86231262045",
+  "configHash": "0x94dc6b8797d5483e9b879a974fa14c18ff094581cc7f628c9d09ba7ae64e10ea",
   "contracts": [
     {
       "name": "ProtocolTimelockController",
@@ -668,7 +668,21 @@
       "sourceHashes": [
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
+          "via": []
+        }
+      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -962,7 +976,7 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "name": "TimelockController",
+      "name": "ZkTokenTimelockController",
       "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
@@ -1051,7 +1065,8 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
-      }
+      },
+      "derivedName": "TimelockController"
     },
     {
       "name": "ZkGovOpsGovernor",
@@ -1157,6 +1172,11 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
+        },
+        {
+          "permission": "interact",
           "from": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
         }
@@ -1181,7 +1201,14 @@
     },
     {
       "name": "ZKFoundationMultisig_l2Alias",
-      "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"
+      "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
+        }
+      ]
     },
     {
       "name": "Guardians_l2Alias_deprecated",

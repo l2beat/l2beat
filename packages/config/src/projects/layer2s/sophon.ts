@@ -74,7 +74,7 @@ export const sophon: Layer2 = zkStackL2({
     },
     bridge: DA_BRIDGES.NONE,
   },
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: [
@@ -104,7 +104,6 @@ export const sophon: Layer2 = zkStackL2({
         ),
         tokensToAssignFromL1: [], // 'SOPH' not on CG yet
       },
-      ...zkStackUpgrades,
     }),
     discovery.getEscrowDetails({
       address: discovery.getContract('L1USDCBridge').address,

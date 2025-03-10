@@ -75,7 +75,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ],
     },
   },
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,
       tokens: ['CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN', 'MOON'],
@@ -91,7 +91,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
         ),
         tokensToAssignFromL1: ['zkCRO'],
       },
-      ...zkStackUpgrades,
     }),
   ],
   // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat

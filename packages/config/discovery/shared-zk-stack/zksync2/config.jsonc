@@ -13,6 +13,8 @@
   "names": {
     "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "ZkToken",
     "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ZkTokenProxyAdmin",
+    "0xb83FF6501214ddF40C91C9565d095400f3F45746": "ZkTokenGovernor",
+    "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": "ZkTokenTimelockController",
     "0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor",
     "0x085b8B6407f150D62adB1EF926F7f304600ec714": "ProtocolTimelockController",
     "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": "ZkGovOpsGovernor",

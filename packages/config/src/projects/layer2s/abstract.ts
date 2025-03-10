@@ -50,7 +50,7 @@ export const abstract: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   diamondContract: discovery.getContract('AbstractZkEvm'),
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['ETH'], // just assuming here, since USDC, USDT are stargate-routed and we want to reduce strain on TVS sync
@@ -65,7 +65,6 @@ export const abstract: Layer2 = zkStackL2({
           '0x000000000000000000000000000000000000800A',
         ),
       },
-      ...zkStackUpgrades,
     }),
   ],
   nonTemplateTrackedTxs: [

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5f8cd8df493e1175a33eea0eaed77d189442854b
+Generated with discovered.json: 0x828126c4bfa98d760d3b4d5ebf890c6943514590
 
-# Diff at Mon, 10 Mar 2025 10:49:01 GMT:
+# Diff at Mon, 10 Mar 2025 11:08:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@4892f7ed52cf565bcd89411616616ca517b2dc9e block: 56755451
@@ -94,20 +94,20 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746)
-    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
 ```
 
 ```diff
 +   Status: CREATED
-    contract TimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d)
+    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d)
     +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
 ```
 
 ## Source code changes
 
 ```diff
-.../zksync2/.flat/TimelockController.sol           | 1227 +++++
- .../zksync2/.flat/ZkTokenGovernor.sol              | 5087 ++++++++++++++++++++
+.../zksync2/.flat/ZkTokenGovernor.sol              | 5087 ++++++++++++++++++++
+ .../zksync2/.flat/ZkTokenTimelockController.sol    | 1227 +++++
  2 files changed, 6314 insertions(+)
 ```
 

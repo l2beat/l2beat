@@ -98,7 +98,7 @@ export const zeronetwork: Layer2 = zkStackL2({
       },
     },
   ],
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['ETH', 'USDC', 'WBTC', 'USDT'],
@@ -113,7 +113,6 @@ export const zeronetwork: Layer2 = zkStackL2({
           '0x000000000000000000000000000000000000800A',
         ),
       },
-      ...zkStackUpgrades,
     }),
   ],
   milestones: [

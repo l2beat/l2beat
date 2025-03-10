@@ -59,7 +59,7 @@ export const treasure: Layer2 = zkStackL2({
     ],
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['MAGIC'],
@@ -75,7 +75,6 @@ export const treasure: Layer2 = zkStackL2({
         ),
         tokensToAssignFromL1: ['MAGIC'], // will apparently be bridged externally at a later point
       },
-      ...zkStackUpgrades,
     }),
   ],
   daProvider: {
