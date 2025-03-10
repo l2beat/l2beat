@@ -1,6 +1,7 @@
 import type { ChainConfig } from '@l2beat/config'
 import {
   type ContractValue,
+  type EntryParameters,
   type FieldDiff,
   diffDiscovery,
 } from '@l2beat/discovery'
@@ -107,13 +108,13 @@ const getCachedProjectsChangeReport = cache(
         }
 
         const onDiskContracts = [
-          ...onDiskDiscovery.entries,
-          ...(onDiskDiscovery.sharedModules ?? []).flatMap(
-            (module) => onDiskChainDiscovery[module]?.entries ?? [],
+          ..._TEMP_getEntries(onDiskDiscovery),
+          ...(onDiskDiscovery.sharedModules ?? []).flatMap((module) =>
+            _TEMP_getEntries(onDiskChainDiscovery[module]),
           ),
         ]
         const latestContracts = [
-          ...newDiscovery.discovery.entries,
+          ..._TEMP_getEntries(newDiscovery.discovery),
           ...(newDiscovery.discovery.sharedModules ?? []).flatMap((module) =>
             newDiscoveries
               .filter(
@@ -121,7 +122,7 @@ const getCachedProjectsChangeReport = cache(
                   d.chainId === newDiscovery.chainId &&
                   d.discovery.name === module,
               )
-              .flatMap((d) => d.discovery.entries ?? []),
+              .flatMap((d) => _TEMP_getEntries(d.discovery)),
           ),
         ]
         const discoveryDiffs = diffDiscovery(onDiskContracts, latestContracts)
@@ -218,4 +219,15 @@ export function toAddressArray(value: ContractValue | undefined) {
     return value.map((v) => v as unknown as EthereumAddress)
   }
   return []
+}
+
+// TODO: REMOVE THIS CODE ON 2025-03-11
+function _TEMP_getEntries(
+  value: { entries: EntryParameters[] } | undefined,
+): EntryParameters[] {
+  if (value === undefined) {
+    return []
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return Reflect.get(value, 'contracts') ?? value.entries
 }
