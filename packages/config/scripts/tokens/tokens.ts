@@ -1,4 +1,4 @@
-import { getTokenData } from '../../src/tokens/getTokenData'
+import { getTokenData } from '../../build/src/tokens/getTokenData'
 
 const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/generated.json'
