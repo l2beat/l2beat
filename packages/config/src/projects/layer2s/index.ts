@@ -161,6 +161,7 @@ import { shape } from './shape'
 import { shibarium } from './shibarium'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
+import { skatechain } from './skatechain'
 import { snaxchain } from './snaxchain'
 import { socialnetwork } from './socialnetwork'
 import { solo } from './solo'
@@ -375,6 +376,7 @@ export const layer2s: ScalingProject[] = [
   scroll,
   silicon,
   singularityfinance,
+  skatechain,
   snaxchain,
   sophon,
   soneium,
