@@ -48,15 +48,6 @@ describe(mapConfig.name, () => {
             address: 'native',
             chain: 'ethereum',
             escrowAddress: EthereumAddress(
-              '0xcEe284F754E854890e311e3280b767F80797180d',
-            ),
-            decimals: 18,
-          },
-          {
-            type: 'balanceOfEscrow',
-            address: 'native',
-            chain: 'ethereum',
-            escrowAddress: EthereumAddress(
               '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             ),
             decimals: 18,
