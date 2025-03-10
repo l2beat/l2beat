@@ -142,7 +142,10 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "manage critical access control roles and the role that can upgrade the implementation."
+            "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          },
+          {
+            "type": "govAdminACStarknetERC20Bridge"
           }
         ]
       }
@@ -160,6 +163,9 @@
           {
             "type": "interact",
             "description": "disable the withdrawal limit."
+          },
+          {
+            "type": "secAdminACStarknetERC20Bridge"
           }
         ]
       }
@@ -177,6 +183,9 @@
           {
             "type": "interact",
             "description": "enable the withdrawal limit."
+          },
+          {
+            "type": "secAgentACStarknetERC20Bridge"
           }
         ]
       }

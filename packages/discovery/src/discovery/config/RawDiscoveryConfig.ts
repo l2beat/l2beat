@@ -25,6 +25,18 @@ export const RolePermissionEntries = [
   'aggregatePolygon',
   'operateStarknet',
   'governStarknet',
+  'secAgentACStarknetETHBridge',
+  'secAgentACStarknetERC20Bridge',
+  'secAdminACStarknetETHBridge',
+  'secAdminACStarknetERC20Bridge',
+  'govAdminACStarknetETHBridge',
+  'govAdminACStarknetERC20Bridge',
+  'secAgentACStarknetMultibridge',
+  'secAdminACStarknetMultibridge',
+  'govAdminACStarknetMultibridge',
+  'managerStarknetMultibridge',
+  'upgraderStarknetETHBridge',
+  'upgraderStarknet',
 ] as const
 
 export const Permission = z.enum([

@@ -112,7 +112,19 @@
             "act",
             "aggregatePolygon",
             "operateStarknet",
-            "governStarknet"
+            "governStarknet",
+            "secAgentACStarknetETHBridge",
+            "secAgentACStarknetERC20Bridge",
+            "secAdminACStarknetETHBridge",
+            "secAdminACStarknetERC20Bridge",
+            "govAdminACStarknetETHBridge",
+            "govAdminACStarknetERC20Bridge",
+            "secAgentACStarknetMultibridge",
+            "secAdminACStarknetMultibridge",
+            "govAdminACStarknetMultibridge",
+            "managerStarknetMultibridge",
+            "upgraderStarknetETHBridge",
+            "upgraderStarknet"
           ]
         },
         "delay": {

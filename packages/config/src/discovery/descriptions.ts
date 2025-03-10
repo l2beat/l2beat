@@ -21,6 +21,18 @@ export const DirectPermissionToPrefix: {
   operateStarknet: 'Can act as an Operator',
   governStarknet: 'Can act as a Governor',
   member: 'Is a member of',
+  secAgentACStarknetETHBridge: 'Can act as a Security Agent',
+  secAgentACStarknetERC20Bridge: 'Can act as a Security Agent',
+  secAdminACStarknetETHBridge: 'Can act as a Security Admin',
+  secAdminACStarknetERC20Bridge: 'Can act as a Security Admin',
+  govAdminACStarknetETHBridge: 'Can act as a Governance Admin',
+  govAdminACStarknetERC20Bridge: 'Can act as a Governance Admin',
+  secAgentACStarknetMultibridge: 'Can act as a Security Agent',
+  secAdminACStarknetMultibridge: 'Can act as a Security Admin',
+  govAdminACStarknetMultibridge: 'Can act as a Governance Admin',
+  managerStarknetMultibridge: 'Can act as a Manager',
+  upgraderStarknetETHBridge: 'Can act as an Upgrader',
+  upgraderStarknet: 'Can act as an Upgrader',
 }
 
 export const UltimatePermissionToPrefix: {
@@ -44,6 +56,18 @@ export const UltimatePermissionToPrefix: {
   operateStarknet: 'An Operator',
   governStarknet: 'A Governor',
   member: 'Is a member of',
+  secAgentACStarknetETHBridge: 'A Security Agent',
+  secAgentACStarknetERC20Bridge: 'A Security Agent',
+  secAdminACStarknetETHBridge: 'A Security Admin',
+  secAdminACStarknetERC20Bridge: 'A Security Admin',
+  govAdminACStarknetETHBridge: 'A Governance Admin',
+  govAdminACStarknetERC20Bridge: 'A Governance Admin',
+  secAgentACStarknetMultibridge: 'A Security Agent',
+  secAdminACStarknetMultibridge: 'A Security Admin',
+  govAdminACStarknetMultibridge: 'A Governance Admin',
+  managerStarknetMultibridge: 'A Manager',
+  upgraderStarknetETHBridge: 'An Upgrader',
+  upgraderStarknet: 'An Upgrader',
 }
 
 export const RoleDescriptions: {
@@ -123,5 +147,65 @@ export const RoleDescriptions: {
     name: 'Governor',
     description:
       'Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
+  },
+  // test roles
+  secAgentACStarknetETHBridge: {
+    name: 'Security Agent (ETH Bridge)',
+    description:
+      'Permissioned to enable the withdrawal limit on the Starknet ETH bridge.',
+  },
+  secAgentACStarknetERC20Bridge: {
+    name: 'Security Agent (ERC-20 Bridges)',
+    description:
+      'Permissioned to enable the withdrawal limit on some Starknet token bridges.',
+  },
+  secAdminACStarknetETHBridge: {
+    name: 'Security Admin (ETH Bridge)',
+    description:
+      'Permissioned to disable the withdrawal limit on the Starknet ETH bridge.',
+  },
+  secAdminACStarknetERC20Bridge: {
+    name: 'Security Admin (ERC-20 Bridges)',
+    description:
+      'Permissioned to disable the withdrawal limit on some Starknet token bridges.',
+  },
+  govAdminACStarknetETHBridge: {
+    name: 'Security Admin (ETH Bridge)',
+    description:
+      'Permissioned to manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.',
+  },
+  govAdminACStarknetERC20Bridge: {
+    name: 'Security Admin (ERC-20 Bridges)',
+    description:
+      'Permissioned to manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.',
+  },
+  secAgentACStarknetMultibridge: {
+    name: 'Security Agent (Multibridge)',
+    description:
+      'Permissioned to enable the withdrawal limit on the Starknet Multibridge.',
+  },
+  secAdminACStarknetMultibridge: {
+    name: 'Security Admin (Multibridge)',
+    description:
+      'Permissioned to disable the withdrawal limit on the Starknet Multibridge.',
+  },
+  govAdminACStarknetMultibridge: {
+    name: 'Security Admin (Multibridge)',
+    description:
+      'Permissioned to manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.',
+  },
+  managerStarknetMultibridge: {
+    name: 'Manager (Multibridge)',
+    description:
+      'Permissioned to enroll new tokens or deactivate deposits into the escrow (for each token individually).',
+  },
+  upgraderStarknetETHBridge: {
+    name: 'Upgrader (ETH Bridge)',
+    description:
+      'Permissioned to upgrade the Starknet ETH bridge (and most other bridge escrows).',
+  },
+  upgraderStarknet: {
+    name: 'Upgrader (Core contract)',
+    description: 'Permissioned to upgrade the Starknet core contract.',
   },
 }
