@@ -1,6 +1,5 @@
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { bigIntToNumber } from '../bigIntToNumber'
 import type { RpcClientPOC } from './RpcClientPOC'
 
 export const erc20Interface = new utils.Interface([
@@ -13,9 +12,8 @@ export class TotalSupplyProvider {
   async getTotalSupply(
     chain: string,
     address: EthereumAddress,
-    decimals: number,
     blockNumber: number,
-  ): Promise<number> {
+  ): Promise<bigint> {
     const rpc = this.rpcClients.get(chain)
     assert(rpc, `${chain}: No RPC configured`)
 
@@ -26,8 +24,8 @@ export class TotalSupplyProvider {
       blockNumber,
     )
 
-    if (response.toString() === '0x') return 0
+    if (response.toString() === '0x') return 0n
 
-    return bigIntToNumber(response.toString(), decimals)
+    return BigInt(response.toString())
   }
 }

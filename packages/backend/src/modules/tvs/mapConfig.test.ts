@@ -48,15 +48,6 @@ describe(mapConfig.name, () => {
             address: 'native',
             chain: 'ethereum',
             escrowAddress: EthereumAddress(
-              '0xcEe284F754E854890e311e3280b767F80797180d',
-            ),
-            decimals: 18,
-          },
-          {
-            type: 'balanceOfEscrow',
-            address: 'native',
-            chain: 'ethereum',
-            escrowAddress: EthereumAddress(
               '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             ),
             decimals: 18,
@@ -91,6 +82,7 @@ describe(mapConfig.name, () => {
       amount: {
         type: 'circulatingSupply',
         priceId: 'arbitrum',
+        decimals: 18,
       },
       sinceTimestamp: UnixTime(1679529600),
       category: 'other',
@@ -133,7 +125,6 @@ describe(extractPricesAndAmounts.name, () => {
             escrowAddress: EthereumAddress(
               '0xcEe284F754E854890e311e3280b767F80797180d',
             ),
-
             decimals: 18,
           },
           valueForProject: undefined,
@@ -144,6 +135,7 @@ describe(extractPricesAndAmounts.name, () => {
           amount: {
             type: 'circulatingSupply',
             priceId: 'price-ARB',
+            decimals: 18,
           },
           valueForProject: undefined,
           valueForTotal: undefined,
@@ -156,7 +148,8 @@ describe(extractPricesAndAmounts.name, () => {
             arguments: [
               {
                 type: 'const',
-                value: 100,
+                value: '100',
+                decimals: 0,
               },
               {
                 type: 'totalSupply',
@@ -193,6 +186,7 @@ describe(extractPricesAndAmounts.name, () => {
           id: '4ffda8b9b469',
           priceId: 'price-ARB',
           type: 'circulatingSupply',
+          decimals: 18,
         },
         {
           id: '9c352c5b1183',

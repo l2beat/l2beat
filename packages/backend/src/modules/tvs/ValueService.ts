@@ -1,5 +1,6 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
+import { BigIntWithDecimals } from './bigIntWithDecimals'
 import { createAmountConfig } from './mapConfig'
 import type {
   AmountFormula,
@@ -42,10 +43,14 @@ export class ValueService {
         values.push({
           tokenConfig: token,
           projectId: config.projectId,
-          amount,
-          value,
-          valueForProject,
-          valueForTotal,
+          amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
+          value: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
+          valueForProject: Number(
+            BigIntWithDecimals.toNumber(valueForProject).toFixed(2),
+          ),
+          valueForTotal: Number(
+            BigIntWithDecimals.toNumber(valueForTotal).toFixed(2),
+          ),
         })
       }
 
@@ -58,37 +63,40 @@ export class ValueService {
   private async executeAmountFormula(
     formula: AmountFormula,
     timestamp: UnixTime,
-  ): Promise<number> {
+  ): Promise<BigIntWithDecimals> {
     if (formula.type === 'const') {
-      return formula.value
+      return BigIntWithDecimals(BigInt(formula.value), formula.decimals)
     }
 
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
     assert(amount !== undefined, `${formula.type} ${config.id}`)
-    return amount
+    return BigIntWithDecimals(amount, config.decimals)
   }
 
   private async executeValueFormula(
     formula: ValueFormula,
     timestamp: UnixTime,
-  ): Promise<number> {
+  ): Promise<BigIntWithDecimals> {
     const price = await this.storage.getPrice(formula.priceId, timestamp)
     assert(price !== undefined, `Price not found for ${formula.priceId}`)
 
     const amount = await this.executeFormula(formula.amount, timestamp)
-    const value = amount * price
+    const value = BigIntWithDecimals.multiply(
+      amount,
+      BigIntWithDecimals.fromNumber(price),
+    )
     return value
   }
 
   private async executeFormula(
     formula: CalculationFormula | ValueFormula | AmountFormula,
     timestamp: UnixTime,
-  ): Promise<number> {
+  ): Promise<BigIntWithDecimals> {
     const executeFormulaRecursive = async (
       formula: CalculationFormula | ValueFormula | AmountFormula,
       timestamp: UnixTime,
-    ): Promise<number> => {
+    ): Promise<BigIntWithDecimals> => {
       if (formula.type === 'value') {
         return await this.executeValueFormula(formula, timestamp)
       }
@@ -96,7 +104,7 @@ export class ValueService {
       if (formula.type === 'calculation') {
         return await formula.arguments.reduce(
           async (
-            acc: Promise<number>,
+            acc: Promise<BigIntWithDecimals>,
             current: CalculationFormula | ValueFormula | AmountFormula,
             index: number,
           ) => {
@@ -109,12 +117,14 @@ export class ValueService {
               case 'diff':
                 return index === 0 ? value : valueAcc - value
               case 'max':
-                return Math.max(valueAcc, value)
+                return valueAcc > value ? valueAcc : value
               case 'min':
-                return Math.min(valueAcc, value)
+                return valueAcc < value ? valueAcc : value
             }
           },
-          Promise.resolve(formula.operator === 'min' ? Infinity : 0),
+          Promise.resolve(
+            formula.operator === 'min' ? BigIntWithDecimals.MAX : 0n,
+          ),
         )
       }
 

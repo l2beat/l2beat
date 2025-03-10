@@ -1,0 +1,33 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "hyperliquid",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "hyperliquid-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "escrowAddress": "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+        "decimals": 6
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "usd-coin"
+      },
+      "sinceTimestamp": 1701389130,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

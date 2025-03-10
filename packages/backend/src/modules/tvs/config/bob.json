@@ -63,11 +63,24 @@
       "symbol": "ETH",
       "name": "Ether",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "ethereum",
-        "escrowAddress": "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
-        "decimals": 18
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+            "decimals": 18
+          }
+        ]
       },
       "sinceTimestamp": 1712862059,
       "category": "ether",
@@ -122,7 +135,7 @@
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
         "decimals": 8
       },
-      "sinceTimestamp": 1712862107,
+      "sinceTimestamp": 1724889600,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -279,9 +292,10 @@
     },
     {
       "mode": "auto",
-      "id": "bob-USDC",
+      "id": "bob-USDC.ext",
       "priceId": "usd-coin",
-      "symbol": "USDC",
+      "symbol": "USDC.ext",
+      "displaySymbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",
@@ -359,9 +373,10 @@
     },
     {
       "mode": "auto",
-      "id": "bob-wstETH",
+      "id": "bob-wstETH.ext",
       "priceId": "wrapped-steth",
-      "symbol": "wstETH",
+      "symbol": "wstETH.ext",
+      "displaySymbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
         "type": "balanceOfEscrow",

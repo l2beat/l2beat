@@ -1,0 +1,73 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "b3",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "b3-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "base",
+            "escrowAddress": "0x3a314A6a3c1470Bf2854960D3Ce9D2435c7Ba794",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "base",
+            "escrowAddress": "0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38",
+            "decimals": 18
+          }
+        ]
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "ethereum"
+      },
+      "sinceTimestamp": 1722376845,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "b3-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "chain": "base",
+        "escrowAddress": "0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38",
+        "decimals": 6
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "usd-coin"
+      },
+      "sinceTimestamp": 1722376845,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

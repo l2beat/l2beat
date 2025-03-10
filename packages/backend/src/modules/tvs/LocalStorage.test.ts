@@ -17,19 +17,19 @@ describe(LocalStorage.name, () => {
     it('can write and read amount', async () => {
       const storage = new LocalStorage(TEST_FILE_PATH)
       const timestamp = UnixTime.now()
-      await storage.writeAmount('token1', timestamp, 1000)
+      await storage.writeAmount('token1', timestamp, 1000n)
       const amount = await storage.getAmount('token1', timestamp)
-      expect(amount).toEqual(1000)
+      expect(amount).toEqual(1000n)
     })
 
     it('persists amounts between instances', async () => {
       const timestamp = UnixTime.now()
       let storage = new LocalStorage(TEST_FILE_PATH)
-      await storage.writeAmount('token1', timestamp, 1000)
+      await storage.writeAmount('token1', timestamp, 1000n)
 
       storage = new LocalStorage(TEST_FILE_PATH)
       const amount = await storage.getAmount('token1', timestamp)
-      expect(amount).toEqual(1000)
+      expect(amount).toEqual(1000n)
     })
   })
 
@@ -59,13 +59,13 @@ describe(LocalStorage.name, () => {
       const timestamp1 = UnixTime(1000)
       const timestamp2 = UnixTime(2000)
 
-      await storage.writeAmount('token1', timestamp1, 1000)
-      await storage.writeAmount('token1', timestamp2, 2000)
+      await storage.writeAmount('token1', timestamp1, 1000n)
+      await storage.writeAmount('token1', timestamp2, 2000n)
       await storage.writePrice('token1', timestamp1, 100)
       await storage.writePrice('token1', timestamp2, 200)
 
-      expect(await storage.getAmount('token1', timestamp1)).toEqual(1000)
-      expect(await storage.getAmount('token1', timestamp2)).toEqual(2000)
+      expect(await storage.getAmount('token1', timestamp1)).toEqual(1000n)
+      expect(await storage.getAmount('token1', timestamp2)).toEqual(2000n)
       expect(await storage.getPrice('token1', timestamp1)).toEqual(100)
       expect(await storage.getPrice('token1', timestamp2)).toEqual(200)
     })
@@ -74,13 +74,13 @@ describe(LocalStorage.name, () => {
       const storage = new LocalStorage(TEST_FILE_PATH)
       const timestamp = UnixTime.now()
 
-      await storage.writeAmount('token1', timestamp, 1000)
-      await storage.writeAmount('token2', timestamp, 2000)
+      await storage.writeAmount('token1', timestamp, 1000n)
+      await storage.writeAmount('token2', timestamp, 2000n)
       await storage.writePrice('token1', timestamp, 100)
       await storage.writePrice('token2', timestamp, 200)
 
-      expect(await storage.getAmount('token1', timestamp)).toEqual(1000)
-      expect(await storage.getAmount('token2', timestamp)).toEqual(2000)
+      expect(await storage.getAmount('token1', timestamp)).toEqual(1000n)
+      expect(await storage.getAmount('token2', timestamp)).toEqual(2000n)
       expect(await storage.getPrice('token1', timestamp)).toEqual(100)
       expect(await storage.getPrice('token2', timestamp)).toEqual(200)
     })

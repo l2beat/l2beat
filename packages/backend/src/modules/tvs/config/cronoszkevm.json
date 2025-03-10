@@ -3,6 +3,7 @@
   "projectId": "cronoszkevm",
   "tokens": [
     {
+      "mode": "auto",
       "id": "cronoszkevm-CRO",
       "priceId": "crypto-com-chain",
       "symbol": "CRO",
@@ -19,86 +20,7 @@
       }
     },
     {
-      "id": "cronoszkevm-FRTN",
-      "priceId": "ebisusbay-fortune",
-      "symbol": "FRTN",
-      "name": "Fortune",
-      "sinceTimestamp": 1722394995,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x96e03FA6c5aB3a7F2e7098Dd07c8935493294E26",
-        "chain": "cronoszkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "cronoszkevm-FUL",
-      "priceId": "fulcrom",
-      "symbol": "FUL",
-      "name": "FUL",
-      "sinceTimestamp": 1722394995,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xFB3338E2cA713B344D6A45B36525c3db156e492F",
-        "chain": "cronoszkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "cronoszkevm-MOON",
-      "priceId": "moonflow",
-      "symbol": "MOON",
-      "name": "Moonflow",
-      "sinceTimestamp": 1722394995,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xC80B437c4c0f9C74CFb2e2D063A58ffB4F82D4F0",
-        "chain": "cronoszkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "cronoszkevm-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "sinceTimestamp": 1722394995,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xaa5b845F8C9c047779bEDf64829601d8B264076c",
-        "chain": "cronoszkevm",
-        "decimals": 6
-      }
-    },
-    {
-      "id": "cronoszkevm-WBTC",
-      "priceId": "wrapped-bitcoin",
-      "symbol": "WBTC",
-      "name": "Wrapped BTC",
-      "sinceTimestamp": 1722394995,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xD65E5DbA71231D35A5802bA83dC6cB6746c9758d",
-        "chain": "cronoszkevm",
-        "decimals": 8
-      }
-    },
-    {
+      "mode": "auto",
       "id": "cronoszkevm-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -115,23 +37,58 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-zkCRO",
-      "priceId": "cronos-zkevm-cro",
-      "symbol": "zkCRO",
-      "name": "Cronos zkEVM CRO",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
-        "chain": "ethereum",
-        "escrowAddress": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1717521479,
+      "mode": "auto",
+      "id": "cronoszkevm-FRTN",
+      "priceId": "ebisusbay-fortune",
+      "symbol": "FRTN",
+      "name": "Fortune",
+      "sinceTimestamp": 1723511591,
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x96e03FA6c5aB3a7F2e7098Dd07c8935493294E26",
+        "chain": "cronoszkevm",
+        "decimals": 18
+      }
     },
     {
+      "mode": "auto",
+      "id": "cronoszkevm-FUL",
+      "priceId": "fulcrom",
+      "symbol": "FUL",
+      "name": "FUL",
+      "sinceTimestamp": 1722578039,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFB3338E2cA713B344D6A45B36525c3db156e492F",
+        "chain": "cronoszkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "cronoszkevm-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "sinceTimestamp": 1722394995,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xaa5b845F8C9c047779bEDf64829601d8B264076c",
+        "chain": "cronoszkevm",
+        "decimals": 6
+      }
+    },
+    {
+      "mode": "auto",
       "id": "cronoszkevm-vETH",
       "priceId": "veno-eth",
       "symbol": "vETH",
@@ -148,6 +105,7 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "cronoszkevm-vUSD",
       "priceId": "veno-usd",
       "symbol": "vUSD",
@@ -162,6 +120,41 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "cronoszkevm-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "sinceTimestamp": 1722394995,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD65E5DbA71231D35A5802bA83dC6cB6746c9758d",
+        "chain": "cronoszkevm",
+        "decimals": 8
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "cronoszkevm-zkCRO",
+      "priceId": "cronos-zkevm-cro",
+      "symbol": "zkCRO",
+      "name": "Cronos zkEVM CRO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+        "chain": "ethereum",
+        "escrowAddress": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1724803200,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
     }
   ]
 }

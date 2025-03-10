@@ -3,6 +3,7 @@
   "projectId": "polygonzkevm",
   "tokens": [
     {
+      "mode": "auto",
       "id": "polygonzkevm-1INCH",
       "priceId": "1inch",
       "symbol": "1INCH",
@@ -19,6 +20,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-AAVE",
       "priceId": "aave",
       "symbol": "AAVE",
@@ -35,22 +37,7 @@
       }
     },
     {
-      "id": "polygonzkevm-GHST",
-      "priceId": "aavegotchi",
-      "symbol": "GHST",
-      "name": "Aavegotchi GHST Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x04474952FB4F60d43f75405411A596E32dFEcd3d",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
+      "mode": "auto",
       "id": "polygonzkevm-ANKR",
       "priceId": "ankr",
       "symbol": "ANKR",
@@ -67,6 +54,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-APE",
       "priceId": "apecoin",
       "symbol": "APE",
@@ -83,6 +71,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-BAL",
       "priceId": "balancer",
       "symbol": "BAL",
@@ -99,11 +88,12 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-BETS",
       "priceId": "betswirl",
       "symbol": "BETS",
       "name": "BetSwirl v2",
-      "sinceTimestamp": 1679679015,
+      "sinceTimestamp": 1690387679,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -115,6 +105,24 @@
       }
     },
     {
+      "mode": "auto",
+      "id": "polygonzkevm-BITCOIN",
+      "priceId": "harrypotterobamasonic10in",
+      "symbol": "BITCOIN",
+      "name": "HarryPotterObamaSonic10Inu",
+      "sinceTimestamp": 1684108800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf1779B7aC59ae14eDcAB1B284823Bc5d1C3F7DD3",
+        "chain": "polygonzkevm",
+        "decimals": 8
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-BONE",
       "priceId": "bone-shibaswap",
       "symbol": "BONE",
@@ -131,6 +139,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-CAPS",
       "priceId": "coin-capsule",
       "symbol": "CAPS",
@@ -147,22 +156,7 @@
       }
     },
     {
-      "id": "polygonzkevm-LINK",
-      "priceId": "chainlink",
-      "symbol": "LINK",
-      "name": "ChainLink Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
+      "mode": "auto",
       "id": "polygonzkevm-cbETH",
       "priceId": "coinbase-wrapped-staked-eth",
       "symbol": "cbETH",
@@ -179,6 +173,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-COMP",
       "priceId": "compound-governance-token",
       "symbol": "COMP",
@@ -195,6 +190,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
@@ -211,6 +207,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-DAI",
       "priceId": "dai",
       "symbol": "DAI",
@@ -227,54 +224,26 @@
       }
     },
     {
-      "id": "polygonzkevm-MANA",
-      "priceId": "decentraland",
-      "symbol": "MANA",
-      "name": "Decentraland MANA",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
+      "mode": "auto",
+      "id": "polygonzkevm-DAI.ext",
+      "priceId": "dai",
+      "symbol": "DAI.ext",
+      "displaySymbol": "DAI",
+      "name": "Dai Stablecoin",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xa5d8eB3eE1C35288e9F4432fAF343510035dE47B",
-        "chain": "polygonzkevm",
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
         "decimals": 18
-      }
+      },
+      "sinceTimestamp": 1695199499,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
     },
     {
-      "id": "polygonzkevm-DIP",
-      "priceId": "etherisc",
-      "symbol": "DIP",
-      "name": "Decentralized Insurance Protocol",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xEe2f24C6103663c0e289176AaE748f969618D57B",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-DPI",
-      "priceId": "defipulse-index",
-      "symbol": "DPI",
-      "name": "DefiPulse Index",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xa5994FE902b9500706d3B40311c3B1bAD6f4C68b",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
+      "mode": "auto",
       "id": "polygonzkevm-DFX",
       "priceId": "dfx-finance",
       "symbol": "DFX",
@@ -291,6 +260,7 @@
       }
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-DHT",
       "priceId": "dhedge-dao",
       "symbol": "DHT",
@@ -307,6 +277,24 @@
       }
     },
     {
+      "mode": "auto",
+      "id": "polygonzkevm-DIP",
+      "priceId": "etherisc",
+      "symbol": "DIP",
+      "name": "Decentralized Insurance Protocol",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xEe2f24C6103663c0e289176AaE748f969618D57B",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-DOLA",
       "priceId": "dola-usd",
       "symbol": "DOLA",
@@ -323,6 +311,70 @@
       }
     },
     {
+      "mode": "auto",
+      "id": "polygonzkevm-DPI",
+      "priceId": "defipulse-index",
+      "symbol": "DPI",
+      "name": "DefiPulse Index",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa5994FE902b9500706d3B40311c3B1bAD6f4C68b",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "sinceTimestamp": 1679679015,
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "const",
+            "value": "200000000000000000000000000",
+            "decimals": 18
+          },
+          {
+            "type": "balanceOfEscrow",
+            "chain": "polygonzkevm",
+            "decimals": 18,
+            "address": "native",
+            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+          }
+        ]
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-ETHx",
+      "priceId": "stader-ethx",
+      "symbol": "ETHx",
+      "name": "ETHx",
+      "sinceTimestamp": 1688688000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7099b0b0fb08CBD284F2cf3745fA26a7bad70051",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-EURA",
       "priceId": "ageur",
       "symbol": "EURA",
@@ -339,598 +391,7 @@
       }
     },
     {
-      "id": "polygonzkevm-FTM",
-      "priceId": "wrapped-fantom",
-      "symbol": "FTM",
-      "name": "Fantom Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x1F5594C2bED2AAeC3B3A03C292e20dC073AE116a",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-FOOM",
-      "priceId": "foom",
-      "symbol": "FOOM",
-      "name": "FOOM",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x121f24Eb74D871E46E2494F054b2822905c5D78D",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-FORT",
-      "priceId": "forta",
-      "symbol": "FORT",
-      "name": "Forta",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x51ce7ba9ac1c93c0Dc4f2a196faE23FDc8fb6e6b",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-FOX",
-      "priceId": "shapeshift-fox-token",
-      "symbol": "FOX",
-      "name": "FOX",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xC9055F4E9F4dbd16e35156C968EEd54983637522",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-FRAX",
-      "priceId": "frax",
-      "symbol": "FRAX",
-      "name": "Frax",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x95e4e1554a3F20932b559470eb57C56B7A26d10E",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-GRT",
-      "priceId": "the-graph",
-      "symbol": "GRT",
-      "name": "Graph Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xbb7835CeFEc0706829842927a645E64CF0A51bDF",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-BITCOIN",
-      "priceId": "harrypotterobamasonic10in",
-      "symbol": "BITCOIN",
-      "name": "HarryPotterObamaSonic10Inu",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xf1779B7aC59ae14eDcAB1B284823Bc5d1C3F7DD3",
-        "chain": "polygonzkevm",
-        "decimals": 8
-      }
-    },
-    {
-      "id": "polygonzkevm-HOT",
-      "priceId": "holotoken",
-      "symbol": "HOT",
-      "name": "HoloToken",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xAC046f5180003e2052085fd7f9edd53fC53bb9DA",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-HOP",
-      "priceId": "hop-protocol",
-      "symbol": "HOP",
-      "name": "Hop",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xbc50659Bf39Ecf4C23b4b996Ad014e6D09206030",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-HT",
-      "priceId": "huobi-token",
-      "symbol": "HT",
-      "name": "HuobiToken",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x75303D1e38e5DA5892698d09A84e5bBDCb440683",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-ILV",
-      "priceId": "illuvium",
-      "symbol": "ILV",
-      "name": "Illuvium",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x9C0ca87Eca993eA9434a6A0758AC10912353eb44",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-IMX",
-      "priceId": "immutable-x",
-      "symbol": "IMX",
-      "name": "Immutable X",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xA1268649070277FCF0081abB38897257383b855c",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-KCS",
-      "priceId": "kucoin-shares",
-      "symbol": "KCS",
-      "name": "KuCoin Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xAD209C28352D3b7e3190170F2658f9aFAaeb482D",
-        "chain": "polygonzkevm",
-        "decimals": 6
-      }
-    },
-    {
-      "id": "polygonzkevm-KNC",
-      "priceId": "kyber-network-crystal",
-      "symbol": "KNC",
-      "name": "Kyber Network Crystal v2",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x6A80A465409ce8D36C513129C0FEEa61BEd579ba",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-LDO",
-      "priceId": "lido-dao",
-      "symbol": "LDO",
-      "name": "Lido DAO Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x7e2feEa957b7D1606335e339754F4e52b452B792",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-LQTY",
-      "priceId": "liquity",
-      "symbol": "LQTY",
-      "name": "LQTY",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xAa26786c9b62Afa8fFe3Db8d08ea40D56Fd3aC25",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-LUMIA",
-      "priceId": "lumia",
-      "symbol": "LUMIA",
-      "name": "Lumia Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x23D559B5E2d2ba2De97E0868b2b9C64A2C668B15",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-LUSD",
-      "priceId": "liquity-usd",
-      "symbol": "LUSD",
-      "name": "LUSD Stablecoin",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x01E9A866c361eAd20Ab4e838287DD464dc67A50e",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-MKR",
-      "priceId": "maker",
-      "symbol": "MKR",
-      "name": "Maker",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x2064d37a31D5f947458CA696b2F42a627Ecf8270",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-OM",
-      "priceId": "mantra-dao",
-      "symbol": "OM",
-      "name": "MANTRA DAO",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x7fC3F5EaD5A5b74D3094D46Df8bbAA60e223aB43",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-MATIC",
-      "priceId": "matic-network",
-      "symbol": "MATIC",
-      "name": "Matic Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": true,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xa2036f0538221a77A3937F1379699f44945018d0",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-MLN",
-      "priceId": "melon",
-      "symbol": "MLN",
-      "name": "Melon Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xc63cD13f61a3B0c7527B60654a860f39c24cAd33",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-OKB",
-      "priceId": "okb",
-      "symbol": "OKB",
-      "name": "OKB",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xA23390ab60fE5482e9230245eb817a8117528b38",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-OVR",
-      "priceId": "ovr",
-      "symbol": "OVR",
-      "name": "OVR",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xd2B36b566F260B9e290db91B002E2849f170457b",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-USDP",
-      "priceId": "paxos-standard",
-      "symbol": "USDP",
-      "name": "Pax Dollar",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x9F171f7d8445a2ab62747C3f3115362a1D51FC50",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-PEPE",
-      "priceId": "pepe",
-      "symbol": "PEPE",
-      "name": "Pepe",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xc291B0753da6Fbf8d848374e1Bb1588dCAD3559a",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-POL",
-      "priceId": "polygon-ecosystem-token",
-      "symbol": "POL",
-      "name": "Polygon Ecosystem Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": true,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x22B21BedDef74FE62F031D2c5c8F7a9F8a4b304D",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-TRADE",
-      "priceId": "polytrade",
-      "symbol": "TRADE",
-      "name": "Polytrade",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x7A61D9E1D0da07747a81C599F48777c5A500F657",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-PYR",
-      "priceId": "vulcan-forged",
-      "symbol": "PYR",
-      "name": "PYR Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xC98D35aE65171aa38c0d6afD5416E4bA856afB86",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-RAI",
-      "priceId": "rai",
-      "symbol": "RAI",
-      "name": "Rai Reflex Index",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xdcB8125a0fA9AD694cEd4bA482A9FbeF14C6c26F",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-RNDR",
-      "priceId": "render-token",
-      "symbol": "RNDR",
-      "name": "Render Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x31FAA1A7fc42510D846736e8fC2aF9D76aab9bC6",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-rETH",
-      "priceId": "rocket-pool-eth",
-      "symbol": "rETH",
-      "name": "Rocket Pool ETH",
-      "sinceTimestamp": 1679679015,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xb23C20EFcE6e24Acca0Cef9B7B7aA196b84EC942",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-RPL",
-      "priceId": "rocket-pool",
-      "symbol": "RPL",
-      "name": "Rocket Pool Protocol",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x70d35152fBf63FB312709b11a9Bac87519de0019",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-rsETH",
-      "priceId": "kelp-dao-restaked-eth",
-      "symbol": "rsETH",
-      "name": "rsETH",
-      "sinceTimestamp": 1679679015,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x8C7D118B5c47a5BCBD47cc51789558B98dAD17c5",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-SAND",
-      "priceId": "the-sandbox",
-      "symbol": "SAND",
-      "name": "SAND",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x2e28B04Bed55F89d867c0966Dcd5dD2C61236349",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-sDAI",
-      "priceId": "savings-dai",
-      "symbol": "sDAI",
-      "name": "Savings Dai",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xd6B9A0B261DDA05ba06DC51821C3Ba12318d9Ae1",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-SIPHER",
-      "priceId": "sipher",
-      "symbol": "SIPHER",
-      "name": "Sipher Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xd3600053aA0055542cFCd78429469A48487E7E63",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
+      "mode": "auto",
       "id": "polygonzkevm-FIS",
       "priceId": "stafi",
       "symbol": "FIS",
@@ -947,389 +408,58 @@
       }
     },
     {
-      "id": "polygonzkevm-SUPER",
-      "priceId": "superfarm",
-      "symbol": "SUPER",
-      "name": "SuperFarm",
+      "mode": "auto",
+      "id": "polygonzkevm-FOOM",
+      "priceId": "foom",
+      "symbol": "FOOM",
+      "name": "FOOM",
+      "sinceTimestamp": 1692316800,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x121f24Eb74D871E46E2494F054b2822905c5D78D",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-FORT",
+      "priceId": "forta",
+      "symbol": "FORT",
+      "name": "Forta",
       "sinceTimestamp": 1679679015,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0x3dacbd6E7767a4F185Fa8A7C26a85C87880013C6",
+        "address": "0x51ce7ba9ac1c93c0Dc4f2a196faE23FDc8fb6e6b",
         "chain": "polygonzkevm",
         "decimals": 18
       }
     },
     {
-      "id": "polygonzkevm-SNX",
-      "priceId": "havven",
-      "symbol": "SNX",
-      "name": "Synthetix Network Token",
+      "mode": "auto",
+      "id": "polygonzkevm-FOX",
+      "priceId": "shapeshift-fox-token",
+      "symbol": "FOX",
+      "name": "FOX",
       "sinceTimestamp": 1679679015,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0x90c6a9befa477ab3c3eC3b8be8dbc7a3e6EF1415",
+        "address": "0xC9055F4E9F4dbd16e35156C968EEd54983637522",
         "chain": "polygonzkevm",
         "decimals": 18
       }
     },
     {
-      "id": "polygonzkevm-TEL",
-      "priceId": "telcoin",
-      "symbol": "TEL",
-      "name": "Telcoin",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x42a4Ab13B8c2cF350f35b0FB68484042480Ed521",
-        "chain": "polygonzkevm",
-        "decimals": 2
-      }
-    },
-    {
-      "id": "polygonzkevm-TRB",
-      "priceId": "tellor",
-      "symbol": "TRB",
-      "name": "Tellor Tributes",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x03346b2F4BC23fd7f4935f74E70c7a7FebC45313",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-XAUt",
-      "priceId": "tether-gold",
-      "symbol": "XAUt",
-      "name": "Tether Gold",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xa7Bd526e698a7EE6261982607D7B64cc8e7be0ef",
-        "chain": "polygonzkevm",
-        "decimals": 6
-      }
-    },
-    {
-      "id": "polygonzkevm-USDT",
-      "priceId": "tether",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x1E4a5963aBFD975d8c9021ce480b42188849D41d",
-        "chain": "polygonzkevm",
-        "decimals": 6
-      }
-    },
-    {
-      "id": "polygonzkevm-UFO",
-      "priceId": "ufo-gaming",
-      "symbol": "UFO",
-      "name": "THE TRUTH",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xd80d233Cc78113a4488945B5d6ae34830EF4b192",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-T",
-      "priceId": "threshold-network-token",
-      "symbol": "T",
-      "name": "Threshold Network Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x4a1f5208821498642061cD35f18a48eE1CA7Ecb7",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-UOS",
-      "priceId": "ultra",
-      "symbol": "UOS",
-      "name": "Ultra Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x8bFB2223b87E03aD701Ce5D00C2817637BdE2845",
-        "chain": "polygonzkevm",
-        "decimals": 4
-      }
-    },
-    {
-      "id": "polygonzkevm-UNI",
-      "priceId": "uniswap",
-      "symbol": "UNI",
-      "name": "Uniswap",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x2548C94A3092494dB3aF864cc2cF781a72f55678",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "sinceTimestamp": 1679679015,
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
-        "chain": "polygonzkevm",
-        "decimals": 6
-      }
-    },
-    {
-      "id": "polygonzkevm-WBTC",
-      "priceId": "wrapped-bitcoin",
-      "symbol": "WBTC",
-      "name": "Wrapped BTC",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1",
-        "chain": "polygonzkevm",
-        "decimals": 8
-      }
-    },
-    {
-      "id": "polygonzkevm-weETH",
-      "priceId": "wrapped-eeth",
-      "symbol": "weETH",
-      "name": "Wrapped eETH",
-      "sinceTimestamp": 1679679015,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xcD68DFf4415358c35a28f96Fd5bF7083B22De1D6",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-WETH",
-      "priceId": "weth",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "sinceTimestamp": 1679679015,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xb584516c8d90f133A48af5cC445cc5d924cf9863",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-wstETH",
-      "priceId": "wrapped-steth",
-      "symbol": "wstETH",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "sinceTimestamp": 1679679015,
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x5D8cfF95D7A57c0BF50B30b43c7CC0D52825D4a9",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-YGG",
-      "priceId": "yield-guild-games",
-      "symbol": "YGG",
-      "name": "Yield Guild Games Token",
-      "sinceTimestamp": 1679679015,
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x5abe6552F0DF9485609CB148Edc80e90E4229f78",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      }
-    },
-    {
-      "id": "polygonzkevm-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ethereum",
-      "sinceTimestamp": 1679679015,
-      "category": "ether",
-      "source": "canonical",
-      "amount": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "const",
-            "value": 200000000
-          },
-          {
-            "type": "balanceOfEscrow",
-            "chain": "polygonzkevm",
-            "decimals": 18,
-            "address": "native",
-            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
-          }
-        ]
-      },
-      "isAssociated": false
-    },
-    {
-      "id": "polygonzkevm-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1700125979,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "polygonzkevm-wstETH",
-      "priceId": "wrapped-steth",
-      "symbol": "wstETH",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1703945135,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "polygonzkevm-DAI",
-      "priceId": "dai",
-      "symbol": "DAI",
-      "name": "Dai Stablecoin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1695199499,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "polygonzkevm-sDAI",
-      "priceId": "savings-dai",
-      "symbol": "sDAI",
-      "name": "Savings Dai",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "chain": "ethereum",
-        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1696982400,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "polygonzkevm-FRAX",
-      "priceId": "frax",
-      "symbol": "FRAX",
-      "name": "Frax",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1680642322,
-      "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "id": "polygonzkevm-frxETH",
-      "priceId": "frax-ether",
-      "symbol": "frxETH",
-      "name": "Frax Ether",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xCf7eceE185f19e2E970a301eE37F93536ed66179",
-        "chain": "polygonzkevm",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1680642322,
-      "category": "ether",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
+      "mode": "auto",
       "id": "polygonzkevm-FPI",
       "priceId": "frax-price-index",
       "symbol": "FPI",
@@ -1346,6 +476,7 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-FPIS",
       "priceId": "frax-price-index-share",
       "symbol": "FPIS",
@@ -1362,6 +493,76 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "polygonzkevm-FRAX",
+      "priceId": "frax",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1680642322,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-FRAX.ethereum",
+      "priceId": "frax",
+      "symbol": "FRAX.ethereum",
+      "name": "Frax",
+      "sinceTimestamp": 1679679015,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x95e4e1554a3F20932b559470eb57C56B7A26d10E",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      },
+      "displaySymbol": "FRAX"
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-frxETH",
+      "priceId": "frax-ether",
+      "symbol": "frxETH",
+      "name": "Frax Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCf7eceE185f19e2E970a301eE37F93536ed66179",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1680642322,
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-FTM",
+      "priceId": "wrapped-fantom",
+      "symbol": "FTM",
+      "name": "Fantom Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1F5594C2bED2AAeC3B3A03C292e20dC073AE116a",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-FXS",
       "priceId": "frax-share",
       "symbol": "FXS",
@@ -1378,6 +579,553 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "polygonzkevm-GHST",
+      "priceId": "aavegotchi",
+      "symbol": "GHST",
+      "name": "Aavegotchi GHST Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x04474952FB4F60d43f75405411A596E32dFEcd3d",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-GRT",
+      "priceId": "the-graph",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xbb7835CeFEc0706829842927a645E64CF0A51bDF",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-HOP",
+      "priceId": "hop-protocol",
+      "symbol": "HOP",
+      "name": "Hop",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xbc50659Bf39Ecf4C23b4b996Ad014e6D09206030",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-HOT",
+      "priceId": "holotoken",
+      "symbol": "HOT",
+      "name": "HoloToken",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAC046f5180003e2052085fd7f9edd53fC53bb9DA",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-HT",
+      "priceId": "huobi-token",
+      "symbol": "HT",
+      "name": "HuobiToken",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x75303D1e38e5DA5892698d09A84e5bBDCb440683",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-ILV",
+      "priceId": "illuvium",
+      "symbol": "ILV",
+      "name": "Illuvium",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9C0ca87Eca993eA9434a6A0758AC10912353eb44",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-IMX",
+      "priceId": "immutable-x",
+      "symbol": "IMX",
+      "name": "Immutable X",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA1268649070277FCF0081abB38897257383b855c",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-KCS",
+      "priceId": "kucoin-shares",
+      "symbol": "KCS",
+      "name": "KuCoin Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAD209C28352D3b7e3190170F2658f9aFAaeb482D",
+        "chain": "polygonzkevm",
+        "decimals": 6
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-KNC",
+      "priceId": "kyber-network-crystal",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal v2",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6A80A465409ce8D36C513129C0FEEa61BEd579ba",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-LDO",
+      "priceId": "lido-dao",
+      "symbol": "LDO",
+      "name": "Lido DAO Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7e2feEa957b7D1606335e339754F4e52b452B792",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-LQTY",
+      "priceId": "liquity",
+      "symbol": "LQTY",
+      "name": "LQTY",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAa26786c9b62Afa8fFe3Db8d08ea40D56Fd3aC25",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-LUMIA",
+      "priceId": "lumia",
+      "symbol": "LUMIA",
+      "name": "Lumia Token",
+      "sinceTimestamp": 1729296000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x23D559B5E2d2ba2De97E0868b2b9C64A2C668B15",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-LUSD",
+      "priceId": "liquity-usd",
+      "symbol": "LUSD",
+      "name": "LUSD Stablecoin",
+      "sinceTimestamp": 1679679015,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x01E9A866c361eAd20Ab4e838287DD464dc67A50e",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-MANA",
+      "priceId": "decentraland",
+      "symbol": "MANA",
+      "name": "Decentraland MANA",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa5d8eB3eE1C35288e9F4432fAF343510035dE47B",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa2036f0538221a77A3937F1379699f44945018d0",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-MKR",
+      "priceId": "maker",
+      "symbol": "MKR",
+      "name": "Maker",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2064d37a31D5f947458CA696b2F42a627Ecf8270",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-MLN",
+      "priceId": "melon",
+      "symbol": "MLN",
+      "name": "Melon Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc63cD13f61a3B0c7527B60654a860f39c24cAd33",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-OKB",
+      "priceId": "okb",
+      "symbol": "OKB",
+      "name": "OKB",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA23390ab60fE5482e9230245eb817a8117528b38",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-OM",
+      "priceId": "mantra-dao",
+      "symbol": "OM",
+      "name": "MANTRA DAO",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7fC3F5EaD5A5b74D3094D46Df8bbAA60e223aB43",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-OVR",
+      "priceId": "ovr",
+      "symbol": "OVR",
+      "name": "OVR",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd2B36b566F260B9e290db91B002E2849f170457b",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "sinceTimestamp": 1681776000,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc291B0753da6Fbf8d848374e1Bb1588dCAD3559a",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-POL",
+      "priceId": "polygon-ecosystem-token",
+      "symbol": "POL",
+      "name": "Polygon Ecosystem Token",
+      "sinceTimestamp": 1698224783,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x22B21BedDef74FE62F031D2c5c8F7a9F8a4b304D",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-PYR",
+      "priceId": "vulcan-forged",
+      "symbol": "PYR",
+      "name": "PYR Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC98D35aE65171aa38c0d6afD5416E4bA856afB86",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-RAI",
+      "priceId": "rai",
+      "symbol": "RAI",
+      "name": "Rai Reflex Index",
+      "sinceTimestamp": 1679679015,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xdcB8125a0fA9AD694cEd4bA482A9FbeF14C6c26F",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "sinceTimestamp": 1679679015,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb23C20EFcE6e24Acca0Cef9B7B7aA196b84EC942",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-RNDR",
+      "priceId": "render-token",
+      "symbol": "RNDR",
+      "name": "Render Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x31FAA1A7fc42510D846736e8fC2aF9D76aab9bC6",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-RPL",
+      "priceId": "rocket-pool",
+      "symbol": "RPL",
+      "name": "Rocket Pool Protocol",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x70d35152fBf63FB312709b11a9Bac87519de0019",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-rsETH",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "rsETH",
+      "sinceTimestamp": 1705017600,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8C7D118B5c47a5BCBD47cc51789558B98dAD17c5",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-SAND",
+      "priceId": "the-sandbox",
+      "symbol": "SAND",
+      "name": "SAND",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2e28B04Bed55F89d867c0966Dcd5dD2C61236349",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-sDAI",
+      "priceId": "savings-dai",
+      "symbol": "sDAI",
+      "name": "Savings Dai",
+      "sinceTimestamp": 1696982400,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd6B9A0B261DDA05ba06DC51821C3Ba12318d9Ae1",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-sDAI.ext",
+      "priceId": "savings-dai",
+      "symbol": "sDAI.ext",
+      "displaySymbol": "sDAI",
+      "name": "Savings Dai",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1696982400,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-sFRAX",
       "priceId": "staked-frax",
       "symbol": "sFRAX",
@@ -1394,6 +1142,7 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
       "id": "polygonzkevm-sfrxETH",
       "priceId": "staked-frax-ether",
       "symbol": "sfrxETH",
@@ -1408,6 +1157,367 @@
       "category": "ether",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-SIPHER",
+      "priceId": "sipher",
+      "symbol": "SIPHER",
+      "name": "Sipher Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd3600053aA0055542cFCd78429469A48487E7E63",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-SNX",
+      "priceId": "havven",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x90c6a9befa477ab3c3eC3b8be8dbc7a3e6EF1415",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-SUPER",
+      "priceId": "superfarm",
+      "symbol": "SUPER",
+      "name": "SuperFarm",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3dacbd6E7767a4F185Fa8A7C26a85C87880013C6",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-T",
+      "priceId": "threshold-network-token",
+      "symbol": "T",
+      "name": "Threshold Network Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4a1f5208821498642061cD35f18a48eE1CA7Ecb7",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-TEL",
+      "priceId": "telcoin",
+      "symbol": "TEL",
+      "name": "Telcoin",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x42a4Ab13B8c2cF350f35b0FB68484042480Ed521",
+        "chain": "polygonzkevm",
+        "decimals": 2
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-TRADE",
+      "priceId": "polytrade",
+      "symbol": "TRADE",
+      "name": "Polytrade",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7A61D9E1D0da07747a81C599F48777c5A500F657",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-TRB",
+      "priceId": "tellor",
+      "symbol": "TRB",
+      "name": "Tellor Tributes",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x03346b2F4BC23fd7f4935f74E70c7a7FebC45313",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-UFO",
+      "priceId": "ufo-gaming",
+      "symbol": "UFO",
+      "name": "THE TRUTH",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd80d233Cc78113a4488945B5d6ae34830EF4b192",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2548C94A3092494dB3aF864cc2cF781a72f55678",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-UOS",
+      "priceId": "ultra",
+      "symbol": "UOS",
+      "name": "Ultra Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8bFB2223b87E03aD701Ce5D00C2817637BdE2845",
+        "chain": "polygonzkevm",
+        "decimals": 4
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "sinceTimestamp": 1679679015,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
+        "chain": "polygonzkevm",
+        "decimals": 6
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-USDC.ext",
+      "priceId": "usd-coin",
+      "symbol": "USDC.ext",
+      "displaySymbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1700125979,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-USDP",
+      "priceId": "paxos-standard",
+      "symbol": "USDP",
+      "name": "Pax Dollar",
+      "sinceTimestamp": 1679679015,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9F171f7d8445a2ab62747C3f3115362a1D51FC50",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "sinceTimestamp": 1679679015,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1E4a5963aBFD975d8c9021ce480b42188849D41d",
+        "chain": "polygonzkevm",
+        "decimals": 6
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xEA034fb02eB1808C2cc3adbC15f447B93CbE08e1",
+        "chain": "polygonzkevm",
+        "decimals": 8
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "sinceTimestamp": 1701648000,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xcD68DFf4415358c35a28f96Fd5bF7083B22De1D6",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "sinceTimestamp": 1679679015,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb584516c8d90f133A48af5cC445cc5d924cf9863",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "sinceTimestamp": 1679679015,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5D8cfF95D7A57c0BF50B30b43c7CC0D52825D4a9",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-wstETH.ext",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH.ext",
+      "displaySymbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1703945135,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-XAUt",
+      "priceId": "tether-gold",
+      "symbol": "XAUt",
+      "name": "Tether Gold",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa7Bd526e698a7EE6261982607D7B64cc8e7be0ef",
+        "chain": "polygonzkevm",
+        "decimals": 6
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-YGG",
+      "priceId": "yield-guild-games",
+      "symbol": "YGG",
+      "name": "Yield Guild Games Token",
+      "sinceTimestamp": 1679679015,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5abe6552F0DF9485609CB148Edc80e90E4229f78",
+        "chain": "polygonzkevm",
+        "decimals": 18
+      }
     }
   ]
 }

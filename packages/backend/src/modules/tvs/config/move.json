@@ -1,0 +1,5 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "move",
+  "tokens": []
+}

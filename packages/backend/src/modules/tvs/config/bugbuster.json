@@ -1,0 +1,33 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "bugbuster",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "bugbuster-CTSI",
+      "priceId": "cartesi",
+      "symbol": "CTSI",
+      "name": "Cartesi Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEc6adef5E1006bb305bB1975333e8fc4071295bf",
+        "chain": "optimism",
+        "escrowAddress": "0x3FF5C7383F614256053c3F6B86A47bA974937299",
+        "decimals": 18
+      },
+      "valueForTotal": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0
+        },
+        "priceId": "cartesi"
+      },
+      "sinceTimestamp": 1726799059,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
