@@ -1,47 +1,5 @@
 Generated with discovered.json: 0xa31ebed6ecd823816f82cdc8b54a940cdc2ec982
 
-# Diff at Mon, 10 Mar 2025 14:44:52 GMT:
-
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@5f0894cc624e3206ceca83cdf36ddd08f1e90538 block: 21322825
-- current block number: 21322825
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21322825 (main branch discovery), not current.
-
-```diff
-+   Status: CREATED
-    contract undefined (0x2A038e100F8B85DF21e4d44121bdBfE0c288A869)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract undefined (0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AnyswapV4Router (0x6b7a87899490EcE95443e979cA9485CBE7E71522)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AnyswapV6Router (0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705)
-    +++ description: None
-```
-
-Generated with discovered.json: 0xd751887708f7f822a48c2d5c814289c373082b8a
-
 # Diff at Tue, 04 Mar 2025 10:39:27 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)

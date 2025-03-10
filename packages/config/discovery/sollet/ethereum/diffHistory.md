@@ -1,35 +1,5 @@
 Generated with discovered.json: 0x253eef42df6ec08ab529cc4926b768f6f605a754
 
-# Diff at Mon, 10 Mar 2025 14:45:22 GMT:
-
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@5f0894cc624e3206ceca83cdf36ddd08f1e90538 block: 16154924
-- current block number: 16154924
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 16154924 (main branch discovery), not current.
-
-```diff
-+   Status: CREATED
-    contract undefined (0x067D382e61c06Cea2815069D9D97fd3ee5df2361)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract SplTokenSwap (0xeae57ce9cc1984F202e15e038B964bb8bdF7229a)
-    +++ description: None
-```
-
-Generated with discovered.json: 0xd78c07173e4d6bbc02fe31a4a30a49353c417ec7
-
 # Diff at Tue, 04 Mar 2025 10:39:57 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
