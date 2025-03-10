@@ -5,7 +5,7 @@ import { upcomingL2 } from './templates/upcoming'
 export const skatechain: ScalingProject = upcomingL2({
   id: 'skatechain',
   capability: 'universal',
-  addedAt: new UnixTime(1741609623),
+  addedAt: UnixTime(1741609623),
   display: {
     name: 'Skatechain',
     slug: 'skatechain',
@@ -23,7 +23,7 @@ export const skatechain: ScalingProject = upcomingL2({
       socialMedia: [
         'https://x.com/skate_chain/',
         'https://t.me/skatechain',
-        'https://discord.com/skatechain',
+        'https://discord.com/invite/skatechain',
       ],
     },
   },
