@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "chain": "ethereum",
-  "blockNumber": 21938183,
+  "blockNumber": 22017795,
   "configHash": "0xf88703ec362520746136ff6938f548d69071d9411e7d8a15d680db69b67f7ecf",
   "entries": [
     {
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x70bc1d0000000000",
-        "get_deposit_root": "0x421ee74c727829a4413452ee750ca06fdd1c37c4e2c0fde75ccf3162f0eecf10"
+        "get_deposit_count": "0xb7bc1d0000000000",
+        "get_deposit_root": "0xcafbe0bea92bf326ec2980b4aa74bcd0563dd3c1b5de6338b628be56b81d5d5a"
       }
     },
     {
@@ -332,7 +332,7 @@
           "genesisTime": 1606824023
         },
         "getContractVersion": 4,
-        "getCurrentEpochId": 351017,
+        "getCurrentEpochId": 351046,
         "getCurrentFrame": {
           "frameEpochId": 351000,
           "frameStartTime": 1741608023,
@@ -611,7 +611,7 @@
         "stEthPerToken": "1196316250627879869",
         "symbol": "wstETH",
         "tokensPerStEth": "835899369815594841",
-        "totalSupply": "3468426541090242455272218"
+        "totalSupply": "3479132686778197494867236"
       },
       "derivedName": "WstETH"
     },
@@ -873,8 +873,8 @@
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
         "getLastFinalizedRequestId": 73933,
-        "getLastRequestId": 74015,
-        "getLockedEtherAmount": "39185594290190827222939",
+        "getLastRequestId": 74045,
+        "getLockedEtherAmount": "39109404549189710354881",
         "getNFTDescriptorAddress": "0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -893,8 +893,8 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 82,
-        "unfinalizedStETH": "16006900904097786662473",
+        "unfinalizedRequestNumber": 112,
+        "unfinalizedStETH": "19636689684503848761811",
         "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       }
     },
@@ -1059,7 +1059,7 @@
           "beaconValidators": 386646,
           "beaconBalance": "9338762294043424000000000"
         },
-        "getBufferedEther": "701873367932298013090",
+        "getBufferedEther": "1900567795849120165002",
         "getContractVersion": 2,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
@@ -1081,11 +1081,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149999999910000000000000",
-          "prevStakeBlockNumber": 22016857
+          "prevStakeLimit": "149938500000000000000000",
+          "prevStakeBlockNumber": 22017770
         },
-        "getTotalPooledEther": "9339464167411356298013090",
-        "getTotalShares": "7806852211954481894661376",
+        "getTotalPooledEther": "9340662861839273120165002",
+        "getTotalShares": "7807854199871379031275111",
         "getTreasury": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -1102,7 +1102,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9339464167411356298013090",
+        "totalSupply": "9340662861839273120165002",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "derivedName": "Lido"
