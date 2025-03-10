@@ -330,9 +330,9 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-SolvBTC",
+      "id": "scroll-SolvBTC.scroll",
       "priceId": "solv-btc",
-      "symbol": "SolvBTC",
+      "symbol": "SolvBTC.scroll",
       "name": "Free Bridged SolvBTC.b",
       "amount": {
         "type": "totalSupply",
@@ -343,28 +343,12 @@
       "sinceTimestamp": 1716874538,
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "SolvBTC"
     },
     {
       "mode": "auto",
       "id": "scroll-STONE",
-      "priceId": "stakestone-ether",
-      "symbol": "STONE",
-      "name": "StakeStone Ether",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x80137510979822322193FC997d400D5A6C747bf7",
-        "chain": "scroll",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1709920633,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "scroll-STONE-duplicate",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -382,9 +366,27 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-sUSDe",
+      "id": "scroll-STONE.scroll",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE.scroll",
+      "name": "StakeStone Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+        "chain": "scroll",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709920633,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "displaySymbol": "STONE"
+    },
+    {
+      "mode": "auto",
+      "id": "scroll-sUSDe.scroll",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe",
+      "symbol": "sUSDe.scroll",
       "name": "Staked USDe",
       "amount": {
         "type": "totalSupply",
@@ -395,7 +397,8 @@
       "sinceTimestamp": 1710892800,
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "sUSDe"
     },
     {
       "mode": "auto",
@@ -485,9 +488,9 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-USDe",
+      "id": "scroll-USDe.scroll",
       "priceId": "ethena-usde",
-      "symbol": "USDe",
+      "symbol": "USDe.scroll",
       "name": "USDe",
       "amount": {
         "type": "totalSupply",
@@ -498,7 +501,8 @@
       "sinceTimestamp": 1710186910,
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "displaySymbol": "USDe"
     },
     {
       "mode": "auto",
@@ -543,23 +547,6 @@
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
-        "chain": "scroll",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1718321733,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "scroll-weETH-duplicate",
-      "priceId": "wrapped-eeth",
-      "symbol": "weETH",
-      "name": "Wrapped eETH",
-      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
         "chain": "ethereum",
@@ -570,6 +557,24 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "scroll-weETH.scroll",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH.scroll",
+      "name": "Wrapped eETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
+        "chain": "scroll",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1718321733,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "displaySymbol": "weETH"
     },
     {
       "mode": "auto",
