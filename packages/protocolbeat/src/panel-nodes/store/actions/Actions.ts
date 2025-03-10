@@ -1,4 +1,4 @@
-import type { Node } from '../State'
+import type { Node, State } from '../State'
 import type { NodeLocations } from '../utils/storage'
 
 export interface Actions {
@@ -13,7 +13,10 @@ export interface Actions {
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
   hideSelected: () => void
+  hideUnknowns: () => void
   showHidden: () => void
   clear: () => void
   selectAndFocus: (selected: readonly string[]) => void
+
+  setPreferences: (preferences: Partial<State['userPreferences']>) => void
 }
