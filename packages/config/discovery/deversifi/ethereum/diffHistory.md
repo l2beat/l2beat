@@ -8,6 +8,11 @@ Generated with discovered.json: 0x9c0d5e81cae2505c9680181ff3117930ff3f32ad
 
 ## Description
 
+### Update on 10 Mar 2025:
+Rhino.fi upgrades their core contract to a simple withdraw contract that [transfered all funds to a multisig](https://etherscan.io/tx/0x9c1692398b107161c7af2c1c02316d449bdf03b15e84b69170373b2864dba754) (labeled Rhino.fi treasury on etherscan). The current app.rhino.fi frontend points to new onchain escrows which act as simple EOA bridge escrows.
+
+### 06 Mar 2025 Description
+
 config: updates timelock templates, added starknet proghashes to global config.
 
 ## Config/verification related changes
