@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xd27ce59a8eb0e41f8c1010898e3fa13aa703a05b
+
+# Diff at Mon, 10 Mar 2025 06:46:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4892f7ed52cf565bcd89411616616ca517b2dc9e block: 21979760
+- current block number: 21979760
+
+## Description
+
+add more roles in the starknet templates as a test.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21979760 (main branch discovery), not current.
+
+```diff
+    contract ParadexAdminMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgraderStarknet","from":"0xF338cad020D506e8e3d9B4854986E0EcE6C23640"}
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.12:
++        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.11:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.10:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x0000000000000000000000000000000000000020","via":[]}
+      issuedPermissions.9:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.8:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x0000000000000000000000000000000000000020","via":[]}
+      issuedPermissions.7:
++        {"permission":"interact","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","description":"manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.","via":[]}
+      issuedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.6.description:
++        "enable the withdrawal limit."
+      issuedPermissions.5.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "disable the withdrawal limit."
+      issuedPermissions.4.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0x0000000000000000000000000000000000000020"
+      issuedPermissions.4.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.3.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0x0000000000000000000000000000000000000020"
+      issuedPermissions.3.description:
+-        "disable the withdrawal limit."
++        "enable the withdrawal limit."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "disable the withdrawal limit."
+      issuedPermissions.1.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.1.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.6:
++        {"permission":"upgraderStarknet","to":"0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","via":[]}
+      issuedPermissions.5:
++        {"permission":"upgraderStarknet","to":"0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","via":[]}
+    }
+```
+
 Generated with discovered.json: 0xae327b8ad330d0e70016f95d3872b2492c67de34
 
 # Diff at Thu, 06 Mar 2025 15:19:41 GMT:

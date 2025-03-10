@@ -1,3 +1,939 @@
+Generated with discovered.json: 0x62c68b8eb3187db389652be9d77a54b471a5969e
+
+# Diff at Mon, 10 Mar 2025 06:46:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4892f7ed52cf565bcd89411616616ca517b2dc9e block: 21973410
+- current block number: 21973410
+
+## Description
+
+add more roles in the starknet templates as a test.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973410 (main branch discovery), not current.
+
+```diff
+    contract StarkgateBridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.95:
++        {"permission":"upgraderStarknetETHBridge","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","delay":259200}
+      receivedPermissions.94:
++        {"permission":"upgrade","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"}
+      receivedPermissions.93:
++        {"permission":"upgrade","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816","delay":259200}
+      receivedPermissions.92:
++        {"permission":"upgrade","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
+      receivedPermissions.91:
++        {"permission":"upgrade","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"}
+      receivedPermissions.90:
++        {"permission":"upgrade","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"}
+      receivedPermissions.89:
++        {"permission":"upgrade","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2","delay":259200}
+      receivedPermissions.88:
++        {"permission":"upgrade","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4","delay":259200}
+      receivedPermissions.87:
++        {"permission":"upgrade","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B","delay":259200}
+      receivedPermissions.86:
++        {"permission":"upgrade","from":"0xbb3400F107804DFB482565FF1Ec8D8aE66747605","delay":259200}
+      receivedPermissions.85:
++        {"permission":"upgrade","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419","delay":259200}
+      receivedPermissions.84:
++        {"permission":"upgrade","from":"0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"}
+      receivedPermissions.83:
++        {"permission":"upgrade","from":"0x283751A21eafBFcD52297820D27C1f1963D9b5b4","delay":259200}
+      receivedPermissions.82:
++        {"permission":"upgrade","from":"0x1268cc171c54F2000402DfF20E93E60DF4c96812"}
+      receivedPermissions.81:
++        {"permission":"upgrade","from":"0x0c5aE94f8939182F2D06097025324D1E537d5B60"}
+      receivedPermissions.80:
++        {"permission":"secAgentACStarknetMultibridge","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
+      receivedPermissions.79:
++        {"permission":"secAgentACStarknetETHBridge","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"}
+      receivedPermissions.78:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"}
+      receivedPermissions.77:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"}
+      receivedPermissions.76:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"}
+      receivedPermissions.75:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"}
+      receivedPermissions.74:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"}
+      receivedPermissions.73:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"}
+      receivedPermissions.72:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"}
+      receivedPermissions.71:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"}
+      receivedPermissions.70:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0xbb3400F107804DFB482565FF1Ec8D8aE66747605"}
+      receivedPermissions.69:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"}
+      receivedPermissions.68:
++        {"permission":"secAgentACStarknetERC20Bridge","from":"0x283751A21eafBFcD52297820D27C1f1963D9b5b4"}
+      receivedPermissions.67:
++        {"permission":"secAdminACStarknetMultibridge","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
+      receivedPermissions.66:
++        {"permission":"secAdminACStarknetETHBridge","from":"0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"}
+      receivedPermissions.65:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"}
+      receivedPermissions.64:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"}
+      receivedPermissions.63:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"}
+      receivedPermissions.62:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"}
+      receivedPermissions.61:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"}
+      receivedPermissions.60:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"}
+      receivedPermissions.59:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"}
+      receivedPermissions.58:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"}
+      receivedPermissions.57:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0xbb3400F107804DFB482565FF1Ec8D8aE66747605"}
+      receivedPermissions.56:
++        {"permission":"secAdminACStarknetERC20Bridge","from":"0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"}
+      receivedPermissions.55.permission:
+-        "upgrade"
++        "secAdminACStarknetERC20Bridge"
+      receivedPermissions.55.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.54.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.54.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.54.delay:
+-        259200
+      receivedPermissions.54.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.53.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.53.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.53.description:
++        "enable the withdrawal limit."
+      receivedPermissions.52.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.52.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.52.description:
++        "disable the withdrawal limit."
+      receivedPermissions.51.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.51.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.51.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.50.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.50.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.50.delay:
+-        259200
+      receivedPermissions.50.description:
++        "enable the withdrawal limit."
+      receivedPermissions.49.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.49.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.49.delay:
+-        259200
+      receivedPermissions.49.description:
++        "disable the withdrawal limit."
+      receivedPermissions.48.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.48.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.48.delay:
+-        259200
+      receivedPermissions.48.description:
++        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.47.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.47.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.47.delay:
+-        259200
+      receivedPermissions.47.description:
++        "enable the withdrawal limit."
+      receivedPermissions.46.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.46.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.46.delay:
+-        259200
+      receivedPermissions.46.description:
++        "disable the withdrawal limit."
+      receivedPermissions.45.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.45.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.45.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.44.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.44.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.44.delay:
+-        259200
+      receivedPermissions.44.description:
++        "enable the withdrawal limit."
+      receivedPermissions.43.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.43.from:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.43.description:
++        "disable the withdrawal limit."
+      receivedPermissions.42.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.42.from:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.42.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.41.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.41.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.40.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.40.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.39.from:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.39.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.38.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.38.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.37.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.37.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.36.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.36.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.35.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.35.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.34.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.34.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.33.from:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.33.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.32.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.32.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.31.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.31.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.30.from:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.30.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.29.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.29.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.28.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.28.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.27.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.27.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.26.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.26.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.25.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.25.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.24.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.24.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.23.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.23.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.22.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.22.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.21.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.21.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.20.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.20.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.19.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.19.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.18.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.18.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.17.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.17.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      receivedPermissions.16.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.16.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      receivedPermissions.15.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+      receivedPermissions.15.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation.."
+      receivedPermissions.14.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      receivedPermissions.13.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      receivedPermissions.13.description:
+-        "enable the withdrawal limit."
++        "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+      receivedPermissions.12.permission:
+-        "interact"
++        "govAdminACStarknetMultibridge"
+      receivedPermissions.12.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+      receivedPermissions.12.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.11.permission:
+-        "interact"
++        "govAdminACStarknetETHBridge"
+      receivedPermissions.11.description:
+-        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      receivedPermissions.10.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.10.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+      receivedPermissions.10.description:
+-        "enable the withdrawal limit."
+      receivedPermissions.9.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.9.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.9.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.8.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.8.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+      receivedPermissions.8.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.7.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.7.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.7.description:
+-        "enable the withdrawal limit."
+      receivedPermissions.6.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.6.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.6.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.5.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.5.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.5.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.4.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.4.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.4.description:
+-        "enable the withdrawal limit."
+      receivedPermissions.3.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.3.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.3.description:
+-        "disable the withdrawal limit."
+      receivedPermissions.2.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.2.from:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation.."
+      receivedPermissions.1.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.1.from:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.1.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+      receivedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      receivedPermissions.0.from:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.0.description:
+-        "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+    }
+```
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      receivedPermissions.1:
++        {"permission":"managerStarknetMultibridge","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
+    }
+```
+
+```diff
+    contract StarknetSecurityCouncil (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgraderStarknet","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgraderStarknet","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.7:
++        {"permission":"upgraderStarknetETHBridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetETHBridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetETHBridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetETHBridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.7:
++        {"permission":"upgraderStarknet","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[{"address":"0xCA112018fEB729458b628AadC8f996f9deCbCa0c","delay":691200}]}
+      issuedPermissions.6:
++        {"permission":"upgraderStarknet","to":"0x15e8c684FD095d4796A0c0CF678554F4c1C7C361","via":[]}
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      directlyReceivedPermissions.2:
++        {"permission":"upgraderStarknet","from":"0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"}
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.to:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      issuedPermissions.8:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.7:
++        {"permission":"secAgentACStarknetMultibridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.6:
++        {"permission":"secAdminACStarknetMultibridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.5:
++        {"permission":"managerStarknetMultibridge","to":"0x0c5aE94f8939182F2D06097025324D1E537d5B60","via":[]}
+      issuedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.4.to:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      issuedPermissions.4.description:
++        "enroll new tokens or deactivate deposits into the escrow (for each token individually)."
+      issuedPermissions.3.to:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.3.description:
+-        "enroll new tokens or deactivate deposits into the escrow (for each token individually)."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetMultibridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","delay":259200,"via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.5:
++        {"permission":"secAgentACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.4:
++        {"permission":"secAdminACStarknetERC20Bridge","to":"0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.3.description:
++        "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+      issuedPermissions.2.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.1.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.0.permission:
+-        "interact"
++        "govAdminACStarknetERC20Bridge"
+      issuedPermissions.0.description:
+-        "disable the withdrawal limit."
+    }
+```
+
 Generated with discovered.json: 0x566ee9d02f5fd5f1abf13c892844a5592ae35927
 
 # Diff at Thu, 06 Mar 2025 15:20:39 GMT:
