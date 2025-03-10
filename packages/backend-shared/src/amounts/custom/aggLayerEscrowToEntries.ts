@@ -1,9 +1,9 @@
 import type { Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
+  type AmountConfigEntry,
   AssetId,
   type Token,
-  type AmountConfigEntry,
 } from '@l2beat/shared-pure'
 import { getAggLayerL2TokenEntry } from '../aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from '../aggLayerNativeEtherPreminted'

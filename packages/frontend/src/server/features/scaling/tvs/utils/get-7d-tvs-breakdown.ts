@@ -40,8 +40,9 @@ const getCached7dTokenBreakdown = cache(
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
+    const tokens = await ps.getTokens()
     const tvsValues = await getTvsValuesForProjects(
-      await getTvsProjects((project) => !!project.scalingInfo, chains),
+      await getTvsProjects((project) => !!project.scalingInfo, chains, tokens),
       '7d',
     )
 

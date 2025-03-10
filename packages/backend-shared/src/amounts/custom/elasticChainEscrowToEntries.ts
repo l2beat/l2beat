@@ -1,8 +1,8 @@
 import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
-  AssetId,
   type AmountConfigEntry,
+  AssetId,
   type Token,
 } from '@l2beat/shared-pure'
 import { getElasticChainEtherEntry } from '../elasticChainEther'
