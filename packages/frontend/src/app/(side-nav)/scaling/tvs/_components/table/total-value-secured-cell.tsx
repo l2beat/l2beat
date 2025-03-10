@@ -34,7 +34,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <TableLink href={props.href}>
           <div className="flex flex-col items-end">
             <div className="flex items-center gap-1">

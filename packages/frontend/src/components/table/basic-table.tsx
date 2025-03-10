@@ -219,7 +219,8 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                     : undefined,
                   cell.column.getIsPinned() &&
                     getRowClassNamesWithoutOpacity(rowType),
-                  highlightedSlug === row.original.slug &&
+                  cell.column.getIsPinned() &&
+                    highlightedSlug === row.original.slug &&
                     'animate-row-highlight-no-opacity',
                   meta?.cellClassName,
                 )}
