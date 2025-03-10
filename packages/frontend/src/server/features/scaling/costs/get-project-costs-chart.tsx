@@ -5,7 +5,7 @@ import { getSummedActivityForProject } from '../activity/get-summed-activity-for
 import { getCostsChart } from './get-costs-chart'
 import { getCostsForProject } from './get-costs-for-project'
 import type { LatestCostsProjectResponse } from './types'
-import { CostsTimeRange } from './utils/range'
+import { CostsTimeRange, rangeToResolution } from './utils/range'
 
 export type ProjectCostsChartParams = z.infer<typeof ProjectCostsChartParams>
 export const ProjectCostsChartParams = z.object({
@@ -54,12 +54,17 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
   const summedThroughput = throughput.reduce((acc, [_, throughput]) => {
     return acc + throughput
   }, 0)
-  const total = withTotal({ ...costs, posted: summedThroughput })
+  const total = withTotal({
+    ...costs,
+    posted: summedThroughput,
+    range: costs.range,
+  })
+
+  const resolution = rangeToResolution(params.range)
   const perL2Uop =
     throughputUopsCount !== undefined &&
     costsUopsCount !== undefined &&
-    params.range !== '1d' &&
-    params.range !== '7d'
+    resolution === 'daily'
       ? mapToPerL2UopsCost(total, {
           costs: costsUopsCount,
           throughput: throughputUopsCount,

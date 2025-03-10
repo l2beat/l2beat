@@ -14,7 +14,7 @@ export interface LatestCostsProjectResponse {
   syncedUntil: UnixTime
 }
 
-interface LatestCostsValues {
+export interface LatestCostsValues {
   overhead: number
   calldata: number
   compute: number
