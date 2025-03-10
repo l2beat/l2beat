@@ -2,11 +2,12 @@
   "name": "hop",
   "chain": "ethereum",
   "blockNumber": 19531595,
-  "configHash": "0xec0353c8a61cefe44bc9952f04a0c0c2bb3c23adcff14d5c6c644bb197a3f3b8",
-  "contracts": [
+  "configHash": "0x33e5d164af72d6bafd821642512a84cdc8966b99f84a7f2ff64d89db5035c303",
+  "entries": [
     {
       "name": "Hop Multisig",
       "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -15,6 +16,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1625076853,
+      "sinceBlock": 12736916,
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -37,10 +39,13 @@
     {
       "name": "MATIC Bridge",
       "address": "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
+      "type": "Contract",
       "sourceHashes": [
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1628225875,
+      "sinceBlock": 12969385,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -57,10 +62,13 @@
     {
       "name": "Timelock",
       "address": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
+      "type": "Contract",
       "sourceHashes": [
         "0xd8c1c87ab8dd6a488c6544d121da18bd936a01cde20a7dd2b3d0f771e376fe37"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1625550046,
+      "sinceBlock": 12772100,
       "values": {
         "$immutable": true,
         "admin": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
@@ -74,10 +82,13 @@
     {
       "name": "USDC Bridge",
       "address": "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
+      "type": "Contract",
       "sourceHashes": [
         "0x0280d9153cd7cca43f1ed48d033d6863660ddf85ced54664b3491bf99b2af313"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1623907245,
+      "sinceBlock": 12650032,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -94,10 +105,13 @@
     {
       "name": "DAI Bridge",
       "address": "0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1",
+      "type": "Contract",
       "sourceHashes": [
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1631654328,
+      "sinceBlock": 13226217,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -114,10 +128,13 @@
     {
       "name": "USDT Bridge",
       "address": "0x3E4a3a4796d16c0Cd582C382691998f7c06420B6",
+      "type": "Contract",
       "sourceHashes": [
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1626739308,
+      "sinceBlock": 12860139,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -132,12 +149,20 @@
       "derivedName": "L1_ERC20_Bridge"
     },
     {
+      "address": "0x404c2184a4027b0092C5877BC4599099cd63E62D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SNX Bridge",
       "address": "0x893246FACF345c99e4235E5A7bbEE7404c988b96",
+      "type": "Contract",
       "sourceHashes": [
         "0x2b7aa191c2727e479449690cdb41f98bbcc67a31189e00edcd25ef5e4d272224"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1664398079,
+      "sinceBlock": 15634323,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -154,10 +179,13 @@
     {
       "name": "HOP Bridge",
       "address": "0x914f986a44AcB623A277d6Bd17368171FCbe4273",
+      "type": "Contract",
       "sourceHashes": [
         "0x8a2a80add79397b17c716d503c7aa7cc60889161cdef47d55c8b8b519f5b90d7"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1663897247,
+      "sinceBlock": 15592825,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -173,12 +201,20 @@
       "derivedName": "L1_HOP_Bridge"
     },
     {
+      "address": "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ETH Bridge",
       "address": "0xb8901acB165ed027E32754E0FFe830802919727f",
+      "type": "Contract",
       "sourceHashes": [
         "0xaed8456169cf92120561541e8b5eee9af6a7b97882c06a21febf326148a53bc3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1633066189,
+      "sinceBlock": 13331564,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -194,10 +230,13 @@
     {
       "name": "WBTC Bridge",
       "address": "0xb98454270065A31D71Bf635F6F7Ee6A518dFb849",
+      "type": "Contract",
       "sourceHashes": [
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1635022634,
+      "sinceBlock": 13476113,
       "values": {
         "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
@@ -212,12 +251,20 @@
       "derivedName": "L1_ERC20_Bridge"
     },
     {
+      "address": "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Hop Governor",
       "address": "0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48",
+      "type": "Contract",
       "sourceHashes": [
         "0x6b63f571e92a25b4c3f2638c0d2dfbc59d1208a0253e4e99ee58a21c681621ba"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1654646429,
+      "sinceBlock": 14923681,
       "values": {
         "$immutable": true,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
@@ -238,10 +285,13 @@
     {
       "name": "Timelock Controller",
       "address": "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a",
+      "type": "Contract",
       "sourceHashes": [
         "0xa6a292449d803c10fc738e9af7e5ad07eac4346aee687901ea5a9957b3ff4272"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1654646382,
+      "sinceBlock": 14923676,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -265,14 +315,12 @@
         "getMinDelay": 172800
       },
       "derivedName": "TimelockController"
+    },
+    {
+      "address": "0xF56e305024B195383245A075737d16dBdb8487Fb",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x404c2184a4027b0092C5877BC4599099cd63E62D" },
-    { "address": "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07" },
-    { "address": "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62" },
-    { "address": "0xF56e305024B195383245A075737d16dBdb8487Fb" }
   ],
   "abis": {
     "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d": [

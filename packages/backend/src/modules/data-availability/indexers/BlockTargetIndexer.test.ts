@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import type { Clock } from '../../../tools/Clock'
 import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 
-const LAST_HOUR = UnixTime.now().add(-1, 'hours')
+const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
 
 describe(BlockTargetIndexer.name, () => {
   describe(BlockTargetIndexer.prototype.start.name, () => {
@@ -23,7 +23,7 @@ describe(BlockTargetIndexer.name, () => {
         Logger.SILENT,
         clock,
         blockTimestampProvider,
-        ProjectId('mock'),
+        'mock',
       )
 
       await indexer.start()
@@ -46,7 +46,7 @@ describe(BlockTargetIndexer.name, () => {
         Logger.SILENT,
         clock,
         blockTimestampProvider,
-        ProjectId('mock'),
+        'mock',
       )
 
       const result = await indexer.tick()
@@ -73,7 +73,7 @@ describe(BlockTargetIndexer.name, () => {
         Logger.SILENT,
         clock,
         blockTimestampProvider,
-        ProjectId('mock'),
+        'mock',
       )
 
       await indexer.tick()

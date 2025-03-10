@@ -1,8 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('stargate')
@@ -10,7 +8,7 @@ const discovery = new ProjectDiscovery('stargate')
 export const stargate: Bridge = {
   type: 'bridge',
   id: ProjectId('stargate'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'StarGate (LayerZero)',
     slug: 'stargate',
@@ -85,67 +83,67 @@ export const stargate: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56'),
-        sinceTimestamp: new UnixTime(1647511732),
+        sinceTimestamp: UnixTime(1647511732),
         tokens: ['USDC'],
         description: 'USDC Escrow',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x38EA452219524Bb87e18dE1C24D3bB59510BD783'),
-        sinceTimestamp: new UnixTime(1647511732),
+        sinceTimestamp: UnixTime(1647511732),
         tokens: ['USDT'],
         description: 'USDT Escrow',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x692953e758c3669290cb1677180c64183cEe374e'),
-        sinceTimestamp: new UnixTime(1656354769),
+        sinceTimestamp: UnixTime(1656354769),
         tokens: ['USDD'],
         description: 'USDD Escrow',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d'),
-        sinceTimestamp: new UnixTime(1668459527),
+        sinceTimestamp: UnixTime(1668459527),
         tokens: ['DAI'],
         description: 'DAI Escrow',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xfA0F307783AC21C39E939ACFF795e27b650F6e68'),
-        sinceTimestamp: new UnixTime(1668459527),
+        sinceTimestamp: UnixTime(1668459527),
         tokens: ['FRAX'],
         description: 'FRAX Escrow',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2'),
-        sinceTimestamp: new UnixTime(1668459587),
+        sinceTimestamp: UnixTime(1668459587),
         tokens: ['LUSD'],
         description: 'LUSD Escrow',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xd8772edBF88bBa2667ed011542343b0eDDaCDa47'),
-        sinceTimestamp: new UnixTime(1673830559),
+        sinceTimestamp: UnixTime(1673830559),
         tokens: ['Metis'],
         description: 'METIS Escrow',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d'),
-        sinceTimestamp: new UnixTime(1673830559),
+        sinceTimestamp: UnixTime(1673830559),
         tokens: ['USDT'],
         description: 'USDT Pool 2',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09'),
-        sinceTimestamp: new UnixTime(1677032255),
+        sinceTimestamp: UnixTime(1677032255),
         tokens: ['WOO'],
         description: 'WOO Pool',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA572d137666DCbAdFA47C3fC41F15e90134C618c'),
-        sinceTimestamp: new UnixTime(1677032255),
+        sinceTimestamp: UnixTime(1677032255),
         tokens: ['mETH'],
         description: 'mETH Pool',
       }),
       {
         address: EthereumAddress('0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c'),
-        sinceTimestamp: new UnixTime(1656108257),
+        sinceTimestamp: UnixTime(1656108257),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
@@ -218,16 +216,4 @@ export const stargate: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Security models: isolated vs shared',
-      url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-    {
-      title: 'StarGate Bridge architecture',
-      url: 'https://twitter.com/bkiepuszewski/status/1518568490147450880',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 }

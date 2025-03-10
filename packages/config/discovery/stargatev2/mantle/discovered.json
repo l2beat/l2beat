@@ -1,16 +1,19 @@
 {
   "name": "stargatev2",
   "chain": "mantle",
-  "blockNumber": 65329557,
-  "configHash": "0xd6c0d2133d23057ed4eeebd1cfd9b09d7fee06ea3fbb52375591dc38bb176d2e",
-  "contracts": [
+  "blockNumber": 75699152,
+  "configHash": "0xf7e9f768422951664d960b160842cc17aab592805f9da69fb822466e731294e1",
+  "entries": [
     {
       "name": "TokenMessaging",
       "address": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837058,
+      "sinceBlock": 64353373,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -53,15 +56,16 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      },
-      "derivedName": "TokenMessaging"
+      }
     },
     {
       "name": "StargatePool",
       "address": "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -70,6 +74,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837014,
+      "sinceBlock": 64353351,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -88,22 +93,24 @@
         "lpToken": "0xc2c3Cc203FB607f2f93e6A15f45556bc83620644",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "30259308523113258",
-        "poolBalance": "1710010979000000000000",
+        "plannerFee": "107636709583178428",
+        "poolBalance": "1741961882000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-        "treasuryFee": 805342,
-        "tvl": "1245578571000000000000"
+        "treasuryFee": 10623043,
+        "tvl": "41153541000000000000"
       }
     },
     {
       "name": "StargatePoolUSDC",
       "address": "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC",
+      "type": "Contract",
       "sourceHashes": [
         "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -112,6 +119,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837036,
+      "sinceBlock": 64353362,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -132,22 +140,24 @@
         "lpToken": "0x5D131cb99cE5642f3d539417A187a93EEae48177",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "346862827018495804",
-        "poolBalance": 12621142228200,
+        "plannerFee": "47247432332797757",
+        "poolBalance": 3230453143825,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-        "treasuryFee": 2585389512,
-        "tvl": 9572670439765
+        "treasuryFee": 21715931672,
+        "tvl": 2042394545218
       }
     },
     {
       "name": "StargatePoolMigratable",
       "address": "0xB715B85682B731dB9D5063187C450095c91C57FC",
+      "type": "Contract",
       "sourceHashes": [
         "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -156,6 +166,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837046,
+      "sinceBlock": 64353367,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -176,22 +187,29 @@
         "lpToken": "0xe1152564ED7B59e01915FC95bBF87cF9b6636fe6",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "56087345876298471",
-        "poolBalance": 10967515157977,
+        "plannerFee": "238784433214785534",
+        "poolBalance": 2955628901535,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-        "treasuryFee": 1470829790,
-        "tvl": 9547683654710
+        "treasuryFee": 17832928452,
+        "tvl": 3009085305912
       }
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "StargatePool",
       "address": "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -200,6 +218,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837026,
+      "sinceBlock": 64353357,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -219,19 +238,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": 0,
-        "poolBalance": "3070973294000000000000",
+        "poolBalance": "5475218257000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
-        "treasuryFee": 45374,
-        "tvl": "3001565521000000000000"
+        "treasuryFee": 8059038,
+        "tvl": "110589208000000000000"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": [

@@ -3,16 +3,16 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('mode')
 
-export const mode: Layer2 = opStackL2({
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+export const mode: ScalingProject = opStackL2({
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Mode Network',
@@ -34,8 +34,7 @@ export const mode: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['MODE'],
-  rpcUrl: 'https://mainnet.mode.network/',
-  genesisTimestamp: new UnixTime(1700125343),
+  genesisTimestamp: UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,
   milestones: [
@@ -72,8 +71,8 @@ export const mode: Layer2 = opStackL2({
   finality: {
     type: 'OPStack',
     l2BlockTimeSeconds: 2,
-    minTimestamp: new UnixTime(1710386375),
-    genesisTimestamp: new UnixTime(1700167583),
+    minTimestamp: UnixTime(1710386375),
+    genesisTimestamp: UnixTime(1700167583),
     lag: 0,
     stateUpdate: 'analyze',
   },
@@ -81,14 +80,10 @@ export const mode: Layer2 = opStackL2({
     name: 'mode',
     chainId: 34443,
     explorerUrl: 'https://explorer.mode.network',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
-      type: 'etherscan',
-    },
     // ~ Timestamp of block number 0 on Mode
     // The first full hour timestamp that will return the block number
     // https://explorer.mode.network/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-16T22:46:23Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-11-16T22:46:23Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -98,6 +93,17 @@ export const mode: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'mode',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.mode.network/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
+      },
+    ],
   },
   nonTemplateExcludedTokens: ['rsETH'],
 })

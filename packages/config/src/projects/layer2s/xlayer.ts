@@ -7,13 +7,13 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('xlayer')
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -29,10 +29,10 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const xlayer: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
+export const xlayer: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.Infra.AggLayer],
+  additionalBadges: [BADGES.DA.DAC, BADGES.Infra.AggLayer],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -67,13 +67,20 @@ export const xlayer: Layer2 = polygonCDKStack({
     name: 'xlayer',
     chainId: 196,
     explorerUrl: 'https://rpc.xlayer.tech',
-    minTimestampForTvl: new UnixTime(1711782180),
+    sinceTimestamp: UnixTime(1711782180),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         batchSize: 150,
         sinceBlock: 47416,
         version: '3',
+      },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.xlayer.tech',
+        callsPerMinute: 1500,
       },
     ],
   },
@@ -97,7 +104,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
-      sinceTimestamp: new UnixTime(1712620800),
+      sinceTimestamp: UnixTime(1712620800),
       sharedEscrow: {
         type: 'AggLayer',
         nativeAsset: 'etherWrapped',
@@ -117,10 +124,8 @@ export const xlayer: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier_13'),
-  rpcUrl: 'https://rpc.xlayer.tech',
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
     newCryptography: {

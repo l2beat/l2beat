@@ -13,7 +13,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -27,9 +26,9 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('reddioex')
 
@@ -54,17 +53,17 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const reddioex: Layer2 = {
+export const reddioex: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.DAC,
-    Badge.Stack.StarkEx,
-    Badge.Infra.SHARP,
+    BADGES.VM.AppChain,
+    BADGES.DA.DAC,
+    BADGES.Stack.StarkEx,
+    BADGES.Infra.SHARP,
   ],
   display: {
     name: 'RedSonic',
@@ -111,7 +110,7 @@ export const reddioex: Layer2 = {
     transactionApi: {
       type: 'starkex',
       product: ['reddio'],
-      sinceTimestamp: new UnixTime(1615389188),
+      sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
     },
     */
@@ -150,7 +149,7 @@ export const reddioex: Layer2 = {
       [discovery.chain]: [
         discovery.getContractDetails('StarkExchange'),
         discovery.getContractDetails(
-          'Committee',
+          'DACommittee',
           'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
         ),
         ...getSHARPVerifierContracts(discovery, verifierAddress),
@@ -190,5 +189,4 @@ export const reddioex: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

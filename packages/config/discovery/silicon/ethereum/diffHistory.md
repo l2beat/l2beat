@@ -1,4 +1,125 @@
-Generated with discovered.json: 0xdc07114b391580f8a86afe5c0415b090a70eeb34
+Generated with discovered.json: 0x6874609fab6decf339f41ba3a521fed1bbab7d6c
+
+# Diff at Tue, 04 Mar 2025 10:39:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21766766
+- current block number: 21766766
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766766 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      sinceBlock:
++        19505052
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      sinceBlock:
++        20578326
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) {
+    +++ description: None
+      sinceBlock:
++        20578325
+    }
+```
+
+```diff
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      sinceBlock:
++        20572039
+    }
+```
+
+Generated with discovered.json: 0xea4d92847d2f00d6c0c6998eb72d734abeb5c465
+
+# Diff at Thu, 27 Feb 2025 11:46:39 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21766766
+- current block number: 21766766
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766766 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "FflonkVerifier"
++        "Verifier"
+      displayName:
+-        "Verifier"
+    }
+```
+
+Generated with discovered.json: 0x5c33254f40d986a8d5629bc381a8c90af4839978
+
+# Diff at Wed, 26 Feb 2025 10:33:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21766766
+- current block number: 21766766
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766766 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x11a50e9af306320f73f9c72d27a78d56847353d6
 
 # Diff at Tue, 04 Feb 2025 12:32:36 GMT:
 

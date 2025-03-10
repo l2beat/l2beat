@@ -20,8 +20,8 @@ import {
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 
@@ -39,19 +39,18 @@ const forcedWithdrawalFee = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: ['LoopringMultisig'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LoopringMultisig', delay: 'no' }],
 }
 
 const upgradeDelay = 0
 const finalizationPeriod = 0
 
-export const loopring: Layer2 = {
+export const loopring: ScalingProject = {
   type: 'layer2',
   id: ProjectId('loopring'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'Loopring',
     slug: 'loopring',
@@ -88,13 +87,24 @@ export const loopring: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'loopring',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'loopring',
+        url: 'https://api3.loopring.io/api/v3',
+        callsPerMinute: 240,
+      },
+    ],
+  },
   config: {
     associatedTokens: ['LRC'],
     escrows: [
       // WeDEX: Beta 1
       {
         address: EthereumAddress('0x7D3D221A8D8AbDd868E8e88811fFaF033e68E108'),
-        sinceTimestamp: new UnixTime(1575539271),
+        sinceTimestamp: UnixTime(1575539271),
         tokens: ['LRC', 'USDT'],
         isHistorical: true,
         chain: 'ethereum',
@@ -102,23 +112,44 @@ export const loopring: Layer2 = {
       // WeDEX: Beta 2
       {
         address: EthereumAddress('0xD97D09f3bd931a14382ac60f156C1285a56Bb51B'),
-        sinceTimestamp: new UnixTime(1578284114),
+        sinceTimestamp: UnixTime(1578284114),
         tokens: ['LRC', 'USDT'],
         isHistorical: true,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x674bdf20A0F284D710BC40872100128e2d66Bd3f'),
-        sinceTimestamp: new UnixTime(1603949642),
+        sinceTimestamp: UnixTime(1603949642),
         tokens: '*',
         chain: 'ethereum',
       },
     ],
-    transactionApi: {
-      type: 'loopring',
-      defaultUrl: 'https://api3.loopring.io/api/v3',
-      defaultCallsPerMinute: 240,
+    activityConfig: {
+      type: 'block',
     },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
+        sequencers: [
+          '0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46',
+          '0x4774d954D20DB98492B0487BC9F91dc401dBA3aE',
+          '0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234',
+          '0x212e75BF264C4FB3133fA5ef6f47A34367020A1A',
+          '0x238b649E62a0C383b54060b1625516b489183843',
+          '0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2',
+          '0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42',
+          '0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc',
+          '0xeadb3d065f8d15cc05e92594523516aD36d1c834',
+          '0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB',
+          '0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5',
+          '0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095',
+          '0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341',
+        ],
+      },
+    ],
     trackedTxs: [
       {
         uses: [
@@ -139,7 +170,7 @@ export const loopring: Layer2 = {
           selector: '0xdcb2aa31',
           functionSignature:
             'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
-          sinceTimestamp: new UnixTime(1616396742),
+          sinceTimestamp: UnixTime(1616396742),
         },
       },
     ],
@@ -152,7 +183,7 @@ export const loopring: Layer2 = {
     finality: {
       lag: 0,
       type: 'Loopring',
-      minTimestamp: new UnixTime(1616396742),
+      minTimestamp: UnixTime(1616396742),
       stateUpdate: 'disabled',
     },
   },

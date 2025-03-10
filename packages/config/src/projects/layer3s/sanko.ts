@@ -1,23 +1,18 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
-export const sanko: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
+export const sanko: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
-  additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Caldera,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -46,11 +41,9 @@ export const sanko: Layer3 = orbitStackL3({
   chainConfig: {
     name: 'sanko',
     chainId: 1996,
-    explorerUrl: 'https://explorer.sanko.xyz/',
-    explorerApi: {
-      url: 'https://explorer.sanko.xyz/api',
-      type: 'blockscout',
-    },
+    explorerUrl: 'https://explorer.sanko.xyz',
+    sinceTimestamp: UnixTime(1712970000),
+    coingeckoPlatform: 'sanko',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -59,16 +52,16 @@ export const sanko: Layer3 = orbitStackL3({
         version: '3',
       },
     ],
-    minTimestampForTvl: new UnixTime(1712970000),
-    coingeckoPlatform: 'sanko',
+    apis: [
+      { type: 'blockscout', url: 'https://explorer.sanko.xyz/api' },
+      { type: 'rpc', url: 'https://mainnet.sanko.xyz', callsPerMinute: 1500 },
+    ],
+    gasTokens: ['DMT'],
   },
-  gasTokens: ['DMT'],
   associatedTokens: ['DMT'],
-  rpcUrl: 'https://mainnet.sanko.xyz',
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,

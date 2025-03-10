@@ -13,8 +13,8 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('metis')
 
@@ -25,12 +25,12 @@ const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
   'FRAUD_PROOF_WINDOW',
 )
 
-export const metis: Layer2 = {
+export const metis: ScalingProject = {
   type: 'layer2',
   id: ProjectId('metis'),
   capability: 'universal',
-  addedAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
-  badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.Fork.OVM],
+  addedAt: UnixTime(1637945259), // 2021-11-26T16:47:39Z
+  badges: [BADGES.VM.EVM, BADGES.DA.CustomDA, BADGES.Fork.OVM],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -69,12 +69,9 @@ export const metis: Layer2 = {
   chainConfig: {
     name: 'metis',
     chainId: 1088,
+    gasTokens: ['METIS'],
     explorerUrl: 'https://explorer.metis.io',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -86,22 +83,31 @@ export const metis: Layer2 = {
       },
     ],
     coingeckoPlatform: 'metis',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://andromeda.metis.io/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+      },
+    ],
   },
   config: {
     associatedTokens: ['Metis'],
     escrows: [
       {
         address: EthereumAddress('0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b'),
-        sinceTimestamp: new UnixTime(1637077208),
+        sinceTimestamp: UnixTime(1637077208),
         tokens: '*',
         chain: 'ethereum',
         premintedTokens: ['Metis'],
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://andromeda.metis.io/',
-      defaultCallsPerMinute: 1500,
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
     },
   },

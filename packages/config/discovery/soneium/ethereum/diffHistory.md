@@ -1,3 +1,638 @@
+Generated with discovered.json: 0x714ba7d70cd991789372144dbac0de1752ec5795
+
+# Diff at Fri, 07 Mar 2025 13:56:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21967100
+- current block number: 21995440
+
+## Description
+
+Single member added to SoneiumMultisig.
+
+## Watched changes
+
+```diff
+    contract SoneiumMultisig (0x509182eC226b3B71D36A3255A80EF0b1A9D43033) {
+    +++ description: None
+      values.$members.5:
++        "0xba1a565d2bF6D27F451a459308f423219478c5cB"
+      values.$members.4:
+-        "0xba1a565d2bF6D27F451a459308f423219478c5cB"
++        "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a"
+      values.$members.3:
+-        "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a"
++        "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452"
+      values.$members.2:
+-        "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452"
++        "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B"
+      values.$members.1:
+-        "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B"
++        "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E"
+      values.$members.0:
+-        "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E"
++        "0xd45F9F3990C48AfA5C90404c7a748b4c23FB2cba"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xaaf55dc8427ef3c11d29a220970a49d59a91f0b0
+
+# Diff at Tue, 04 Mar 2025 11:26:31 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@be38e12d3ff947ca8de40f3a23a9ba1875a54f5a block: 21965340
+- current block number: 21967100
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21965340 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
+-        false
+      values.opStackDA.isUsingCelestia:
++        false
+    }
+```
+
+Generated with discovered.json: 0x1813d25ce6bd3d08381f05bf6ed6a2817f9d9983
+
+# Diff at Tue, 04 Mar 2025 10:39:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21965340
+- current block number: 21965340
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21965340 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      sinceBlock:
++        19989094
+    }
+```
+
+```diff
+    contract SuperchainGuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      sinceBlock:
++        19968607
+    }
+```
+
+```diff
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sinceBlock:
++        20637601
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      sinceBlock:
++        19989094
+    }
+```
+
+```diff
+    contract L1ERC20TokenBridge (0x2F543A7C9cc80Cc2427c892B96263098d23ee55a) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      sinceBlock:
++        21664885
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0x42D15f045159Ce4adE9EDC7da5704eF36056c936) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      sinceBlock:
++        16780617
+    }
+```
+
+```diff
+    contract SoneiumMultisig (0x509182eC226b3B71D36A3255A80EF0b1A9D43033) {
+    +++ description: None
+      sinceBlock:
++        21278117
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      sinceBlock:
++        17365800
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5933e323bE8896DfaCd1cD671442F27dAA10a053) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      sinceBlock:
++        19185554
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0x61f89A381E0BE13BD8Ab356cf4B7301BC97d7522) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sinceBlock:
++        19185544
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x88e529A6ccd302c948689Cd5156C83D4614FAE92) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a) {
+    +++ description: None
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        19064589
+    }
+```
+
+```diff
+    contract DelayedWETH (0x9AEA1FD851b63d57Ba4Fc556B0e0c170126C9EAf) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sinceBlock:
++        11670007
+    }
+```
+
+```diff
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sinceBlock:
++        20637600
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract AddressManager (0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc1047e30EFC9E172cFe7aa0219895B6a43fC415F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sinceBlock:
++        21314185
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      sinceBlock:
++        19185517
+    }
+```
+
+```diff
+    contract L1OpUSDCBridgeAdapter (0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb) {
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+      sinceBlock:
++        21471915
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      sinceBlock:
++        20566057
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        12686687
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xeb9bf100225c214Efc3E7C651ebbaDcF85177607) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        21314185
+    }
+```
+
+Generated with discovered.json: 0x5dd07ab3ee227d71fd3a75f85d228f28f9facfb4
+
+# Diff at Mon, 03 Mar 2025 09:03:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f23dcb100957b0b121d62148a4d586788383af80 block: 21931801
+- current block number: 21965340
+
+## Description
+
+SystemConfig upgrade to known version:
+- libraries added (Constants, LibString, GasPayingToken)
+- minor changes
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
++        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+      values.$implementation:
+-        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
++        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.3:
++        ["2025-02-28T14:55:35.000Z","0x9c6af2cb2b4fcde9e351662342f15b60f004108b575dddd05d0caa4f50220966",["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.2:
++        ["2025-02-28T14:55:35.000Z","0x9c6af2cb2b4fcde9e351662342f15b60f004108b575dddd05d0caa4f50220966",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        2
++        4
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      values.basefeeScalar:
++        9736
+      values.blobbasefeeScalar:
++        1540079
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 1458 +++++++++++++++++++-
+ 1 file changed, 1436 insertions(+), 22 deletions(-)
+```
+
+Generated with discovered.json: 0x9ca12edc2675c06e9f0afbc12a0279d05150a132
+
+# Diff at Thu, 27 Feb 2025 12:01:47 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21931801
+- current block number: 21931801
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21931801 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20TokenBridge (0x2F543A7C9cc80Cc2427c892B96263098d23ee55a) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      name:
+-        "L1LidoTokensBridge"
++        "L1ERC20TokenBridge"
+      displayName:
+-        "L1ERC20TokenBridge"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x88e529A6ccd302c948689Cd5156C83D4614FAE92) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      displayName:
+-        "OptimismPortal"
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      name:
+-        "Lib_AddressManager"
++        "AddressManager"
+      displayName:
+-        "AddressManager"
+    }
+```
+
+Generated with discovered.json: 0x093f3dab64b8cbc670476958de7629ddb9915c16
+
+# Diff at Wed, 26 Feb 2025 16:48:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9eb8b2d626938c85a098b11b809352a92a892736 block: 21872714
+- current block number: 21931801
+
+## Description
+
+gasLimit raised a bit (60M->30M in last update).
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        40000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872714 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5933e323bE8896DfaCd1cD671442F27dAA10a053) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x88e529A6ccd302c948689Cd5156C83D4614FAE92) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xeb9bf100225c214Efc3E7C651ebbaDcF85177607) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+Generated with discovered.json: 0xf7727238a444a72d5c5913965abbf5e4f44f8876
+
+# Diff at Fri, 21 Feb 2025 09:00:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21872714
+- current block number: 21872714
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872714 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xeb9bf100225c214Efc3E7C651ebbaDcF85177607) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+Generated with discovered.json: 0x1b7ca641ef17503af5c39100ef0b004c8bf955fa
+
+# Diff at Tue, 18 Feb 2025 10:39:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21829673
+- current block number: 21872714
+
+## Description
+
+Soneium gas limit halved (checked on l2 block explorer since some op stacks have weird custom gas config).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        60000000
++        30000000
+    }
+```
+
+Generated with discovered.json: 0xb822487d0854a6da7090c4fd28a46b32d8a59a58
+
+# Diff at Wed, 12 Feb 2025 10:00:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21802838
+- current block number: 21829673
+
+## Description
+
+Optimism SecurityCouncil rotates signers.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.7:
+-        "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310"
++        "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90"
+      values.$members.5:
+-        "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e"
++        "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c"
+    }
+```
+
+Generated with discovered.json: 0x5259e58500198151edb98f0e1469b6760c1fd3c4
+
+# Diff at Mon, 10 Feb 2025 19:04:47 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21802838
+- current block number: 21802838
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802838 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x2e5ded78d17c47d32410211fa35102d2f8db52ae
 
 # Diff at Sat, 08 Feb 2025 15:58:23 GMT:

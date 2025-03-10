@@ -1,6 +1,6 @@
 import path from 'path'
 import { ConfigReader } from '@l2beat/discovery'
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { EntryParameters } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 
 const chainMapping: Record<string, string> = {
@@ -68,12 +68,10 @@ export async function analyseAllOrbitChains(
   discoveryPath: string,
 ): Promise<void> {
   const configReader = new ConfigReader(path.dirname(discoveryPath))
-  const rollups: ContractParameters[] = []
+  const rollups: EntryParameters[] = []
   for (const [chain, mapping] of Object.entries(chainMapping)) {
     const discovery = configReader.readDiscovery(chain, mapping)
-    const contract = discovery.contracts.find(
-      (obj) => obj.name === 'RollupProxy',
-    )
+    const contract = discovery.entries.find((obj) => obj.name === 'RollupProxy')
     assert(contract, 'RollupProxy contract not found')
     rollups.push(contract)
   }
@@ -160,11 +158,11 @@ export async function compareTwoOrbitChain(
   const discovery1 = getSafeDiscovery(configReader, firstProject)
   const discovery2 = getSafeDiscovery(configReader, secondProject)
 
-  const rollupProxy1 = discovery1.contracts.find(
+  const rollupProxy1 = discovery1.entries.find(
     (obj) => obj.name === 'RollupProxy',
   )
 
-  const rollupProxy2 = discovery2.contracts.find(
+  const rollupProxy2 = discovery2.entries.find(
     (obj) => obj.name === 'RollupProxy',
   )
 

@@ -1,13 +1,18 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
 
-export const rufus: Layer2 = underReviewL2({
+export const rufus: ScalingProject = underReviewL2({
   id: 'rufus',
   capability: 'universal',
-  addedAt: new UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
-  badges: [Badge.RaaS.Caldera, Badge.DA.DAC, Badge.Stack.Orbit, Badge.VM.EVM],
+  addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
+  badges: [
+    BADGES.RaaS.Caldera,
+    BADGES.DA.DAC,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
+  ],
   display: {
     name: 'Rufus',
     slug: 'rufus',
@@ -30,23 +35,32 @@ export const rufus: Layer2 = underReviewL2({
     },
   },
   associatedTokens: ['ELON'],
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rufus.calderachain.xyz/http',
-    defaultCallsPerMinute: 1500,
-    adjustCount: { type: 'SubtractOne' },
+  chainConfig: {
+    name: 'rufus',
+    chainId: 2420,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rufus.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {
       address: EthereumAddress('0x0E1a60c49b3aAABa3313918f63F6CC6c55746B17'), // bridge
-      sinceTimestamp: new UnixTime(1733961947),
+      sinceTimestamp: UnixTime(1733961947),
       tokens: ['ELON'],
       chain: 'ethereum',
     },
     {
       address: EthereumAddress('0x7F6300B8d3be27aAe2c7b5f9B5dB95152279D926'), // standardGW
-      sinceTimestamp: new UnixTime(1733961983),
+      sinceTimestamp: UnixTime(1733961983),
       tokens: '*',
       chain: 'ethereum',
     },

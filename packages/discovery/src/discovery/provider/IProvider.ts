@@ -1,4 +1,8 @@
-import type { BlobClient, BlobsInBlock } from '@l2beat/shared'
+import type {
+  BlobClient,
+  BlobsInBlock,
+  CelestiaApiClient,
+} from '@l2beat/shared'
 import type {
   Bytes,
   EthereumAddress,
@@ -21,6 +25,7 @@ export interface RawProviders {
   baseProvider: providers.JsonRpcProvider
   eventProvider: providers.JsonRpcProvider
   etherscanClient: IEtherscanClient
+  celestiaApiClient?: CelestiaApiClient
   blobClient?: BlobClient
 }
 
@@ -87,4 +92,11 @@ export interface IProvider {
   ): Promise<ContractDeployment | undefined>
 
   getBlobs(txHash: string): Promise<BlobsInBlock>
+
+  celestiaBlobExists(
+    height: number,
+    namespace: string,
+    commitment: string,
+  ): Promise<boolean>
+  getCelestiaBlockResultLogs(height: number): Promise<string[]>
 }

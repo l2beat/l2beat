@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "cronoszkevm",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"],
   "names": {
     "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm",
@@ -10,9 +11,7 @@
     "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": "TxFiltererOwnerMultisig",
     "0xA8998F231a660Eca365B382943c71ad9b7619139": "TransactionFiltererDenyList"
   },
-  "sharedModules": {
-    "BridgeHub": "shared-zk-stack"
-  },
+  "sharedModules": ["shared-zk-stack"],
   "overrides": {
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       // local override over the template to fetch the validators from the shared contract

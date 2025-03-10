@@ -1,5 +1,5 @@
 import type { QueryParamTypes } from '@google-cloud/bigquery/build/src/bigquery'
-import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import type { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
 
@@ -17,14 +17,14 @@ export function getFunctionCallQuery(
     .map((c) => c.address.toLowerCase())
   const params = [
     fullInputAddresses,
-    from.toDate().toISOString(),
-    to.toDate().toISOString(),
+    UnixTime.toDate(from).toISOString(),
+    UnixTime.toDate(to).toISOString(),
     ...configs.flatMap((c) => [
       c.address.toLowerCase(),
       c.selector.toLowerCase() + '%',
     ]),
-    from.toDate().toISOString(),
-    to.toDate().toISOString(),
+    UnixTime.toDate(from).toISOString(),
+    UnixTime.toDate(to).toISOString(),
   ]
 
   const query = `

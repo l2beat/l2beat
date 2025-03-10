@@ -1,5 +1,5 @@
-import type { ContractValue } from '@l2beat/discovery-types'
 import { BigNumber } from 'ethers'
+import type { ContractValue } from '../../output/types'
 
 export function toContractValue(value: unknown): ContractValue {
   if (Array.isArray(value)) {

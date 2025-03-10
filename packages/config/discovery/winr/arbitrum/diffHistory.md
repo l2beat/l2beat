@@ -1,3 +1,434 @@
+Generated with discovered.json: 0x29741e2e0c248234bd7e32ff2bcb92e25ed8904a
+
+# Diff at Thu, 06 Mar 2025 14:25:18 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@454ef41fea41bcea030780b23fd1f11519ff78d2 block: 305988230
+- current block number: 305988230
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305988230 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
+Generated with discovered.json: 0x2fa921f9b0d6a355fc589c5e1eb0f870f9d8d056
+
+# Diff at Thu, 06 Mar 2025 09:39:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 305988230
+- current block number: 305988230
+
+## Description
+
+Config related: set severity for arbitrum inbox/outbox changes to high and add historical In- and Outboxes via events.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305988230 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory:
++        ["0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42","0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"]
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory:
++        ["0xBA99217992620b76aae0D574c70bD313B30D3D1d"]
+      fieldMeta:
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
+    }
+```
+
+Generated with discovered.json: 0x8a2d8cf24bd994603ab787d1ae4872d4a2f07fae
+
+# Diff at Tue, 04 Mar 2025 10:40:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 305988230
+- current block number: 305988230
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305988230 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x0E40E41E6095A4f0607144a52d31C2F11a3FF1a1) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract RollupProxy (0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x33c1514Bf90e202d242C299b37C60f908aa206D4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        244802957
+    }
+```
+
+```diff
+    contract Inbox (0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x54E0923782b701044444De5d8c3A45aC890b0881) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        244802857
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x6c21303F5986180B1394d2C89f3e883890E2867b) {
+    +++ description: This contract implements view only utilities for validators.
+      sinceBlock:
++        150599283
+    }
+```
+
+```diff
+    contract ConduitMultisig2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      sinceBlock:
++        155965667
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x802c7B6585d20cb69524EF23fCbF919F671F808a) {
+    +++ description: None
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract SequencerInbox (0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract WinrFastconfirmerMultisig (0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4) {
+    +++ description: None
+      sinceBlock:
++        305331967
+    }
+```
+
+```diff
+    contract Outbox (0xBA99217992620b76aae0D574c70bD313B30D3D1d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0xD89d54007079071cBA859127318b9F34eeB78049) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        244802990
+    }
+```
+
+```diff
+    contract OneStepProverMath (0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        244802923
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract Bridge (0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sinceBlock:
++        211603139
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sinceBlock:
++        244802890
+    }
+```
+
+Generated with discovered.json: 0x0310de51db7e12047796e75aeaa276a7a4fc2df7
+
+# Diff at Thu, 27 Feb 2025 11:47:38 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 305988230
+- current block number: 305988230
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305988230 (main branch discovery), not current.
+
+```diff
+    contract Inbox (0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      name:
+-        "ERC20Inbox"
++        "Inbox"
+      displayName:
+-        "Inbox"
+    }
+```
+
+```diff
+    contract Outbox (0xBA99217992620b76aae0D574c70bD313B30D3D1d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      name:
+-        "ERC20Outbox"
++        "Outbox"
+      displayName:
+-        "Outbox"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      name:
+-        "ERC20RollupEventInbox"
++        "RollupEventInbox"
+      displayName:
+-        "RollupEventInbox"
+    }
+```
+
+```diff
+    contract Bridge (0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      name:
+-        "ERC20Bridge"
++        "Bridge"
+      displayName:
+-        "Bridge"
+    }
+```
+
+Generated with discovered.json: 0x9a090604fb314b0accec1491c16f0b16a3b1ab2c
+
+# Diff at Fri, 21 Feb 2025 14:12:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 305988230
+- current block number: 305988230
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305988230 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x0E40E41E6095A4f0607144a52d31C2F11a3FF1a1) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RollupProxy (0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ERC20Inbox (0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract SequencerInbox (0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ERC20Outbox (0xBA99217992620b76aae0D574c70bD313B30D3D1d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract ERC20Bridge (0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x39f8a3a7cb98d17221e8745782206be915c2219f
+
+# Diff at Fri, 14 Feb 2025 13:33:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 298397636
+- current block number: 305988230
+
+## Description
+
+Fastconfirmer added, minimum assertion set to 1 block.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
++        {"permission":"validate","to":"0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4"}]}
+      issuedPermissions.3:
++        {"permission":"validate","to":"0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.2.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.2.to:
+-        "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e"
++        "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
+      issuedPermissions.2.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      issuedPermissions.2.via.0:
++        {"address":"0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA"}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.permission:
+-        "interact"
++        "fastconfirm"
+      issuedPermissions.0.to:
+-        "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
++        "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e"
+      issuedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.0.via.0.address:
+-        "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA"
++        "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4"
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4"
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        75
++        1
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        2
+      values.validators.1:
++        "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e"
+      values.validators.0:
+-        "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e"
++        "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WinrFastconfirmerMultisig (0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../WinrFastconfirmerMultisig/GnosisSafeL2.sol     | 1032 ++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
 Generated with discovered.json: 0x32529d0dfbff1c372c0dafeee03154a1ac447424
 
 # Diff at Tue, 04 Feb 2025 12:33:58 GMT:

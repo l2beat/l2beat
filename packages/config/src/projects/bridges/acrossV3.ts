@@ -5,10 +5,8 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const PROJECT_ID = ProjectId('across-v3')
@@ -26,7 +24,7 @@ const bondSymbol = discovery.getContractValue<string>('BondToken', 'symbol')
 export const acrossV3: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
-  addedAt: new UnixTime(1712746402), // 2024-04-10T10:53:22Z
+  addedAt: UnixTime(1712746402), // 2024-04-10T10:53:22Z
   display: {
     name: 'Across V3',
     slug: 'acrossv3',
@@ -52,19 +50,19 @@ export const acrossV3: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda'),
-        sinceTimestamp: new UnixTime(1653124620),
+        sinceTimestamp: UnixTime(1653124620),
         tokens: '*',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5'),
-        sinceTimestamp: new UnixTime(1682355155),
+        sinceTimestamp: UnixTime(1682355155),
         tokens: '*',
       }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
         address: EthereumAddress('0x4D9079Bb4165aeb4084c526a32695dCfd2F77381'),
-        sinceTimestamp: new UnixTime(1653167083),
+        sinceTimestamp: UnixTime(1653167083),
         tokens: '*',
         isHistorical: true,
         chain: 'ethereum',
@@ -72,70 +70,70 @@ export const acrossV3: Bridge = {
       // multichain bridges from https://docs.across.to/reference/contract-addresses/
       {
         address: EthereumAddress('0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A'),
-        sinceTimestamp: new UnixTime(1682355537),
+        sinceTimestamp: UnixTime(1682355537),
         tokens: '*',
         chain: 'arbitrum',
       },
       {
         address: EthereumAddress('0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64'),
-        sinceTimestamp: new UnixTime(1691119103),
+        sinceTimestamp: UnixTime(1691119103),
         tokens: '*',
         chain: 'base',
       },
       {
         address: EthereumAddress('0x2D509190Ed0172ba588407D4c2df918F955Cc6E1'),
-        sinceTimestamp: new UnixTime(1719958375),
+        sinceTimestamp: UnixTime(1719958375),
         tokens: '*',
         chain: 'blast',
       },
       {
         address: EthereumAddress('0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75'),
-        sinceTimestamp: new UnixTime(1709742598),
+        sinceTimestamp: UnixTime(1709742598),
         tokens: '*',
         chain: 'linea',
       },
       // lisk is not conf'd yet
       // {
       //   address: EthereumAddress('0x9552a0a6624A23B848060AE5901659CDDa1f83f8'),
-      //   sinceTimestamp: new UnixTime(1719933465),
+      //   sinceTimestamp: UnixTime(1719933465),
       //   tokens: '*',
       //   chain: 'lisk',
       // },
       {
         address: EthereumAddress('0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96'),
-        sinceTimestamp: new UnixTime(1716253957),
+        sinceTimestamp: UnixTime(1716253957),
         tokens: '*',
         chain: 'mode',
       },
       {
         address: EthereumAddress('0x6f26Bf09B1C792e3228e5467807a900A503c0281'),
-        sinceTimestamp: new UnixTime(1682354696),
+        sinceTimestamp: UnixTime(1682354696),
         tokens: '*',
         chain: 'optimism',
       },
       // no chainconf yet
       // {
       //   address: EthereumAddress('0x13fDac9F9b4777705db45291bbFF3c972c6d1d97'),
-      //   sinceTimestamp: new UnixTime(1723209335),
+      //   sinceTimestamp: UnixTime(1723209335),
       //   tokens: '*',
       //   chain: 'redstone',
       // },
       {
         address: EthereumAddress('0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96'),
-        sinceTimestamp: new UnixTime(1721124038),
+        sinceTimestamp: UnixTime(1721124038),
         tokens: '*',
         chain: 'scroll',
       },
       {
         address: EthereumAddress('0xE0B015E54d54fc84a6cB9B666099c46adE9335FF'),
-        sinceTimestamp: new UnixTime(1691141266),
+        sinceTimestamp: UnixTime(1691141266),
         tokens: '*',
         chain: 'zksync2',
       },
       // no chainconf yet
       // {
       //   address: EthereumAddress('0x13fDac9F9b4777705db45291bbFF3c972c6d1d97'),
-      //   sinceTimestamp: new UnixTime(1723459573),
+      //   sinceTimestamp: UnixTime(1723459573),
       //   tokens: '*',
       //   chain: 'zora',
       // },
@@ -298,11 +296,4 @@ export const acrossV3: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Across deep dive',
-      url: 'https://li.fi/knowledge-hub/across-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

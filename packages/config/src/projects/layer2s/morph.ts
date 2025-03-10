@@ -20,8 +20,8 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
@@ -50,12 +50,12 @@ const proofWindow = discovery.getContractValue<number>(
   'proofWindow',
 )
 
-export const morph: Layer2 = {
+export const morph: ScalingProject = {
   type: 'layer2',
   id: ProjectId('morph'),
   capability: 'universal',
-  addedAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  addedAt: UnixTime(1702295992), // 2023-12-11T11:59:52Z
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Morph',
@@ -102,45 +102,60 @@ export const morph: Layer2 = {
     },
   }),
   config: {
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.morphl2.io',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
-      defaultCallsPerMinute: 300,
     },
     escrows: [
       {
         address: EthereumAddress('0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304'),
-        sinceTimestamp: new UnixTime(1729307111),
+        sinceTimestamp: UnixTime(1729307111),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8'),
-        sinceTimestamp: new UnixTime(1729307651),
+        sinceTimestamp: UnixTime(1729307651),
         tokens: '*',
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1'),
-        sinceTimestamp: new UnixTime(1729307783),
+        sinceTimestamp: UnixTime(1729307783),
         tokens: '*',
         ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535'),
-        sinceTimestamp: new UnixTime(1729308239),
+        sinceTimestamp: UnixTime(1729308239),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
-        sinceTimestamp: new UnixTime(1729308239),
+        sinceTimestamp: UnixTime(1729308239),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
+      },
+    ],
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0x759894Ced0e6af42c26668076Ffa84d02E3CeF60',
+        sequencers: [
+          '0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796',
+          '0x61F2945d4bc9E40B66a6376d1094a50438f613e2',
+          '0x6aB0E960911b50f6d14f249782ac12EC3E7584A0',
+          '0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65',
+          '0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7',
+          '0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80',
+          '0xC412B4e6399F694CfF21D038d225373Fd6596811',
+        ],
       },
     ],
   },
@@ -162,6 +177,29 @@ export const morph: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
+  chainConfig: {
+    name: 'morph',
+    chainId: 2818,
+    // explorerUrl: 'https://explorer.morphl2.io/', // needed?
+    coingeckoPlatform: 'morph-l2',
+    sinceTimestamp: UnixTime(1729490400), // morph block 0
+    gasTokens: ['ETH'],
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 3654913,
+        version: '3',
+      },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.morphl2.io',
+        callsPerMinute: 300,
+      },
+    ],
   },
   technology: {
     newCryptography: {

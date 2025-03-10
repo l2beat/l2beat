@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { ps } from '~/server/projects'
 import { getEthPrices } from './utils/get-eth-prices'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
@@ -57,7 +58,16 @@ export const getCachedTvsChartData = cache(
       filter,
       previewRecategorisation,
     )
-    const tvsProjects = getTvsProjects(projectsFilter, previewRecategorisation)
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
+    const tokenList = await ps.getTokens()
+    const tvsProjects = await getTvsProjects(
+      projectsFilter,
+      chains,
+      tokenList,
+      previewRecategorisation,
+    )
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
       getTvsValuesForProjects(tvsProjects, range),
@@ -72,9 +82,9 @@ export const getCachedTvsChartData = cache(
       forTotal,
     })
   },
-  ['tvs-chart-data'],
+  ['tvs-chart-data-v2'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )
@@ -111,13 +121,14 @@ function getChartData(
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const { days, resolution } = getRangeConfig(range)
-  const target = getTvsTargetTimestamp().toStartOf(
+  const target = UnixTime.toStartOf(
+    getTvsTargetTimestamp(),
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from = days !== null ? target.add(-days, 'days') : MIN_TIMESTAMPS.tvs
+  const from = days !== null ? target - days * UnixTime.DAY : MIN_TIMESTAMPS.tvs
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
-    return [timestamp.toNumber(), 3000, 2000, 1000, 1200]
+    return [timestamp, 3000, 2000, 1000, 1200]
   })
 }

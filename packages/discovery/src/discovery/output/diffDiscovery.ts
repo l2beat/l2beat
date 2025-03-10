@@ -1,10 +1,10 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import { type FieldDiff, diffContracts } from './diffContracts'
+import type { EntryParameters } from './types'
 
 export interface DiscoveryDiff {
-  name: string
+  name?: string
   address: EthereumAddress
   description?: string
   diff?: FieldDiff[]
@@ -12,8 +12,8 @@ export interface DiscoveryDiff {
 }
 
 export function diffDiscovery(
-  previous: ContractParameters[],
-  current: ContractParameters[],
+  previous: EntryParameters[],
+  current: EntryParameters[],
   unverifiedContracts?: string[],
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
@@ -33,6 +33,7 @@ export function diffDiscovery(
     }
 
     if (
+      currentContract.name !== undefined &&
       unverifiedContracts?.includes(currentContract.name) &&
       !currentContract.unverified
     ) {

@@ -6,25 +6,25 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  SOA,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('fuelv1')
 
-export const fuelv1: Layer2 = {
+export const fuelv1: ScalingProject = {
   type: 'layer2',
   id: ProjectId('fuelv1'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'Fuel v1',
     slug: 'fuelv1',
@@ -35,7 +35,7 @@ export const fuelv1: Layer2 = {
 
     links: {
       websites: ['https://fuel.sh/'],
-      documentation: ['https://docs.fuel.sh/'],
+      documentation: ['https://docs.fuel.network/'],
       explorers: ['https://mainnet.fuel.sh/network/'],
       repositories: [
         'https://github.com/FuelLabs/fuel-core',
@@ -56,11 +56,15 @@ export const fuelv1: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'),
-        sinceTimestamp: new UnixTime(1612414780),
+        sinceTimestamp: UnixTime(1612414780),
         tokens: ['ETH', 'DAI', 'USDC', 'USDT'],
         chain: 'ethereum',
       },
     ],
+  },
+  scopeOfAssessment: {
+    checked: [SOA.l1Contracts, SOA.gasToken],
+    notChecked: [SOA.specToSourceCode, SOA.nonGasTokens, SOA.derivationSpec],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
@@ -178,13 +182,6 @@ export const fuelv1: Layer2 = {
       date: '2020-12-31T00:00:00Z',
       description: 'First trustless Optimistic Rollup is live on Mainnet.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Fuel security stress test by L2BEAT team',
-      url: 'https://twitter.com/krzKaczor/status/1524753284434587649',
-      thumbnail: NUGGETS.THUMBNAILS.FUEL_01,
     },
   ],
 }

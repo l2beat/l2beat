@@ -1,15 +1,27 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 21680644,
-  "configHash": "0x697136942f0883bfe5dfcb94d8e1b7b817ecc96e4d11e2feeee479ee22700f15",
-  "contracts": [
+  "blockNumber": 21872493,
+  "configHash": "0xb4f8aeacf5a5f679d56c57f6a86a0af173db9918aba9b014e6b52d68c995cf56",
+  "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x00da2F87c56C3a19BD863613995705095F55b524",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "PauserRegistry",
       "address": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
+      "type": "Contract",
       "sourceHashes": [
         "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -28,20 +40,34 @@
         }
       ],
       "sinceTimestamp": 1687930847,
+      "sinceBlock": 17575800,
       "values": {
         "$immutable": true,
         "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "unpauser": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      },
-      "derivedName": "PauserRegistry"
+      }
+    },
+    {
+      "address": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
     },
     {
       "name": "MantleTokenProxyAdmin",
       "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -50,15 +76,29 @@
         }
       ],
       "sinceTimestamp": 1687241639,
+      "sinceBlock": 17519057,
       "values": {
         "$immutable": true,
-        "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+        "owner": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
       },
       "derivedName": "ProxyAdmin"
     },
     {
+      "address": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
       "name": "BLSRegistry",
       "address": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"
@@ -133,6 +173,7 @@
         }
       ],
       "sinceTimestamp": 1687932047,
+      "sinceBlock": 17575899,
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad",
@@ -175,12 +216,24 @@
         "serviceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
         "strategiesConsideredAndMultipliersLength": [1, 1],
         "totalStake": ["1000000000000000000000000", 0]
-      },
-      "derivedName": "BLSRegistry"
+      }
+    },
+    {
+      "address": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+          "description": "can register or change status of DA node operators."
+        }
+      ]
     },
     {
       "name": "InvestmentManager",
       "address": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"
@@ -201,6 +254,7 @@
         }
       ],
       "sinceTimestamp": 1687930955,
+      "sinceBlock": 17575809,
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E",
@@ -225,16 +279,17 @@
         "paused": 0,
         "pauserRegistry": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
         "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
-      },
-      "derivedName": "InvestmentManager"
+      }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -258,14 +313,27 @@
         }
       ],
       "sinceTimestamp": 1687930823,
+      "sinceBlock": 17575798,
       "values": {
         "$immutable": true,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       }
     },
     {
+      "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+        }
+      ]
+    },
+    {
       "name": "MantleEngineeringMultisig",
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -284,6 +352,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686902471,
+      "sinceBlock": 17491078,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -301,14 +370,20 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 109,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L2OutputOracle",
       "address": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
@@ -340,6 +415,7 @@
         "latestOutputIndex"
       ],
       "sinceTimestamp": 1710439931,
+      "sinceBlock": 19434935,
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0xD1230865641561653406906Fb08873F011c19080",
@@ -355,10 +431,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 74711546,
-        "latestOutputIndex": 7521,
-        "nextBlockNumber": 74713346,
-        "nextOutputIndex": 7522,
+        "latestBlockNumber": 75868946,
+        "latestOutputIndex": 8164,
+        "nextBlockNumber": 75870746,
+        "nextOutputIndex": 8165,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -368,12 +444,17 @@
       "fieldMeta": {
         "FINALIZATION_PERIOD_SECONDS": {
           "description": "Challenge period (Number of seconds until a state root is finalized)."
-        }
-      }
+        },
+        "proposer": { "severity": "HIGH" },
+        "challenger": { "severity": "HIGH" },
+        "deletedOutputs": { "severity": "HIGH" }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "L1MantleToken",
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
@@ -384,11 +465,18 @@
         {
           "permission": "upgrade",
           "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd" }]
+          "via": [
+            {
+              "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+              "delay": 86400
+            },
+            { "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1687241795,
+      "sinceBlock": 17519070,
       "values": {
         "$admin": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
         "$implementation": "0xCd368c1d80120b0Dd92447c87eB570154f8e685c",
@@ -411,12 +499,17 @@
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "symbol": "MNT",
         "totalSupply": "6219316794990000000000000000"
-      },
-      "derivedName": "L1MantleToken"
+      }
+    },
+    {
+      "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
       "address": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
@@ -444,6 +537,7 @@
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1710440051,
+      "sinceBlock": 19434945,
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3",
@@ -460,8 +554,9 @@
         "gasLimit": 200000000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
+          "isUsingEigenDA": false
         },
         "overhead": 188,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -485,15 +580,18 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -517,18 +615,32 @@
         }
       ],
       "sinceTimestamp": 1687931879,
+      "sinceBlock": 17575885,
       "values": {
         "$immutable": true,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       }
     },
     {
+      "address": "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PauserRegistry2",
       "address": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
+      "type": "Contract",
       "sourceHashes": [
         "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1687931903,
+      "sinceBlock": 17575887,
       "values": {
         "$immutable": true,
         "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
@@ -539,6 +651,7 @@
     {
       "name": "MantleSecurityMultisig",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -550,6 +663,37 @@
           "permission": "interact",
           "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "interact",
+          "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "interact",
+          "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "description": "manage all access control roles.",
+          "via": [
+            {
+              "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+              "delay": 86400
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "description": "manage all access control roles."
+        },
+        {
+          "permission": "interact",
+          "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "description": "propose transactions."
         },
         {
           "permission": "interact",
@@ -575,7 +719,13 @@
         {
           "permission": "upgrade",
           "from": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-          "via": [{ "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd" }]
+          "via": [
+            { "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd" },
+            {
+              "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+              "delay": 86400
+            }
+          ]
         },
         {
           "permission": "upgrade",
@@ -641,10 +791,6 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
-        },
-        {
-          "permission": "act",
           "from": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
         },
         {
@@ -653,22 +799,28 @@
         },
         {
           "permission": "act",
+          "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "delay": 86400
+        },
+        {
+          "permission": "act",
           "from": "0xca35F8338054739D138884685e08b39EE2217794"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1683509999,
+      "sinceBlock": 17212573,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089",
           "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3",
-          "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC",
-          "0x207E804758e28F2b3fD6E4219671B327100b82f8",
-          "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
+          "0x50dCf0B40E593301aA75DcB54f36f379607595CE",
+          "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F",
+          "0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
           "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
-          "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
+          "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498",
           "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
           "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
           "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B",
@@ -681,14 +833,20 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 13 (46%)",
-        "nonce": 51,
+        "nonce": 54,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x50dCf0B40E593301aA75DcB54f36f379607595CE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EigenDataLayerChain",
       "address": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
+      "type": "Contract",
       "sourceHashes": [
         "0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781",
         "0x5333d2d13f53d445ff99fbe5845e2658fbafd68944683fb56a2644d76e5a4f36"
@@ -709,6 +867,7 @@
         "rollupBatchIndex"
       ],
       "sinceTimestamp": 1688282303,
+      "sinceBlock": 17604795,
       "values": {
         "$admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "$implementation": "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
@@ -737,8 +896,26 @@
       "derivedName": "BVM_EigenDataLayrChain"
     },
     {
+      "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DataLayrServiceManager",
       "address": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"
@@ -754,6 +931,7 @@
       ],
       "ignoreInWatchMode": ["dataStoresForDuration"],
       "sinceTimestamp": 1687931975,
+      "sinceBlock": 17575893,
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0xAB42127980a3bff124E6465e097a5fC97228827e",
@@ -779,15 +957,15 @@
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
         "dataStoresForDuration": {
-          "one_duration": 50141,
+          "one_duration": 52546,
           "two_duration": 0,
           "three_duration": 0,
           "four_duration": 0,
           "five_duration": 0,
           "six_duration": 0,
           "seven_duration": 0,
-          "dataStoreId": 50142,
-          "latestTime": 1737559067
+          "dataStoreId": 52547,
+          "latestTime": 1739875859
         },
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
@@ -804,12 +982,131 @@
         "pauserRegistry": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
         "quorumThresholdBasisPoints": 9000,
         "registry": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
-      },
-      "derivedName": "DataLayrServiceManager"
+      }
+    },
+    {
+      "address": "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TimelockController",
+      "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0xc4d0d6be09d9d589447b5e4983d9fb98fc772a22d463cef44caa7bd943eff26d"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 1d.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "description": "manage all access control roles.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "description": "manage all access control roles.",
+          "via": [
+            {
+              "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+              "delay": 86400
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+          "description": "propose transactions.",
+          "via": []
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+        },
+        {
+          "permission": "interact",
+          "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "description": "manage all access control roles."
+        }
+      ],
+      "sinceTimestamp": 1739349323,
+      "sinceBlock": 21829257,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+              "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"]
+          }
+        },
+        "Canceller": ["0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+          "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+        ],
+        "Executor": ["0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 86400,
+        "getMinDelayFormatted": "1d",
+        "Proposer": ["0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      }
+    },
+    {
+      "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+        }
+      ]
     },
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
@@ -817,9 +1114,9 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1687953527,
+      "sinceBlock": 17577670,
       "values": {
         "$immutable": false,
         "$implementation": "0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308",
@@ -845,7 +1142,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637704",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638139",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -858,16 +1155,18 @@
         "ResolvedDelegateProxy_addressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
-      "displayName": "AddressManager",
+      "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -878,41 +1177,70 @@
         }
       ],
       "sinceTimestamp": 1687951883,
+      "sinceBlock": 17577535,
       "values": {
         "$immutable": true,
         "owner": "0xca35F8338054739D138884685e08b39EE2217794"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1684377983,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0x5881541E79f5D9d5d72c87E8Ea6F681CAb289B12",
-          "0x2288226d687c01B7332c2A99A0C5A4a112c63f1e"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xc1d265aa3661784e967614a86ab34bbccd5c4a901612dfe9cde9f949b055b09f",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 2,
-        "VERSION": "1.3.0"
-      }
+      "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PubkeyCompendium",
       "address": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x8ae883de7991fc1ec2291f58deabd148cec4b61384f2eafa6c703304b9a2c757"
@@ -926,6 +1254,7 @@
         }
       ],
       "sinceTimestamp": 1687931999,
+      "sinceBlock": 17575895,
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0x18Dd3cBE484f955217165FEaC6fe928D04a56a72",
@@ -950,6 +1279,7 @@
     {
       "name": "L1StandardBridge",
       "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
@@ -966,6 +1296,7 @@
         }
       ],
       "sinceTimestamp": 1687954103,
+      "sinceBlock": 17577718,
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f",
@@ -977,11 +1308,18 @@
         "MESSENGER": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "MantleSecondStrat",
       "address": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
@@ -1002,6 +1340,7 @@
         }
       ],
       "sinceTimestamp": 1687931291,
+      "sinceBlock": 17575837,
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
@@ -1025,8 +1364,26 @@
       "derivedName": "InvestmentStrategyBase"
     },
     {
+      "address": "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
       "name": "RegistryPermission",
       "address": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xc65400995a550bff2a6272beee2e54f8cf8f9369406fe8531bd5d39add1635b7"
@@ -1046,6 +1403,7 @@
         }
       ],
       "sinceTimestamp": 1687930979,
+      "sinceBlock": 17575811,
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85",
@@ -1081,12 +1439,39 @@
           "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
           "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323"
         ]
-      },
-      "derivedName": "RegistryPermission"
+      }
+    },
+    {
+      "address": "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0xC37642355c18ec9c3b3268AAC67e33516aa115eb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc4143711aA5bd6d37F1b0A690120AA5859e32A93",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OptimismPortal",
       "address": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
@@ -1108,6 +1493,7 @@
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1710439967,
+      "sinceBlock": 19434938,
       "values": {
         "$admin": "0xca35F8338054739D138884685e08b39EE2217794",
         "$implementation": "0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7",
@@ -1125,17 +1511,19 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 593078,
-          "prevBlockNum": 21680630
+          "prevBoughtGas": 591926,
+          "prevBlockNum": 21872105
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DataLayrChallenge",
       "address": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xe8b1ba037124dea50d3eec5112ed3b8507e29739b723810a9f6f00976b9e2d08"
@@ -1149,6 +1537,7 @@
         }
       ],
       "sinceTimestamp": 1687932023,
+      "sinceBlock": 17575897,
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066",
@@ -1174,10 +1563,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0xca35F8338054739D138884685e08b39EE2217794",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1203,6 +1594,7 @@
         }
       ],
       "sinceTimestamp": 1710439895,
+      "sinceBlock": 19434932,
       "values": {
         "$immutable": true,
         "addressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
@@ -1213,6 +1605,7 @@
     {
       "name": "MantleFirstStrat",
       "address": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
@@ -1233,6 +1626,7 @@
         }
       ],
       "sinceTimestamp": 1687931243,
+      "sinceBlock": 17575833,
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
@@ -1258,6 +1652,7 @@
     {
       "name": "DataLayrChallengeUtils",
       "address": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x9dc36b80e92cea40c02d3b9d2684d85d4141dcab44cf882b91cf3148476432ee"
@@ -1271,6 +1666,7 @@
         }
       ],
       "sinceTimestamp": 1687931951,
+      "sinceBlock": 17575891,
       "values": {
         "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
         "$implementation": "0xd8d731624d97a66e012E62208cFc921d7033c564",
@@ -1293,12 +1689,34 @@
           "0x4843774a80fc8385b31024f5bd18b42e62de439206ab9468d42d826796d41f67",
           "0x092d3e5f87f5293e7ab0cc2ca6b0b5e4adb5e0011656544915f7cea34e69e5ab"
         ]
-      },
-      "derivedName": "DataLayrChallengeUtils"
+      }
+    },
+    {
+      "address": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Delegation",
       "address": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xa961eebaaac6cb33d38501294b0f98165b96d04af2f99311bd99b282798990be"
@@ -1312,6 +1730,7 @@
         }
       ],
       "sinceTimestamp": 1687930907,
+      "sinceBlock": 17575805,
       "values": {
         "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
         "$implementation": "0xAdA69A18B30B3B9235AB2748116bB9195e16aDba",
@@ -1338,157 +1757,17 @@
         "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
       },
       "derivedName": "EigenLayrDelegation"
+    },
+    {
+      "address": "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x00da2F87c56C3a19BD863613995705095F55b524" },
-    {
-      "address": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "description": "can register or change status of DA node operators."
-        }
-      ]
-    },
-    { "address": "0x2288226d687c01B7332c2A99A0C5A4a112c63f1e" },
-    {
-      "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
-        }
-      ]
-    },
-    { "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb" },
-    { "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8" },
-    { "address": "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC" },
-    { "address": "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1" },
-    {
-      "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0x5881541E79f5D9d5d72c87E8Ea6F681CAb289B12" },
-    { "address": "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317" },
-    { "address": "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3" },
-    { "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad" },
-    {
-      "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
-        }
-      ]
-    },
-    {
-      "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a" },
-    { "address": "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc" },
-    {
-      "address": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e" },
-    {
-      "address": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0xC37642355c18ec9c3b3268AAC67e33516aa115eb" },
-    { "address": "0xc4143711aA5bd6d37F1b0A690120AA5859e32A93" },
-    {
-      "address": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B" },
-    { "address": "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070" },
-    { "address": "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089" }
   ],
   "abis": {
     "0x075a48633dc6845f92339741E9c96b88f1b2A86f": [
@@ -1713,6 +1992,53 @@
       "function updateStakes(address[] operators, uint256[] prevElements)",
       "function weightOfOperator(address operator, uint256 quorumNumber) returns (uint96)"
     ],
+    "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
     "0x676A795fe6E43C17c668de16730c3F690FEB7120": [
       "constructor(address _libAddressManager, string _implementationName)"
     ],
@@ -1765,9 +2091,6 @@
       "function pairingGasLimit() view returns (uint256)",
       "function verifyLowDegreenessProof(bytes header, tuple(uint256[2] X, uint256[2] Y) potElement, bytes potMerkleProof, tuple(uint256 X, uint256 Y) lowDegreenessProof) view returns (bool)",
       "function verifyZeroPaddingProof(bytes header, tuple(uint256 X, uint256 Y) paddingProof, tuple(uint256 X, uint256 Y) paddingQuotientPolyCommit) returns (bool)"
-    ],
-    "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A": [
-      "constructor(address _singleton)"
     ],
     "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E": [
       "constructor(address _delegation, address _permissionManager)",
@@ -2383,12 +2706,13 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "global/TimelockController": "0x02cb99448890790dfb8e36464d6501ef350dd02ff56ee00c497303f2dc000e77",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
-    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
-    "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
-    "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
-    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
+    "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
+    "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
+    "opstack/L2OutputOracle": "0x1f3a79744f58781fffa6c018ccd268ad7f3f33c1e89ec7268d7bd19bda0867be",
+    "opstack/OptimismPortal": "0x750f5e07f37ab3d0a766982dc74c1c619779a2044e8a1484ed1e2859854ec514",
+    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15"
   }
 }

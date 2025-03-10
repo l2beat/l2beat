@@ -1,32 +1,34 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
 import type {
-  Layer2,
-  Layer2Display,
-  Layer3,
-  ScalingProjectCapability,
-  ScalingProjectDisplay,
+  ProjectScalingDisplay,
+  ScalingProject,
+} from '../../../internalTypes'
+import type {
+  Badge,
+  ChainConfig,
+  ProjectScalingCapability,
 } from '../../../types'
-import type { BadgeId } from '../../badges'
 
 export interface UpcomingConfigL2 {
   id: string
   addedAt: UnixTime
-  display: Layer2Display
-  capability: ScalingProjectCapability
-  badges?: BadgeId[]
+  display: ProjectScalingDisplay
+  capability: ProjectScalingCapability
+  badges?: Badge[]
+  chainConfig?: ChainConfig
 }
 
 export interface UpcomingConfigL3 {
   id: string
   addedAt: UnixTime
-  display: ScalingProjectDisplay
-  capability: ScalingProjectCapability
-  hostChain: Layer3['hostChain']
-  badges?: BadgeId[]
+  display: ProjectScalingDisplay
+  capability: ProjectScalingCapability
+  hostChain: ScalingProject['hostChain']
+  badges?: Badge[]
 }
 
-export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
+export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
   return {
     isUpcoming: true,
     type: 'layer2',
@@ -40,6 +42,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
     config: {
       escrows: [],
     },
+    chainConfig: templateVars.chainConfig,
     riskView: UPCOMING_RISK_VIEW,
     technology: TECHNOLOGY.UPCOMING,
     contracts: CONTRACTS.EMPTY,
@@ -47,7 +50,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
   }
 }
 
-export function upcomingL3(templateVars: UpcomingConfigL3): Layer3 {
+export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
   return {
     isUpcoming: true,
     type: 'layer3',

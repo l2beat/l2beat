@@ -1,5 +1,5 @@
 import type { Env } from '@l2beat/backend-tools'
-import { chains } from '@l2beat/config'
+import type { ChainConfig } from '@l2beat/config'
 import {
   type DiscoveryChainConfig,
   getMulticall3Config,
@@ -8,6 +8,7 @@ import {
 export function getChainDiscoveryConfig(
   env: Env,
   chain: string,
+  chains: ChainConfig[],
 ): DiscoveryChainConfig {
   const chainConfig = chains.find((c) => c.name === chain)
   if (!chainConfig) {
@@ -21,7 +22,11 @@ export function getChainDiscoveryConfig(
     throw new Error('Missing multicallV3 for chain: ' + chain)
   }
 
-  if (!chainConfig.explorerApi) {
+  const explorerApi = chainConfig.apis.find(
+    (x) => x.type === 'etherscan' || x.type === 'blockscout',
+  )
+
+  if (!explorerApi) {
     throw new Error('Missing explorerApi for chain: ' + chain)
   }
 
@@ -43,26 +48,34 @@ export function getChainDiscoveryConfig(
       'ETHEREUM_BEACON_API_URL_FOR_DISCOVERY',
       'ETHEREUM_BEACON_API_URL',
     ]),
+    celestiaApiUrl: env.optionalString([
+      'CELESTIA_API_URL_FOR_DISCOVERY',
+      'CELESTIA_API_URL',
+    ]),
     multicall: getMulticall3Config(
       multicallV3.sinceBlock,
       multicallV3.address,
       multicallV3.batchSize,
     ),
     explorer:
-      chainConfig.explorerApi.type === 'blockscout'
+      explorerApi.type === 'blockscout'
         ? {
-            type: chainConfig.explorerApi.type,
-            url: chainConfig.explorerApi.url,
-            unsupported: chainConfig.explorerApi.missingFeatures,
+            type: explorerApi.type,
+            url: explorerApi.url,
+            unsupported: {
+              getContractCreation: explorerApi.contractCreationUnsupported,
+            },
           }
         : {
-            type: chainConfig.explorerApi.type,
-            url: chainConfig.explorerApi.url,
+            type: explorerApi.type,
+            url: explorerApi.url,
             apiKey: env.string([
               `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
               `${ENV_NAME}_ETHERSCAN_API_KEY`,
             ]),
-            unsupported: chainConfig.explorerApi.missingFeatures,
+            unsupported: {
+              getContractCreation: explorerApi.contractCreationUnsupported,
+            },
           },
   }
 }

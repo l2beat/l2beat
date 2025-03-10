@@ -7,13 +7,13 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('astarzkevm')
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -29,9 +29,9 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const astarzkevm: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+export const astarzkevm: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -63,7 +63,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     },
   },
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Astar zkEVM',
@@ -87,7 +87,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     name: 'astarzkevm',
     chainId: 3776,
     explorerUrl: 'https://astar-zkevm.explorer.startale.com',
-    minTimestampForTvl: new UnixTime(1708632059),
+    sinceTimestamp: UnixTime(1708632059),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -96,8 +96,14 @@ export const astarzkevm: Layer2 = polygonCDKStack({
         version: '3',
       },
     ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.startale.com/astar-zkevm',
+        callsPerMinute: 1500,
+      },
+    ],
   },
-  rpcUrl: 'https://rpc.startale.com/astar-zkevm',
   discovery,
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
@@ -135,7 +141,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

@@ -1,4 +1,134 @@
-Generated with discovered.json: 0x15da83563d4e5bff9eb5a7fcef389bea0df6b6ae
+Generated with discovered.json: 0xa012ca7f5c6e5dbc1d921acff9f299944a941ca9
+
+# Diff at Tue, 04 Mar 2025 10:38:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21723791
+- current block number: 21723791
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723791 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Proof Library (0x07245eEa05826F5984c7c3C8F478b04892e4df89) {
+    +++ description: None
+      sinceBlock:
++        15757967
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      sinceBlock:
++        15416287
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sinceBlock:
++        15416271
+    }
+```
+
+```diff
+    contract TokenBridge (0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907) {
+    +++ description: None
+      sinceBlock:
++        15778949
+    }
+```
+
+```diff
+    contract LayerZero Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      sinceBlock:
++        15416736
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      sinceBlock:
++        15398311
+    }
+```
+
+```diff
+    contract Aptos Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      sinceBlock:
++        14402408
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      sinceBlock:
++        14388880
+    }
+```
+
+```diff
+    contract  (0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7) {
+    +++ description: None
+      sinceBlock:
++        15416447
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      sinceBlock:
++        15416448
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sinceBlock:
++        15410443
+    }
+```
+
+```diff
+    contract  (0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f) {
+    +++ description: None
+      sinceBlock:
++        15416732
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      sinceBlock:
++        14388905
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sinceBlock:
++        14457816
+    }
+```
+
+Generated with discovered.json: 0xaefc929f2ef58b362f1ec3d4ba7f5bc6db89aeb8
 
 # Diff at Tue, 28 Jan 2025 15:03:18 GMT:
 

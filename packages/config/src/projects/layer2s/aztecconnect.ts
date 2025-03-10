@@ -6,22 +6,21 @@ import {
   DA_MODES,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
-export const aztecconnect: Layer2 = {
+export const aztecconnect: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   capability: 'universal',
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',
@@ -49,7 +48,7 @@ export const aztecconnect: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
-        sinceTimestamp: new UnixTime(1654587783),
+        sinceTimestamp: UnixTime(1654587783),
         tokens: ['ETH', 'DAI', 'wstETH'],
         chain: 'ethereum',
       },
@@ -67,8 +66,8 @@ export const aztecconnect: Layer2 = {
           ),
           selector: '0xf81cccbe',
           functionSignature: 'function processRollup(bytes ,bytes _signatures)',
-          sinceTimestamp: new UnixTime(1654638194),
-          untilTimestamp: new UnixTime(1712696939),
+          sinceTimestamp: UnixTime(1654638194),
+          untilTimestamp: UnixTime(1712696939),
         },
       },
     ],
@@ -268,23 +267,6 @@ export const aztecconnect: Layer2 = {
       description:
         'Noir - programming language for zero-knowledge proofs, has been introduced.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Explaining the Aztec Network',
-      url: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
-      thumbnail: NUGGETS.THUMBNAILS.AZTEC_01,
-    },
-    {
-      title: 'Economics of Aztec ZK Rollup',
-      url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
-      thumbnail: NUGGETS.THUMBNAILS.AZTEC_02,
-    },
-    {
-      title: 'Understanding PLONK',
-      url: 'https://vitalik.eth.limo/general/2019/09/22/plonk.html',
-      thumbnail: NUGGETS.THUMBNAILS.VITALIK_01,
     },
   ],
 }

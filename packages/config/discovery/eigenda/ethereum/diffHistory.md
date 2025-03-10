@@ -1,3 +1,272 @@
+Generated with discovered.json: 0x233c22c60b0653353f74a5835ea7ccec3f1242e4
+
+# Diff at Tue, 04 Mar 2025 10:39:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21786519
+- current block number: 21786519
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786519 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: Keeps track of the total stake of each operator.
+      sinceBlock:
++        19592323
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      sinceBlock:
++        19592323
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      sinceBlock:
++        19592322
+    }
+```
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.
+      sinceBlock:
++        17445563
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: None
+      sinceBlock:
++        20493176
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      sinceBlock:
++        19839949
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      sinceBlock:
++        19492759
+    }
+```
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      sinceBlock:
++        20371264
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      sinceBlock:
++        17472874
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      sinceBlock:
++        17445563
+    }
+```
+
+```diff
+    contract EigenLayerProtocolCouncil (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      sinceBlock:
++        21239749
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      sinceBlock:
++        17443669
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: None
+      sinceBlock:
++        17445565
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: None
+      sinceBlock:
++        20493178
+    }
+```
+
+```diff
+    contract EigenPod (0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430) {
+    +++ description: None
+      sinceBlock:
++        20571837
+    }
+```
+
+```diff
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1) {
+    +++ description: None
+      sinceBlock:
++        20896663
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      sinceBlock:
++        19592322
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      sinceBlock:
++        17445564
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      sinceBlock:
++        19592322
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      sinceBlock:
++        17445563
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      sinceBlock:
++        17445564
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: None
+      sinceBlock:
++        19592323
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      sinceBlock:
++        17443829
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      sinceBlock:
++        21239612
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      sinceBlock:
++        17445564
+    }
+```
+
+```diff
+    contract StrategyBase (0xe9FA8F904d97854C7389b68923262ADCC6C27827) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sinceBlock:
++        20493175
+    }
+```
+
+```diff
+    contract EIGEN Token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      sinceBlock:
++        18366276
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      sinceBlock:
++        17472847
+    }
+```
+
+Generated with discovered.json: 0x4da91e8c7ee7a84a004e6a8d52978c7247d9e9ba
+
+# Diff at Wed, 12 Feb 2025 08:54:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21786519
+- current block number: 21786519
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786519 (main branch discovery), not current.
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      description:
+-        "A timelock that allows scheduling calls and executing or cancelling them with a delay"
++        "A timelock that allows scheduling calls and executing or cancelling them with a delay."
+    }
+```
+
 Generated with discovered.json: 0x3af8a224f797588da25b9bfe888a67517baf2ac3
 
 # Diff at Thu, 06 Feb 2025 09:19:17 GMT:

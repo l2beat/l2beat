@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x330e02011de44042ef449f554772d01cbd3cf7b0
+Generated with discovered.json: 0xdf7aa946815766876f98f412948ee2549f83f871
+
+# Diff at Tue, 04 Mar 2025 10:39:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21394291
+- current block number: 21394291
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21394291 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      sinceBlock:
++        18552614
+    }
+```
+
+```diff
+    contract Multisig2 (0x2028834B2c0A36A918c10937EeA71BE4f932da52) {
+    +++ description: None
+      sinceBlock:
++        17285500
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      sinceBlock:
++        18552104
+    }
+```
+
+```diff
+    contract Multisig1 (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C) {
+    +++ description: None
+      sinceBlock:
++        11970338
+    }
+```
+
+```diff
+    contract LoopringV3 (0x9385aCd9d78dFE854c543294770d0C94c2B07EDC) {
+    +++ description: None
+      sinceBlock:
++        18552049
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD) {
+    +++ description: None
+      sinceBlock:
++        18552106
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      sinceBlock:
++        18552105
+    }
+```
+
+```diff
+    contract BlockVerifier (0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6) {
+    +++ description: None
+      sinceBlock:
++        18552036
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      sinceBlock:
++        18552636
+    }
+```
+
+Generated with discovered.json: 0xdced21b761e08817918ce1b96344ec1682832f56
 
 # Diff at Mon, 20 Jan 2025 11:09:25 GMT:
 

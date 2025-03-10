@@ -6,7 +6,23 @@ import { expect } from 'earl'
 import { bridges } from '../../projects/bridges'
 import { layer2s } from '../../projects/layer2s'
 import { layer3s } from '../../projects/layer3s'
-import { onChainProjects } from '../../projects/onChainProjects'
+
+// A list of onchain projects that are not L2s (or prelaunch) or bridges
+// (so we don't show them on the frontend), but we still
+// want to monitor using discovery.
+export const onChainProjects: string[] = [
+  'blobstream',
+  'eigenda',
+  'shared-eigenlayer',
+  'swell',
+  'worldcoin',
+  'cronoszkevm',
+  'nebraupa',
+  'vector',
+  'espresso',
+  'dydx',
+  'tokens',
+]
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader(join(process.cwd(), '../config'))
@@ -57,12 +73,12 @@ describe('discovery config.jsonc', () => {
     expect(notEqual).toBeEmpty()
     notEqual.forEach((p) => {
       console.log(
-        `Following projects do not have the same name in config and discovery.json. Run "pnpm discover <config.name>" - ${p}`,
+        `Following projects do not have the same name in config and discovery.json. Run "l2b discover <config.name>" - ${p}`,
       )
     })
   })
 
-  it('every discovery.json has sorted contracts', () => {
+  it('every discovery.json has sorted entries', () => {
     const notSorted: string[] = []
 
     for (const configs of chainConfigs ?? []) {
@@ -71,8 +87,8 @@ describe('discovery config.jsonc', () => {
 
         if (
           !isDeepStrictEqual(
-            discovery.contracts,
-            discovery.contracts
+            discovery.entries,
+            discovery.entries
               .slice()
               .sort((a, b) => a.address.localeCompare(b.address.toString())),
           )
@@ -84,8 +100,7 @@ describe('discovery config.jsonc', () => {
 
     assert(
       notSorted.length === 0,
-      'Following projects do not have sorted contracts: ' +
-        notSorted.join(', '),
+      'Following projects do not have sorted entries: ' + notSorted.join(', '),
     )
   })
 
@@ -97,11 +112,16 @@ describe('discovery config.jsonc', () => {
 
         assert(
           reason === undefined,
-          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "pnpm refresh-discovery"`,
+          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
         )
       }
     }
-  })
+  }).timeout(5000) // TODO(radomski): The test is taking a lot of time because
+  // we need to recompute the hashes for every single template shape to run
+  // this test. Right now this test is flaky (nondeterministic) on CI. If
+  // calculating the template shape hashes will take more than 2 seconds it
+  // will fail. The amount of shapes is going to keep growing linearly.
+  // Something needs to be done with this problem.
 
   it('discovery.json does not include errors', () => {
     for (const configs of chainConfigs ?? []) {
@@ -109,8 +129,8 @@ describe('discovery config.jsonc', () => {
         const discovery = configReader.readDiscovery(c.name, c.chain)
 
         assert(
-          discovery.contracts.every((c) => c.errors === undefined),
-          `${c.name} discovery.json includes errors. Run "pnpm discover ${c.name}".`,
+          discovery.entries.every((c) => c.errors === undefined),
+          `${c.name} discovery.json includes errors. Run "l2b discover ${c.name}".`,
         )
       }
     }
@@ -122,13 +142,13 @@ describe('discovery config.jsonc', () => {
     describe('every override correspond to existing contract', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
-          it(`${c.name} on ${c.chain}`, () => {
-            for (const key of Object.keys(c.raw.overrides ?? {})) {
+          for (const key of Object.keys(c.raw.overrides ?? {})) {
+            it(`${c.name} on ${c.chain} with the override ${key}`, () => {
               if (!EthereumAddress.check(key)) {
                 expect(() => c.for(key)).not.toThrow()
               }
-            }
-          })
+            })
+          }
         }
       }
     })
@@ -154,8 +174,8 @@ describe('discovery config.jsonc', () => {
         for (const c of configs) {
           const discovery = configReader.readDiscovery(c.name, c.chain)
           it(`${c.name}:${c.chain}`, () => {
-            for (const contract of discovery.contracts) {
-              const fields = c.for(contract.address).fields
+            for (const entry of discovery.entries) {
+              const fields = c.for(entry.address).fields
               for (const [key, value] of Object.entries(fields)) {
                 if (
                   value.handler?.type === 'accessControl' &&

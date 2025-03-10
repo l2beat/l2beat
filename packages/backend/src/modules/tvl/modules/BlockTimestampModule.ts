@@ -39,27 +39,23 @@ function createBlockTimestampIndexers(
 
   const blockTimestampIndexers = new Map<string, BlockTimestampIndexer>()
 
-  for (const chainConfig of chains) {
-    if (chainConfig.config === undefined) {
-      continue
-    }
-
+  for (const chain of chains) {
     const blockTimestampProvider = dependencies.getBlockTimestampProvider(
-      chainConfig.chain,
+      chain.name,
     )
 
     const indexer = new BlockTimestampIndexer({
       logger,
       parents: [hourlyIndexer],
-      minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
+      minHeight: chain.minBlockTimestamp,
       indexerService,
-      chain: chainConfig.chain,
+      chain: chain.name,
       blockTimestampProvider,
       db,
       syncOptimizer,
     })
 
-    blockTimestampIndexers.set(chainConfig.chain, indexer)
+    blockTimestampIndexers.set(chain.name, indexer)
   }
 
   return blockTimestampIndexers

@@ -1,4 +1,168 @@
-Generated with discovered.json: 0x1c55669e367fa60d3c96ba3d25923f7a52c340c3
+Generated with discovered.json: 0xa09669f0e97925336784304b4b4a5713fe5b981a
+
+# Diff at Tue, 04 Mar 2025 10:39:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ERC20 Vault V1 (0x112334f50Cb6efcff4e35Ae51A022dBE41a48135) {
+    +++ description: None
+      sinceBlock:
++        12373839
+    }
+```
+
+```diff
+    contract pNetworkDAOVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4) {
+    +++ description: None
+      sinceBlock:
++        10565990
+    }
+```
+
+```diff
+    contract Kernel (0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b) {
+    +++ description: None
+      sinceBlock:
++        10565704
+    }
+```
+
+```diff
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478) {
+    +++ description: None
+      sinceBlock:
++        10565704
+    }
+```
+
+```diff
+    contract UOS Vault (0x9f8622b11984AfC8f0a42A394928702017c5968D) {
+    +++ description: None
+      sinceBlock:
++        12825127
+    }
+```
+
+```diff
+    contract MiniMeTokenFactory (0xA29EF584c389c67178aE9152aC9C543f9156E2B3) {
+    +++ description: None
+      sinceBlock:
++        8262062
+    }
+```
+
+```diff
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB) {
+    +++ description: None
+      sinceBlock:
++        16325852
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      sinceBlock:
++        15618660
+    }
+```
+
+```diff
+    contract TokenManager (0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254) {
+    +++ description: None
+      sinceBlock:
++        10565855
+    }
+```
+
+```diff
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a) {
+    +++ description: None
+      sinceBlock:
++        13906609
+    }
+```
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      sinceBlock:
++        13906697
+    }
+```
+
+```diff
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E) {
+    +++ description: None
+      sinceBlock:
++        10565808
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      sinceBlock:
++        15618661
+    }
+```
+
+```diff
+    contract ACL (0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe) {
+    +++ description: None
+      sinceBlock:
++        10565704
+    }
+```
+
+Generated with discovered.json: 0x0f14df70fd18a66cbb89b832db5dee1b9cdc83b4
+
+# Diff at Tue, 25 Feb 2025 13:12:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b171c901abf483bb022511bdc023137c55d589c block: 20420398
+- current block number: 20420398
+
+## Description
+
+Config: added lido related templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478) {
+    +++ description: None
+      template:
++        "tokens/Lido/EVMScriptRegistry"
+    }
+```
+
+```diff
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E) {
+    +++ description: None
+      template:
++        "tokens/Lido/MiniMeToken"
+    }
+```
+
+Generated with discovered.json: 0x8aca3656cae4efe07280e16ddcf39418a9bd0768
 
 # Diff at Mon, 20 Jan 2025 11:09:52 GMT:
 

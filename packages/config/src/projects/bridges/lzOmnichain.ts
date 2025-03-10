@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS, NUGGETS } from '../../common'
+import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { languageJoin } from '../../utils/languageJoin'
 import { RISK_VIEW } from './common'
 import {
@@ -18,7 +18,7 @@ const discovery = new ProjectDiscovery('lzomnichain')
 export const lzOmnichain: Bridge = {
   type: 'bridge',
   id: ProjectId('lzomnichain'),
-  addedAt: new UnixTime(1677513767), // 2023-02-27T16:02:47Z
+  addedAt: UnixTime(1677513767), // 2023-02-27T16:02:47Z
   display: {
     name: 'Omnichain (LayerZero)',
     slug: 'omnichain',
@@ -139,7 +139,7 @@ export const lzOmnichain: Bridge = {
         discovery.getContractDetails('NonceContract'),
       ],
     },
-    risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
     [discovery.chain]: {
@@ -161,11 +161,4 @@ export const lzOmnichain: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Security models: isolated vs shared',
-      url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-  ],
 }

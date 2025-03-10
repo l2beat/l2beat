@@ -9,7 +9,7 @@ import { PROOFS } from './common/proofSystems'
 
 export const sp1vector: BaseProject = {
   id: ProjectId('sp1vector'),
-  slug: 'SP1Vector', // TODO: lowercase + redirect
+  slug: 'sp1-vector',
   name: 'SP1Vector',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-12')),

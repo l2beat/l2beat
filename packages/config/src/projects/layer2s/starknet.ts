@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -16,7 +15,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -25,20 +23,17 @@ import {
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-  getSHARPVerifierUpgradeDelay,
-} from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
-import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('starknet')
-const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
 
 const starknetDelaySeconds = discovery.getContractValue<number>(
   'Starknet',
@@ -231,37 +226,19 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
   discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
-const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'EKUBO',
-  discovery.getContractValue<number>('MultiBridge', 'maxTotalBalance_EKUBO'),
-  18,
-)
 
 const finalizationPeriod = 0
 
-const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
-const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
-
-// big governance assert
-assert(
-  proxyGovernors[0].address ===
-    discovery.getContract('StarknetAdminMultisig').address &&
-    proxyGovernors[1].address ===
-      discovery.getContract('StarknetSecurityCouncil').address &&
-    proxyGovernors.length === 2 &&
-    governors[0].address ===
-      discovery.getContract('StarknetOpsMultisig').address &&
-    governors[1].address ===
-      discovery.getContract('StarknetSecurityCouncil').address &&
-    governors.length === 2,
-  'gov has changed, review non-discodriven perms and gov section.',
+const scThreshold = discovery.getMultisigStats('StarknetSecurityCouncil')
+const sharpMsThreshold = discovery.getMultisigStats(
+  'SHARPVerifierAdminMultisig',
 )
 
-export const starknet: Layer2 = {
+export const starknet: ScalingProject = {
   type: 'layer2',
   id: ProjectId('starknet'),
   capability: 'universal',
-  addedAt: new UnixTime(1642687633), // 2022-01-20T14:07:13Z
+  addedAt: UnixTime(1642687633), // 2022-01-20T14:07:13Z
   display: {
     name: 'Starknet',
     slug: 'starknet',
@@ -300,24 +277,44 @@ export const starknet: Layer2 = {
     costsWarning: {
       sentiment: 'warning',
       value:
-        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs represent a rough estimate, and we are working to provide more accurate values.',
+        "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet's costs represent a rough estimate, and we are working to provide more accurate values.",
     },
+  },
+  chainConfig: {
+    name: 'starknet',
+    chainId: undefined,
+    gasTokens: ['ETH', 'STRK'],
+    apis: [
+      {
+        type: 'starknet',
+        url: 'https://starknet-mainnet.public.blastapi.io',
+        callsPerMinute: 120,
+      },
+    ],
   },
   config: {
     associatedTokens: ['STRK'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_ETH_ADDRESS),
-        sinceTimestamp: new UnixTime(1647857148),
+        sinceTimestamp: UnixTime(1647857148),
         tokens: ['ETH'],
         description:
           'StarkGate bridge for ETH.' + ' ' + escrowETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate ETH owner', 'BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowETHDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate ETH owner',
+            delay: formatSeconds(escrowETHDelaySeconds),
+          },
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowETHDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
-        sinceTimestamp: new UnixTime(1652101033),
+        sinceTimestamp: UnixTime(1652101033),
         tokens: ['DAI'],
         ...ESCROW.CANONICAL_EXTERNAL,
         description:
@@ -327,74 +324,102 @@ export const starknet: Layer2 = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_WBTC_ADDRESS),
-        sinceTimestamp: new UnixTime(1657137600),
+        sinceTimestamp: UnixTime(1657137600),
         tokens: ['WBTC'],
         description:
           'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowWBTCDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowWBTCDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_USDC_ADDRESS),
-        sinceTimestamp: new UnixTime(1657137639),
+        sinceTimestamp: UnixTime(1657137639),
         tokens: ['USDC'],
-        upgradableBy: ['BridgeMultisig'],
+        upgradableBy: [{ name: 'BridgeMultisig', delay: 'no' }],
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_USDT_ADDRESS),
-        sinceTimestamp: new UnixTime(1657137615),
+        sinceTimestamp: UnixTime(1657137615),
         tokens: ['USDT'],
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowUSDTDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_WSTETH_ADDRESS),
-        sinceTimestamp: new UnixTime(1657137623),
+        sinceTimestamp: UnixTime(1657137623),
         tokens: ['wstETH'],
         description:
           'StarkGate bridge for wstETH.' +
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowWSTETHDelaySeconds),
+          },
+        ],
         ...ESCROW.CANONICAL_EXTERNAL,
-        upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_RETH_ADDRESS),
-        sinceTimestamp: new UnixTime(1657137623),
+        sinceTimestamp: UnixTime(1657137623),
         tokens: ['rETH'],
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowRETHDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_UNI_ADDRESS),
         tokens: ['UNI'],
         description:
           'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
-        upgradableBy: ['StarkGate UNI owner'],
-        upgradeDelay: formatSeconds(escrowUNIDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate UNI owner',
+            delay: formatSeconds(escrowUNIDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FRAX_ADDRESS),
         tokens: ['FRAX'],
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
-        upgradableBy: ['StarkGate FRAX owner'],
-        upgradeDelay: formatSeconds(escrowFRAXDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate FRAX owner',
+            delay: formatSeconds(escrowFRAXDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FXS_ADDRESS),
         tokens: ['FXS'],
         description:
           'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
-        upgradableBy: ['StarkGate FXS owner'],
-        upgradeDelay: formatSeconds(escrowFXSDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate FXS owner',
+            delay: formatSeconds(escrowFXSDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_SFRXETH_ADDRESS),
@@ -403,16 +428,24 @@ export const starknet: Layer2 = {
           'StarkGate bridge for sfrxETH.' +
           ' ' +
           escrowSFRXETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate sfrxETH owner'],
-        upgradeDelay: formatSeconds(escrowSFRXETHDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate sfrxETH owner',
+            delay: formatSeconds(escrowSFRXETHDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_LUSD_ADDRESS),
         tokens: ['LUSD'],
         description:
           'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
-        upgradableBy: ['StarkGate LUSD owner'],
-        upgradeDelay: formatSeconds(escrowLUSDDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate LUSD owner',
+            delay: formatSeconds(escrowLUSDDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_LORDS_ADDRESS),
@@ -424,29 +457,45 @@ export const starknet: Layer2 = {
         tokens: ['STRK'],
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
-        upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
-        upgradableBy: ['BridgeMultisig'],
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowSTRKDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_MULTIBRIDGE_ADDRESS),
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
         description:
-          'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).' +
-          ' ' +
-          escrowEKUBOMaxTotalBalanceString,
-        upgradeDelay: formatSeconds(escrowMultibridgeDelaySeconds),
-        upgradableBy: ['StarkGate MultiBridge Admin'],
+          'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
+        upgradableBy: [
+          {
+            name: 'StarkGate MultiBridge Admin',
+            delay: formatSeconds(escrowMultibridgeDelaySeconds),
+          },
+        ],
       }),
     ],
-    transactionApi: {
-      type: 'starknet',
-      defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
-      defaultCallsPerMinute: 120,
+    activityConfig: {
+      type: 'block',
     },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+        sequencers: [
+          '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',
+          '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+        ],
+      },
+    ],
     finality: {
       lag: 0,
       type: 'Starknet',
-      minTimestamp: new UnixTime(1724856347),
+      minTimestamp: UnixTime(1724856347),
       stateUpdate: 'disabled',
     },
     trackedTxs: [
@@ -457,8 +506,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1636978914),
-          untilTimestamp: new UnixTime(1702921247),
+          sinceTimestamp: UnixTime(1636978914),
+          untilTimestamp: UnixTime(1702921247),
           programHashes: [
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
@@ -472,8 +521,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1702921247),
-          untilTimestamp: new UnixTime(1704855731),
+          sinceTimestamp: UnixTime(1702921247),
+          untilTimestamp: UnixTime(1704855731),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
@@ -487,8 +536,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1704855731),
-          untilTimestamp: new UnixTime(1710252995),
+          sinceTimestamp: UnixTime(1704855731),
+          untilTimestamp: UnixTime(1710252995),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
@@ -502,8 +551,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1710252995),
-          untilTimestamp: new UnixTime(1710625271),
+          sinceTimestamp: UnixTime(1710252995),
+          untilTimestamp: UnixTime(1710625271),
           programHashes: [
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
@@ -517,8 +566,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1710625271),
-          untilTimestamp: new UnixTime(1715783986), // 15.05.2024 https://app.blocksec.com/explorer/tx/eth/0x3b5c41b3abb8e265b8d58ec3dde79790d4f0ee050de97f8bd0fe68048c070bdd
+          sinceTimestamp: UnixTime(1710625271),
+          untilTimestamp: UnixTime(1715783986), // 15.05.2024 https://app.blocksec.com/explorer/tx/eth/0x3b5c41b3abb8e265b8d58ec3dde79790d4f0ee050de97f8bd0fe68048c070bdd
           programHashes: [
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
@@ -532,8 +581,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1715783986),
-          untilTimestamp: new UnixTime(1724856227),
+          sinceTimestamp: UnixTime(1715783986),
+          untilTimestamp: UnixTime(1724856227),
           programHashes: [
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
@@ -547,8 +596,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1724856227),
-          untilTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1724856227),
+          untilTimestamp: UnixTime(1732747391),
           programHashes: [
             '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
           ],
@@ -562,8 +611,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1724856227),
-          untilTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1724856227),
+          untilTimestamp: UnixTime(1732747391),
           programHashes: [
             '1161178844461337253856226043908368523817098764221830529880464854589141231910', // old Aggregator
           ],
@@ -577,7 +626,7 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1732747391),
           programHashes: [
             '2397984267054479079853548842566103781972463965746662494980785692480538410509', // Starknet OS
           ],
@@ -591,7 +640,7 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1732747391),
           programHashes: [
             '15787695375210609250491147414005894154890873413229882671403677761527504080', // Aggregator (since Starknet v0.13.3)
           ],
@@ -611,7 +660,7 @@ export const starknet: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestamp: new UnixTime(1636979180),
+          sinceTimestamp: UnixTime(1636979180),
         },
       },
       {
@@ -627,8 +676,8 @@ export const starknet: Layer2 = {
           selector: '0xb72d42a1',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
-          sinceTimestamp: new UnixTime(1710252995),
-          untilTimestamp: new UnixTime(1724855579),
+          sinceTimestamp: UnixTime(1710252995),
+          untilTimestamp: UnixTime(1724855579),
         },
       },
       {
@@ -644,7 +693,7 @@ export const starknet: Layer2 = {
           selector: '0x507ee528',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)',
-          sinceTimestamp: new UnixTime(1724855579),
+          sinceTimestamp: UnixTime(1724855579),
         },
       },
       {
@@ -657,8 +706,8 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestamp: new UnixTime(1678095635),
-          untilTimestamp: new UnixTime(1706789063),
+          sinceTimestamp: UnixTime(1678095635),
+          untilTimestamp: UnixTime(1706789063),
         },
         _hackCostMultiplier: 0.9,
       },
@@ -672,8 +721,8 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestamp: new UnixTime(1706789063),
-          untilTimestamp: new UnixTime(1710342000),
+          sinceTimestamp: UnixTime(1706789063),
+          untilTimestamp: UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.9,
       },
@@ -687,8 +736,8 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestamp: new UnixTime(1710342000),
-          untilTimestamp: new UnixTime(1722197315),
+          sinceTimestamp: UnixTime(1710342000),
+          untilTimestamp: UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.5,
       },
@@ -702,8 +751,8 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestamp: new UnixTime(1722197315),
-          untilTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1722197315),
+          untilTimestamp: UnixTime(1732747391),
         },
         _hackCostMultiplier: 0.5,
       },
@@ -717,8 +766,8 @@ export const starknet: Layer2 = {
           selector: '0x739ef303',
           functionSignature:
             'function registerContinuousPageBatch((uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime)[] memoryPageEntries)',
-          sinceTimestamp: new UnixTime(1722197315),
-          untilTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1722197315),
+          untilTimestamp: UnixTime(1732747391),
         },
         _hackCostMultiplier: 0.5,
       },
@@ -732,7 +781,7 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1732747391),
         },
         _hackCostMultiplier: 0.03,
       },
@@ -746,7 +795,7 @@ export const starknet: Layer2 = {
           selector: '0x739ef303',
           functionSignature:
             'function registerContinuousPageBatch((uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime)[] memoryPageEntries)',
-          sinceTimestamp: new UnixTime(1732747391),
+          sinceTimestamp: UnixTime(1732747391),
         },
         _hackCostMultiplier: 0.03,
       },
@@ -760,8 +809,8 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1706772791),
-          untilTimestamp: new UnixTime(1710342000),
+          sinceTimestamp: UnixTime(1706772791),
+          untilTimestamp: UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.7,
       },
@@ -775,13 +824,13 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1710342000),
-          untilTimestamp: new UnixTime(1715783986), //15.05.2024
+          sinceTimestamp: UnixTime(1710342000),
+          untilTimestamp: UnixTime(1715783986), //15.05.2024
         },
         _hackCostMultiplier: 0.65,
       },
       {
-        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }], //same config as above but different multiplier
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -790,8 +839,8 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1715783986), //15.05.2024
-          untilTimestamp: new UnixTime(1722197315), //28.07.2024
+          sinceTimestamp: UnixTime(1715783986), //15.05.2024
+          untilTimestamp: UnixTime(1722197315), //28.07.2024
         },
         _hackCostMultiplier: 0.2,
       },
@@ -805,8 +854,8 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1722197315),
-          untilTimestamp: new UnixTime(1732665600), //27.11
+          sinceTimestamp: UnixTime(1722197315),
+          untilTimestamp: UnixTime(1732665600), //27.11
         },
         _hackCostMultiplier: 0.2,
       },
@@ -820,7 +869,7 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1732665600),
+          sinceTimestamp: UnixTime(1732665600),
         },
         _hackCostMultiplier: 0.05,
       },
@@ -834,8 +883,8 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1706767355),
-          untilTimestamp: new UnixTime(1710342000),
+          sinceTimestamp: UnixTime(1706767355),
+          untilTimestamp: UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.7,
       },
@@ -849,8 +898,8 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1710342000),
-          untilTimestamp: new UnixTime(1715783986),
+          sinceTimestamp: UnixTime(1710342000),
+          untilTimestamp: UnixTime(1715783986),
         },
         _hackCostMultiplier: 0.65,
       },
@@ -864,8 +913,8 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1715783986),
-          untilTimestamp: new UnixTime(1722197315),
+          sinceTimestamp: UnixTime(1715783986),
+          untilTimestamp: UnixTime(1722197315),
         },
         _hackCostMultiplier: 0.2,
       },
@@ -879,8 +928,8 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1722197315),
-          untilTimestamp: new UnixTime(1732665600), //27.11
+          sinceTimestamp: UnixTime(1722197315),
+          untilTimestamp: UnixTime(1732665600), //27.11
         },
         _hackCostMultiplier: 0.2,
       },
@@ -894,7 +943,7 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1732665600),
+          sinceTimestamp: UnixTime(1732665600),
         },
         _hackCostMultiplier: 0.05,
       },
@@ -1040,88 +1089,23 @@ export const starknet: Layer2 = {
       ],
     },
   },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('Starknet', {
-          description:
-            'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-          upgradeDelay: starknetDelaySeconds
-            ? formatSeconds(starknetDelaySeconds)
-            : 'No delay',
-          upgradableBy: ['StarknetAdminMultisig', 'StarknetSecurityCouncil'],
-        }),
-        ...getSHARPVerifierContracts(discovery, verifierAddress),
-        discovery.getContractDetails(
-          'L1DaiGateway',
-          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        ),
-        discovery.getContractDetails('StarkgateManager', {
-          description:
-            'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
-          upgradableBy: ['StarkgateBridgeMultisig'],
-          upgradeDelay: formatSeconds(starkgateManagerDelaySeconds),
-        }),
-        discovery.getContractDetails('StarkgateRegistry', {
-          description:
-            'A central registry contract to map token addresses to their StarkGate bridge contract.',
-          upgradableBy: ['StarkgateBridgeMultisig'],
-          upgradeDelay: formatSeconds(starkgateRegistryDelaySeconds),
-        }),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   upgradesAndGovernance: `
-  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
+  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the overall rollup system is currently split between a Security Council for the Starknet rollup contract and a ${sharpMsThreshold} Multisig for the SHARP verifier proxy with instant upgrade capability. Other Multisigs are governing the bridge escrows or permissioned for operations (posting state updates with proofs).
   
   
-  The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
+  The ${scThreshold} StarknetSecurityCouncil can upgrade the Starknet contract, force state finalization, change central configurations and manage the Operator role. Starkgate bridge contracts can be upgraded (and configured) by the ${discovery.getMultisigStats('StarkgateBridgeMultisig')} StarkgateBridgeMultisig without delay, allowing the potential theft of all bridged funds.
   
   
-  The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
+  The Operator role in the Starknet contract is permissioned to update the state of the Starknet rollup by supplying valid (zk) state transition proofs. Since this role is not permissionless, Starknet implements a StarknetSCMinorityMultisig with the Operator role, which potentially allows a minority of the StarknetSecurityCouncil to enforce censorship resistance by including transactions that are not included by regular Operators.
+  
+  
+  The shared SHARPVerifier contract is governed by the ${sharpMsThreshold} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting state validity of all StarkEx and SN stack chains that are using it and potentially allowing this Multisig to finalize malicious state updates.
   `,
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getMultisigPermission(
-          'StarknetSecurityCouncil',
-          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
-            delayDescriptionFromSeconds(starknetDelaySeconds),
-        ),
-        discovery.getMultisigPermission(
-          'StarknetAdminMultisig',
-          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
-            delayDescriptionFromSeconds(starknetDelaySeconds),
-        ),
-        discovery.getMultisigPermission(
-          'StarkgateBridgeMultisig',
-          'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
-        ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getMultisigPermission(
-          'StarknetOpsMultisig',
-          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
-        ),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getPermissionedAccounts('Starknet', 'operators'),
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
-        ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getMultisigPermission(
-          'StarknetOperatorMultisig',
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
-        ),
-        discovery.getPermissionDetails(
-          'StarkGate LUSD owner',
-          getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
-          'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
-        ),
-      ],
-    },
-  },
   milestones: [
     {
       title: 'Starknet starts using blobs',
@@ -1156,11 +1140,10 @@ export const starknet: Layer2 = {
     },
   ],
   badges: [
-    Badge.VM.CairoVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.SNStack,
-    Badge.Infra.SHARP,
-    Badge.Other.Governance,
+    BADGES.VM.CairoVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.SNStack,
+    BADGES.Infra.SHARP,
+    BADGES.Other.Governance,
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

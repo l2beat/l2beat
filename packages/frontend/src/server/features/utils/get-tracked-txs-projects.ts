@@ -1,42 +1,52 @@
-import type { Layer2 } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import type { IndexerConfigurationRecord } from '@l2beat/database'
-import { notUndefined } from '@l2beat/shared-pure'
-import { toTrackedTxConfig } from '../scaling/costs/utils/to-tracked-tx-config'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
+import { createTrackedTxId } from '@l2beat/shared'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getConfigurationsSyncedUntil } from './get-configurations-synced-until'
 
-export type TrackedTxsProject = ReturnType<typeof getTrackedTxsProjects>[number]
+export type TrackedTxsProject = {
+  id: ProjectId
+  trackedTxsConfigs: TrackedTxConfigEntry[]
+  syncedUntil: UnixTime
+}
 
 export function getTrackedTxsProjects(
-  projects: Layer2[],
+  projects: Project<'trackedTxsConfig'>[],
   configurations: IndexerConfigurationRecord[],
   type: 'liveness' | 'l2costs',
-) {
+): TrackedTxsProject[] {
   return projects
-    .map((project) => {
-      const trackedTxsConfigs = toTrackedTxConfig(
-        project.id,
-        project.config.trackedTxs,
-      )
-      if (trackedTxsConfigs === undefined) return
+    .map((p) => getTrackedTxsProject(p, configurations, type))
+    .filter((x) => x !== undefined)
+}
 
-      const projectRuntimeConfigIds = trackedTxsConfigs
-        .filter((c) => c.type === type)
-        .map((c) => c.id)
+export function getTrackedTxsProject(
+  project: Project<'trackedTxsConfig'>,
+  configurations: IndexerConfigurationRecord[],
+  type: 'liveness' | 'l2costs',
+): TrackedTxsProject | undefined {
+  const trackedTxsConfigs = project.trackedTxsConfig.map((c) => ({
+    ...c,
+    id: createTrackedTxId(c),
+  }))
 
-      const projectConfigs = configurations.filter((c) =>
-        projectRuntimeConfigIds.includes(c.id),
-      )
+  const projectRuntimeConfigIds = trackedTxsConfigs
+    .filter((c) => c.type === type)
+    .map((c) => c.id)
 
-      if (projectConfigs.length === 0) return
+  const projectConfigs = configurations.filter((c) =>
+    projectRuntimeConfigIds.includes(c.id),
+  )
 
-      const syncedUntil = getConfigurationsSyncedUntil(projectConfigs)
-      if (!syncedUntil) return
+  if (projectConfigs.length === 0) return
 
-      return {
-        ...project,
-        trackedTxsConfigs,
-        syncedUntil,
-      }
-    })
-    .filter(notUndefined)
+  const syncedUntil = getConfigurationsSyncedUntil(projectConfigs)
+  if (!syncedUntil) return
+
+  return {
+    id: project.id,
+    trackedTxsConfigs,
+    syncedUntil,
+  }
 }

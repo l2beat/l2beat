@@ -1,19 +1,18 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 
-export const galxegravity: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
+export const galxegravity: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
-  gasTokens: ['G'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -40,11 +39,8 @@ export const galxegravity: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  rpcUrl: 'https://rpc.gravity.xyz',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.gravity.xyz',
-    defaultCallsPerMinute: 1500,
+  activityConfig: {
+    type: 'block',
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
@@ -52,13 +48,8 @@ export const galxegravity: Layer2 = orbitStackL2({
     name: 'galxegravity',
     coingeckoPlatform: 'gravity-alpha',
     chainId: 1625,
-    explorerUrl: 'https://gscan.xyz/',
-    explorerApi: {
-      url: 'https://explorer.gravity.xyz/api',
-      type: 'blockscout',
-    },
-    blockscoutV2ApiUrl: 'https://explorer.gravity.xyz/api/v2',
-    minTimestampForTvl: new UnixTime(1716054191), // block 1 TS
+    explorerUrl: 'https://gscan.xyz',
+    sinceTimestamp: UnixTime(1716054191), // block 1 TS
     multicallContracts: [
       {
         sinceBlock: 52682,
@@ -67,7 +58,12 @@ export const galxegravity: Layer2 = orbitStackL2({
         version: '3',
       },
     ],
+    gasTokens: ['G'],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.gravity.xyz', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.gravity.xyz/api' },
+      { type: 'blockscoutV2', url: 'https://explorer.gravity.xyz/api/v2' },
+    ],
   },
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

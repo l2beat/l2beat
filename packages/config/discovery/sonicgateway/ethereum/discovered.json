@@ -2,14 +2,97 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 21766633,
-  "configHash": "0xb4d74f2a1d08050bd88dcdf6b5f5fffeb7a212a049c8d3a90907a95844a3ec13",
-  "contracts": [
+  "configHash": "0x959c9e518abcb18a9e8c93c0e70c42da96adca0bee76a6ba9cecb289464d36c6",
+  "entries": [
+    {
+      "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "relay",
+          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+        }
+      ]
+    },
+    {
+      "address": "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
+    },
+    {
+      "address": "0x2D407dDb06311396fE14D4b49da5F0471447d45C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x32744b98cC03A76C0559e905a31E8474a31729c1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
+    },
+    {
+      "address": "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
+    },
+    {
+      "address": "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
+    },
+    {
+      "address": "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
+    },
+    {
+      "address": "0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "ValidatorsRegistry",
       "address": "0x72965045A6691E5A74299D1e878f303264D4D910",
+      "type": "Contract",
       "sourceHashes": [
         "0xcc25aa0a3dfaee567102dda1bbc3cac11de3d99aedbb1be6b059dc6230d61f8c"
       ],
+      "proxyType": "immutable",
       "description": "Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).",
       "issuedPermissions": [
         {
@@ -54,6 +137,7 @@
         }
       ],
       "sinceTimestamp": 1734690491,
+      "sinceBlock": 21443134,
       "values": {
         "$immutable": true,
         "getQuorum": 533,
@@ -80,15 +164,16 @@
           "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
           "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
         ]
-      },
-      "derivedName": "ValidatorsRegistry"
+      }
     },
     {
       "name": "DirectExitAdministrator",
       "address": "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
+      "type": "Contract",
       "sourceHashes": [
         "0x8098841579ecf27111655e2469db7694f23f693dcd7bc781864783f8c03ea4df"
       ],
+      "proxyType": "immutable",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -98,6 +183,7 @@
         }
       ],
       "sinceTimestamp": 1734690695,
+      "sinceBlock": 21443151,
       "values": {
         "$immutable": true,
         "deposit": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
@@ -106,6 +192,7 @@
     {
       "name": "SonicGatewayOpsMultisig",
       "address": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -131,6 +218,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1734794243,
+      "sinceBlock": 21451725,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -150,19 +238,49 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8406de45bfAca854d08377ca1436C6b4785b4D79",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
+    },
+    {
       "name": "MPTProofVerifier",
       "address": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
+      "type": "Contract",
       "sourceHashes": [
         "0xfca61099dca9ccc6f9eb4019b9ca13d0b1cbe6e68f74766cb39e25550441701e"
       ],
+      "proxyType": "immutable",
       "description": "Verifier contract for merkle proofs.",
       "sinceTimestamp": 1734690407,
-      "values": { "$immutable": true },
-      "derivedName": "MPTProofVerifier"
+      "sinceBlock": 21443127,
+      "values": { "$immutable": true }
+    },
+    {
+      "address": "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
     },
     {
       "name": "SonicGatewayMultisig",
       "address": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -202,6 +320,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1733407067,
+      "sinceBlock": 21336741,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -224,6 +343,7 @@
     {
       "name": "TokenDeposit",
       "address": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
+      "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
         "0xa91b55bb0cd39f657105bf6422bd209274305ae3556f2f802a822a891fabfa0e"
@@ -250,6 +370,7 @@
         }
       ],
       "sinceTimestamp": 1734690647,
+      "sinceBlock": 21443147,
       "values": {
         "$admin": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
         "$implementation": "0x4cbd824685F1E21B119F230B54d65C5a7D2a5330",
@@ -284,12 +405,28 @@
         "proofVerifier": { "severity": "HIGH" },
         "stateOracle": { "severity": "HIGH" },
         "deadState": { "severity": "HIGH" }
-      },
-      "derivedName": "TokenDeposit"
+      }
+    },
+    {
+      "address": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "relay",
+          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+        }
+      ]
+    },
+    {
+      "address": "0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "UpdateManager",
       "address": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+      "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
         "0xfecbe59e70f38272cb616319820802e07cc538b07b4eb586855b0ca363db6ce9"
@@ -339,8 +476,9 @@
           "description": "update the state root."
         }
       ],
-      "ignoreInWatchMode": ["lastBlockNum"],
+      "ignoreInWatchMode": ["lastBlockNum", "fastLaneInUse"],
       "sinceTimestamp": 1734690815,
+      "sinceBlock": 21443161,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
@@ -408,15 +546,16 @@
         "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
         "updateVerifier": "0x72965045A6691E5A74299D1e878f303264D4D910",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "UpdateManager"
+      }
     },
     {
       "name": "StateOracle",
       "address": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+      "type": "Contract",
       "sourceHashes": [
         "0x32d9b287383d91a40dcf024a5f38e044b104c231806ecf21aa5867f45f895eb0"
       ],
+      "proxyType": "immutable",
       "description": "Simple contract that saves the latest state root.",
       "issuedPermissions": [
         {
@@ -428,6 +567,7 @@
       ],
       "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "sinceTimestamp": 1734690443,
+      "sinceBlock": 21443130,
       "values": {
         "$immutable": true,
         "chainId": 146,
@@ -435,12 +575,23 @@
         "lastState": "0x1e4dd2c7434e8393889f81a784a5baaf0930e50c8e620e5c4c774ef53eaf3c29",
         "lastUpdateTime": 1738593395,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-      },
-      "derivedName": "StateOracle"
+      }
+    },
+    {
+      "address": "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge",
+          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
     },
     {
       "name": "TokenPairs",
       "address": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
+      "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
         "0x2527d117bfcdd69b3e49a08514f4e5090307308646ebf2f019e382e7c4968fb3"
@@ -468,6 +619,7 @@
         }
       ],
       "sinceTimestamp": 1734690539,
+      "sinceBlock": 21443138,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943",
@@ -501,124 +653,13 @@
         "TERMINATOR_ROLE": "0x26aab3fbd9c7d505a96c193ccd3127894549d6ee75e38e08a6cef48fbab511e8",
         "UNREGISTER_ROLE": "0x822120e1e3a621ffae2121fc52e9eb301eb26b031334bbf3018f0954c7360700",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "derivedName": "TokenPairs"
+      }
+    },
+    {
+      "address": "0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
-        },
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    {
-      "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
-      "receivedPermissions": [
-        {
-          "permission": "relay",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-        }
-      ]
-    },
-    {
-      "address": "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    { "address": "0x2D407dDb06311396fE14D4b49da5F0471447d45C" },
-    {
-      "address": "0x32744b98cC03A76C0559e905a31E8474a31729c1",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    {
-      "address": "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    {
-      "address": "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    {
-      "address": "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    { "address": "0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9" },
-    { "address": "0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5" },
-    { "address": "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1" },
-    {
-      "address": "0x8406de45bfAca854d08377ca1436C6b4785b4D79",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    {
-      "address": "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    {
-      "address": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
-      "receivedPermissions": [
-        {
-          "permission": "relay",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-        }
-      ]
-    },
-    { "address": "0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7" },
-    {
-      "address": "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
-    },
-    { "address": "0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB" }
   ],
   "abis": {
     "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943": [

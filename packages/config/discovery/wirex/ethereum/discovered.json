@@ -2,28 +2,34 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 21766767,
-  "configHash": "0x5e4fefef153889abe97a4682d238cb5fc5d527b118a3b0cc817efdbd52b011c4",
+  "configHash": "0x58254cf9d83c5eb150cd7f42d5bc726afb6caacb6c1ff060074497fa5a418b48",
   "sharedModules": ["shared-polygon-cdk"],
-  "contracts": [
+  "entries": [
     {
-      "name": "FflonkVerifier",
+      "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
-      "displayName": "Verifier",
+      "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
-      "values": { "$immutable": true }
+      "sinceBlock": 19505052,
+      "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -31,14 +37,27 @@
         }
       ],
       "sinceTimestamp": 1720547171,
+      "sinceBlock": 20270515,
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
       }
     },
     {
+      "address": "0x49a191471F248f7c86cA29477e6E969970BaEAdA",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
+        }
+      ]
+    },
+    {
       "name": "PolygonDataCommittee",
       "address": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -60,6 +79,7 @@
         }
       ],
       "sinceTimestamp": 1720547183,
+      "sinceBlock": 20270516,
       "values": {
         "$admin": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
         "$implementation": "0xAce9269EaC3419937093154dea0AD44C36Df6963",
@@ -86,11 +106,13 @@
         ],
         "owner": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
         "requiredAmountOfSignatures": 1
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Validium",
       "address": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
@@ -120,6 +142,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1720089623,
+      "sinceBlock": 20232613,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
@@ -170,22 +193,13 @@
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
       },
-      "derivedName": "PolygonValidiumStorageMigration"
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    {
-      "address": "0x49a191471F248f7c86cA29477e6E969970BaEAdA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
-        }
-      ]
+      "derivedName": "PolygonValidiumStorageMigration",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -200,10 +214,20 @@
         }
       ]
     },
-    { "address": "0xBf5B50887F0B2b3160A3a097EBA4edEd8A9dDed1" },
-    { "address": "0xCEb82CC6e0C2541a19E4b6E2DBF237fF2d8E96f8" },
+    {
+      "address": "0xBf5B50887F0B2b3160A3a097EBA4edEd8A9dDed1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xCEb82CC6e0C2541a19E4b6E2DBF237fF2d8E96f8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+      "type": "EOA",
+      "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -401,8 +425,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "polygon-cdk/PolygonDataCommittee": "0x31cd17cf72567c89c63efc52c1e02df7c736621657d2c0fa8007a75fca167219",
-    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
-    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
+    "polygon-cdk/PolygonDataCommittee": "0x94ff847d4abbe9deb28dd2529a1549d9b5b2144a2d61677e595d5bb40f193bda",
+    "polygon-cdk/PolygonZkEVM": "0xa3db9cd4750e048e231aadcba1dd439bc7ca32cfc261f65c34038f8df919df94",
+    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
   }
 }

@@ -1,19 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const clique: Layer3 = underReviewL3({
+export const clique: ScalingProject = underReviewL3({
   id: 'clique',
   capability: 'universal',
-  addedAt: new UnixTime(1726595996), // 2024-09-17T17:59:56Z
+  addedAt: UnixTime(1726595996), // 2024-09-17T17:59:56Z
   hostChain: ProjectId('base'),
   badges: [
-    Badge.L3ParentChain.Base,
-    Badge.DA.Celestia,
-    Badge.Stack.OPStack,
-    Badge.VM.EVM,
-    Badge.RaaS.Conduit,
+    BADGES.L3ParentChain.Base,
+    BADGES.DA.Celestia,
+    BADGES.Stack.OPStack,
+    BADGES.VM.EVM,
+    BADGES.RaaS.Conduit,
   ],
   display: {
     name: 'Clique',
@@ -32,19 +32,23 @@ export const clique: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/STP_Network', 'https://t.me/STPofficial'],
     },
   },
-  rpcUrl: 'https://rpc.myclique.io/',
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'clique',
+    chainId: 8853,
+    apis: [
+      { type: 'rpc', url: 'https://rpc.myclique.io/', callsPerMinute: 1500 },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.myclique.io/',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     // BRIDGE
     {
       address: EthereumAddress('0x29e464a7e6331e80f0e707e2cbdbafb1a6af0a76'),
-      sinceTimestamp: new UnixTime(1710831600),
+      sinceTimestamp: UnixTime(1710831600),
       includeInTotal: false,
       tokens: ['ETH'],
       chain: 'base',

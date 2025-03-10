@@ -1,4 +1,4 @@
-import type { ScalingProjectStateDerivation } from '../types'
+import type { ProjectScalingStateDerivation } from '../types'
 
 type SupportedOPStackChains =
   | 'OP_MAINNET'
@@ -13,6 +13,8 @@ type SupportedOPStackChains =
   | 'SWELL'
   | 'WORLD'
   | 'SHAPE'
+  | 'UNICHAIN'
+  | 'INK'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
@@ -64,9 +66,17 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/shape.toml',
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/shape.json.zst',
   ],
+  UNICHAIN: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/unichain.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/unichain.json.zst',
+  ],
+  INK: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/ink.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/ink.json.zst',
+  ],
 }
 
-function OPSTACK(chain: SupportedOPStackChains): ScalingProjectStateDerivation {
+function OPSTACK(chain: SupportedOPStackChains): ProjectScalingStateDerivation {
   const [config, genesis] = OPStackInfos[chain]
   return {
     nodeSoftware: `The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](${config}).`,

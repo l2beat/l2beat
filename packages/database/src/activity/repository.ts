@@ -42,7 +42,7 @@ export class ActivityRepository extends BaseRepository {
       .where((eb) =>
         eb.and([
           eb('projectId', '=', projectId.toString()),
-          eb('timestamp', '>=', fromInclusive.toDate()),
+          eb('timestamp', '>=', UnixTime.toDate(fromInclusive)),
         ]),
       )
       .executeTakeFirst()
@@ -63,8 +63,8 @@ export class ActivityRepository extends BaseRepository {
       .selectFrom('Activity')
       .select(selectActivity)
       .where('projectId', '=', projectId.toString())
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
@@ -83,8 +83,8 @@ export class ActivityRepository extends BaseRepository {
         'in',
         projectIds.map((p) => p.toString()),
       )
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
@@ -146,6 +146,26 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
+  async getSummedUopsCountForProjectAndTimeRange(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<number | undefined> {
+    const [from, to] = timeRange
+    const row = await this.db
+      .selectFrom('Activity')
+      .select((eb) =>
+        eb.fn
+          .sum(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+          .as('count'),
+      )
+      .where('projectId', '=', projectId.toString())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .executeTakeFirst()
+
+    return row ? Number(row.count) : undefined
+  }
+
   async getSummedUopsCountForProjectsAndTimeRange(
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
@@ -164,8 +184,8 @@ export class ActivityRepository extends BaseRepository {
         'in',
         projectIds.map((p) => p.toString()),
       )
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .groupBy('projectId')
       .execute()
 

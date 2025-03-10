@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('swell')
-const genesisTimestamp = new UnixTime(1732696703)
+const genesisTimestamp = UnixTime(1732696703)
 
 export const swell = opStackL2({
-  addedAt: new UnixTime(1712341625), // 2024-04-05T18:27:05Z
+  addedAt: UnixTime(1712341625), // 2024-04-05T18:27:05Z
   discovery,
   genesisTimestamp,
-  additionalBadges: [Badge.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Restaking'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   associatedTokens: ['WLD'],
@@ -33,11 +33,10 @@ export const swell = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.ankr.com/swell',
   finality: {
     type: 'OPStack',
-    minTimestamp: new UnixTime(1732701647),
-    genesisTimestamp: new UnixTime(1732696703),
+    minTimestamp: UnixTime(1732701647),
+    genesisTimestamp: UnixTime(1732696703),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -47,8 +46,14 @@ export const swell = opStackL2({
   chainConfig: {
     name: 'swell',
     chainId: 1923,
-    // coingeckoPlatform: '',
-    minTimestampForTvl: new UnixTime(1732696703),
+    sinceTimestamp: UnixTime(1732696703),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ankr.com/swell',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

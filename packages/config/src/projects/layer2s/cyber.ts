@@ -2,8 +2,8 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -29,11 +29,11 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const cyber: Layer2 = opStackL2({
-  addedAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
+export const cyber: ScalingProject = opStackL2({
+  addedAt: UnixTime(1713364684), // 2024-04-17T14:38:04Z
   associatedTokens: ['CYBER'],
   discovery,
-  additionalBadges: [Badge.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -71,13 +71,9 @@ export const cyber: Layer2 = opStackL2({
   chainConfig: {
     name: 'cyber',
     chainId: 7560,
-    explorerUrl: 'https://cyberscan.co/',
+    explorerUrl: 'https://cyberscan.co',
     coingeckoPlatform: 'cyber',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1713428569), // block 1 ts
+    sinceTimestamp: UnixTime(1713428569), // block 1 ts
     multicallContracts: [
       {
         sinceBlock: 1,
@@ -86,10 +82,20 @@ export const cyber: Layer2 = opStackL2({
         version: '3',
       },
     ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://cyber.alt.technology/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
+      },
+    ],
   },
-  genesisTimestamp: new UnixTime(1713428569),
+  genesisTimestamp: UnixTime(1713428569),
   isNodeAvailable: 'UnderReview',
-  rpcUrl: 'https://cyber.alt.technology/',
   customDa: {
     type: 'DA Challenges',
     name: 'CyberDA',

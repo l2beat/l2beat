@@ -1,3 +1,122 @@
+Generated with discovered.json: 0x9bef2c3a881643b91efd62d012a10d55d9face55
+
+# Diff at Tue, 04 Mar 2025 10:40:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21845003
+- current block number: 21845003
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21845003 (main branch discovery), not current.
+
+```diff
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986) {
+    +++ description: None
+      sinceBlock:
++        18987060
+    }
+```
+
+```diff
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49) {
+    +++ description: None
+      sinceBlock:
++        17584527
+    }
+```
+
+```diff
+    contract DeleteVerifierSize100 (0x43B68ccBa7FC726540768fD1537c3179283140ed) {
+    +++ description: None
+      sinceBlock:
++        18987089
+    }
+```
+
+```diff
+    contract RegisterVerifierSize100 (0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258) {
+    +++ description: None
+      sinceBlock:
++        18967237
+    }
+```
+
+```diff
+    contract DeleteVerifierSize10 (0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1) {
+    +++ description: None
+      sinceBlock:
++        18987084
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5) {
+    +++ description: None
+      sinceBlock:
++        17584544
+    }
+```
+
+```diff
+    contract RegisterVerifierSize1200 (0xE44c83b9e1971A24EC698829297A0C4026B0CeF9) {
+    +++ description: None
+      sinceBlock:
++        18967248
+    }
+```
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      sinceBlock:
++        17636832
+    }
+```
+
+```diff
+    contract RegisterVerifierSize600 (0xFC1c26E964F791f81a33F49D91f79456891AA1c1) {
+    +++ description: None
+      sinceBlock:
++        18967244
+    }
+```
+
+Generated with discovered.json: 0x7c9073b2478d0121e3cf233495042b32825b4004
+
+# Diff at Fri, 14 Feb 2025 13:29:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 20922333
+- current block number: 21845003
+
+## Description
+
+WorldIdIdentityManager2 admin, owner change (EOA).
+
+## Watched changes
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      issuedPermissions.0.to:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.$admin:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.owner:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    }
+```
+
 Generated with discovered.json: 0xef2da8c67b30bebcbc8f5c89fe5d1ad362505ddb
 
 # Diff at Mon, 20 Jan 2025 11:10:21 GMT:

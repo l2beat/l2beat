@@ -1,14 +1,9 @@
-import type { Layer2FinalityConfig, Project } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { FinalityData, FinalityDataPoint } from './schema'
-
-export type FinalityProjectConfig = {
-  projectId: ProjectId
-} & Layer2FinalityConfig
 
 export async function getFinality(projects: Project<'finalityConfig'>[]) {
   if (env.MOCK) {
@@ -27,7 +22,7 @@ async function getFinalityData(projects: Project<'finalityConfig'>[]) {
     keyBy(records, 'projectId'),
     (record) => {
       const base = {
-        syncedUntil: record.timestamp.toNumber(), // cache serialization, will be coerced to UnixTime
+        syncedUntil: record.timestamp, // cache serialization, will be coerced to UnixTime
         timeToInclusion: {
           minimumInSeconds: record.minimumTimeToInclusion,
           maximumInSeconds: record.maximumTimeToInclusion,
@@ -68,7 +63,7 @@ function getMockFinalityData(
     acc[cur.id.toString()] = {
       timeToInclusion: generateMockData(),
       stateUpdateDelays: generateMockData(),
-      syncedUntil: UnixTime.now().toNumber(),
+      syncedUntil: UnixTime.now(),
     }
     return acc
   }, {})
@@ -77,7 +72,7 @@ function getMockFinalityData(
     ...result,
     optimism: {
       ...result.optimism!,
-      syncedUntil: UnixTime.now().add(-2, 'days').toNumber(),
+      syncedUntil: UnixTime.now() - 2 * UnixTime.DAY,
     },
   }
 }

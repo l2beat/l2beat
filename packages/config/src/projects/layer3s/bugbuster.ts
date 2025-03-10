@@ -12,24 +12,24 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
-export const bugbuster: Layer3 = {
+export const bugbuster: ScalingProject = {
   type: 'layer3',
   id: ProjectId('bugbuster'),
   capability: 'appchain',
-  addedAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  addedAt: UnixTime(1723722996), // 2024-08-15T11:56:36Z
   hostChain: ProjectId('optimism'),
   badges: [
-    Badge.Stack.Cartesi,
-    Badge.VM.AppChain,
-    Badge.VM.CartesiVM,
-    Badge.DA.EthereumCalldata,
-    Badge.L3ParentChain.OpMainnet,
+    BADGES.Stack.Cartesi,
+    BADGES.VM.AppChain,
+    BADGES.VM.CartesiVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.L3ParentChain.OpMainnet,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

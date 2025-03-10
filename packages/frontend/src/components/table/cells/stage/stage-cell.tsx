@@ -1,4 +1,4 @@
-import type { StageConfig } from '@l2beat/config'
+import type { ProjectScalingStage } from '@l2beat/config'
 
 import {
   StageBadge,
@@ -15,7 +15,7 @@ import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
 
 export interface StageCellProps {
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
   isAppchain: boolean
 }
 
@@ -28,7 +28,10 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger
-        className="flex gap-1 max-md:pb-[5px] max-md:pt-2"
+        className={cn(
+          'flex gap-1',
+          isAppchain && 'max-md:pb-[5px] max-md:pt-2',
+        )}
         disabledOnMobile
       >
         <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />

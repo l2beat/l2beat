@@ -1,31 +1,30 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import type { Meta } from '@l2beat/discovery-types'
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
+import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
-const emptyOutputMeta: Meta = {
-  description: undefined,
-  issuedPermissions: undefined,
-  receivedPermissions: undefined,
-  directlyReceivedPermissions: undefined,
-  categories: undefined,
-  types: undefined,
-  severity: undefined,
-}
+const emptyOutputMeta = {
+  type: 'EOA',
+  unverified: true,
+  proxyType: 'EOA',
+} as const
 
 describe(processAnalysis.name, () => {
-  const base = {
+  const baseContract = {
     ...EMPTY_ANALYZED_CONTRACT,
     type: 'Contract' as const,
     derivedName: undefined,
     isVerified: true,
-    deploymentTimestamp: new UnixTime(1234),
+    deploymentTimestamp: UnixTime(1234),
     deploymentBlockNumber: 9876,
     proxyType: 'immutable',
     ignoreInWatchMode: undefined,
+  }
+
+  const baseEOA = {
+    ...EMPTY_ANALYZED_EOA,
   }
 
   const ADDRESS_A = EthereumAddress(
@@ -45,14 +44,14 @@ describe(processAnalysis.name, () => {
   )
 
   const CONTRACT_A: AnalyzedContract = {
-    ...base,
+    ...baseContract,
     address: ADDRESS_A,
     name: 'A',
     isVerified: false,
   }
 
   const CONTRACT_B: AnalyzedContract = {
-    ...base,
+    ...baseContract,
     address: ADDRESS_B,
     name: 'B',
     derivedName: 'Something not B',
@@ -68,7 +67,7 @@ describe(processAnalysis.name, () => {
   }
 
   const CONTRACT_C: AnalyzedContract = {
-    ...base,
+    ...baseContract,
     address: ADDRESS_C,
     name: 'C',
     proxyType: 'EIP1967 proxy',
@@ -89,17 +88,16 @@ describe(processAnalysis.name, () => {
 
   it('sorts EOAs', () => {
     const result = processAnalysis([
-      { type: 'EOA', address: ADDRESS_B },
-      { type: 'EOA', address: ADDRESS_A },
-      { type: 'EOA', address: ADDRESS_C },
+      { ...baseEOA, type: 'EOA', address: ADDRESS_B },
+      { ...baseEOA, type: 'EOA', address: ADDRESS_A },
+      { ...baseEOA, type: 'EOA', address: ADDRESS_C },
     ])
 
     expect(result).toEqual({
-      contracts: [],
-      eoas: [
-        { ...emptyOutputMeta, address: ADDRESS_A, name: undefined },
-        { ...emptyOutputMeta, address: ADDRESS_B, name: undefined },
-        { ...emptyOutputMeta, address: ADDRESS_C, name: undefined },
+      entries: [
+        { ...emptyOutputMeta, address: ADDRESS_A },
+        { ...emptyOutputMeta, address: ADDRESS_B },
+        { ...emptyOutputMeta, address: ADDRESS_C },
       ],
       abis: {},
     })
@@ -109,16 +107,17 @@ describe(processAnalysis.name, () => {
     const result = processAnalysis([CONTRACT_A])
 
     expect(result).toEqual({
-      contracts: [
+      entries: [
         {
+          type: 'Contract',
           address: ADDRESS_A,
           name: 'A',
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: baseContract.deploymentBlockNumber,
+          sinceTimestamp: baseContract.deploymentTimestamp,
         },
       ],
-      eoas: [],
       abis: CONTRACT_A.abis,
     })
   })
@@ -127,19 +126,19 @@ describe(processAnalysis.name, () => {
     const result = processAnalysis([CONTRACT_B])
 
     expect(result).toEqual({
-      contracts: [
+      entries: [
         {
+          type: 'Contract',
           address: ADDRESS_B,
           name: 'B',
           derivedName: 'Something not B',
           proxyType: CONTRACT_B.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: baseContract.deploymentBlockNumber,
+          sinceTimestamp: baseContract.deploymentTimestamp,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
-          sourceHashes: [],
         },
       ],
-      eoas: [],
       abis: CONTRACT_B.abis,
     })
   })
@@ -147,21 +146,22 @@ describe(processAnalysis.name, () => {
   it('processes a proxy', () => {
     const result = processAnalysis([
       CONTRACT_C,
-      { type: 'EOA', address: ADDRESS_D },
+      { ...baseEOA, type: 'EOA', address: ADDRESS_D },
     ])
 
     expect(result).toEqual({
-      contracts: [
+      entries: [
         {
+          type: 'Contract',
           address: ADDRESS_C,
           name: 'C',
           proxyType: CONTRACT_C.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: baseContract.deploymentBlockNumber,
+          sinceTimestamp: baseContract.deploymentTimestamp,
           values: CONTRACT_C.values,
-          sourceHashes: [],
         },
+        { ...emptyOutputMeta, address: ADDRESS_D },
       ],
-      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D, name: undefined }],
       abis: CONTRACT_C.abis,
     })
   })
@@ -172,40 +172,45 @@ describe(processAnalysis.name, () => {
       CONTRACT_B,
       CONTRACT_C,
       {
+        ...baseEOA,
         type: 'EOA',
         address: ADDRESS_D,
       },
     ])
 
     expect(result).toEqual({
-      contracts: [
+      entries: [
         {
+          type: 'Contract',
           address: ADDRESS_A,
           name: 'A',
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
+          sinceBlock: baseContract.deploymentBlockNumber,
+          sinceTimestamp: baseContract.deploymentTimestamp,
         },
         {
+          type: 'Contract',
           address: ADDRESS_B,
           proxyType: CONTRACT_B.proxyType,
           name: 'B',
           derivedName: 'Something not B',
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
-          sourceHashes: [],
+          sinceBlock: baseContract.deploymentBlockNumber,
+          sinceTimestamp: baseContract.deploymentTimestamp,
         },
         {
+          type: 'Contract',
           address: ADDRESS_C,
           proxyType: CONTRACT_C.proxyType,
           name: 'C',
           values: CONTRACT_C.values,
-          sinceTimestamp: base.deploymentTimestamp.toNumber(),
-          sourceHashes: [],
+          sinceBlock: baseContract.deploymentBlockNumber,
+          sinceTimestamp: baseContract.deploymentTimestamp,
         },
+        { ...emptyOutputMeta, address: ADDRESS_D },
       ],
-      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D, name: undefined }],
       abis: {
         ...CONTRACT_A.abis,
         ...CONTRACT_B.abis,

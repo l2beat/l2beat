@@ -19,12 +19,15 @@ export function splitIntoSubfiles(
 ): Result {
   const newFilePathList: LeftRightPair[] = []
   for (const fullPaths of filePathsList) {
-    const truncPaths = removeCommonPath(fullPaths)
-    const result = splitPair(fullPaths, truncPaths)
-
-    if (result !== undefined) {
-      newFilePathList.push(result)
+    if (fullPaths.left === fullPaths.right) {
+      newFilePathList.push(fullPaths)
     } else {
+      const truncPaths = removeCommonPath(fullPaths)
+      const result = splitPair(fullPaths, truncPaths)
+
+      if (result !== undefined) {
+        newFilePathList.push(result)
+      }
     }
   }
 

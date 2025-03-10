@@ -1,23 +1,16 @@
 import { join } from 'path'
-import {
-  bridgeToBackendProject,
-  layer2ToBackendProject,
-} from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
-import { ProjectService, bridges, chains, layer2s } from '@l2beat/config'
+import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
-import {
-  getChainActivityBlockExplorerConfig,
-  getChainActivityConfig,
-  getProjectsWithActivity,
-} from './features/activity'
+import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
-import { getFinalityConfigurations } from './features/finality'
+import { getFinalityConfig } from './features/finality'
+import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getVerifiersConfig } from './features/verifiers'
@@ -38,8 +31,10 @@ export async function makeConfig(
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
-  const tvlConfig = getTvlConfig(flags, env, minTimestampOverride)
 
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
   const isReadonly = env.boolean(
     'READONLY',
     // if we connect locally to production db, we want to be readonly!
@@ -49,11 +44,9 @@ export async function makeConfig(
   return {
     name,
     isReadonly,
-    projects: layer2s
-      .map(layer2ToBackendProject)
-      .concat(bridges.map(bridgeToBackendProject)),
     clock: {
-      minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
+      minBlockTimestamp:
+        minTimestampOverride ?? getEthereumMinTimestamp(chains),
       safeTimeOffsetSeconds: 60 * 60,
       hourlyCutoffDays: 7,
       sixHourlyCutoffDays: 90,
@@ -111,49 +104,16 @@ export async function makeConfig(
           user: env.string('METRICS_AUTH_USER'),
           pass: env.string('METRICS_AUTH_PASS'),
         },
-    tvl: flags.isEnabled('tvl') && tvlConfig,
-    trackedTxsConfig: flags.isEnabled('tracked-txs') && {
-      bigQuery: {
-        clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
-        privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
-        projectId: env.string('BIGQUERY_PROJECT_ID'),
-      },
-      // TODO: figure out how to set it for local development
-      minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
-      uses: {
-        liveness: flags.isEnabled('tracked-txs', 'liveness'),
-        l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
-          aggregatorEnabled: flags.isEnabled(
-            'tracked-txs',
-            'l2costs',
-            'aggregator',
-          ),
-        },
-      },
-    },
-    finality: flags.isEnabled('finality') && {
-      configurations: getFinalityConfigurations(flags, env),
-    },
-    activity: flags.isEnabled('activity') && {
-      starkexApiKey: env.string([
-        'STARKEX_API_KEY_FOR_ACTIVITY',
-        'STARKEX_API_KEY',
-      ]),
-      starkexCallsPerMinute: env.integer(
-        [
-          'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
-          'STARKEX_API_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      projects: getProjectsWithActivity()
-        .filter((x) => flags.isEnabled('activity', x.id.toString()))
-        .map((x) => ({
-          id: x.id,
-          config: getChainActivityConfig(env, x),
-          blockExplorerConfig: getChainActivityBlockExplorerConfig(env, x),
-        })),
-    },
+    tvl:
+      flags.isEnabled('tvl') &&
+      (await getTvlConfig(ps, flags, env, chains, minTimestampOverride)),
+    trackedTxsConfig:
+      flags.isEnabled('tracked-txs') &&
+      (await getTrackedTxsConfig(ps, env, flags)),
+    finality:
+      flags.isEnabled('finality') && (await getFinalityConfig(ps, env, flags)),
+    activity:
+      flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
@@ -165,18 +125,21 @@ export async function makeConfig(
       chains: new ConfigReader(join(process.cwd(), '../config'))
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
-        .map((chain) => getChainDiscoveryConfig(env, chain)),
+        .map((chain) => getChainDiscoveryConfig(env, chain, chains)),
       cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
       cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
+      updateMessagesRetentionPeriodDays: env.integer(
+        ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
+        30,
+      ),
     },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
-    chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-
+    chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
-    chainConfig: getChainConfig(env),
+    chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString([
         'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
@@ -197,16 +160,16 @@ export async function makeConfig(
         10000,
       ),
     },
-    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, flags, env)),
+    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     // Must be last
     flags: flags.getResolved(),
   }
 }
 
-function getEthereumMinTimestamp() {
+function getEthereumMinTimestamp(chains: ChainConfig[]) {
   const minBlockTimestamp = chains.find(
     (c) => c.name === 'ethereum',
-  )?.minTimestampForTvl
+  )?.sinceTimestamp
   if (!minBlockTimestamp) {
     throw new Error('Missing minBlockTimestamp for ethereum')
   }

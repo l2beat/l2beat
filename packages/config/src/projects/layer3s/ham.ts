@@ -1,17 +1,16 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
 
 const discovery = new ProjectDiscovery('ham', 'base')
 
-export const ham: Layer3 = opStackL3({
-  addedAt: new UnixTime(1722499160), // 2024-08-01T07:59:20Z
+export const ham: ScalingProject = opStackL3({
+  addedAt: UnixTime(1722499160), // 2024-08-01T07:59:20Z
   discovery,
-  hostChain: ProjectId('base'),
-  additionalBadges: [Badge.L3ParentChain.Base, Badge.RaaS.Caldera],
+  additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -42,7 +41,21 @@ export const ham: Layer3 = opStackL3({
       ],
     },
   },
-  genesisTimestamp: new UnixTime(1716590734),
+  genesisTimestamp: UnixTime(1716590734),
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k=',
+  },
   isNodeAvailable: true,
-  rpcUrl: 'https://rpc.ham.fun', // chainId: 5112
+  chainConfig: {
+    name: 'ham',
+    chainId: 5112,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ham.fun',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
 })

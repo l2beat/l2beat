@@ -14,14 +14,13 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
 const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
 }
 
 const withdrawalDelay = discovery.getContractValue<number>(
@@ -29,12 +28,12 @@ const withdrawalDelay = discovery.getContractValue<number>(
   'withdrawalDelay',
 )
 
-export const immutablezkevm: Layer2 = {
+export const immutablezkevm: ScalingProject = {
   type: 'layer2',
   id: ProjectId('immutablezkevm'),
   capability: 'universal',
-  addedAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
-  badges: [Badge.VM.EVM, Badge.DA.CustomDA],
+  addedAt: UnixTime(1707318380), // 2024-02-07T15:06:20Z
+  badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -56,21 +55,30 @@ export const immutablezkevm: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'immutablezkevm',
+    chainId: 13371,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.immutable.com',
+        callsPerMinute: 500,
+      },
+    ],
+  },
   config: {
     associatedTokens: ['IMX'],
     escrows: [
       {
         address: EthereumAddress('0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6'),
-        sinceTimestamp: new UnixTime(1702962563),
+        sinceTimestamp: UnixTime(1702962563),
         tokens: ['IMX', 'USDC', 'ETH', 'USDT', 'GOG'],
         chain: 'ethereum',
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.immutable.com',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
-      defaultCallsPerMinute: 500,
     },
   },
   dataAvailability: {

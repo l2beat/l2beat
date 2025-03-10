@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('swan')
 
-export const swan: Layer2 = opStackL2({
-  addedAt: new UnixTime(1722275591), // 2024-07-29T17:53:11Z
+export const swan: ScalingProject = opStackL2({
+  addedAt: UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
   additionalPurposes: ['AI', 'Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -34,18 +34,28 @@ export const swan: Layer2 = opStackL2({
       ],
     },
   },
-  genesisTimestamp: new UnixTime(1718640220),
+  genesisTimestamp: UnixTime(1718640220),
   // failing, needs different analyzer?
   // finality: {
   //   type: 'OPStack-blob',
-  //   genesisTimestamp: new UnixTime(1718640220),
-  //   minTimestamp: new UnixTime(1718683727), // first blob
+  //   genesisTimestamp: UnixTime(1718640220),
+  //   minTimestamp: UnixTime(1718683727), // first blob
   //   l2BlockTimeSeconds: 2,
   //   lag: 0,
   //   stateUpdate: 'disabled',
   // },
   isNodeAvailable: true,
-  rpcUrl: 'https://mainnet-rpc01.swanchain.io',
+  chainConfig: {
+    name: 'swan',
+    chainId: 254,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet-rpc01.swanchain.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   milestones: [
     {
       title: 'Mainnet launch',

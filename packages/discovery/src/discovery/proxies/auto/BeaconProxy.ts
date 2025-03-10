@@ -1,7 +1,8 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 // keccak256('eip1967.proxy.beacon') - 1)
 const BEACON_SLOT = Bytes.fromHex(

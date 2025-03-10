@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { isProjectVerified } from '../../../verification/isVerified'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -20,7 +19,7 @@ export const blobstream: BaseProject = {
   slug: 'blobstream',
   name: 'Blobstream',
   shortName: undefined,
-  addedAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
+  addedAt: UnixTime(1729253328), // 2024-10-18T12:08:48Z
   // data
   statuses: {
     yellowWarning: undefined,
@@ -40,6 +39,7 @@ export const blobstream: BaseProject = {
         'https://github.com/succinctlabs/blobstreamx',
       ],
     },
+    badges: [],
   },
   daBridge: {
     name: 'Blobstream',
@@ -50,7 +50,6 @@ export const blobstream: BaseProject = {
     }),
     technology: {
       description: `
-  
       ## Architecture
         
       ![Celestia blobstream architecture](/images/da-bridge-technology/celestia/blobstream/architecture.png#center)
@@ -115,9 +114,4 @@ export const blobstream: BaseProject = {
     arbitrumDiscovery,
     baseDiscovery,
   ]),
-}
-
-// TODO: different solution for this
-if (blobstream.statuses) {
-  blobstream.statuses.isUnverified = !isProjectVerified(blobstream)
 }

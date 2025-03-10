@@ -36,6 +36,7 @@ export const near: BaseProject = {
         'https://discord.com/invite/zfhfRpaM4m',
       ],
     },
+    badges: [],
   },
   daLayer: {
     type: 'Public Blockchain',
@@ -145,10 +146,13 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       bridge: undefined,
     }),
     pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
-    throughput: {
-      size: 16000, // 16 MB , 4MB per 4 shard
-      frequency: 1, // 16 MB/s
-    },
+    throughput: [
+      {
+        size: 16777216, // 16 MiB , 4MiB per 4 shard
+        frequency: 1, // 16 MiB/s
+        sinceTimestamp: 1587513600, // 2020-04-22
+      },
+    ],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

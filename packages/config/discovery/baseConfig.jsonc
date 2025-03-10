@@ -1,0 +1,6 @@
+{
+  "import": ["globalConfig.jsonc"],
+  "names": {
+    "0x871e290d5447b958131F6d44f915F10032436ee6": "AlchemyMultisig2"
+  }
+}

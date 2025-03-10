@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xf5bb34194f1ba245fa68a68406b69300d994b674
+
+# Diff at Tue, 04 Mar 2025 10:40:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 131964914
+- current block number: 131964914
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 131964914 (main branch discovery), not current.
+
+```diff
+    contract StargatePoolMigratable (0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      sinceBlock:
++        120619124
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      sinceBlock:
++        120619120
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      sinceBlock:
++        120619116
+    }
+```
+
+```diff
+    contract TokenMessaging (0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6) {
+    +++ description: None
+      sinceBlock:
++        120619127
+    }
+```
+
+Generated with discovered.json: 0x6c1efd0b8352484276f7aee323d18962af735f0a
+
+# Diff at Fri, 14 Feb 2025 10:23:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 121594324
+- current block number: 131964914
+
+## Description
+
+Deficit config adjustements affecting fee calculation.
+
+## Watched changes
+
+```diff
+    contract StargatePoolUSDC (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      values.deficitOffset:
+-        0
++        20000000000000
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      values.deficitOffset:
+-        0
++        "10000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x134087d1fcf3d608fd7594a01201ff2006d88c20
 
 # Diff at Mon, 14 Oct 2024 11:00:06 GMT:

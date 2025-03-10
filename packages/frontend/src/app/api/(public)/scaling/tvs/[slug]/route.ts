@@ -1,12 +1,10 @@
-import { layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
 import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
-
-const projects = [...layer2s, ...layer3s]
+import { ps } from '~/server/projects'
 
 export async function GET(
   request: NextRequest,
@@ -23,7 +21,10 @@ export async function GET(
 
 const getCachedResponse = cache(
   async (slug: string, range: TvsChartRange) => {
-    const project = projects.find((p) => p.display.slug === slug)
+    const project = await ps.getProject({
+      slug,
+      where: ['tvlConfig', 'isScaling'],
+    })
 
     if (!project) {
       return {
@@ -74,7 +75,7 @@ const getCachedResponse = cache(
   },
   ['scaling-tvs-project-route'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )

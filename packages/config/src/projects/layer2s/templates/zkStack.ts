@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
@@ -15,7 +15,6 @@ import {
   type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -23,29 +22,35 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
-  ChainConfig,
-  KnowledgeNugget,
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
   Layer2TxConfig,
+  ProjectScalingDisplay,
+  ProjectScalingTechnology,
+  ScalingProject,
+} from '../../../internalTypes'
+import type {
+  Badge,
+  ChainConfig,
   Milestone,
+  ProjectActivityConfig,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
+  ProjectFinalityConfig,
   ProjectPermissions,
+  ProjectScalingCapability,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectTechnology,
-  StageConfig,
   TableReadyValue,
-  TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
+import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -61,10 +66,10 @@ export interface DAProvider {
 
 export interface ZkStackConfigCommon {
   addedAt: UnixTime
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
     upgradableBy: string[] | undefined
@@ -73,15 +78,13 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
-  diamondContract: ContractParameters
-  rpcUrl?: string
-  transactionApi?: TransactionApiConfig
+  diamondContract: EntryParameters
+  activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
-  finality?: Layer2FinalityConfig
-  l2OutputOracle?: ContractParameters
-  portal?: ContractParameters
+  finality?: ProjectFinalityConfig
+  l2OutputOracle?: EntryParameters
+  portal?: EntryParameters
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: (upgrades: Upgradeability) => ProjectContract[]
@@ -92,29 +95,41 @@ export interface ZkStackConfigCommon {
   chainConfig?: ChainConfig
   usesBlobs?: boolean
   isUnderReview?: boolean
-  stage?: StageConfig
-  additionalBadges?: BadgeId[]
+  stage?: ProjectScalingStage
+  additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: string[]
-  nonTemplateRiskView?: Partial<ScalingProjectRiskView>
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export type Upgradeability = {
-  upgradeDelay?: string
-  upgradableBy?: string[]
+  upgradableBy?: ProjectUpgradeableActor[]
 }
 
-export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
+export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const { discovery, discovery_ZKstackGovL2 } = templateVars
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge missing',
     )
   }
@@ -214,10 +229,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
 
   const upgrades: Upgradeability = {
-    upgradableBy: ['ProtocolUpgradeHandler'],
-    upgradeDelay: `${formatSeconds(
-      upgradeDelayWithScApprovalS,
-    )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
+    upgradableBy: [
+      {
+        name: 'ProtocolUpgradeHandler',
+        delay: `${formatSeconds(
+          upgradeDelayWithScApprovalS,
+        )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
+      },
+    ],
   }
 
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
@@ -228,10 +247,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
-        Badge.Stack.ZKStack,
-        Badge.Infra.ElasticChain,
-        Badge.VM.EVM,
-        Badge.DA.EthereumBlobs,
+        BADGES.Stack.ZKStack,
+        BADGES.Infra.ElasticChain,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumBlobs,
       ],
       templateVars.additionalBadges ?? [],
     ),
@@ -267,29 +286,30 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
           : []),
       ],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
+      daTracking: getDaTracking(templateVars),
       trackedTxs:
         daProvider !== undefined
           ? undefined
           : (templateVars.nonTemplateTrackedTxs ?? []),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
@@ -390,64 +410,63 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     upgradesAndGovernance: (() => {
       const description = `
-    There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade proxy contract ProtocolUpgradeHandler.
-    The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants.
-    The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
-    ## Standard path
-    ### On ZKsync Era
-    Delegates can start new proposals by reaching a threshold of ${protocolStartProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
-    This launches a ${formatSeconds(
-      protVotingDelayS,
-    )} 'voting delay' after which the ${formatSeconds(protVotingPeriodS)} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
-    A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, the voting period is reset to ${formatSeconds(
-      protVotingPeriodS,
-    )}.
-    In the successful case, it can be queued in the ${formatSeconds(
-      protTlMinDelayS,
-    )} timelock which forwards it to Ethereum as an L2->L1 log.
-    ### On Ethereum
-    After the execution of the proposal-containing batch (${executionDelay} delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the ${formatSeconds(
-      legalVetoStandardS,
-    )} 'legal veto period'.
-    This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCouncil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
-      legalVetoExtendedS,
-    )}.
-    After this a proposal enters a \*waiting\* state of ${formatSeconds(
-      upgradeWaitOrExpireS,
-    )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil.
-    For the unlikely case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
-    A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will be expired if not approved within the waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of 1d, and can then be executed.
-    ### Other governance tracks
-    There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and
-    2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets.
-    The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1.
-    Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
-    ## Emergency path
-    SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
-      'ZkFoundationMultisig',
-    )}) form a de-facto 3/3 Multisig
-    by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
-    ## Upgrade Delays
-    The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is ${formatSeconds(
-      upgradeDelayWithScApprovalS,
-    )} or ${formatSeconds(
-      upgradeDelayWithScApprovalExtendedLegalVotingS,
-    )} (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and ${formatSeconds(
-      upgradeDelayNoScS,
-    )} for the path in which the SecurityCouncil is not approving the proposal.
-    ## Freezing
-    The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current StateTransitionManager.
-    Either for a softFreeze of ${formatSeconds(
-      softFreezeS,
-    )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
-    After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible.
-    Only the SecurityCouncil can unfreeze an active freeze.
-    ## Elastic Chain Operator and ChainAdmin
-    Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system:
-    A single *Elastic Chain operator* role that governs parameters in the shared contracts and a *ChainAdmin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
-    These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock.
-    ZKsync Era's ChainAdmin differs from the others as it also has the above *Elastic Chain Operator* role in the shared ZK stack contracts.
-    `
+There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade proxy contract ProtocolUpgradeHandler.
+The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants.
+The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
+## Standard path
+### On ZKsync Era
+Delegates can start new proposals by reaching a threshold of ${protocolStartProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
+This launches a ${formatSeconds(
+        protVotingDelayS,
+      )} 'voting delay' after which the ${formatSeconds(protVotingPeriodS)} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
+A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, the voting period is reset to ${formatSeconds(
+        protVotingPeriodS,
+      )}.
+In the successful case, it can be queued in the ${formatSeconds(
+        protTlMinDelayS,
+      )} timelock which forwards it to Ethereum as an L2->L1 log.
+### On Ethereum
+After the execution of the proposal-containing batch (${executionDelay} delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the ${formatSeconds(
+        legalVetoStandardS,
+      )} 'legal veto period'.
+This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCouncil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
+        legalVetoExtendedS,
+      )}.
+After this a proposal enters a \*waiting\* state of ${formatSeconds(
+        upgradeWaitOrExpireS,
+      )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil.
+For the unlikely case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
+A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will be expired if not approved within the waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of 1d, and can then be executed.
+### Other governance tracks
+There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and
+2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets.
+The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1.
+Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
+## Emergency path
+SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
+        'ZkFoundationMultisig',
+      )}) form a de-facto 3/3 Multisig
+by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
+## Upgrade Delays
+The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is ${formatSeconds(
+        upgradeDelayWithScApprovalS,
+      )} or ${formatSeconds(
+        upgradeDelayWithScApprovalExtendedLegalVotingS,
+      )} (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and ${formatSeconds(
+        upgradeDelayNoScS,
+      )} for the path in which the SecurityCouncil is not approving the proposal.
+## Freezing
+The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current StateTransitionManager.
+Either for a softFreeze of ${formatSeconds(
+        softFreezeS,
+      )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
+After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible.
+Only the SecurityCouncil can unfreeze an active freeze.
+## Elastic Chain Operator and ChainAdmin
+Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system:
+A single *Elastic Chain operator* role that governs parameters in the shared contracts and a *ChainAdmin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
+These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock.
+ZKsync Era's ChainAdmin differs from the others as it also has the above *Elastic Chain Operator* role in the shared ZK stack contracts.`
       return description
     })(),
     permissions: mergePermissions(
@@ -553,15 +572,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
     },
     milestones: templateVars.milestones ?? [],
-    knowledgeNuggets: [
-      ...(templateVars.knowledgeNuggets ?? []),
-      {
-        title: 'State diffs vs raw tx data',
-        url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
-        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-      },
-    ],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
@@ -571,4 +583,55 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+}
+
+function getDaTracking(
+  templateVars: ZkStackConfigCommon,
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
+  const validatorTimelock =
+    templateVars.discovery.getContractDetails('ValidatorTimelock').address
+
+  const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
+    'ValidatorTimelock',
+    'validatorsVTL',
+  )
+
+  const inboxDeploymentBlockNumber =
+    templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
+
+  return templateVars.usesBlobs
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: validatorTimelock,
+          sequencers: validatorsVTL,
+        },
+      ]
+    : templateVars.celestiaDa
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
+        : undefined
 }

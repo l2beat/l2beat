@@ -2,17 +2,20 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21786536,
-  "configHash": "0xbd0d7a87123446674c46a4d5106feeac4a1cbafb715070cfdc12a6e6c91b5e37",
-  "contracts": [
+  "configHash": "0xc1a2681797043123298dd7386615471cfd8a7956448a3c43af47b89edda4cdc7",
+  "entries": [
     {
       "name": "PauserRegistry",
       "address": "0x0c431C66F4dE941d089625E5B423D00707977060",
+      "type": "Contract",
       "template": "eigenlayer/PauserRegistry",
       "sourceHashes": [
         "0x3b8d61b335423f5ba47369c8a865fa7f3296ba457e10069b0b9c46bcb03aa1e8"
       ],
+      "proxyType": "immutable",
       "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.",
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$immutable": true,
         "pausers": [
@@ -21,17 +24,19 @@
           "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
         ],
         "unpauser": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      },
-      "derivedName": "PauserRegistry"
+      }
     },
     {
       "name": "StrategiesBeacon",
       "address": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
+      "type": "Contract",
       "sourceHashes": [
         "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
       ],
+      "proxyType": "immutable",
       "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
       "sinceTimestamp": 1723232219,
+      "sinceBlock": 20493176,
       "values": {
         "$immutable": true,
         "implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
@@ -42,13 +47,16 @@
     {
       "name": "TokenHopper",
       "address": "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563",
+      "type": "Contract",
       "template": "eigenlayer/TokenHopper",
       "sourceHashes": [
         "0x7a33b4c0c58212ece91ddbb1006f31ba22a346c26b7b89555d88d72b195aec84"
       ],
+      "proxyType": "immutable",
       "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
       "ignoreInWatchMode": ["latestPress", "canPress"],
       "sinceTimestamp": 1727895695,
+      "sinceBlock": 20879772,
       "values": {
         "$immutable": true,
         "canPress": false,
@@ -73,12 +81,17 @@
           "severity": "MEDIUM",
           "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds."
         }
-      },
-      "derivedName": "TokenHopper"
+      }
+    },
+    {
+      "address": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "AVSDirectory",
       "address": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+      "type": "Contract",
       "template": "eigenlayer/AVSDirectory",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
@@ -121,6 +134,7 @@
       ],
       "ignoreInWatchMode": ["avs"],
       "sinceTimestamp": 1711141931,
+      "sinceBlock": 19492759,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
@@ -199,12 +213,47 @@
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060"
-      },
-      "derivedName": "AVSDirectory"
+      }
+    },
+    {
+      "address": "0x17919FAC7024d5b770322E5Cb81607D247654116",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2E158da11961426E2A1Cc9e79f40244486b6845C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x33E816008E7bc7798A73d0eaa640CC24f34d1626",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x34C37613e1680efD9e203C979658e1d058b4B2BC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x34D64c402cA43C1c4B368e16130C64aC245718C6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EigenLayerOwningMultisig",
       "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -223,6 +272,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686681203,
+      "sinceBlock": 17472874,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -243,6 +293,7 @@
     {
       "name": "DelegationManager",
       "address": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+      "type": "Contract",
       "template": "eigenlayer/DelegationManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
@@ -285,6 +336,7 @@
         }
       ],
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda",
@@ -320,16 +372,22 @@
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "STAKER_DELEGATION_TYPEHASH": "0x39111bc4a4d688e1f685123d7497d4615370152a8ee4a0593e647bd06ad8bb0b",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "DelegationManager"
+      }
+    },
+    {
+      "address": "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
       "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -337,14 +395,21 @@
         }
       ],
       "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
       "values": {
         "$immutable": true,
         "owner": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
       }
     },
     {
+      "address": "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EigenLayerOperationsMultisig2",
       "address": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -485,6 +550,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732236023,
+      "sinceBlock": 21239749,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -506,8 +572,14 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0x4a3CD82B73821d075799680AcDff3e884B726777",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EigenLayerPauserMultisig",
       "address": "0x5050389572f2d220ad927CcbeA0D406831012390",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -522,6 +594,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686325811,
+      "sinceBlock": 17443669,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -546,12 +619,20 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UpgradeableBeacon",
       "address": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
+      "type": "Contract",
       "sourceHashes": [
         "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1686348959,
+      "sinceBlock": 17445565,
       "values": {
         "$immutable": true,
         "implementation": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
@@ -561,6 +642,7 @@
     {
       "name": "StrategyFactory",
       "address": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+      "type": "Contract",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xeac0eb693fee0b97ae0ce2176c60bd57f93b6f1264e6844e4bec7e4e4efdfeca"
@@ -602,6 +684,7 @@
         }
       ],
       "sinceTimestamp": 1723232243,
+      "sinceBlock": 20493178,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74",
@@ -618,17 +701,39 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyBeacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "StrategyFactory"
+      }
+    },
+    {
+      "address": "0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x60bbde47423D62F6d7658bb3654869dfA397bF3D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EigenPod",
       "address": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
+      "type": "Contract",
       "template": "eigenlayer/EigenPod",
       "sourceHashes": [
         "0xda9b2195cd2d07052198378564d56758772451df9c7849c8d958ef8e2207e059"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1724181107,
+      "sinceBlock": 20571837,
       "values": {
         "$immutable": true,
         "activeValidatorCount": 0,
@@ -649,13 +754,20 @@
       }
     },
     {
+      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TimelockControllerBeigen",
       "address": "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+      "type": "Contract",
       "template": "eigenlayer/TimelockControllerOwning",
       "sourceHashes": [
         "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
       ],
-      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
+      "proxyType": "immutable",
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -671,6 +783,7 @@
         }
       ],
       "sinceTimestamp": 1732299167,
+      "sinceBlock": 21244979,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -717,8 +830,14 @@
       "derivedName": "TimelockController"
     },
     {
+      "address": "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RewardsCoordinator",
       "address": "0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "type": "Contract",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xee70d5b56b152b7eac8c1b57b3e8f6c501adb6b0c780ff4b0b89b28fb38273fa"
@@ -760,6 +879,7 @@
         }
       ],
       "sinceTimestamp": 1721406755,
+      "sinceBlock": 20341793,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x29A954e9e7F12936Db89b183ECdf879fBBB99F14",
@@ -796,12 +916,17 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "rewardsUpdater": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "RewardsCoordinator"
+      }
+    },
+    {
+      "address": "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Safe",
       "address": "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -810,6 +935,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1728099143,
+      "sinceBlock": 20896663,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -826,6 +952,7 @@
     {
       "name": "bEIGEN token",
       "address": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+      "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x06b65d2894679524c6c376c7f4f4de01c85bb91d59784505b3aca00b9e976a09"
@@ -867,6 +994,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1710958955,
+      "sinceBlock": 19477666,
       "values": {
         "$admin": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
         "$implementation": "0xF2b225815F70c9b327DC9db758A36c92A4279b17",
@@ -914,6 +1042,7 @@
     {
       "name": "StrategyManager",
       "address": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+      "type": "Contract",
       "template": "eigenlayer/StrategyManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
@@ -956,6 +1085,7 @@
         }
       ],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b",
@@ -987,16 +1117,17 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyWhitelister": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
-      },
-      "derivedName": "StrategyManager"
+      }
     },
     {
       "name": "EigenLayerProxyAdmin",
       "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -1033,6 +1164,7 @@
         }
       ],
       "sinceTimestamp": 1686348935,
+      "sinceBlock": 17445563,
       "values": {
         "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
@@ -1040,8 +1172,19 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "address": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EigenPodManager",
       "address": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+      "type": "Contract",
       "template": "eigenlayer/EigenPodManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
@@ -1084,6 +1227,7 @@
       ],
       "ignoreInWatchMode": ["numPods"],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa",
@@ -1120,12 +1264,17 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "EigenPodManager"
+      }
+    },
+    {
+      "address": "0x9229C290F60F303884073F28EB8E81F9B82506d5",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EigenLayerBeigenOwningMultisig",
       "address": "0x942eaF324971440384e4cA0ffA39fC3bb369D67d",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -1140,6 +1289,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732299383,
+      "sinceBlock": 21244997,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -1158,14 +1308,22 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RewardAllStakersActionGenerator",
       "address": "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
+      "type": "Contract",
       "template": "eigenlayer/RewardAllStakersActionGenerator",
       "sourceHashes": [
         "0x519834dae9f17d3adac32cfef3f2d1e84185152157b8e20a0ff5837d33eb423a"
       ],
+      "proxyType": "immutable",
       "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.",
       "sinceTimestamp": 1727895359,
+      "sinceBlock": 20879744,
       "values": {
         "$immutable": true,
         "amounts": ["321855128516280769230770", "965565385548842307692308"],
@@ -1175,12 +1333,47 @@
         "firstSubmissionStartTimestamp": 1723680000,
         "firstSubmissionTriggerCutoff": 1727913600,
         "rewardsCoordinator": "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
-      },
-      "derivedName": "RewardAllStakersActionGenerator"
+      }
+    },
+    {
+      "address": "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAF4D94Cd299211de542530399290877E2c85F061",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EigenLayerTokenMultisig",
       "address": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1189,6 +1382,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1697498675,
+      "sinceBlock": 18366203,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1213,6 +1407,7 @@
     {
       "name": "EigenLayerOperationsMultisig",
       "address": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1357,6 +1552,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686327791,
+      "sinceBlock": 17443829,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1379,13 +1575,20 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TimelockControllerOwning",
       "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+      "type": "Contract",
       "template": "eigenlayer/TimelockControllerOwning",
       "sourceHashes": [
         "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
       ],
-      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
+      "proxyType": "immutable",
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1401,6 +1604,7 @@
         }
       ],
       "sinceTimestamp": 1732234379,
+      "sinceBlock": 21239612,
       "values": {
         "$immutable": true,
         "accessControl": {
@@ -1447,8 +1651,24 @@
       "derivedName": "TimelockController"
     },
     {
+      "address": "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc5280E368648b0e192b355c7d8330593bA7af700",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Slasher",
       "address": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
+      "type": "Contract",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x354232830a4c633f47d96d48ecce7e0dae7c3475887ee6418e78b2dcc045f8b7"
@@ -1489,6 +1709,7 @@
         }
       ],
       "sinceTimestamp": 1686348947,
+      "sinceBlock": 17445564,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0xF3234220163a757edf1E11a8a085638D9B236614",
@@ -1515,19 +1736,41 @@
         "paused": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "Slasher"
+      }
+    },
+    {
+      "address": "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe7fFd467F7526abf9c8796EDeE0AD30110419127",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "StrategyBase",
       "address": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
+      "type": "Contract",
       "template": "eigenlayer/Strategy",
       "sourceHashes": [
         "0x6be5dd10217b2d3a9bca287766865129906f886adb603752ddcb21538ef683ea"
       ],
+      "proxyType": "immutable",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1723232207,
+      "sinceBlock": 20493175,
       "values": {
         "$immutable": true,
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
@@ -1558,6 +1801,7 @@
     {
       "name": "EIGEN token",
       "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "type": "Contract",
       "template": "eigenlayer/EIGEN token",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -1601,6 +1845,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1697499563,
+      "sinceBlock": 18366276,
       "values": {
         "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
         "$implementation": "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0",
@@ -1655,8 +1900,19 @@
       "derivedName": "Eigen"
     },
     {
+      "address": "0xED732DEb32034e603bEEEdA84605dAbb8933594b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xEFca484E497a9de170Da32abfa11650957dD2a95",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EigenLayerCommunityMultisig",
       "address": "0xFEA47018D632A77bA579846c840d5706705Dc598",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1739,6 +1995,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686680867,
+      "sinceBlock": 17472847,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1767,49 +2024,6 @@
       },
       "derivedName": "GnosisSafe"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256" },
-    { "address": "0x17919FAC7024d5b770322E5Cb81607D247654116" },
-    { "address": "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30" },
-    { "address": "0x2E158da11961426E2A1Cc9e79f40244486b6845C" },
-    { "address": "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a" },
-    { "address": "0x33E816008E7bc7798A73d0eaa640CC24f34d1626" },
-    { "address": "0x34C37613e1680efD9e203C979658e1d058b4B2BC" },
-    { "address": "0x34D64c402cA43C1c4B368e16130C64aC245718C6" },
-    { "address": "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE" },
-    { "address": "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1" },
-    { "address": "0x4a3CD82B73821d075799680AcDff3e884B726777" },
-    { "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71" },
-    { "address": "0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5" },
-    { "address": "0x60bbde47423D62F6d7658bb3654869dfA397bF3D" },
-    { "address": "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F" },
-    { "address": "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f" },
-    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
-    { "address": "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835" },
-    { "address": "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B" },
-    { "address": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2" },
-    { "address": "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95" },
-    { "address": "0x9229C290F60F303884073F28EB8E81F9B82506d5" },
-    { "address": "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815" },
-    { "address": "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4" },
-    { "address": "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02" },
-    { "address": "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99" },
-    { "address": "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3" },
-    { "address": "0xAF4D94Cd299211de542530399290877E2c85F061" },
-    { "address": "0xb7Ae34BB33da55f12797e793E01e63a17B11d108" },
-    { "address": "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD" },
-    { "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0" },
-    { "address": "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c" },
-    { "address": "0xc5280E368648b0e192b355c7d8330593bA7af700" },
-    { "address": "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927" },
-    { "address": "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF" },
-    { "address": "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60" },
-    { "address": "0xe7fFd467F7526abf9c8796EDeE0AD30110419127" },
-    { "address": "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e" },
-    { "address": "0xED732DEb32034e603bEEEdA84605dAbb8933594b" },
-    { "address": "0xEFca484E497a9de170Da32abfa11650957dD2a95" }
   ],
   "abis": {
     "0x0c431C66F4dE941d089625E5B423D00707977060": [
@@ -2723,7 +2937,7 @@
     "eigenlayer/RewardAllStakersActionGenerator": "0xe7a628d04c304f1774fb445ab055daba3d45d29d884cea0cf653c452b8471bab",
     "eigenlayer/Strategy": "0x421f91e2b1f1a1ca56e8ee9e26d416ae472234abb80b6ee8fa801b0461569d25",
     "eigenlayer/StrategyManager": "0x91dbd29e4171ae9cef07eed3c492622e98c1f91baf2bee399a0e72331296ac91",
-    "eigenlayer/TimelockControllerOwning": "0x089a48c5958746053b46c7f052ae879ff1a8891d5c9c48e6dfe25a36ac021448",
+    "eigenlayer/TimelockControllerOwning": "0x643e781b544b6eaf45615bc664d49d425ed521f4c7699ae130efab4630f7edc4",
     "eigenlayer/TokenHopper": "0xa7a1dc2a0b6dd2dcf17c48f0556e05791098c11aadc69900499911a228765efd",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"

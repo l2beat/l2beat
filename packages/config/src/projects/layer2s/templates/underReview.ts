@@ -1,41 +1,43 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type {
+  ProjectScalingDisplay,
+  ScalingProject,
+} from '../../../internalTypes'
+import type {
+  Badge,
   ChainConfig,
-  Layer2,
-  Layer2Display,
-  Layer3,
+  ProjectActivityConfig,
   ProjectEscrow,
-  ScalingProjectCapability,
-  ScalingProjectDisplay,
-  TransactionApiConfig,
+  ProjectScalingCapability,
 } from '../../../types'
-import type { BadgeId } from '../../badges'
+import { getActivityConfig } from './activity'
 
 interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
-  capability: ScalingProjectCapability
-  rpcUrl?: string
+  capability: ProjectScalingCapability
+  activityConfig?: ProjectActivityConfig
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
-  transactionApi?: TransactionApiConfig
-  badges?: BadgeId[]
+  badges?: Badge[]
   isArchived?: boolean
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
-  display: Layer2Display
+  display: ProjectScalingDisplay
   associatedTokens?: string[]
 }
 
 export interface UnderReviewConfigL3 extends UnderReviewConfigCommon {
-  display: ScalingProjectDisplay
-  hostChain: Layer3['hostChain']
+  display: ProjectScalingDisplay
+  hostChain: ScalingProject['hostChain']
   associatedTokens?: string[]
 }
 
-export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
+export function underReviewL2(
+  templateVars: UnderReviewConfigL2,
+): ScalingProject {
   return {
     isUnderReview: true,
     type: 'layer2',
@@ -54,16 +56,14 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.escrows ?? [],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
@@ -73,7 +73,9 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
   }
 }
 
-export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
+export function underReviewL3(
+  templateVars: UnderReviewConfigL3,
+): ScalingProject {
   return {
     type: 'layer3',
     isUnderReview: true,
@@ -88,16 +90,14 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.escrows ?? [],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
     },
     stage: {
       stage:

@@ -1,20 +1,19 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
-export const l3x: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
-  hostChain: ProjectId('arbitrum'),
+export const l3x: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1718370384), // 2024-06-14T13:06:24Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -39,19 +38,20 @@ export const l3x: Layer3 = orbitStackL3({
   chainConfig: {
     name: 'l3x',
     chainId: 12324,
-    explorerUrl: 'https://explorer.l3x.com/',
-    explorerApi: {
-      url: 'https://explorer.l3x.com/api',
-      type: 'blockscout',
-    },
+    explorerUrl: 'https://explorer.l3x.com',
     multicallContracts: [],
-    minTimestampForTvl: new UnixTime(1714618907),
+    sinceTimestamp: UnixTime(1714618907),
     coingeckoPlatform: 'l3x',
+    apis: [
+      {
+        type: 'blockscout',
+        url: 'https://explorer.l3x.com/api',
+      },
+    ],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -63,7 +63,7 @@ export const l3x: Layer3 = orbitStackL3({
     // prelaunch escrows
     {
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
-      sinceTimestamp: new UnixTime(1713781465),
+      sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
@@ -71,7 +71,7 @@ export const l3x: Layer3 = orbitStackL3({
     },
     {
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
-      sinceTimestamp: new UnixTime(1713781465),
+      sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
@@ -79,7 +79,7 @@ export const l3x: Layer3 = orbitStackL3({
     },
     {
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
-      sinceTimestamp: new UnixTime(1713781465),
+      sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
@@ -87,7 +87,7 @@ export const l3x: Layer3 = orbitStackL3({
     },
     {
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
-      sinceTimestamp: new UnixTime(1713781465),
+      sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',

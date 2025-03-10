@@ -1,23 +1,18 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('popboss', 'arbitrum')
 
-export const popboss: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1710836229), // 2024-03-19T08:17:09Z
-  additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Conduit,
-  ],
+export const popboss: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1710836229), // 2024-03-19T08:17:09Z
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   discovery,
-  hostChain: ProjectId('arbitrum'),
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
@@ -46,13 +41,21 @@ export const popboss: Layer3 = orbitStackL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'popboss',
+    chainId: 70701,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.boss.proofofplay.com',
+        callsPerMinute: 3000,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.boss.proofofplay.com',
-    defaultCallsPerMinute: 3000,
     adjustCount: { type: 'SubtractOne' },
   },
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

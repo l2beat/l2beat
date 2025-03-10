@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('amarok')
 
@@ -19,10 +19,12 @@ const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
 export const amarok: Bridge = {
   type: 'bridge',
   id: ProjectId('amarok'),
-  addedAt: new UnixTime(1680097524), // 2023-03-29T13:45:24Z
+  addedAt: UnixTime(1680097524), // 2023-03-29T13:45:24Z
   display: {
     name: 'Connext',
     slug: 'connext',
+    warning:
+      'This project [is winding down](https://bridge.connext.network/) and operations are migrating to [the Everclear Hub](https://l2beat.com/scaling/projects/everclear).',
     description:
       'Connext is a multilayered system that aggregates various native AMBs in a Hub-and-Spoke architecture with Ethereum being the Hub receiving\
     messages from other domains. It implements a liquidity network on top of its Hub-and-Spoke architecture.',
@@ -63,20 +65,20 @@ export const amarok: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
-        sinceTimestamp: new UnixTime(1671625595),
+        sinceTimestamp: UnixTime(1671625595),
         tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD'],
         chain: 'ethereum',
       },
       // shared ezETH lockbox (xERC20)
       {
         address: EthereumAddress('0xC8140dA31E6bCa19b287cC35531c2212763C2059'),
-        sinceTimestamp: new UnixTime(1671625595),
+        sinceTimestamp: UnixTime(1671625595),
         tokens: ['ezETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x22f424Bca11FE154c403c277b5F8dAb54a4bA29b'),
-        sinceTimestamp: new UnixTime(1693790555),
+        sinceTimestamp: UnixTime(1693790555),
         tokens: ['NEXT'],
         chain: 'ethereum',
       },
@@ -102,15 +104,15 @@ export const amarok: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `
-      The bridge can operate in one of two modes: Optimistic or Native. In both modes, so-called routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination. The routers are reimbursed after the message has arrived at the destination through one of the two modes.
-      
-      In optimistic mode the messages (bridging transactions) go through the central Connext sequencer, who reads them from the source chains, then sequences them and calculates an aggregate root offchain. This aggregate root can be proposed by a relayer at the destination triggering a \`disputeBlocks\` window where any watcher can turn the system back into native mode, invalidating the proposed root. Only the owner can set the system back into optimistic mode. Non-invalidated roots get finalized after \`disputeBlocks\`. In summary, optimistic mode skips the hub domain (Ethereum in the case of an L2-to-L2 transfer) and native arbitrary message bridges (AMBs) completely.
-      
-      In native mode, messages from various spoke domains are aggregated and periodically sent to Ethereum (hub domain) using the native (non-Connext) AMBs. When delivered to the hub domain, these message roots are aggregated again into a root-of-root of messages before being delivered to their destination (spoke domains). A custom \`delayBlocks\` value can be set individually in message-receiving Connext contracts to grant a time delay in which Connext-permissioned watchers could invalidate a potentially fraudulent message from the AMBs.
-      
-      In the case of a Connext router having accelerated a message by fronting liquidity, they will have to wait a certain time to get their liquidity back. In native mode, this is the time it takes to pass the message via AMBs and then verify / invalidate it during the \`delayBlocks\` period. In optimistic mode, it is the time to pass it via the offchain sequencer and finalize / dispute it during the \`disputeBlocks\` period. In both cases this reconciliation of funds for the router takes longer than the bridging for the user, while native mode has the longest delay for reconciliation.
-      
-      Although the values can be different for every message-receiving contract on each chain, current examples are ${mainnetSpokedelayBlocks} blocks for \`delayBlocks\` and ${mainnetSpokedisputeBlocks} blocks for \`disputeBlocks\` on the MainnetSpokeConnector on Ethereum.`,
+The bridge can operate in one of two modes: Optimistic or Native. In both modes, so-called routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination. The routers are reimbursed after the message has arrived at the destination through one of the two modes.
+
+In optimistic mode the messages (bridging transactions) go through the central Connext sequencer, who reads them from the source chains, then sequences them and calculates an aggregate root offchain. This aggregate root can be proposed by a relayer at the destination triggering a \`disputeBlocks\` window where any watcher can turn the system back into native mode, invalidating the proposed root. Only the owner can set the system back into optimistic mode. Non-invalidated roots get finalized after \`disputeBlocks\`. In summary, optimistic mode skips the hub domain (Ethereum in the case of an L2-to-L2 transfer) and native arbitrary message bridges (AMBs) completely.
+
+In native mode, messages from various spoke domains are aggregated and periodically sent to Ethereum (hub domain) using the native (non-Connext) AMBs. When delivered to the hub domain, these message roots are aggregated again into a root-of-root of messages before being delivered to their destination (spoke domains). A custom \`delayBlocks\` value can be set individually in message-receiving Connext contracts to grant a time delay in which Connext-permissioned watchers could invalidate a potentially fraudulent message from the AMBs.
+
+In the case of a Connext router having accelerated a message by fronting liquidity, they will have to wait a certain time to get their liquidity back. In native mode, this is the time it takes to pass the message via AMBs and then verify / invalidate it during the \`delayBlocks\` period. In optimistic mode, it is the time to pass it via the offchain sequencer and finalize / dispute it during the \`disputeBlocks\` period. In both cases this reconciliation of funds for the router takes longer than the bridging for the user, while native mode has the longest delay for reconciliation.
+
+Although the values can be different for every message-receiving contract on each chain, current examples are ${mainnetSpokedelayBlocks} blocks for \`delayBlocks\` and ${mainnetSpokedisputeBlocks} blocks for \`disputeBlocks\` on the MainnetSpokeConnector on Ethereum.`,
       references: [],
       risks: [],
     },

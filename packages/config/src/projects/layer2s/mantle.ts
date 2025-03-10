@@ -2,8 +2,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { CustomDa, Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import type { ProjectCustomDa } from '../../types'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -38,7 +39,7 @@ const requiredStakeFormatted = parseFloat(
   utils.formatEther(requiredStake),
 ).toLocaleString()
 
-const mantleDa: CustomDa = {
+const mantleDa: ProjectCustomDa = {
   type: 'Data Availability Committee',
   name: 'Mantle DA',
   description:
@@ -79,8 +80,8 @@ The confirmDataStore() function verify the signatures and if the quorum is reach
   },
 }
 
-export const mantle: Layer2 = opStackL2({
-  addedAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
+export const mantle: ScalingProject = opStackL2({
+  addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   daProvider: {
     layer: DA_LAYERS.MANTLE_DA,
     bridge: DA_BRIDGES.STAKED_OPERATORS({
@@ -117,7 +118,7 @@ export const mantle: Layer2 = opStackL2({
         },
       ],
     },
-    badge: Badge.DA.CustomDA,
+    badge: BADGES.DA.CustomDA,
   },
   associatedTokens: ['MNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
@@ -146,17 +147,12 @@ export const mantle: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.mantle.xyz',
-  genesisTimestamp: new UnixTime(1688428800),
+  genesisTimestamp: UnixTime(1688428800),
   chainConfig: {
     name: 'mantle',
     chainId: 5000,
-    explorerUrl: 'https://explorer.mantle.xyz/',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1688314886),
+    explorerUrl: 'https://explorer.mantle.xyz',
+    sinceTimestamp: UnixTime(1688314886),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -166,6 +162,17 @@ export const mantle: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'mantle',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.mantle.xyz',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
+      },
+    ],
   },
   milestones: [
     {

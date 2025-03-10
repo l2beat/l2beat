@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   AggregatedLivenessRange,
   AggregatedLivenessRecord,
@@ -9,6 +8,7 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
@@ -26,7 +26,7 @@ import { groupByType } from '../utils/groupByType'
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  projects: BackendProject[]
+  projects: TrackedTxProject[]
 }
 
 export class LivenessAggregatingIndexer extends ManagedChildIndexer {
@@ -39,12 +39,10 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     parentSafeHeight: number,
   ): Promise<number> {
     const now = UnixTime.now()
-    const endOfPreviousDay = now.toStartOf('day').add(-1, 'seconds')
-    let targetHeight = new UnixTime(safeHeight)
-      .toEndOf('day')
-      .add(-1, 'seconds')
+    const endOfPreviousDay = UnixTime.toStartOf(now, 'day') - 1
+    let targetHeight = UnixTime.toEndOf(safeHeight, 'day') - 1
 
-    if (parentSafeHeight <= endOfPreviousDay.toNumber()) {
+    if (parentSafeHeight <= endOfPreviousDay) {
       this.logger.info('Not enough data to calculate - skipping', {
         parentSafeHeight,
       })
@@ -56,7 +54,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       this.logger.info('Adjusting target height', { targetHeight })
     }
 
-    if (targetHeight.toNumber() > parentSafeHeight) {
+    if (targetHeight > parentSafeHeight) {
       this.logger.info('Up to date - skipping', {
         targetHeight,
         parentSafeHeight,
@@ -104,13 +102,13 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
-          projectId: project.projectId,
+          projectId: project.id,
         })
         continue
       }
 
       this.logger.debug('Liveness records loaded', {
-        projectId: project.projectId,
+        projectId: project.id,
         count: livenessRecords.length,
       })
 
@@ -119,7 +117,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
       aggregatedRecords.push(
         ...this.aggregatedRecords(
-          project.projectId,
+          project.id,
           'batchSubmissions',
           batchSubmissions,
           syncTo,
@@ -128,7 +126,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       )
       aggregatedRecords.push(
         ...this.aggregatedRecords(
-          project.projectId,
+          project.id,
           'stateUpdates',
           stateUpdates,
           syncTo,
@@ -137,7 +135,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       )
       aggregatedRecords.push(
         ...this.aggregatedRecords(
-          project.projectId,
+          project.id,
           'proofSubmissions',
           proofSubmissions,
           syncTo,

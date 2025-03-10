@@ -1,16 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('parallel')
 
-export const parallel: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
+export const parallel: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1704289654), // 2024-01-03T13:47:34Z
   isArchived: true,
   discovery,
-  additionalBadges: [],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Parallel',
@@ -47,7 +46,7 @@ export const parallel: Layer2 = orbitStackL2({
         selector: '0x8f111f3c',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(1704125939),
+        sinceTimestamp: UnixTime(1704125939),
       },
     },
     {
@@ -61,7 +60,7 @@ export const parallel: Layer2 = orbitStackL2({
         selector: '0x6f12b0c9',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
-        sinceTimestamp: new UnixTime(1704125939),
+        sinceTimestamp: UnixTime(1704125939),
       },
     },
     {
@@ -75,7 +74,7 @@ export const parallel: Layer2 = orbitStackL2({
         selector: '0xe0bc9729',
         functionSignature:
           'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(1704125939),
+        sinceTimestamp: UnixTime(1704125939),
       },
     },
     {
@@ -89,7 +88,7 @@ export const parallel: Layer2 = orbitStackL2({
         selector: '0x3e5aa082',
         functionSignature:
           'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(1712861435),
+        sinceTimestamp: UnixTime(1712861435),
       },
     },
     {
@@ -103,7 +102,7 @@ export const parallel: Layer2 = orbitStackL2({
         selector: '0xa04cee60',
         functionSignature:
           'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-        sinceTimestamp: new UnixTime(1704125939),
+        sinceTimestamp: UnixTime(1704125939),
       },
     },
   ],
@@ -125,14 +124,22 @@ export const parallel: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.parallel.fi',
-    defaultCallsPerMinute: 120,
-    adjustCount: { type: 'SubtractOne' },
-    startBlock: 1,
+  chainConfig: {
+    name: 'parallel',
+    chainId: 1024,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.parallel.fi',
+        callsPerMinute: 120,
+      },
+    ],
   },
-  discoveryDrivenData: true,
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
+  },
   milestones: [
     {
       title: 'ArbOS v20 upgrade',

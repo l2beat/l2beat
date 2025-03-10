@@ -1,17 +1,15 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type DataAvailabilityRecord, toRecord, toRow } from './entity'
+import {
+  type DataAvailabilityRecord,
+  type ProjectsSummedDataAvailabilityRecord,
+  toProjectsSummedRecord,
+  toRecord,
+  toRow,
+} from './entity'
 import { selectDataAvailability } from './select'
 
 export class DataAvailabilityRepository extends BaseRepository {
-  async getAll(): Promise<DataAvailabilityRecord[]> {
-    const rows = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .execute()
-    return rows.map(toRecord)
-  }
-
   async upsertMany(records: DataAvailabilityRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
@@ -21,65 +19,130 @@ export class DataAvailabilityRepository extends BaseRepository {
         .insertInto('DataAvailability')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['timestamp', 'projectId']).doUpdateSet((eb) => ({
-            totalSize: eb.ref('excluded.totalSize'),
-          })),
+          cb
+            .columns(['timestamp', 'daLayer', 'projectId'])
+            .doUpdateSet((eb) => ({
+              totalSize: eb.ref('excluded.totalSize'),
+            })),
         )
         .execute()
     })
     return records.length
   }
 
-  async deleteByProjectFrom(
-    project: string,
-    fromInclusive: UnixTime,
-  ): Promise<number> {
+  async getForDaLayerInTimeRange(
+    daLayer: string,
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<DataAvailabilityRecord[]> {
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('daLayer', '=', daLayer)
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getByProjectIdsAndTimeRange(
+    projectIds: string[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<DataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .orderBy('timestamp', 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getSummedProjectsByDaLayersAndTimeRange(
+    daLayers: string[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<ProjectsSummedDataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select([
+        'daLayer',
+        'timestamp',
+        (eb) => eb.fn.sum('totalSize').as('totalSize'),
+      ])
+      .where('daLayer', 'in', daLayers)
+      // Exclude the daLayer itself because we only want to sum the projects
+      .whereRef('projectId', '!=', 'daLayer')
+      .groupBy(['timestamp', 'daLayer'])
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .orderBy('timestamp', 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) =>
+      toProjectsSummedRecord({
+        ...row,
+        totalSize: row.totalSize.toString(),
+      }),
+    )
+  }
+
+  async getByDaLayersAndTimeRange(
+    daLayers: string[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<DataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('daLayer', 'in', daLayers)
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .orderBy('timestamp', 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
+  }
+
+  async deleteByProject(projectId: string, daLayer: string): Promise<number> {
     const result = await this.db
       .deleteFrom('DataAvailability')
-      .where((eb) =>
-        eb.and([
-          eb('projectId', '=', project.toString()),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-        ]),
-      )
+      .where('projectId', '=', projectId)
+      .where('daLayer', '=', daLayer)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
+  // Test only
+  async getAll(): Promise<DataAvailabilityRecord[]> {
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  // Test only
   async deleteAll(): Promise<number> {
     const result = await this.db
       .deleteFrom('DataAvailability')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  async getByProjectAndTimeRange(
-    projectId: string,
-    timeRange: [UnixTime, UnixTime],
-  ): Promise<DataAvailabilityRecord[]> {
-    const [from, to] = timeRange
-    const rows = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .where('projectId', '=', projectId)
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
-  }
-
-  async getByProjectIdAndFrom(
-    projectId: string,
-    fromInclusive: UnixTime,
-  ): Promise<DataAvailabilityRecord[]> {
-    const rows = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .where('projectId', '=', projectId)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
   }
 }

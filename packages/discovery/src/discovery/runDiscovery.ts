@@ -1,4 +1,4 @@
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import path from 'path'
 import type { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import type {
@@ -9,6 +9,7 @@ import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
+import { TEMPLATES_PATH } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
@@ -16,6 +17,7 @@ import { diffDiscovery } from './output/diffDiscovery'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
+import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
@@ -48,11 +50,17 @@ export async function runDiscovery(
     config.overwriteCache,
   )
 
+  const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
+
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
+    rootFolder: configReader.rootPath,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
     saveSources: config.saveSources,
+    buildModels: config.buildModels,
+    buildProjectPageFacts: config.buildProjectPageFacts,
+    templatesFolder,
   })
 
   if (config.project.startsWith('shared-')) {
@@ -106,10 +114,7 @@ export async function dryRunDiscovery(
     ),
   ])
 
-  const diff = diffDiscovery(
-    discoveredYesterday.contracts,
-    discovered.contracts,
-  )
+  const diff = diffDiscovery(discoveredYesterday.entries, discovered.entries)
 
   if (diff.length > 0) {
     console.log(JSON.stringify(diff, null, 2))

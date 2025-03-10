@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xdd4fd39e32b8055a9cfcda21ff50c869e6cc63c9
+Generated with discovered.json: 0x207382d25996376f40ff8e05b7b4b0275ac40d0a
+
+# Diff at Tue, 04 Mar 2025 10:40:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21778563
+- current block number: 21778563
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21778563 (main branch discovery), not current.
+
+```diff
+    contract GnosisBridgeGovernanceMultisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      sinceBlock:
++        10925774
+    }
+```
+
+```diff
+    contract SDaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: None
+      sinceBlock:
++        6478422
+    }
+```
+
+```diff
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      sinceBlock:
++        17420395
+    }
+```
+
+```diff
+    contract BridgeValidators (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: None
+      sinceBlock:
++        6478411
+    }
+```
+
+```diff
+    contract DaiForeignBridge (0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473) {
+    +++ description: None
+      sinceBlock:
++        13359601
+    }
+```
+
+Generated with discovered.json: 0x54d5926d3ab1522fc8b9ad52b2be77e022c907c8
 
 # Diff at Wed, 05 Feb 2025 07:21:43 GMT:
 

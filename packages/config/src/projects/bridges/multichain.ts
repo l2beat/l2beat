@@ -1,8 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 import config from './multichain-config.json'
 
@@ -11,7 +9,7 @@ const discovery = new ProjectDiscovery('multichain')
 export const multichain: Bridge = {
   type: 'bridge',
   id: ProjectId('multichain'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Multichain',
     slug: 'multichain',
@@ -28,7 +26,7 @@ export const multichain: Bridge = {
   config: {
     escrows: config.escrows.map((escrow) => ({
       address: EthereumAddress(escrow.address),
-      sinceTimestamp: new UnixTime(escrow.sinceTimestamp),
+      sinceTimestamp: UnixTime(escrow.sinceTimestamp),
       tokens: escrow.tokens,
       chain: 'ethereum',
     })),
@@ -180,18 +178,6 @@ export const multichain: Bridge = {
       date: '2023-07-07T00:00:00Z',
       url: 'https://blockworks.co/news/multichain-anyswap-exploit',
       type: 'incident',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Multichain deep dive',
-      url: 'https://li.fi/knowledge-hub/multichain-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-    {
-      title: 'Multichain escrow problem',
-      url: 'https://twitter.com/bkiepuszewski/status/1572537802512044034',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }

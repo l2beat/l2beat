@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('socket')
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('socket')
 export const socket: Bridge = {
   type: 'bridge',
   id: ProjectId('socket'),
-  addedAt: new UnixTime(1706204584), // 2024-01-25T17:43:04Z
+  addedAt: UnixTime(1706204584), // 2024-01-25T17:43:04Z
   display: {
     name: 'Socket',
     slug: 'socket',
@@ -467,5 +467,4 @@ export const socket: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [],
 }

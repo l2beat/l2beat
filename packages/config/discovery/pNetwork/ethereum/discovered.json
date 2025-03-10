@@ -2,15 +2,23 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "blockNumber": 20420398,
-  "configHash": "0x45448020c606d3eb2c08c12edf157ad5c33e0c14392a1d5921ce0f041aee1316",
-  "contracts": [
+  "configHash": "0x7ad2a972b8c6cb5a4bf0b993559cbeee500ed00349268411f1a5f531fb89e81f",
+  "entries": [
+    {
+      "address": "0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "ERC20 Vault V1",
       "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+      "type": "Contract",
       "sourceHashes": [
         "0xdf2e47952904a5d0bc18604cdb2be843cfbc6ae2be79ca98e0d1fcf9f69d70d4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1620212602,
+      "sinceBlock": 12373839,
       "values": {
         "$immutable": true,
         "PNETWORK": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
@@ -18,8 +26,14 @@
       "derivedName": "Erc20Vault"
     },
     {
+      "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "pNetworkDAOVoting",
       "address": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
+      "type": "Contract",
       "sourceHashes": [
         "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
         "0xeec9883cfc8cce2215f09608d831b1e64c31e57e4daf63da14701cdbe8b2a291"
@@ -27,6 +41,7 @@
       "proxyType": "EIP897 proxy",
       "ignoreInWatchMode": ["votesLength"],
       "sinceTimestamp": 1596180723,
+      "sinceBlock": 10565990,
       "values": {
         "$immutable": false,
         "$implementation": "0x17bFDa688b43245A399200a284F81CA0A0b25Bf4",
@@ -117,12 +132,14 @@
     {
       "name": "Kernel",
       "address": "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b",
+      "type": "Contract",
       "sourceHashes": [
         "0x3ef00bf119dbb1f46a05a35111f35da84bb45cac1abfa574989211677d16787a",
         "0x452458b35204910fe71376b423bd8d2887a1e82d22843fd79880d4ac0dce2a33"
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596177143,
+      "sinceBlock": 10565704,
       "values": {
         "$immutable": false,
         "$implementation": "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425",
@@ -144,14 +161,37 @@
       }
     },
     {
+      "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EVMScriptRegistry",
       "address": "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478",
+      "type": "Contract",
+      "template": "tokens/Lido/EVMScriptRegistry",
       "sourceHashes": [
         "0x3cab9c9a12a52c625f55b2d3d9693f8eb062cb0d41841589b557888ad01afced",
         "0x00350407c4a32b62d60dbac5ac3093bf4bffd482f40b2df2a9cd3268365b84e5"
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596177143,
+      "sinceBlock": 10565704,
       "values": {
         "$immutable": true,
         "$implementation": "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb",
@@ -167,16 +207,23 @@
         "proxyType": 1,
         "REGISTRY_ADD_EXECUTOR_ROLE": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2",
         "REGISTRY_MANAGER_ROLE": "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
-      },
-      "derivedName": "EVMScriptRegistry"
+      }
+    },
+    {
+      "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "UOS Vault",
       "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
+      "type": "Contract",
       "sourceHashes": [
         "0xe6b0ad564ecf0ee4b47b19a605101ce2c680b5e451c154acaaabb25f454aed1a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1626265622,
+      "sinceBlock": 12825127,
       "values": {
         "$immutable": true,
         "PNETWORK": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
@@ -186,15 +233,19 @@
     {
       "name": "MiniMeTokenFactory",
       "address": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
+      "type": "Contract",
       "sourceHashes": [
         "0xab441847b55bfdc5cf90792906cf0effcd43d3390a7cc05e690aad5fb349c19b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1564624915,
+      "sinceBlock": 8262062,
       "values": { "$immutable": true }
     },
     {
       "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -203,6 +254,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672744007,
+      "sinceBlock": 16325852,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -225,9 +277,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -235,20 +289,28 @@
         }
       ],
       "sinceTimestamp": 1664208791,
+      "sinceBlock": 15618660,
       "values": {
         "$immutable": true,
         "owner": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
       }
     },
     {
+      "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TokenManager",
       "address": "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254",
+      "type": "Contract",
       "sourceHashes": [
         "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
         "0x07aae7f3026cf9986df7e9587978c4a61f37310b62ac418c63e182d2fdb51fef"
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596179040,
+      "sinceBlock": 10565855,
       "values": {
         "$immutable": false,
         "$implementation": "0xde3A93028F2283cc28756B3674BD657eaFB992f4",
@@ -276,9 +338,11 @@
     {
       "name": "PProxyAdmin",
       "address": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
+      "type": "Contract",
       "sourceHashes": [
         "0x90607504d5e8f365803601eeade9548daa56d981da3ce27d42acb6d7e01150b2"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -286,14 +350,21 @@
         }
       ],
       "sinceTimestamp": 1640866403,
+      "sinceBlock": 13906609,
       "values": {
         "$immutable": true,
         "owner": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
       }
     },
     {
+      "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
+      "type": "Contract",
       "sourceHashes": [
         "0x421304ff20b039c820bfc9af779d8ec7444153822c329251f1bbaec68febf02c",
         "0x9a4dab9a6c79e6054401f76b1b8df918bf8b24d341078c87aef7d619f3787d3c"
@@ -307,6 +378,7 @@
         }
       ],
       "sinceTimestamp": 1640867581,
+      "sinceBlock": 13906697,
       "values": {
         "$admin": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
         "$implementation": "0x34D085516f9D7794192aDB10C995d9c532E335aF",
@@ -353,11 +425,15 @@
     {
       "name": "MiniMeToken",
       "address": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
+      "type": "Contract",
+      "template": "tokens/Lido/MiniMeToken",
       "sourceHashes": [
         "0x1098670857010f37e15b128a92baa1ccb42e961bd5e02b478a0c69fd8d66eb46"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1596178410,
+      "sinceBlock": 10565808,
       "values": {
         "$immutable": true,
         "controller": "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254",
@@ -371,12 +447,12 @@
         "totalSupply": "8926751749751332015693664",
         "transfersEnabled": false,
         "version": "MMT_0.1"
-      },
-      "derivedName": "MiniMeToken"
+      }
     },
     {
       "name": "EthPntv2",
       "address": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xf9ab1306492850c52f787f8af996c1c4df97d8c382b73d65e0e8e60fd346c056"
@@ -398,6 +474,7 @@
         "currentYearNumber"
       ],
       "sinceTimestamp": 1664208803,
+      "sinceBlock": 15618661,
       "values": {
         "$admin": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
         "$implementation": "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b",
@@ -435,18 +512,19 @@
         "totalSupply": "14960000000000000000000000",
         "yearlyRateCap": 2000,
         "yearlyWithdrawableLimit": "19355045741928169125886545"
-      },
-      "derivedName": "EthPntv2"
+      }
     },
     {
       "name": "ACL",
       "address": "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe",
+      "type": "Contract",
       "sourceHashes": [
         "0xe95d65e50752cf7b137131ff78cb164641fe141b0780189482701ebda1b66d4a",
         "0xe780841a8c7ccdd14b49db877aa5f4c96632a8a751af71424973cb40b5a8a726"
       ],
       "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596177143,
+      "sinceBlock": 10565704,
       "values": {
         "$immutable": false,
         "$implementation": "0x81F7564e413586f1f99fDe55740Ac52b43cA99c9",
@@ -466,20 +544,12 @@
         "NO_PERMISSION": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "proxyType": 2
       }
+    },
+    {
+      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0000000000000000000000000000000000000001" },
-    { "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9" },
-    { "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b" },
-    { "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496" },
-    { "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262" },
-    { "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f" },
-    { "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45" },
-    { "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20" },
-    { "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132" },
-    { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
   ],
   "abis": {
     "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": [
@@ -994,6 +1064,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "tokens/Lido/EVMScriptRegistry": "0x8228a3c805da8d57d6a0e3b2616cb2c7bf14dcc41d58d0d3db37347af278de24",
+    "tokens/Lido/MiniMeToken": "0x1b2cc52391bb51e1adb2b3daeffcdbe04cc5fc42c5c2bcc152b81e725421370d"
   }
 }

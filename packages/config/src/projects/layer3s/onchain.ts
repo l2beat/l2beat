@@ -1,19 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const onchain: Layer3 = underReviewL3({
+export const onchain: ScalingProject = underReviewL3({
   id: 'onchain',
   capability: 'universal',
-  addedAt: new UnixTime(1737469446), // 2025-01-21T14:24:03+00:00
+  addedAt: UnixTime(1737469446), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('base'),
   badges: [
-    Badge.RaaS.Conduit,
-    Badge.L3ParentChain.Base,
-    Badge.DA.DAC,
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
+    BADGES.RaaS.Conduit,
+    BADGES.L3ParentChain.Base,
+    BADGES.DA.DAC,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
   ],
   display: {
     name: 'Onchain Chain',
@@ -34,17 +34,27 @@ export const onchain: Layer3 = underReviewL3({
       ],
     },
   },
-  rpcUrl: 'https://rpc.onchainpoints.xyz',
+  chainConfig: {
+    name: 'onchain',
+    chainId: 17071,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.onchainpoints.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0x2e5AfeEfeA725e23d0B54f9e28Fd9ACDD4c312E9'), // bridge (native token: POP)
-      sinceTimestamp: new UnixTime(1718927985),
+      sinceTimestamp: UnixTime(1718927985),
       tokens: ['ETH'],
       chain: 'base',
     },
     {
       address: EthereumAddress('0xbc201f1cfc02097f875ec45eb8d5f7b264EcA095'), // standardGW
-      sinceTimestamp: new UnixTime(1718928173),
+      sinceTimestamp: UnixTime(1718928173),
       tokens: '*',
       chain: 'base',
     },

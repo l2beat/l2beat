@@ -1,28 +1,24 @@
-import {
-  type ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
-import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
+import type { EntryParameters } from '@l2beat/discovery'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
+import { get$Implementations } from '../../../discovery/extractors'
 import type {
+  Badge,
   ProjectContracts,
   ProjectPermissions,
   ReferenceLink,
 } from '../../../types'
-import { type BadgeId, badges } from '../../badges'
 
 export function mergeBadges(
-  inherentBadges: BadgeId[],
-  definedBadges: BadgeId[],
-): BadgeId[] {
+  inherentBadges: Badge[],
+  definedBadges: Badge[],
+): Badge[] {
   const all = definedBadges.concat(inherentBadges)
   const allowDuplicates = all.filter(
-    (b) => badges[b].type === 'Other' || badges[b].type === 'VM',
+    (b) => b.type === 'Other' || b.type === 'VM',
   ) // do not dedup badges of type 'Other' and 'VM' (multiVM)
-  const rest = all.filter(
-    (b) => badges[b].type !== 'Other' && badges[b].type !== 'VM',
-  )
-  return unionBy(rest, (b) => badges[b].type).concat(allowDuplicates)
+  const rest = all.filter((b) => b.type !== 'Other' && b.type !== 'VM')
+  return unionBy(rest, (b) => b.type).concat(allowDuplicates)
 }
 
 export function mergePermissions(
@@ -59,12 +55,10 @@ export function mergeContracts(
   return result
 }
 
-export function safeGetImplementation(
-  contract: ContractParameters,
-): EthereumAddress {
-  const implementation = get$Implementations(contract.values)[0]
+export function safeGetImplementation(entry: EntryParameters): EthereumAddress {
+  const implementation = get$Implementations(entry.values)[0]
   if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
+    throw new Error(`No implementation found for ${entry.name}`)
   }
   return implementation
 }

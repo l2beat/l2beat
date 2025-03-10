@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "ancient",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
     "0x132b3456300332d488f946B818eB9512931eBCAa",

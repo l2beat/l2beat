@@ -1,8 +1,8 @@
 import type { Project } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
@@ -14,7 +14,7 @@ import { getActivitySyncWarning } from './utils/is-activity-synced'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({
-    select: ['statuses', 'scalingInfo', 'hasActivity'],
+    select: ['statuses', 'scalingInfo', 'hasActivity', 'display'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -44,7 +44,7 @@ export async function getScalingActivityEntries() {
     ])
     .sort(compareActivityEntry)
 
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
@@ -69,7 +69,7 @@ interface ActivityData {
 }
 
 function getScalingProjectActivityEntry(
-  project: Project<'statuses' | 'scalingInfo'>,
+  project: Project<'statuses' | 'scalingInfo' | 'display'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {

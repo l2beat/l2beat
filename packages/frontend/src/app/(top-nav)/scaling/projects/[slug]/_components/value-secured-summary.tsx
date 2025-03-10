@@ -6,11 +6,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { VerticalSeparator } from '~/components/core/vertical-separator'
 import { CustomLink } from '~/components/link/custom-link'
 import { Square } from '~/components/square'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { cn } from '~/utils/cn'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
@@ -24,7 +26,7 @@ interface ValueSecuredBreakdown {
 }
 
 export interface ValueSecuredSummaryProps {
-  tvs: NonNullable<ScalingProjectEntry['header']['tvs']> | undefined
+  tvs: NonNullable<ProjectScalingEntry['header']['tvs']> | undefined
   detailedBreakdownHref: string
   isArchived?: boolean
 }
@@ -41,23 +43,28 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
       icon: <Square variant="canonical" size="small" />,
     },
     {
-      label: 'Externally Bridged',
-      shortLabel: 'External',
-      value: formatCurrency(params.breakdown.external, 'usd'),
-      usage: params.usage.external,
-      icon: <Square variant="external" size="small" />,
-    },
-    {
       label: 'Natively Minted',
       shortLabel: 'Native',
       value: formatCurrency(params.breakdown.native, 'usd'),
       usage: params.usage.native,
       icon: <Square variant="native" size="small" />,
     },
+    {
+      label: 'Externally Bridged',
+      shortLabel: 'External',
+      value: formatCurrency(params.breakdown.external, 'usd'),
+      usage: params.usage.external,
+      icon: <Square variant="external" size="small" />,
+    },
   ]
 
   return (
-    <div className="md:flex md:flex-col md:gap-3 md:rounded-lg md:bg-header-secondary md:px-6 md:py-4">
+    <div
+      className={cn(
+        'md:col-span-2 md:grid md:grid-cols-[1fr_1px_1fr] md:gap-x-8 md:gap-y-4 md:rounded-lg md:bg-header-secondary md:p-6',
+        '[@media(min-width:1000px)]:col-span-1 [@media(min-width:1000px)]:flex [@media(min-width:1000px)]:flex-col',
+      )}
+    >
       <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
           Value secured
@@ -90,14 +97,21 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
             </Tooltip>
           ) : null}
         </div>
+        <ValueSecuredBreakdown
+          canonical={params.usage.canonical}
+          external={params.usage.external}
+          native={params.usage.native}
+          className="my-3 hidden h-1 w-full md:my-0 md:flex [@media(min-width:1000px)]:hidden"
+        />
       </div>
       <ValueSecuredBreakdown
         canonical={params.usage.canonical}
         external={params.usage.external}
         native={params.usage.native}
-        className="my-3 h-1 w-full md:my-0"
+        className="my-3 h-1 w-full md:my-0 md:hidden [@media(min-width:1000px)]:flex"
       />
-      <div className="flex h-1/2 flex-wrap gap-3 @container md:gap-0">
+      <VerticalSeparator className="row-span-2 hidden w-px md:block [@media(min-width:1000px)]:hidden" />
+      <div className="row-span-2 flex h-1/2 flex-wrap gap-3 @container md:h-full md:gap-0 [@media(min-width:1000px)]:h-1/2">
         {tvsStats.map((s, i) => (
           <div
             key={i}

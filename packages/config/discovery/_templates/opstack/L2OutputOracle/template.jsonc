@@ -19,6 +19,7 @@
       "description": "Challenge period (Number of seconds until a state root is finalized)."
     },
     "proposer": {
+      "severity": "HIGH",
       "target": {
         "permissions": [{ "type": "propose" }]
       }
@@ -29,6 +30,7 @@
       }
     },
     "challenger": {
+      "severity": "HIGH",
       "target": {
         "permissions": [{ "type": "challenge" }]
       }
@@ -39,11 +41,13 @@
       }
     },
     "deletedOutputs": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["prevNextOutputIndex", "newNextOutputIndex"],
         "add": { "event": "OutputsDeleted" }
       }
     }
-  }
+  },
+  "category": "core"
 }

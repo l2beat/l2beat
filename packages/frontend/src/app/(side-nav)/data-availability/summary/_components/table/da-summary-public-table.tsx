@@ -80,16 +80,13 @@ function BridgeCells({
         href={bridge.href}
         className="flex items-center justify-center pl-4"
       >
-        <GrissiniCell
-          values={bridge.risks.values}
-          hasNoBridge={bridge.risks.isNoBridge}
-        />
+        <GrissiniCell values={bridge.risks} />
       </TableCell>
       <TableCell
         className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]"
         href={bridge.href}
       >
-        {formatDollarValueNumber(bridge.tvs)}
+        {formatDollarValueNumber(bridge.tvs.latest)}
       </TableCell>
       <TableCell className="text-sm font-medium">
         <ProjectsUsedIn usedIn={bridge.usedIn} />

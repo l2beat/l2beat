@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('alienx')
 
-export const alienx: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1719847684), // 2024-07-01T15:28:04Z
+export const alienx: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1719847684), // 2024-07-01T15:28:04Z
   additionalPurposes: ['Gaming', 'AI', 'NFT'],
-  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -42,12 +42,21 @@ export const alienx: Layer2 = orbitStackL2({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  rpcUrl: 'https://rpc.alienxchain.io/http',
+  chainConfig: {
+    name: 'alienx',
+    chainId: 10241024,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.alienxchain.io/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',

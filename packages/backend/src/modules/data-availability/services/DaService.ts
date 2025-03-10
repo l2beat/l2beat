@@ -10,36 +10,22 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { DaTrackingConfig } from '../../../config/Config'
 
 export class DaService {
-  constructor(
-    private readonly configs: {
-      ethereum: {
-        id: ProjectId
-        config: EthereumDaTrackingConfig
-      }[]
-      celestia: {
-        id: ProjectId
-        config: CelestiaDaTrackingConfig
-      }[]
-      avail: {
-        id: ProjectId
-        config: AvailDaTrackingConfig
-      }[]
-    },
-  ) {}
-
   generateRecords(
     blobs: DaBlob[],
     previousRecords: DataAvailabilityRecord[],
+    configurations: DaTrackingConfig[],
   ): DataAvailabilityRecord[] {
     const updatedRecords = [...previousRecords]
 
     const addOrMerge = (record: DataAvailabilityRecord) => {
       const existing = updatedRecords.find(
         (r) =>
-          r.timestamp.toNumber() === record.timestamp.toNumber() &&
+          r.timestamp === record.timestamp &&
+          r.daLayer === record.daLayer &&
           r.projectId === record.projectId,
       )
       if (existing) {
@@ -50,54 +36,75 @@ export class DaService {
     }
 
     for (const blob of blobs) {
-      const [daLayerRecord, projectRecord] = this.createRecordFromBlob(blob)
-      // DA layer record is always created
-      addOrMerge(daLayerRecord)
-      // project record is created only if we could match to one of the tracked projects
-      if (projectRecord) addOrMerge(projectRecord)
+      const records = this.createRecordsFromBlob(blob, configurations)
+      records.forEach((r) => addOrMerge(r))
     }
 
     return updatedRecords
   }
 
-  private createRecordFromBlob(
+  private createRecordsFromBlob(
     blob: DaBlob,
-  ): [DataAvailabilityRecord, DataAvailabilityRecord | undefined] {
-    const daLayerRecord: DataAvailabilityRecord = {
-      projectId: ProjectId(blob.type),
-      timestamp: blob.blockTimestamp.toStartOf('day'),
-      totalSize: blob.size,
-    }
+    configurations: DaTrackingConfig[],
+  ): DataAvailabilityRecord[] {
+    const records: DataAvailabilityRecord[] = []
 
-    let projectId = undefined
-
-    switch (blob.type) {
-      case 'ethereum':
-        projectId = this.configs.ethereum.find((entry) =>
-          matchEthereumProject(blob, entry.config),
-        )?.id
-        break
-      case 'celestia':
-        projectId = this.configs.celestia.find((entry) =>
-          matchCelestiaProject(blob, entry.config),
-        )?.id
-        break
-      case 'avail':
-        projectId = this.configs.avail.find((entry) =>
-          matchAvailProject(blob, entry.config),
-        )?.id
-        break
-    }
-
-    const projectRecord = projectId
-      ? {
-          projectId,
-          timestamp: blob.blockTimestamp.toStartOf('day'),
-          totalSize: blob.size,
+    for (const c of configurations) {
+      switch (c.type) {
+        case 'baseLayer': {
+          if (blob.daLayer === c.daLayer) {
+            records.push({
+              projectId: c.projectId,
+              daLayer: blob.daLayer,
+              timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+              totalSize: blob.size,
+            })
+          }
+          break
         }
-      : undefined
+        case 'ethereum': {
+          if (blob.type === 'ethereum') {
+            if (matchEthereumProject(blob, c)) {
+              records.push({
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+        case 'celestia': {
+          if (blob.type === 'celestia') {
+            if (matchCelestiaProject(blob, c)) {
+              records.push({
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+        case 'avail': {
+          if (blob.type === 'avail') {
+            if (matchAvailProject(blob, c)) {
+              records.push({
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+      }
+    }
 
-    return [daLayerRecord, projectRecord]
+    return records
   }
 }
 
@@ -105,14 +112,14 @@ function matchEthereumProject(
   blob: EthereumBlob,
   config: EthereumDaTrackingConfig,
 ) {
-  const hasInboxMatch = config.inbox === blob.inbox
+  const hasInboxMatch = config.inbox.toLowerCase() === blob.inbox.toLowerCase()
 
   if (!config.sequencers || config.sequencers.length === 0) {
     return hasInboxMatch
   }
 
   const hasMatchingSequencer = config.sequencers.some(
-    (sequencer) => sequencer === blob.sequencer,
+    (sequencer) => sequencer.toLowerCase() === blob.sequencer.toLowerCase(),
   )
 
   return hasInboxMatch && hasMatchingSequencer

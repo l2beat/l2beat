@@ -1,16 +1,10 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
-import {
-  type ContractFieldSeverity,
-  type ContractValue,
-  type ContractValueType,
-  type StackCategory,
-  get$Admins,
-  get$Implementations,
-} from '@l2beat/discovery-types'
 import { groupBy, uniqBy } from 'lodash'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
+  ContractFieldSeverity,
+  ContractValueType,
   DiscoveryContractField,
   ExternalReference,
   PermissionConfiguration,
@@ -18,7 +12,9 @@ import type {
 } from '../config/RawDiscoveryConfig'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
-import type { AnalyzedContract } from './AddressAnalyzer'
+import type { ContractValue } from '../output/types'
+import { get$Admins, get$Implementations } from '../utils/extractors'
+import type { Analysis } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
 
@@ -29,7 +25,6 @@ export interface ContractMeta {
   displayName?: string
   description?: string
   permissions?: PermissionConfiguration[]
-  categories?: Set<StackCategory>
   types?: Set<ContractValueType>
   severity?: ContractFieldSeverity
   references?: ExternalReference[]
@@ -43,7 +38,6 @@ export function mergeContractMeta(
     displayName: a?.displayName ?? b?.displayName,
     description: a?.description ?? b?.description,
     permissions: mergePermissions(a?.permissions, b?.permissions),
-    categories: mergeSets(a?.categories, b?.categories),
     types: mergeSets(a?.types, b?.types),
     severity: findHighestSeverity(a?.severity, b?.severity),
     canActIndependently: mergeCanActIndependently(
@@ -99,7 +93,7 @@ export function mergePermissions(
 
 export function interpolateString(
   description: string,
-  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
+  analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): string {
   return description.replace(/\{\{\s*((\$\.?)?\w+)\s*\}\}/g, (_match, key) => {
     const value = key === '$.address' ? analysis.address : analysis.values[key]
@@ -114,7 +108,7 @@ export function interpolateString(
 
 export function getSelfMeta(
   config: ContractConfig,
-  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
+  analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   let description: string | undefined = undefined
   if (config.description !== undefined) {
@@ -143,7 +137,6 @@ export function getSelfMeta(
     description,
     references,
     permissions: undefined,
-    categories: undefined,
     severity: undefined,
     types: undefined,
   }
@@ -155,7 +148,7 @@ export function getTargetsMeta(
   self: EthereumAddress,
   values: Record<string, ContractValue | undefined> = {},
   fields: { [address: string]: DiscoveryContractField } = {},
-  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
+  analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): AddressToMetaMap | undefined {
   const result = getMetaFromUpgradeability(self, get$Admins(values))
 
@@ -187,7 +180,6 @@ export function getMetaFromUpgradeability(
     if (upgradeabilityAdmin !== undefined) {
       result[upgradeabilityAdmin.toString()] = {
         displayName: undefined,
-        categories: undefined,
         description: undefined,
         severity: undefined,
         types: undefined,
@@ -202,7 +194,7 @@ function targetConfigToMeta(
   self: EthereumAddress,
   field: DiscoveryContractField,
   target: DiscoveryContractField['target'],
-  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
+  analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   if (target === undefined) {
     return undefined
@@ -214,7 +206,6 @@ function targetConfigToMeta(
     permissions: target.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
-    categories: toSet(target.category),
     types: toSet(field.type),
     severity: Array.from(toSet(field.severity) ?? [])[0],
   }
@@ -224,8 +215,8 @@ function targetConfigToMeta(
 function linkPermission(
   rawPermission: RawPermissionConfiguration,
   self: EthereumAddress,
-  values: AnalyzedContract['values'],
-  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
+  values: Analysis['values'],
+  analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): PermissionConfiguration {
   let delay = rawPermission.delay
   if (typeof delay === 'string') {
@@ -246,7 +237,7 @@ function linkPermission(
 }
 
 export function invertMeta(
-  targetsMeta: AnalyzedContract['targetsMeta'][],
+  targetsMeta: Analysis['targetsMeta'][],
 ): AddressToMetaMap {
   const result: AddressToMetaMap = {}
 

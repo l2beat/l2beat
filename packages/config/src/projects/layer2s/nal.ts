@@ -1,11 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from './templates/underReview'
 
-export const nal: Layer2 = underReviewL2({
+export const nal: ScalingProject = underReviewL2({
   id: 'nal',
   capability: 'universal',
-  addedAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
+  isArchived: true,
+  addedAt: UnixTime(1726499832), // 2024-09-16T15:17:12Z
   display: {
     name: 'Nal',
     slug: 'nal',
@@ -22,18 +23,26 @@ export const nal: Layer2 = underReviewL2({
       socialMedia: ['https://x.com/nal_network'],
     },
   },
-  rpcUrl: 'https://rpc.nal.network/',
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'nal',
+    chainId: 328527,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.nal.network/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.nal.network/',
-    defaultCallsPerMinute: 1500,
     adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {
       address: EthereumAddress('0x8a471dF117E2fEA79DACE93cF5f6dd4217931Db7'),
-      sinceTimestamp: new UnixTime(1719457200),
+      sinceTimestamp: UnixTime(1719457200),
       tokens: '*',
       chain: 'ethereum',
     },

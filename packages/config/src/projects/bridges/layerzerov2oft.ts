@@ -1,8 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('layerzerov2oft')
@@ -18,12 +16,12 @@ const enaExecutor = EthereumAddress(
 export const layerzerov2oft: Bridge = {
   type: 'bridge',
   id: ProjectId('layerzerov2oft'),
-  addedAt: new UnixTime(1718891395), // 2024-06-20T13:49:55Z
+  addedAt: UnixTime(1718891395), // 2024-06-20T13:49:55Z
   display: {
     name: 'LayerZero v2 OFTs',
     slug: 'layerzerov2oft',
     warning:
-      'The security parameters of each Omnichain Fungible Token must be individually assessed, and can be changed by their developers.',
+      'The security parameters of each Omnichain Fungible Token must be individually assessed, and can be changed by their developers (OFT/OApp owners).',
     category: 'Token Bridge',
     links: {
       websites: ['https://layerzero.network/'],
@@ -44,16 +42,15 @@ export const layerzerov2oft: Bridge = {
     description:
       'This page gathers significant Omnichain Fungible Tokens (OFTs) built on top of LayerZero v2 AMB protocol.',
     detailedDescription:
-      'Risk associated with using any OFT varies, depending on the technological decisions ([OApp configuration and security stack](https://docs.layerzero.network/v2/developers/evm/protocol-gas-settings/default-config)) made by the developers.\
-       LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings,\
-       however applications and tokens choosing the default security settings will leverage security provided by the current default Verifiers and Executor.\
-       Default settings are managed by LayerZero team.',
+      'Risk associated with using any OFT varies, depending on the technological decisions ([OApp configuration and security stack](https://docs.layerzero.network/v2/developers/evm/protocol-gas-settings/default-config)) made by the developers (OFT/OApp owners).\
+       LayerZero as a framework to build omnichain application only provides a default, but does not enforce any minimum security as applications can define their own security settings.\
+       Applications and tokens choosing the default security settings will leverage security provided by the current default Verifiers and Executor managed by the LayerZero team.',
   },
   riskView: {
     validatedBy: {
       value: 'Third Party',
       description:
-        'The LayerZero message protocol is used. If all preconfigured verifiers agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
+        'The LayerZero message protocol is used. If all preconfigured verifiers agree on a message, it is considered verified and can be executed at the destination.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -129,20 +126,23 @@ export const layerzerov2oft: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `Omnichain Fungible Tokens (OFTs) are individually configurable Token Bridges. This means that an asset is usually locked or burned at its origin to start the bridging. 
-      Then a witness event of this is emitted, verified and relayed to the destination by third verfiiers. Finally, a permissioned Executor submits a transaction at the destination chain to mint the bridged asset. 
-      
-      The shared feature among all OFTs is the messaging interface, which always uses the LayerZero message protocol (or arbitrary message bridge, AMB). 
-      Apart from the OFT standard provided by LayerZero, which extends the ERC-20 standard, implementation details are highly customizable and vary widely. 
-      
-      Each OFT is a LayerZero OApp and can be configured to use custom security settings when interacting with the AMB.
-      Among these OApp configuration parameters are the DVN(s) (who will read and verify the interchain messages), the executor (who will deliver and execute the transaction on the destination chain), and the minimum block confirmations needed. 
-      These can be set by the Oapp / OFT owner or a delegate that they can define in the EndpointV2 contract.
-      Additionally, the OFT owner can often use other admin functions on the OFT contract that are specific to the ERC-20 implementation (similar to other ERC-20 tokens, like arbitrary minting or pausing functions) and not related to LayerZero.
-      
-      OFTs can either be natively multichain or they can use an adapter. Native OFTs are burned at their origin and minted at their destination when bridging. 
-      Adapter OFTs have a main chain, where they are locked in an adapter escrow. This mints a 'native' OFT version of the locked token that can then be bridged on all chains by burn-minting. 
-      To receive the original locked token back, a user would have to return to the main chain and unlock it from the adapter escrow.`,
+      description: `
+Omnichain Fungible Tokens (OFTs) are individually configurable asset-specific Token Bridges. This means that an asset is usually locked or burned at its origin to start the bridging. 
+Then a witness event of this is emitted, verified and relayed to the destination by third parties. Finally, an Executor submits a transaction at the destination chain to mint the bridged asset. 
+
+The shared feature among all OFTs is the messaging interface, which always uses the LayerZero message protocol (or arbitrary message bridge, AMB). 
+Apart from the OFT token standard provided by LayerZero, which extends the ERC-20 standard, implementation details are highly customizable and vary widely. 
+
+Each OFT contract is a LayerZero OApp and can be configured to use custom security settings when interacting with the AMB.
+Among these OApp configuration parameters are the DVN(s) (verifiers who will read and verify the interchain messages), the executor (who will execute the transaction on the destination chain and pay for gas), and the minimum block confirmations needed. 
+These can be set by the Oapp / OFT owner or a delegate that they can define in the EndpointV2 contract.
+Additionally, the OFT owner can often use other admin functions on the OFT contract that are specific to the ERC-20 implementation (similar to other ERC-20 tokens, like arbitrary minting or pausing functions) and not related to LayerZero.
+
+In the case of the Executor failing to deliver the bridge message, the user can try to deliver the message to the destination themselves, either if it was already verified and committed onchain or if the user has access to the signed verifier message (e.g. through the layerzeroscan API).
+
+OFTs can either be natively multichain or they can use an adapter. Native OFTs are burned at their origin and minted at their destination when bridging. 
+Adapter OFTs have a main chain, where they are locked in an adapter escrow. This mints a 'native' OFT version of the locked token that can then be bridged on all chains by burn-minting. 
+To receive the original locked token back, a user would have to return to the main chain and unlock it from the adapter escrow.`,
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -163,7 +163,7 @@ export const layerzerov2oft: Bridge = {
     validation: {
       name: 'Configurable Verifiers',
       description:
-        'Each crosschain transaction is emitted on the origin chain and must be picked up and verified by preconfigured verifiers (LayerZero calls these DVNs). If they agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
+        'Each crosschain transaction is emitted on the origin chain and must be picked up and verified by preconfigured verifiers (aka DVNs). If they agree on a message, it is considered verified and can be executed at the destination.',
       references: [
         {
           title: 'Etherscan: Function setConfig() in SendUln302.sol',
@@ -177,11 +177,11 @@ export const layerzerov2oft: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'the executor or all required verifiers fail to facilitate the transfer.',
+          text: 'any required Verifiers fail to approve the transfer.',
         },
         {
           category: 'Funds can be stolen if',
-          text: 'the Executor and the Verifiers collude to submit fraudulent block hash and relay fraudulent transfer.',
+          text: 'all required Verifiers collude to approve and relay a fraudulent transfer.',
         },
         {
           category: 'Funds can be stolen if',
@@ -340,16 +340,9 @@ export const layerzerov2oft: Bridge = {
         discovery.getPermissionDetails(
           'Default LayerZero Executor',
           discovery.formatPermissionedAccounts([enaExecutor]),
-          'Messages passed through the LayerZero AMB are, by default, sent to the destination chain by this Executor. This can be changed by the respective OApp owner.',
+          'Messages passed through the LayerZero AMB are, by default, sent to the destination chain by this Executor. They are reimbursed for gas at the origin and can be set by the respective OApp owner.',
         ),
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Security models: isolated vs shared',
-      url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-  ],
 }

@@ -1,8 +1,9 @@
-import { layer2s, layer3s } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ValueRecord } from '@l2beat/database'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 
 export async function getDaProjectsTvs(projectIds: ProjectId[]) {
   if (env.MOCK) {
@@ -14,31 +15,45 @@ export async function getDaProjectsTvs(projectIds: ProjectId[]) {
 type DaProjectsTvs = Awaited<ReturnType<typeof getDaProjectsTvsData>>
 async function getDaProjectsTvsData(projectIds: ProjectId[]) {
   const db = getDb()
-  const values = await db.value.getLatestValues(projectIds)
+  const to = UnixTime.toStartOf(UnixTime.now(), 'hour') - 1 * UnixTime.HOUR
+  const from = to - 7 * UnixTime.DAY
+  const values = await db.value.getValuesByProjectIdsAndTimeRange(projectIds, [
+    from,
+    to,
+  ])
 
   const byProject = groupBy(values, 'projectId')
 
   const aggregated = Object.entries(byProject).map(([projectId, values]) => {
-    const { canonical, external, native } = values.reduce(
-      (acc, value) => {
-        acc.canonical += value.canonical
-        acc.external += value.external
-        acc.native += value.native
+    const timestamps = values.map((v) => v.timestamp)
+    const latestTimestamp = Math.max(...timestamps)
+    const oldestTimestamp = Math.min(...timestamps)
 
-        return acc
-      },
-      { canonical: 0n, external: 0n, native: 0n },
-    )
+    const latestValues = values.filter((v) => v.timestamp === latestTimestamp)
+    const oldestValues = values.filter((v) => v.timestamp === oldestTimestamp)
 
-    const tvs = canonical + external + native
+    const latestTvs = sumTvs(latestValues)
+    const oldestTvs = sumTvs(oldestValues)
 
     return {
       projectId: ProjectId(projectId),
-      tvs: Number(tvs),
+      tvs: Number(latestTvs),
+      tvs7d: Number(oldestTvs),
     }
   })
 
   return aggregated
+}
+
+function sumTvs(values: ValueRecord[]) {
+  return values.reduce(
+    (acc, value) =>
+      acc +
+      Number(value.canonical) +
+      Number(value.external) +
+      Number(value.native),
+    0,
+  )
 }
 
 /**
@@ -51,15 +66,18 @@ export function pickTvsForProjects(
     const included = aggregate.filter((x) => projects.includes(x.projectId))
 
     const sum = included.reduce((acc, curr) => acc + curr.tvs, 0)
+    const sum7d = included.reduce((acc, curr) => acc + curr.tvs7d, 0)
 
     // Fiat denomination to cents
-    return sum / 100
+    return { latest: sum / 100, sevenDaysAgo: sum7d / 100 }
   }
 }
 
-function getMockDaProjectsTvsData(): DaProjectsTvs {
-  return [...layer2s, ...layer3s].map((project) => ({
+async function getMockDaProjectsTvsData(): Promise<DaProjectsTvs> {
+  const projects = await ps.getProjects({ where: ['isScaling'] })
+  return projects.map((project) => ({
     projectId: project.id,
     tvs: 100000,
+    tvs7d: 90000,
   }))
 }

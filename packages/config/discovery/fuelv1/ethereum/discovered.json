@@ -2,15 +2,18 @@
   "name": "fuelv1",
   "chain": "ethereum",
   "blockNumber": 21594621,
-  "configHash": "0xf1779c426700939b4564a439dae3499848e0435976e08b78fc8e19c42f6e4130",
-  "contracts": [
+  "configHash": "0xc345178da12518fce9ba3340cac1d04ec5ce8697bb5e55cb5b46cf795d59b0ff",
+  "entries": [
     {
       "name": "Fuel",
       "address": "0x6880f6Fd960D1581C2730a451A22EED1081cfD72",
+      "type": "Contract",
       "sourceHashes": [
         "0x882649168abfdfff5ebf9fbcaa09f8d7025c4b394b2ca7f4f4325f3eba030292"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1612414780,
+      "sinceBlock": 11787727,
       "values": { "$immutable": true },
       "derivedName": "",
       "references": [
@@ -21,7 +24,6 @@
       ]
     }
   ],
-  "eoas": [],
   "abis": {},
   "usedTemplates": {}
 }

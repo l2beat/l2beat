@@ -29,14 +29,14 @@ describe(shouldSkip.name, () => {
         name: 'SharedFoo',
         chain: 'ethereum',
         blockNumber: 1234,
-        contracts: [
+        entries: [
           {
+            type: 'Contract',
             name: 'Foo',
             address,
             upgradeability: { type: 'immutable' },
           },
         ],
-        eoas: [],
         abis: {},
         fieldMeta: {},
         configHash: Hash256.random(),
@@ -54,12 +54,8 @@ describe(shouldSkip.name, () => {
         names: {
           [address.toString()]: 'Foo',
         },
-        sharedModules: {
-          Foo: 'SharedFoo',
-        },
+        sharedModules: ['SharedFoo'],
       },
-      {},
-      {},
       configReader,
     )
     const result = shouldSkip(address, config, 0, 1)

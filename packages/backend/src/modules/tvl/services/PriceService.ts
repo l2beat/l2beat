@@ -48,8 +48,8 @@ export class PriceService {
       .map((c) =>
         prices
           .filter((p) =>
-            p.timestamp.gte(new UnixTime(c.minHeight)) && c.maxHeight
-              ? p.timestamp.lte(new UnixTime(c.maxHeight))
+            p.timestamp >= UnixTime(c.minHeight) && c.maxHeight
+              ? p.timestamp <= UnixTime(c.maxHeight)
               : true,
           )
           .map((p) => ({
@@ -74,7 +74,7 @@ export class PriceService {
         to,
       )
     } catch (error) {
-      assertLatestHour(from, to, error, coingeckoId)
+      assertLatestHour(from, to, error, coingeckoId, this.logger)
 
       const priceFromDb = await this.getLatestPriceFromDb(
         to,
@@ -95,30 +95,27 @@ export class PriceService {
       configurations.map((c) => c.id),
     )
 
-    assert(
-      fallbackPrice,
-      `Latest price not found for ${coingeckoId} @ ${latestHour.toNumber()}`,
-    )
+    assert(fallbackPrice, `No price not found for ${coingeckoId}`)
 
     this.logger.warn(
       `${coingeckoId}: DB fallback triggered: failed to fetch price from Coingecko`,
       {
         coingeckoId,
-        latestHour: latestHour.toNumber(),
-        fallbackPrice: JSON.stringify(fallbackPrice),
+        latestHour: latestHour,
+        fallbackPrice: fallbackPrice.priceUsd,
       },
     )
 
     return {
+      timestamp: latestHour,
       value: fallbackPrice.priceUsd,
-      timestamp: fallbackPrice.timestamp,
     }
   }
 
   calculateAdjustedTo(from: number, to: number): UnixTime {
     return CoingeckoQueryService.calculateAdjustedTo(
-      new UnixTime(from),
-      new UnixTime(to),
+      UnixTime(from),
+      UnixTime(to),
     )
   }
 }
@@ -128,12 +125,16 @@ function assertLatestHour(
   to: UnixTime,
   error: unknown,
   coingeckoId: CoingeckoId,
+  logger: Logger,
 ) {
-  const diff = to.toNumber() - from.toNumber()
-  if (diff >= 3600) throw error
+  const diff = to - from
+  if (diff >= 3600) {
+    logger.error(`Timestamps diff to large to perform fallback`, { diff })
+    throw error
+  }
   assert(
-    to.isFull('hour'),
-    `Latest hour assert failed for ${coingeckoId} <${from.toNumber()},${to.toNumber()}>`,
+    UnixTime.isFull(to, 'hour'),
+    `Latest hour assert failed for ${coingeckoId} <${from},${to}>`,
   )
 
   return to

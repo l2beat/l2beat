@@ -9,17 +9,17 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('omgnetwork')
 
 const upgradeDelay = 0
 
-export const omgnetwork: Layer2 = {
+export const omgnetwork: ScalingProject = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
   capability: 'universal',
-  addedAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
+  addedAt: UnixTime(1623332638), // 2021-06-10T13:43:58Z
   isArchived: true,
   display: {
     name: 'OMG Network',
@@ -49,13 +49,13 @@ export const omgnetwork: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0'),
-        sinceTimestamp: new UnixTime(1584424507),
+        sinceTimestamp: UnixTime(1584424507),
         tokens: ['ETH'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B'),
-        sinceTimestamp: new UnixTime(1584424719),
+        sinceTimestamp: UnixTime(1584424719),
         tokens: '*',
         chain: 'ethereum',
       },

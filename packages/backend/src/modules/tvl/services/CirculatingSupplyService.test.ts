@@ -1,5 +1,6 @@
 import { createAmountId } from '@l2beat/backend-shared'
-import type { AmountRecord } from '@l2beat/database'
+import { Logger } from '@l2beat/backend-tools'
+import type { AmountRecord, Database } from '@l2beat/database'
 import {
   type CirculatingSupplyProvider,
   CoingeckoQueryService,
@@ -11,7 +12,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { CirculatingSupplyService } from './CirculatingSupplyService'
 
 describe(CirculatingSupplyService.name, () => {
@@ -28,10 +29,12 @@ describe(CirculatingSupplyService.name, () => {
 
       const service = new CirculatingSupplyService({
         circulatingSupplyProvider: circulatingSupplyProvider,
+        logger: Logger.SILENT,
+        database: mockObject<Database>(),
       })
 
-      const from = new UnixTime(100)
-      const to = new UnixTime(300)
+      const from = UnixTime(100)
+      const to = UnixTime(300)
       const coingeckoId = CoingeckoId('id')
       const config = mockObject<CirculatingSupplyEntry>({
         chain: 'chain',
@@ -58,6 +61,97 @@ describe(CirculatingSupplyService.name, () => {
         circulatingSupplyProvider.getCirculatingSupplies,
       ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to })
     })
+
+    it('returns DB record when CirculatingSupplyProvider fails', async () => {
+      const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+      const from = to - 1 * UnixTime.HOUR + 1 // indexer ticks
+      const lastFetched = to - 1 * UnixTime.HOUR
+
+      const coingeckoId = CoingeckoId('coingecko-id')
+      const config = mockObject<CirculatingSupplyEntry>({
+        chain: 'chain',
+        project: ProjectId('project'),
+        type: 'circulatingSupply',
+        address: EthereumAddress.random(),
+        coingeckoId,
+        decimals: 18,
+        category: 'other',
+      })
+
+      const configId = createAmountId(config)
+      const configWithId = { ...config, id: configId }
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getCirculatingSupplies: mockFn().rejectsWith(new Error('error')),
+      })
+
+      const amountTable = mockObject<Database['amount']>({
+        getLatestAmount: async () => ({
+          configId,
+          timestamp: lastFetched,
+          amount: BigInt(lastFetched) * 10n ** 18n,
+        }),
+      })
+
+      const service = new CirculatingSupplyService({
+        circulatingSupplyProvider,
+        database: mockObject<Database>({ amount: amountTable }),
+        logger: Logger.SILENT,
+      })
+
+      const result = await service.fetchCirculatingSupplies(
+        from,
+        to,
+        configWithId,
+      )
+
+      expect(result).toEqual([
+        {
+          configId,
+          timestamp: to,
+          amount: BigInt(lastFetched) * 10n ** 18n,
+        },
+      ])
+
+      expect(
+        circulatingSupplyProvider.getCirculatingSupplies,
+      ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to })
+      expect(amountTable.getLatestAmount).toHaveBeenOnlyCalledWith(configId)
+    })
+
+    it('works only for latest hour', async () => {
+      const coingeckoId = CoingeckoId('coingecko-id')
+      const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+      const from = to - 365 * UnixTime.DAY
+
+      const config = mockObject<CirculatingSupplyEntry>({
+        chain: 'chain',
+        project: ProjectId('project'),
+        type: 'circulatingSupply',
+        address: EthereumAddress.random(),
+        coingeckoId,
+        decimals: 18,
+        category: 'other',
+      })
+
+      const configId = createAmountId(config)
+      const configWithId = { ...config, id: configId }
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getCirculatingSupplies: mockFn().rejectsWith(new Error('error')),
+      })
+
+      const service = new CirculatingSupplyService({
+        circulatingSupplyProvider,
+        database: mockObject<Database>(),
+        logger: Logger.SILENT,
+      })
+
+      await expect(
+        async () =>
+          await service.fetchCirculatingSupplies(from, to, configWithId),
+      ).toBeRejectedWith('error')
+    })
   })
 
   describe(CirculatingSupplyService.prototype.getAdjustedTo.name, () => {
@@ -67,13 +161,15 @@ describe(CirculatingSupplyService.name, () => {
 
       const circulatingSupplyProvider = new CirculatingSupplyService({
         circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
+        logger: Logger.SILENT,
+        database: mockObject<Database>(),
       })
 
       const result = circulatingSupplyProvider.getAdjustedTo(from, to)
 
       const expected = CoingeckoQueryService.calculateAdjustedTo(
-        new UnixTime(from),
-        new UnixTime(to),
+        UnixTime(from),
+        UnixTime(to),
       )
 
       expect(result).toEqual(expected)
@@ -87,14 +183,14 @@ function amount(
 ): AmountRecord {
   return {
     configId: createAmountId(config),
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     amount: BigInt(timestamp) * 10n ** BigInt(config.decimals), // for the sake of tests simplicity it is the same
   }
 }
 
 function coingeckoResponse(timestamp: number) {
   return {
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     value: timestamp, // for the sake of tests simplicity it is the same
   }
 }

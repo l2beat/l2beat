@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "sonicgateway",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"],
   "names": {
     "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20": "TokenDeposit",
@@ -138,7 +139,7 @@
     "UpdateManager": {
       "description": "Entry point for state (oracle) updates.",
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["lastBlockNum"],
+      "ignoreInWatchMode": ["lastBlockNum", "fastLaneInUse"],
       "fields": {
         "accessControl": {
           "handler": {

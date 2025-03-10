@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 import {
   DA_BRIDGES,
@@ -20,7 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('degate2')
@@ -58,16 +58,16 @@ assert(owner1 === owner2 && owner2 === owner3 && owner3, 'DeGate')
 const permissionedAccount = discovery.formatPermissionedAccounts([owner1])
 assert(permissionedAccount[0].type === 'EOA', 'DeGate')
 
-export const degate2: Layer2 = {
+export const degate2: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate2'),
   capability: 'appchain',
-  addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  addedAt: UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.LoopringFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.LoopringFork,
   ],
   display: {
     name: 'DeGate V1 Legacy',
@@ -98,7 +98,7 @@ export const degate2: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xF13e21653AEB763595D5E4baA1dC115689Da49b9'),
-        sinceTimestamp: new UnixTime(1693304807),
+        sinceTimestamp: UnixTime(1693304807),
         tokens: '*',
       }),
     ],
@@ -116,8 +116,8 @@ export const degate2: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1693304819),
-          untilTimestamp: new UnixTime(1699766508),
+          sinceTimestamp: UnixTime(1693304819),
+          untilTimestamp: UnixTime(1699766508),
         },
       },
     ],

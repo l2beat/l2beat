@@ -1,10 +1,10 @@
+import { diff } from 'deep-diff'
 import type {
   ContractFieldSeverity,
-  ContractParameters,
   ContractValueType,
-} from '@l2beat/discovery-types'
-import { diff } from 'deep-diff'
+} from '../config/RawDiscoveryConfig'
 import { normalizeDiffPath } from '../utils/normalizeDiffPath'
+import type { EntryParameters } from './types'
 
 export interface FieldDiff {
   key: string
@@ -16,8 +16,8 @@ export interface FieldDiff {
 }
 
 export function diffContracts(
-  before: ContractParameters,
-  after: ContractParameters,
+  before: EntryParameters,
+  after: EntryParameters,
   ignore: string[],
 ): FieldDiff[] {
   const differences = diff(before, after)

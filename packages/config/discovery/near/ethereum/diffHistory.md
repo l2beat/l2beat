@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x5fa66ee06b95969d749f73c5683f04d5de2fa272
+Generated with discovered.json: 0x4078b5bb8c74564285edd29b388fc20a041befe9
+
+# Diff at Tue, 04 Mar 2025 10:39:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 19531990
+- current block number: 19531990
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531990 (main branch discovery), not current.
+
+```diff
+    contract NearProver (0x051AD3F020274910065Dcb421629cd2e6E5b46c4) {
+    +++ description: None
+      sinceBlock:
++        12040114
+    }
+```
+
+```diff
+    contract ERC20Locker (0x23Ddd3e3692d1861Ed57EDE224608875809e127f) {
+    +++ description: None
+      sinceBlock:
++        12044301
+    }
+```
+
+```diff
+    contract BridgeAdminMultisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1) {
+    +++ description: None
+      sinceBlock:
++        13896975
+    }
+```
+
+```diff
+    contract NearBridge (0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873) {
+    +++ description: None
+      sinceBlock:
++        15617816
+    }
+```
+
+```diff
+    contract EthCustodian (0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52) {
+    +++ description: None
+      sinceBlock:
++        12702964
+    }
+```
+
+Generated with discovered.json: 0x091a0dee529ef8aad47f7d8fe1cf041a9efce9fa
 
 # Diff at Mon, 14 Oct 2024 10:53:12 GMT:
 

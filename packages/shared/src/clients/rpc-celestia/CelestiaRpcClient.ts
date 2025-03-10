@@ -1,4 +1,4 @@
-import { UnixTime, type json } from '@l2beat/shared-pure'
+import { type Block, UnixTime, type json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   CelestiaBlockResponse,
@@ -17,9 +17,29 @@ export class CelestiaRpcClient extends ClientCore {
     super($)
   }
 
-  async getBlockTimestamp(height: number): Promise<UnixTime> {
+  async getLatestBlockNumber(): Promise<number> {
+    const block = await this.getBlockResult()
+    return Number(block.height)
+  }
+
+  async getBlockWithTransactions(
+    blockNumber: number | 'latest',
+  ): Promise<Block> {
+    const height = blockNumber === 'latest' ? undefined : blockNumber
+    const block = await this.getBlockResult(height)
+    const blockTimestamp = await this.getBlockTimestamp(height)
+
+    return {
+      number: Number(block.height),
+      hash: 'UNSUPPORTED',
+      timestamp: blockTimestamp,
+      transactions: [], // UNSUPPORTED
+    }
+  }
+
+  async getBlockTimestamp(height?: number): Promise<UnixTime> {
     const response = await this.query('block', {
-      height: height.toString(),
+      ...(height && { height: height.toString() }),
     })
 
     const blockResponse = CelestiaBlockResponse.safeParse(response)
@@ -37,9 +57,9 @@ export class CelestiaRpcClient extends ClientCore {
     )
   }
 
-  async getBlockResult(height: number): Promise<CelestiaBlockResult> {
+  async getBlockResult(height?: number): Promise<CelestiaBlockResult> {
     const response = await this.query('block_results', {
-      height: height.toString(),
+      ...(height && { height: height.toString() }),
     })
 
     const blockResponse = CelestiaBlockResultResponse.safeParse(response)
@@ -57,12 +77,12 @@ export class CelestiaRpcClient extends ClientCore {
 
   async query(method: string, params: Record<string, string>) {
     const url = `${this.$.url}${method}`
-    const searchParams = new URLSearchParams(params).toString()
+    const query =
+      Object.keys(params).length > 0 ? `?${new URLSearchParams(params)}` : ''
 
-    return await this.fetch(`${url}?${searchParams}`, {
+    return await this.fetch(`${url}${query}`, {
       method: 'GET',
       redirect: 'follow',
-      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
     })
   }
 
@@ -80,5 +100,9 @@ export class CelestiaRpcClient extends ClientCore {
     }
 
     return { success: true }
+  }
+
+  get chain() {
+    return this.$.sourceName
   }
 }

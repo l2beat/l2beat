@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 
-export const superseed: Layer2 = underReviewL2({
+export const superseed: ScalingProject = underReviewL2({
   id: 'superseed',
   capability: 'universal',
-  addedAt: new UnixTime(1714316238), // 2024-04-28T14:57:18Z
+  addedAt: UnixTime(1714316238), // 2024-04-28T14:57:18Z
   badges: [
-    Badge.Infra.Superchain,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.VM.EVM,
+    BADGES.Infra.Superchain,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.VM.EVM,
   ],
   display: {
     name: 'Superseed',
@@ -33,17 +33,26 @@ export const superseed: Layer2 = underReviewL2({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://mainnet.superseed.xyz/',
-    defaultCallsPerMinute: 1500,
+  chainConfig: {
+    name: 'superseed',
+    chainId: 5330,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.superseed.xyz/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   escrows: [
     {
       address: EthereumAddress('0x2c2150aa5c75A24fB93d4fD2F2a895D618054f07'), // optiPortal
-      sinceTimestamp: new UnixTime(1726179731),
+      sinceTimestamp: UnixTime(1726179731),
       tokens: ['ETH'],
       chain: 'ethereum',
     },

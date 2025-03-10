@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('corn')
 
-export const corn: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1733880840),
+export const corn: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -38,7 +38,6 @@ export const corn: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://mainnet.corn-rpc.com',
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // wbtc vault backing the BTCN in the canonical bridge
@@ -73,22 +72,18 @@ export const corn: Layer2 = orbitStackL2({
         "This vault escrows the cbBTC backing BTCN, Corn's gastoken. Users can directly bridge via LayerZero when minting BTCN in this contract.",
     }),
   ],
-  // gasTokens: ['BTCN'],
+  untrackedGasTokens: ['BTCN'],
   // associatedTokens: ['BTCN'],
   discovery,
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   chainConfig: {
     name: 'corn',
     chainId: 21000000,
-    explorerUrl: 'https://maizenet-explorer.usecorn.com/',
-    explorerApi: {
-      url: 'https://maizenet-explorer.usecorn.com/api',
-      type: 'blockscout',
-    },
-    minTimestampForTvl: new UnixTime(1732012151),
+    explorerUrl: 'https://maizenet-explorer.usecorn.com',
+    sinceTimestamp: UnixTime(1732012151),
+    gasTokens: ['BTCN'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -96,6 +91,14 @@ export const corn: Layer2 = orbitStackL2({
         sinceBlock: 3228,
         version: '3',
       },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.corn-rpc.com',
+        callsPerMinute: 1500,
+      },
+      { type: 'blockscout', url: 'https://maizenet-explorer.usecorn.com/api' },
     ],
   },
   milestones: [

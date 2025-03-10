@@ -1,11 +1,11 @@
-import { layer2s, layer3s } from '@l2beat/config'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 
-export function getActivityProjects() {
-  return [...layer2s, ...layer3s].filter(
-    (project) =>
-      !project.isUpcoming &&
-      project.config.transactionApi !== undefined &&
-      !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(project.id.toString()),
-  )
+export async function getActivityProjects() {
+  const projects = await ps.getProjects({
+    select: ['scalingInfo', 'statuses'],
+    where: ['activityConfig'],
+    whereNot: ['isUpcoming'],
+  })
+  return projects.filter((p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id))
 }

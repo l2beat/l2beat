@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "optimism",
   "name": "optimism",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x4200000000000000000000000000000000000010",
     "0x4200000000000000000000000000000000000016",
@@ -20,29 +21,12 @@
     "0x4200000000000000000000000000000000000021"
   ],
   "names": {
-    "0x4200000000000000000000000000000000000010": "L2StandardBridge",
-    "0x4200000000000000000000000000000000000011": "SequencerFeeVault",
-    "0x420000000000000000000000000000000000000F": "GasPriceOracle",
     "0x4200000000000000000000000000000000000042": "OPToken",
-    "0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger",
-    "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe": "L2ProxyAdminOwner",
     "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
     "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
-    "0x4200000000000000000000000000000000000013": "L1BlockNumber",
-    "0x4200000000000000000000000000000000000015": "L1Block",
-    "0x4200000000000000000000000000000000000016": "L2ToL1MessagePasser",
-    "0x4200000000000000000000000000000000000018": "L2ProxyAdmin",
     "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
-    "0x4200000000000000000000000000000000000019": "BaseFeeVault",
-    "0x420000000000000000000000000000000000001A": "L1FeeVault",
-    "0x4200000000000000000000000000000000000012": "OptimismMintableERC20Factory",
-    "0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory",
     "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager",
-    "0x4200000000000000000000000000000000000014": "L2ERC721Bridge",
-    "0x4200000000000000000000000000000000000020": "SchemaRegistry",
-    "0x4200000000000000000000000000000000000021": "EAS",
-    "0x4200000000000000000000000000000000000002": "DeployerWhitelist",
-    "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias"
+    "0x4200000000000000000000000000000000000002": "DeployerWhitelist"
   },
   "overrides": {
     "DeployerWhitelist": {
@@ -63,69 +47,10 @@
         }
       }
     },
-    "L1FeeVault": {
-      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
-      "ignoreMethods": ["totalProcessed"]
-    },
-    "BaseFeeVault": {
-      "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
-      "ignoreMethods": ["totalProcessed"]
-    },
-    "SequencerFeeVault": {
-      "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
-      "ignoreMethods": ["totalProcessed"]
-    },
-    "GasPriceOracle": {
-      "description": "Provides the current gas price for L2 transactions.",
-      "ignoreMethods": ["overhead", "scalar", "getL1FeeUpperBound"],
-      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
-    },
     "OPToken": {
       "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"]
-    },
-    "L2CrossDomainMessenger": {
-      "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
-      "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
-    },
-    "L1BlockNumber": {
-      "description": "Simple contract that returns the latest L1 block number.",
-      "ignoreMethods": ["getL1BlockNumber"]
-    },
-    "L1Block": {
-      "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
-      "ignoreInWatchMode": [
-        "basefee",
-        "hash",
-        "number",
-        "timestamp",
-        "sequenceNumber",
-        "blobBaseFee"
-      ]
-    },
-    "L2ToL1MessagePasser": {
-      "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
-      "ignoreMethods": ["messageNonce"]
-    },
-    "L2StandardBridge": {
-      "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token."
-    },
-    "OptimismMintableERC20Factory": {
-      "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens."
-    },
-    "OptimismMintableERC721Factory": {
-      "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens."
-    },
-    "L2ERC721Bridge": {
-      "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token."
-    },
-    "SchemaRegistry": {
-      "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS)."
-    },
-    "EAS": {
-      "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS)."
     }
   }
 }

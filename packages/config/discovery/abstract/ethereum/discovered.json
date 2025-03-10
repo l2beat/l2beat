@@ -1,27 +1,43 @@
 {
   "name": "abstract",
   "chain": "ethereum",
-  "blockNumber": 21766582,
-  "configHash": "0x2e61acbd93b52ada4ff5fccd220deda5d4ef2ec7719ab82446224424e54d0728",
+  "blockNumber": 21916825,
+  "configHash": "0x178d11dce635d5045a10702cb790b07893d69ad1fb2087b366b03b7b2bf5e8e7",
   "sharedModules": ["shared-zk-stack"],
-  "contracts": [
+  "entries": [
     {
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "type": "Contract",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "proxyType": "immutable",
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
+      "sinceBlock": 21081436,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x11805594be0229EF08429D775AF0c55f7c4535dE",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
     },
     {
       "name": "AbstractZkEvm",
       "address": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
+      "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
@@ -60,6 +76,7 @@
         "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1729680467,
+      "sinceBlock": 21027786,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -194,26 +211,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 10510,
+        "getFirstUnprocessedPriorityTx": 15733,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 97,
+        "getPriorityQueueSize": 11,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 1471,
-        "getTotalBatchesExecuted": 1432,
-        "getTotalBatchesVerified": 1468,
-        "getTotalBlocksCommitted": 1471,
-        "getTotalBlocksExecuted": 1432,
-        "getTotalBlocksVerified": 1468,
-        "getTotalPriorityTxs": 10607,
+        "getTotalBatchesCommitted": 4785,
+        "getTotalBatchesExecuted": 4764,
+        "getTotalBatchesVerified": 4778,
+        "getTotalBlocksCommitted": 4785,
+        "getTotalBlocksExecuted": 4764,
+        "getTotalBlocksVerified": 4778,
+        "getTotalPriorityTxs": 15744,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -238,15 +255,34 @@
           "description": "Verifier parameters used for proving batches."
         }
       },
-      "derivedName": "DiamondProxy"
+      "derivedName": "DiamondProxy",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x54aB716D465be3D5EEca64E63ac0048D7a81659a",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
     },
     {
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
+      "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
@@ -268,6 +304,7 @@
         }
       ],
       "sinceTimestamp": 1717520615,
+      "sinceBlock": 20019826,
       "values": {
         "$immutable": true,
         "executionDelay": 10800,
@@ -281,11 +318,13 @@
           "0x54aB716D465be3D5EEca64E63ac0048D7a81659a",
           "0x11805594be0229EF08429D775AF0c55f7c4535dE"
         ]
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "AbstractChainAdminMultisig",
       "address": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -308,6 +347,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1729784015,
+      "sinceBlock": 21036380,
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
@@ -328,12 +368,19 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ChainAdmin",
       "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
+      "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -342,6 +389,7 @@
         }
       ],
       "sinceTimestamp": 1729083287,
+      "sinceBlock": 20978253,
       "values": {
         "$immutable": true,
         "owner": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
@@ -355,42 +403,19 @@
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe7ea5B62F939611D11C0Ce7606B001207870C704",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
-          "description": "set the conversion factor for gas token deposits."
-        }
-      ]
-    },
-    {
-      "address": "0x11805594be0229EF08429D775AF0c55f7c4535dE",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
-    },
-    { "address": "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0" },
-    {
-      "address": "0x54aB716D465be3D5EEca64E63ac0048D7a81659a",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
-    },
-    { "address": "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74" },
-    { "address": "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE" },
-    { "address": "0xe7ea5B62F939611D11C0Ce7606B001207870C704" }
   ],
   "abis": {
     "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66": [
@@ -699,9 +724,9 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/ChainAdmin": "0x9e6c69705a47c98e16eb9d2fc299b67fbc863a6d7315b4b3519eecb96f5b20e5",
-    "shared-zk-stack/Diamond": "0xff5383a8ec4b4fefa1093890cd7eed015c46ac789aa5fbb7f2ef4b5b1adcf473",
-    "shared-zk-stack/ValidatorTimelock": "0x3776f17136539758803c8f9414cca1bb0b6b9758adb3686b6cc31c7a53210cf0",
-    "shared-zk-stack/Verifier": "0x747e9df6c967ba03b301b81982e9eee0991001c30f832d55dba9c87bbd2651c4"
+    "shared-zk-stack/ChainAdmin": "0x21362d1e1f6039b145ce8e607cf8c1f6f2d4b7e32cea642e1253fe0302cdb5d6",
+    "shared-zk-stack/Diamond": "0x35d64655368a19cac7e3f39d5009f281ae309f51b9f83661f70c192d3499a227",
+    "shared-zk-stack/ValidatorTimelock": "0x58f7bef19010ef32f238898c7b274dfe08c8412e455fb6bdaf21a44ef0611ca6",
+    "shared-zk-stack/Verifier": "0xdf758e791d4b50d840b7b4546467e86c3b081e1499c51f4ab37caa07476968eb"
   }
 }

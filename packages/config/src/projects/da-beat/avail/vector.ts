@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { isProjectVerified } from '../../../verification/isVerified'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
@@ -14,7 +13,7 @@ export const vector: BaseProject = {
   slug: 'vector',
   name: 'Vector',
   shortName: undefined,
-  addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
+  addedAt: UnixTime(1725372159), // 2024-09-03T14:02:39Z
   // data
   statuses: {
     yellowWarning: undefined,
@@ -28,6 +27,7 @@ export const vector: BaseProject = {
       documentation: ['https://docs.succinct.xyz/'],
       repositories: ['https://github.com/succinctlabs/sp1-vector'],
     },
+    badges: [],
   },
   daBridge: {
     name: 'Vector',
@@ -96,9 +96,4 @@ export const vector: BaseProject = {
   permissions: {
     ethereum: discovery.getDiscoveredPermissions(),
   },
-}
-
-// TODO: different solution for this
-if (vector.statuses) {
-  vector.statuses.isUnverified = !isProjectVerified(vector)
 }

@@ -1,15 +1,17 @@
 {
   "name": "stargatev2",
   "chain": "metis",
-  "blockNumber": 17386539,
-  "configHash": "0xa8bebc942203333ef34ed655fafb608072cc8038c52571a57eafa0d3bf2c6ff3",
-  "contracts": [
+  "blockNumber": 19714541,
+  "configHash": "0xf9b568fbb23c9fc534ec7636a8c540b31764dd9d0e5bff1f3eaf7338935fa987",
+  "entries": [
     {
       "name": "StargatePool",
       "address": "0x36ed193dc7160D3858EC250e69D12B03Ca087D08",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -18,6 +20,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837010,
+      "sinceBlock": 17182940,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -36,22 +39,24 @@
         "lpToken": "0x16C58802FD464D2Ac33B8f1DB57D7717f8365d91",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
-        "plannerFee": "468043191475948754",
-        "poolBalance": "935086575000000000000",
+        "plannerFee": "648705583184445758",
+        "poolBalance": "2317457552000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x420000000000000000000000000000000000000A",
-        "treasuryFee": 436756,
-        "tvl": "548518904000000000000"
+        "treasuryFee": 5282956,
+        "tvl": "129646152000000000000"
       }
     },
     {
       "name": "StargatePoolMigratable",
       "address": "0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125",
+      "type": "Contract",
       "sourceHashes": [
         "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -60,6 +65,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837024,
+      "sinceBlock": 17182942,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -80,23 +86,26 @@
         "lpToken": "0x222A9a6dD812CA5a27fFfEC39816A2DF6837D396",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
-        "plannerFee": "484502171552392862",
-        "poolBalance": 3001648036254,
+        "plannerFee": "485470518497289148",
+        "poolBalance": 2836077993545,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-        "treasuryFee": 1758963818,
-        "tvl": 1187087448272
+        "treasuryFee": 23237486873,
+        "tvl": 332651386362
       }
     },
     {
       "name": "TokenMessaging",
       "address": "0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837030,
+      "sinceBlock": 17182943,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -134,15 +143,16 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      },
-      "derivedName": "TokenMessaging"
+      }
     },
     {
       "name": "StargatePool",
       "address": "0xD9050e7043102a0391F81462a3916326F86331F0",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -151,6 +161,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837016,
+      "sinceBlock": 17182941,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -169,20 +180,21 @@
         "lpToken": "0x2D4848d502B8B16b8ad86945d3D4e92F2d229dFF",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
-        "plannerFee": "11000000000000000",
-        "poolBalance": "10502070000000000000",
+        "plannerFee": "952831000000000000",
+        "poolBalance": "951920000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
         "treasuryFee": 0,
-        "tvl": "10502070000000000000"
+        "tvl": "9354386000000000000"
       }
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x36ed193dc7160D3858EC250e69D12B03Ca087D08": [

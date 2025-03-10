@@ -1,26 +1,26 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { EntryParameters } from '@l2beat/discovery'
 import type { ApiAddressEntry } from './types'
 
 export function getContractType(
-  contract: ContractParameters,
+  entry: EntryParameters,
 ): ApiAddressEntry['type'] {
-  if (contract.unverified) {
+  if (entry.unverified) {
     return 'Unverified'
   }
-  if (contract.values?.['$members']) {
+  if (entry.values?.['$members']) {
     return 'Multisig'
   }
   if (
-    !!contract.values?.['name'] &&
-    !!contract.values?.['symbol'] &&
-    !!contract.values?.['decimals']
+    !!entry.values?.['name'] &&
+    !!entry.values?.['symbol'] &&
+    !!entry.values?.['decimals']
   ) {
     return 'Token'
   }
-  if (contract.values?.['TIMELOCK_ADMIN_ROLE']) {
+  if (entry.values?.['TIMELOCK_ADMIN_ROLE']) {
     return 'Timelock'
   }
-  if (Array.isArray(contract.values?.['$implementation'])) {
+  if (Array.isArray(entry.values?.['$implementation'])) {
     return 'Diamond'
   }
   return 'Contract'

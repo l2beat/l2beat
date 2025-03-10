@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const memento: Layer2 = upcomingL2({
+export const memento: ScalingProject = upcomingL2({
   id: 'memento',
   capability: 'universal',
-  addedAt: new UnixTime(1730879100), // 2024-11-6T07:45:00Z
+  addedAt: UnixTime(1730879100), // 2024-11-6T07:45:00Z
   display: {
     name: 'Memento ZK Chain',
     slug: 'memento',

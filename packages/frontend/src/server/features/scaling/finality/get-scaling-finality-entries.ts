@@ -1,12 +1,12 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
@@ -19,7 +19,13 @@ import { getFinalitySyncWarning } from './utils/is-finality-synced'
 
 export async function getFinalityProjects() {
   const projects = await ps.getProjects({
-    select: ['statuses', 'scalingInfo', 'finalityInfo', 'finalityConfig'],
+    select: [
+      'statuses',
+      'scalingInfo',
+      'finalityInfo',
+      'finalityConfig',
+      'display',
+    ],
     optional: ['scalingDa'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
@@ -49,12 +55,12 @@ export async function getScalingFinalityEntries() {
     .filter((x) => x !== undefined)
     .sort(compareStageAndTvs)
 
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingFinalityEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  stack: ProjectScalingStack | undefined
   dataAvailabilityMode: TableReadyValue | undefined
   data: {
     timeToInclusion: {
@@ -76,7 +82,10 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
 }
 
 function getScalingFinalityEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'finalityInfo', 'scalingDa'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'finalityInfo' | 'display',
+    'scalingDa'
+  >,
   changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
   tvs: number | undefined,

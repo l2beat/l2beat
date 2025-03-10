@@ -3,13 +3,12 @@ import type { BlockProvider } from '@l2beat/shared'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
-import type { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
-import type { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
+import type { UopsAnalyzer } from '../uops/types'
 
 interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
-  uopsAnalyzer?: RpcUopsAnalyzer | StarknetUopsAnalyzer
+  uopsAnalyzer?: UopsAnalyzer
   assessCount: (count: number, blockNumber: number) => number
 }
 
@@ -32,7 +31,7 @@ export class BlockTxsCountService {
       return {
         txsCount,
         uopsCount,
-        timestamp: new UnixTime(block.timestamp),
+        timestamp: UnixTime(block.timestamp),
         number: block.number,
       }
     })

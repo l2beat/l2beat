@@ -1,4 +1,70 @@
-Generated with discovered.json: 0xaa9a8caaa5e4ab3e4c5f74cdc560428da920119d
+Generated with discovered.json: 0xeca3a56a7cb24e74196af7e80ed9b56a3a538058
+
+# Diff at Tue, 04 Mar 2025 10:39:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21378535
+- current block number: 21378535
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21378535 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      sinceBlock:
++        20425326
+    }
+```
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      sinceBlock:
++        8077308
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      sinceBlock:
++        20440286
+    }
+```
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      sinceBlock:
++        15006576
+    }
+```
+
+```diff
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      sinceBlock:
++        4719568
+    }
+```
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      sinceBlock:
++        16895391
+    }
+```
+
+Generated with discovered.json: 0xb2247e55f4bba610cac5118d6f30a33041c5df04
 
 # Diff at Mon, 03 Feb 2025 16:07:20 GMT:
 

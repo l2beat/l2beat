@@ -1,19 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const huddle01: Layer3 = underReviewL3({
+export const huddle01: ScalingProject = underReviewL3({
   id: 'huddle01',
   capability: 'universal',
-  addedAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
+  addedAt: UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
-    Badge.RaaS.Caldera,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.DA.DAC,
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
+    BADGES.RaaS.Caldera,
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.DA.DAC,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
   ],
   display: {
     name: 'Huddle01',
@@ -38,17 +38,27 @@ export const huddle01: Layer3 = underReviewL3({
       ],
     },
   },
-  rpcUrl: 'https://huddle01.calderachain.xyz/http',
+  chainConfig: {
+    name: 'huddle01',
+    chainId: 12323,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://huddle01.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0x4A346da02EA2Fa6E49834C409165c6D6527ae522'), // bridge
-      sinceTimestamp: new UnixTime(1733189165),
+      sinceTimestamp: UnixTime(1733189165),
       tokens: ['ETH'],
       chain: 'arbitrum',
     },
     {
       address: EthereumAddress('0xD027882355d26e1891bD9D0B0953536b59e3B263'), // standardGW
-      sinceTimestamp: new UnixTime(1733189169),
+      sinceTimestamp: UnixTime(1733189169),
       tokens: '*',
       chain: 'arbitrum',
     },

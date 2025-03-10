@@ -14,7 +14,7 @@ interface ChainConfig {
     url: string
     unsupported?: EtherscanUnsupportedMethods
   }
-  multicall: MulticallConfig
+  multicall: MulticallConfig | undefined
 }
 
 export const chains: ChainConfig[] = [
@@ -258,6 +258,29 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'blockscout',
       url: 'https://explorer.kinto.xyz/api',
+    },
+  },
+  {
+    name: 'unichain',
+    chainId: 130,
+    shortName: 'unichain',
+    multicall: getMulticall3Config(8000000),
+    explorer: {
+      type: 'etherscan',
+      url: 'https://api.uniscan.xyz/api',
+    },
+  },
+  {
+    name: 'ink',
+    chainId: 57073,
+    shortName: 'ink',
+    multicall: getMulticall3Config(
+      1,
+      EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+    ),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.inkonchain.com/api',
     },
   },
 ] as const satisfies ChainConfig[]

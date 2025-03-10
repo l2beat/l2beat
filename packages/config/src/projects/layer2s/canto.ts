@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const canto: Layer2 = upcomingL2({
+export const canto: ScalingProject = upcomingL2({
   id: 'canto',
   capability: 'universal', // this project should be deleted, because the team is no longer builiding the L2.
-  addedAt: new UnixTime(1690815262), // '2023-07-31T14:54:22Z'
+  addedAt: UnixTime(1690815262), // '2023-07-31T14:54:22Z'
   display: {
     name: 'Canto',
     slug: 'canto',

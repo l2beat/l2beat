@@ -1,4 +1,125 @@
-Generated with discovered.json: 0x182b69b1965920f09a79860285a7853e7c23894e
+Generated with discovered.json: 0xd01d2f69be09a6db99f51f61cadefc18672b04a7
+
+# Diff at Tue, 04 Mar 2025 10:39:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      sinceBlock:
++        19505052
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      sinceBlock:
++        20125601
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      sinceBlock:
++        20125600
+    }
+```
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      sinceBlock:
++        19960801
+    }
+```
+
+Generated with discovered.json: 0x98f1ced001a0241dd3f7d57041d34d159a3b18ee
+
+# Diff at Thu, 27 Feb 2025 11:45:44 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "FflonkVerifier"
++        "Verifier"
+      displayName:
+-        "Verifier"
+    }
+```
+
+Generated with discovered.json: 0x7819947ddaec0744fb2bdc9116b251053fa37543
+
+# Diff at Wed, 26 Feb 2025 10:32:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21744154
+- current block number: 21744154
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x0974f0953d39381a030d46ef8655abde90a7ac3c
 
 # Diff at Tue, 04 Feb 2025 12:31:29 GMT:
 

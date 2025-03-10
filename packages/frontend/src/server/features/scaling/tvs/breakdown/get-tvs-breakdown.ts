@@ -1,158 +1,186 @@
 import type { ConfigMapping } from '@l2beat/backend-shared'
-import { safeGetTokenByAssetId } from '@l2beat/config'
+import type { ChainConfig } from '@l2beat/config'
 import type {
   AmountConfigEntry,
   AssetId,
   EthereumAddress,
   ProjectId,
+  Token,
 } from '@l2beat/shared-pure'
 import {
   assert,
+  ChainConverter,
+  ChainId,
   UnixTime,
   asNumber,
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import { assignTokenMetaToBreakdown } from './assign-token-meta-to-breakdown'
-import { chainConverter } from './chain-converter'
 import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import type { BreakdownRecord, CanonicalAssetBreakdownData } from './types'
 
-export function getTvsBreakdown(configMapping: ConfigMapping) {
-  return async function (projectId: ProjectId, target?: UnixTime) {
-    const targetTimestamp =
-      target ?? UnixTime.now().toStartOf('hour').add(-2, 'hours')
+export async function getTvsBreakdown(
+  configMapping: ConfigMapping,
+  chains: ChainConfig[],
+  projectId: ProjectId,
+  tokenMap: Map<AssetId, Token>,
+  gasTokens?: string[],
+  target?: UnixTime,
+) {
+  const chainConverter = new ChainConverter(chains)
 
-    const prices = await getLatestPriceForConfigurations(
-      configMapping.prices,
-      targetTimestamp,
-    )
+  const targetTimestamp =
+    target ?? UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-    const tokenAmounts = await getLatestAmountForConfigurations(
-      configMapping.amounts,
-      targetTimestamp,
-    )
+  const prices = await getLatestPriceForConfigurations(
+    configMapping.prices,
+    targetTimestamp,
+  )
 
-    const pricesMap = new Map(
-      prices.prices.map((x) => [x.configId, x.priceUsd]),
-    )
+  const tokenAmounts = await getLatestAmountForConfigurations(
+    configMapping.amounts,
+    targetTimestamp,
+  )
 
-    const breakdown: BreakdownRecord = {
-      canonical: new Map<AssetId, CanonicalAssetBreakdownData>(),
-      external: [],
-      native: [],
+  const pricesMap = new Map(prices.prices.map((x) => [x.configId, x.priceUsd]))
+
+  const breakdown: BreakdownRecord = {
+    canonical: new Map<AssetId, CanonicalAssetBreakdownData>(),
+    external: [],
+    native: [],
+  }
+
+  for (const amount of tokenAmounts.amounts) {
+    const config = configMapping.getAmountConfig(amount.configId)
+
+    if (config.project !== projectId) {
+      throw new Error(
+        `Project id mismatch. Expected ${projectId}, got ${config.project}. Double check amounts mappings.`,
+      )
     }
 
-    for (const amount of tokenAmounts.amounts) {
-      const config = configMapping.getAmountConfig(amount.configId)
+    if (config.untilTimestamp && config.untilTimestamp < targetTimestamp) {
+      continue
+    }
 
-      if (config.project !== projectId) {
-        throw new Error(
-          `Project id mismatch. Expected ${projectId}, got ${config.project}. Double check amounts mappings.`,
+    const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
+    if (prices.excluded.has(priceConfig.configId)) {
+      continue
+    }
+    const price = pricesMap.get(priceConfig.configId)
+    assert(price, 'Price not found for id ' + priceConfig.configId)
+
+    const amountAsNumber = asNumber(amount.amount, config.decimals)
+    const valueAsNumber = amountAsNumber * price
+
+    switch (config.source) {
+      case 'canonical': {
+        const address = getTokenAddress(config)
+        const isSharedEscrow = getIsSharedEscrow(config)
+        assert(
+          config.type !== 'totalSupply' && config.type !== 'circulatingSupply',
         )
-      }
 
-      if (config.untilTimestamp?.lt(targetTimestamp)) {
-        continue
-      }
+        const explorer = chains.find(
+          (c) => c.name === config.chain,
+        )?.explorerUrl
 
-      const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
-      if (prices.excluded.has(priceConfig.configId)) {
-        continue
-      }
-      const price = pricesMap.get(priceConfig.configId)
-      assert(price, 'Price not found for id ' + priceConfig.configId)
-
-      const amountAsNumber = asNumber(amount.amount, config.decimals)
-      const valueAsNumber = amountAsNumber * price
-
-      switch (config.source) {
-        case 'canonical': {
-          const address = getTokenAddress(config)
-          const isSharedEscrow = getIsSharedEscrow(config)
-          assert(
-            config.type !== 'totalSupply' &&
-              config.type !== 'circulatingSupply',
-          )
-
-          const asset = breakdown.canonical.get(priceConfig.assetId)
-          if (asset) {
-            asset.usdValue += valueAsNumber
-            asset.amount += amountAsNumber
-            asset.escrows.push({
-              amount: amountAsNumber,
-              usdValue: valueAsNumber,
-              escrowAddress: config.escrowAddress,
-              ...(config.type === 'preminted' ? { isPreminted: true } : {}),
-              isSharedEscrow,
-            })
-          } else {
-            breakdown.canonical.set(priceConfig.assetId, {
-              assetId: priceConfig.assetId,
-              /*
-               * We are taking chain from price because there is an edge case in which
-               * chain from amount config is different for frontend and backend purposes.
-               * E.g. Elastic chain and AggLayer where we have shared escrows.
-               */
-              chainId: chainConverter.toChainId(priceConfig.chain),
-              amount: amountAsNumber,
-              usdValue: valueAsNumber,
-              usdPrice: price.toString(),
-              tokenAddress: address === 'native' ? undefined : address,
-              escrows: [
-                {
-                  amount: amountAsNumber,
-                  usdValue: valueAsNumber,
-                  escrowAddress: config.escrowAddress,
-                  ...(config.type === 'preminted' ? { isPreminted: true } : {}),
-                  isSharedEscrow,
-                },
-              ],
-            })
-          }
-          break
-        }
-        case 'external': {
-          const token = safeGetTokenByAssetId(priceConfig.assetId)
-          const address = getTokenAddress(config)
-
-          breakdown.external.push({
-            assetId: priceConfig.assetId,
-            chainId: chainConverter.toChainId(config.chain),
+        const asset = breakdown.canonical.get(priceConfig.assetId)
+        if (asset) {
+          asset.usdValue += valueAsNumber
+          asset.amount += amountAsNumber
+          asset.escrows.push({
             amount: amountAsNumber,
             usdValue: valueAsNumber,
-            usdPrice: price.toString(),
-            tokenAddress: address === 'native' ? undefined : address,
-            bridgedUsing: config.bridgedUsing ?? {
-              bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
-              warning: token?.bridgedUsing?.warning,
+            escrowAddress: config.escrowAddress,
+            ...(config.type === 'preminted' ? { isPreminted: true } : {}),
+            isSharedEscrow,
+          })
+        } else {
+          breakdown.canonical.set(priceConfig.assetId, {
+            assetId: priceConfig.assetId,
+            /*
+             * We are taking chain from price because there is an edge case in which
+             * chain from amount config is different for frontend and backend purposes.
+             * E.g. Elastic chain and AggLayer where we have shared escrows.
+             */
+            chain: {
+              name: priceConfig.chain,
+              id: ChainId(chainConverter.toChainId(priceConfig.chain)),
             },
-          })
-          break
-        }
-        case 'native': {
-          const address = getTokenAddress(config)
-          breakdown.native.push({
-            assetId: priceConfig.assetId,
-            chainId: chainConverter.toChainId(config.chain),
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
-            // TODO: force fe to accept "native"
+            isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
             tokenAddress: address === 'native' ? undefined : address,
+            escrows: [
+              {
+                amount: amountAsNumber,
+                usdValue: valueAsNumber,
+                escrowAddress: config.escrowAddress,
+                ...(config.type === 'preminted' ? { isPreminted: true } : {}),
+                isSharedEscrow,
+                url: explorer
+                  ? `${explorer}/address/${config.escrowAddress}`
+                  : undefined,
+              },
+            ],
           })
         }
+        break
+      }
+      case 'external': {
+        const token = tokenMap.get(priceConfig.assetId)
+        const address = getTokenAddress(config)
+
+        breakdown.external.push({
+          assetId: priceConfig.assetId,
+          chain: {
+            name: priceConfig.chain,
+            id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+          },
+          amount: amountAsNumber,
+          usdValue: valueAsNumber,
+          usdPrice: price.toString(),
+          isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
+          tokenAddress: address === 'native' ? undefined : address,
+          bridgedUsing: config.bridgedUsing ?? {
+            bridges: token?.bridgedUsing?.bridges ?? [{ name: 'Unknown' }],
+            warning: token?.bridgedUsing?.warning,
+          },
+        })
+        break
+      }
+      case 'native': {
+        const address = getTokenAddress(config)
+        breakdown.native.push({
+          assetId: priceConfig.assetId,
+          chain: {
+            name: priceConfig.chain,
+            id: ChainId(chainConverter.toChainId(priceConfig.chain)),
+          },
+          amount: amountAsNumber,
+          usdValue: valueAsNumber,
+          usdPrice: price.toString(),
+          isGasToken: gasTokens?.includes(config.symbol.toUpperCase()),
+          // TODO: force fe to accept "native"
+          tokenAddress: address === 'native' ? undefined : address,
+        })
       }
     }
+  }
 
-    const sortedBreakdown = recordToSortedBreakdown(breakdown)
-    const breakdownWithTokenInfo = assignTokenMetaToBreakdown(sortedBreakdown)
+  const sortedBreakdown = recordToSortedBreakdown(breakdown)
+  const breakdownWithTokenInfo = assignTokenMetaToBreakdown(
+    sortedBreakdown,
+    tokenMap,
+  )
 
-    return {
-      dataTimestamp: targetTimestamp.toNumber(),
-      breakdown: breakdownWithTokenInfo,
-    }
+  return {
+    dataTimestamp: targetTimestamp,
+    breakdown: breakdownWithTokenInfo,
   }
 }
 

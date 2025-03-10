@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('worldchain')
-const genesisTimestamp = new UnixTime(1719335639)
+const genesisTimestamp = UnixTime(1719335639)
 
 export const world = opStackL2({
-  addedAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
+  addedAt: UnixTime(1729586060), // 2024-10-22T08:34:20Z
   genesisTimestamp,
   discovery,
-  additionalBadges: [Badge.RaaS.Alchemy],
+  additionalBadges: [BADGES.RaaS.Alchemy],
   additionalPurposes: ['Identity'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
@@ -40,7 +40,18 @@ export const world = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
+  associatedTokens: ['WLD'],
+  chainConfig: {
+    name: 'worldchain',
+    chainId: 480,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://worldchain-mainnet.g.alchemy.com/public',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   finality: {
     type: 'OPStack',
     minTimestamp: genesisTimestamp,

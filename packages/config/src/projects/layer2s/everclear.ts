@@ -1,16 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('everclear')
 
-export const everclear: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
-  additionalBadges: [Badge.RaaS.Gelato, Badge.DA.DAC],
+export const everclear: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1717512064), // 2024-06-04T14:41:04Z
+  additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Interoperability'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -34,13 +34,23 @@ export const everclear: Layer2 = orbitStackL2({
       ],
     },
   },
-  associatedTokens: ['NEXT'],
-  rpcUrl: 'https://rpc.everclear.raas.gelato.cloud',
+  associatedTokens: ['NEXT', 'CLEAR'],
+  chainConfig: {
+    name: 'everclear',
+    chainId: 25327,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.everclear.raas.gelato.cloud',
+        callsPerMinute: 1500,
+      },
+    ],
+    sinceTimestamp: UnixTime(1725539051), // block 1 ts
+  },
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet Beta launch',

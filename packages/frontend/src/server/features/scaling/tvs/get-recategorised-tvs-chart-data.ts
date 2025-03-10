@@ -1,4 +1,5 @@
 import type { ValueRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
 import { uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
@@ -6,6 +7,7 @@ import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { ps } from '~/server/projects'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
@@ -56,7 +58,17 @@ export const getCachedRecategorisedTvsChartData = cache(
       filter,
       previewRecategorisation,
     )
-    const tvsProjects = getTvsProjects(projectsFilter, previewRecategorisation)
+
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
+    const tokenList = await ps.getTokens()
+    const tvsProjects = await getTvsProjects(
+      projectsFilter,
+      chains,
+      tokenList,
+      previewRecategorisation,
+    )
 
     const rollups = tvsProjects.filter(({ category }) => category === 'rollups')
     const validiumsAndOptimiums = tvsProjects.filter(
@@ -85,9 +97,10 @@ export const getCachedRecategorisedTvsChartData = cache(
       },
     )
   },
-  ['recategorised-tvs-chart-data'],
+  ['recategorised-tvs-chart-data-v2'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 
@@ -139,14 +152,15 @@ function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
   const { days, resolution } = getRangeConfig(range)
-  const target = getTvsTargetTimestamp().toStartOf(
+  const target = UnixTime.toStartOf(
+    getTvsTargetTimestamp(),
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from = days !== null ? target.add(-days, 'days') : MIN_TIMESTAMPS.tvs
+  const from = days !== null ? target - days * UnixTime.DAY : MIN_TIMESTAMPS.tvs
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
-    return [timestamp.toNumber(), 3000, 2000, 1000]
+    return [timestamp, 3000, 2000, 1000]
   })
 }
 

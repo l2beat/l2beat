@@ -1,11 +1,15 @@
-import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { chains } from '../../chains'
-import { NUGGETS } from '../../common'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens/tokens'
-import type { BridgeTechnology, ProjectTechnologyChoice } from '../../types'
+import { getTokenList } from '../../tokens/tokens'
+import type {
+  ProjectBridgeTechnology,
+  ProjectTechnologyChoice,
+} from '../../types'
+import { chains } from '../chains'
 import { bridges } from './index'
+
+const tokenList = getTokenList(chains)
 
 describe('bridges', () => {
   describe('links', () => {
@@ -33,8 +37,8 @@ describe('bridges', () => {
 
   describe('escrows', () => {
     describe('every escrow can resolve all of its tokens', () => {
-      const chainsMap = new Map<string, ChainId>(
-        chains.map((c) => [c.name, ChainId(c.chainId)]),
+      const chainsMap = new Map<string, number | undefined>(
+        chains.map((c) => [c.name, c.chainId]),
       )
       for (const bridge of bridges) {
         for (const escrow of bridge.config.escrows) {
@@ -59,7 +63,7 @@ describe('bridges', () => {
     })
   })
 
-  describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+  describe('every escrow sinceTimestamp is greater or equal to chains sinceTimestamp', () => {
     for (const bridge of bridges) {
       for (const escrow of bridge.config.escrows) {
         const chain = chains.find((c) => c.name === escrow.chain)
@@ -70,14 +74,14 @@ describe('bridges', () => {
             `Chain not found for escrow ${escrow.address.toString()}`,
           )
           assert(
-            chain.minTimestampForTvl,
-            `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+            chain.sinceTimestamp,
+            `Escrow ${escrow.address.toString()} added for chain without sinceTimestamp ${
               chain.name
             }`,
           )
 
-          expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-            chain.minTimestampForTvl.toNumber(),
+          expect(escrow.sinceTimestamp).toBeGreaterThanOrEqual(
+            chain.sinceTimestamp,
           )
         })
       }
@@ -88,8 +92,12 @@ describe('bridges', () => {
     for (const bridge of bridges) {
       describe(bridge.display.name, () => {
         type Key = Exclude<
-          keyof BridgeTechnology,
-          'canonical' | 'category' | 'destination' | 'isUnderReview'
+          keyof ProjectBridgeTechnology,
+          | 'canonical'
+          | 'category'
+          | 'destination'
+          | 'isUnderReview'
+          | 'detailedDescription'
         >
 
         function check(key: Key) {
@@ -181,36 +189,14 @@ describe('bridges', () => {
         for (const milestone of project.milestones) {
           it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
-              UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+              UnixTime.isFull(
+                UnixTime.fromDate(new Date(milestone.date)),
+                'day',
+              ),
             ).toEqual(true)
           })
         }
       }
-    })
-
-    describe('knowledgeNuggets', () => {
-      const knowledgeNuggets = bridges.flatMap(
-        (nugget) => nugget.knowledgeNuggets ?? [],
-      )
-
-      describe('title fits character limit', () => {
-        knowledgeNuggets.forEach((nugget) => {
-          it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqual(40)
-          })
-        })
-      })
-
-      describe('uses static thumbnail', () => {
-        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
-        knowledgeNuggets
-          .filter((x) => x.thumbnail !== undefined)
-          .forEach((nugget) => {
-            it(nugget.title, () => {
-              expect(staticThumbnails).toInclude(nugget.thumbnail!)
-            })
-          })
-      })
     })
   })
 })

@@ -1,14 +1,21 @@
 import { readFileSync } from 'fs'
 import path from 'path'
-import {} from '@l2beat/shared-pure'
-import type { TvsConfig } from '../types'
+import { Logger } from '@l2beat/backend-tools'
+import { ProjectService } from '@l2beat/config'
+import { assert, ProjectId } from '@l2beat/shared-pure'
+import { mapConfig } from '../mapConfig'
 
-// const kinto = layer2s.find((l) => l.id === ProjectId('kinto'))
-// assert(kinto, 'Kinto not found')
-// assert(kinto.chainConfig, 'Kinto chain config not defined')
-// const backendProject = layer2ToBackendProject(kinto)
+export async function getKintoConfig(regenerate: boolean = false) {
+  if (regenerate) {
+    const ps = new ProjectService()
+    const kinto = await ps.getProject({
+      id: ProjectId('kinto'),
+      select: ['tvlConfig', 'chainConfig'],
+    })
+    assert(kinto, 'Kinto project not found')
+    return mapConfig(kinto, Logger.INFO)
+  }
 
-// export const kintoConfig = mapConfig(backendProject, kinto.chainConfig)
-
-const filePath = path.join(__dirname, 'kinto-config.json')
-export const kintoConfig: TvsConfig = JSON.parse(readFileSync(filePath, 'utf8'))
+  const filePath = path.join(__dirname, 'kinto-config.json')
+  return JSON.parse(readFileSync(filePath, 'utf8'))
+}

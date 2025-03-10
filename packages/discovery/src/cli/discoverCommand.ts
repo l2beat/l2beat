@@ -61,6 +61,16 @@ export const DiscoverCommandArgs = {
     short: 's',
     description: 'save raw sources downloaded from chain explorer',
   }),
+  buildModels: flag({
+    type: boolean,
+    long: 'build-models',
+    description: 'build models for every contract',
+  }),
+  buildProjectPageFacts: flag({
+    type: boolean,
+    long: 'build-project-page-facts',
+    description: 'build project page facts',
+  }),
   sourcesFolder: option({
     type: optional(string),
     long: 'sources-folder',

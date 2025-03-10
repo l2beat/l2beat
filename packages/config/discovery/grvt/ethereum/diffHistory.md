@@ -1,4 +1,136 @@
-Generated with discovered.json: 0x6828727d31292c83ff8408bdddc8c5a3db5a941a
+Generated with discovered.json: 0x9a924385421b3c06b52864bd53a7e362ac4f4ae8
+
+# Diff at Tue, 04 Mar 2025 10:39:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21766583
+- current block number: 21766583
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766583 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      sinceBlock:
++        21081436
+    }
+```
+
+```diff
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      sinceBlock:
++        20996715
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      sinceBlock:
++        21313725
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sinceBlock:
++        20019826
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: None
+      sinceBlock:
++        21120440
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      sinceBlock:
++        21313725
+    }
+```
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sinceBlock:
++        21168735
+    }
+```
+
+```diff
+    contract Governance (0xe81d64195072e4d09639b31Abb257d0096FEa9d1) {
+    +++ description: None
+      sinceBlock:
++        21134244
+    }
+```
+
+Generated with discovered.json: 0xb4ccceda7a88f6c1ffe15e503a5b93b50e7b57df
+
+# Diff at Wed, 26 Feb 2025 10:32:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21766583
+- current block number: 21766583
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766583 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: None
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0xb9820f9ab3e1cdab970adef05c2dae9bea612da9
 
 # Diff at Tue, 04 Feb 2025 12:31:32 GMT:
 

@@ -1,9 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('cbridge')
@@ -11,7 +9,7 @@ const discovery = new ProjectDiscovery('cbridge')
 export const cBridge: Bridge = {
   type: 'bridge',
   id: ProjectId('cbridge'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'cBridge (Celer)',
     slug: 'cbridge',
@@ -42,14 +40,14 @@ export const cBridge: Bridge = {
       // liquidity pool
       {
         address: EthereumAddress('0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820'),
-        sinceTimestamp: new UnixTime(1638346811),
+        sinceTimestamp: UnixTime(1638346811),
         tokens: ['ETH', 'USDC', 'WETH', 'USDT', 'MASK', 'BUSD', 'LYRA'],
         chain: 'ethereum',
       },
       // token bridge v1
       {
         address: EthereumAddress('0xB37D31b2A74029B5951a2778F959282E2D518595'),
-        sinceTimestamp: new UnixTime(1639553135),
+        sinceTimestamp: UnixTime(1639553135),
         tokens: [
           'USDC',
           'WETH',
@@ -67,7 +65,7 @@ export const cBridge: Bridge = {
       // token bridge v2
       {
         address: EthereumAddress('0x7510792A3B1969F9307F3845CE88e39578f2bAE1'),
-        sinceTimestamp: new UnixTime(1651661389),
+        sinceTimestamp: UnixTime(1651661389),
         tokens: ['WETH', 'PSTAKE'],
         chain: 'ethereum',
       },
@@ -265,16 +263,4 @@ export const cBridge: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'How HTLC bridge works?',
-      url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'cBridge deep dive',
-      url: 'https://li.fi/knowledge-hub/cbridge-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

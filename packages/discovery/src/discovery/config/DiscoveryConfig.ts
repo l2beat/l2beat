@@ -1,18 +1,15 @@
 import { hashJson } from '@l2beat/shared'
 import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { join, merge } from 'lodash'
+import { join } from 'lodash'
+import type { DiscoveryOutput } from '../output/types'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
 import {
   DiscoveryContract,
-  type DiscoveryCustomType,
   type RawDiscoveryConfig,
 } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
-
-export type CommonAddressNames = Record<string, Record<string, string>>
 
 export type ContractOverrides = DiscoveryContract & {
   name?: string
@@ -28,22 +25,17 @@ export class DiscoveryConfig {
 
   constructor(
     private readonly config: RawDiscoveryConfig,
-    globalAddressToNameConfig: CommonAddressNames = {},
-    private readonly globalTypes: Record<string, DiscoveryCustomType> = {},
     configReader: ConfigReader = new ConfigReader(
       join(process.cwd(), '../config'),
     ),
   ) {
-    this.sharedModuleDiscovery = Object.values(config.sharedModules ?? {}).map(
+    this.sharedModuleDiscovery = (config.sharedModules ?? []).map(
       (projectName) => {
         return configReader.readDiscovery(projectName, config.chain)
       },
     )
 
-    const all = globalAddressToNameConfig?.['all'] ?? {}
-    const thisChain = globalAddressToNameConfig?.[this.config.chain] ?? {}
-    const addressToName = merge(all, thisChain, config.names ?? {})
-
+    const addressToName = config.names ?? {}
     for (const [address, name] of Object.entries(addressToName)) {
       this.addressToName.set(EthereumAddress(address), name)
       this.nameToAddress.set(name, EthereumAddress(address))
@@ -53,7 +45,11 @@ export class DiscoveryConfig {
   for(addressOrName: string | EthereumAddress): ContractConfig {
     const overrides = this.getOverrides(addressOrName)
 
-    return createContractConfig(overrides, this.configTypes())
+    return createContractConfig(
+      overrides,
+      structuredClone(this.config.types ?? {}),
+      structuredClone(this.config.categories ?? {}),
+    )
   }
 
   get raw(): RawDiscoveryConfig {
@@ -85,9 +81,7 @@ export class DiscoveryConfig {
   }
 
   get sharedModules(): string[] {
-    return this.config.sharedModules
-      ? Object.values(this.config.sharedModules)
-      : []
+    return this.config.sharedModules ?? []
   }
 
   get hash(): Hash256 {
@@ -96,7 +90,7 @@ export class DiscoveryConfig {
 
   isInSharedModules(address: EthereumAddress): boolean {
     return this.sharedModuleDiscovery.some((d) => {
-      const addresses = d.contracts.map((c) => c.address)
+      const addresses = d.entries.map((c) => c.address)
       return addresses.includes(address)
     })
   }
@@ -126,14 +120,5 @@ export class DiscoveryConfig {
 
     const override = DiscoveryContract.parse(unparsedOverride)
     return { name, address, ...override }
-  }
-
-  private configTypes(): Record<string, DiscoveryCustomType> {
-    const result = structuredClone(this.globalTypes)
-    for (const key in this.config.types ?? {}) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      result[key] = (this.config.types ?? {})[key]!
-    }
-    return result
   }
 }

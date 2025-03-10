@@ -1,4 +1,3 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import {
   assert,
   Bytes,
@@ -6,6 +5,8 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../output/types'
+import type { ProxyDetails } from '../types'
 
 import { type providers, utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
@@ -138,10 +139,7 @@ async function getPastUpgrades(
   )
   assert(blocks.every((b) => b !== undefined))
   const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
+    blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
 
   return mergeLogs(abi, dateMap, primaryLogs, secondaryLogs)

@@ -1,16 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('xchain')
 
-export const xchain: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
-  additionalBadges: [Badge.RaaS.Conduit, Badge.DA.DAC],
+export const xchain: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z
+  additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -35,21 +35,18 @@ export const xchain: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'xchain',
     chainId: 94524,
-    explorerUrl: 'https://xchain-explorer.idex.io/',
-    explorerApi: {
-      url: 'https://xchain-explorer.idex.io/api',
-      type: 'blockscout',
-    },
+    explorerUrl: 'https://xchain-explorer.idex.io',
     multicallContracts: [],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
+    apis: [
+      { type: 'rpc', url: 'https://xchain-rpc.idex.io/', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://xchain-explorer.idex.io/api' },
+    ],
   },
-  rpcUrl: 'https://xchain-rpc.idex.io/',
-
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',

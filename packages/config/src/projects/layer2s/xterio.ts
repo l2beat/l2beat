@@ -2,8 +2,8 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -29,10 +29,10 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const xterio: Layer2 = opStackL2({
-  addedAt: new UnixTime(1714996778), // 2024-05-06T11:59:38Z
+export const xterio: ScalingProject = opStackL2({
+  addedAt: UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
-  additionalBadges: [Badge.DA.CustomDA, Badge.RaaS.AltLayer],
+  additionalBadges: [BADGES.DA.CustomDA, BADGES.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -64,8 +64,18 @@ export const xterio: Layer2 = opStackL2({
     'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
-  genesisTimestamp: new UnixTime(1716537433),
-  rpcUrl: 'https://xterio-eth.alt.technology/',
+  genesisTimestamp: UnixTime(1716537433),
+  chainConfig: {
+    name: 'xterio',
+    chainId: 2702128,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://xterio-eth.alt.technology/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   customDa: {
     type: 'DA Challenges',
     name: 'XterioDA',

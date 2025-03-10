@@ -1,3 +1,679 @@
+Generated with discovered.json: 0x26cd811b4563d0d63f285e1ec5d26af71db00c17
+
+# Diff at Tue, 04 Mar 2025 11:25:58 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@be38e12d3ff947ca8de40f3a23a9ba1875a54f5a block: 21872493
+- current block number: 21872493
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
+-        false
+      values.opStackDA.isUsingCelestia:
++        false
+    }
+```
+
+Generated with discovered.json: 0x33174b6f0ddec893f48f3e481d4d25f79497e9df
+
+# Diff at Tue, 04 Mar 2025 10:39:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21872493
+- current block number: 21872493
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x075a48633dc6845f92339741E9c96b88f1b2A86f) {
+    +++ description: None
+      sinceBlock:
++        17575800
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      sinceBlock:
++        17519057
+    }
+```
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      sinceBlock:
++        17575899
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      sinceBlock:
++        17575809
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83) {
+    +++ description: None
+      sinceBlock:
++        17575798
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      sinceBlock:
++        17491078
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        19434935
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      sinceBlock:
++        17519070
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sinceBlock:
++        19434945
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x47D58744D8515d9aaEAf961bc03625118bd91EBb) {
+    +++ description: None
+      sinceBlock:
++        17575885
+    }
+```
+
+```diff
+    contract PauserRegistry2 (0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0) {
+    +++ description: None
+      sinceBlock:
++        17575887
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      sinceBlock:
++        17212573
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      sinceBlock:
++        17604795
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+      sinceBlock:
++        17575893
+    }
+```
+
+```diff
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      sinceBlock:
++        21829257
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        17577670
+    }
+```
+
+```diff
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        17577535
+    }
+```
+
+```diff
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a) {
+    +++ description: None
+      sinceBlock:
++        17575895
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        17577718
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      sinceBlock:
++        17575837
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      sinceBlock:
++        17575811
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        19434938
+    }
+```
+
+```diff
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94) {
+    +++ description: None
+      sinceBlock:
++        17575897
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      sinceBlock:
++        19434932
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      sinceBlock:
++        17575833
+    }
+```
+
+```diff
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D) {
+    +++ description: None
+      sinceBlock:
++        17575891
+    }
+```
+
+```diff
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798) {
+    +++ description: None
+      sinceBlock:
++        17575805
+    }
+```
+
+Generated with discovered.json: 0xf361f459831961995f6d57fcbe6c3555a80c6d73
+
+# Diff at Thu, 27 Feb 2025 11:45:59 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@a4b50e45bb44f8ceeea29f9236088d26a843c885 block: 21872493
+- current block number: 21872493
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      name:
+-        "Lib_AddressManager"
++        "AddressManager"
+      displayName:
+-        "AddressManager"
+    }
+```
+
+Generated with discovered.json: 0x8c81b0e07bb01de495880b587ead2e84897db936
+
+# Diff at Wed, 26 Feb 2025 10:32:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21872493
+- current block number: 21872493
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0xf2663f8aca34c891cb7a85f474daa791a70e713a
+
+# Diff at Fri, 21 Feb 2025 14:08:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21872493
+- current block number: 21872493
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x0617a66fc5c7e14b3ad0e8bf54216e6135d80fa2
+
+# Diff at Fri, 21 Feb 2025 08:59:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21872493
+- current block number: 21872493
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+Generated with discovered.json: 0x30615bb2b8a42cca9d35c7d162a672d0472a606f
+
+# Diff at Tue, 18 Feb 2025 10:00:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21844254
+- current block number: 21872493
+
+## Description
+
+Token ProxyAdmin owner transfered to a timelock.
+
+## Watched changes
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      values.owner:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      issuedPermissions.0.via.1:
++        {"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}
+      issuedPermissions.0.via.0.address:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      issuedPermissions.0.via.0.delay:
++        86400
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.17.from:
+-        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
++        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+      receivedPermissions.16.from:
+-        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
++        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
+      receivedPermissions.16.via.0.address:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      receivedPermissions.15.from:
+-        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
++        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      receivedPermissions.15.via.0.address:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      receivedPermissions.15.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.14.from:
+-        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
++        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
+      receivedPermissions.13.from:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      receivedPermissions.13.via.0.address:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      receivedPermissions.12.from:
+-        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
++        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
+      receivedPermissions.12.via:
+-        [{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]
+      receivedPermissions.11.from:
+-        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.11.via.0.address:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      receivedPermissions.10.from:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      receivedPermissions.10.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.10.via.1:
++        {"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400}
+      receivedPermissions.10.via.0.address:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+      receivedPermissions.9.from:
+-        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      receivedPermissions.9.via.0.address:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      receivedPermissions.8.from:
+-        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
++        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
+      receivedPermissions.8.via.0.address:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      receivedPermissions.7.from:
+-        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
++        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+      receivedPermissions.7.via:
++        [{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      receivedPermissions.6.description:
++        "set and change address mappings."
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.5.via:
+-        [{"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}]
+      receivedPermissions.5.description:
++        "propose transactions."
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.4.via:
+-        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      receivedPermissions.4.description:
++        "manage all access control roles."
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.3.via.0.address:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.3.via.0.delay:
++        86400
+      receivedPermissions.3.description:
++        "manage all access control roles."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.2.via:
+-        [{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]
+      receivedPermissions.2.description:
++        "execute transactions that are ready."
+      receivedPermissions.1.from:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
++        "cancel queued transactions."
+      receivedPermissions.1.via:
+-        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      directlyReceivedPermissions.2.from:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      directlyReceivedPermissions.2.delay:
++        86400
+      directlyReceivedPermissions.1.from:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      directlyReceivedPermissions.0.from:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+## Source code changes
+
+```diff
+.../mantle/ethereum/.flat/TimelockController.sol   | 1011 ++++++++++++++++++++
+ 1 file changed, 1011 insertions(+)
+```
+
+Generated with discovered.json: 0x40fd0aceb1b11ae0548b3afd418d36b0ee0edb01
+
+# Diff at Fri, 14 Feb 2025 10:58:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21680644
+- current block number: 21844254
+
+## Description
+
+MS signer changes.
+
+## Watched changes
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.6:
+-        "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A"
++        "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
+      values.$members.4:
+-        "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
+      values.$members.3:
+-        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
++        "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
+      values.$members.2:
+-        "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC"
++        "0x50dCf0B40E593301aA75DcB54f36f379607595CE"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x7735cDcc85E63A7684C29652DbE8B845e0b4635A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0xe4d8cddd84a7321c4a3efc6354505347078a6f1b
+
+# Diff at Mon, 10 Feb 2025 19:04:14 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21680644
+- current block number: 21680644
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680644 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x79eafeddf5109bc94236e6500db930f6e22cdb22
 
 # Diff at Tue, 04 Feb 2025 12:31:42 GMT:

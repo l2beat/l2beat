@@ -2,15 +2,18 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21686332,
-  "configHash": "0xf7279a74e50acb483760e304d032f6ec3a43c811d7d0e7a8917bef8720eb8e6c",
-  "contracts": [
+  "configHash": "0xce06d85d79f0e42ac6789a5c9be5fbfdd0d2bfe0be6198bbfd09f15de150734a",
+  "entries": [
     {
       "name": "NextHeaderVerifier",
       "address": "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06",
+      "type": "Contract",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1717613939,
+      "sinceBlock": 20027571,
       "values": {
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
@@ -19,30 +22,62 @@
       "derivedName": "FunctionVerifier"
     },
     {
+      "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuccinctFeeVault",
       "address": "0x296666e937b270193B960a7cEC526B351F353166",
+      "type": "Contract",
       "sourceHashes": [
         "0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706575919,
+      "sinceBlock": 19115866,
       "values": {
         "$immutable": true,
         "owner": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0"
       }
     },
     {
+      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    {
       "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Contract",
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
-      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
       "issuedPermissions": [
         {
           "permission": "interact",
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
@@ -53,6 +88,7 @@
         }
       ],
       "sinceTimestamp": 1720099223,
+      "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
         "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
@@ -86,12 +122,29 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+      "type": "Contract",
       "template": "succinct/SuccinctGateway",
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
       ],
+      "proxyType": "immutable",
       "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
       "issuedPermissions": [
         {
@@ -102,6 +155,7 @@
         }
       ],
       "sinceTimestamp": 1706575991,
+      "sinceBlock": 19115872,
       "values": {
         "$immutable": true,
         "feeVault": "0x296666e937b270193B960a7cEC526B351F353166",
@@ -135,12 +189,22 @@
           "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
           "type": "PERMISSION"
         }
-      },
-      "derivedName": "SuccinctGateway"
+      }
+    },
+    {
+      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Blobstream",
       "address": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+      "type": "Contract",
       "template": "succinct/SP1Blobstream",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
@@ -175,6 +239,7 @@
       ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1717615307,
+      "sinceBlock": 20027685,
       "values": {
         "$admin": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
@@ -238,6 +303,7 @@
     {
       "name": "BlobstreamMultisig",
       "address": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -257,6 +323,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1717613015,
+      "sinceBlock": 20027494,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -279,8 +346,41 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    {
+      "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -291,11 +391,12 @@
         {
           "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204135,
+      "sinceBlock": 20573748,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -317,6 +418,7 @@
     {
       "name": "SuccinctGatewayMultisig",
       "address": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -332,6 +434,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678822115,
+      "sinceBlock": 16828272,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -354,10 +457,13 @@
     {
       "name": "SP1Verifier",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+      "type": "Contract",
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1729727135,
+      "sinceBlock": 21031662,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
@@ -367,9 +473,11 @@
     {
       "name": "SP1Verifier",
       "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "type": "Contract",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -378,6 +486,7 @@
         }
       ],
       "sinceTimestamp": 1735949699,
+      "sinceBlock": 21547470,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
@@ -387,46 +496,14 @@
     {
       "name": "HeaderRangeVerifier",
       "address": "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1717613795,
+      "sinceBlock": 20027559,
       "values": { "$immutable": true },
       "derivedName": ""
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9" },
-    { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
-    { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
-    {
-      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
-        }
-      ]
-    },
-    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
-    { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
-    { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
-    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
-    { "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899" },
-    { "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15" },
-    { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
-    {
-      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
-        }
-      ]
-    },
-    { "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65" },
-    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" }
   ],
   "abis": {
     "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06": [
@@ -681,7 +758,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "succinct/SP1Blobstream": "0x594e33b67e9567cb684ee6e5145bf328d6a21adde6d56019482a7de9241c460b",
-    "succinct/SP1SuccinctGateway": "0xddf7c5c632f3cb0a4055a574c75ebf95a7599c66d18d65a94e314628b9681708",
+    "succinct/SP1SuccinctGateway": "0x5afcd1d6328298e040516db4b10567b17e543a1f43468f4d77ba68e8dcbf5151",
     "succinct/SuccinctGateway": "0xee3e679e5e4af6a88d7c2bf61aa7e3b2d955ef5e35994c84d082522365c545db"
   }
 }

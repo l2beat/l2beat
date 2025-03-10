@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('allbridge')
@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('allbridge')
 export const allbridge: Bridge = {
   type: 'bridge',
   id: ProjectId('allbridge'),
-  addedAt: new UnixTime(1675164709), // 2023-01-31T11:31:49Z
+  addedAt: UnixTime(1675164709), // 2023-01-31T11:31:49Z
   display: {
     name: 'Allbridge',
     slug: 'allbridge',
@@ -39,19 +39,19 @@ export const allbridge: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xBBbD1BbB4f9b936C3604906D7592A644071dE884'),
-        sinceTimestamp: new UnixTime(1636635220),
+        sinceTimestamp: UnixTime(1636635220),
         tokens: '*',
         description: 'Lock-Mint token bridge',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D'),
-        sinceTimestamp: new UnixTime(1662596190),
+        sinceTimestamp: UnixTime(1662596190),
         tokens: ['USDT'],
         description: 'USDT liquidity pool on Ethereum',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d'),
-        sinceTimestamp: new UnixTime(1669206935),
+        sinceTimestamp: UnixTime(1669206935),
         tokens: ['USDC'],
         description: 'USDC liquidity pool on Ethereum',
       }),
@@ -60,35 +60,35 @@ export const allbridge: Bridge = {
         chain: 'arbitrum',
         includeInTotal: false,
         address: EthereumAddress('0x690e66fc0F8be8964d40e55EdE6aEBdfcB8A21Df'),
-        sinceTimestamp: new UnixTime(1687868331),
+        sinceTimestamp: UnixTime(1687868331),
         tokens: ['USDC'],
       },
       {
         chain: 'arbitrum',
         includeInTotal: false,
         address: EthereumAddress('0x47235cB71107CC66B12aF6f8b8a9260ea38472c7'),
-        sinceTimestamp: new UnixTime(1704638642),
+        sinceTimestamp: UnixTime(1704638642),
         tokens: ['USDT'],
       },
       {
         chain: 'base',
         includeInTotal: false,
         address: EthereumAddress('0xDA6bb1ec3BaBA68B26bEa0508d6f81c9ec5e96d5'),
-        sinceTimestamp: new UnixTime(1706798147),
+        sinceTimestamp: UnixTime(1706798147),
         tokens: ['USDC'],
       },
       {
         chain: 'optimism',
         includeInTotal: false,
         address: EthereumAddress('0x3B96F88b2b9EB87964b852874D41B633e0f1f68F'),
-        sinceTimestamp: new UnixTime(1702912935),
+        sinceTimestamp: UnixTime(1702912935),
         tokens: ['USDC'],
       },
       {
         chain: 'optimism',
         includeInTotal: false,
         address: EthereumAddress('0xb24A05d54fcAcfe1FC00c59209470d4cafB0deEA'),
-        sinceTimestamp: new UnixTime(1704638475),
+        sinceTimestamp: UnixTime(1704638475),
         tokens: ['USDT'],
       },
     ],

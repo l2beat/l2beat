@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const superposition: Layer3 = underReviewL3({
+export const superposition: ScalingProject = underReviewL3({
   id: 'superposition',
   capability: 'universal',
-  addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
+  addedAt: UnixTime(1720082709), // 2024-07-04T08:45:09Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Superposition',
@@ -25,18 +25,28 @@ export const superposition: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/Superpositionso'],
     },
   },
-  rpcUrl: 'https://rpc.superposition.so',
+  chainConfig: {
+    name: 'superposition',
+    chainId: 55244,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.superposition.so',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0xEca0fEB4aA6112a3923823559e7197294Bc49CC7'), // Bridge
-      sinceTimestamp: new UnixTime(1725644220),
+      sinceTimestamp: UnixTime(1725644220),
       tokens: ['ETH'],
       includeInTotal: false,
       chain: 'arbitrum',
     },
     {
       address: EthereumAddress('0x62bEd4b862254789825Cd6F2352aa2b76B16145e'), // standardGW
-      sinceTimestamp: new UnixTime(1725644465),
+      sinceTimestamp: UnixTime(1725644465),
       tokens: '*',
       includeInTotal: false,
       chain: 'arbitrum',

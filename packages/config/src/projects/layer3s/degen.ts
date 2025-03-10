@@ -1,25 +1,19 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('degen', 'base')
 
-export const degen: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
-  hostChain: ProjectId('base'),
+export const degen: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1712135735), // 2024-04-03T09:15:35Z
   discovery,
-  additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Base,
-    Badge.RaaS.Alchemy,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   additionalPurposes: ['Social'],
-  gasTokens: ['DEGEN'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -41,22 +35,16 @@ export const degen: Layer3 = orbitStackL3({
     },
   },
   blockNumberOpcodeTimeSeconds: 2, // block.number opcode on Base (Degen host chain) counts Base L2 block numbers that have 2 seconds block time (different to OP stack host chains that count the L1 blocks)
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.degen.tips',
-    defaultCallsPerMinute: 5000,
-    adjustCount: { type: 'SubtractOne' },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   chainConfig: {
     name: 'degen',
     chainId: 666666666,
-    explorerUrl: 'https://explorer.degen.tips/',
-    explorerApi: {
-      url: 'https://explorer.degen.tips/api',
-      type: 'blockscout',
-    },
-    minTimestampForTvl: new UnixTime(1710087539),
+    explorerUrl: 'https://explorer.degen.tips',
+    sinceTimestamp: UnixTime(1710087539),
     multicallContracts: [
       {
         address: EthereumAddress('0x79035Dc4436bA9C95016D3bF6304e5bA78B1066A'),
@@ -65,11 +53,15 @@ export const degen: Layer3 = orbitStackL3({
         version: '3',
       },
     ],
+    gasTokens: ['DEGEN'],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.degen.tips', callsPerMinute: 5000 },
+      { type: 'blockscout', url: 'https://explorer.degen.tips/api' },
+    ],
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateContractRisks: [
     {
       category: 'Funds can be stolen if',

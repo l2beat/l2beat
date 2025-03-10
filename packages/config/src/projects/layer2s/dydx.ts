@@ -12,7 +12,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -20,9 +19,9 @@ import {
 } from '../../common'
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('dydx')
@@ -54,34 +53,40 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 )
 
 const priorityExecutorUpgradeability = {
-  upgradableBy: ['Rollup Admin'],
-  upgradeDelay: `${formatSeconds(maxPriorityDelay)} or ${formatSeconds(
-    minPriorityDelay,
-  )} if overridden by Priority Controller`,
+  upgradableBy: [
+    {
+      name: 'Rollup Admin',
+      delay: `${formatSeconds(maxPriorityDelay)} or ${formatSeconds(
+        minPriorityDelay,
+      )} if overridden by Priority Controller`,
+    },
+  ],
 }
 
 const shortTimelockUpgradeability = {
-  upgradableBy: ['Treasury Admin'],
-  upgradeDelay: `${formatSeconds(shortTimelockDelay)}`,
+  upgradableBy: [
+    { name: 'Treasury Admin', delay: formatSeconds(shortTimelockDelay) },
+  ],
 }
 
 const longTimelockUpgradeability = {
-  upgradableBy: ['Safety Module Admin'],
-  upgradeDelay: `${formatSeconds(longTimelockDelay)}`,
+  upgradableBy: [
+    { name: 'Safety Module Admin', delay: formatSeconds(longTimelockDelay) },
+  ],
 }
 const finalizationPeriod = 0
 
-export const dydx: Layer2 = {
+export const dydx: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('dydx'),
   capability: 'universal',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.Stack.StarkEx,
-    Badge.DA.EthereumCalldata,
-    Badge.Other.Governance,
+    BADGES.VM.AppChain,
+    BADGES.Stack.StarkEx,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Other.Governance,
   ],
   display: {
     name: 'dYdX v3',
@@ -129,20 +134,24 @@ export const dydx: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'dydx',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['dydx'] }],
+  },
   config: {
     associatedTokens: ['DYDX'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
-        sinceTimestamp: new UnixTime(1613033682),
+        sinceTimestamp: UnixTime(1613033682),
         tokens: ['USDC'],
         ...priorityExecutorUpgradeability,
       }),
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['dydx'],
-      sinceTimestamp: new UnixTime(1613033682),
+    activityConfig: {
+      type: 'day',
+      sinceTimestamp: UnixTime(1613033682),
       resyncLastDays: 7,
     },
     trackedTxs: [
@@ -159,7 +168,7 @@ export const dydx: Layer2 = {
           selector: '0x9b3b76cc',
           functionSignature:
             'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
-          sinceTimestamp: new UnixTime(1615417556),
+          sinceTimestamp: UnixTime(1615417556),
         },
       },
       {
@@ -175,7 +184,7 @@ export const dydx: Layer2 = {
           selector: '0x538f9406',
           functionSignature:
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1613033682),
+          sinceTimestamp: UnixTime(1613033682),
         },
       },
     ],
@@ -503,13 +512,5 @@ export const dydx: Layer2 = {
         'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK.',
       type: 'general',
     },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'How does escape hatch work?',
-      url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    ...NUGGETS.STARKWARE,
   ],
 }

@@ -1,3 +1,148 @@
+Generated with discovered.json: 0x67f433e8fba505f229d40a3e6a9850d9ed7b1405
+
+# Diff at Tue, 04 Mar 2025 10:40:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 25417811
+- current block number: 25417811
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25417811 (main branch discovery), not current.
+
+```diff
+    contract SuccinctFeeVault (0x296666e937b270193B960a7cEC526B351F353166) {
+    +++ description: None
+      sinceBlock:
++        9892035
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sinceBlock:
++        16367160
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
+    +++ description: None
+      sinceBlock:
++        11858833
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      sinceBlock:
++        9892352
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      sinceBlock:
++        11930930
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      sinceBlock:
++        18708503
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      sinceBlock:
++        21468906
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      sinceBlock:
++        9889667
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      sinceBlock:
++        24580169
+    }
+```
+
+```diff
+    contract NextHeaderVerifier (0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6) {
+    +++ description: None
+      sinceBlock:
++        12175358
+    }
+```
+
+```diff
+    contract HeaderRangeVerifier (0xF2415C44F47983F7dD22003B46A034B1F1d04e44) {
+    +++ description: None
+      sinceBlock:
++        12175332
+    }
+```
+
+Generated with discovered.json: 0x1494e0b8fdf0458d1463dae2add4f13add5d56a5
+
+# Diff at Tue, 11 Feb 2025 14:13:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5604bedbb0dabec83d300e0abeb3d8685929c5d3 block: 25417811
+- current block number: 25417811
+
+## Description
+
+Made succinct gateway description more generic (to be used not only for blobstream).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25417811 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      description:
+-        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
++        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
+      issuedPermissions.0.description:
+-        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
++        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
++        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+    }
+```
+
 Generated with discovered.json: 0x8989dcedddeda69f9879338077be520e5819fa5e
 
 # Diff at Tue, 04 Feb 2025 12:34:00 GMT:

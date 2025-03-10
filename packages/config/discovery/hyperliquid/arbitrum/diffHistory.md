@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x8ad89a3edc6ccfe262ae34af433eaef7c671809b
+Generated with discovered.json: 0x856955a084faa09f1b8eb67d0be51608665fc3dd
+
+# Diff at Tue, 04 Mar 2025 10:40:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 300202969
+- current block number: 300202969
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 300202969 (main branch discovery), not current.
+
+```diff
+    contract HyperliquidBridge (0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7) {
+    +++ description: Single contract containing all the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions.
+      sinceBlock:
++        155689071
+    }
+```
+
+Generated with discovered.json: 0x3e81a51537faa63f5c1040276f925611b6c4f0d2
 
 # Diff at Tue, 28 Jan 2025 15:49:26 GMT:
 

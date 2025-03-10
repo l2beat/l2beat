@@ -1,14 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
-export const bobanetwork: Layer2 = opStackL2({
-  addedAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
+export const bobanetwork: ScalingProject = opStackL2({
+  addedAt: UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -32,24 +31,22 @@ export const bobanetwork: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://mainnet.boba.network/',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://mainnet.boba.network/',
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1149019 }, // boba L2 bedrock upgrade block number
   },
   // finality: {
   //   type: 'OPStack-blob',
-  //   minTimestamp: new UnixTime(1713303530),
-  //   genesisTimestamp: new UnixTime(1635393439),
+  //   minTimestamp: UnixTime(1713303530),
+  //   genesisTimestamp: UnixTime(1635393439),
   //   l2BlockTimeSeconds: 2,
   //   lag: 0,
   //   stateUpdate: 'disabled',
   // },
   // Explicitly set since we are getting weird results from the finality calculation
   finality: undefined,
-  genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
+  genesisTimestamp: UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA'],
   isNodeAvailable: 'UnderReview',
   nonTemplateTrackedTxs: [
@@ -63,8 +60,8 @@ export const bobanetwork: Layer2 = opStackL2({
         address: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
         selector: '0xd0f89344',
         functionSignature: 'function appendSequencerBatch()',
-        sinceTimestamp: new UnixTime(1635386025),
-        untilTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1635386025),
+        untilTimestamp: UnixTime(1713303530),
       },
     },
     {
@@ -76,7 +73,7 @@ export const bobanetwork: Layer2 = opStackL2({
         formula: 'transfer',
         from: EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
         to: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
-        sinceTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1713303530),
       },
     },
     {
@@ -90,8 +87,8 @@ export const bobanetwork: Layer2 = opStackL2({
         selector: '0x8ca5cbb9',
         functionSignature:
           'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
-        sinceTimestamp: new UnixTime(1635386294),
-        untilTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1635386294),
+        untilTimestamp: UnixTime(1713303530),
       },
     },
     {
@@ -105,7 +102,7 @@ export const bobanetwork: Layer2 = opStackL2({
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-        sinceTimestamp: new UnixTime(1713303530),
+        sinceTimestamp: UnixTime(1713303530),
       },
     },
   ],
@@ -152,7 +149,7 @@ export const bobanetwork: Layer2 = opStackL2({
       date: '2022-03-18T00:00:00Z',
       url: 'https://boba.network/education/boba-basics/hybrid-compute/',
       description:
-        'Boba’s proprietary technology enables dApps that trigger code executed on web-scale infrastructure.',
+        "Boba's proprietary technology enables dApps that trigger code executed on web-scale infrastructure.",
       type: 'general',
     },
     {
@@ -182,20 +179,20 @@ export const bobanetwork: Layer2 = opStackL2({
     ],
     name: 'bobanetwork',
     chainId: 288,
-    explorerUrl: 'https://eth.bobascan.com/',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/',
-      type: 'etherscan',
-    },
+    explorerUrl: 'https://eth.bobascan.com',
     coingeckoPlatform: 'boba',
     // ~ Timestamp of block number 1
-    minTimestampForTvl: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.boba.network/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/',
+      },
+    ],
   },
-  knowledgeNuggets: [
-    {
-      title: 'What is Hybrid Compute?',
-      url: 'https://twitter.com/bkiepuszewski/status/1521849011594010624',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 })

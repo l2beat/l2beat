@@ -8,11 +8,9 @@
 // shared-modules better.
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "cronoszkevm",
   "chain": "zksync2",
-  "sharedModules": {
-    "doesThisKeyDoAnything": "shared-zk-stack"
-  },
-
+  "name": "cronoszkevm",
+  "import": ["../../globalConfig.jsonc"],
+  "sharedModules": ["shared-zk-stack"],
   "initialAddresses": []
 }

@@ -1,12 +1,16 @@
-import { chains } from '@l2beat/config'
-import type { FieldDiff } from '@l2beat/discovery'
-import { diffDiscovery } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery-types'
+import type { ChainConfig } from '@l2beat/config'
+import {
+  type ContractValue,
+  type EntryParameters,
+  type FieldDiff,
+  diffDiscovery,
+} from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { assert, ChainId } from '@l2beat/shared-pure'
+import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getOnDiskData } from './get-on-disk-data'
 
 export async function getProjectsChangeReport() {
@@ -76,6 +80,10 @@ const getCachedProjectsChangeReport = cache(
     const onDisk = getOnDiskData()
     const newDiscoveries = await db.updateMonitor.getAll()
 
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
+
     for (const onDiskChain of onDisk.chains) {
       const onDiskChainProjects = onDisk.projects[onDiskChain]
       if (!onDiskChainProjects) continue
@@ -84,7 +92,7 @@ const getCachedProjectsChangeReport = cache(
 
       for (const project of onDiskChainProjects) {
         const onDiskDiscovery = onDiskChainDiscovery[project]
-        const chainId = chainNameToId(onDiskChain)
+        const chainId = chainNameToId(onDiskChain, chains)
 
         const newDiscovery = newDiscoveries.find(
           (d) => d.chainId === chainId && d.projectName === project,
@@ -100,13 +108,13 @@ const getCachedProjectsChangeReport = cache(
         }
 
         const onDiskContracts = [
-          ...onDiskDiscovery.contracts,
-          ...(onDiskDiscovery.sharedModules ?? []).flatMap(
-            (module) => onDiskChainDiscovery[module]?.contracts ?? [],
+          ..._TEMP_getEntries(onDiskDiscovery),
+          ...(onDiskDiscovery.sharedModules ?? []).flatMap((module) =>
+            _TEMP_getEntries(onDiskChainDiscovery[module]),
           ),
         ]
         const latestContracts = [
-          ...newDiscovery.discovery.contracts,
+          ..._TEMP_getEntries(newDiscovery.discovery),
           ...(newDiscovery.discovery.sharedModules ?? []).flatMap((module) =>
             newDiscoveries
               .filter(
@@ -114,7 +122,7 @@ const getCachedProjectsChangeReport = cache(
                   d.chainId === newDiscovery.chainId &&
                   d.discovery.name === module,
               )
-              .flatMap((d) => d.discovery.contracts ?? []),
+              .flatMap((d) => _TEMP_getEntries(d.discovery)),
           ),
         ]
         const discoveryDiffs = diffDiscovery(onDiskContracts, latestContracts)
@@ -170,7 +178,7 @@ const getCachedProjectsChangeReport = cache(
     return result
   },
   [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
-  { tags: ['update-monitor'] },
+  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {
@@ -185,8 +193,41 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
   }
 }
 
-function chainNameToId(chainName: string): ChainId {
+function chainNameToId(chainName: string, chains: ChainConfig[]): ChainId {
   const chain = chains.find((chain) => chain.name === chainName)
   assert(chain, `Unknown chain name: ${chainName}`)
+  assert(chain.chainId, `Missing chainId for chain: ${chainName}`)
   return ChainId(chain.chainId)
+}
+
+// TODO(radomski): This is duplicated from discovery/extractors.ts. Pulling
+// functions from discovery would make config dependent on discovery. We want
+// to break the dependency between frontend and config/discovery. Ideally this
+// logic wouldn't live in frontend at all. This would remove the need for this
+// code.
+function get$Implementations(
+  values: Record<string, ContractValue | undefined> | undefined,
+): EthereumAddress[] {
+  return toAddressArray(values?.$implementation)
+}
+
+export function toAddressArray(value: ContractValue | undefined) {
+  if (typeof value === 'string') {
+    return [value as unknown as EthereumAddress]
+  }
+  if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
+    return value.map((v) => v as unknown as EthereumAddress)
+  }
+  return []
+}
+
+// TODO: REMOVE THIS CODE ON 2025-03-11
+function _TEMP_getEntries(
+  value: { entries: EntryParameters[] } | undefined,
+): EntryParameters[] {
+  if (value === undefined) {
+    return []
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return Reflect.get(value, 'contracts') ?? value.entries
 }

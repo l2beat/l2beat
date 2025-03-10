@@ -2,15 +2,18 @@
   "name": "honeypot",
   "chain": "ethereum",
   "blockNumber": 20641250,
-  "configHash": "0x35db5f8a0df3ed146129e0e43df74c425532c80a960c281dc1427a78beebaad2",
-  "contracts": [
+  "configHash": "0xeb564b3cf5eeee346086fea4d3558c536257d2d5664c0f76d7a21002929f57db",
+  "entries": [
     {
       "name": "Honeypot",
       "address": "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
+      "type": "Contract",
       "sourceHashes": [
         "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694553335,
+      "sinceBlock": 18122866,
       "values": {
         "$immutable": true,
         "getConsensus": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
@@ -22,57 +25,66 @@
     {
       "name": "History",
       "address": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+      "type": "Contract",
       "sourceHashes": [
         "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694457347,
+      "sinceBlock": 18114934,
       "values": {
         "$immutable": true,
         "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
-      },
-      "derivedName": "History"
+      }
     },
     {
       "name": "InputBox",
       "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
+      "type": "Contract",
       "sourceHashes": [
         "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1690464923,
-      "values": { "$immutable": true },
-      "derivedName": "InputBox"
+      "sinceBlock": 17784733,
+      "values": { "$immutable": true }
+    },
+    {
+      "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ERC20Portal",
       "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "type": "Contract",
       "sourceHashes": [
         "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1690464947,
+      "sinceBlock": 17784735,
       "values": {
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
-      },
-      "derivedName": "ERC20Portal"
+      }
     },
     {
       "name": "Authority",
       "address": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+      "type": "Contract",
       "sourceHashes": [
         "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694456915,
+      "sinceBlock": 18114898,
       "values": {
         "$immutable": true,
         "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
         "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
-      },
-      "derivedName": "Authority"
+      }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861" }
   ],
   "abis": {
     "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [

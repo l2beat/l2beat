@@ -42,6 +42,10 @@ import {
 import { EventHandler, EventHandlerDefinition } from './EventHandler'
 import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler'
 import {
+  KintoAccessControlHandler,
+  KintoAccessControlHandlerDefinition,
+} from './KintoAccessControlHandler'
+import {
   LayerZeroMultisigHandler,
   LayerZeroMultisigHandlerDefinition,
 } from './LayerZeroMultisigHandler'
@@ -49,7 +53,10 @@ import {
   LineaRolesModuleHandler,
   LineaRolesModuleHandlerDefinition,
 } from './LineaRolesModuleHandler'
-import { OpStackDAHandler, OpStackDAHandlerDefinition } from './OpDAHandler'
+import {
+  OpStackDAHandler,
+  OpStackDAHandlerDefinition,
+} from './OpDaHandler/OpDAHandler'
 import {
   OpStackSequencerInboxHandler,
   OpStackSequencerInboxHandlerDefinition,
@@ -95,6 +102,7 @@ export const UserHandlerDefinition = z.union([
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
   ScrollAccessControlHandlerDefinition,
+  KintoAccessControlHandlerDefinition,
   LineaRolesModuleHandlerDefinition,
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
@@ -134,6 +142,8 @@ export function getUserHandler(
       return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
       return new AccessControlHandler(field, definition, abi)
+    case 'kintoAccessControl':
+      return new KintoAccessControlHandler(field, definition, abi)
     case 'scrollAccessControl':
       return new ScrollAccessControlHandler(field, definition, abi)
     case 'lineaRolesModule':

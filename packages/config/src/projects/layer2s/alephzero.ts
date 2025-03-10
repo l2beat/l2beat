@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('alephzero')
 
-export const alephzero: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+export const alephzero: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -32,12 +32,21 @@ export const alephzero: Layer2 = orbitStackL2({
     },
   },
   associatedTokens: ['AZERO'],
-  gasTokens: ['AZERO'],
-  rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
-  bridge: discovery.getContract('ERC20Bridge'),
+  chainConfig: {
+    name: 'alephzero',
+    chainId: 41455,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.alephzero.raas.gelato.cloud',
+        callsPerMinute: 1500,
+      },
+    ],
+    gasTokens: ['AZERO'],
+  },
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xccaF21F002EAF230c9Fa810B34837a3739B70F7B'),

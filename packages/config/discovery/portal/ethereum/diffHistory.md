@@ -1,4 +1,86 @@
-Generated with discovered.json: 0xb530635514db7eb499254cf1061550ab111fff2e
+Generated with discovered.json: 0x43606223bd0bdc6b8ada4165d50927e40ed86f34
+
+# Diff at Tue, 04 Mar 2025 10:39:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 20089055
+- current block number: 20089055
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20089055 (main branch discovery), not current.
+
+```diff
+    contract TokenImplementation (0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6) {
+    +++ description: None
+      sinceBlock:
++        15569178
+    }
+```
+
+```diff
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911) {
+    +++ description: None
+      sinceBlock:
++        17494020
+    }
+```
+
+```diff
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585) {
+    +++ description: None
+      sinceBlock:
++        13217349
+    }
+```
+
+```diff
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE) {
+    +++ description: None
+      sinceBlock:
++        13268501
+    }
+```
+
+```diff
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81) {
+    +++ description: None
+      sinceBlock:
++        17493968
+    }
+```
+
+```diff
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: None
+      sinceBlock:
++        12959638
+    }
+```
+
+```diff
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a) {
+    +++ description: None
+      sinceBlock:
++        17089754
+    }
+```
+
+```diff
+    contract NFTImplementation (0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc) {
+    +++ description: None
+      sinceBlock:
++        13268489
+    }
+```
+
+Generated with discovered.json: 0x3e1ea88de5dacd730a1b3a4a3d912bd4e4ad1508
 
 # Diff at Mon, 20 Jan 2025 11:09:56 GMT:
 

@@ -1,11 +1,7 @@
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-  EoaParameters,
-} from '@l2beat/discovery-types'
 import type { Hash256 } from '@l2beat/shared-pure'
+import type { DiscoveryOutput, EntryParameters } from './types'
 
-import type { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import {
@@ -21,9 +17,9 @@ export function toDiscoveryOutput(
 ): DiscoveryOutput {
   const discovery = toRawDiscoveryOutput(config, blockNumber, results)
 
-  discovery.contracts.forEach((c) => {
-    if (c.errors !== undefined) {
-      c.errors = sortByKeys(neuterErrors(c.errors))
+  discovery.entries.forEach((e) => {
+    if (e.errors !== undefined) {
+      e.errors = sortByKeys(neuterErrors(e.errors))
     }
   })
 
@@ -50,7 +46,6 @@ function collectUsedTemplatesWithHashes(
   results: Analysis[],
 ): Record<string, Hash256> {
   const entries: [string, Hash256][] = results
-    .filter((a): a is AnalyzedContract => a.type === 'Contract')
     .map((contract) => contract.extendedTemplate)
     .filter((t) => t !== undefined)
     .map((t) => [t.template, t.templateHash])
@@ -60,14 +55,14 @@ function collectUsedTemplatesWithHashes(
 
 export function processAnalysis(
   results: Analysis[],
-): Pick<DiscoveryOutput, 'contracts' | 'eoas' | 'abis'> {
+): Pick<DiscoveryOutput, 'entries' | 'abis'> {
   const resolvedPermissions = resolveAnalysis(results)
 
-  const { contracts, abis } = getContracts(results)
+  const { contracts, abis } = getEntries(results)
   return {
-    contracts: contracts
+    entries: contracts
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
-      .map((x): ContractParameters => {
+      .map((x): EntryParameters => {
         const displayName = x.combinedMeta?.displayName
         const { directlyReceivedPermissions, receivedPermissions } =
           transformToReceived(
@@ -84,23 +79,24 @@ export function processAnalysis(
         return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
+          type: x.type,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
           sourceHashes: x.isVerified
-            ? x.sourceBundles.map((b) => b.hash as string)
+            ? undefinedIfEmpty(x.sourceBundles.map((b) => b.hash as string))
             : undefined,
           proxyType: x.proxyType,
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
           description: x.combinedMeta?.description,
-          categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
           receivedPermissions,
           directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,
-          sinceTimestamp: x.deploymentTimestamp?.toNumber(),
+          sinceTimestamp: x.deploymentTimestamp,
+          sinceBlock: x.deploymentBlockNumber,
           values:
             Object.keys(x.values).length === 0
               ? undefined
@@ -114,45 +110,22 @@ export function processAnalysis(
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
           references,
-        } satisfies ContractParameters)
-      }),
-    eoas: results
-      .filter((x) => x.type === 'EOA')
-      .sort((a, b) => a.address.localeCompare(b.address.toString()))
-      .map((x) => {
-        const { directlyReceivedPermissions, receivedPermissions } =
-          transformToReceived(
-            x.address,
-            resolvedPermissions,
-            x.combinedMeta?.permissions,
-          )
-        return {
-          name: x.name,
-          address: x.address,
-          description: x.combinedMeta?.description,
-          categories: setToSortedArray(x.combinedMeta?.categories),
-          types: setToSortedArray(x.combinedMeta?.types),
-          severity: x.combinedMeta?.severity,
-          issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-          receivedPermissions,
-          directlyReceivedPermissions,
-        } satisfies EoaParameters
+          category: x.category,
+        } satisfies EntryParameters)
       }),
     abis,
   }
 }
 
-function getContracts(results: Analysis[]): {
-  contracts: AnalyzedContract[]
+function getEntries(results: Analysis[]): {
+  contracts: Analysis[]
   abis: Record<string, string[]>
 } {
   let abis: Record<string, string[]> = {}
-  const contracts: AnalyzedContract[] = []
+  const contracts: Analysis[] = []
   for (const result of results) {
-    if (result.type === 'Contract') {
-      contracts.push(result)
-      abis = { ...abis, ...result.abis }
-    }
+    contracts.push(result)
+    abis = { ...abis, ...result.abis }
   }
   abis = Object.fromEntries(
     Object.entries(abis).sort(([a], [b]) => a.localeCompare(b)),

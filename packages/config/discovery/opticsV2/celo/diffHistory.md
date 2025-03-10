@@ -1,4 +1,175 @@
-Generated with discovered.json: 0x04882d1b0ea5d3b39ebce296a66cbfdc58ae8485
+Generated with discovered.json: 0xab9a036a6cd39f92fa50a2898a15a0a44759afd8
+
+# Diff at Mon, 10 Mar 2025 14:56:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5f0894cc624e3206ceca83cdf36ddd08f1e90538 block: 26689586
+- current block number: 30784081
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract OpticsV2Governor (0x070c2843402Aa0637ae0F2E2edf601aAB5E72509)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeacon (0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x63c079444e07D82d33399DE7D56d6E48740494c7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7519Db53B63d72721470319A5F4462D587Bb3008)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconProxy (0x913EE05036f3cbc94Ee4afDea87ceb430524648a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa725898D6F73C512f803B564A89DFbd96cF298EC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XAppConnectionManager (0xaa099aF87ACE9E437b9B410a687F263eeaeC4321)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxy (0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd85DC9A21378EF738A248236E970c2e0be89C9c2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xeE2b1e23e71052860C14f69E84AAF78478606D63)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFCcD3516d6BB62b009088aDae1E349430dDF6e77)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x8c8ec2092b76355e66b19ad5eca12231a09f63ae
+
+# Diff at Thu, 27 Feb 2025 11:12:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd67aa263dbf676cd3ff7e986b95cc7a52f3991b block: 26689586
+- current block number: 26689586
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeacon (0x4a594E07D5295E4e4cd1fF728e85a317A20A5010)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeaconController (0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeaconProxy (0x5EE2BA07742D9276b2F51Ee4AD949016b7F164c1)
+    +++ description: None
+```
+
+```diff
+    contract BeaconProxy (0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee"
++        "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e"
+      values.$admin:
+-        "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee"
++        "0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e"
+      values.$implementation:
+-        "0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"
++        "0xd37d1f682Ff556C5B6C4Eb58075a93747379A3d7"
+      values.$pastUpgrades.0.2.0:
+-        "0x8Dbce625664E61Bd3902Ec84DE5E22d2B12c3fb6"
++        "0xd37d1f682Ff556C5B6C4Eb58075a93747379A3d7"
+      values.$pastUpgrades.0.1:
+-        "0xde8dc7be51fd7efb7940f1c079ad9c47107e15911a3388264cd14a660af92fe5"
++        "0xa360ab72c136ac975030f7fab25f2f51bd9c8ed76a98d1e028c2c2767096bbdf"
+      values.$pastUpgrades.0.0:
+-        "2022-07-12T10:32:51.000Z"
++        "2021-11-26T21:02:52.000Z"
+      values.OpticsBeacon_beacon:
+-        "0x4a594E07D5295E4e4cd1fF728e85a317A20A5010"
++        "0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeacon (0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xcb4d9b8d6731b5fb65c0e30ab76c7b7647c45010
 
 # Diff at Mon, 20 Jan 2025 11:10:46 GMT:
 

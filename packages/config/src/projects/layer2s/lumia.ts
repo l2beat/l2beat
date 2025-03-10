@@ -7,13 +7,13 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('lumia')
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -29,9 +29,9 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const lumia: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1718181773), // 2024-06-12T08:42:53Z
-  additionalBadges: [Badge.DA.DAC],
+export const lumia: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1718181773), // 2024-06-12T08:42:53Z
+  additionalBadges: [BADGES.DA.DAC],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Restaking', 'RWA'],
   display: {
@@ -54,7 +54,6 @@ export const lumia: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rpcUrl: 'https://mainnet-rpc.lumia.org',
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -80,20 +79,27 @@ export const lumia: Layer2 = polygonCDKStack({
       references: [
         {
           title:
-            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
     },
   },
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   chainConfig: {
     name: 'lumia',
     chainId: 994873017,
-    explorerUrl: 'https://explorer.lumia.org/',
-    minTimestampForTvl: new UnixTime(1719499031),
+    explorerUrl: 'https://explorer.lumia.org',
+    sinceTimestamp: UnixTime(1719499031),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet-rpc.lumia.org',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   associatedTokens: ['LUMIA'],
   nonTemplateEscrows: [
@@ -124,7 +130,6 @@ export const lumia: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
   },
-  knowledgeNuggets: [],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

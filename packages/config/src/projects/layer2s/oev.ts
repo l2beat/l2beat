@@ -1,17 +1,17 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('oevnetwork')
 
-export const oev: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
+export const oev: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
-  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -37,9 +37,18 @@ export const oev: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://oev.rpc.api3.org/http',
+  chainConfig: {
+    name: 'oevnetwork',
+    chainId: 4913,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://oev.rpc.api3.org/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
-  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

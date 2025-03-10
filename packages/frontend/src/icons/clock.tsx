@@ -1,4 +1,6 @@
-export function ClockIcon() {
+import type { SvgIconProps } from './svg-icon'
+
+export function ClockIcon(props: SvgIconProps) {
   return (
     <svg
       width="16"
@@ -6,6 +8,7 @@ export function ClockIcon() {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_6337_40212)">
         <path

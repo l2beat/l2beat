@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x25de2b1eed39346562d30e7f92d7494547470d9b
+Generated with discovered.json: 0xfa26bdca43414e1aca2cb632b2c4ebfc5f0a89d3
+
+# Diff at Tue, 04 Mar 2025 10:38:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21041827
+- current block number: 21041827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041827 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (0x4cf32670a53657596E641DFCC6d40f01e4d64927) {
+    +++ description: None
+      sinceBlock:
++        14923083
+    }
+```
+
+```diff
+    contract DefiBridgeProxy (0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487) {
+    +++ description: None
+      sinceBlock:
++        14923076
+    }
+```
+
+```diff
+    contract Verifier28x32 (0xb7baA1420f88b7758E341c93463426A2b7651CFB) {
+    +++ description: None
+      sinceBlock:
++        19609952
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B) {
+    +++ description: None
+      sinceBlock:
++        14923077
+    }
+```
+
+```diff
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      sinceBlock:
++        11647532
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      sinceBlock:
++        14923081
+    }
+```
+
+Generated with discovered.json: 0xc0abb212722da4f4e4ae682e6901f217245c8ee2
 
 # Diff at Mon, 20 Jan 2025 11:09:18 GMT:
 

@@ -1,15 +1,17 @@
 {
   "name": "stargatev2",
   "chain": "scroll",
-  "blockNumber": 6694912,
-  "configHash": "0x40b498787793f3e052f74d25a8424df89c08caa6a3f9806cb796c8a76ef50c89",
-  "contracts": [
+  "blockNumber": 13418769,
+  "configHash": "0x23e8e15b70fae242646e428dc2076e9a412367f36319a5150f4a01405eafdb10",
+  "entries": [
     {
       "name": "StargatePoolUSDC",
       "address": "0x3Fc69CC4A842838bCDC9499178740226062b14E4",
+      "type": "Contract",
       "sourceHashes": [
         "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -18,6 +20,7 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837020,
+      "sinceBlock": 6044867,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
@@ -38,23 +41,26 @@
         "lpToken": "0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "68183656877608917",
-        "poolBalance": 2462659462553,
+        "plannerFee": "811470384891119569",
+        "poolBalance": 2819219232233,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-        "treasuryFee": 2304526795,
-        "tvl": 2310681817458
+        "treasuryFee": 25444228957,
+        "tvl": 2360898822794
       }
     },
     {
       "name": "TokenMessaging",
       "address": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837029,
+      "sinceBlock": 6044870,
       "values": {
         "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -88,15 +94,16 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      },
-      "derivedName": "TokenMessaging"
+      }
     },
     {
       "name": "StargatePoolNative",
       "address": "0xC2b638Cb5042c1B3c5d5C969361fB50569840583",
+      "type": "Contract",
       "sourceHashes": [
         "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -105,10 +112,11 @@
         "getTransferGasLimit"
       ],
       "sinceTimestamp": 1716837011,
+      "sinceBlock": 6044864,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": 0,
+        "deficitOffset": "7000000000000000000000",
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x2A6c43e0DBDCde23d40c82F45682BC6D8A6dB219",
@@ -118,25 +126,26 @@
           "creditMessaging": "0x4694900bDbA99Edf07A2E46C4093f88F9106a90D",
           "lzToken": "0x0000000000000000000000000000000000000000"
         },
-        "getTransferGasLimit": 2300,
+        "getTransferGasLimit": 15000,
         "localEid": 30214,
         "lpToken": "0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "598960801454452859",
-        "poolBalance": "2956610241000000000000",
+        "plannerFee": "181196259205248056",
+        "poolBalance": "5840886036000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 2088685,
-        "tvl": "907870118000000000000"
+        "treasuryFee": 27770330,
+        "tvl": "2980916176000000000000"
       }
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x3Fc69CC4A842838bCDC9499178740226062b14E4": [

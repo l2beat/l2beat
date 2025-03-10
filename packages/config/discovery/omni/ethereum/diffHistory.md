@@ -1,4 +1,125 @@
-Generated with discovered.json: 0x2aac90c99b3c8c40c22c97763ef57ffc1ad0d501
+Generated with discovered.json: 0xec3682f6f47fd625806a10d787c071b2a904874e
+
+# Diff at Thu, 06 Mar 2025 15:19:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21744158
+- current block number: 21981875
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Watched changes
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.adapters.0:
+-        "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5"
++        "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
+    }
+```
+
+Generated with discovered.json: 0x50a086bdf86b2f41065d6a596c34836168a3c496
+
+# Diff at Tue, 04 Mar 2025 10:39:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21744158
+- current block number: 21744158
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744158 (main branch discovery), not current.
+
+```diff
+    contract OmniBridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      sinceBlock:
++        10925774
+    }
+```
+
+```diff
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      sinceBlock:
++        17420395
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      sinceBlock:
++        9298324
+    }
+```
+
+```diff
+    contract Safe (0x670a3e447F4DE92C012777Ac5591D81E12aD0957) {
+    +++ description: None
+      sinceBlock:
++        20977347
+    }
+```
+
+```diff
+    contract TokenFactory (0x71d5ba4e37de72415F685490B684538Aae8f0424) {
+    +++ description: None
+      sinceBlock:
++        13421129
+    }
+```
+
+```diff
+    contract PermittableToken (0x7c24d0061b484B267F286aa2DCe891220Db254b3) {
+    +++ description: None
+      sinceBlock:
++        13421099
+    }
+```
+
+```diff
+    contract AAVEInterestERC20 (0x87D48c565D0D85770406D248efd7dc3cbd41e729) {
+    +++ description: None
+      sinceBlock:
++        13421159
+    }
+```
+
+```diff
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      sinceBlock:
++        10590093
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      sinceBlock:
++        20724523
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      sinceBlock:
++        9298314
+    }
+```
+
+Generated with discovered.json: 0x5f57255303c11288cadec2af83c32902817b8a8e
 
 # Diff at Fri, 31 Jan 2025 11:17:35 GMT:
 

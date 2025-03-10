@@ -1,9 +1,9 @@
 import type { Project } from '@l2beat/config'
-import { layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { countPerSecond } from './utils/count-per-second'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
@@ -58,7 +58,7 @@ async function getActivityTableData(projects: Project[]) {
             summedCount: sumTpsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.count),
-              timestamp: maxCount.countTimestamp.toNumber(),
+              timestamp: maxCount.countTimestamp,
             },
           },
           uops: {
@@ -67,7 +67,7 @@ async function getActivityTableData(projects: Project[]) {
             summedCount: sumUopsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
-              timestamp: maxCount.uopsTimestamp.toNumber(),
+              timestamp: maxCount.uopsTimestamp,
             },
           },
           ratio: getLastDayRatio(records),
@@ -80,12 +80,11 @@ async function getActivityTableData(projects: Project[]) {
   return Object.fromEntries(Object.entries(data).filter(([_, value]) => value))
 }
 
-function getMockActivityTableData(): ActivityTableData {
-  const projects = [
-    { id: ProjectId.ETHEREUM },
-    ...layer2s.filter((l2) => !l2.isArchived && !l2.isUpcoming),
-    ...layer3s.filter((l3) => !l3.isUpcoming),
-  ]
+async function getMockActivityTableData(): Promise<ActivityTableData> {
+  const projects = await ps.getProjects({
+    where: ['activityConfig'],
+    whereNot: ['isArchived', 'isUpcoming'],
+  })
 
   return Object.fromEntries(
     projects.map((project) => [
@@ -97,7 +96,7 @@ function getMockActivityTableData(): ActivityTableData {
           summedCount: 1500,
           maxCount: {
             value: 30,
-            timestamp: UnixTime.now().toNumber(),
+            timestamp: UnixTime.now(),
           },
         },
         uops: {
@@ -106,7 +105,7 @@ function getMockActivityTableData(): ActivityTableData {
           summedCount: 1550,
           maxCount: {
             value: 30,
-            timestamp: UnixTime.now().add(-1, 'days').toNumber(),
+            timestamp: UnixTime.now() - 1 * UnixTime.DAY,
           },
         },
         ratio: 1.1,

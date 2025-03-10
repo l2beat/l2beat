@@ -2,8 +2,8 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -29,9 +29,9 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const automata: Layer2 = opStackL2({
-  addedAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
-  additionalBadges: [Badge.RaaS.AltLayer],
+export const automata: ScalingProject = opStackL2({
+  addedAt: UnixTime(1729359609), // 2024-10-19T17:40:09Z
+  additionalBadges: [BADGES.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -58,9 +58,19 @@ export const automata: Layer2 = opStackL2({
   associatedTokens: ['ATA'],
   nonTemplateOptimismPortalEscrowTokens: ['ATA'],
   isNodeAvailable: 'UnderReview',
-  rpcUrl: 'https://rpc.ata.network/',
+  chainConfig: {
+    name: 'automata',
+    chainId: 65536,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ata.network/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
-  genesisTimestamp: new UnixTime(1721183063),
+  genesisTimestamp: UnixTime(1721183063),
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
     daResolveWindow,

@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('portal')
@@ -15,7 +15,7 @@ const guardians = discovery.getContractValue<[string[], number]>(
 export const portal: Bridge = {
   type: 'bridge',
   id: ProjectId('portal'),
-  addedAt: new UnixTime(1665415357), // 2022-10-10T15:22:37Z
+  addedAt: UnixTime(1665415357), // 2022-10-10T15:22:37Z
   display: {
     name: 'Portal (Wormhole)',
     slug: 'portal',
@@ -45,7 +45,7 @@ export const portal: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'), // Escrows to various chains
-        sinceTimestamp: new UnixTime(1631535967),
+        sinceTimestamp: UnixTime(1631535967),
         tokens: '*',
         chain: 'ethereum',
       },
@@ -194,16 +194,6 @@ export const portal: Bridge = {
       date: '2022-02-03T00:00:00.00Z',
       url: 'https://rekt.news/wormhole-rekt/',
       type: 'incident',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Wormhole core architecture',
-      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0001_generic_message_passing.md',
-    },
-    {
-      title: 'How Wormhole Guardians work',
-      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0009_guardian_key.md',
     },
   ],
 }

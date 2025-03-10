@@ -1,8 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('symbiosis')
@@ -10,7 +8,7 @@ const discovery = new ProjectDiscovery('symbiosis')
 export const symbiosis: Bridge = {
   type: 'bridge',
   id: ProjectId('symbiosis'),
-  addedAt: new UnixTime(1688541556), // 2023-07-05T07:19:16Z
+  addedAt: UnixTime(1688541556), // 2023-07-05T07:19:16Z
   display: {
     name: 'Symbiosis',
     slug: 'symbiosis',
@@ -111,7 +109,7 @@ export const symbiosis: Bridge = {
     escrows: [
       {
         address: discovery.getContract('Portal').address, // Portal v2
-        sinceTimestamp: new UnixTime(1668373200),
+        sinceTimestamp: UnixTime(1668373200),
         tokens: '*',
         chain: 'ethereum',
       },
@@ -146,21 +144,4 @@ export const symbiosis: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Bridging contracts explained',
-      url: 'https://docs.symbiosis.finance/crosschain-liquidity-engine/bridge-contracts',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-    {
-      title: 'Relayers network explained',
-      url: 'https://docs.symbiosis.finance/relayers-network/pos-relayers-network',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Audits',
-      url: 'https://docs.symbiosis.finance/main-concepts/security-audits-of-symbiosis',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 }

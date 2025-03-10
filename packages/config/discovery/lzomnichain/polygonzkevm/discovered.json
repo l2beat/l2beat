@@ -1,29 +1,42 @@
 {
   "name": "lzomnichain",
   "chain": "polygonzkevm",
-  "blockNumber": 19516552,
-  "configHash": "0x5431ef445e0e00f97a85ed79d0c9d2a253ab7cbbc32974df5f4c946e241e62a8",
-  "contracts": [
+  "blockNumber": 20493030,
+  "configHash": "0x4dd6836ff0de931316473bf95e06516bc282e110cb8cffaa5019299b4cd55a55",
+  "entries": [
+    {
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "",
       "address": "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5878,
       "values": { "$immutable": true }
     },
     {
       "name": "",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5880,
       "values": { "$immutable": true }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -31,6 +44,7 @@
         }
       ],
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5875,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
@@ -39,20 +53,47 @@
     {
       "name": "",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5879,
       "values": { "$immutable": true }
     },
     {
       "name": "",
       "address": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1679974072,
+      "sinceBlock": 5886,
       "values": { "$immutable": true }
+    },
+    {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "LayerZeroMultisig_pzkevm",
       "address": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -61,21 +102,23 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1712271299,
+      "sinceBlock": 11336913,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
+          "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+          "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+          "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
           "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-          "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0xe1cb4394c03df39d0d0d616a14a46acd94d4358f3439b1d5bd0d7c60910315b9",
         "getChainId": 1101,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 94,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 110,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -83,9 +126,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -93,6 +138,7 @@
         }
       ],
       "sinceTimestamp": 1679975850,
+      "sinceBlock": 6150,
       "values": {
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
@@ -101,11 +147,14 @@
     {
       "name": "Endpoint",
       "address": "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
+      "type": "Contract",
       "sourceHashes": [
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5873,
       "values": {
         "$immutable": true,
         "BLOCK_VERSION": 65535,
@@ -125,12 +174,17 @@
           "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
         ],
         "owner": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827"
-      },
-      "derivedName": "Endpoint"
+      }
+    },
+    {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -141,6 +195,7 @@
         }
       ],
       "sinceTimestamp": 1679974072,
+      "sinceBlock": 5885,
       "values": {
         "$admin": "0x3c2269811836af69497E5F486A85D7316753cf62",
         "$implementation": "0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F",
@@ -162,6 +217,7 @@
     {
       "name": "",
       "address": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -172,6 +228,7 @@
         }
       ],
       "sinceTimestamp": 1679975953,
+      "sinceBlock": 6153,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f",
@@ -186,11 +243,18 @@
       }
     },
     {
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UltraLightNodeV2",
       "address": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+      "type": "Contract",
       "sourceHashes": [
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -200,6 +264,7 @@
         "ulnLookup"
       ],
       "sinceTimestamp": 1679974014,
+      "sinceBlock": 5882,
       "values": {
         "$immutable": true,
         "chainAddressSizeMap": {
@@ -1380,18 +1445,8 @@
           "267": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "274": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
-    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" }
   ],
   "abis": {
     "0x3c2269811836af69497E5F486A85D7316753cf62": [

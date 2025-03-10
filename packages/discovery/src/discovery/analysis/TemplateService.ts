@@ -1,7 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
 
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { hashJson } from '@l2beat/shared'
 import {
   assert,
@@ -9,19 +8,15 @@ import {
   Hash256,
   type json,
 } from '@l2beat/shared-pure'
-import {
-  flattenFirstSource,
-  flatteningHash,
-  formatIntoHashable,
-  sha2_256bit,
-} from '../../flatten/utils'
+import { flatteningHash, hashFirstSource } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
-const TEMPLATES_PATH = path.join('discovery', '_templates')
+export const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
 
 interface ShapeCriteria {
@@ -182,7 +177,7 @@ export class TemplateService {
     const allTemplateHashes = this.getAllTemplateHashes()
     const allShapes = this.getAllShapes()
 
-    for (const contract of discovery.contracts) {
+    for (const contract of discovery.entries) {
       if (contract.sourceHashes === undefined) {
         continue
       }
@@ -197,7 +192,10 @@ export class TemplateService {
       }
 
       const hash = hashes[0]
-      assert(hash !== undefined)
+      assert(
+        hash !== undefined,
+        `Source hash is undefined for contract "${contract.name}" at address "${contract.address}". This indicates an issue with the discovery process or contract deployment.`,
+      )
       const sourcesHash = Hash256(hash)
       const matchingTemplates = this.findMatchingTemplatesByHash(
         sourcesHash,
@@ -249,16 +247,4 @@ function listAllPaths(path: string): string[] {
     result = result.concat(listAllPaths(subPath))
   }
   return result
-}
-
-export function hashFirstSource(sources: ContractSources): Hash256 | undefined {
-  if (!sources.isVerified || sources.sources.length < 1) {
-    return
-  }
-
-  const flattenedSource = flattenFirstSource(sources)
-  if (flattenedSource === undefined) {
-    return
-  }
-  return sha2_256bit(formatIntoHashable(flattenedSource))
 }

@@ -1,3 +1,895 @@
+Generated with discovered.json: 0x828dcb338ea1d66fa228c9114dcf41b93c7106d5
+
+# Diff at Thu, 06 Mar 2025 15:34:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 308283361
+- current block number: 308283361
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308283361 (main branch discovery), not current.
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.5.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.5.delay:
++        691200
+      issuedPermissions.0.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.0.delay:
++        691200
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      receivedPermissions.0.delay:
++        691200
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      directlyReceivedPermissions.2.description:
+-        "update the minimum delay of the timelock."
++        "manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.2.delay:
++        691200
+    }
+```
+
+Generated with discovered.json: 0xe9e6a4d3f0c7642dfbb8fd12872613c951ba11ac
+
+# Diff at Tue, 04 Mar 2025 10:40:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 308283361
+- current block number: 308283361
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308283361 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      sinceBlock:
++        2107
+    }
+```
+
+```diff
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      sinceBlock:
++        70398215
+    }
+```
+
+```diff
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      sinceBlock:
++        70483363
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      sinceBlock:
++        70398215
+    }
+```
+
+```diff
+    contract StandardArbERC20 (0x3f770Ac673856F105b586bb393d122721265aD46) {
+    +++ description: None
+      sinceBlock:
++        2454760
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (0x3fE38087A94903A9D946fa1915e1772fe611000f) {
+    +++ description: None
+      sinceBlock:
++        2103
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      sinceBlock:
++        121762709
+    }
+```
+
+```diff
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      sinceBlock:
++        1336834
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      sinceBlock:
++        2108
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      sinceBlock:
++        38495
+    }
+```
+
+```diff
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318) {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      sinceBlock:
++        5864786
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) {
+    +++ description: None
+      sinceBlock:
++        121763102
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      sinceBlock:
++        70398215
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      sinceBlock:
++        70398215
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) {
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+      sinceBlock:
++        121762383
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      sinceBlock:
++        121762420
+    }
+```
+
+```diff
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649) {
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+      sinceBlock:
++        70483310
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      sinceBlock:
++        70398215
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      sinceBlock:
++        70397931
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      sinceBlock:
++        70398215
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      sinceBlock:
++        121763102
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      sinceBlock:
++        2106
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      sinceBlock:
++        70397784
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333) {
+    +++ description: None
+      sinceBlock:
++        2102
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      sinceBlock:
++        70398215
+    }
+```
+
+Generated with discovered.json: 0x920eb76415377917efa5e5983c0de2d7cb5fccea
+
+# Diff at Fri, 21 Feb 2025 06:03:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@72fe705e53307d22cfc60842c4313d545aee913e block: 305003923
+- current block number: 308283361
+
+## Description
+
+Config related: remove faulty L2ProxyAdmin template to resolve permissions correctly.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305003923 (main branch discovery), not current.
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.7:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.6.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.6.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.6.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0xCaD7828a19b363A2B44717AFB1786B5196974D8E","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0x912CE59144191C1204E64559FE8253a0e49E6548","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0x789fC99093B09aD01C34DC7251D0C89ce743e5a4","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.3.from:
+-        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
++        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      receivedPermissions.2.from:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      receivedPermissions.2.via.0.address:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.0.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.0.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.0.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.0.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.0.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"update the minimum delay of the timelock."}
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "act"
+      directlyReceivedPermissions.1.from:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      directlyReceivedPermissions.1.description:
+-        "update the minimum delay of the timelock."
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.0.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      template:
+-        "orbitstack/layer2/L2ProxyAdmin"
++        "global/ProxyAdmin"
+      description:
+-        "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract."
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"},{"permission":"upgrade","from":"0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"},{"permission":"upgrade","from":"0x912CE59144191C1204E64559FE8253a0e49E6548"},{"permission":"upgrade","from":"0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"},{"permission":"upgrade","from":"0xCaD7828a19b363A2B44717AFB1786B5196974D8E"},{"permission":"upgrade","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"},{"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"}]
+      displayName:
++        "ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"},{"permission":"upgrade","from":"0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"},{"permission":"upgrade","from":"0x912CE59144191C1204E64559FE8253a0e49E6548"},{"permission":"upgrade","from":"0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"},{"permission":"upgrade","from":"0xCaD7828a19b363A2B44717AFB1786B5196974D8E"},{"permission":"upgrade","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"},{"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"}]
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.0.to:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
++        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+Generated with discovered.json: 0x5896a873cd8b51113d0474fa4c7fac2d45b7ccfd
+
+# Diff at Thu, 20 Feb 2025 12:22:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 305003923
+- current block number: 305003923
+
+## Description
+
+Config related: Bold templates added
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305003923 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xF06E95eF589D9c38af242a8AAee8375f14023F85)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x29e97c700d703b45fc915b7e9c5b0299c2b6abac
+
+# Diff at Wed, 12 Feb 2025 18:43:35 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
+- current block number: 305003923
+
+## Description
+
+Make Arbitrum discovery driven.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 295612328 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      template:
++        "orbitstack/layer2/L2ERC20Gateway"
+      description:
++        "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2."
+    }
+```
+
+```diff
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      template:
++        "orbitstack/layer2/ConstitutionHash"
+      description:
++        "Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor."
+    }
+```
+
+```diff
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      template:
++        "orbitstack/layer2/L2SurplusFee"
+      description:
++        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients."
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0xdb216562328215E010F819B5aBe947bad4ca961e","via":[]}
+      issuedPermissions.5:
++        {"permission":"interact","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","description":"update the minimum delay of the timelock.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","description":"propose transactions.","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","description":"cancel queued transactions.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"propose transactions.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"propose transactions.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.description:
++        "update the minimum delay of the timelock."
+      values.Canceller:
++        ["0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"]
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor:
++        ["0x0000000000000000000000000000000000000000"]
+      values.getMinDelayFormatted:
++        "8d"
+      values.Proposer:
++        ["0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"]
+      values.timelockAdminAC:
++        ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
+      template:
++        "orbitstack/layer2/L2Timelock"
+      description:
++        "Delays constitutional AIPs from the CoreGovernor by 8d."
+      fieldMeta:
++        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      template:
+-        "GnosisSafe"
++        "orbitstack/layer2/L2SecurityCouncilEmergency"
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"update the minimum delay of the timelock.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x09e9222E96E7B4AE2a407B98d48e330053351EEe","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}]
+    }
+```
+
+```diff
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      template:
++        "orbitstack/layer2/L2DAIGateway"
+      description:
++        "Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2."
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      template:
++        "orbitstack/layer2/L2GatewayRouter"
+      description:
++        "Router managing token <–> gateway mapping on L2."
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      template:
++        "orbitstack/layer2/L2WethGateway"
+      description:
++        "Counterpart to the Bridge on L1. Mints and burns WETH on L2."
+    }
+```
+
+```diff
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318) {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      template:
++        "orbitstack/layer2/L2LPTGateway"
+      description:
++        "Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2."
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) {
+    +++ description: None
+      template:
++        "orbitstack/layer2/UpgradeExecRouteBuilder"
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
++++ description: The percentage of the total supply that is required to pass a proposal.
+      values.l2TreasuryQuorumPercent:
++        "3"
+      template:
++        "orbitstack/layer2/TreasuryGovernor"
+      description:
++        "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
+      fieldMeta:
++        {"l2TreasuryQuorumPercent":{"description":"The percentage of the total supply that is required to pass a proposal."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
++++ description: The percentage of the total supply that can be minted by the owner once per year.
+      values.mintCapPerYer:
++        "2"
+      template:
++        "orbitstack/layer2/L2ArbitrumToken"
+      description:
++        "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%."
+      fieldMeta:
++        {"mintCapPerYer":{"description":"The percentage of the total supply that can be minted by the owner once per year."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) {
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+      template:
++        "orbitstack/layer2/SecurityCouncilMemberSyncAction"
+      description:
++        "Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2."
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      template:
+-        "GnosisSafe"
++        "orbitstack/layer2/L2SecurityCouncilPropose"
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]
+    }
+```
+
+```diff
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649) {
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+      template:
++        "orbitstack/layer2/L2BaseFee"
+      description:
++        "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients."
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      values.getMinDelayFormatted:
++        259200
+      template:
++        "orbitstack/layer2/TreasuryTimelock"
+      description:
++        "Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts."
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      template:
++        "orbitstack/layer2/L2ARBGateway"
+      description:
++        "ARB sent from L2 to L1 is escrowed in this contract and minted on L1."
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      template:
+-        "orbitstack/UpgradeExecutor"
++        "orbitstack/layer2/L2UpgradeExecutor"
+      displayName:
+-        "UpgradeExecutor"
+      description:
+-        "Central contract defining the access control permissions for upgrading the system contract implementations."
++        "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2)."
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      directlyReceivedPermissions.3:
+-        {"permission":"act","from":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      directlyReceivedPermissions.2:
+-        {"permission":"act","from":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}
+      directlyReceivedPermissions.1.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.1.from:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      directlyReceivedPermissions.1.description:
++        "update the minimum delay of the timelock."
+      directlyReceivedPermissions.0.from:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      template:
++        "orbitstack/layer2/SecurityCouncilManager"
+      description:
++        "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync."
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract.
+      template:
+-        "global/ProxyAdmin"
++        "orbitstack/layer2/L2ProxyAdmin"
+      displayName:
+-        "ProxyAdmin"
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"},{"permission":"upgrade","from":"0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"},{"permission":"upgrade","from":"0x912CE59144191C1204E64559FE8253a0e49E6548"},{"permission":"upgrade","from":"0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"},{"permission":"upgrade","from":"0xCaD7828a19b363A2B44717AFB1786B5196974D8E"},{"permission":"upgrade","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"},{"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"}]
+      description:
++        "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract."
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"},{"permission":"upgrade","from":"0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"},{"permission":"upgrade","from":"0x912CE59144191C1204E64559FE8253a0e49E6548"},{"permission":"upgrade","from":"0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"},{"permission":"upgrade","from":"0xCaD7828a19b363A2B44717AFB1786B5196974D8E"},{"permission":"upgrade","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"},{"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"}]
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      template:
+-        "GnosisSafe"
++        "orbitstack/SecurityCouncil"
+      references:
++        [{"text":"Security Council members - Arbitrum Foundation Docs","href":"https://docs.arbitrum.foundation/security-council-members"}]
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
++++ description: The percentage of the total supply that is required to pass a proposal.
+      values.l2CoreQuorumPercent:
++        "5"
+      template:
++        "orbitstack/layer2/CoreGovernor"
+      description:
++        "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"cancel queued transactions."},{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]
+      fieldMeta:
++        {"l2CoreQuorumPercent":{"description":"The percentage of the total supply that is required to pass a proposal."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
+    }
+```
+
 Generated with discovered.json: 0xeba979cb10654403eba767f0a42cdb0b4828e203
 
 # Diff at Mon, 20 Jan 2025 11:10:28 GMT:

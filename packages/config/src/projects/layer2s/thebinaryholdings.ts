@@ -1,14 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('thebinaryholdings')
 
-export const thebinaryholdings: Layer2 = opStackL2({
-  addedAt: new UnixTime(1726668186), // 2024-09-18T14:03:06Z
+export const thebinaryholdings: ScalingProject = opStackL2({
+  addedAt: UnixTime(1726668186), // 2024-09-18T14:03:06Z
   discovery,
+  additionalBadges: [BADGES.RaaS.Zeeve],
   associatedTokens: ['BNRY'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   isArchived: true, // operator inactive, might still be pre official launch
@@ -31,12 +33,22 @@ export const thebinaryholdings: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.zero.thebinaryholdings.com',
-  genesisTimestamp: new UnixTime(1719397465),
+  chainConfig: {
+    name: 'thebinaryholdings',
+    chainId: 624,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.zero.thebinaryholdings.com',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  genesisTimestamp: UnixTime(1719397465),
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1719397463),
-    minTimestamp: new UnixTime(1719397465),
+    genesisTimestamp: UnixTime(1719397463),
+    minTimestamp: UnixTime(1719397465),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',

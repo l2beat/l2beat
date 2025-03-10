@@ -44,27 +44,17 @@ function DashboardPage(props: DashboardPageProps) {
                   >
                     <TableData
                       value={
-                        project.configured ? (
-                          project.diff && project.diff.length > 0 ? (
-                            <ChangedDetectedDropdown
-                              project={project}
-                              summary={
-                                <a
-                                  href={`/status/discovery/${chainName}/${project.name}`}
-                                >
-                                  {`${project.name} (Changes Detected!)`}
-                                </a>
-                              }
-                            />
-                          ) : (
-                            <a
-                              href={`/status/discovery/${chainName}/${project.name}`}
-                            >
-                              {project.name}
-                            </a>
-                          )
+                        project.diff && project.diff.length > 0 ? (
+                          <ChangedDetectedDropdown
+                            project={project}
+                            summary={
+                              <div
+                                style={{ color: '#cecbc4' }}
+                              >{`${project.name} (Changes Detected!)`}</div>
+                            }
+                          />
                         ) : (
-                          project.name
+                          <div>{project.name}</div>
                         )
                       }
                     />

@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { createDatabase } from '@l2beat/database'
 import { HttpClient, type TrackedTxCostsConfig } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { makeConfig } from '../src/config/makeConfig'
 
@@ -32,7 +32,7 @@ const cmd = command({
   name: 'starkware-multiplier',
   args,
   handler: async (args) => {
-    const env = getEnv()
+    const env = getEnv({ FEATURES: 'tracked-txs' })
     const config = await makeConfig(env, {
       name: 'Script/Local',
       isLocal: true,
@@ -48,13 +48,14 @@ const cmd = command({
       ...config.database.connectionPoolSize,
     })
 
-    const projectConfig = config.projects.find(
-      (p) => p.projectId === args.project,
+    assert(config.trackedTxsConfig !== false)
+    const projectConfig = config.trackedTxsConfig.projects.find(
+      (p) => p.id === args.project,
     )
-    const costsConfigs = projectConfig?.trackedTxsConfig?.filter(
+    const costsConfigs = projectConfig?.configurations.filter(
       (c): c is TrackedTxCostsConfig =>
-        c.sinceTimestamp.lte(endDate) &&
-        (!c.untilTimestamp || c.untilTimestamp.gte(startDate)) &&
+        c.sinceTimestamp < endDate &&
+        (!c.untilTimestamp || c.untilTimestamp > startDate) &&
         c.type === 'l2costs',
     )
 
@@ -101,8 +102,8 @@ const cmd = command({
       console.log(
         `Proof config: ${c.id} |`,
         getConfigDetails(c.params),
-        `Since: ${c.sinceTimestamp.toNumber()}`,
-        `Until: ${c.untilTimestamp ? c.untilTimestamp.toNumber() : '-'} |`,
+        `Since: ${c.sinceTimestamp}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp : '-'} |`,
         'Multiplier:',
         c.costMultiplier,
       )
@@ -112,8 +113,8 @@ const cmd = command({
       console.log(
         `Batch config: ${c.id} |`,
         getConfigDetails(c.params),
-        `Since: ${c.sinceTimestamp.toNumber()}`,
-        `Until: ${c.untilTimestamp ? c.untilTimestamp.toNumber() : '-'} |`,
+        `Since: ${c.sinceTimestamp}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp : '-'} |`,
         'Multiplier:',
         c.costMultiplier,
       )
@@ -132,7 +133,7 @@ async function fetchStarkwareApi(
   const http = new HttpClient()
 
   const data = await http.fetch(
-    `http://sharp-bi.provingservice.io/sharp_bi/aggregations/cost?day_start=${startDate.toYYYYMMDD()}&day_end=${endDate.toYYYYMMDD()}&customer_id=${customerId}`,
+    `http://sharp-bi.provingservice.io/sharp_bi/aggregations/cost?day_start=${UnixTime.toYYYYMMDD(startDate)}&day_end=${UnixTime.toYYYYMMDD(endDate)}&customer_id=${customerId}`,
     {
       timeout: 10000,
     },
@@ -160,10 +161,10 @@ function getDates(startDate: string | undefined, endDate: string | undefined) {
   }
   const start = startDate
     ? UnixTime.fromDate(getDateFromString(startDate))
-    : UnixTime.now().toStartOf('day').add(-1, 'days')
+    : UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
   const end = endDate
     ? UnixTime.fromDate(getDateFromString(endDate))
-    : UnixTime.now().toStartOf('day')
+    : UnixTime.toStartOf(UnixTime.now(), 'day')
   return [start, end]
 }
 

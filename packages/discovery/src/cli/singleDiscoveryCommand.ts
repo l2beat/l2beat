@@ -12,6 +12,7 @@ import { discover } from '../discovery/runDiscovery'
 import { HttpClient } from '@l2beat/shared'
 import { boolean, command, flag, positional } from 'cmd-ts'
 import { getChainConfigs } from '../config/config.discovery'
+import { TEMPLATES_PATH } from '../discovery/analysis/TemplateService'
 import { ChainValue, EthereumAddressValue } from './types'
 
 export const SingleDiscoveryCommand = command({
@@ -37,8 +38,6 @@ export const SingleDiscoveryCommand = command({
         chain: chain,
         initialAddresses: [address],
       },
-      {},
-      {},
       configReader,
     )
     const http = new HttpClient()
@@ -54,6 +53,8 @@ export const SingleDiscoveryCommand = command({
     )
 
     const rootFolder = `./cache/single-discovery`
+    const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
+
     await rimraf(rootFolder)
 
     await saveDiscoveryResult(
@@ -61,7 +62,10 @@ export const SingleDiscoveryCommand = command({
       projectConfig,
       blockNumber,
       DiscoveryLogger.CLI,
-      { rootFolder },
+      {
+        rootFolder,
+        templatesFolder,
+      },
     )
 
     logger.info(

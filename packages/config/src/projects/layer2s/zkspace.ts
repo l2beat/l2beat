@@ -16,8 +16,8 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { zkswap } from './zkswap'
 
@@ -29,19 +29,18 @@ const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
 const finalizationPeriod = 0
 
 const upgradeability = {
-  upgradableBy: ['zkSpace Admin'],
-  upgradeDelayString,
+  upgradableBy: [{ name: 'zkSpace Admin', delay: upgradeDelayString }],
 }
 
-export const zkspace: Layer2 = {
+export const zkspace: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zkspace'),
   capability: 'appchain',
-  addedAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
+  addedAt: UnixTime(1629199654), // 2021-08-17T11:27:34Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.ZKsyncLiteFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.ZKsyncLiteFork,
   ],
   display: {
     name: 'ZKBase',
@@ -77,7 +76,7 @@ export const zkspace: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
-        sinceTimestamp: new UnixTime(1639569183),
+        sinceTimestamp: UnixTime(1639569183),
         tokens: '*',
       }),
     ],
@@ -101,7 +100,7 @@ export const zkspace: Layer2 = {
           selector: '0x6898e6fc',
           functionSignature:
             'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
-          sinceTimestamp: new UnixTime(1639569183),
+          sinceTimestamp: UnixTime(1639569183),
         },
       },
     ],
@@ -183,7 +182,7 @@ export const zkspace: Layer2 = {
         }),
         discovery.getContractDetails('ZkSeaNFT', {
           description:
-            'Contract managing deposits and withdrawals of NFTs to Layer2.',
+            'Contract managing deposits and withdrawals of NFTs to ScalingProject.',
           ...upgradeability,
         }),
         discovery.getContractDetails('Verifier', {
@@ -231,7 +230,7 @@ export const zkspace: Layer2 = {
       url: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
       date: '2021-12-20T00:00:00Z',
       description:
-        'All-in-One Layer2 Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',
+        'All-in-One ScalingProject Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',
       type: 'general',
     },
     {

@@ -3,16 +3,16 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('zora')
 
-export const zora: Layer2 = opStackL2({
-  addedAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
+export const zora: ScalingProject = opStackL2({
+  addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -35,11 +35,10 @@ export const zora: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.zora.energy',
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1686693839),
-    minTimestamp: new UnixTime(1710386579),
+    genesisTimestamp: UnixTime(1686693839),
+    minTimestamp: UnixTime(1710386579),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',
@@ -47,15 +46,11 @@ export const zora: Layer2 = opStackL2({
   chainConfig: {
     name: 'zora',
     chainId: 7777777,
-    explorerUrl: 'https://explorer.zora.energy/',
-    explorerApi: {
-      url: 'https://explorer.zora.energy/api',
-      type: 'blockscout',
-    },
+    explorerUrl: 'https://explorer.zora.energy',
     // ~ Timestamp of block number 0 on Zora
     // The first full hour timestamp that will return the block number
     // https://explorer.zora.energy/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -65,8 +60,12 @@ export const zora: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'zora',
+    apis: [
+      { type: 'rpc', url: 'https://rpc.zora.energy', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.zora.energy/api' },
+    ],
   },
-  genesisTimestamp: new UnixTime(1686695915),
+  genesisTimestamp: UnixTime(1686695915),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),
   isNodeAvailable: true,
   milestones: [
@@ -85,5 +84,4 @@ export const zora: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
 })

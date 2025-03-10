@@ -1,4 +1,112 @@
-Generated with discovered.json: 0x523ff2047e394e92aea9be2a9fe87a5a33edf1ab
+Generated with discovered.json: 0x89523c4d4a59bd6bcf78288121221b158a3f501b
+
+# Diff at Tue, 04 Mar 2025 10:40:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21786543
+- current block number: 21786543
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786543 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      sinceBlock:
++        21081436
+    }
+```
+
+```diff
+    contract TreasureChainAdminMultisig (0x282370D1e925ee897CB29Cb3beC13aAe0743067C) {
+    +++ description: None
+      sinceBlock:
++        21273741
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sinceBlock:
++        20019826
+    }
+```
+
+```diff
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sinceBlock:
++        21236684
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) {
+    +++ description: None
+      sinceBlock:
++        21182547
+    }
+```
+
+Generated with discovered.json: 0x23b5ef04ac3ef5830ceae9e2a6847196b40fd3e3
+
+# Diff at Wed, 26 Feb 2025 10:33:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21786543
+- current block number: 21786543
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786543 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) {
+    +++ description: None
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+Generated with discovered.json: 0xab5c09bf1ea40eac3fa111bc574e9096fadbb5eb
 
 # Diff at Thu, 06 Feb 2025 09:24:01 GMT:
 

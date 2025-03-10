@@ -34,7 +34,7 @@ describe(PremintedIndexer.name, () => {
 
   describe(PremintedIndexer.prototype.update.name, () => {
     it('Circulating supply smaller than locked in escrow', async () => {
-      const timestamp = new UnixTime(100)
+      const timestamp = UnixTime(100)
       const circulatingAmount = 100n
       const escrowAmount = 100_000n
 
@@ -58,7 +58,7 @@ describe(PremintedIndexer.name, () => {
     })
 
     it('Locked in escrow smaller than circulating supply', async () => {
-      const timestamp = new UnixTime(100)
+      const timestamp = UnixTime(100)
       const circulatingAmount = 100_000n
       const escrowAmount = 100n
 
@@ -83,7 +83,7 @@ describe(PremintedIndexer.name, () => {
     })
 
     it('Circulating supply = Locked in escrow', async () => {
-      const timestamp = new UnixTime(100)
+      const timestamp = UnixTime(100)
       const equalAmount = 100n
 
       const { premintedIndexer, amountRepository, runCommonTests } = setup(
@@ -111,7 +111,7 @@ describe(PremintedIndexer.name, () => {
       const optimizedTimestamp = to + 1
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: () => new UnixTime(optimizedTimestamp),
+        getTimestampToSync: () => UnixTime(optimizedTimestamp),
       })
 
       const premintedIndexer = mockIndexer({
@@ -128,7 +128,7 @@ describe(PremintedIndexer.name, () => {
       const to = 100
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: () => new UnixTime(to),
+        getTimestampToSync: () => UnixTime(to),
       })
 
       const premintedIndexer = mockIndexer({
@@ -160,7 +160,7 @@ describe(PremintedIndexer.name, () => {
 
       expect(amountRepository.deleteByConfigAfter).toHaveBeenOnlyCalledWith(
         CONFIG_ID,
-        new UnixTime(targetHeight),
+        UnixTime(targetHeight),
       )
     })
   })
@@ -217,10 +217,10 @@ function setup(
 
     expect(
       blockTimestampRepository.findBlockNumberByChainAndTimestamp,
-    ).toHaveBeenOnlyCalledWith('chain', new UnixTime(100))
+    ).toHaveBeenOnlyCalledWith('chain', UnixTime(100))
 
     expect(amountService.fetchAmounts).toHaveBeenOnlyCalledWith(
-      new UnixTime(100),
+      UnixTime(100),
       100,
       [toEscrowEntry(token)],
     )
@@ -228,8 +228,8 @@ function setup(
     expect(
       circulatingSupplyService.fetchCirculatingSupplies,
     ).toHaveBeenCalledWith(
-      new UnixTime(100),
-      new UnixTime(100),
+      UnixTime(100),
+      UnixTime(100),
       toCirculatingEntry(token),
     )
 

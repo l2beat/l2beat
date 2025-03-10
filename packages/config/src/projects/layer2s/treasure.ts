@@ -2,8 +2,8 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('treasure')
@@ -13,11 +13,11 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 )
 const bridge = discovery.getContract('L1SharedBridge')
 
-export const treasure: Layer2 = zkStackL2({
+export const treasure: ScalingProject = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  additionalBadges: [Badge.DA.CustomDA],
-  addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
+  additionalBadges: [BADGES.DA.CustomDA],
+  addedAt: UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
@@ -45,12 +45,18 @@ export const treasure: Layer2 = zkStackL2({
     },
   },
   associatedTokens: ['MAGIC'],
-  rpcUrl: 'https://rpc.treasure.lol',
   chainConfig: {
     name: 'treasure',
     chainId: 61166,
     explorerUrl: 'https://treasurescan.io',
-    minTimestampForTvl: new UnixTime(1732617294),
+    sinceTimestamp: UnixTime(1732617294),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.treasure.lol',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [

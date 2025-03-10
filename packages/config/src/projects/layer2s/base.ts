@@ -1,8 +1,4 @@
 import {
-  type ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
-import {
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -25,24 +21,17 @@ import { ESCROW } from '../../common'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './templates/generateDiscoveryDrivenSections'
+import { safeGetImplementation } from './templates/utils'
 
 const discovery = new ProjectDiscovery('base')
-
-function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = get$Implementations(contract.values)[0]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
-}
 
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'OptimismPortal',
@@ -74,7 +63,7 @@ const sequencerInbox = EthereumAddress(
 
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
-const genesisTimestamp = new UnixTime(1686074603)
+const genesisTimestamp = UnixTime(1686074603)
 const portal = discovery.getContract('OptimismPortal')
 
 const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
@@ -121,17 +110,16 @@ const permissionlessGameMaxClockExtension =
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
   permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
 
-export const base: Layer2 = {
+export const base: ScalingProject = {
   type: 'layer2',
   id: ProjectId('base'),
   capability: 'universal',
-  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.Other.L3HostChain,
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.Infra.Superchain,
   ],
   display: {
     name: 'Base',
@@ -201,16 +189,24 @@ export const base: Layer2 = {
           'Maker-controlled vault for USDS ans sUSDS bridged with canonical messaging.',
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://developer-access-mainnet.base.org',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+        sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
+      },
+    ],
     finality: {
       type: 'OPStack',
-      minTimestamp: new UnixTime(1710375515),
-      genesisTimestamp: new UnixTime(1686789347),
+      minTimestamp: UnixTime(1710375515),
+      genesisTimestamp: UnixTime(1686789347),
       l2BlockTimeSeconds: 2,
       lag: 0,
       stateUpdate: 'disabled',
@@ -241,8 +237,8 @@ export const base: Layer2 = {
           selector: '0x9aaab648',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1686793895),
-          untilTimestamp: new UnixTime(1730303471), // before proofs
+          sinceTimestamp: UnixTime(1686793895),
+          untilTimestamp: UnixTime(1730303471), // before proofs
         },
       },
       {
@@ -256,23 +252,19 @@ export const base: Layer2 = {
           selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-          sinceTimestamp: new UnixTime(1730303471), // after proofs
+          sinceTimestamp: UnixTime(1730303471), // after proofs
         },
       },
     ],
   },
   chainConfig: {
     name: 'base',
-    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
     chainId: 8453,
     explorerUrl: 'https://basescan.org',
-    explorerApi: {
-      url: 'https://api.basescan.org/api',
-      type: 'etherscan',
-    },
     // ~ Timestamp of block number 0 on Base
     // https://basescan.org/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    gasTokens: ['ETH'],
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -282,6 +274,15 @@ export const base: Layer2 = {
       },
     ],
     coingeckoPlatform: 'base',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://developer-access-mainnet.base.org',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api.basescan.org/api' },
+      { type: 'blockscoutV2', url: 'https://base.blockscout.com/api/v2' },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

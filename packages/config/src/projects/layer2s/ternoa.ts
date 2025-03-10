@@ -7,13 +7,13 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('ternoa')
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -29,9 +29,9 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const ternoa: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
-  additionalBadges: [Badge.DA.DAC], // TODO: add Badge.RaaS.Zeeve
+export const ternoa: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1727455020), // 2024-09-27T17:09:00Z
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
   display: {
@@ -55,7 +55,6 @@ export const ternoa: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rpcUrl: 'https://rpc-mainnet.zkevm.ternoa.network', // successfully tested at 5k/min
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -88,13 +87,21 @@ export const ternoa: Layer2 = polygonCDKStack({
     },
   },
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier_12'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   chainConfig: {
     name: 'ternoa',
     chainId: 752025,
-    explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network/',
-    minTimestampForTvl: new UnixTime(1735650935),
+    explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
+    sinceTimestamp: UnixTime(1735650935),
+    apis: [
+      {
+        type: 'rpc',
+        // successfully tested at 5k/min
+        url: 'https://rpc-mainnet.zkevm.ternoa.network',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   associatedTokens: ['CAPS'],
   nonTemplateEscrows: [
@@ -134,7 +141,6 @@ export const ternoa: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

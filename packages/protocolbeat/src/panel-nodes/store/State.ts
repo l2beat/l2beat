@@ -43,6 +43,7 @@ export interface Node {
   readonly fields: Field[]
   readonly box: Box
   readonly color: number
+  readonly hueShift: number
   readonly data: unknown
 }
 

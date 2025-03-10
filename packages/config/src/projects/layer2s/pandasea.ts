@@ -1,11 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
-import { upcomingL2 } from './templates/upcoming'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
+import { underReviewL2 } from './templates/underReview'
 
-export const pandasea: Layer2 = upcomingL2({
+export const pandasea: ScalingProject = underReviewL2({
   id: 'pandasea',
   capability: 'universal',
-  addedAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  addedAt: UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'PandaSea',
     slug: 'pandasea',
@@ -16,6 +18,20 @@ export const pandasea: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://pandasea.io/'],
+      explorers: ['https://pandaseascan.com/'],
+      apps: ['https://bridge.pandasea.io/'],
     },
   },
-})
+  chainConfig: {
+    name: 'pandasea',
+    chainId: 7776,
+    apis: [
+      { type: 'rpc', url: 'https://rpc1.pandasea.io', callsPerMinute: 1500 },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
+    adjustCount: { type: 'SubtractOne' },
+    startBlock: 1,
+  },
+}) //no escrow (0xfd84a81e4419af02DFBE0A19cB8B2802C44E0368) since gas token is not on CG

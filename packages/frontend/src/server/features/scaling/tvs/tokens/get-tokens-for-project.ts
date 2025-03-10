@@ -1,7 +1,4 @@
-import { chainConverter, toBackendProject } from '@l2beat/backend-shared'
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
-import { safeGetTokenByAssetId } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId, Token } from '@l2beat/shared-pure'
 import {
   assert,
   AssetId,
@@ -12,6 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
@@ -30,21 +28,38 @@ export type ProjectToken = {
 type ProjectTokenSource = 'native' | 'canonical' | 'external'
 
 export async function getTokensForProject(
-  project: Layer2 | Layer3 | Bridge,
+  projectId: ProjectId,
 ): Promise<ProjectTokens> {
+  const tokenList = await ps.getTokens()
+  const tokenMap = new Map(tokenList.map((t) => [t.id, t]))
   if (env.MOCK) {
-    return toDisplayableTokens(project.id, getMockTokensDataForProject())
+    return toDisplayableTokens(
+      projectId,
+      getMockTokensDataForProject(),
+      tokenMap,
+    )
   }
-  const cachedTokens = await getTokensDataForProject(project)
-  return toDisplayableTokens(project.id, cachedTokens)
+  const cachedTokens = await getTokensDataForProject(projectId, tokenList)
+  return toDisplayableTokens(projectId, cachedTokens, tokenMap)
 }
 
 async function getTokensDataForProject(
-  project: Layer2 | Layer3 | Bridge,
+  id: ProjectId,
+  tokenList: Token[],
 ): Promise<Record<ProjectTokenSource, AssetId[]>> {
-  const backendProject = toBackendProject(project)
-  const configMapping = getConfigMapping(backendProject)
-  const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
+  const project = await ps.getProject({
+    id,
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
+  })
+  assert(project !== undefined)
+
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  const configMapping = getConfigMapping(project, chains, tokenList)
+  const targetTimestamp =
+    UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
   const [priceConfigs, amountConfigs] = await Promise.all([
     getLatestPriceForConfigurations(configMapping.prices, targetTimestamp),
@@ -134,16 +149,17 @@ function groupBySource(
 function toDisplayableTokens(
   projectId: ProjectId,
   tokens: Record<ProjectTokenSource, AssetId[]>,
+  tokenMap: Map<AssetId, Token>,
 ): ProjectTokens {
   return {
     canonical: tokens.canonical.map((assetId) =>
-      toDisplayableToken(projectId, { assetId, source: 'canonical' }),
+      toDisplayableToken(projectId, { assetId, source: 'canonical' }, tokenMap),
     ),
     native: tokens.native.map((assetId) =>
-      toDisplayableToken(projectId, { assetId, source: 'native' }),
+      toDisplayableToken(projectId, { assetId, source: 'native' }, tokenMap),
     ),
     external: tokens.external.map((assetId) =>
-      toDisplayableToken(projectId, { assetId, source: 'external' }),
+      toDisplayableToken(projectId, { assetId, source: 'external' }, tokenMap),
     ),
   }
 }
@@ -157,8 +173,9 @@ function toDisplayableToken(
     assetId: AssetId
     source: 'native' | 'canonical' | 'external'
   },
+  tokenMap: Map<AssetId, Token>,
 ): ProjectToken {
-  const token = safeGetTokenByAssetId(assetId)
+  const token = tokenMap.get(assetId)
   assert(token, 'Token not found for asset id ' + assetId.toString())
   let symbol = token.symbol
   if (symbol === 'USDC' && source === 'canonical') {
@@ -182,7 +199,7 @@ function toDisplayableToken(
     iconUrl,
     name,
     symbol,
-    chain: chainConverter.toName(token.chainId),
+    chain: token.chainName,
     source,
   }
 }

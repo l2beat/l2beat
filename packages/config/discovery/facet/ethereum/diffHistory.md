@@ -1,4 +1,230 @@
-Generated with discovered.json: 0x198864c0bf64db4adfa294f8c734a42b62ed3c43
+Generated with discovered.json: 0x8fa91b93e7aa30007ca6eabafcf4981391ab559a
+
+# Diff at Tue, 04 Mar 2025 10:39:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21678827
+- current block number: 21678827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21678827 (main branch discovery), not current.
+
+```diff
+    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: Official Facet implementation of the Ether Bridge.
+      sinceBlock:
++        21444055
+    }
+```
+
+```diff
+    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      sinceBlock:
++        21373904
+    }
+```
+
+```diff
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF) {
+    +++ description: Module that allows the Safe to send Facet transactions.
+      sinceBlock:
++        21352215
+    }
+```
+
+```diff
+    contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sinceBlock:
++        21373911
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sinceBlock:
++        21373913
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xa1233c2DB638D41893a101B0e9dd44cb681270E8) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sinceBlock:
++        21373914
+    }
+```
+
+```diff
+    contract FacetMultisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      sinceBlock:
++        18663532
+    }
+```
+
+```diff
+    contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e) {
+    +++ description: None
+      sinceBlock:
++        21373912
+    }
+```
+
+```diff
+    contract FacetSafeProxy (0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25) {
+    +++ description: Helper of the Safe Module that allows to send Facet transactions.
+      sinceBlock:
++        21352209
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sinceBlock:
++        21373915
+    }
+```
+
+```diff
+    contract EthscriptionsSafeModule (0xDB866fD9241cd32851Df760c1Ec536f3199B22cE) {
+    +++ description: Module that allows the Safe to interact with Ethscriptions.
+      sinceBlock:
++        18393837
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C) {
+    +++ description: None
+      sinceBlock:
++        21373905
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sinceBlock:
++        21373908
+    }
+```
+
+```diff
+    contract EthscriptionsSafeProxy (0xeEd444Fc821b866b002f30f502C53e88E15d5095) {
+    +++ description: Helper of the Safe Module that allows to send Ethscriptions transactions.
+      sinceBlock:
++        18393830
+    }
+```
+
+Generated with discovered.json: 0x6c81269772f20a029b98c2f78f08de8a0b8c2032
+
+# Diff at Wed, 26 Feb 2025 10:32:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21678827
+- current block number: 21678827
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21678827 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xa1233c2DB638D41893a101B0e9dd44cb681270E8) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e) {
+    +++ description: None
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+Generated with discovered.json: 0x41f94d5c689a8487e1281d398ae43f9f42309acd
+
+# Diff at Fri, 21 Feb 2025 14:06:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21678827
+- current block number: 21678827
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21678827 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x4afe078dadcf17cb242c6f1bff37ef99d6daabf1
 
 # Diff at Tue, 04 Feb 2025 12:31:25 GMT:
 

@@ -2,8 +2,8 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -29,10 +29,10 @@ const daResolveWindow = formatSeconds(
   ) * 12, // in blocks, to seconds
 )
 
-export const gmnetwork: Layer2 = opStackL2({
-  addedAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
+export const gmnetwork: ScalingProject = opStackL2({
+  addedAt: UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
-  additionalBadges: [Badge.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['AI'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -66,8 +66,18 @@ export const gmnetwork: Layer2 = opStackL2({
     'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
-  genesisTimestamp: new UnixTime(1717656409),
-  rpcUrl: 'https://rpc.gmnetwork.ai/',
+  genesisTimestamp: UnixTime(1717656409),
+  chainConfig: {
+    name: 'gmnetwork',
+    chainId: 2777,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.gmnetwork.ai/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   customDa: {
     type: 'DA Challenges',
     name: 'GM Network DA',

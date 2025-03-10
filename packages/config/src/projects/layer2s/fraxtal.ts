@@ -3,15 +3,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../da-beat/common'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('fraxtal')
 
-export const fraxtal: Layer2 = opStackL2({
-  addedAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
+export const fraxtal: ScalingProject = opStackL2({
+  addedAt: UnixTime(1708511622), // 2024-02-21T10:33:42Z
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {
@@ -48,7 +48,7 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
     bridge: DA_BRIDGES.NONE,
-    badge: Badge.DA.CustomDA,
+    badge: BADGES.DA.CustomDA,
   },
   associatedTokens: ['FXS', 'FPIS'],
   discovery,
@@ -74,20 +74,26 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.frax.com',
-  genesisTimestamp: new UnixTime(1706811599),
+  genesisTimestamp: UnixTime(1706811599),
   isNodeAvailable: true,
   chainConfig: {
     name: 'fraxtal',
     chainId: 252,
-    explorerUrl: 'https://fraxscan.com/',
-    explorerApi: {
-      url: 'https://api.fraxscan.com/api',
-      type: 'etherscan',
-    },
+    explorerUrl: 'https://fraxscan.com',
     // ~ Timestamp of block number 1
-    minTimestampForTvl: new UnixTime(1706810713),
+    sinceTimestamp: UnixTime(1706810713),
     coingeckoPlatform: 'fraxtal',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.frax.com',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.fraxscan.com/api',
+      },
+    ],
   },
   nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['frxETH'],

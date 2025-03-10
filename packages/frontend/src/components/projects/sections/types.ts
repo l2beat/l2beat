@@ -5,7 +5,6 @@ import type { DaRiskSummarySectionProps } from './da-risk-summary-section'
 import type { DetailedDescriptionSectionProps } from './detailed-description-section'
 import type { GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
 import type { GroupSectionProps } from './group-section'
-import type { KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import type { L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import type { MarkdownSectionProps } from './markdown-section'
 import type { MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
@@ -18,6 +17,7 @@ import type { StageSectionProps } from './stage-section'
 import type { StateDerivationSectionProps } from './state-derivation-section'
 import type { StateValidationSectionProps } from './state-validation-section'
 import type { TechnologySectionProps } from './technology-section'
+import type { ThroughputSectionProps } from './throughput/throughput-section'
 
 type SectionId =
   | 'tvs'
@@ -38,8 +38,8 @@ type SectionId =
   | 'upgrades-and-governance'
   | 'permissions'
   | 'contracts'
-  | 'knowledge-nuggets'
   | 'sequencing'
+  | 'throughput'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -60,6 +60,11 @@ interface ProjectDetailsChartSection {
 interface ProjectDetailsCostsSection {
   type: 'CostsSection'
   props: ProjectDetailsProps<CostsSectionProps>
+}
+
+interface ProjectDetailsThroughputSection {
+  type: 'ThroughputSection'
+  props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
 interface ProjectDetailsDetailedDescriptionSection {
@@ -132,11 +137,6 @@ interface ProjectDetailsContractsSection {
   props: ProjectDetailsProps<ContractsSectionProps>
 }
 
-interface ProjectDetailsKnowledgeNuggetsSection {
-  type: 'KnowledgeNuggetsSection'
-  props: ProjectDetailsProps<KnowledgeNuggetsSectionProps>
-}
-
 interface ProjectDetailsUpcomingDisclaimer {
   type: 'UpcomingDisclaimer'
   excludeFromNavigation: true
@@ -172,8 +172,8 @@ export type ProjectDetailsSection = {
   | ProjectDetailsSequencingSection
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
-  | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
+  | ProjectDetailsThroughputSection
 )

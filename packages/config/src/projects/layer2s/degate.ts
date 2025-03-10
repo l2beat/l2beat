@@ -19,8 +19,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('degate')
@@ -58,16 +58,16 @@ assert(owner1 === owner2 && owner2 === owner3 && owner3, 'DeGate')
 const permissionedAccount = discovery.formatPermissionedAccounts([owner1])
 assert(permissionedAccount[0].type === 'Contract', 'DeGate')
 
-export const degate: Layer2 = {
+export const degate: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate'),
   capability: 'appchain',
-  addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  addedAt: UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.LoopringFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.LoopringFork,
   ],
   display: {
     name: 'DeGate Legacy',
@@ -98,7 +98,7 @@ export const degate: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA'),
-        sinceTimestamp: new UnixTime(1681991243),
+        sinceTimestamp: UnixTime(1681991243),
         tokens: '*',
       }),
     ],
@@ -116,8 +116,8 @@ export const degate: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1681993655),
-          untilTimestamp: new UnixTime(1695902496),
+          sinceTimestamp: UnixTime(1681993655),
+          untilTimestamp: UnixTime(1695902496),
         },
       },
     ],

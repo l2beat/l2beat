@@ -8,8 +8,8 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('sophon')
@@ -19,11 +19,11 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 )
 const bridge = discovery.getContract('L1SharedBridge')
 
-export const sophon: Layer2 = zkStackL2({
+export const sophon: ScalingProject = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  additionalBadges: [Badge.DA.Avail],
-  addedAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
+  additionalBadges: [BADGES.DA.Avail],
+  addedAt: UnixTime(1716536140), // 2024-05-24T07:35:40Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',
@@ -45,12 +45,19 @@ export const sophon: Layer2 = zkStackL2({
     },
   },
   associatedTokens: ['SOPH'],
-  rpcUrl: 'https://rpc.sophon.xyz/',
   chainConfig: {
     name: 'sophon',
     chainId: 50104,
-    explorerUrl: 'https://explorer.sophon.xyz/',
-    minTimestampForTvl: new UnixTime(1729531437),
+    gasTokens: ['SOPH'],
+    explorerUrl: 'https://explorer.sophon.xyz',
+    sinceTimestamp: UnixTime(1729531437),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.sophon.xyz/',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {
@@ -107,6 +114,10 @@ export const sophon: Layer2 = zkStackL2({
         'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
   ],
+  availDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    appId: '17',
+  },
   milestones: [
     {
       title: 'Mainnet public launch',

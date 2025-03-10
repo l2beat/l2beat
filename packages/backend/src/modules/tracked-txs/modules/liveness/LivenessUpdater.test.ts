@@ -154,9 +154,9 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
     {
       params: {
         formula: 'functionCall',
-
         address: EthereumAddress.random(),
         selector: '0x',
+        signature: 'function foo()',
       },
       projectId: ProjectId('test'),
       sinceTimestamp: MIN_TIMESTAMP,
@@ -169,6 +169,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
         formula: 'functionCall',
         address: EthereumAddress.random(),
         selector: '0x',
+        signature: 'function foo()',
       },
       projectId: ProjectId('test2'),
       sinceTimestamp: MIN_TIMESTAMP,

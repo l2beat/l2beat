@@ -5,13 +5,17 @@ import type {
   TokenBridgedUsing,
 } from '@l2beat/shared-pure'
 
-type BaseAssetBreakdownData = {
+export type BaseAssetBreakdownData = {
   assetId: AssetId
-  chainId: ChainId
+  chain: {
+    id: ChainId
+    name: string
+  }
   amount: number
   usdValue: number
   usdPrice: string
   tokenAddress?: EthereumAddress
+  isGasToken?: boolean
 }
 
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
@@ -21,6 +25,7 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
     escrowAddress: EthereumAddress
     isPreminted?: boolean
     isSharedEscrow?: boolean
+    url?: string
   }[]
 }
 

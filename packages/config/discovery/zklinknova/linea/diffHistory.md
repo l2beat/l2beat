@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x6aa01ff2a31c3053ba66320275f014d8e6eb4514
+Generated with discovered.json: 0x301b9a1e23fdb64bb9d6ccb7ae0d7ebe32ec1a92
+
+# Diff at Tue, 04 Mar 2025 10:41:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 9010064
+- current block number: 9010064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9010064 (main branch discovery), not current.
+
+```diff
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      sinceBlock:
++        244397
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x509ff56c152315EdeE91A2e0f059195519507e01) {
+    +++ description: None
+      sinceBlock:
++        2779975
+    }
+```
+
+```diff
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      sinceBlock:
++        2590041
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      sinceBlock:
++        2590048
+    }
+```
+
+```diff
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      sinceBlock:
++        2605406
+    }
+```
+
+```diff
+    contract Verifier (0x902C3806A84f4e855a8746e92d7F1C9a51400458) {
+    +++ description: None
+      sinceBlock:
++        2590010
+    }
+```
+
+```diff
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      sinceBlock:
++        2590022
+    }
+```
+
+Generated with discovered.json: 0x2ce3103541e071f6b93aa869695f8924ce364d93
 
 # Diff at Mon, 20 Jan 2025 11:10:45 GMT:
 

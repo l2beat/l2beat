@@ -1,6 +1,5 @@
 import {
   assert,
-  ChainId,
   EthereumAddress,
   UnixTime,
   assertUnreachable,
@@ -8,21 +7,26 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
-import { startsWith, uniq } from 'lodash'
+import { uniq } from 'lodash'
 import { describe } from 'mocha'
-import { chains } from '../../chains'
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ProjectScalingTechnology } from '../../internalTypes'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens/tokens'
-import type {
-  ProjectTechnologyChoice,
-  ReferenceLink,
-  ScalingProjectTechnology,
-} from '../../types'
+import { getTokenList } from '../../tokens/tokens'
+import type { ProjectTechnologyChoice, ReferenceLink } from '../../types'
+import { chains } from '../chains'
 import { layer2s, milestonesLayer2s } from './index'
 
+const tokenList = getTokenList(chains)
+
 describe('layer2s', () => {
+  it('l2s do not have a host chain', () => {
+    for (const layer2 of layer2s) {
+      expect(layer2.hostChain).toEqual(undefined)
+      expect(layer2.stackedRiskView).toEqual(undefined)
+    }
+  })
+
   describe('links', () => {
     describe('all links do not contain spaces', () => {
       for (const layer2 of layer2s) {
@@ -90,7 +94,7 @@ describe('layer2s', () => {
       }
     })
 
-    describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+    describe('every escrow sinceTimestamp is greater or equal to chains sinceTimestamp', () => {
       for (const layer2 of layer2s) {
         for (const escrow of layer2.config.escrows) {
           const chain = chains.find((c) => c.name === escrow.chain)
@@ -101,14 +105,14 @@ describe('layer2s', () => {
               `Chain not found for escrow ${escrow.address.toString()}`,
             )
             assert(
-              chain.minTimestampForTvl,
-              `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+              chain.sinceTimestamp,
+              `Escrow ${escrow.address.toString()} added for chain without sinceTimestamp ${
                 chain.name
               }`,
             )
 
-            expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-              chain.minTimestampForTvl.toNumber(),
+            expect(escrow.sinceTimestamp).toBeGreaterThanOrEqual(
+              chain.sinceTimestamp,
             )
           })
         }
@@ -116,8 +120,8 @@ describe('layer2s', () => {
     })
 
     describe('every escrow can resolve all of its tokens', () => {
-      const chainsMap = new Map<string, ChainId>(
-        chains.map((c) => [c.name, ChainId(c.chainId)]),
+      const chainsMap = new Map<string, number | undefined>(
+        chains.map((c) => [c.name, c.chainId]),
       )
       for (const layer2 of layer2s) {
         for (const escrow of layer2.config.escrows) {
@@ -145,7 +149,8 @@ describe('layer2s', () => {
   describe('chain name equals project id', () => {
     for (const layer2 of layer2s) {
       const name = layer2.chainConfig?.name
-      if (name !== undefined) {
+      // polygon-pos is the exception
+      if (name !== undefined && layer2.id !== 'polygon-pos') {
         it(layer2.id.toString(), () => {
           expect(name).toEqual(layer2.id.toString())
         })
@@ -234,31 +239,6 @@ describe('layer2s', () => {
   })
 
   describe('activity', () => {
-    describe('custom URL starts with https', () => {
-      const layers2WithUrls = layer2s.flatMap((layer2) => {
-        const { transactionApi } = layer2.config
-
-        if (
-          transactionApi &&
-          'defaultUrl' in transactionApi &&
-          transactionApi.defaultUrl
-        ) {
-          return {
-            id: layer2.id,
-            url: transactionApi.defaultUrl,
-          }
-        }
-
-        return []
-      })
-
-      for (const { id, url } of layers2WithUrls) {
-        it(`${id.toString()} : ${url}`, () => {
-          expect(url).toSatisfy((url: string) => startsWith(url, 'https://'))
-        })
-      }
-    })
-
     describe('all arbitrum and op stack chains have the assessCount defined', () => {
       const opAndArbL2sWithActivity = layer2s
         .filter((layer2) => {
@@ -266,12 +246,12 @@ describe('layer2s', () => {
           return stack === 'Arbitrum' || stack === 'OP Stack'
         })
         .flatMap((layer2) => {
-          const { transactionApi } = layer2.config
+          const { activityConfig } = layer2.config
 
-          if (transactionApi && transactionApi.type === 'rpc') {
+          if (activityConfig && activityConfig.type === 'block') {
             return {
               id: layer2.id,
-              assessCount: transactionApi.adjustCount,
+              assessCount: activityConfig.adjustCount,
             }
           }
 
@@ -364,7 +344,7 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         describe(layer2.display.name, () => {
           type Key = Exclude<
-            keyof ScalingProjectTechnology,
+            keyof ProjectScalingTechnology,
             'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 
@@ -488,7 +468,10 @@ describe('layer2s', () => {
         for (const milestone of project.milestones) {
           it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
-              UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+              UnixTime.isFull(
+                UnixTime.fromDate(new Date(milestone.date)),
+                'day',
+              ),
             ).toEqual(true)
           })
         }
@@ -496,35 +479,10 @@ describe('layer2s', () => {
       for (const milestone of milestonesLayer2s) {
         it(`Milestone: ${milestone.title} (main page) date is full day`, () => {
           expect(
-            UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
+            UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
           ).toEqual(true)
         })
       }
-    })
-
-    describe('knowledgeNuggets', () => {
-      const knowledgeNuggets = layer2s.flatMap(
-        (nugget) => nugget.knowledgeNuggets ?? [],
-      )
-
-      describe('title fits character limit', () => {
-        knowledgeNuggets.forEach((nugget) => {
-          it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqual(40)
-          })
-        })
-      })
-
-      describe('uses static thumbnail', () => {
-        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
-        knowledgeNuggets
-          .filter((x) => x.thumbnail !== undefined)
-          .forEach((nugget) => {
-            it(nugget.title, () => {
-              expect(staticThumbnails).toInclude(nugget.thumbnail!)
-            })
-          })
-      })
     })
   })
 

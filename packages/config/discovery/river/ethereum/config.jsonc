@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "river",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x2d51D580Cae0a644a5328E665c768C2A4c0E4a03" // L1StandardBridge
   ],

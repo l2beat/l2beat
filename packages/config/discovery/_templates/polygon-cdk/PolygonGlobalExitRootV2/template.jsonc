@@ -7,5 +7,6 @@
     "lastMainnetExitRoot",
     "lastRollupExitRoot"
   ],
-  "ignoreInWatchMode": ["getRoot", "depositCount"]
+  "ignoreInWatchMode": ["getRoot", "depositCount"],
+  "category": "shared"
 }

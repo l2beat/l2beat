@@ -1,16 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('aevo')
 
-export const aevo: Layer2 = opStackL2({
-  addedAt: new UnixTime(1694090052), // 2023-09-07T12:34:12Z
-  additionalBadges: [Badge.DA.EigenDA, Badge.RaaS.Conduit],
+export const aevo: ScalingProject = opStackL2({
+  addedAt: UnixTime(1694090052), // 2023-09-07T12:34:12Z
+  additionalBadges: [BADGES.DA.EigenDA, BADGES.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,
@@ -41,10 +40,7 @@ export const aevo: Layer2 = opStackL2({
     name: 'aevo',
     chainId: 2999,
     explorerUrl: 'https://explorer.aevo.xyz',
-    explorerApi: {
-      url: 'https://explorer.aevo.xyz/api',
-      type: 'blockscout',
-    },
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
     multicallContracts: [
       {
         sinceBlock: 2790111,
@@ -53,16 +49,25 @@ export const aevo: Layer2 = opStackL2({
         version: '3',
       },
     ],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
+        callsPerMinute: 800,
+      },
+      { type: 'blockscout', url: 'https://explorer.aevo.xyz/api' },
+    ],
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
-  genesisTimestamp: new UnixTime(1679202395),
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
+  },
+  genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [
     {
@@ -94,13 +99,6 @@ export const aevo: Layer2 = opStackL2({
       date: '2024-03-13T00:00:00.00Z',
       description: 'AEVO token launches.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Blobstream and Celestia Architecture',
-      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
 })

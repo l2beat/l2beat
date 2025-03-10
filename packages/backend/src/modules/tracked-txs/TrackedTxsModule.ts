@@ -1,18 +1,16 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { notUndefined } from '@l2beat/shared-pure'
-
 import { CoingeckoQueryService } from '@l2beat/shared'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
-import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
@@ -38,7 +36,7 @@ export function createTrackedTxsModule(
 
   const indexerService = new IndexerService(peripherals.database)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
   const bigQueryClient = peripherals.getClient(
     BigQueryClient,
     config.trackedTxsConfig.bigQuery,
@@ -46,9 +44,9 @@ export function createTrackedTxsModule(
 
   const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
 
-  const runtimeConfigurations = config.projects
-    .flatMap((project) => project.trackedTxsConfig)
-    .filter(notUndefined)
+  const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
+    (project) => project.configurations,
+  )
 
   const livenessModule = createLivenessModule(config, logger, peripherals)
   const l2costsModule = createL2CostsModule(config, logger, peripherals)
@@ -59,10 +57,10 @@ export function createTrackedTxsModule(
   ]
 
   const updaters = [livenessModule?.updater, l2costsModule?.updater].filter(
-    notUndefined,
+    (x) => x !== undefined,
   )
 
-  const minTimestamp = config.trackedTxsConfig.minTimestamp.toNumber()
+  const minTimestamp = config.trackedTxsConfig.minTimestamp
 
   const trackedTxsIndexer = new TrackedTxsIndexer({
     logger,
@@ -72,10 +70,8 @@ export function createTrackedTxsModule(
     configurations: runtimeConfigurations.map((c) => ({
       properties: c,
       minHeight:
-        c.sinceTimestamp.toNumber() < minTimestamp
-          ? minTimestamp
-          : c.sinceTimestamp.toNumber(),
-      maxHeight: c.untilTimestamp?.toNumber() ?? null,
+        c.sinceTimestamp < minTimestamp ? minTimestamp : c.sinceTimestamp,
+      maxHeight: c.untilTimestamp ?? null,
       id: c.id,
     })),
     updaters,
@@ -101,7 +97,7 @@ export function createTrackedTxsModule(
       db: peripherals.database,
       parents: [hourlyIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'costs' }),
     })
 
@@ -109,9 +105,9 @@ export function createTrackedTxsModule(
       db: peripherals.database,
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'costs' }),
-      projects: config.projects,
+      projects: config.trackedTxsConfig.projects,
     })
   }
 
@@ -121,19 +117,19 @@ export function createTrackedTxsModule(
   if (config.trackedTxsConfig.uses.liveness) {
     livenessAggregatingIndexer = new LivenessAggregatingIndexer({
       db: peripherals.database,
-      projects: config.projects,
+      projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'liveness' }),
     })
 
     anomaliesIndexer = new AnomaliesIndexer({
       db: peripherals.database,
-      projects: config.projects,
+      projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      minHeight: config.trackedTxsConfig.minTimestamp,
       logger: logger.tag({ feature: 'liveness' }),
     })
   }

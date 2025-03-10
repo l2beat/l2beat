@@ -1,3 +1,458 @@
+Generated with discovered.json: 0x8846183834460efea98f88f83e68c7c5e23344c1
+
+# Diff at Thu, 06 Mar 2025 15:18:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21981180
+- current block number: 21981180
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981180 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).
+      values.programHashMapped:
+-        "770346231394331402493200980986217737662224545740427952627288191358999988146"
++        "ApeX-USDT"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"15787695375210609250491147414005894154890873413229882671403677761527504080":"Starknet Aggregator (since v0.13.3)","2397984267054479079853548842566103781972463965746662494980785692480538410509":"StarkNet OS (Starknet)","853638403225561750106379562222782223909906501242604214771127703946595519856":"StarkNet OS (Paradex)","3383082961563516565935611087683915026448707331436034043529592588079494402084":"StarkNet OS (old Paradex, old StarkNet)","3485280386001712778192330279103973322645241679001461923469191557000342180556":"StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)","770346231394331402493200980986217737662224545740427952627288191358999988146":"ApeX-USDT","3174901404014912024702042974619036870715605532092680335571201877913899936957":"StarkEx Spot v4.0 (RhinoFi, Sorare)","16830627573509542901909952446321116535677491650708854009406762893086223513":"StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)","2530337539466159944237001094809327283009177793361359619481044346150483328860":"ApeX-USDC 20250130","3114724292040200590153042023978438629733352741898912919152162079752811928849":"StarkEx Perp v2.0 ApeX-USDC","217719352201300445998518619904782191262194843262573339166404641663770051805":"StarkNet (old)","3003515909324298587247571665454372831319437787162989623104387385306791861180":"StarkNet (old)","1161178844461337253856226043908368523817098764221830529880464854589141231910":"StarkNet Aggregator (old)","1921772108187713503530008849184725638117898887391063185252422808224349294626":"StarkNet (old)","3258367057337572248818716706664617507069572185152472699066582725377748079373":"StarkNet (old)","407700941260678649793204927710478760533239334662847444187959202896452163393":"StarkNet (old)","1865367024509426979036104162713508294334262484507712987283009063059134893433":"StarkNet (old)","54878256403880350656938046611252303365750679698042371543935159963667935317":"StarkNet (old)","2479841346739966073527450029179698923866252973805981504232089731754042431018":"StarkNet (old)","109586309220455887239200613090920758778188956576212125550190099009305121410":"StarkNet (old)"}}]
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+      values.programHashMapped:
+-        "2530337539466159944237001094809327283009177793361359619481044346150483328860"
++        "ApeX-USDC 20250130"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"15787695375210609250491147414005894154890873413229882671403677761527504080":"Starknet Aggregator (since v0.13.3)","2397984267054479079853548842566103781972463965746662494980785692480538410509":"StarkNet OS (Starknet)","853638403225561750106379562222782223909906501242604214771127703946595519856":"StarkNet OS (Paradex)","3383082961563516565935611087683915026448707331436034043529592588079494402084":"StarkNet OS (old Paradex, old StarkNet)","3485280386001712778192330279103973322645241679001461923469191557000342180556":"StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)","770346231394331402493200980986217737662224545740427952627288191358999988146":"ApeX-USDT","3174901404014912024702042974619036870715605532092680335571201877913899936957":"StarkEx Spot v4.0 (RhinoFi, Sorare)","16830627573509542901909952446321116535677491650708854009406762893086223513":"StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)","2530337539466159944237001094809327283009177793361359619481044346150483328860":"ApeX-USDC 20250130","3114724292040200590153042023978438629733352741898912919152162079752811928849":"StarkEx Perp v2.0 ApeX-USDC","217719352201300445998518619904782191262194843262573339166404641663770051805":"StarkNet (old)","3003515909324298587247571665454372831319437787162989623104387385306791861180":"StarkNet (old)","1161178844461337253856226043908368523817098764221830529880464854589141231910":"StarkNet Aggregator (old)","1921772108187713503530008849184725638117898887391063185252422808224349294626":"StarkNet (old)","3258367057337572248818716706664617507069572185152472699066582725377748079373":"StarkNet (old)","407700941260678649793204927710478760533239334662847444187959202896452163393":"StarkNet (old)","1865367024509426979036104162713508294334262484507712987283009063059134893433":"StarkNet (old)","54878256403880350656938046611252303365750679698042371543935159963667935317":"StarkNet (old)","2479841346739966073527450029179698923866252973805981504232089731754042431018":"StarkNet (old)","109586309220455887239200613090920758778188956576212125550190099009305121410":"StarkNet (old)"}}]
+    }
+```
+
+Generated with discovered.json: 0xe01ed88a8c2c5e4a75f6d5a2943b57db15ad9e02
+
+# Diff at Wed, 05 Mar 2025 14:51:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2e85261cbf7cfc5afeac755b44f9df82c8a3c4ba block: 21872281
+- current block number: 21981180
+
+## Description
+
+discodrive starkex chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872281 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AggregationRouterV4 (0x1111111254fb6c44bAC0beD2854e76F90643097d)
+    +++ description: None
+```
+
+```diff
+    contract CommitteeUSDC (0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+      template:
++        "starkex/Committee"
+      displayName:
++        "DACommittee"
+      description:
++        "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3."
+      fieldMeta:
++        {"constructorArgs":{"description":"Includes DAC members and threshold."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MultiSigPoolUSDT (0x379c15156B527D6E693bED60d1FBb44CE46046b8)
+    +++ description: None
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).
+      values.programHashMapped:
++        "770346231394331402493200980986217737662224545740427952627288191358999988146"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      displayName:
++        "GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`)."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AggregationRouterV4Owner (0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1)
+    +++ description: None
+```
+
+```diff
+    contract CommitteeUSDT (0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+      template:
++        "starkex/Committee"
+      displayName:
++        "DACommittee"
+      description:
++        "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3."
+      fieldMeta:
++        {"constructorArgs":{"description":"Includes DAC members and threshold."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      name:
+-        "StarkExchangeUSDC"
++        "StarkPerpetualUSDC"
+      issuedPermissions.8:
++        {"permission":"upgrade","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","delay":1209600,"via":[]}
+      issuedPermissions.7:
++        {"permission":"upgrade","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","delay":1209600,"via":[]}
+      issuedPermissions.6:
++        {"permission":"operateStarknet","to":"0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb","via":[]}
+      issuedPermissions.5:
++        {"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","description":"manage the token admin role.","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","description":"manage the token admin role.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "governStarknet"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      values.OPERATORS:
+-        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A","0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb"]
+      values.operators:
++        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A","0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb"]
+      values.tokenAdmins:
++        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+      template:
++        "starkex/StarkPerpetual"
+      displayName:
++        "StarkPerpetual"
+      description:
++        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."},"isFinalized":{"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."},"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) {
+    +++ description: Special verifier for the escape() function.
+      description:
++        "Special verifier for the escape() function."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TransferRegistry (0xBE9a129909EbCb954bC065536D2bfAfBd170d27A)
+    +++ description: None
+```
+
+```diff
+    contract ApexAdminMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      name:
+-        "PerpetualGovernanceMultisig"
++        "ApexAdminMultisig"
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","delay":1209600}
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb","description":"manage the token admin role."}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      name:
+-        "StarkExchangeUSDT"
++        "StarkPerpetualUSDT"
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","delay":1209600,"via":[]}
+      issuedPermissions.4:
++        {"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]}
+      issuedPermissions.3:
++        {"permission":"operateStarknet","to":"0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","description":"manage the token admin role.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "governStarknet"
+      values.OPERATORS:
+-        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A","0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169"]
+      values.operators:
++        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A","0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169"]
+      values.tokenAdmins:
++        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+      template:
++        "starkex/StarkPerpetual"
+      displayName:
++        "StarkPerpetual"
+      description:
++        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."},"isFinalized":{"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."},"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+      values.programHashMapped:
++        "2530337539466159944237001094809327283009177793361359619481044346150483328860"
+      template:
++        "starkex/GpsFactRegistryAdapter"
+      displayName:
++        "GpsFactRegistryAdapter"
+      description:
++        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`)."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MultiSigPoolUSDC (0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xb2d8a3bc5dc64199033f1cb7a91245e8f27c5e20
+
+# Diff at Tue, 04 Mar 2025 10:38:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21872281
+- current block number: 21872281
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872281 (main branch discovery), not current.
+
+```diff
+    contract AggregationRouterV4 (0x1111111254fb6c44bAC0beD2854e76F90643097d) {
+    +++ description: None
+      sinceBlock:
++        13556016
+    }
+```
+
+```diff
+    contract CommitteeUSDC (0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4) {
+    +++ description: None
+      sinceBlock:
++        16233442
+    }
+```
+
+```diff
+    contract MultiSigPoolUSDT (0x379c15156B527D6E693bED60d1FBb44CE46046b8) {
+    +++ description: None
+      sinceBlock:
++        18475677
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) {
+    +++ description: None
+      sinceBlock:
++        18377195
+    }
+```
+
+```diff
+    contract AggregationRouterV4Owner (0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1) {
+    +++ description: None
+      sinceBlock:
++        11502031
+    }
+```
+
+```diff
+    contract CommitteeUSDT (0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800) {
+    +++ description: None
+      sinceBlock:
++        18377195
+    }
+```
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      sinceBlock:
++        15322967
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) {
+    +++ description: None
+      sinceBlock:
++        15322966
+    }
+```
+
+```diff
+    contract TransferRegistry (0xBE9a129909EbCb954bC065536D2bfAfBd170d27A) {
+    +++ description: None
+      sinceBlock:
++        11899719
+    }
+```
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      sinceBlock:
++        16282082
+    }
+```
+
+```diff
+    contract StarkExchangeUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: None
+      sinceBlock:
++        18377191
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: None
+      sinceBlock:
++        15396280
+    }
+```
+
+```diff
+    contract MultiSigPoolUSDC (0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE) {
+    +++ description: None
+      sinceBlock:
++        15414333
+    }
+```
+
+Generated with discovered.json: 0x38230bf391f21e818fe4fcf5837049e6204e1609
+
+# Diff at Tue, 18 Feb 2025 09:12:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21736735
+- current block number: 21872281
+
+## Description
+
+Minor upgrade to the StarkExchangeUSDC contract which is an implementation of StarkEx Perpetual.
+
+Two new asset IDs are added:
+- NON_UNIQUE_MINTABLE_ASSET_ID_FLAG (ERC-1155)
+- MINTABLE_ERC20_ASSET_ID_FLAG (ERC-20)
+
+## Watched changes
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      sourceHashes.5:
+-        "0x0c38b010717f86413abfb52412e5eb50b689b8d172e8c39ef81fc428fe5a1e52"
++        "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
+      sourceHashes.4:
+-        "0xb8c0122f24ea2e559e908278def38aa80b6cd27b39b2d74402dbf5ba2585c7c5"
++        "0xdfa7b8bf4884e9f9933980cec5bcf744d2e522c291ed2a383c140cfb8c795f29"
+      sourceHashes.3:
+-        "0x473fc9765112e835124640cb91a4642354e09e94f92462929139d9ab5b6ddcf4"
++        "0xb5161e812087e15dd53a4c29ab296ade613b540445f7d1eb470de4f81a9c555c"
+      sourceHashes.2:
+-        "0x5ebd3f192c54b3d36f0d57e1cb14f418ae69a1694f7dc7d19d006883fc89e525"
++        "0xf6d00f2bc5db71a79b854049b38819f78c8fbbd98dcc2e4555f70946f6e58069"
+      sourceHashes.1:
+-        "0x758db67adde840068b01898c25f007a0d0549aaf9d431c2e0ae77ae4c2c56b33"
++        "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d"
+      values.$implementation.4:
+-        "0x34E7cfedF99995A47B3e3D0AB88ba67072B55035"
++        "0x31e2d974BaC547101413c24C23443AD488423f64"
+      values.$implementation.3:
+-        "0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859"
++        "0x45de249eEa8f9CDB70943B17CceDeb42F5BA0175"
+      values.$implementation.2:
+-        "0x564EA75a26Dc0Bb5c5033B4752f88953A25AD058"
++        "0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310"
+      values.$implementation.1:
+-        "0x533a7f4bE5453513049EB94A2b115F2CcE161dce"
++        "0x540Ad8576d2F90f28994ab001622F964945854A8"
+      values.$implementation.0:
+-        "0xdD813397b79f8df581eEb0c4B8aB72304c528396"
++        "0x8C43C9bec15d82D153C52518030e0a9590ABD35d"
+      values.$pastUpgrades.4:
++        ["2025-02-17T09:39:23.000Z","0x7c6ca54630321bc1f0e2ad0b68972ec3f6efaab449f09839ef612f90d4292bdd",["0x8C43C9bec15d82D153C52518030e0a9590ABD35d","0x540Ad8576d2F90f28994ab001622F964945854A8","0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310","0x45de249eEa8f9CDB70943B17CceDeb42F5BA0175","0x31e2d974BaC547101413c24C23443AD488423f64"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.implementation:
+-        "0xdD813397b79f8df581eEb0c4B8aB72304c528396"
++        "0x8C43C9bec15d82D153C52518030e0a9590ABD35d"
+      values.VERSION:
+-        "3.1.0"
++        "3.2.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../StarkExchangeUSDC/AllVerifiers.2.sol           | 10 +++-
+ .../StarkExchangeUSDC/PerpetualForcedActions.5.sol | 10 +++-
+ .../StarkExchangeUSDC/PerpetualState.4.sol         | 19 +++++--
+ .../PerpetualTokensAndRamping.3.sol                | 60 +++++++++++++++++-----
+ .../StarkExchangeUSDC/StarkPerpetual.1.sol         |  4 +-
+ 5 files changed, 84 insertions(+), 19 deletions(-)
+```
+
 Generated with discovered.json: 0x60aa51d35bfba3889065a02bfb6a3aa5df5a52fa
 
 # Diff at Thu, 30 Jan 2025 10:24:49 GMT:

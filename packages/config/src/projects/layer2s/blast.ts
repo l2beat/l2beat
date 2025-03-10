@@ -4,13 +4,13 @@ import { EXITS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('blast')
 
-export const blast: Layer2 = opStackL2({
-  addedAt: new UnixTime(1700555008), // 2023-11-21T08:23:28Z
+export const blast: ScalingProject = opStackL2({
+  addedAt: UnixTime(1700555008), // 2023-11-21T08:23:28Z
   discovery,
   display: {
     name: 'Blast',
@@ -71,17 +71,12 @@ export const blast: Layer2 = opStackL2({
       },
     ],
   },
-  rpcUrl: 'https://rpc.blast.io/',
   chainConfig: {
     name: 'blast',
     coingeckoPlatform: 'blast',
     chainId: 81457,
-    explorerUrl: 'https://blastscan.io/',
-    explorerApi: {
-      url: 'https://api.blastscan.io/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
+    explorerUrl: 'https://blastscan.io',
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -90,17 +85,21 @@ export const blast: Layer2 = opStackL2({
         version: '3',
       },
     ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.blast.io/', callsPerMinute: 1500 },
+      { type: 'etherscan', url: 'https://api.blastscan.io/api' },
+    ],
   },
   finality: {
     type: 'OPStack',
     // timestamp of the first blob tx
-    minTimestamp: new UnixTime(1716846455),
+    minTimestamp: UnixTime(1716846455),
     l2BlockTimeSeconds: 2,
-    genesisTimestamp: new UnixTime(1708809815),
+    genesisTimestamp: UnixTime(1708809815),
     lag: 0,
     stateUpdate: 'disabled',
   },
-  genesisTimestamp: new UnixTime(1708825259), //First sequencer transaction
+  genesisTimestamp: UnixTime(1708825259), //First sequencer transaction
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d'),

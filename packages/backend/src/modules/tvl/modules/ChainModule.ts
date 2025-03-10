@@ -66,47 +66,40 @@ function createIndexers(
   const dataIndexers: ChainAmountIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
 
-  for (const chainConfig of config.chains) {
-    const chain = chainConfig.chain
-    if (!chainConfig.config) {
-      continue
-    }
-
+  for (const chain of config.chains) {
     const chainAmountEntries = config.amounts.filter(
       (a): a is ChainAmountConfig =>
-        a.chain === chain && (a.type === 'escrow' || a.type === 'totalSupply'),
+        a.chain === chain.name &&
+        (a.type === 'escrow' || a.type === 'totalSupply'),
     )
 
     if (chainAmountEntries.length === 0) {
       continue
     }
 
-    const rpcClient = dependencies.clients.getRpcClient(chain)
+    const rpcClient = dependencies.clients.getRpcClient(chain.name)
 
     const amountService = new AmountService({
       rpcClient: rpcClient,
-      multicallClient: new MulticallClient(
-        rpcClient,
-        chainConfig.config.multicallConfig,
-      ),
-      logger: logger.tag({ tag: chain, chain }),
+      multicallClient: new MulticallClient(rpcClient, chain.multicallConfig),
+      logger: logger.tag({ tag: chain.name, chain: chain.name }),
     })
 
     const blockTimestampIndexer =
-      blockTimestampIndexers && blockTimestampIndexers.get(chain)
+      blockTimestampIndexers && blockTimestampIndexers.get(chain.name)
     assert(
       blockTimestampIndexer,
       'blockTimestampIndexer should be defined for enabled chain',
     )
 
-    const configurations = toConfigurations(chainConfig, chainAmountEntries)
+    const configurations = toConfigurations(chain, chainAmountEntries)
 
     const chainAmountIndexer = new ChainAmountIndexer({
       logger,
       parents: [blockTimestampIndexer],
       indexerService,
       configurations,
-      chain,
+      chain: chain.name,
       amountService,
       serializeConfiguration,
       syncOptimizer,
@@ -124,11 +117,9 @@ function createIndexers(
         ),
       )
 
-      const minHeight = Math.min(
-        ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
-      )
+      const minHeight = Math.min(...amountConfigs.map((c) => c.sinceTimestamp))
       const maxHeight = Math.max(
-        ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+        ...amountConfigs.map((c) => c.untilTimestamp ?? Infinity),
       )
 
       const indexer = new ValueIndexer({
@@ -137,7 +128,7 @@ function createIndexers(
         priceConfigs: [...priceConfigs],
         amountConfigs,
         project: ProjectId(project),
-        dataSource: chain,
+        dataSource: chain.name,
         syncOptimizer,
         parents: [descendantPriceIndexer, chainAmountIndexer],
         indexerService,
@@ -154,18 +145,17 @@ function createIndexers(
 }
 
 function toConfigurations(
-  chainConfig: ChainTvlConfig,
+  chain: ChainTvlConfig,
   chainAmountEntries: ChainAmountConfig[],
 ) {
-  assert(chainConfig.config)
-  const chainMinTimestamp = chainConfig.config.minBlockTimestamp
   const chainAmountConfigurations = chainAmountEntries.map((a) => ({
     id: createAmountId(a),
     properties: a,
-    minHeight: a.sinceTimestamp.lt(chainMinTimestamp)
-      ? chainMinTimestamp.toNumber()
-      : a.sinceTimestamp.toNumber(),
-    maxHeight: a.untilTimestamp?.toNumber() ?? null,
+    minHeight:
+      a.sinceTimestamp < chain.minBlockTimestamp
+        ? chain.minBlockTimestamp
+        : a.sinceTimestamp,
+    maxHeight: a.untilTimestamp ?? null,
   }))
   return chainAmountConfigurations
 }
@@ -201,9 +191,9 @@ function getBaseEntry(value: EscrowEntry | TotalSupplyEntry) {
     chain: value.chain,
     project: value.project.toString(),
     source: value.source,
-    sinceTimestamp: value.sinceTimestamp.toNumber(),
+    sinceTimestamp: value.sinceTimestamp,
     ...(Object.keys(value).includes('untilTimestamp')
-      ? { untilTimestamp: value.untilTimestamp?.toNumber() }
+      ? { untilTimestamp: value.untilTimestamp }
       : {}),
     includeInTotal: value.includeInTotal,
     decimals: value.decimals,

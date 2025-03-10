@@ -1,8 +1,7 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
-import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRange, getRangeWithMax } from '~/utils/range/range'
@@ -12,8 +11,9 @@ import {
   CostsProjectsFilter,
   getCostsProjects,
 } from './utils/get-costs-projects'
-import { getCostsTargetTimestamp } from './utils/get-costs-target-timestamp'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
+
+const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
 export const CostsChartParams = z.object({
   range: CostsTimeRange,
@@ -44,27 +44,16 @@ export const getCachedCostsChartData = cache(
     previewRecategorisation,
   }: CostsChartParams) => {
     const db = getDb()
-    const projects = getCostsProjects(filter, previewRecategorisation)
+    const projects = await getCostsProjects(filter, previewRecategorisation)
     if (projects.length === 0) {
       return []
     }
     const resolution = rangeToResolution(timeRange)
-    const targetTimestamp = getCostsTargetTimestamp()
-    const [from, to] = getRangeWithMax(timeRange, resolution, {
-      now: targetTimestamp,
-    })
-
-    const fromToQuery = from
-      ? // one-off
-        from.add(-1, resolution === 'daily' ? 'days' : 'hours')
-      : MIN_TIMESTAMPS.costs
-
-    // to is exclusive
-    const rangeForQuery: [UnixTime, UnixTime] = [fromToQuery, to]
+    const range = getRangeWithMax(timeRange, resolution)
 
     const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
       projects.map((p) => p.id),
-      rangeForQuery,
+      range,
     )
 
     if (data.length === 0) {
@@ -72,15 +61,21 @@ export const getCachedCostsChartData = cache(
     }
 
     const summedByTimestamp = sumByTimestamp(data, resolution)
+
+    const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
+    const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
+
     const timestamps = generateTimestamps(
-      [fromToQuery, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
+      [minTimestamp, maxTimestamp],
       resolution,
     )
     const result = timestamps.map((timestamp) => {
-      const entry = summedByTimestamp.get(timestamp.toNumber())
+      const entry = summedByTimestamp.get(timestamp)
+      const blobsFallback =
+        timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
       if (!entry) {
         return [
-          timestamp.toNumber(),
+          timestamp,
           0,
           0,
           0,
@@ -90,13 +85,13 @@ export const getCachedCostsChartData = cache(
           0,
           0,
           0,
-          undefined,
-          undefined,
-          undefined,
+          blobsFallback,
+          blobsFallback,
+          blobsFallback,
         ] as const
       }
       return [
-        timestamp.toNumber(),
+        timestamp,
         entry.overheadGas,
         entry.overheadGasEth,
         entry.overheadGasUsd,
@@ -106,16 +101,17 @@ export const getCachedCostsChartData = cache(
         entry.computeGas,
         entry.computeGasEth,
         entry.computeGasUsd,
-        entry.blobsGas,
-        entry.blobsGasEth,
-        entry.blobsGasUsd,
+        entry.blobsGas ?? blobsFallback,
+        entry.blobsGasEth ?? blobsFallback,
+        entry.blobsGasUsd ?? blobsFallback,
       ] as const
     })
     return result
   },
   ['costs-chart-data'],
   {
-    tags: ['costs'],
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 
@@ -128,7 +124,7 @@ function getMockCostsChartData({
   const timestamps = generateTimestamps(range, resolution)
 
   return timestamps.map((timestamp) => [
-    timestamp.toNumber(),
+    timestamp,
     20000,
     0.5,
     1000,
@@ -167,9 +163,11 @@ function sumByTimestamp(
   >()
 
   for (const record of records) {
-    const timestamp = record.timestamp
-      .toStartOf(resolution === 'daily' ? 'day' : 'hour')
-      .toNumber()
+    const timestamp = UnixTime.toStartOf(
+      record.timestamp,
+      resolution === 'daily' ? 'day' : 'hour',
+    )
+
     const existing = result.get(timestamp)
     if (existing) {
       result.set(timestamp, {

@@ -1,8 +1,10 @@
-import type { ScalingProjectCategory } from '@l2beat/config'
+import type { ProjectScalingCategory } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import type { ActivityChartType } from '../use-activity-chart-render-params'
+import type { ActivityChartType } from '../activity-chart'
 
-export function getChartType(category?: ScalingProjectCategory) {
+export function getChartType(
+  category?: ProjectScalingCategory,
+): ActivityChartType {
   switch (category) {
     case 'Optimistic Rollup':
     case 'ZK Rollup':
@@ -16,19 +18,5 @@ export function getChartType(category?: ScalingProjectCategory) {
       return 'Others'
     default:
       assertUnreachable(category)
-  }
-}
-
-export function typeToIndicator(type?: ActivityChartType) {
-  switch (type) {
-    case 'Rollups':
-      return 'bg-indicator-rollups'
-    case 'ValidiumsAndOptimiums':
-      return 'bg-indicator-validiums-optimiums'
-    case 'Others':
-    case undefined:
-      return 'bg-indicator-others'
-    default:
-      assertUnreachable(type)
   }
 }

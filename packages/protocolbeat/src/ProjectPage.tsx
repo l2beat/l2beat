@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { type JSX, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from './api/api'
 import { MultiView } from './multi-view/MultiView'
@@ -24,7 +24,7 @@ export function ProjectPage() {
   const select = usePanelStore((state) => state.select)
   useEffect(() => {
     if (response.data) {
-      const first = response.data.chains[0]?.initialContracts[0]?.address
+      const first = response.data.entries[0]?.initialContracts[0]?.address
       select(first)
     }
   }, [response.data, select])

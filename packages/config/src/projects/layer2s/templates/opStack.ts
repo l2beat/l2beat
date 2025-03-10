@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -7,7 +7,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -16,7 +15,6 @@ import {
   type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -30,38 +28,42 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
-  ChainConfig,
-  CustomDa,
-  KnowledgeNugget,
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2FinalityDisplay,
   Layer2TxConfig,
-  Layer3,
-  Milestone,
-  ProjectDataAvailability,
-  ProjectEscrow,
-  ProjectLivenessInfo,
-  ProjectTechnologyChoice,
-  ReasonForBeingInOther,
+  ProjectScalingDisplay,
+  ProjectScalingTechnology,
   ScalingProject,
-  ScalingProjectCapability,
-  ScalingProjectCategory,
-  ScalingProjectDisplay,
-  ScalingProjectPurpose,
-  ScalingProjectRisk,
-  ScalingProjectRiskView,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectTechnology,
-  StageConfig,
+} from '../../../internalTypes'
+import type {
+  Badge,
+  ChainConfig,
+  Milestone,
+  ProjectActivityConfig,
+  ProjectCustomDa,
+  ProjectDaTrackingConfig,
+  ProjectEscrow,
+  ProjectFinalityConfig,
+  ProjectFinalityInfo,
+  ProjectLivenessInfo,
+  ProjectRisk,
+  ProjectScalingCapability,
+  ProjectScalingCategory,
+  ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingRiskView,
+  ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
+  ProjectScalingStateDerivation,
+  ProjectScalingStateValidation,
+  ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
+  ReasonForBeingInOther,
   TableReadyValue,
-  TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId } from '../../badges'
+import { BADGES } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
+import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -73,7 +75,7 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
-  badge: Badge.DA.Celestia,
+  badge: BADGES.DA.Celestia,
 }
 
 export const EIGENDA_DA_PROVIDER: DAProvider = {
@@ -81,7 +83,7 @@ export const EIGENDA_DA_PROVIDER: DAProvider = {
   riskView: RISK_VIEW.DATA_EIGENDA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
-  badge: Badge.DA.EigenDA,
+  badge: BADGES.DA.EigenDA,
 }
 
 export function DACHALLENGES_DA_PROVIDER(
@@ -99,7 +101,7 @@ export function DACHALLENGES_DA_PROVIDER(
       nodeSourceLink,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
-    badge: Badge.DA.DAC,
+    badge: BADGES.DA.DAC,
   }
 }
 
@@ -108,42 +110,39 @@ interface DAProvider {
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
-  badge: BadgeId
+  badge: Badge
 }
 
 interface OpStackConfigCommon {
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   architectureImage?: string
   stateValidationImage?: string
   isArchived?: true
   addedAt: UnixTime
   daProvider?: DAProvider
-  customDa?: CustomDa
+  customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
-    upgradableBy: string[] | undefined
-    upgradeDelay: string | undefined
+    upgradableBy?: ProjectUpgradeableActor[]
   }
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
-  rpcUrl?: string
-  transactionApi?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
-  finality?: Layer2FinalityConfig
-  l2OutputOracle?: ContractParameters
-  disputeGameFactory?: ContractParameters
-  portal?: ContractParameters
-  stateDerivation?: ScalingProjectStateDerivation
-  stateValidation?: ScalingProjectStateValidation
+  finality?: ProjectFinalityConfig
+  l2OutputOracle?: EntryParameters
+  disputeGameFactory?: EntryParameters
+  portal?: EntryParameters
+  stateDerivation?: ProjectScalingStateDerivation
+  stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -151,39 +150,52 @@ interface OpStackConfigCommon {
   hasProperSecurityCouncil?: boolean
   usesBlobs?: boolean
   isUnderReview?: boolean
-  stage?: StageConfig
-  additionalBadges?: BadgeId[]
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
-  riskView?: ScalingProjectRiskView
-  gasTokens?: string[]
+  stage?: ProjectScalingStage
+  additionalBadges?: Badge[]
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
+  riskView?: ProjectScalingRiskView
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ScalingProjectCategory
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingCategory
   }
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer2Display['category']
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingDisplay['category']
   }
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  stackedRiskView?: ScalingProjectRiskView
-  hostChain: ProjectId
+  stackedRiskView?: ProjectScalingRiskView
 }
 
 function opStackCommon(
-  type: (Layer2 | Layer3)['type'],
+  type: ScalingProject['type'],
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
-  incomingNativeDA?: ProjectDataAvailability,
+  hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
-    ScalingProjectDisplay,
+    ProjectScalingDisplay,
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
@@ -197,60 +209,45 @@ function opStackCommon(
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
-  const daProvider = getDAProvider(templateVars)
-  const postsToEthereum = daProvider === undefined
-
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValue<{
-      isSequencerSendingBlobTx: boolean
-    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  let daBadge: BadgeId | undefined = daProvider?.badge
-  if (postsToEthereum) {
-    daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
-  }
-
-  assert(daBadge !== undefined, 'DA badge must be defined')
+  const daProvider = getDAProvider(templateVars, hostChainDA)
 
   const automaticBadges = templateVars.usingAltVm
-    ? [Badge.Stack.OPStack, daBadge]
-    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
-
-  const nativeDA = incomingNativeDA ?? {
-    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }
+    ? [BADGES.Stack.OPStack, daProvider.badge]
+    : [BADGES.Stack.OPStack, BADGES.VM.EVM, daProvider.badge]
 
   const portal = getOptimismPortal(templateVars)
   const l1StandardBridgeEscrow =
     templateVars.l1StandardBridgeEscrow ??
     templateVars.discovery.getContract('L1StandardBridge').address
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const fraudProofType = getFraudProofType(templateVars)
 
   // archi images defined locally in the project.ts take precedence over this one
-  const architectureImage = ['opstack', postsToEthereum ? 'rollup' : 'optimium']
+  const architectureImage = [
+    'opstack',
+    postsToEthereum(templateVars) ? 'rollup' : 'optimium',
+  ]
   const partOfSuperchain = isPartOfSuperchain(templateVars)
   if (partOfSuperchain) {
     architectureImage.push('superchain')
-    automaticBadges.push(Badge.Infra.Superchain)
+    automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
     architectureImage.push('opfp')
   }
+  if (fraudProofType === 'Permissionless') {
+    architectureImage.push('permissionless')
+  }
 
-  const nativeContractRisks: ScalingProjectRisk[] = [
+  const nativeContractRisks: ProjectRisk[] = [
     partOfSuperchain
       ? ({
           category: 'Funds can be stolen if',
           text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
-        } satisfies ScalingProjectRisk)
+        } satisfies ProjectRisk)
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
@@ -279,27 +276,27 @@ function opStackCommon(
       stack: 'OP Stack',
       category:
         templateVars.display.category ??
-        (postsToEthereum ? 'Optimistic Rollup' : 'Optimium'),
+        (postsToEthereum(templateVars) ? 'Optimistic Rollup' : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+          adjustCount: { type: 'SubtractOne' },
+        },
+      ),
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
@@ -322,45 +319,97 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      daTracking: getDaTracking(templateVars),
     },
-    technology: getTechnology(templateVars, explorerUrl),
+    technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
     },
     milestones: templateVars.milestones ?? [],
-    knowledgeNuggets: [
-      ...(templateVars.knowledgeNuggets ?? []),
-      {
-        title: 'How Optimism compresses data',
-        url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-      },
-      {
-        title: 'Superchain Explainer',
-        url: 'https://docs.optimism.io/stack/explainer',
-        thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_03,
-      },
-      {
-        title: 'Modular Rollup Theory',
-        url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
-        thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
-      },
-    ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),
     riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
-    stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
-    dataAvailability: decideDA(daProvider, nativeDA),
+    stage:
+      templateVars.stage ??
+      computedStage(templateVars, postsToEthereum(templateVars)),
+    dataAvailability: extractDA(daProvider),
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 
-export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
-  const common = opStackCommon('layer2', templateVars, ethereum.explorerUrl)
+function getDaTracking(
+  templateVars: OpStackConfigCommon,
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
+  const sequencerInbox = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'sequencerInbox',
+  )
+
+  const inboxStartBlock =
+    templateVars.discovery.getContractValueOrUndefined<number>(
+      'SystemConfig',
+      'startBlock',
+    ) ?? 0
+
+  const sequencer = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'batcherHash',
+  )
+
+  return usesBlobs
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxStartBlock,
+          inbox: sequencerInbox,
+          sequencers: [sequencer],
+        },
+      ]
+    : templateVars.celestiaDa
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
+        : undefined
+}
+
+export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
+  const common = opStackCommon(
+    'layer2',
+    templateVars,
+    EXPLORER_URLS['ethereum'],
+  )
   return {
     type: 'layer2',
     ...common,
@@ -380,19 +429,17 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
   }
 }
 
-export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
-  const layer2s = require('..').layer2s as Layer2[]
-  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
-  assert(
-    baseChain,
-    `Could not find base chain ${templateVars.hostChain} in layer2s`,
-  )
+export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
+  const layer2s = require('..').layer2s as ScalingProject[]
+  const hostChain = templateVars.discovery.chain
+  const baseChain = layer2s.find((l2) => l2.id === hostChain)
+  assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
   const common = opStackCommon(
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    baseChain.dataAvailability,
+    hostChainDAProvider(baseChain),
   )
 
   const stackedRisk = {
@@ -423,7 +470,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   return {
     type: 'layer3',
     ...common,
-    hostChain: templateVars.hostChain,
+    hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
   }
@@ -431,7 +478,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 
 function getStateValidation(
   templateVars: OpStackConfigCommon,
-): ScalingProjectStateValidation | undefined {
+): ProjectScalingStateValidation | undefined {
   if (templateVars.stateValidation !== undefined) {
     return templateVars.stateValidation
   }
@@ -547,7 +594,7 @@ function describeOPFP({
   gameSplitDepth: number
   gameClockExtension: number
   oracleChallengePeriod: number
-}): ScalingProjectStateValidation {
+}): ProjectScalingStateValidation {
   const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
 
   const gameMaxClockExtension =
@@ -613,7 +660,7 @@ function describeOPFP({
 function getRiskView(
   templateVars: OpStackConfigCommon,
   daProvider: DAProvider | undefined,
-): ScalingProjectRiskView {
+): ProjectScalingRiskView {
   return {
     stateValidation: getRiskViewStateValidation(templateVars),
     exitWindow: getRiskViewExitWindow(templateVars),
@@ -686,7 +733,7 @@ function getRiskViewProposerFailure(
 function computedStage(
   templateVars: OpStackConfigCommon,
   postsToEthereum: boolean,
-): StageConfig {
+): ProjectScalingStage {
   if (!postsToEthereum || templateVars.isNodeAvailable === undefined) {
     return { stage: 'NotApplicable' }
   }
@@ -734,8 +781,8 @@ function computedStage(
 function getTechnology(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
-): ScalingProjectTechnology {
-  const daProvider = getDAProvider(templateVars)
+  daProvider: DAProvider | undefined,
+): ProjectScalingTechnology {
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
@@ -981,13 +1028,13 @@ function getTechnologyExitMechanism(
     case 'Permissionless': {
       const disputeGameFinalityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          portal.name,
+          portal.name ?? portal.address,
           'disputeGameFinalityDelaySeconds',
         )
 
       const proofMaturityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          portal.name,
+          portal.name ?? portal.address,
           'proofMaturityDelaySeconds',
         )
 
@@ -1043,19 +1090,12 @@ function getTechnologyExitMechanism(
   return result
 }
 
-function decideDA(
-  daProvider: DAProvider | undefined,
-  nativeDA: ProjectDataAvailability | undefined,
-): ProjectDataAvailability | undefined {
-  if (daProvider !== undefined) {
-    return {
-      layer: daProvider.layer,
-      bridge: daProvider.bridge,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }
+function extractDA(daProvider: DAProvider): ProjectScalingDa {
+  return {
+    layer: daProvider.layer,
+    bridge: daProvider.bridge,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }
-
-  return nativeDA
 }
 
 function technologyDA(
@@ -1075,12 +1115,13 @@ function technologyDA(
 
 function getDAProvider(
   templateVars: OpStackConfigCommon,
-): DAProvider | undefined {
+  hostChainDA?: DAProvider,
+): DAProvider {
   const postsToCelestia =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -1090,6 +1131,30 @@ function getDAProvider(
       templateVars.isNodeAvailable !== undefined,
       'isNodeAvailable must be defined if no DA provider is defined',
     )
+  }
+
+  if (daProvider === undefined) {
+    const usesBlobs =
+      templateVars.usesBlobs ??
+      templateVars.discovery.getContractValue<{
+        isSequencerSendingBlobTx: boolean
+      }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
+    return {
+      layer:
+        (hostChainDA?.layer ?? usesBlobs)
+          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+          : DA_LAYERS.ETH_CALLDATA,
+      bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
+      badge:
+        (hostChainDA?.badge ?? usesBlobs)
+          ? BADGES.DA.EthereumBlobs
+          : BADGES.DA.EthereumCalldata,
+      riskView: RISK_VIEW.DATA_ON_CHAIN,
+      technology: usesBlobs
+        ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+        : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
+    }
   }
 
   return daProvider
@@ -1116,7 +1181,7 @@ function getLiveness(
 
 function getFinality(
   templateVars: OpStackConfigCommon,
-): Layer2FinalityDisplay | undefined {
+): ProjectFinalityInfo | undefined {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
 
   return ifPostsToEthereum(templateVars, {
@@ -1173,16 +1238,16 @@ function getTrackedTxs(
               selector: '0x9aaab648',
               functionSignature:
                 'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-              sinceTimestamp: new UnixTime(
-                l2OutputOracle.sinceTimestamp ??
-                  templateVars.genesisTimestamp.toNumber(),
+              sinceTimestamp: UnixTime(
+                l2OutputOracle.sinceTimestamp ?? templateVars.genesisTimestamp,
               ),
             },
           },
         ]
       )
     }
-    case 'Permissioned': {
+    case 'Permissioned':
+    case 'Permissionless': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -1216,21 +1281,33 @@ function getTrackedTxs(
         },
       ]
     }
-    case 'Permissionless':
-      return undefined
   }
+}
+
+function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isUsingCelestia: boolean
+    }>('SystemConfig', 'opStackDA').isUsingCelestia
+
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
+  return daProvider === undefined
 }
 
 function ifPostsToEthereum<T>(
   templateVars: OpStackConfigCommon,
   value: T,
 ): T | undefined {
-  return getDAProvider(templateVars) === undefined ? value : undefined
+  if (postsToEthereum(templateVars)) {
+    return value
+  }
 }
 
-function getOptimismPortal(
-  templateVars: OpStackConfigCommon,
-): ContractParameters {
+function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
   if (templateVars.portal !== undefined) {
     return templateVars.portal
   }
@@ -1252,7 +1329,7 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
         templateVars.discovery.getContract('L2OutputOracle')
 
       return templateVars.discovery.getContractValue<number>(
-        l2OutputOracle.name,
+        l2OutputOracle.name ?? l2OutputOracle.address,
         'FINALIZATION_PERIOD_SECONDS',
       )
     }
@@ -1275,7 +1352,7 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
 
   const respectedGameType = templateVars.discovery.getContractValue<number>(
-    portal.name,
+    portal.name ?? portal.address,
     'respectedGameType',
   )
 
@@ -1290,4 +1367,25 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
+}
+
+function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
+  const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
+  assert(DABadge !== undefined, 'Host chain must have data availability badge')
+  assert(
+    hostChain.technology.dataAvailability !== undefined,
+    'Host chain must have technology data availability',
+  )
+  assert(
+    hostChain.dataAvailability !== undefined,
+    'Host chain must have data availability',
+  )
+
+  return {
+    layer: hostChain.dataAvailability.layer,
+    bridge: hostChain.dataAvailability.bridge,
+    riskView: hostChain.riskView.dataAvailability,
+    technology: hostChain.technology.dataAvailability,
+    badge: DABadge,
+  }
 }

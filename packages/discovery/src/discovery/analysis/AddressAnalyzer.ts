@@ -1,34 +1,36 @@
-import {
-  type ContractValue,
-  type FieldMeta,
-  get$PastUpgrades,
-} from '@l2beat/discovery-types'
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
+  DiscoveryCategory,
   DiscoveryCustomType,
   ExternalReference,
 } from '../config/RawDiscoveryConfig'
 import type { HandlerResult } from '../handlers/Handler'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
+import type { FieldMeta } from '../output/types'
+import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
 import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
+import {
+  get$Beacons,
+  get$Implementations,
+  get$PastUpgrades,
+} from '../utils/extractors'
 import type { TemplateService } from './TemplateService'
+import { resolveCategory } from './category'
+import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import { type ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
-export interface AnalyzedContract {
-  type: 'Contract'
+interface AnalyzedCommon {
   address: EthereumAddress
-  name: string
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
   derivedName: string | undefined
@@ -48,7 +50,13 @@ export interface AnalyzedContract {
   combinedMeta?: ContractMeta
   usedTypes?: DiscoveryCustomType[]
   references?: ExternalReference[]
+  category?: DiscoveryCategory
 }
+
+export type AnalyzedContract = {
+  type: 'Contract'
+  name: string
+} & AnalyzedCommon
 
 export interface ExtendedTemplate {
   template: string
@@ -56,12 +64,10 @@ export interface ExtendedTemplate {
   templateHash: Hash256
 }
 
-interface AnalyzedEOA {
+export type AnalyzedEOA = {
   type: 'EOA'
-  name?: string
-  address: EthereumAddress
-  combinedMeta?: ContractMeta
-}
+  name: string | undefined
+} & AnalyzedCommon
 
 export type AddressesWithTemplates = Record<string, Set<string>>
 
@@ -80,11 +86,7 @@ export class AddressAnalyzer {
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
-    if (code.length === 0) {
-      return { type: 'EOA', name: config.name, address }
-    }
-
-    const deployment = await provider.getDeployment(address)
+    const isEOA = codeIsEOA(code)
 
     const templateErrors: Record<string, string> = {}
     let extendedTemplate: ExtendedTemplate | undefined = undefined
@@ -125,18 +127,16 @@ export class AddressAnalyzer {
       address,
       config.proxyType,
     )
-    const implementations = get$Implementations(proxy?.values)
-    const beacons = get$Beacons(proxy?.values)
-    const pastUpgrades = get$PastUpgrades(proxy?.values)
+    const implementations = get$Implementations(proxy.values)
+    const beacons = get$Beacons(proxy.values)
+    const pastUpgrades = get$PastUpgrades(proxy.values)
 
     const sources = await this.sourceCodeService.getSources(
       provider,
-      address,
-      implementations,
+      proxy.addresses,
       config.manualSourcePaths,
     )
 
-    const name = config.name ?? sources.name
     if (extendedTemplate === undefined) {
       const matchingTemplates = this.templateService.findMatchingTemplates(
         sources,
@@ -163,7 +163,7 @@ export class AddressAnalyzer {
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(provider, address, sources.abi, config)
 
-    const proxyResults = Object.entries(proxy?.values ?? {}).map(
+    const proxyResults = Object.entries(proxy.values).map(
       ([field, value]): HandlerResult => ({ field, value }),
     )
 
@@ -180,18 +180,18 @@ export class AddressAnalyzer {
     )
 
     const mergedValues = {
-      ...(!proxy ? { $immutable: true } : {}),
-      ...(proxy?.values ?? {}),
+      ...proxy.values,
       ...(values ?? {}),
     }
 
-    const analysisWithoutMeta: Omit<
-      AnalyzedContract,
-      'selfMeta' | 'targetsMeta'
-    > = {
-      type: 'Contract',
-      name,
-      derivedName: config.name !== undefined ? sources.name : undefined,
+    const deployment = proxy.deployment
+    const analysisWithoutMeta: Omit<Analysis, 'selfMeta' | 'targetsMeta'> = {
+      type: isEOA ? 'EOA' : 'Contract',
+      name: isEOA ? config.name : (config.name ?? sources.name),
+      derivedName:
+        config.name !== undefined && config.name !== sources.name
+          ? sources.name
+          : undefined,
       isVerified: sources.isVerified,
       address,
       deploymentTimestamp: deployment?.timestamp,
@@ -208,9 +208,10 @@ export class AddressAnalyzer {
       references: config.references,
       relatives,
       usedTypes,
+      category: resolveCategory(config),
     }
 
-    const analysis: AnalyzedContract = {
+    const analysis: Analysis = {
       ...analysisWithoutMeta,
       selfMeta: getSelfMeta(config, analysisWithoutMeta),
       targetsMeta: getTargetsMeta(
@@ -219,7 +220,8 @@ export class AddressAnalyzer {
         config.fields,
         analysisWithoutMeta,
       ),
-    }
+    } as Analysis
+
     return analysis
   }
 

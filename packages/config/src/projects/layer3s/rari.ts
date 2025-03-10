@@ -1,22 +1,17 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
-export const rari: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
-  additionalBadges: [
-    Badge.DA.CelestiaBlobstream,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Caldera,
-  ],
+export const rari: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1706285474), // 2024-01-26T16:11:14Z
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   discovery,
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'RARI Chain',
@@ -34,13 +29,9 @@ export const rari: Layer3 = orbitStackL3({
       socialMedia: ['https://twitter.com/RariChain'],
     },
   },
-  rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
-  nonTemplateContracts: {
-    [discovery.chain]: [
-      discovery.getContractDetails('L1GatewayRouter', {
-        description: 'Router managing token <--> gateway mapping.',
-      }),
-    ],
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start  },
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -58,7 +49,6 @@ export const rari: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
     }),
   ],
-  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
@@ -66,12 +56,16 @@ export const rari: Layer3 = orbitStackL3({
     name: 'rari',
     chainId: 1380012617,
     explorerUrl: 'https://mainnet.explorer.rarichain.org',
-    explorerApi: {
-      url: 'https://rari.calderaexplorer.xyz/api',
-      type: 'blockscout',
-    },
-    blockscoutV2ApiUrl: 'https://rari.calderaexplorer.xyz/api/v2',
-    minTimestampForTvl: new UnixTime(1705716145),
+    sinceTimestamp: UnixTime(1705716145),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.rpc.rarichain.org/http',
+        callsPerMinute: 1500,
+      },
+      { type: 'blockscout', url: 'https://rari.calderaexplorer.xyz/api' },
+      { type: 'blockscoutV2', url: 'https://rari.calderaexplorer.xyz/api/v2' },
+    ],
   },
   nonTemplateTechnology: {
     sequencing: {

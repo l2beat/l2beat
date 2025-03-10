@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "arbitrum",
   "name": "sanko",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x2f285781B8d58678a3483de52D618198E4d27532", // Bridge
     "0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B" // L1OrbitGatewayRouter

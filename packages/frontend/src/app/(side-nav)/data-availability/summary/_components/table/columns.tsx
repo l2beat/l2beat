@@ -42,12 +42,7 @@ const daBridgeRisksColumn = columnHelper.display({
     if (!bridge) {
       return EM_DASH
     }
-    return (
-      <GrissiniCell
-        values={bridge.risks.values}
-        hasNoBridge={bridge.risks.isNoBridge}
-      />
-    )
+    return <GrissiniCell values={bridge.risks} />
   },
   meta: {
     align: 'center',
@@ -58,7 +53,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
   cell: (ctx) => (
     <div className="w-full pr-5 text-right text-sm font-medium">
-      {formatDollarValueNumber(ctx.row.original.tvs)}
+      {formatDollarValueNumber(ctx.row.original.tvs.latest)}
     </div>
   ),
   meta: {

@@ -2,17 +2,17 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('reya')
 
-export const reya: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1715019483), // 2024-05-06T18:18:03Z
+export const reya: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -42,12 +42,12 @@ export const reya: Layer2 = orbitStackL2({
     name: 'reya',
     chainId: 1729,
     explorerUrl: 'https://explorer.reya.network',
-    explorerApi: {
-      url: 'https://explorer.reya.network/api',
-      type: 'blockscout',
-    },
     multicallContracts: [],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-04-23T00:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-04-23T00:00:00Z')),
+    apis: [
+      { type: 'rpc', url: 'https://rpc.reya.network', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.reya.network/api' },
+    ],
   },
   // trackedTxs: [
   //   {
@@ -61,7 +61,7 @@ export const reya: Layer2 = orbitStackL2({
   //       selector: '0x8f111f3c',
   //       functionSignature:
   //         'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-  //       sinceTimestamp: new UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
+  //       sinceTimestamp: UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
   //     },
   //   },
   //   // add other SC-supported function signatures here if the sequencer changes behaviour (cp. kinto)
@@ -76,7 +76,7 @@ export const reya: Layer2 = orbitStackL2({
   //       selector: '0xa04cee60',
   //       functionSignature:
   //         'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-  //       sinceTimestamp: new UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
+  //       sinceTimestamp: UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
   //     },
   //   },
   // ],
@@ -84,8 +84,6 @@ export const reya: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  rpcUrl: 'https://rpc.reya.network',
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Reya DEX launch',

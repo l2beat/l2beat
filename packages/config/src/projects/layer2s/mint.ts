@@ -1,16 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('mint')
 
-export const mint: Layer2 = opStackL2({
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+export const mint: ScalingProject = opStackL2({
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -36,10 +36,7 @@ export const mint: Layer2 = opStackL2({
     name: 'mint',
     chainId: 185,
     explorerUrl: 'https://explorer.mintchain.io',
-    explorerApi: {
-      url: 'https://explorer.mintchain.io/api',
-      type: 'blockscout',
-    },
+    coingeckoPlatform: 'mint',
     multicallContracts: [
       {
         sinceBlock: 19861572,
@@ -48,17 +45,19 @@ export const mint: Layer2 = opStackL2({
         version: '3',
       },
     ],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-13T14:02:11Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-05-13T14:02:11Z')),
+    apis: [
+      { type: 'rpc', url: 'https://rpc.mintchain.io', callsPerMinute: 800 },
+      { type: 'blockscout', url: 'https://explorer.mintchain.io/api' },
+    ],
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.mintchain.io',
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
   isNodeAvailable: true,
-  genesisTimestamp: new UnixTime(1715608931),
+  genesisTimestamp: UnixTime(1715608931),
   milestones: [
     {
       title: 'Mint Mainnet Launch',

@@ -1,19 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const pmon: Layer3 = underReviewL3({
+export const pmon: ScalingProject = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   id: ProjectId('pmon'),
   capability: 'universal',
-  addedAt: new UnixTime(1722587021), // 2024-08-02T08:23:41Z
+  addedAt: UnixTime(1722587021), // 2024-08-02T08:23:41Z
   badges: [
-    Badge.L3ParentChain.Arbitrum,
-    Badge.DA.Celestia,
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
-    Badge.RaaS.AltLayer,
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.DA.Celestia,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
+    BADGES.RaaS.AltLayer,
   ],
   display: {
     category: 'Optimium',
@@ -41,7 +41,7 @@ export const pmon: Layer3 = underReviewL3({
     {
       chain: 'arbitrum',
       address: EthereumAddress('0x10B25719f4c0fA1BFF22431438E6b6315059548A'), // ERC20Bridge
-      sinceTimestamp: new UnixTime(1707462976),
+      sinceTimestamp: UnixTime(1707462976),
       tokens: '*',
     },
   ],

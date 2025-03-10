@@ -5,8 +5,8 @@ import type { Clients } from '../../../providers/Clients'
 import type { PriceProviders } from '../../../providers/PriceProviders'
 import type { Providers } from '../../../providers/Providers'
 import type { Clock } from '../../../tools/Clock'
+import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import type { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { PriceService } from '../services/PriceService'
@@ -44,6 +44,8 @@ export class TvlDependencies {
     this.circulatingSupplyService = new CirculatingSupplyService({
       circulatingSupplyProvider:
         this.circulatingSupplyProviders.getCirculatingSupplyProvider(),
+      database,
+      logger,
     })
     this.clients = providers.clients
   }

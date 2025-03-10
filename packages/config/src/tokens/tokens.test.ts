@@ -10,9 +10,11 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
-import { chains } from '../chains'
 import { bridges } from '../projects/bridges'
-import { tokenList } from './tokens'
+import { chains } from '../projects/chains'
+import { getTokenList } from './tokens'
+
+const tokenList = getTokenList(chains)
 
 // Github actions sets env as an empty string when secret is not set
 // this resulted in a bug on the outside contributors PRs
@@ -44,13 +46,13 @@ describe('tokens', () => {
     expect(everyUnique).toEqual(true)
   })
 
-  it('every token has a chain with minTimestampForTvl', () => {
+  it('every token has a chain with sinceTimestamp', () => {
     for (const token of tokenList) {
       const chain = chains.find((c) => c.chainId === +token.chainId)
       assert(chain, `Chain not found for token ${token.symbol}`)
       assert(
-        chain.minTimestampForTvl,
-        `Token ${token.symbol} added for chain without minTimestampForTvl ${chain.name}`,
+        chain.sinceTimestamp,
+        `Token ${token.symbol} added for chain without sinceTimestamp ${chain.name}`,
       )
     }
   })

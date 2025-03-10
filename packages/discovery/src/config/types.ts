@@ -10,6 +10,8 @@ export interface DiscoveryModuleConfig {
   readonly printStats?: boolean
   readonly verboseTemplatization?: boolean
   readonly saveSources?: boolean
+  readonly buildModels?: boolean
+  readonly buildProjectPageFacts?: boolean
   readonly blockNumber?: number
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
@@ -24,6 +26,7 @@ export interface DiscoveryChainConfig {
   eventRpcUrl?: string
   reorgSafeDepth?: number
   beaconApiUrl?: string
-  multicall: MulticallConfig
+  celestiaApiUrl?: string
+  multicall: MulticallConfig | undefined
   explorer: ExplorerConfig
 }

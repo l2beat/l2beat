@@ -2,11 +2,12 @@
   "name": "xai",
   "chain": "arbitrum",
   "blockNumber": 299816283,
-  "configHash": "0xed05342f28e5ddd2e368ff3adffa0183c6a1d205511c612a3ccab5fbff2f3c4b",
-  "contracts": [
+  "configHash": "0xe0d9701642a3259bf80737e83622946e719b75d8dd6ac17398f1c12cbba8a5e1",
+  "entries": [
     {
       "name": "XaiMultisig2",
       "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -22,6 +23,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1704399729,
+      "sinceBlock": 167114912,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -43,10 +45,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -86,14 +90,38 @@
         }
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$immutable": true,
         "owner": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
       }
     },
     {
+      "address": "0x08a361fE449b1371cC21b286d88F69eF6d205809",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UpgradeExecutor",
       "address": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
+      "type": "Contract",
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -127,6 +155,7 @@
         }
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1",
@@ -156,18 +185,19 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E"]
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "ERC20Outbox",
+      "name": "Outbox",
       "address": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
+      "type": "Contract",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Outbox",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
@@ -180,6 +210,7 @@
         }
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
@@ -201,18 +232,25 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
-      }
+      },
+      "derivedName": "ERC20Outbox",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "L1OrbitGatewayRouter",
+      "address": "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GatewayRouter",
       "address": "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35",
+      "type": "Contract",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "GatewayRouter",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
       "issuedPermissions": [
         {
@@ -225,6 +263,7 @@
         }
       ],
       "sinceTimestamp": 1704476020,
+      "sinceBlock": 167416353,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe",
@@ -242,29 +281,59 @@
         "owner": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "L1OrbitGatewayRouter",
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
+        }
+      ]
     },
     {
       "name": "OneStepProverHostIo",
       "address": "0x33c1514Bf90e202d242C299b37C60f908aa206D4",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148192,
+      "sinceBlock": 244802957,
       "values": { "$immutable": true }
     },
     {
-      "name": "ERC20RollupEventInbox",
+      "name": "RollupEventInbox",
       "address": "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8",
+      "type": "Contract",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "RollupEventInbox",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
         {
@@ -277,6 +346,7 @@
         }
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb",
@@ -290,11 +360,13 @@
         "$upgradeCount": 1,
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
-      }
+      },
+      "derivedName": "ERC20RollupEventInbox"
     },
     {
       "name": "ChallengeManager",
       "address": "0x3a3f62034a42a35eA1686B199bB73006aa525eE4",
+      "type": "Contract",
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -313,6 +385,7 @@
         }
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED",
@@ -339,11 +412,13 @@
         "resultReceiver": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
         "totalChallengesCreated": 0
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "XaiMultisig",
       "address": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -443,6 +518,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1704757616,
+      "sinceBlock": 168497380,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -466,17 +542,21 @@
     {
       "name": "OneStepProver0",
       "address": "0x54E0923782b701044444De5d8c3A45aC890b0881",
+      "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148167,
+      "sinceBlock": 244802857,
       "values": { "$immutable": true }
     },
     {
       "name": "PoolProxyDeployer",
       "address": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xfe7d4f8b4f6b1198e1260974eeca86c30dbb95347dd52003ca893a8421f63f2f"
@@ -491,6 +571,7 @@
         }
       ],
       "sinceTimestamp": 1712865943,
+      "sinceBlock": 200013514,
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xb6773d5bF5b908B58ff5B7Bd36A7F06Da2EeeEc7",
@@ -506,30 +587,75 @@
         "esXaiBeacon": "0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B",
         "keyBucketBeacon": "0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a",
         "poolBeacon": "0x5f9D168d3435747335b1B3dC7e4d42e3510087C7"
-      },
-      "derivedName": "PoolProxyDeployer"
+      }
     },
     {
       "name": "ValidatorUtils",
       "address": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+      "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
       ],
+      "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1700037477,
+      "sinceBlock": 150599283,
       "values": { "$immutable": true }
     },
     {
-      "name": "ERC20Bridge",
+      "address": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
+          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
+          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
+          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F",
+          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5",
+          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xfD41041180571C5D371BEA3D9550E55653671198",
+          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
+        }
+      ]
+    },
+    {
+      "name": "Bridge",
       "address": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
+      "type": "Contract",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Bridge",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
@@ -547,6 +673,7 @@
         "sequencerReportedSubMessageCount"
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
@@ -565,16 +692,77 @@
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "delayedMessageCount": 91692,
+        "inboxHistory": [
+          "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
+          "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
+        ],
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
+        "outboxHistory": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
         "sequencerMessageCount": 140575,
         "sequencerReportedSubMessageCount": 76724940
-      }
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
+      },
+      "derivedName": "ERC20Bridge",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
+        }
+      ]
+    },
+    {
+      "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "GasSubsidy",
       "address": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x4fb5ce09fed416c49adb85057e748a97d8987e93d10a84ab6c10c85217a9d4ad"
@@ -588,6 +776,7 @@
         }
       ],
       "sinceTimestamp": 1701801219,
+      "sinceBlock": 157193649,
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A",
@@ -606,6 +795,7 @@
     {
       "name": "SequencerInbox",
       "address": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+      "type": "Contract",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -647,8 +837,9 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x7a299aD29499736994Aa3a9aFa3f476445FAEB2c",
@@ -708,18 +899,24 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ERC20Inbox",
+      "address": "0xa2E7768789921a36eCFe8c239dBd8213120fFF83",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Inbox",
       "address": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
+      "type": "Contract",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
         {
@@ -732,6 +929,7 @@
         }
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
@@ -749,18 +947,20 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1"
-      }
+      },
+      "derivedName": "ERC20Inbox",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "L1OrbitERC20Gateway",
+      "name": "ERC20Gateway",
       "address": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+      "type": "Contract",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -773,6 +973,7 @@
         }
       ],
       "sinceTimestamp": 1704476020,
+      "sinceBlock": 167416353,
       "values": {
         "$admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
         "$implementation": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f",
@@ -790,11 +991,19 @@
         "l2BeaconProxyFactory": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44",
         "router": "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "L1OrbitERC20Gateway",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "0xbBE90F6748C82623F130A4486722a436c5a72440",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "NodeLicenseRegistry",
       "address": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xd57a1c31847923aab8fde5350591529c8c1087dcf26a2f3c0eed7017cb0bd9aa"
@@ -810,6 +1019,7 @@
       ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1701801243,
+      "sinceBlock": 157193743,
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6",
@@ -926,6 +1136,7 @@
     {
       "name": "RollupProxy",
       "address": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
+      "type": "Contract",
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
@@ -962,9 +1173,11 @@
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
-        "latestNodeCreated"
+        "latestNodeCreated",
+        "lastStakeBlock"
       ],
       "sinceTimestamp": 1704309371,
+      "sinceBlock": 166757506,
       "values": {
         "$admin": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
         "$implementation": [
@@ -1003,6 +1216,7 @@
         "firstUnresolvedNode": 8940,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
+        "isPostBoLD": false,
         "lastStakeBlock": 18944658,
         "latestConfirmed": 8939,
         "latestNodeCreated": 9091,
@@ -1079,11 +1293,31 @@
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
+        }
       ]
     },
     {
       "name": "RefereeCalculations",
       "address": "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xc9c19fb4d016fe3bcc74ab045b2d6a2231e661f4d86cbb0cac0dc5d1301fb49a"
@@ -1097,6 +1331,7 @@
         }
       ],
       "sinceTimestamp": 1730222058,
+      "sinceBlock": 268948639,
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0x1488598b22Cc196Aa547894493BC2313a8A00C1e",
@@ -1117,12 +1352,34 @@
       }
     },
     {
+      "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd4318D959B46d555143f56E03077028aB94D85d2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1150,6 +1407,7 @@
         }
       ],
       "sinceTimestamp": 1701801208,
+      "sinceBlock": 157193603,
       "values": {
         "$immutable": true,
         "owner": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
@@ -1158,12 +1416,15 @@
     {
       "name": "OneStepProofEntry",
       "address": "0xD89d54007079071cBA859127318b9F34eeB78049",
+      "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148200,
+      "sinceBlock": 244802990,
       "values": {
         "$immutable": true,
         "prover0": "0x54E0923782b701044444De5d8c3A45aC890b0881",
@@ -1173,30 +1434,42 @@
       }
     },
     {
+      "address": "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OneStepProverMath",
       "address": "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148184,
+      "sinceBlock": 244802923,
       "values": { "$immutable": true }
     },
     {
       "name": "OneStepProverMemory",
       "address": "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148175,
+      "sinceBlock": 244802890,
       "values": { "$immutable": true }
     },
     {
       "name": "PoolFactory",
       "address": "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xb7442a555bc7fc85b30ed13ce21e18806035a14f3365977cd18286d5d7f808f1"
@@ -1212,6 +1485,7 @@
       ],
       "ignoreInWatchMode": ["getPoolsCount"],
       "sinceTimestamp": 1712865940,
+      "sinceBlock": 200013500,
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0xf7f1F9d67a46452da30d4125Ff39ED216e975E24",
@@ -1261,8 +1535,14 @@
       "derivedName": "PoolFactory3"
     },
     {
+      "address": "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "XaiFundsReiceiverMultisig",
       "address": "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1272,6 +1552,7 @@
       "description": "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1701577782,
+      "sinceBlock": 156368763,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -1297,6 +1578,7 @@
     {
       "name": "SentryReferee",
       "address": "0xfD41041180571C5D371BEA3D9550E55653671198",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x3b80a9109759df060ce4e99dc21f4421975553bf75760dafe4c4106046fba1c1"
@@ -1316,6 +1598,7 @@
         "calculateChallengeEmissionAndTier"
       ],
       "sinceTimestamp": 1701801226,
+      "sinceBlock": 157193676,
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
         "$implementation": "0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97",
@@ -1448,136 +1731,6 @@
       },
       "derivedName": "Referee11"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "fastconfirm",
-          "from": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-        }
-      ]
-    },
-    { "address": "0x08a361fE449b1371cC21b286d88F69eF6d205809" },
-    {
-      "address": "0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-        }
-      ]
-    },
-    { "address": "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a" },
-    { "address": "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc" },
-    {
-      "address": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-        }
-      ]
-    },
-    {
-      "address": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
-        }
-      ]
-    },
-    {
-      "address": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xfD41041180571C5D371BEA3D9550E55653671198",
-          "via": [{ "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
-        }
-      ]
-    },
-    {
-      "address": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
-        }
-      ]
-    },
-    {
-      "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
-        }
-      ]
-    },
-    { "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c" },
-    { "address": "0x90D77E3a3B660E54E04cD622937765d2375FB2e3" },
-    { "address": "0xa2E7768789921a36eCFe8c239dBd8213120fFF83" },
-    { "address": "0xbBE90F6748C82623F130A4486722a436c5a72440" },
-    { "address": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44" },
-    {
-      "address": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "via": [{ "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871" }]
-        }
-      ]
-    },
-    { "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF" },
-    { "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a" },
-    { "address": "0xd4318D959B46d555143f56E03077028aB94D85d2" },
-    { "address": "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A" },
-    { "address": "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a" },
-    { "address": "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894" }
   ],
   "abis": {
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": [
@@ -2646,21 +2799,21 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
-    "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
-    "orbitstack/ERC20Gateway": "0xe0a16d610d226558ac7f6fe1e8a4f752f31aa0939f378c8e4c1d10c6197832ec",
-    "orbitstack/GatewayRouter": "0x716365f0496eb5c6804067a5971d09346a726a1e4a8aa9930d6fd7d3e4410163",
-    "orbitstack/Inbox": "0x76c4be4a3bd6153fa5530bf9f42e610add9fe1ae32fef1b70778ccadcb143430",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
+    "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
+    "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
+    "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",
+    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
     "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
     "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
     "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
-    "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
+    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0xee489bf7626a044e8dd932264f77763a50e2408f988f199c47d15cf8b7e88f3f",
-    "orbitstack/SequencerInbox": "0xffc4669c98d6decc7bfb0c338a045ccd0d2e74106372de2960f2fff19a842cb0",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
+    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
+    "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
+    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }
 }

@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 
 export const davos: Bridge = {
   type: 'bridge',
   id: ProjectId('davos'),
-  addedAt: new UnixTime(1710858245), // 2024-03-19T14:24:05Z
+  addedAt: UnixTime(1710858245), // 2024-03-19T14:24:05Z
   isUnderReview: true,
   display: {
     name: 'Davos',
@@ -31,7 +31,7 @@ export const davos: Bridge = {
       // no escrows due to burn and mint
       {
         address: EthereumAddress('0x6DeF4570251E1f435E121b3Ee47174496D851C99'),
-        sinceTimestamp: new UnixTime(1685433000),
+        sinceTimestamp: UnixTime(1685433000),
         tokens: [],
         chain: 'ethereum',
       },

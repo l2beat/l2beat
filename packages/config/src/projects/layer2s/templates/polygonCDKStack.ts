@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -6,7 +6,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -24,28 +23,33 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
-  ChainConfig,
-  CustomDa,
-  KnowledgeNugget,
-  Layer2,
-  Layer2Display,
   Layer2TxConfig,
+  ProjectScalingDisplay,
+  ProjectScalingTechnology,
+  ScalingProject,
+} from '../../../internalTypes'
+import type {
+  Badge,
+  ChainConfig,
   Milestone,
+  ProjectActivityConfig,
   ProjectContract,
+  ProjectCustomDa,
   ProjectEscrow,
   ProjectPermissions,
+  ProjectScalingCapability,
+  ProjectScalingPurpose,
+  ProjectScalingScopeOfAssessment,
+  ProjectScalingStateDerivation,
+  ProjectScalingStateValidation,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectPurpose,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectTechnology,
   TableReadyValue,
-  TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { getStage } from '../common/stages/getStage'
+import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -61,52 +65,51 @@ export interface DAProvider {
 
 export interface PolygonCDKStackConfig {
   addedAt: UnixTime
-  capability?: ScalingProjectCapability
+  capability?: ProjectScalingCapability
   daProvider?: DAProvider
-  customDa?: CustomDa
+  customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
-  rpcUrl?: string
-  transactionApi?: TransactionApiConfig
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
+  activityConfig?: ProjectActivityConfig
   chainConfig?: ChainConfig
-  stateDerivation?: ScalingProjectStateDerivation
+  stateDerivation?: ProjectScalingStateDerivation
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: ProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
-  knowledgeNuggets: KnowledgeNugget[]
   isForcedBatchDisallowed: boolean
-  rollupModuleContract: ContractParameters
-  rollupVerifierContract: ContractParameters
+  rollupModuleContract: EntryParameters
+  rollupVerifierContract: EntryParameters
   upgradesAndGovernance?: string
-  stateValidation?: ScalingProjectStateValidation
+  stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
-  additionalBadges?: BadgeId[]
-  additionalPurposes?: ScalingProjectPurpose[]
-  overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: string[]
+  additionalBadges?: Badge[]
+  additionalPurposes?: ProjectScalingPurpose[]
+  overridingPurposes?: ProjectScalingPurpose[]
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
-export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
-  const explorerUrl = ethereum.explorerUrl
+export function polygonCDKStack(
+  templateVars: PolygonCDKStackConfig,
+): ScalingProject {
+  const explorerUrl = EXPLORER_URLS['ethereum']
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
   const rollupManagerContract = shared.getContract('PolygonRollupManager')
   if (daProvider !== undefined) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge is required for external DA',
     )
   }
 
   const upgradeDelay = shared.getContractValue<number>(
-    'PolygonZkEVMTimelock',
+    'Timelock',
     'getMinDelay',
   )
   const upgradeDelayString = formatSeconds(upgradeDelay)
@@ -131,7 +134,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
     'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
   )
-  const bridge = shared.getContract('PolygonZkEVMBridgeV2')
+  const bridge = shared.getContract('PolygonSharedBridge')
 
   const finalizationPeriod =
     templateVars.display.finality?.finalizationPeriod ?? 0
@@ -154,8 +157,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)
-          ? 'polygon-zkevm-validium'
-          : 'polygon-zkevm-rollup',
+          ? 'polygon-cdk-validium'
+          : 'polygon-cdk-rollup',
       stack: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
@@ -170,18 +173,15 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
       escrows: templateVars.nonTemplateEscrows,
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
       trackedTxs:
         templateVars.daProvider !== undefined
           ? undefined
@@ -200,8 +200,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x5e9145c9',
                   functionSignature:
                     'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-                  sinceTimestamp: new UnixTime(1679653163),
-                  untilTimestamp: new UnixTime(1707824735),
+                  sinceTimestamp: UnixTime(1679653163),
+                  untilTimestamp: UnixTime(1707824735),
                 },
               },
               {
@@ -223,8 +223,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x2b0006fa',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
-                  sinceTimestamp: new UnixTime(1679653163),
-                  untilTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1679653163),
+                  untilTimestamp: UnixTime(1707822059),
                 },
               },
               {
@@ -246,8 +246,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x621dd411',
                   functionSignature:
                     'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
-                  sinceTimestamp: new UnixTime(1679653163),
-                  untilTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1679653163),
+                  untilTimestamp: UnixTime(1707822059),
                 },
               },
               {
@@ -269,7 +269,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x1489ed10',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1707822059),
                 },
               },
               {
@@ -291,7 +291,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x87c20c01',
                   functionSignature:
                     'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestamp: new UnixTime(1707822059),
+                  sinceTimestamp: UnixTime(1707822059),
                 },
               },
             ],
@@ -306,12 +306,15 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           ? undefined
           : {
               type: 'PolygonZkEvm',
-              minTimestamp: new UnixTime(1679653163),
+              minTimestamp: UnixTime(1679653163),
               lag: 0,
               stateUpdate: 'disabled',
             },
     },
-    chainConfig: templateVars.chainConfig,
+    chainConfig: templateVars.chainConfig && {
+      ...templateVars.chainConfig,
+      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
+    },
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
@@ -416,7 +419,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           references: explorerReferences(explorerUrl, [
             {
               title:
-                'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
+                'PolygonSharedBridge.sol - source code, claimAsset function',
               address: safeGetImplementation(bridge),
             },
           ]),
@@ -439,26 +442,24 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     upgradesAndGovernance:
       templateVars.upgradesAndGovernance ??
       `
-    The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
+The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
 
+The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
 
-    The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
-
-
-    Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
+Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
     milestones: templateVars.milestones,
-    knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [
-        Badge.Stack.PolygonCDK,
-        Badge.VM.EVM,
-        Badge.DA.EthereumCalldata,
-        Badge.Infra.AggLayer,
+        BADGES.Stack.PolygonCDK,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumCalldata,
+        BADGES.Infra.AggLayer,
       ],
       templateVars.additionalBadges ?? [],
     ),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    scopeOfAssessment: templateVars.scopeOfAssessment,
   }
 }
 

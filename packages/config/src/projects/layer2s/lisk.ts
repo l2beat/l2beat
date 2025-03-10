@@ -2,18 +2,18 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('lisk')
 
-export const lisk: Layer2 = opStackL2({
-  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+export const lisk: ScalingProject = opStackL2({
+  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
-  genesisTimestamp: new UnixTime(1714728793),
+  genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
-  additionalBadges: [Badge.RaaS.Gelato, Badge.Other.MigratedFromL1],
+  additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Lisk',
@@ -42,8 +42,8 @@ export const lisk: Layer2 = opStackL2({
   nonTemplateExcludedTokens: ['USDC'],
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1714728791),
-    minTimestamp: new UnixTime(1714746983), // first blob
+    genesisTimestamp: UnixTime(1714728791),
+    minTimestamp: UnixTime(1714746983), // first blob
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',
@@ -51,7 +51,17 @@ export const lisk: Layer2 = opStackL2({
   // not ready yet, check this PR https://github.com/ethereum-optimism/superchain-registry/pull/234 or the prepared links in `DERIVATION.OPSTACK('LISK')`
   // stateDerivation: DERIVATION.OPSTACK('LISK'),
   isNodeAvailable: true,
-  rpcUrl: 'https://rpc.api.lisk.com',
+  chainConfig: {
+    name: 'lisk',
+    chainId: 1135,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.api.lisk.com',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xE3622468Ea7dD804702B56ca2a4f88C0936995e6'),

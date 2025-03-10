@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "polygonzkevm",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
     "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
@@ -15,9 +16,7 @@
     "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": "daiBridge",
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "PolygonZkEvmEscrowsMultisig"
   },
-  "sharedModules": {
-    "woeeeeeeeeeeeeeeeeeeoowwwwwwweeeeee": "shared-polygon-cdk"
-  },
+  "sharedModules": ["shared-polygon-cdk"],
   "overrides": {
     "wstETHBridge": {
       "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",

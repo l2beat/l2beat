@@ -2,10 +2,12 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
+import { getDaThroughputSection } from './get-da-throughput-section'
 
 type RegularDetailsParams = {
   layer: Project<
@@ -21,7 +23,7 @@ type RegularDetailsParams = {
   bridgeGrissiniValues: RosetteValue[]
 }
 
-export function getRegularDaProjectSections({
+export async function getRegularDaProjectSections({
   layer,
   bridge,
   isVerified,
@@ -29,14 +31,19 @@ export function getRegularDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
+  const contractUtils = await getContractUtils()
+
   const permissionsSection =
     bridge?.permissions &&
-    getPermissionsSection({
-      type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-      id: layer.id,
-      isUnderReview: layer.statuses.isUnderReview,
-      permissions: bridge.permissions,
-    })
+    getPermissionsSection(
+      {
+        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
+        id: layer.id,
+        isUnderReview: layer.statuses.isUnderReview,
+        permissions: bridge.permissions,
+      },
+      contractUtils,
+    )
 
   const contractsSection =
     bridge?.contracts &&
@@ -47,9 +54,9 @@ export function getRegularDaProjectSections({
         isVerified,
         slug: bridge.slug,
         contracts: bridge.contracts ?? {},
-        escrows: undefined,
         isUnderReview: layer.statuses.isUnderReview,
       },
+      contractUtils,
       projectsChangeReport,
     )
 
@@ -58,6 +65,7 @@ export function getRegularDaProjectSections({
     bridge,
     isVerified,
   )
+  const throughputSection = await getDaThroughputSection(layer)
 
   const daLayerItems: ProjectDetailsSection[] = []
 
@@ -149,6 +157,17 @@ export function getRegularDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
+  if (throughputSection) {
+    items.push({
+      type: 'ThroughputSection',
+      props: {
+        id: 'throughput',
+        title: 'Throughput',
+        ...throughputSection,
+      },
+    })
+  }
+
   if (!layer.isUpcoming && layer.milestones && layer.milestones.length > 0) {
     const sortedMilestones = layer.milestones.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -208,14 +227,14 @@ export function getRegularDaProjectSections({
 }
 
 type EthereumDetailsParams = {
-  layer: Project<'daLayer' | 'statuses' | 'display'>
+  layer: Project<'daLayer' | 'statuses' | 'display', 'milestones'>
   bridge: Project<'daBridge', 'contracts'>
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
 }
 
-export function getEthereumDaProjectSections({
+export async function getEthereumDaProjectSections({
   layer,
   bridge,
   isVerified,
@@ -229,6 +248,19 @@ export function getEthereumDaProjectSections({
   )
 
   const items: ProjectDetailsSection[] = []
+
+  const throughputSection = await getDaThroughputSection(layer)
+
+  if (throughputSection) {
+    items.push({
+      type: 'ThroughputSection',
+      props: {
+        id: 'throughput',
+        title: 'Throughput',
+        ...throughputSection,
+      },
+    })
+  }
 
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)

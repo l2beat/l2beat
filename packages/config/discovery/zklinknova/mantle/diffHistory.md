@@ -1,4 +1,85 @@
-Generated with discovered.json: 0x1631999838f4e6d52b4f0de858962e8f7465126f
+Generated with discovered.json: 0xf9ed2842d0c2587223c2fc614cbe18fe032c9645
+
+# Diff at Mon, 10 Mar 2025 16:52:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 68652420
+- current block number: 76747606
+
+## Description
+
+zklink core contract paused. this only prevents deposits/ on the affected chains.
+
+## Watched changes
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x426d4813917798363d8fc2c0fd461a9c8241bd1c
+
+# Diff at Tue, 04 Mar 2025 10:42:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 68652420
+- current block number: 68652420
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 68652420 (main branch discovery), not current.
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      sinceBlock:
++        60705516
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2) {
+    +++ description: None
+      sinceBlock:
++        58697615
+    }
+```
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      sinceBlock:
++        58659816
+    }
+```
+
+```diff
+    contract MantleL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      sinceBlock:
++        58659973
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) {
+    +++ description: None
+      sinceBlock:
++        58697615
+    }
+```
+
+Generated with discovered.json: 0x859c735004e6c2ceff7e740235165b73c2650565
 
 # Diff at Mon, 20 Jan 2025 11:10:48 GMT:
 

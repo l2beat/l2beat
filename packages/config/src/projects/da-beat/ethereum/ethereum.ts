@@ -1,7 +1,12 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
 import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../common'
 import { linkByDA } from '../common/linkByDA'
+
+// Deployment of the first L2
+export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
+  new Date('2019-11-14T00:00:00Z'),
+)
 
 export const ethereum: BaseProject = {
   id: ProjectId('ethereum'),
@@ -36,6 +41,7 @@ export const ethereum: BaseProject = {
       ],
       socialMedia: ['https://x.com/ethereum'],
     },
+    badges: [],
   },
   daLayer: {
     type: 'Public Blockchain',
@@ -122,10 +128,14 @@ This method allows ZK rollups to prove that the data used in their validity proo
       consensusFinality: 768, // seconds, two epochs of 32 slots each
       unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
     },
-    throughput: {
-      size: 750, // 0.75 MB
-      frequency: 12, // 12 seconds
-    },
+    throughput: [
+      {
+        size: 786432, // 0.75 MiB
+        target: 393216, // 0.375 MiB
+        frequency: 12, // 12 seconds
+        sinceTimestamp: 1710288000, // 2024-03-13
+      },
+    ],
     finality: 720, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
@@ -139,7 +149,6 @@ This method allows ZK rollups to prove that the data used in their validity proo
         coingeckoId: 'ethereum',
       },
     },
-    daTracking: 'ethereum',
   },
   daBridge: {
     name: 'Enshrined Bridge',
@@ -167,4 +176,37 @@ This method allows ZK rollups to prove that the data used in their validity proo
           validating bridge has access to all the data, as it is posted on chain.`,
     },
   },
+  chainConfig: {
+    name: 'ethereum',
+    chainId: 1,
+    explorerUrl: 'https://etherscan.io',
+    coingeckoPlatform: 'ethereum',
+    sinceTimestamp: MIN_TIMESTAMP_FOR_TVL,
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 14353601,
+        version: '3',
+      },
+      {
+        sinceBlock: 12336033,
+        batchSize: 150,
+        address: EthereumAddress('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'),
+        version: '2',
+      },
+      {
+        sinceBlock: 7929876,
+        batchSize: 150,
+        address: EthereumAddress('0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'),
+        version: '1',
+      },
+    ],
+    apis: [
+      { type: 'etherscan', url: 'https://api.etherscan.io/api' },
+      { type: 'blockscoutV2', url: 'https://eth.blockscout.com/api/v2' },
+      { type: 'rpc', url: 'https://eth-mainnet.alchemyapi.io/v2/demo' },
+    ],
+  },
+  activityConfig: { type: 'block', startBlock: 8929324 },
 }

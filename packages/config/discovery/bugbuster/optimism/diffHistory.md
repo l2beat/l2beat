@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xc95627c1c4eae15bdad5c5cf2b57cc5e89a704e9
+Generated with discovered.json: 0x9b66088a58f4ca149d063249fff96a652a414490
+
+# Diff at Tue, 04 Mar 2025 10:40:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 125928338
+- current block number: 125928338
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 125928338 (main branch discovery), not current.
+
+```diff
+    contract History (0x04395d494624D2B6e30C0dfDB74498a2839f805d) {
+    +++ description: None
+      sinceBlock:
++        121950726
+    }
+```
+
+```diff
+    contract BugBuster (0x3FF5C7383F614256053c3F6B86A47bA974937299) {
+    +++ description: None
+      sinceBlock:
++        125600141
+    }
+```
+
+```diff
+    contract Authority (0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35) {
+    +++ description: None
+      sinceBlock:
++        121950726
+    }
+```
+
+```diff
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768) {
+    +++ description: None
+      sinceBlock:
++        107432991
+    }
+```
+
+```diff
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB) {
+    +++ description: None
+      sinceBlock:
++        107432999
+    }
+```
+
+Generated with discovered.json: 0x6501bd3170a1b94606441125e6b0d50d385e27d4
 
 # Diff at Mon, 14 Oct 2024 10:59:55 GMT:
 

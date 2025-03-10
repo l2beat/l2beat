@@ -22,9 +22,33 @@ import { blobsToData } from './blobsToData'
 import { calculateDelaysFromSegments } from './calculateDelaysFromSegments'
 import { numberToByteArr } from './utils'
 
-const calldataSignature =
-  'addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)'
-const iface = new utils.Interface([`function ${calldataSignature}`])
+const methods = new Map<string, { name: string; signature: string }>([
+  [
+    '0x8f111f3c',
+    {
+      name: 'addSequencerL2BatchFromOrigin',
+      signature:
+        'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+    },
+  ],
+  [
+    '0x6f12b0c9',
+    {
+      name: 'addSequencerL2BatchFromOrigin',
+      signature:
+        'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
+    },
+  ],
+  [
+    '0x69cacded',
+    {
+      name: 'addSequencerL2BatchFromOriginDelayProof',
+      signature:
+        'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+    },
+  ],
+])
+
 const BROTLI_COMPRESSION_TYPE = 0x00
 
 export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
@@ -63,16 +87,14 @@ export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
   async getSegments(tx: EVMTransaction): Promise<RlpSerializable[]> {
     switch (Number(tx.type)) {
       case 2: {
-        // We only support addSequencerL2BatchFromOrigin (0x8f111f3c),
-        // because this is the only method that is used for now
-        assert(
-          iface.getSighash(calldataSignature) === tx.data.slice(0, 10),
-          `Not supported method: ${tx.data.slice(0, 10)}`,
-        )
-        const decodedInput = iface.decodeFunctionData(
-          calldataSignature,
-          tx.data,
-        )
+        const selector = tx.data.slice(0, 10)
+        const method = methods.get(selector)
+
+        assert(method, `Not supported method: ${selector}`)
+
+        const iface = new utils.Interface([`${method.signature}`])
+
+        const decodedInput = iface.decodeFunctionData(method.name, tx.data)
         assert(decodedInput[1], 'No data in calldata')
         return this.getSegmentsFromCalldata(decodedInput[1])
       }

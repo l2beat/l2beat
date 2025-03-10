@@ -1,12 +1,13 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 68652420,
-  "configHash": "0x462d076f3fc07600bc44792715f84e714732beededa7e857746af9d89c39548f",
-  "contracts": [
+  "blockNumber": 76747606,
+  "configHash": "0xc054e16b3c1de3011cb8dbd5461374914a8b3400a327219bd87e3247aa1ec2d7",
+  "entries": [
     {
       "name": "MantleOwner",
       "address": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -25,6 +26,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710253012,
+      "sinceBlock": 60705516,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -43,14 +45,35 @@
         "getChainId": 5000,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
     },
     {
+      "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ERC20Bridge",
       "address": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+      "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
@@ -64,6 +87,7 @@
         }
       ],
       "sinceTimestamp": 1709296907,
+      "sinceBlock": 58697615,
       "values": {
         "$admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
         "$implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
@@ -83,12 +107,32 @@
         "l2Bridge": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      },
-      "derivedName": "L1ERC20Bridge"
+      }
+    },
+    {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "zkLink",
       "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+      "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -111,6 +155,7 @@
         "totalValidatorForwardFee"
       ],
       "sinceTimestamp": 1709279309,
+      "sinceBlock": 58659816,
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
@@ -151,22 +196,28 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 24163,
-        "getTotalPriorityTxs": 861,
+        "getTotalBatchesExecuted": 50873,
+        "getTotalPriorityTxs": 880,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
-        "paused": false,
-        "totalBatchesExecuted": 24163,
-        "totalPriorityTxs": 861,
-        "totalSyncedPriorityTxs": 861,
-        "totalValidatorForwardFee": "1105664800685749588412",
+        "paused": true,
+        "totalBatchesExecuted": 50873,
+        "totalPriorityTxs": 880,
+        "totalSyncedPriorityTxs": 880,
+        "totalValidatorForwardFee": "1145994696585755653058",
         "totalValidatorForwardFeeWithdrawn": "1105664800685749588412",
         "txGasPrice": 140000000000000
       },
       "derivedName": "ZkLink"
     },
     {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MantleL2Gateway",
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+      "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -181,6 +232,7 @@
         }
       ],
       "sinceTimestamp": 1709279398,
+      "sinceBlock": 58659973,
       "values": {
         "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
@@ -208,15 +260,16 @@
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "ZKLINK": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
-      },
-      "derivedName": "MantleL2Gateway"
+      }
     },
     {
       "name": "MantleProxyAdmin",
       "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
+      "type": "Contract",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -224,25 +277,19 @@
         }
       ],
       "sinceTimestamp": 1709296907,
+      "sinceBlock": 58697615,
       "values": {
         "$immutable": true,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe" },
-    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
-    { "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272" },
-    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
-    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
-    { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
-    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
-    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
-    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
-    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],
   "abis": {
     "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821": [

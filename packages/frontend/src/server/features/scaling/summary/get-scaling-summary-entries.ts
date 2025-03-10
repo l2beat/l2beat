@@ -1,19 +1,19 @@
 import type {
   Project,
-  ProjectDataAvailability,
+  ProjectScalingCapability,
+  ProjectScalingCategory,
+  ProjectScalingDa,
+  ProjectScalingPurpose,
+  ProjectScalingStack,
+  ProjectScalingStage,
   ReasonForBeingInOther,
-  ScalingProjectCapability,
-  ScalingProjectCategory,
-  ScalingProjectPurpose,
-  ScalingProjectStack,
-  StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { ActivityLatestUopsData } from '../activity/get-activity-latest-tps'
@@ -28,8 +28,8 @@ import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
-    select: ['statuses', 'scalingInfo', 'scalingRisks'],
-    optional: ['tvlInfo', 'scalingDa', 'scalingStage'],
+    select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
+    optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -51,16 +51,16 @@ export async function getScalingSummaryEntries() {
     )
     .sort(compareStageAndTvs)
 
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingSummaryEntry extends CommonScalingEntry {
-  capability: ScalingProjectCapability
-  stage: StageConfig
-  category: ScalingProjectCategory
-  purposes: ScalingProjectPurpose[]
-  stack: ScalingProjectStack | undefined
-  dataAvailability: ProjectDataAvailability | undefined
+  capability: ProjectScalingCapability
+  stage: ProjectScalingStage
+  category: ProjectScalingCategory
+  purposes: ProjectScalingPurpose[]
+  stack: ProjectScalingStack | undefined
+  dataAvailability: ProjectScalingDa | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
     breakdown:
@@ -87,12 +87,13 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   tvsOrder: number
   risks: RosetteValue[]
   baseLayerRisks: RosetteValue[] | undefined
+  gasTokens: string[] | undefined
 }
 
 function getScalingSummaryEntry(
   project: Project<
-    'statuses' | 'scalingInfo' | 'scalingRisks',
-    'tvlInfo' | 'scalingDa' | 'scalingStage'
+    'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
+    'tvlInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'
   >,
   changes: ProjectChanges,
   latestTvs: LatestTvs['projects'][string] | undefined,
@@ -151,5 +152,6 @@ function getScalingSummaryEntry(
     baseLayerRisks: project.scalingRisks.host
       ? getL2Risks(project.scalingRisks.host)
       : undefined,
+    gasTokens: project.chainConfig?.gasTokens,
   }
 }

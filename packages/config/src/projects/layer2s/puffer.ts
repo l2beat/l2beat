@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const puffer: Layer2 = upcomingL2({
+export const puffer: ScalingProject = upcomingL2({
   id: 'puffer',
   capability: 'universal',
-  addedAt: new UnixTime(1729172001), // 2024-10-17T15:33:21
+  addedAt: UnixTime(1729172001), // 2024-10-17T15:33:21
   display: {
     name: 'Puffer UniFi',
     slug: 'puffer',

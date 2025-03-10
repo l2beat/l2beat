@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "scroll",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
     "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
@@ -64,6 +65,14 @@
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow"
   },
   "overrides": {
+    "SecurityCouncil": {
+      "references": [
+        {
+          "text": "Security Council members - Scroll Docs",
+          "href": "https://scroll.io/gov-docs/content/security-council"
+        }
+      ]
+    },
     "pufETHEscrow": {
       "ignoreRelatives": ["owner", "$admin", "counterpart"]
     },

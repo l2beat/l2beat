@@ -1,17 +1,17 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('ebichain')
 
-export const ebichain: Layer2 = orbitStackL2({
+export const ebichain: ScalingProject = orbitStackL2({
   discovery,
-  addedAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -36,10 +36,19 @@ export const ebichain: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.ebi.xyz',
+  chainConfig: {
+    name: 'ebichain',
+    chainId: 98881,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.ebi.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

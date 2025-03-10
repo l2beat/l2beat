@@ -1,8 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('connext')
@@ -10,7 +8,7 @@ const discovery = new ProjectDiscovery('connext')
 export const connext: Bridge = {
   type: 'bridge',
   id: ProjectId('connext'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Connext (Legacy)',
@@ -34,7 +32,7 @@ export const connext: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09'),
-        sinceTimestamp: new UnixTime(1636004546),
+        sinceTimestamp: UnixTime(1636004546),
         tokens: ['USDC', 'USDT', 'DAI', 'WBTC'],
         chain: 'ethereum',
       },
@@ -118,11 +116,4 @@ export const connext: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Connext deep dive',
-      url: 'https://li.fi/knowledge-hub/connext-network-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

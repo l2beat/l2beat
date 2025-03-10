@@ -25,6 +25,8 @@ const addSequencerBatchV1 =
   'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder)'
 const addSequencerBatchV2 =
   'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)'
+const addSequencerBatchV3 =
+  'addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)'
 const addSequencerBatchEspresso =
   'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)'
 
@@ -32,11 +34,13 @@ const abi = new utils.Interface([
   'event SequencerBatchDelivered(uint256 indexed batchSequenceNumber, bytes32 indexed beforeAcc, bytes32 indexed afterAcc, bytes32 delayedAcc, uint256 afterDelayedMessagesRead, tuple(uint64, uint64, uint64, uint64) timeBounds, uint8 dataLocation)',
   `function ${addSequencerBatchV1}`,
   `function ${addSequencerBatchV2}`,
+  `function ${addSequencerBatchV3}`,
   `function ${addSequencerBatchEspresso}`,
 ])
 
 const addSequencerBatchV1SigHash = abi.getSighash(addSequencerBatchV1)
 const addSequencerBatchV2SigHash = abi.getSighash(addSequencerBatchV2)
+const addSequencerBatchV3SigHash = abi.getSighash(addSequencerBatchV3)
 const addSequencerBatchEspressoSigHash = abi.getSighash(
   addSequencerBatchEspresso,
 )
@@ -142,6 +146,8 @@ export class ArbitrumSequencerVersionHandler implements Handler {
       return abi.decodeFunctionData(addSequencerBatchV1, calldata)
     } else if (calldata.startsWith(addSequencerBatchV2SigHash)) {
       return abi.decodeFunctionData(addSequencerBatchV2, calldata)
+    } else if (calldata.startsWith(addSequencerBatchV3SigHash)) {
+      return abi.decodeFunctionData(addSequencerBatchV3, calldata)
     } else if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
       return abi.decodeFunctionData(addSequencerBatchEspresso, calldata)
     } else {
@@ -168,18 +174,14 @@ export class ArbitrumSequencerVersionHandler implements Handler {
             0,
             currentBlockNumber - blockStep * multiplier,
           )
-          return await rpcWithRetries(
-            async () => {
-              return await eventProvider.getLogs({
-                address: address.toString(),
-                topics: [abi.getEventTopic('SequencerBatchDelivered')],
-                fromBlock,
-                toBlock: currentBlockNumber,
-              })
-            },
-            () =>
-              `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`,
-          )
+          return await rpcWithRetries(async () => {
+            return await eventProvider.getLogs({
+              address: address.toString(),
+              topics: [abi.getEventTopic('SequencerBatchDelivered')],
+              fromBlock,
+              toBlock: currentBlockNumber,
+            })
+          }, `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`)
         },
       )
 

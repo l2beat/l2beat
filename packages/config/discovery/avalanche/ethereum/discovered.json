@@ -2,9 +2,14 @@
   "name": "avalanche",
   "chain": "ethereum",
   "blockNumber": 21773615,
-  "configHash": "0xf09675de482b8fcfd1f4719e12a550495afe53b6db63c1d2547d900b0dd86872",
-  "contracts": [],
-  "eoas": [{ "address": "0x8EB8a3b98659Cce290402893d0123abb75E3ab28" }],
+  "configHash": "0x7241ad6ece394aeb531059e1992de339654e53993e82340af9ae616d35660a9c",
+  "entries": [
+    {
+      "address": "0x8EB8a3b98659Cce290402893d0123abb75E3ab28",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
   "abis": {},
   "usedTemplates": {}
 }

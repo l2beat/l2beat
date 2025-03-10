@@ -1,5 +1,5 @@
 // TODO: Figure out how to what to do about it
-import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/common/projectCountdowns'
+import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Countdown } from '~/components/countdown'
 import { CustomLink } from '~/components/link/custom-link'
@@ -21,7 +21,7 @@ export function OtherMigrationTabNotice({
 }: Props) {
   if (
     projectsToBeMigrated.length === 0 ||
-    PROJECT_COUNTDOWNS.otherMigration.lt(UnixTime.now())
+    PROJECT_COUNTDOWNS.otherMigration < UnixTime.now()
   ) {
     return null
   }
@@ -36,7 +36,7 @@ export function OtherMigrationTabNotice({
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-2xl font-bold leading-none">Recategorisation</h2>
         <Countdown
-          expiresAt={PROJECT_COUNTDOWNS.otherMigration.toNumber()}
+          expiresAt={PROJECT_COUNTDOWNS.otherMigration}
           className="max-md:hidden"
           size="md"
         />
@@ -51,7 +51,7 @@ export function OtherMigrationTabNotice({
         </span>
       </p>
       <Countdown
-        expiresAt={PROJECT_COUNTDOWNS.otherMigration.toNumber()}
+        expiresAt={PROJECT_COUNTDOWNS.otherMigration}
         className="md:hidden"
         size="sm"
       />

@@ -1,15 +1,14 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('mantapacific')
 
-export const mantapacific: Layer2 = opStackL2({
-  addedAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
+export const mantapacific: ScalingProject = opStackL2({
+  addedAt: UnixTime(1693907285), // 2023-09-05T09:48:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   reasonsForBeingOther: [
@@ -37,26 +36,23 @@ export const mantapacific: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://pacific-rpc.manta.network/http',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://pacific-rpc.manta.network/http',
-    defaultCallsPerMinute: 1500,
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
+  },
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0=',
   },
   associatedTokens: ['MANTA'],
   chainConfig: {
     name: 'mantapacific',
     chainId: 169,
     explorerUrl: 'https://pacific-explorer.manta.network',
-    explorerApi: {
-      url: 'https://pacific-explorer.manta.network/api',
-      type: 'blockscout',
-    },
     // ~ Timestamp of block number 0 on MantaPacific
     // https://pacific-explorer.manta.network/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
     multicallContracts: [
       {
         sinceBlock: 332890,
@@ -72,8 +68,16 @@ export const mantapacific: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'manta-pacific',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://pacific-rpc.manta.network/http',
+        callsPerMinute: 1500,
+      },
+      { type: 'blockscout', url: 'https://pacific-explorer.manta.network/api' },
+    ],
   },
-  genesisTimestamp: new UnixTime(1679202395),
+  genesisTimestamp: UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [
     {
@@ -84,12 +88,5 @@ export const mantapacific: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
-  knowledgeNuggets: [
-    {
-      title: 'Blobstream and Celestia Architecture',
-      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
-    },
-  ],
+  additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Caldera],
 })

@@ -26,7 +26,7 @@ describe(ZkSyncLiteT2IAnalyzer.name, () => {
         projectId,
       )
 
-      const tx = { txHash: TX_HASH, timestamp: new UnixTime(L1_TIMESTAMP) }
+      const tx = { txHash: TX_HASH, timestamp: UnixTime(L1_TIMESTAMP) }
       const previousTx = tx // not used
       const result = await analyzer.analyze(previousTx, tx)
 
@@ -36,7 +36,7 @@ describe(ZkSyncLiteT2IAnalyzer.name, () => {
 })
 
 /**
- * Slice of actual transcation under hash `0x9bb45c938921cdbb5cdd46c5221c8964e1181728484b4113bacdfe22e71e46e1`
+ * Slice of actual transaction under hash `0x9bb45c938921cdbb5cdd46c5221c8964e1181728484b4113bacdfe22e71e46e1`
  * For the sake of testing, we only care about the single block, transaction's data has been reduced to.
  * Proof input has been preserved
  *

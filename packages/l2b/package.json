@@ -25,7 +25,6 @@
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/discovery": "workspace:*",
-    "@l2beat/discovery-types": "workspace:*",
     "@l2beat/protocolbeat": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
@@ -40,7 +39,8 @@
     "readline-sync": "^1.4.10",
     "rimraf": "^5.0.0",
     "viem": "^2.18.6",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

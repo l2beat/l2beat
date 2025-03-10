@@ -1,3 +1,281 @@
+Generated with discovered.json: 0x752352b447bf51c948abd92d4575246abf15e601
+
+# Diff at Tue, 04 Mar 2025 10:39:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21786536
+- current block number: 21786536
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786536 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.
+      sinceBlock:
++        17445563
+    }
+```
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      sinceBlock:
++        20493176
+    }
+```
+
+```diff
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      sinceBlock:
++        20879772
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      sinceBlock:
++        19492759
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      sinceBlock:
++        17472874
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      sinceBlock:
++        17445563
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      sinceBlock:
++        19477666
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      sinceBlock:
++        21239749
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      sinceBlock:
++        17443669
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: None
+      sinceBlock:
++        17445565
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      sinceBlock:
++        20493178
+    }
+```
+
+```diff
+    contract EigenPod (0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430) {
+    +++ description: None
+      sinceBlock:
++        20571837
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      sinceBlock:
++        21244979
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      sinceBlock:
++        20341793
+    }
+```
+
+```diff
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1) {
+    +++ description: None
+      sinceBlock:
++        20896663
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      sinceBlock:
++        19477666
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      sinceBlock:
++        17445564
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      sinceBlock:
++        17445563
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      sinceBlock:
++        17445564
+    }
+```
+
+```diff
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d) {
+    +++ description: None
+      sinceBlock:
++        21244997
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      sinceBlock:
++        20879744
+    }
+```
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      sinceBlock:
++        18366203
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      sinceBlock:
++        17443829
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      sinceBlock:
++        21239612
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      sinceBlock:
++        17445564
+    }
+```
+
+```diff
+    contract StrategyBase (0xe9FA8F904d97854C7389b68923262ADCC6C27827) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sinceBlock:
++        20493175
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      sinceBlock:
++        18366276
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      sinceBlock:
++        17472847
+    }
+```
+
+Generated with discovered.json: 0xbb8b08bb272e47a02dfe7a8ecee3aeb805799731
+
+# Diff at Wed, 12 Feb 2025 08:54:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21786536
+- current block number: 21786536
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786536 (main branch discovery), not current.
+
+```diff
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      description:
+-        "A timelock that allows scheduling calls and executing or cancelling them with a delay"
++        "A timelock that allows scheduling calls and executing or cancelling them with a delay."
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      description:
+-        "A timelock that allows scheduling calls and executing or cancelling them with a delay"
++        "A timelock that allows scheduling calls and executing or cancelling them with a delay."
+    }
+```
+
 Generated with discovered.json: 0x0c2731cccbb0da7240b867401f22bd684005e35b
 
 # Diff at Thu, 06 Feb 2025 09:22:48 GMT:

@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedLivenessRecord,
@@ -8,21 +7,22 @@ import type {
 import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
 
 const NOW = UnixTime.now()
-const MIN = NOW.add(-100, 'days')
+const MIN = NOW - 100 * UnixTime.DAY
 
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
 
-const MOCK_PROJECTS = [
-  mockObject<BackendProject>({
-    projectId: ProjectId('mocked-project'),
+const MOCK_PROJECTS: TrackedTxProject[] = [
+  {
+    id: ProjectId('mocked-project'),
     isArchived: false,
-    trackedTxsConfig: [
+    configurations: [
       mockObject<TrackedTxConfigEntry>({
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
@@ -30,7 +30,7 @@ const MOCK_PROJECTS = [
         untilTimestamp: UnixTime.now(),
       }),
     ],
-  }),
+  },
 ]
 
 const MOCK_CONFIGURATIONS = [
@@ -44,15 +44,15 @@ const MOCK_CONFIGURATIONS = [
 const MOCK_LIVENESS: LivenessRecord[] = [
   mockObject<LivenessRecord>({
     configurationId: MOCK_CONFIGURATION_ID,
-    timestamp: NOW.add(-1, 'hours'),
+    timestamp: NOW - 1 * UnixTime.HOUR,
   }),
   mockObject<LivenessRecord>({
     configurationId: MOCK_CONFIGURATION_ID,
-    timestamp: NOW.add(-3, 'hours'),
+    timestamp: NOW - 3 * UnixTime.HOUR,
   }),
   mockObject<LivenessRecord>({
     configurationId: MOCK_CONFIGURATION_ID,
-    timestamp: NOW.add(-7, 'hours'),
+    timestamp: NOW - 7 * UnixTime.HOUR,
   }),
 ]
 
@@ -63,8 +63,8 @@ describe(LivenessAggregatingIndexer.name, () => {
       const mockGenerateLiveness = mockFn().resolvesTo([])
       indexer.generateLiveness = mockGenerateLiveness
 
-      const safeHeigh = MIN.toNumber()
-      const parentSafeHeight = NOW.add(-2, 'days').toNumber()
+      const safeHeigh = MIN
+      const parentSafeHeight = NOW - 2 * UnixTime.DAY
 
       const result = await indexer.update(safeHeigh, parentSafeHeight)
 
@@ -78,8 +78,8 @@ describe(LivenessAggregatingIndexer.name, () => {
       const mockGenerateLiveness = mockFn().resolvesTo([])
       indexer.generateLiveness = mockGenerateLiveness
 
-      const safeHeight = NOW.add(-2, 'hours').toNumber()
-      const parentSafeHeight = NOW.add(-1, 'hours').toNumber()
+      const safeHeight = NOW - 2 * UnixTime.HOUR
+      const parentSafeHeight = NOW - 1 * UnixTime.HOUR
 
       const result = await indexer.update(safeHeight, parentSafeHeight)
 
@@ -101,7 +101,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       })
       const mockLiveness: AggregatedLivenessRecord[] = [
         {
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           range: '30D',
           min: 10,
@@ -114,23 +114,20 @@ describe(LivenessAggregatingIndexer.name, () => {
       const mockGenerateLiveness = mockFn().resolvesTo(mockLiveness)
       indexer.generateLiveness = mockGenerateLiveness
 
-      const safeHeight = NOW.add(-4, 'days')
-      const parentSafeHeight = NOW.add(-1, 'hours')
+      const safeHeight = NOW - 4 * UnixTime.DAY
+      const parentSafeHeight = NOW - 1 * UnixTime.HOUR
 
-      const result = await indexer.update(
-        safeHeight.toNumber(),
-        parentSafeHeight.toNumber(),
-      )
+      const result = await indexer.update(safeHeight, parentSafeHeight)
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
-        NOW.toStartOf('day').add(-1, 'seconds'),
+        UnixTime.toStartOf(NOW, 'day') - 1,
       )
 
       expect(mockLivenessRepository.upsertMany).toHaveBeenCalledWith(
         mockLiveness,
       )
 
-      expect(result).toEqual(parentSafeHeight.toNumber())
+      expect(result).toEqual(parentSafeHeight)
     })
   })
 
@@ -140,7 +137,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         deleteAll: mockFn().resolvesTo(1),
       })
 
-      const targetHeight = UnixTime.now().toNumber()
+      const targetHeight = UnixTime.now()
 
       const indexer = createIndexer({
         tag: 'invalidate',
@@ -214,7 +211,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       const indexer = createIndexer({ tag: 'aggregatedRecords' })
 
       const result = indexer.aggregatedRecords(
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'batchSubmissions',
         MOCK_LIVENESS.map((record) => ({
           ...record,

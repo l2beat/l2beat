@@ -2,31 +2,27 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   ESCROW,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'PolygonZkEVMEtrog',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
+  discovery.getContractValue<string>('PolygonZkEVM', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
-export const polygonzkevm: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
-  rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier_11'),
+export const polygonzkevm: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  rollupModuleContract: discovery.getContract('PolygonZkEVM'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
-    architectureImage: 'polygonzkevm',
     warning: 'The forced transaction mechanism is currently disabled.',
     description:
       'Polygon zkEVM is an EVM-compatible ZK Rollup built by Polygon Labs.',
@@ -53,22 +49,15 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
   },
   associatedTokens: ['POL', 'MATIC'],
   discovery,
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://polygon-rpc.com/zkevm',
-    defaultCallsPerMinute: 500,
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
   },
   chainConfig: {
     name: 'polygonzkevm',
     chainId: 1101,
-    blockscoutV2ApiUrl: 'https://zkevm.blockscout.com/api/v2',
     explorerUrl: 'https://zkevm.polygonscan.com',
-    explorerApi: {
-      url: 'https://api-zkevm.polygonscan.com/api',
-      type: 'etherscan',
-    },
-    minTimestampForTvl: new UnixTime(1679679015),
+    sinceTimestamp: UnixTime(1679679015),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -76,6 +65,15 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         sinceBlock: 57746,
         version: '3',
       },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://polygon-rpc.com/zkevm',
+        callsPerMinute: 500,
+      },
+      { type: 'etherscan', url: 'https://api-zkevm.polygonscan.com/api' },
+      { type: 'blockscoutV2', url: 'https://zkevm.blockscout.com/api/v2' },
     ],
   },
   nonTemplateTrackedTxs: [
@@ -90,8 +88,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xecef3f99',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
-        sinceTimestamp: new UnixTime(1707824735),
-        untilTimestamp: new UnixTime(1710419699),
+        sinceTimestamp: UnixTime(1707824735),
+        untilTimestamp: UnixTime(1710419699),
       },
     },
     {
@@ -105,8 +103,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xdef57e54',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
-        sinceTimestamp: new UnixTime(1710419699),
-        untilTimestamp: new UnixTime(1736943371),
+        sinceTimestamp: UnixTime(1710419699),
+        untilTimestamp: UnixTime(1736943371),
       },
     },
     {
@@ -120,7 +118,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xb910e0f9',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
-        sinceTimestamp: new UnixTime(1736943371),
+        sinceTimestamp: UnixTime(1736943371),
       },
     },
   ],
@@ -162,7 +160,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       references: [
         {
           title:
-            'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
+            'PolygonZkEVM.sol - Etherscan source code, verifyBatches function',
           url: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
         },
       ],
@@ -172,7 +170,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       references: [
         {
           title:
-            'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
+            'PolygonZkEVM.sol - Etherscan source code, sequenceBatches function',
           url: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
@@ -310,13 +308,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       date: '2023-03-27T00:00:00Z',
       description: 'Polygon zkEVM public beta launched.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'State diffs vs raw tx data',
-      url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 })

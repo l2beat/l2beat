@@ -1,26 +1,39 @@
-import type { BadgeId } from '@l2beat/config'
-import { badges } from '@l2beat/config'
+import type { Badge } from '@l2beat/config'
+import type { ClassNameValue } from 'tailwind-merge'
+import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/components/core/tooltip/tooltip'
+} from '../core/tooltip/tooltip'
+export function ProjectBadge({
+  badge,
+  hideTooltip,
+  className,
+}: {
+  badge: Badge
+  hideTooltip?: boolean
+  className?: ClassNameValue
+}) {
+  const badgeImg = (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`/images/badges/${badge.id}.png`}
+        alt={`${badge.name} badge`}
+        className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
+      />
+    </>
+  )
 
-export function ProjectBadge({ id }: { id: BadgeId }) {
-  const meta = badges[id]
+  if (hideTooltip) return badgeImg
+
   return (
     <Tooltip>
-      <TooltipTrigger className="shrink-0">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`/images/badges/${id}.png`}
-          alt={`${meta.display.name} badge`}
-          className="h-16 w-auto lg:h-[4.5rem]"
-        />
-      </TooltipTrigger>
+      <TooltipTrigger className="shrink-0">{badgeImg}</TooltipTrigger>
       <TooltipContent>
-        <span className="mb-2 block font-medium">{meta.display.name}</span>
-        <span className="text-xs">{meta.display.description}</span>
+        <span className="mb-2 block font-medium">{badge.name}</span>
+        <span className="text-xs">{badge.description}</span>
       </TooltipContent>
     </Tooltip>
   )

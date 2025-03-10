@@ -4,33 +4,27 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import { CONTRACTS, layer2s } from '@l2beat/config'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
-import { concat } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
-import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
-import { getExplorerUrl } from '~/utils/get-explorer-url'
+import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
-import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
-import { getUsedInProjects } from './get-used-in-projects'
+import type { ContractUtils } from './get-contract-utils'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   type: 'layer2' | 'layer3' | 'bridge'
-  id?: string
+  id: ProjectId
   slug: string
   isUnderReview?: boolean
   isVerified: boolean
   architectureImage?: string
-  contracts: ProjectContracts
+  contracts?: ProjectContracts
   daSolution?: DaSolution
-  escrows: ProjectEscrow[] | undefined
-  hostChain?: string
 }
 
 type ContractsSection = Omit<
@@ -40,8 +34,12 @@ type ContractsSection = Omit<
 
 export function getContractsSection(
   projectParams: ProjectParams,
+  contractUtils: ContractUtils,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
+  if (!projectParams.contracts) {
+    return undefined
+  }
   if (
     Object.values(projectParams.contracts.addresses).flat().length === 0 &&
     projectParams.daSolution?.contracts?.length === 0
@@ -56,13 +54,14 @@ export function getContractsSection(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
       ([chainName, contracts]) => {
         return [
-          slugToDisplayName(chainName),
+          contractUtils.getChainName(chainName),
           contracts.map((contract) => {
             return makeTechnologyContract(
               contract,
               projectParams,
               !contract.isVerified,
               projectChangeReport,
+              contractUtils,
             )
           }),
         ]
@@ -74,22 +73,23 @@ export function getContractsSection(
     projectParams.daSolution?.contracts &&
     projectParams.daSolution.contracts.length !== 0
       ? {
-          layerName: projectParams.daSolution?.layerName,
-          bridgeName: projectParams.daSolution?.bridgeName,
-          hostChain: slugToDisplayName(projectParams.daSolution?.hostChain),
+          layerName: projectParams.daSolution.layerName,
+          bridgeName: projectParams.daSolution.bridgeName,
+          hostChainName: projectParams.daSolution.hostChainName,
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
             return makeTechnologyContract(
               contract,
               projectParams,
               !contract.isVerified,
               projectChangeReport,
+              contractUtils,
             )
           }),
         }
       : undefined
 
   const escrows =
-    projectParams.escrows
+    projectParams.contracts.escrows
       ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
@@ -100,30 +100,14 @@ export function getContractsSection(
           projectParams,
           !contract.isVerified,
           projectChangeReport,
+          contractUtils,
           true,
         )
       }) ?? []
 
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
 
-  if (projectParams.isVerified === false) {
-    risks.push({
-      text: `${CONTRACTS.UNVERIFIED_RISK.category} ${CONTRACTS.UNVERIFIED_RISK.text}`,
-      isCritical: !!CONTRACTS.UNVERIFIED_RISK.isCritical,
-    })
-  }
-
-  const getL3HostChain = (hostChain: string) => {
-    return layer2s.find((l2) => l2.id === hostChain)?.display.name ?? 'Unknown'
-  }
-
-  const chainName =
-    projectParams.type === 'layer3' && projectParams.hostChain
-      ? getL3HostChain(projectParams.hostChain)
-      : 'Ethereum'
-
   return {
-    chainName,
     contracts,
     escrows,
     risks,
@@ -141,10 +125,16 @@ function makeTechnologyContract(
   projectParams: ProjectParams,
   isUnverified: boolean,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
+  contractUtils: ContractUtils,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = item.chain
-  const etherscanUrl = getExplorerUrl(chain)
+  // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
+  // weird logic would exist here. Instead you'd already have the items you want
+  // to display already pre-processed in config
+  const explorerUrl = item.url
+    ? new URL(item.url).origin
+    : 'https://etherscan.io'
 
   const getAddress = (opts: {
     address: EthereumAddress
@@ -157,7 +147,7 @@ function makeTechnologyContract(
       name: name,
       address: opts.address.toString(),
       verificationStatus: toVerificationStatus(!isUnverified),
-      href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
+      href: `${explorerUrl}/address/${opts.address.toString()}#code`,
     }
   }
 
@@ -192,16 +182,16 @@ function makeTechnologyContract(
   let description = item.description
 
   if (isUnverified) {
-    const unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
-
+    const text =
+      'The source code of this contract is not verified on Etherscan.'
     if (!description) {
-      description = unverifiedText
+      description = text
     } else {
-      description += ' ' + unverifiedText
+      description += ' ' + text
     }
   }
 
-  const tokens = projectParams.escrows?.find(
+  const tokens = projectParams.contracts?.escrows?.find(
     (x) => x.address === item.address,
   )?.tokens
   // if contract is an escrow we already tweak it's name so we don't need to add this
@@ -237,16 +227,12 @@ function makeTechnologyContract(
   )
 
   const additionalReferences: ReferenceLink[] = []
-  const mainAddresses = [getAddress({ address: item.address })]
-  const implementationAddresses =
-    item.upgradeability?.implementations.map((implementation) =>
-      getAddress({ address: implementation }),
-    ) ?? []
 
-  const usedInProjects = getUsedInProjects(
-    projectParams,
-    mainAddresses,
-    implementationAddresses,
+  const usedInProjects = [
+    item.address,
+    ...(item.upgradeability?.implementations ?? []),
+  ].flatMap((address) =>
+    contractUtils.getUsedIn(projectParams.id, item.chain, address),
   )
 
   return {
@@ -255,12 +241,11 @@ function makeTechnologyContract(
     admins,
     description,
     usedInProjects,
-    references: concat(item.references ?? [], additionalReferences),
+    references: (item.references ?? []).concat(additionalReferences),
     chain,
     implementationChanged,
     highSeverityFieldChanged,
     upgradeableBy: item.upgradableBy,
-    upgradeDelay: item.upgradeDelay,
     upgradeConsiderations: item.upgradeConsiderations,
   }
 }

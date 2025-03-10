@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { isProjectVerified } from '../../../verification/isVerified'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -96,6 +95,7 @@ export const eigenda: BaseProject = {
       explorers: ['https://blobs.eigenda.xyz/'],
       socialMedia: ['https://x.com/eigen_da'],
     },
+    badges: [],
   },
   daLayer: {
     type: 'DA Service',
@@ -159,7 +159,7 @@ export const eigenda: BaseProject = {
       ],
     },
     usedWithoutBridgeIn: linkByDA({
-      layer: ProjectId('eigen-da'),
+      layer: ProjectId('eigenda'),
       bridge: undefined,
     }),
     risks: {
@@ -172,24 +172,24 @@ export const eigenda: BaseProject = {
     daLayer: ProjectId('eigenda'),
     technology: {
       description: `
-      ## Architecture
-  
-      ![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
-  
-      The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
-      The checkSignatures() function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
-      The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
-      To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
-      Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
-  
-      ![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
-  
-      Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of the registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. Meeting these dispersal thresholds allows the system to tolerate up to ${quorum1AdversaryThreshold}% (quorum 1) and ${quorum2AdversaryThreshold}% (quorum 2) of the total stake being adversarial, achieving this with approximately 4.5 data redundancy.  
-      The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
-      There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
-  
-      Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
-      An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
+## Architecture
+
+![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
+
+The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
+The checkSignatures() function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
+The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
+To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
+Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
+
+![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
+
+Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of the registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. Meeting these dispersal thresholds allows the system to tolerate up to ${quorum1AdversaryThreshold}% (quorum 1) and ${quorum2AdversaryThreshold}% (quorum 2) of the total stake being adversarial, achieving this with approximately 4.5 data redundancy.  
+The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
+There is a maximum of ${operatorSetParamsQuorum1[0]} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2[0]} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
+
+Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
+An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
     `,
       references: [
         {
@@ -221,7 +221,7 @@ export const eigenda: BaseProject = {
       membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
     },
     usedIn: linkByDA({
-      layer: ProjectId('eigen-da'),
+      layer: ProjectId('eigenda'),
       bridge: ProjectId('eigenda'),
     }),
     risks: {
@@ -245,11 +245,11 @@ export const eigenda: BaseProject = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
-        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
+        text: `the EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
       },
       {
         category: 'Funds can be lost if',
@@ -280,9 +280,4 @@ export const eigenda: BaseProject = {
       type: 'general',
     },
   ],
-}
-
-// TODO: different solution for this
-if (eigenda.statuses) {
-  eigenda.statuses.isUnverified = !isProjectVerified(eigenda)
 }

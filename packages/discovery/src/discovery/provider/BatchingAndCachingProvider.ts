@@ -531,7 +531,7 @@ export class BatchingAndCachingProvider {
         return undefined
       } else {
         const parsed = parseCacheEntry(cached)
-        parsed.timestamp = new UnixTime(parsed.timestamp)
+        parsed.timestamp = UnixTime(parsed.timestamp)
         return parsed
       }
     }
@@ -553,6 +553,47 @@ export class BatchingAndCachingProvider {
     const blobs = await this.provider.getBlobs(txHash)
     entry.write(JSON.stringify(blobs))
     return blobs
+  }
+
+  async celestiaBlobExists(
+    height: number,
+    namespace: string,
+    commitment: string,
+  ) {
+    const entry = await this.cache.entry(
+      'celestiaBlobExists',
+      [height, namespace, commitment],
+      undefined,
+    )
+    const cached = entry.read()
+    if (cached !== undefined) {
+      return parseCacheEntry(cached)
+    }
+
+    const blobExists = await this.provider.celestiaBlobExists(
+      height,
+      namespace,
+      commitment,
+    )
+
+    entry.write(JSON.stringify(blobExists))
+
+    return blobExists
+  }
+
+  async getCelestiaBlockResultLogs(height: number) {
+    const entry = await this.cache.entry(
+      'getCelestiaBlockResultLogs',
+      [height],
+      undefined,
+    )
+    const cached = entry.read()
+    if (cached !== undefined) {
+      return parseCacheEntry(cached)
+    }
+    const logs = await this.provider.getCelestiaBlockResultLogs(height)
+    entry.write(JSON.stringify(logs))
+    return logs
   }
 }
 

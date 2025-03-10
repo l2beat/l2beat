@@ -1,12 +1,13 @@
 import { expect } from 'earl'
 
-import { assert, ChainId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { chains } from '../../chains'
-import { NUGGETS } from '../../common'
-import { tokenList } from '../../tokens/tokens'
+import { getTokenList } from '../../tokens/tokens'
+import { chains } from '../chains'
 import { layer2s } from '../layer2s'
 import { layer3s } from './index'
+
+const tokenList = getTokenList(chains)
 
 describe('layer3s', () => {
   describe('links', () => {
@@ -32,17 +33,25 @@ describe('layer3s', () => {
     })
   })
 
-  it('every layer3 has a valid host chain', () => {
+  it('every layer3 has a valid config', () => {
     for (const layer3 of layer3s) {
       expect(layer3.hostChain).not.toBeNullish()
       const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
       expect(hostChain).not.toBeNullish()
+
+      expect(layer3.stackedRiskView).not.toBeNullish()
+
+      expect(layer3.config.trackedTxs).toEqual(undefined)
+      expect(layer3.config.liveness).toEqual(undefined)
+      expect(layer3.display.liveness).toEqual(undefined)
+      expect(layer3.config.finality).toEqual(undefined)
+      expect(layer3.display.finality).toEqual(undefined)
     }
   })
 
   describe('every escrow can resolve all of its tokens', () => {
-    const chainsMap = new Map<string, ChainId>(
-      chains.map((c) => [c.name, ChainId(c.chainId)]),
+    const chainsMap = new Map<string, number | undefined>(
+      chains.map((c) => [c.name, c.chainId]),
     )
     for (const layer3 of layer3s) {
       for (const escrow of layer3.config.escrows) {
@@ -65,7 +74,7 @@ describe('layer3s', () => {
     }
   })
 
-  describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+  describe('every escrow sinceTimestamp is greater or equal to chains sinceTimestamp', () => {
     for (const layer3 of layer3s) {
       for (const escrow of layer3.config.escrows) {
         const chain = chains.find((c) => c.name === escrow.chain)
@@ -76,14 +85,14 @@ describe('layer3s', () => {
             `Chain not found for escrow ${escrow.address.toString()}`,
           )
           assert(
-            chain.minTimestampForTvl,
-            `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+            chain.sinceTimestamp,
+            `Escrow ${escrow.address.toString()} added for chain without sinceTimestamp ${
               chain.name
             }`,
           )
 
-          expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-            chain.minTimestampForTvl.toNumber(),
+          expect(escrow.sinceTimestamp).toBeGreaterThanOrEqual(
+            chain.sinceTimestamp,
           )
         })
       }
@@ -97,33 +106,6 @@ describe('layer3s', () => {
           expect(layer3.display.description.endsWith('.')).toEqual(true)
         })
       }
-    })
-  })
-
-  describe('milestones', () => {
-    describe('knowledgeNuggets', () => {
-      const knowledgeNuggets = layer3s.flatMap(
-        (nugget) => nugget.knowledgeNuggets ?? [],
-      )
-
-      describe('title fits character limit', () => {
-        knowledgeNuggets.forEach((nugget) => {
-          it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqual(40)
-          })
-        })
-      })
-
-      describe('uses static thumbnail', () => {
-        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
-        knowledgeNuggets
-          .filter((x) => x.thumbnail !== undefined)
-          .forEach((nugget) => {
-            it(nugget.title, () => {
-              expect(staticThumbnails).toInclude(nugget.thumbnail!)
-            })
-          })
-      })
     })
   })
 

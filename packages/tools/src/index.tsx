@@ -6,6 +6,7 @@ import { Layout } from './Layout'
 import { DecoderApp } from './decoder/DecoderApp'
 import { DiscoLupe } from './discolupe/DiscoLupe'
 import { LogoGenerator } from './logo-generator/LogoGenerator'
+import { MonitorApp } from './monitor/MonitorApp'
 import { SimulatorApp } from './simulator/SimulatorApp'
 
 const queryClient = new QueryClient()
@@ -24,6 +25,7 @@ ReactDOM.createRoot(root).render(
             <Route path="/simulator" element={<SimulatorApp />} />
             <Route path="/discolupe" element={<DiscoLupe />} />
             <Route path="/logo-generator" element={<LogoGenerator />} />
+            <Route path="/monitor" element={<MonitorApp />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('dbk')
 
-export const dbk: Layer2 = opStackL2({
-  addedAt: new UnixTime(1726825120), // 2024-09-20T09:38:40Z
+export const dbk: ScalingProject = opStackL2({
+  addedAt: UnixTime(1726825120), // 2024-09-20T09:38:40Z
   discovery,
   additionalBadges: [],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -26,13 +26,23 @@ export const dbk: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.mainnet.dbkchain.io/',
-  genesisTimestamp: new UnixTime(1717461337),
+  chainConfig: {
+    name: 'dbk',
+    chainId: 20240603,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.mainnet.dbkchain.io/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  genesisTimestamp: UnixTime(1717461337),
   // incompatible
   // finality: {
   //   type: 'OPStack-blob',
-  //   genesisTimestamp: new UnixTime(1717461337),
-  //   minTimestamp: new UnixTime(1717485635), // first blob https://etherscan.io/tx/0x5206806df7d2124910f2c44f38bb34b6ab99b9dfbea94c6ae6a793f1600e3363
+  //   genesisTimestamp: UnixTime(1717461337),
+  //   minTimestamp: UnixTime(1717485635), // first blob https://etherscan.io/tx/0x5206806df7d2124910f2c44f38bb34b6ab99b9dfbea94c6ae6a793f1600e3363
   //   l2BlockTimeSeconds: 2,
   //   lag: 0,
   //   stateUpdate: 'disabled',

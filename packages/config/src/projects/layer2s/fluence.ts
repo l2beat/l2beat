@@ -1,17 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('fluence')
 
-export const fluence: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
+export const fluence: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -42,13 +42,22 @@ export const fluence: Layer2 = orbitStackL2({
       tokens: '*',
     }),
   ],
-  gasTokens: ['FLT'],
   associatedTokens: ['FLT'],
-  rpcUrl: 'https://rpc.mainnet.fluence.dev',
-  bridge: discovery.getContract('ERC20Bridge'),
+  chainConfig: {
+    name: 'fluence',
+    chainId: 9999999,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.mainnet.fluence.dev',
+        callsPerMinute: 1500,
+      },
+    ],
+    gasTokens: ['FLT'],
+  },
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',

@@ -1,15 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('ethernity')
 
-export const ethernity: Layer2 = opStackL2({
-  addedAt: new UnixTime(1718182472), // 2024-06-12T08:54:32Z
-  additionalBadges: [Badge.RaaS.Gelato],
+export const ethernity: ScalingProject = opStackL2({
+  addedAt: UnixTime(1718182472), // 2024-06-12T08:54:32Z
+  additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['AI'],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -38,8 +38,18 @@ export const ethernity: Layer2 = opStackL2({
   },
   associatedTokens: ['ERN'],
   isNodeAvailable: true,
-  rpcUrl: 'https://mainnet.ethernitychain.io',
-  genesisTimestamp: new UnixTime(1723547737),
+  chainConfig: {
+    name: 'ethernity',
+    chainId: 183,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.ethernitychain.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  genesisTimestamp: UnixTime(1723547737),
   milestones: [
     // {
     //   name: 'Ethernity Mainnet Launch',

@@ -1,4 +1,254 @@
-Generated with discovered.json: 0x67e48bd8c81c48f175c54edeed597c2ab791aaa5
+Generated with discovered.json: 0xcb8aaaceb0aa928256f8772757ca6db9da67ecbb
+
+# Diff at Tue, 04 Mar 2025 10:40:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 21723798
+- current block number: 21723798
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723798 (main branch discovery), not current.
+
+```diff
+    contract Factory (0x06D538690AF257Da524f25D0CD52fD85b1c2173E) {
+    +++ description: None
+      sinceBlock:
++        14402871
+    }
+```
+
+```diff
+    contract DAI Pool (0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d) {
+    +++ description: None
+      sinceBlock:
++        15970816
+    }
+```
+
+```diff
+    contract SG-ETH Pool (0x101816545F6bd2b1076434B54383a1E633390A2E) {
+    +++ description: None
+      sinceBlock:
++        15035701
+    }
+```
+
+```diff
+    contract WOO Pool (0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09) {
+    +++ description: None
+      sinceBlock:
++        16680977
+    }
+```
+
+```diff
+    contract Bridge (0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97) {
+    +++ description: None
+      sinceBlock:
++        14402868
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      sinceBlock:
++        15416287
+    }
+```
+
+```diff
+    contract USDT Pool (0x38EA452219524Bb87e18dE1C24D3bB59510BD783) {
+    +++ description: None
+      sinceBlock:
++        14403402
+    }
+```
+
+```diff
+    contract USDT Pool2 (0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d) {
+    +++ description: None
+      sinceBlock:
++        16415911
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sinceBlock:
++        15416271
+    }
+```
+
+```diff
+    contract sUSD Pool (0x590d4f8A68583639f215f675F3a259Ed84790580) {
+    +++ description: None
+      sinceBlock:
++        15970821
+    }
+```
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      sinceBlock:
++        15416736
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      sinceBlock:
++        15398311
+    }
+```
+
+```diff
+    contract StarGate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      sinceBlock:
++        14402408
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      sinceBlock:
++        14388880
+    }
+```
+
+```diff
+    contract USDD Pool (0x692953e758c3669290cb1677180c64183cEe374e) {
+    +++ description: None
+      sinceBlock:
++        15035701
+    }
+```
+
+```diff
+    contract Router (0x8731d54E9D02c286767d56ac03e8037C07e01e98) {
+    +++ description: None
+      sinceBlock:
++        14402864
+    }
+```
+
+```diff
+    contract StarGateFeeLibrary7 (0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F) {
+    +++ description: None
+      sinceBlock:
++        17437020
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      sinceBlock:
++        15416448
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      sinceBlock:
++        15410443
+    }
+```
+
+```diff
+    contract MAI Pool (0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8) {
+    +++ description: None
+      sinceBlock:
++        15979653
+    }
+```
+
+```diff
+    contract mETH Pool (0xA572d137666DCbAdFA47C3fC41F15e90134C618c) {
+    +++ description: None
+      sinceBlock:
++        19138880
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      sinceBlock:
++        14388905
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      sinceBlock:
++        14457816
+    }
+```
+
+```diff
+    contract Google Cloud Oracle (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      sinceBlock:
++        18095084
+    }
+```
+
+```diff
+    contract METIS Pool (0xd8772edBF88bBa2667ed011542343b0eDDaCDa47) {
+    +++ description: None
+      sinceBlock:
++        16415911
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sinceBlock:
++        18095085
+    }
+```
+
+```diff
+    contract USDC Pool (0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56) {
+    +++ description: None
+      sinceBlock:
++        14403393
+    }
+```
+
+```diff
+    contract LUSD Pool (0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2) {
+    +++ description: None
+      sinceBlock:
++        15970821
+    }
+```
+
+```diff
+    contract Frax Pool (0xfA0F307783AC21C39E939ACFF795e27b650F6e68) {
+    +++ description: None
+      sinceBlock:
++        15970816
+    }
+```
+
+Generated with discovered.json: 0x55658afed1de7bf30ab944043644d40c6e1bb06f
 
 # Diff at Tue, 28 Jan 2025 15:04:50 GMT:
 

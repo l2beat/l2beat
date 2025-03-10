@@ -7,8 +7,8 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
@@ -28,11 +28,11 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const witness: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+export const witness: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
   isArchived: true,
   discovery,
-  additionalBadges: [Badge.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -88,9 +88,15 @@ export const witness: Layer2 = polygonCDKStack({
   chainConfig: {
     chainId: 1702448187,
     name: 'witness',
-    minTimestampForTvl: new UnixTime(1718569535),
+    sinceTimestamp: UnixTime(1718569535),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
+        callsPerMinute: 1500,
+      },
+    ],
   },
-  rpcUrl: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
   nonTemplateEscrows: [
     // TVS was 31 doler on 2025-01-28 when this was archived
     // shared.getEscrowDetails({
@@ -113,9 +119,8 @@ export const witness: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
     newCryptography: {

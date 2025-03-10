@@ -4,10 +4,10 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('soneium')
-const genesisTimestamp = new UnixTime(1733498411)
+const genesisTimestamp = UnixTime(1733498411)
 
 export const soneium = opStackL2({
-  addedAt: new UnixTime(1724842746),
+  addedAt: UnixTime(1724842746),
   discovery,
   genesisTimestamp,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -15,6 +15,11 @@ export const soneium = opStackL2({
     name: 'Soneium',
     slug: 'soneium',
     stateValidationImage: 'opfp',
+    tvlWarning: {
+      value:
+        'The total TVS doublecounts underlying assets for solvBTC.BBN and solvBTC since they are locked on Soneium. We are working on a fix.',
+      sentiment: 'warning',
+    },
     description:
       'Soneium is an Optimistic rollup based on the OP Stack. It is built by Sony Block Solutions Labs and planned to stand as a versatile, general-purpose blockchain.',
     links: {
@@ -30,11 +35,10 @@ export const soneium = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.soneium.org/',
   finality: {
     type: 'OPStack',
-    minTimestamp: new UnixTime(1733134753),
-    genesisTimestamp: new UnixTime(1733134753),
+    minTimestamp: UnixTime(1733134753),
+    genesisTimestamp: UnixTime(1733134753),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -44,13 +48,9 @@ export const soneium = opStackL2({
   chainConfig: {
     name: 'soneium',
     chainId: 1868,
-    blockscoutV2ApiUrl: 'https://soneium.blockscout.com/api/v2',
-    explorerUrl: 'https://soneium.blockscout.com/',
-    explorerApi: {
-      url: 'https://soneium.blockscout.com/api',
-      type: 'blockscout',
-    },
-    minTimestampForTvl: new UnixTime(1733134751),
+    explorerUrl: 'https://soneium.blockscout.com',
+    coingeckoPlatform: 'soneium',
+    sinceTimestamp: UnixTime(1733134751),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -58,6 +58,11 @@ export const soneium = opStackL2({
         sinceBlock: 1,
         version: '3',
       },
+    ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.soneium.org/', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://soneium.blockscout.com/api' },
+      { type: 'blockscoutV2', url: 'https://soneium.blockscout.com/api/v2' },
     ],
   },
   nonTemplateEscrows: [

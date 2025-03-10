@@ -8,7 +8,7 @@ import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
 import type { ContractSources } from '../source/SourceCodeService'
 import type { SourceCodeService } from '../source/SourceCodeService'
-import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
+import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { AddressAnalyzer } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
 
@@ -17,17 +17,42 @@ describe(AddressAnalyzer.name, () => {
   const config = createContractConfig(
     { address: EthereumAddress.random(), ...overrides },
     {},
+    {},
   )
 
   describe(AddressAnalyzer.prototype.analyze.name, () => {
     it('handles EOAs', async () => {
+      const sources: ContractSources = {
+        name: '',
+        isVerified: false,
+        abi: [],
+        abis: {},
+        sources: [],
+      }
+
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.EMPTY,
       })
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<ProxyDetector>(),
-        mockObject<SourceCodeService>(),
-        mockObject<HandlerExecutor>(),
+        mockObject<ProxyDetector>({
+          detectProxy: async () => ({
+            type: 'EOA',
+            values: {},
+            deployment: undefined,
+            addresses: [],
+          }),
+        }),
+        mockObject<SourceCodeService>({
+          getSources: async () => sources,
+        }),
+        mockObject<HandlerExecutor>({
+          execute: async () => ({
+            results: [],
+            values: {},
+            usedTypes: [],
+            errors: {},
+          }),
+        }),
         mockObject<TemplateService>({
           findMatchingTemplates: () => [],
         }),
@@ -42,8 +67,14 @@ describe(AddressAnalyzer.name, () => {
       )
 
       expect(result).toEqual({
+        ...EMPTY_ANALYZED_EOA,
         type: 'EOA',
         name: undefined,
+        category: undefined,
+        deploymentTimestamp: undefined,
+        deploymentBlockNumber: undefined,
+        references: undefined,
+        targetsMeta: undefined,
         address,
       })
     })
@@ -96,12 +127,6 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
-        getDeployment: async () => ({
-          timestamp: new UnixTime(1234),
-          blockNumber: 9876,
-          deployer: EthereumAddress.random(),
-          transactionHash: Hash256.random(),
-        }),
       })
 
       const addressAnalyzer = new AddressAnalyzer(
@@ -112,6 +137,13 @@ describe(AddressAnalyzer.name, () => {
               $implementation: implementation.toString(),
               $admin: admin.toString(),
             },
+            deployment: {
+              timestamp: UnixTime(1234),
+              blockNumber: 9876,
+              deployer: EthereumAddress.random(),
+              transactionHash: Hash256.random(),
+            },
+            addresses: [],
           }),
         }),
         mockObject<SourceCodeService>({
@@ -140,9 +172,10 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
+        category: undefined,
         name: 'Test',
         isVerified: true,
-        deploymentTimestamp: new UnixTime(1234),
+        deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
         references: undefined,
@@ -157,7 +190,6 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
-            categories: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             severity: undefined,
@@ -218,12 +250,6 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
-        getDeployment: async () => ({
-          timestamp: new UnixTime(1234),
-          blockNumber: 9876,
-          deployer: EthereumAddress.random(),
-          transactionHash: Hash256.random(),
-        }),
       })
 
       const addressAnalyzer = new AddressAnalyzer(
@@ -234,6 +260,13 @@ describe(AddressAnalyzer.name, () => {
               $implementation: implementation.toString(),
               $admin: admin.toString(),
             },
+            deployment: {
+              timestamp: UnixTime(1234),
+              blockNumber: 9876,
+              deployer: EthereumAddress.random(),
+              transactionHash: Hash256.random(),
+            },
+            addresses: [],
           }),
         }),
         mockObject<SourceCodeService>({
@@ -263,8 +296,9 @@ describe(AddressAnalyzer.name, () => {
         ...EMPTY_ANALYZED_CONTRACT,
         name: 'Test',
         address,
+        category: undefined,
         isVerified: false,
-        deploymentTimestamp: new UnixTime(1234),
+        deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
         references: undefined,
@@ -279,7 +313,6 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
-            categories: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             severity: undefined,
@@ -352,6 +385,8 @@ describe(AddressAnalyzer.name, () => {
               $implementation: implementation.toString(),
               $admin: admin.toString(),
             },
+            deployment: undefined,
+            addresses: [],
           }),
         }),
         mockObject<SourceCodeService>({
@@ -380,6 +415,7 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
+        category: undefined,
         name: 'Test',
         deploymentBlockNumber: undefined,
         deploymentTimestamp: undefined,
@@ -397,7 +433,6 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
-            categories: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             severity: undefined,

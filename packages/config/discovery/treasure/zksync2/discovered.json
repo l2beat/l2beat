@@ -2,10 +2,9 @@
   "name": "treasure",
   "chain": "zksync2",
   "blockNumber": 54952364,
-  "configHash": "0x0dc20c4a005e00134a517b576748f661ba6fe77112ada058553218ababf90690",
+  "configHash": "0xa28fa0d224e7a6fff4a042a3496c8048e1096216c888f032afa2b8987640576d",
   "sharedModules": ["shared-zk-stack"],
-  "contracts": [],
-  "eoas": [],
+  "entries": [],
   "abis": {},
   "usedTemplates": {}
 }

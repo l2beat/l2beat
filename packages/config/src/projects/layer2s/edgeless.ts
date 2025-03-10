@@ -1,15 +1,15 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('edgeless')
 
-export const edgeless: Layer2 = orbitStackL2({
-  addedAt: new UnixTime(1712313901), // 2024-04-05T10:45:01Z
+export const edgeless: ScalingProject = orbitStackL2({
+  addedAt: UnixTime(1712313901), // 2024-04-05T10:45:01Z
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -34,28 +34,37 @@ export const edgeless: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.edgeless.network/http',
-  additionalBadges: [Badge.DA.CustomDA, Badge.RaaS.Caldera],
+  chainConfig: {
+    name: 'edgeless',
+    chainId: 2026,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.edgeless.network/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  additionalBadges: [BADGES.DA.CustomDA, BADGES.RaaS.Caldera],
   nonTemplateEscrows: [
     // this is not the bridge escrow itself but the strategy contract that holds all funds backing the ewETH in the canonical bridge escrow. The normal escrow can be used as soon as we track the ewETH token
     {
       address: EthereumAddress('0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b'),
-      sinceTimestamp: new UnixTime(1711057199),
+      sinceTimestamp: UnixTime(1711057199),
       tokens: ['ETH', 'stETH'],
       source: 'external',
       chain: 'ethereum',
     },
     {
       address: EthereumAddress('0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9'),
-      sinceTimestamp: new UnixTime(1713942971),
+      sinceTimestamp: UnixTime(1713942971),
       tokens: ['ETH', 'ezETH'],
       source: 'external',
       chain: 'ethereum',
     },
   ],
-  discoveryDrivenData: true,
   discovery,
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),

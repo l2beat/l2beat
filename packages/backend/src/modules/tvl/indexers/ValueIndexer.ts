@@ -83,7 +83,7 @@ export class ValueIndexer extends ManagedChildIndexer {
       values: values.length,
     })
 
-    return timestamps[timestamps.length - 1].toNumber()
+    return timestamps[timestamps.length - 1]
   }
 
   private getTimestampsToSync(from: number, to: number) {

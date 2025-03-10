@@ -30,6 +30,7 @@ export const memo: BaseProject = {
         'https://discord.com/invite/YG4Ydv2E7X',
       ],
     },
+    badges: [],
   },
   daLayer: {
     type: 'Public Blockchain',

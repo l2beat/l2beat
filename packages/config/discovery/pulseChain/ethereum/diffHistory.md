@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x73de0535121361b8226a04f72f187087d802e951
+Generated with discovered.json: 0xd01eb5e94debe166e4d208aa7eb5b10182a50f85
+
+# Diff at Tue, 04 Mar 2025 10:39:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 17968825
+- current block number: 17968825
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17968825 (main branch discovery), not current.
+
+```diff
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D) {
+    +++ description: None
+      sinceBlock:
++        17264177
+    }
+```
+
+```diff
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d) {
+    +++ description: None
+      sinceBlock:
++        17264119
+    }
+```
+
+```diff
+    contract WETHOmnibridgeRouter (0x8AC4ae65b3656e26dC4e0e69108B392283350f55) {
+    +++ description: None
+      sinceBlock:
++        17264181
+    }
+```
+
+```diff
+    contract TokenFactory (0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02) {
+    +++ description: None
+      sinceBlock:
++        17264180
+    }
+```
+
+```diff
+    contract PermittableToken (0xA1077a294dDE1B09bB078844df40758a5D0f9a27) {
+    +++ description: None
+      sinceBlock:
++        17264179
+    }
+```
+
+```diff
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c) {
+    +++ description: None
+      sinceBlock:
++        17264125
+    }
+```
+
+Generated with discovered.json: 0xde4fc0e1dfafc4585656de553fe80eb2b90d5044
 
 # Diff at Mon, 20 Jan 2025 11:09:56 GMT:
 

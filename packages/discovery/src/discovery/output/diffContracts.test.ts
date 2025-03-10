@@ -1,8 +1,8 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { diffContracts } from './diffContracts'
+import type { EntryParameters } from './types'
 
 describe(diffContracts.name, () => {
   const OLD_ADDRESS = EthereumAddress.random()
@@ -14,7 +14,8 @@ describe(diffContracts.name, () => {
   const IMPLEMENTATION = EthereumAddress.random()
 
   it('returns difference between two objects', () => {
-    const committed: ContractParameters = {
+    const committed: EntryParameters = {
+      type: 'Contract',
       name: 'A',
       address: OLD_ADDRESS,
       proxyType: 'EIP1967 proxy',
@@ -28,7 +29,8 @@ describe(diffContracts.name, () => {
         E: 'ignoreMe',
       },
     }
-    const discovered: ContractParameters = {
+    const discovered: EntryParameters = {
+      type: 'Contract',
       name: 'A',
       address: NEW_ADDRESS,
       proxyType: 'EIP1967 proxy',

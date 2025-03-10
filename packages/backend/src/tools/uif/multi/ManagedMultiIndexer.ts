@@ -44,6 +44,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
       saved,
       this.options.configurations,
       this.options.serializeConfiguration,
+      this.options.configurationsTrimmingDisabled,
     )
     await this.updateSavedConfigurations(state.diff)
     this.ranges = toRanges(state.configurations)
@@ -54,49 +55,53 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     if (
       diff.toAdd.length === 0 &&
       diff.toUpdate.length === 0 &&
-      diff.toDelete.length === 0 &&
-      diff.toRemoveData.length === 0
+      diff.toDelete.length === 0
     ) {
       return
     }
 
-    return await this.options.db.transaction(async () => {
-      if (diff.toAdd.length > 0) {
-        await this.options.indexerService.insertConfigurations(
-          this.indexerId,
-          diff.toAdd,
-          this.options.serializeConfiguration,
-        )
-        this.logger.info('Inserted configurations', {
-          configurations: diff.toAdd.length,
-        })
-      }
+    return await this.options.db
+      .transaction(async () => {
+        if (diff.toAdd.length > 0) {
+          await this.options.indexerService.insertConfigurations(
+            this.indexerId,
+            diff.toAdd,
+            this.options.serializeConfiguration,
+          )
+        }
 
-      if (diff.toUpdate.length > 0) {
-        await this.options.indexerService.upsertConfigurations(
-          this.indexerId,
-          diff.toUpdate,
-          this.options.serializeConfiguration,
-        )
-        this.logger.info('Updated configurations', {
-          configurations: diff.toUpdate.length,
-        })
-      }
+        if (diff.toUpdate.length > 0) {
+          await this.options.indexerService.upsertConfigurations(
+            this.indexerId,
+            diff.toUpdate,
+            this.options.serializeConfiguration,
+          )
+        }
 
-      if (diff.toDelete.length > 0) {
-        await this.options.indexerService.deleteConfigurations(
-          this.indexerId,
-          diff.toDelete,
-        )
-        this.logger.info('Deleted configurations', {
-          configurations: diff.toDelete.length,
-        })
-      }
+        if (diff.toTrimDataAfterUpdate.length > 0) {
+          await this.removeData(diff.toTrimDataAfterUpdate)
+        }
 
-      if (diff.toRemoveData.length > 0) {
-        await this.removeData(diff.toRemoveData)
-      }
-    })
+        if (diff.toWipeDataAfterUpdate.length > 0) {
+          await this.removeData(diff.toWipeDataAfterUpdate)
+        }
+
+        if (diff.toDelete.length > 0) {
+          await this.options.indexerService.deleteConfigurations(
+            this.indexerId,
+            diff.toDelete,
+          )
+        }
+
+        if (!this.options.dataWipingAfterDeleteDisabled) {
+          if (diff.toWipeDataAfterDelete.length > 0) {
+            await this.removeData(diff.toWipeDataAfterDelete)
+          }
+        }
+      })
+      .then(() => {
+        this.logConfigurationsChanges(diff)
+      })
   }
 
   // #endregion
@@ -200,4 +205,39 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
 
   // #endregion
+
+  private logConfigurationsChanges(diff: ConfigurationsDiff<T>) {
+    if (diff.toAdd.length > 0) {
+      this.logger.info('Inserted configurations', {
+        configurations: diff.toAdd.length,
+      })
+    }
+    if (diff.toUpdate.length > 0) {
+      this.logger.info('Updated configurations', {
+        configurations: diff.toUpdate.length,
+      })
+    }
+    if (diff.toTrimDataAfterUpdate.length > 0) {
+      this.logger.info('Trimmed data after update', {
+        configurations: diff.toTrimDataAfterUpdate.length,
+      })
+    }
+    if (diff.toWipeDataAfterUpdate.length > 0) {
+      this.logger.info('Wiped data after update', {
+        configurations: diff.toWipeDataAfterUpdate.length,
+      })
+    }
+    if (diff.toDelete.length > 0) {
+      this.logger.info('Deleted configurations', {
+        configurations: diff.toDelete.length,
+      })
+    }
+    if (!this.options.dataWipingAfterDeleteDisabled) {
+      if (diff.toWipeDataAfterDelete.length > 0) {
+        this.logger.info('Wiped data after delete', {
+          configurations: diff.toWipeDataAfterDelete.length,
+        })
+      }
+    }
+  }
 }

@@ -1,9 +1,7 @@
-import type { ContractParameters } from '@l2beat/discovery-types'
+import type { EntryParameters } from '@l2beat/discovery'
 import type { ApiAddressEntry } from './types'
 
-export function getContractName(
-  c: ContractParameters,
-): ApiAddressEntry['name'] {
+export function getContractName(c: EntryParameters): ApiAddressEntry['name'] {
   if (c.values?.['$members']) {
     const threshold = c.values?.['$threshold'] as number
     const members = (c.values?.['$members'] as string[]).length

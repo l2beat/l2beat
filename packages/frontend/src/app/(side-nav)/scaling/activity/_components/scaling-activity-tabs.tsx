@@ -1,8 +1,9 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
-import { ActivityChart } from '~/components/chart/activity/activity-chart'
+import { ScalingActivityChart } from '~/components/chart/activity/scaling-activity-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
@@ -19,7 +20,6 @@ import {
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -86,40 +86,43 @@ export function ScalingActivityTabs(props: Props) {
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="pt-5">
-            <ActivityChart
+          <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
+            <RollupsInfo />
+            <ScalingActivityChart
               entries={entries.rollups}
               milestones={props.milestones}
               type="Rollups"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
-            <RollupsInfo />
             <ScalingActivityTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
-            <ActivityChart
+          <DirectoryTabsContent
+            value="validiumsAndOptimiums"
+            className="pt-4 sm:pt-3"
+          >
+            <ValidiumsAndOptimiumsInfo />
+            <ScalingActivityChart
               entries={entries.validiumsAndOptimiums}
               milestones={props.milestones}
               hideScalingFactor
               type="ValidiumsAndOptimiums"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
-            <ValidiumsAndOptimiumsInfo />
             <ScalingActivityTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="others" className="pt-5">
-            <ActivityChart
+          <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
+            <OthersInfo />
+            <ScalingActivityChart
               entries={entries.others}
               milestones={props.milestones}
               hideScalingFactor
               type="Others"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
-            <OthersInfo />
             <ScalingActivityTable entries={entries.others} />
             <OtherMigrationTabNotice
               projectsToBeMigrated={projectToBeMigratedToOthers}

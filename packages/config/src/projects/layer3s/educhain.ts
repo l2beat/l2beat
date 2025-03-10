@@ -1,24 +1,19 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 
-export const educhain: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
+export const educhain: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1720082709), // 2024-07-04T08:45:09Z
   discovery,
-  additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Gelato,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Gelato],
   additionalPurposes: ['Social'],
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -43,10 +38,19 @@ export const educhain: Layer3 = orbitStackL3({
       ],
     },
   },
-  rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
-  discoveryDrivenData: true,
+  chainConfig: {
+    name: 'educhain',
+    chainId: 41923,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.edu-chain.raas.gelato.cloud',
+        callsPerMinute: 1500,
+      },
+    ],
+    gasTokens: ['EDU'],
+  },
   associatedTokens: ['EDU'],
-  gasTokens: ['EDU'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),
@@ -64,7 +68,7 @@ export const educhain: Layer3 = orbitStackL3({
       tokens: '*',
     }),
   ],
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [

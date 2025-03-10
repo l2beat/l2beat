@@ -2,17 +2,29 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0x58c97ac9be53efca56c3f570ddefd6e2429a368a9601a183e06d1357654e4416",
-  "contracts": [
+  "configHash": "0x2669d380bf47a8ff1b88eebfb43cb970c6c11044c9ab31f7e2549a3edde60c61",
+  "entries": [
+    {
+      "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x02058Bb1d98D88087008F2ac1273584591380e3F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+      "type": "Contract",
       "sourceHashes": [
         "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
         "0xda7b05d88be95072ae926d6f2b176d60c2d568f45ef6c67071b28159388c81e7"
       ],
       "proxyType": "resolved delegate proxy",
       "sinceTimestamp": 1637076488,
+      "sinceBlock": 13627370,
       "values": {
         "$immutable": false,
         "$implementation": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
@@ -34,6 +46,7 @@
     {
       "name": "LockingInfo",
       "address": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+      "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0x3052e020792c1a42febb86916d737ca4d3962b80b97fe18c7a778bf270acf023"
@@ -48,6 +61,7 @@
       ],
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
       "sinceTimestamp": 1710314867,
+      "sinceBlock": 19424659,
       "values": {
         "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
         "$implementation": "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC",
@@ -75,15 +89,16 @@
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
         "totalLocked": "489592026707194902745743",
         "totalRewardsLiquidated": "21186281823923435000000"
-      },
-      "derivedName": "LockingInfo"
+      }
     },
     {
       "name": "ChainStorageContainer-SCC-batches",
       "address": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
+      "type": "Contract",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "getGlobalMetadata",
         "length",
@@ -91,6 +106,7 @@
         "lengthByChainId"
       ],
       "sinceTimestamp": 1637070395,
+      "sinceBlock": 13626929,
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
@@ -104,12 +120,40 @@
       "derivedName": "ChainStorageContainer"
     },
     {
+      "address": "0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1A9da0aedA630dDf2748a453BF6d92560762D914",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ChainStorageContainer-CTC-batches",
       "address": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
+      "type": "Contract",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1637047500,
+      "sinceBlock": 13625270,
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
@@ -121,6 +165,7 @@
     {
       "name": "L1StandardBridge",
       "address": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+      "type": "Contract",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x6e30dabe85a54d5753ec304088b4cc9f1fc2ba202fb3982bf202b0cc4a922c99"
@@ -134,6 +179,7 @@
         }
       ],
       "sinceTimestamp": 1637077208,
+      "sinceBlock": 13627429,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
@@ -147,8 +193,19 @@
       }
     },
     {
+      "address": "0x4200000000000000000000000000000000000007",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000010",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Metis Multisig",
       "address": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -201,6 +258,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1636927409,
+      "sinceBlock": 13616534,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -232,9 +290,11 @@
     {
       "name": "CanonicalTransactionChain",
       "address": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
+      "type": "Contract",
       "sourceHashes": [
         "0x70010b1d5bb98964174a28e3c3a229763fb65df55575104adbec0bc0552cd31d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "getLastBlockNumber",
         "getLastTimestamp",
@@ -245,6 +305,7 @@
         "getTotalElements"
       ],
       "sinceTimestamp": 1637070766,
+      "sinceBlock": 13626959,
       "values": {
         "$immutable": true,
         "batches": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
@@ -269,10 +330,13 @@
     {
       "name": "BondManager",
       "address": "0x595801b85628ec6979C420988b8843A40F850528",
+      "type": "Contract",
       "sourceHashes": [
         "0xe429226928e3766e14dbbf6391a4caa68cf9e4c12cb9e81ef04b84a38747449a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1713873023,
+      "sinceBlock": 19717907,
       "values": {
         "$immutable": true,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d"
@@ -281,13 +345,17 @@
     {
       "name": "",
       "address": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1637083067,
+      "sinceBlock": 13627861,
       "values": { "$immutable": true }
     },
     {
       "name": "RewardEscrowerMultisig",
       "address": "0x62478E4eeb4070fE399866aB05e821AB97200947",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -296,6 +364,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1713630491,
+      "sinceBlock": 19697815,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -318,6 +387,7 @@
     {
       "name": "MVM_CanonicalTransaction",
       "address": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
+      "type": "Contract",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0xc5bc8dddf764177767a3613d96c31c0fcc86db07c909c72cbf2f6a2443942109"
@@ -331,6 +401,7 @@
         }
       ],
       "sinceTimestamp": 1649638297,
+      "sinceBlock": 14561258,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
@@ -354,12 +425,20 @@
       }
     },
     {
+      "address": "0x7a9059F4A6e50090e4f55994d465918200AB4454",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MVM_DiscountOracle",
       "address": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
+      "type": "Contract",
       "sourceHashes": [
         "0x8406419ac446023c37b27d0154da77b664a20b7da231802e32193c8883d32d06"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1649859244,
+      "sinceBlock": 14577582,
       "values": {
         "$immutable": true,
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
@@ -373,10 +452,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -388,6 +469,7 @@
         }
       ],
       "sinceTimestamp": 1710314795,
+      "sinceBlock": 19424653,
       "values": {
         "$immutable": true,
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
@@ -396,10 +478,12 @@
     {
       "name": "Lib_AddressManager",
       "address": "0x918778e825747a892b17C66fe7D24C618262867d",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
+      "proxyType": "immutable",
       "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
@@ -411,6 +495,7 @@
         }
       ],
       "sinceTimestamp": 1637047108,
+      "sinceBlock": 13625248,
       "values": {
         "_1088_MVM_FraudVerifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
         "_1088_MVM_Proposer": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
@@ -437,16 +522,18 @@
           "description": "Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers.",
           "type": "CODE_CHANGE"
         }
-      },
-      "derivedName": "Lib_AddressManager"
+      }
     },
     {
       "name": "MToken",
       "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0f9d9680beb2766f32df8f35302771cde6d0ccb5c3e7f32fdacd13bf5c58203"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1607734167,
+      "sinceBlock": 11434969,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -454,12 +541,12 @@
         "owner": "0x0000000000000000000000000000000000000000",
         "symbol": "Metis",
         "totalSupply": "10000000000000000000000000"
-      },
-      "derivedName": "MToken"
+      }
     },
     {
       "name": "StateCommitmentChain",
       "address": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+      "type": "Contract",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0xc6bcfffdfe15d4c259332b8f62b29950aecdec253e8eeed2ebfa9e78ca1cea2b"
@@ -481,6 +568,7 @@
         "getTotalElementsByChainId"
       ],
       "sinceTimestamp": 1710487823,
+      "sinceBlock": 19438866,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48",
@@ -501,12 +589,20 @@
       "derivedName": "MVM_StateCommitmentChain"
     },
     {
+      "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ChainStorageContainer-CTC-queue",
       "address": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
+      "type": "Contract",
       "sourceHashes": [
         "0x94ea4eb57654b23e5ce34a8f4571a446786efb3080044f3ecfc2f3870e601ee0"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1637047833,
+      "sinceBlock": 13625297,
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
@@ -521,8 +617,29 @@
       "derivedName": "ChainStorageContainer"
     },
     {
+      "address": "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB961047013F974C5b6B6F8dA4402379525316550",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcDf02971871B7736874E20B8487c019D28090019",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LockingPool",
       "address": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+      "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
         "0xff86f55c7d91dbdd408e8b44c6aa3647e5d7cef144de8a65bc84e13e3bf3524f"
@@ -543,6 +660,7 @@
         "rewardPerBlock"
       ],
       "sinceTimestamp": 1710314939,
+      "sinceBlock": 19424665,
       "values": {
         "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
         "$implementation": "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60",
@@ -632,12 +750,22 @@
         "signerUpdateThrottle": 1,
         "totalSequencers": 10,
         "WITHDRAWAL_DELAY": 1814400
-      },
-      "derivedName": "LockingPool"
+      }
+    },
+    {
+      "address": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "MVM_Verifier",
       "address": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
+      "type": "Contract",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x85cae352a6b900f9d20a913095da6267900b8e10f04d7277743dcdd0ce8c809e"
@@ -651,6 +779,7 @@
         }
       ],
       "sinceTimestamp": 1649719906,
+      "sinceBlock": 14567320,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
@@ -669,8 +798,14 @@
       }
     },
     {
+      "address": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MVM_L2ChainManagerOnL1",
       "address": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
+      "type": "Contract",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x8be6c2abbd355799e149ebae677a3814685c6b43ebad0b7853fe236af7a84fe7"
@@ -684,6 +819,7 @@
         }
       ],
       "sinceTimestamp": 1637089464,
+      "sinceBlock": 13628326,
       "values": {
         "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
@@ -694,27 +830,6 @@
         "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751" },
-    { "address": "0x02058Bb1d98D88087008F2ac1273584591380e3F" },
-    { "address": "0x1577D2b835f561BD021E3219Cd786181D0e17ff5" },
-    { "address": "0x1A9da0aedA630dDf2748a453BF6d92560762D914" },
-    { "address": "0x217fD54d336f710F8aee19572dBfBf0B2297ed69" },
-    { "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6" },
-    { "address": "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01" },
-    { "address": "0x4200000000000000000000000000000000000007" },
-    { "address": "0x4200000000000000000000000000000000000010" },
-    { "address": "0x7a9059F4A6e50090e4f55994d465918200AB4454" },
-    { "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E" },
-    { "address": "0xB383E1331dEE29864b68f7D84b0dC289F770d846" },
-    { "address": "0xB961047013F974C5b6B6F8dA4402379525316550" },
-    { "address": "0xcDf02971871B7736874E20B8487c019D28090019" },
-    { "address": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b" },
-    { "address": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377" },
-    { "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000" },
-    { "address": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040" }
   ],
   "abis": {
     "0x081D1101855bD523bA69A9794e0217F0DB6323ff": [

@@ -1,6 +1,42 @@
 {
   "ethereum": [
     {
+      "symbol": "CLEAR",
+      "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8"
+    },
+    {
+      "symbol": "DOG",
+      "address": "0xbaac2b4491727d78d2b78815144570b9f2fe8899"
+    },
+    {
+      "symbol": "imgnAI",
+      "address": "0xa735a3af76cc30791c61c10d585833829d36cbe0"
+    },
+    {
+      "symbol": "HEU",
+      "address": "0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea"
+    },
+    {
+      "symbol": "TRADE",
+      "address": "0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1"
+    },
+    {
+      "symbol": "WXM",
+      "address": "0xde654f497a563dd7a121c176a125dd2f11f13a83"
+    },
+    {
+      "symbol": "RSC",
+      "address": "0xd101dcc414f310268c37eeb4cd376ccfa507f571"
+    },
+    {
+      "symbol": "GHST",
+      "address": "0x3f382dbd960e3a9bbceae22651e88158d2791550"
+    },
+    {
+      "symbol": "OM",
+      "address": "0x3593d125a4f7849a1b059e64f4517a86dd60c95d"
+    },
+    {
       "symbol": "LUMIA",
       "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
       "coingeckoId": "lumia"
@@ -1375,6 +1411,10 @@
       "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
     },
     {
+      "symbol": "PEPU",
+      "address": "0xadd39272e83895e7d3f244f696b7a25635f34234"
+    },
+    {
       "symbol": "PERP",
       "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
     },
@@ -2149,6 +2189,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "category": "stablecoin",
@@ -2325,20 +2380,6 @@
       "supply": "zero", // the collateral is WBTC on arbitrum
       "coingeckoId": "solv-btc",
       "source": "native"
-    },
-    {
-      "symbol": "TAP",
-      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "source": "native",
-      "supply": "circulatingSupply", // not totalSupply since the vesting contracts are on arbitrum (would dilute the supply) and the governance token is native to arbitrum (this will only be wrong if totalSupply(arb) < circulatingSupply (coingecko) which is unlikely to happen)
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
     },
     {
       "symbol": "ETHFI",
@@ -2886,6 +2927,12 @@
       "source": "canonical",
       "supply": "zero",
       "coingeckoId": "forta"
+    },
+    {
+      "symbol": "G7",
+      "address": "0xf18e4466f26b4ca55bbab890b314a54976e45b17",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "nova": [
@@ -2897,6 +2944,21 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
     {
       "symbol": "CTSI",
       "address": "0xec6adef5e1006bb305bb1975333e8fc4071295bf",
@@ -3238,6 +3300,30 @@
     }
   ],
   "base": [
+    {
+      "symbol": "KAITO",
+      "address": "0x98d0baa52b2D063E780DE12F615f963Fe8537553",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "FAI",
+      "address": "0xb33Ff54b9F7242EF1593d2C9Bcd8f9df46c77935",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "B3",
+      "address": "0xB3B32F9f8827D4634fE7d973Fa1034Ec9fdDB3B3",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "VVV",
+      "address": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "GHST",
       "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
@@ -3750,7 +3836,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane Nexus"
+            "name": "Hyperlane Nexus",
+            "slug": "hyperlane"
           }
         ]
       },
@@ -4695,6 +4782,28 @@
   ],
   "zksync2": [
     {
+      "symbol": "USDN",
+      "category": "stablecoin",
+      "address": "0x0469d9d1dE0ee58fA1153ef00836B9BbCb84c0B6",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDM",
+      "address": "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply" // totalSupply < circulatingSupply and token is minted by admins
+    },
+    {
       "symbol": "FIUSD",
       "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
       "source": "native",
@@ -5223,6 +5332,13 @@
   ],
   "mint": [
     {
+      "symbol": "MINT",
+      "address": "0x8511138208529fe1b9a37b863c7EEE3Fe234b7Ab",
+      "coingeckoId": "mint-blockchain",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "MST",
       "address": "0x9f7bd1ce3412960524e86183b8f005271c09a5e0",
       "source": "native",
@@ -5664,7 +5780,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -5679,7 +5796,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -5830,6 +5948,142 @@
   ],
   "soneium": [
     {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "coingeckoId": "stakestone-ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pufETH",
+      "address": "0x6c460b2c6D6719562D5dA43E5152B375e79B9A8B",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vASTR",
+      "address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
+      "source": "external",
+      "coingeckoId": "bifrost-voucher-astr",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "PIPO",
+      "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
+      "source": "external",
+      "coingeckoId": "pipo-2",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYAGETH",
+      "address": "0xda14b3b7aef494b8c37ed9710d14e44d490316fa",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYSTONE",
+      "address": "0x54e86315c03217b76a7466c302245fd10ebef25a",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "ASTR",
       "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
       "coingeckoId": "astar",
@@ -5872,6 +6126,100 @@
           {
             "name": "Stargate v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    }
+  ],
+  "unichain": [
+    {
+      "symbol": "USDC",
+      "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    }
+  ],
+  "morph": [
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    }
+  ],
+  "form": [
+    {
+      "symbol": "USDT",
+      "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external", // potential doublecount for the scaling total
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external", // potential doublecount for the scaling total
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    }
+  ],
+  "everclear": [
+    {
+      "symbol": "CLEAR",
+      "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
+      "source": "external",
+      "coingeckoId": "everclear",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
           }
         ]
       }

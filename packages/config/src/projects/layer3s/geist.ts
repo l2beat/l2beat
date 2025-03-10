@@ -1,23 +1,18 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('geist', 'base')
 
-export const geist: Layer3 = orbitStackL3({
-  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
-  hostChain: ProjectId('base'),
+export const geist: ScalingProject = orbitStackL3({
+  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   additionalPurposes: ['Gaming', 'NFT'],
-  additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Base,
-    Badge.RaaS.Alchemy,
-  ],
+  additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -45,19 +40,27 @@ export const geist: Layer3 = orbitStackL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://geist-mainnet.g.alchemy.com/public',
-    defaultCallsPerMinute: 600,
-    adjustCount: { type: 'SubtractOne' },
-    startBlock: 1,
+  chainConfig: {
+    name: 'geist',
+    chainId: 63157,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://geist-mainnet.g.alchemy.com/public',
+        callsPerMinute: 600,
+      },
+    ],
+    gasTokens: ['GHST'],
   },
-  bridge: discovery.getContract('ERC20Bridge'),
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
+  },
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['GHST'],
-  gasTokens: ['GHST'],
   discovery,
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

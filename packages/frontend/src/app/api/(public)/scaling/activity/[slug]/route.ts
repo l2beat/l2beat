@@ -1,21 +1,11 @@
-import { layer2s, layer3s } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
 import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
-
-const projectsIds = [...layer2s, ...layer3s]
-  .map((p) => ({
-    id: p.id,
-    slug: p.display.slug,
-  }))
-  .concat({
-    id: ProjectId.ETHEREUM,
-    slug: 'ethereum',
-  })
+import { ps } from '~/server/projects'
 
 export async function GET(
   request: NextRequest,
@@ -31,7 +21,10 @@ export async function GET(
 
 const getCachedResponse = cache(
   async (slug: string, range: ActivityTimeRange) => {
-    const project = projectsIds.find((p) => p.slug === slug)
+    const project = await ps.getProject({
+      slug,
+      where: ['activityConfig', 'isScaling'],
+    })
 
     if (!project) {
       return {
@@ -86,7 +79,7 @@ const getCachedResponse = cache(
   },
   ['scaling-activity-project-route'],
   {
-    tags: ['activity'],
-    revalidate: UnixTime.DAY,
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )

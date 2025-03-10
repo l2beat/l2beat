@@ -1,8 +1,7 @@
-import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
-import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { ethers } from 'ethers'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import type { ContractValue } from '../../output/types'
+import type { ProxyDetails } from '../types'
 
-import { serializeResult } from '../../handlers/user/ConstructorArgsHandler'
 import type { IProvider } from '../../provider/IProvider'
 import { bytes32ToAddress } from '../../utils/address'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
@@ -11,24 +10,25 @@ export async function getOpticsBeaconProxy(
   provider: IProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetails | undefined> {
-  const proxyConstructorFragment = ethers.utils.Fragment.from(
-    'constructor(address _upgradeBeacon, bytes memory _initializationCalldata)',
-  )
-  const upgradeBeacon = await getAddressFromConstructor(
-    provider,
-    address,
-    proxyConstructorFragment,
-    0,
-  )
+  // NOTE(radomski): These offsets are extracted manually from the runtime
+  // bytecode. The only other way to extract these addresses is to look into
+  // the constructor arguments. But this is super flaky, Etherscan gets lost
+  // easily. The following where observed:
+  //
+  // - If enough time passes (3+ years), Etherscan will start to hallucinate
+  // and will not provide a correct answer to certain API calls. - If
+  // contract is semi-verified - that means a different contract which has
+  // the same bytecode was verified - it might return constructor arguments
+  // from that verified contract and not the one we queried.
+  //
+  // Because of these issues which brought a lot of confusion and instability
+  // a decision was made to extract these addresses basically manually.
+  const beaconBytecode = await provider.getBytecode(address)
+  const upgradeBeacon = EthereumAddress(beaconBytecode.slice(66, 86).toString())
 
-  const beaconConstructorFragment = ethers.utils.Fragment.from(
-    'constructor(address _initialImplementation, address _controller)',
-  )
-  const beaconController = await getAddressFromConstructor(
-    provider,
-    upgradeBeacon,
-    beaconConstructorFragment,
-    1,
+  const upgradeBeaconBytecode = await provider.getBytecode(upgradeBeacon)
+  const beaconController = EthereumAddress(
+    upgradeBeaconBytecode.slice(40, 60).toString(),
   )
 
   const implementationCallResult = await provider.call(
@@ -54,29 +54,4 @@ export async function getOpticsBeaconProxy(
       OpticsBeacon_beacon: upgradeBeacon.toString(),
     },
   }
-}
-
-async function getAddressFromConstructor(
-  provider: IProvider,
-  address: EthereumAddress,
-  constructorFragment: ethers.utils.Fragment,
-  index: number,
-): Promise<EthereumAddress> {
-  const { constructorArguments } = await provider.getSource(address)
-  const decodedArgs = ethers.utils.defaultAbiCoder.decode(
-    constructorFragment.inputs,
-    '0x' + constructorArguments,
-  )
-
-  const args = serializeResult(decodedArgs)
-  assert(Array.isArray(args), 'Constructor args are not an array')
-
-  const arg = args[index]
-  assert(arg !== undefined, 'Argument not found: ' + index.toString())
-  assert(
-    typeof arg === 'string',
-    'Argument is not a string: ' + index.toString(),
-  )
-
-  return EthereumAddress(arg)
 }

@@ -2,12 +2,29 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0xbaedab6db13baa91db4f7d1c2a3f43dc9eeeb3316eec2f8402710a42d2ccd2c9",
+  "configHash": "0xd53540449bd6ef7e623cf66098bb7442e8027b576ddc8f156916bd1794a9c0a1",
   "sharedModules": ["shared-polygon-cdk"],
-  "contracts": [
+  "entries": [
+    {
+      "address": "0x099198353446A9E3a20672eDC1Bd461E978842c3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+        }
+      ]
+    },
     {
       "name": "daiBridge",
       "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+      "type": "Contract",
       "sourceHashes": [
         "0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa",
         "0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"
@@ -23,6 +40,7 @@
       ],
       "ignoreInWatchMode": ["totalBridgedDAI"],
       "sinceTimestamp": 1695199499,
+      "sinceBlock": 18175991,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
@@ -57,15 +75,25 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "PolygonZkEVMEtrog",
+      "address": "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4E83124eD15b13265240B61EC9627797CCE1032E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PolygonZkEVM",
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
         "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -76,6 +104,7 @@
       ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1706364971,
+      "sinceBlock": 19098451,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
@@ -143,11 +172,14 @@
           "severity": "HIGH",
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
-      }
+      },
+      "derivedName": "PolygonZkEVMEtrog",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "usdcBridge",
       "address": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+      "type": "Contract",
       "sourceHashes": [
         "0x74f36c1c292d2992d00c72ffd2ff8a4b8648a1c9058e63210c2742186a9daf50",
         "0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"
@@ -162,6 +194,7 @@
         }
       ],
       "sinceTimestamp": 1700125979,
+      "sinceBlock": 18583475,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6",
@@ -183,20 +216,60 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "FflonkVerifier_11",
+      "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Verifier",
       "address": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x1b9299553467d8c5557640b4aa02efa58c4fd2cec8e008db1a70ce0a1c5a131b"
       ],
-      "displayName": "Verifier",
+      "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1726821035,
-      "values": { "$immutable": true }
+      "sinceBlock": 20790618,
+      "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier_11",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "wstETHBridge",
       "address": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+      "type": "Contract",
       "sourceHashes": [
         "0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa",
         "0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"
@@ -211,6 +284,7 @@
         }
       ],
       "sinceTimestamp": 1703945135,
+      "sinceBlock": 18898811,
       "values": {
         "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "$implementation": "0x18FED1E19dC564DC917D203be9d40790472D22e9",
@@ -244,8 +318,19 @@
       "derivedName": "WstETHBridgeL1"
     },
     {
+      "address": "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf56AE6520776934127AB68438d1b4652BCe07F8f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonZkEvmEscrowsMultisig",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -268,6 +353,7 @@
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1694792111,
+      "sinceBlock": 18142537,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -293,30 +379,6 @@
       },
       "derivedName": "GnosisSafe"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x099198353446A9E3a20672eDC1Bd461E978842c3" },
-    {
-      "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
-        }
-      ]
-    },
-    { "address": "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed" },
-    { "address": "0x4E83124eD15b13265240B61EC9627797CCE1032E" },
-    { "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5" },
-    { "address": "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189" },
-    { "address": "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D" },
-    { "address": "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4" },
-    { "address": "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224" },
-    { "address": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B" },
-    { "address": "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a" },
-    { "address": "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F" },
-    { "address": "0xf56AE6520776934127AB68438d1b4652BCe07F8f" }
   ],
   "abis": {
     "0x18FED1E19dC564DC917D203be9d40790472D22e9": [
@@ -663,7 +725,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
-    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
+    "polygon-cdk/PolygonZkEVM": "0xa3db9cd4750e048e231aadcba1dd439bc7ca32cfc261f65c34038f8df919df94",
+    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
   }
 }

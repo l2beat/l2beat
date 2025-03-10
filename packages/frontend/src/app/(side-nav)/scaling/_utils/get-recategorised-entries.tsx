@@ -1,6 +1,6 @@
 import { partition } from 'lodash'
+import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import type { CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
-import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 
 export function getRecategorisedEntries<T extends CommonScalingEntry>(
   entries: TabbedScalingEntries<T>,
@@ -23,10 +23,12 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
   ].sort(sortFn)
 
   return {
-    rollups: rollups.filter((entry) => !entry.statuses?.underReview),
-    validiumsAndOptimiums: validiumsAndOptimiums.filter(
-      (entry) => !entry.statuses?.underReview,
+    rollups: rollups.filter(
+      (entry) => entry.statuses?.underReview !== 'config',
     ),
-    others: others.filter((entry) => !entry.statuses?.underReview),
+    validiumsAndOptimiums: validiumsAndOptimiums.filter(
+      (entry) => entry.statuses?.underReview !== 'config',
+    ),
+    others: others.filter((entry) => entry.statuses?.underReview !== 'config'),
   }
 }

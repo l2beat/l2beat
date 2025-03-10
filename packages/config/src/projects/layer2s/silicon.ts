@@ -7,13 +7,13 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('silicon')
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -29,9 +29,9 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const silicon: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
-  additionalBadges: [Badge.DA.DAC],
+export const silicon: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
+  additionalBadges: [BADGES.DA.DAC],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
@@ -47,9 +47,8 @@ export const silicon: Layer2 = polygonCDKStack({
       socialMedia: ['https://x.com/0xSilicon'],
     },
   },
-  rpcUrl: 'https://rpc.silicon.network',
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -84,8 +83,11 @@ export const silicon: Layer2 = polygonCDKStack({
   chainConfig: {
     name: 'silicon',
     chainId: 2355,
-    explorerUrl: 'https://scope.silicon.network/',
-    minTimestampForTvl: new UnixTime(1724183531),
+    explorerUrl: 'https://scope.silicon.network',
+    sinceTimestamp: UnixTime(1724183531),
+    apis: [
+      { type: 'rpc', url: 'https://rpc.silicon.network', callsPerMinute: 1500 },
+    ],
   },
   nonTemplateTechnology: {
     newCryptography: {
@@ -123,7 +125,6 @@ export const silicon: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

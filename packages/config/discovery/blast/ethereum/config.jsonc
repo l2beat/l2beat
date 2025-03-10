@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "blast",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d", //LaunchBridge
     "0x697402166Fbf2F22E970df8a6486Ef171dbfc524", //L1StandardBridge

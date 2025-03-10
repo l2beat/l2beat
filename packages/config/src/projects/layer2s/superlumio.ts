@@ -1,16 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('superlumio')
 
-export const superlumio: Layer2 = opStackL2({
-  addedAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
+export const superlumio: ScalingProject = opStackL2({
+  addedAt: UnixTime(1726646157), // 2024-09-18T07:55:57Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'SuperLumio',
@@ -29,12 +29,22 @@ export const superlumio: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://mainnet.lumio.io',
-  genesisTimestamp: new UnixTime(1708984633),
+  chainConfig: {
+    name: 'superlumio',
+    chainId: 8866,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.lumio.io',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  genesisTimestamp: UnixTime(1708984633),
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1708984631),
-    minTimestamp: new UnixTime(1708984751),
+    genesisTimestamp: UnixTime(1708984631),
+    minTimestamp: UnixTime(1708984751),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',

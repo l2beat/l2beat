@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
@@ -11,11 +11,11 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 )
 const bridge = discovery.getContract('L1SharedBridge')
 
-export const zeronetwork: Layer2 = zkStackL2({
+export const zeronetwork: ScalingProject = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  additionalBadges: [Badge.RaaS.Caldera],
-  addedAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
+  additionalBadges: [BADGES.RaaS.Caldera],
+  addedAt: UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',
@@ -40,12 +40,18 @@ export const zeronetwork: Layer2 = zkStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.zerion.io/v1/zero',
   chainConfig: {
     name: 'zeronetwork',
     chainId: 543210,
-    explorerUrl: 'https://explorer.zero.network/',
-    minTimestampForTvl: new UnixTime(1729616414),
+    explorerUrl: 'https://explorer.zero.network',
+    sinceTimestamp: UnixTime(1729616414),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.zerion.io/v1/zero',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   diamondContract: discovery.getContract('ZeroNetworkZkEvm'),
   nonTemplateTrackedTxs: [
@@ -58,7 +64,7 @@ export const zeronetwork: Layer2 = zkStackL2({
         selector: '0x6edd4f12',
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
-        sinceTimestamp: new UnixTime(1729616414),
+        sinceTimestamp: UnixTime(1729616414),
       },
     },
     {
@@ -73,7 +79,7 @@ export const zeronetwork: Layer2 = zkStackL2({
         selector: '0xc37533bb',
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
-        sinceTimestamp: new UnixTime(1729616414),
+        sinceTimestamp: UnixTime(1729616414),
       },
     },
     {
@@ -88,7 +94,7 @@ export const zeronetwork: Layer2 = zkStackL2({
         selector: '0x6f497ac6',
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
-        sinceTimestamp: new UnixTime(1729616414),
+        sinceTimestamp: UnixTime(1729616414),
       },
     },
   ],

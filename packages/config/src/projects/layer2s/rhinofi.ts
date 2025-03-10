@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +8,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -24,15 +18,15 @@ import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
-import { delayDescriptionFromString } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('deversifi')
 const upgradeDelaySeconds = discovery.getContractValue<number>(
@@ -43,11 +37,6 @@ const includingSHARPUpgradeDelaySeconds = Math.min(
   upgradeDelaySeconds,
   getSHARPVerifierUpgradeDelay(),
 )
-const upgradeDelay = formatSeconds(upgradeDelaySeconds)
-const verifierAddress = discovery.getAddressFromValue(
-  'GpsFactRegistryAdapter',
-  'gpsContract',
-)
 
 const freezeGracePeriod = discovery.getContractValue<number>(
   'StarkExchange',
@@ -56,21 +45,23 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const rhinofi: Layer2 = {
+export const rhinofi: ScalingProject = {
   type: 'layer2',
   id: ProjectId('deversifi'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.DAC,
-    Badge.Stack.StarkEx,
-    Badge.Infra.SHARP,
+    BADGES.VM.AppChain,
+    BADGES.DA.DAC,
+    BADGES.Stack.StarkEx,
+    BADGES.Infra.SHARP,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
     name: 'rhino.fi',
     slug: 'rhinofi',
+    headerWarning:
+      'The [RhinoFi StarkEx Validium is being deprecated](https://support.rhino.fi/en/article/important-upgrade-rhino-revamp-is-coming-cuks7m/). The RhinofiAdminMultisig upgraded the implementation of the core contract and subsequently [withdrew all funds](https://etherscan.io/tx/0x9c1692398b107161c7af2c1c02316d449bdf03b15e84b69170373b2864dba754). The Validium is no longer operational and funds are currently held in a multisig on Ethereum (2025/03/10).',
     description: 'rhino.fi is a Validium based on the StarkEx technology.',
     purposes: ['Exchange'],
     stack: 'StarkEx',
@@ -99,19 +90,23 @@ export const rhinofi: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'deversifi',
+    chainId: undefined,
+    apis: [{ type: 'starkex', product: ['rhinofi'] }],
+  },
   config: {
     escrows: [
       {
         address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
-        sinceTimestamp: new UnixTime(1590491810),
+        sinceTimestamp: UnixTime(1590491810),
         tokens: '*',
         chain: 'ethereum',
       },
     ],
-    transactionApi: {
-      type: 'starkex',
-      product: ['rhinofi'],
-      sinceTimestamp: new UnixTime(1590491810),
+    activityConfig: {
+      type: 'day',
+      sinceTimestamp: UnixTime(1590491810),
       resyncLastDays: 7,
     },
     // trackedTxs: [
@@ -128,7 +123,7 @@ export const rhinofi: Layer2 = {
     //       selector: '0x538f9406',
     //       functionSignature:
     //         'function updateState(uint256[] publicInput, uint256[] applicationData)',
-    //       sinceTimestampInclusive: new UnixTime(1590491810),
+    //       sinceTimestampInclusive: UnixTime(1590491810),
     //     },
     //   },
     // ],
@@ -167,50 +162,14 @@ export const rhinofi: Layer2 = {
     exitMechanisms: [...EXITS.STARKEX_PERPETUAL, EXITS.STARKEX_BLOCKLIST],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('StarkExchange'),
-        discovery.getContractDetails(
-          'Committee',
-          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-        ),
-        ...getSHARPVerifierContracts(discovery, verifierAddress),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Governors',
-          getProxyGovernance(discovery, 'StarkExchange'),
-          'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromString(upgradeDelay),
-        ),
-        discovery.getMultisigPermission(
-          'GovernanceMultisig',
-          'Has full power to upgrade the bridge implementation as a Governor.',
-        ),
-        committeePermission,
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-          'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
-        ),
-        discovery.contractAsPermissioned(
-          // this multisig does not get recognized as such (because of the old proxy?)
-          discovery.getContract('DeversiFiTreasuryMultisig'),
-          'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
-        ),
-      ],
-    },
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'Rebranding',
@@ -229,6 +188,5 @@ export const rhinofi: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
   customDa: StarkexDAC({ discovery }),
 }

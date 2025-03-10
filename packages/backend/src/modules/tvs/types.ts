@@ -5,24 +5,25 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-export type Operator = 'sum' | 'diff'
+export type Operator = 'sum' | 'diff' | 'max' | 'min'
 
 export interface CalculationFormula {
   type: 'calculation'
   operator: Operator
-  arguments: (CalculationFormula | ValueFormula)[]
+  arguments: (CalculationFormula | ValueFormula | AmountFormula)[]
 }
 
 export type ValueFormula = {
   type: 'value'
-  amount: AmountFormula
-  ticker: string
+  amount: AmountFormula | CalculationFormula
+  priceId: string
 }
 
 export type AmountFormula =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
   | CirculatingSupplyAmountFormula
+  | ConstAmountFormula
 
 export interface BalanceOfEscrowAmountFormula {
   type: 'balanceOfEscrow'
@@ -48,7 +49,12 @@ export interface TotalSupplyAmountFormula {
 
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
-  ticker: string
+  priceId: string
+}
+
+export interface ConstAmountFormula {
+  type: 'const'
+  value: number
 }
 
 export interface AmountConfigBase {
@@ -71,13 +77,14 @@ export type AmountConfig =
 
 // token deployed to single chain
 export interface Token {
+  mode: 'auto' | 'custom'
   // unique identifier
   id: TokenId
-  // arbitrary set by us, there are symbol duplicates e.g. GAME
-  ticker: string
+  // by default it is set to coingeckoId
+  priceId: string
   symbol: string
   name: string
-  amount: AmountFormula
+  amount: AmountFormula | CalculationFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)
@@ -115,11 +122,11 @@ export type TvsConfig = {
 }
 
 export type PriceConfig = {
-  ticker: string
+  priceId: string
 }
 
 export interface TokenValue {
-  tokenId: string
+  tokenConfig: Token
   projectId: ProjectId
   amount: number
   value: number
@@ -128,16 +135,26 @@ export interface TokenValue {
 }
 
 export interface TvsBreakdown {
-  total: number
+  tvs: number
   source: {
-    canonical: number
-    external: number
-    native: number
+    canonical: {
+      value: number
+      tokens: TokenValue[]
+    }
+    external: {
+      value: number
+      tokens: TokenValue[]
+    }
+    native: {
+      value: number
+      tokens: TokenValue[]
+    }
   }
   category: {
     ether: number
     stablecoin: number
     other: number
+    associated: number
   }
 }
 
@@ -149,12 +166,6 @@ export function TokenId(value: string) {
   return value as unknown as TokenId
 }
 
-TokenId.create = function (
-  chain: string,
-  address: EthereumAddress | 'native',
-  escrowAddress?: EthereumAddress,
-) {
-  return TokenId(
-    `${chain}-${(address).toString()}${escrowAddress ? `-${escrowAddress}` : ''}`,
-  )
+TokenId.create = function (chain: string, symbol: string) {
+  return TokenId(`${chain}-${symbol}`)
 }

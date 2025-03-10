@@ -13,7 +13,6 @@ import {
   DA_MODES,
   EXITS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -23,18 +22,15 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import {
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../../discovery/starkware'
-import type { Layer2 } from '../../types'
-import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('paradex')
-const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
 
 const upgradeDelaySeconds = discovery.getContractValue<number>(
   'Paradex',
@@ -65,16 +61,16 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   6,
 )
 
-export const paradex: Layer2 = {
+export const paradex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('paradex'),
   capability: 'universal',
-  addedAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
+  addedAt: UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
-    Badge.VM.CairoVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.SNStack,
-    Badge.Infra.SHARP,
+    BADGES.VM.CairoVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.SNStack,
+    BADGES.Infra.SHARP,
   ],
   display: {
     name: 'Paradex',
@@ -109,19 +105,32 @@ export const paradex: Layer2 = {
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
-        upgradableBy: ['USDC Escrow owner'],
-        upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'USDC Escrow owner',
+            delay: formatSeconds(escrowUSDCDelaySeconds),
+          },
+        ],
         description:
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
+    ],
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+        sequencers: ['0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'],
+      },
     ],
     trackedTxs: [
       {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1636978914),
-          untilTimestamp: new UnixTime(1704729971),
+          sinceTimestamp: UnixTime(1636978914),
+          untilTimestamp: UnixTime(1704729971),
           programHashes: [
             '3258367057337572248818716706664617507069572185152472699066582725377748079373',
           ],
@@ -131,8 +140,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1704729971),
-          untilTimestamp: new UnixTime(1706626427),
+          sinceTimestamp: UnixTime(1704729971),
+          untilTimestamp: UnixTime(1706626427),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
@@ -143,8 +152,8 @@ export const paradex: Layer2 = {
         query: {
           // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1706626427),
-          untilTimestamp: new UnixTime(1710346919),
+          sinceTimestamp: UnixTime(1706626427),
+          untilTimestamp: UnixTime(1710346919),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
@@ -154,8 +163,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1710346919),
-          untilTimestamp: new UnixTime(1710764843),
+          sinceTimestamp: UnixTime(1710346919),
+          untilTimestamp: UnixTime(1710764843),
           programHashes: [
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
@@ -165,8 +174,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1710764843),
-          untilTimestamp: new UnixTime(1725811535),
+          sinceTimestamp: UnixTime(1710764843),
+          untilTimestamp: UnixTime(1725811535),
           programHashes: [
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
@@ -176,7 +185,7 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1725811535),
+          sinceTimestamp: UnixTime(1725811535),
           programHashes: [
             '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
           ],
@@ -186,7 +195,7 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1725811535),
+          sinceTimestamp: UnixTime(1725811535),
           programHashes: [
             '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
           ],
@@ -202,7 +211,7 @@ export const paradex: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestamp: new UnixTime(1689850631),
+          sinceTimestamp: UnixTime(1689850631),
         },
       },
       {
@@ -215,8 +224,8 @@ export const paradex: Layer2 = {
           selector: '0xb72d42a1',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
-          sinceTimestamp: new UnixTime(1710346919),
-          untilTimestamp: new UnixTime(1725811535),
+          sinceTimestamp: UnixTime(1710346919),
+          untilTimestamp: UnixTime(1725811535),
         },
       },
       {
@@ -229,14 +238,14 @@ export const paradex: Layer2 = {
           selector: '0x507ee528',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)',
-          sinceTimestamp: new UnixTime(1725811667),
+          sinceTimestamp: UnixTime(1725811667),
         },
       },
     ],
     finality: {
       lag: 0,
       type: 'Starknet',
-      minTimestamp: new UnixTime(1725811667),
+      minTimestamp: UnixTime(1725811667),
       stateUpdate: 'disabled',
     },
   },
@@ -293,50 +302,10 @@ export const paradex: Layer2 = {
     exitMechanisms: EXITS.STARKNET,
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('Paradex', {
-          description:
-            'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
-          upgradeDelay: upgradeDelaySeconds
-            ? formatSeconds(upgradeDelaySeconds)
-            : 'No delay',
-          upgradableBy: ['Paradex owner'],
-        }),
-        ...getSHARPVerifierContracts(discovery, verifierAddress),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Paradex owner',
-          getProxyGovernance(discovery, 'Paradex'),
-          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
-            delayDescriptionFromSeconds(upgradeDelaySeconds),
-        ),
-        discovery.getPermissionDetails(
-          'Paradex Implementation Governors',
-          discovery.getPermissionedAccounts('Paradex', 'governors'),
-          'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
-        ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getPermissionedAccounts('Paradex', 'operators'),
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
-        ),
-        discovery.getPermissionDetails(
-          'USDC Escrow owner',
-          getProxyGovernance(discovery, 'USDC Bridge'),
-          'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
-        ),
-      ],
-    },
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'Paradex starts using blobs',
@@ -353,5 +322,4 @@ export const paradex: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

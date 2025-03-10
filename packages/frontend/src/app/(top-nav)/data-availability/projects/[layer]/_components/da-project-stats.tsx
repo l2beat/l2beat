@@ -17,8 +17,8 @@ import type {
   EthereumDaProjectPageEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
+import { formatBpsToMbps } from '~/utils/number-format/format-bytes'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { formatThroughputMBPS } from '~/utils/number-format/format-throughput-mbps'
 
 interface Props {
   stats: ProjectStat[]
@@ -26,11 +26,11 @@ interface Props {
 }
 
 export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
-  const GROUPS = 3
+  const GROUPS = 4
   const partitionedByThree = chunkArray(stats, GROUPS)
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5">
       {partitionedByThree.map((statGroup, i) => {
         const isLastGroup = i === partitionedByThree.length - 1
 
@@ -158,13 +158,10 @@ export function getCommonDaProjectStats(
     ...durationOfStorage,
   })
 
-  if (project.header.throughput) {
+  if (project.header.maxThroughputPerSecond) {
     stats.push({
       title: 'Max throughput',
-      value: formatThroughputMBPS(
-        project.header.throughput.size,
-        project.header.throughput.frequency,
-      ),
+      value: formatBpsToMbps(project.header.maxThroughputPerSecond),
     })
   }
 

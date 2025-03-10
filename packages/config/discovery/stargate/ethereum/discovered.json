@@ -2,15 +2,18 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21723798,
-  "configHash": "0xf8cbc72f92a1d9dd96eba3fe85d77190715327574e59d7cd078e6bdf0a7c53ae",
-  "contracts": [
+  "configHash": "0x5f75cfc74caac0001420c6271b8f6829448b4d07cfbc8686533d35d5e5dcd17b",
+  "entries": [
     {
       "name": "Factory",
       "address": "0x06D538690AF257Da524f25D0CD52fD85b1c2173E",
+      "type": "Contract",
       "sourceHashes": [
         "0xbc704e600b52db9b8f9530b3e75e45a8f0561c0d52beab8121e42c3fa18aefaf"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647504676,
+      "sinceBlock": 14402871,
       "values": {
         "$immutable": true,
         "allPools": [
@@ -32,15 +35,16 @@
         "defaultFeeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98"
-      },
-      "derivedName": "Factory"
+      }
     },
     {
       "name": "DAI Pool",
       "address": "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -52,6 +56,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1668459527,
+      "sinceBlock": 15970816,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -90,9 +95,11 @@
     {
       "name": "SG-ETH Pool",
       "address": "0x101816545F6bd2b1076434B54383a1E633390A2E",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -104,6 +111,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1656354769,
+      "sinceBlock": 15035701,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -181,11 +189,18 @@
       "derivedName": "Pool"
     },
     {
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "WOO Pool",
       "address": "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -197,6 +212,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1677032255,
+      "sinceBlock": 16680977,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -291,12 +307,20 @@
       "derivedName": "Pool"
     },
     {
+      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Bridge",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+      "type": "Contract",
       "sourceHashes": [
         "0xcfc56af1501e5fdb6791848b058bbdd819db31eb1e168d31c30743c57eb88a41"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647504669,
+      "sinceBlock": 14402868,
       "values": {
         "$immutable": true,
         "layerZeroEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
@@ -306,12 +330,20 @@
       }
     },
     {
+      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
+      "type": "Contract",
       "sourceHashes": [
         "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661529370,
+      "sinceBlock": 15416287,
       "values": {
         "$immutable": true,
         "feeEnabled": false,
@@ -325,9 +357,11 @@
     {
       "name": "USDT Pool",
       "address": "0x38EA452219524Bb87e18dE1C24D3bB59510BD783",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -339,6 +373,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1647511860,
+      "sinceBlock": 14403402,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -446,9 +481,11 @@
     {
       "name": "USDT Pool2",
       "address": "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -460,6 +497,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1673830559,
+      "sinceBlock": 16415911,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -497,10 +535,13 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+      "type": "Contract",
       "sourceHashes": [
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661529280,
+      "sinceBlock": 15416271,
       "values": {
         "$immutable": true,
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
@@ -539,15 +580,21 @@
         ],
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0
-      },
-      "derivedName": "UltraLightNodeV2"
+      }
+    },
+    {
+      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "sUSD Pool",
       "address": "0x590d4f8A68583639f215f675F3a259Ed84790580",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -559,6 +606,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1668459587,
+      "sinceBlock": 15970821,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -596,6 +644,7 @@
     {
       "name": "TSS Oracle",
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -606,6 +655,7 @@
         }
       ],
       "sinceTimestamp": 1661536020,
+      "sinceBlock": 15416736,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
@@ -628,10 +678,13 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
+      "type": "Contract",
       "sourceHashes": [
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661280206,
+      "sinceBlock": 15398311,
       "values": {
         "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
@@ -640,6 +693,7 @@
     {
       "name": "StarGate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -648,6 +702,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1647498793,
+      "sinceBlock": 14402408,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -672,10 +727,13 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "type": "Contract",
       "sourceHashes": [
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647316591,
+      "sinceBlock": 14388880,
       "values": {
         "$immutable": true,
         "BLOCK_VERSION": 65535,
@@ -695,9 +753,11 @@
     {
       "name": "USDD Pool",
       "address": "0x692953e758c3669290cb1677180c64183cEe374e",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -709,6 +769,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1656354769,
+      "sinceBlock": 15035701,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -754,12 +815,45 @@
       "derivedName": "Pool"
     },
     {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Router",
       "address": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
+      "type": "Contract",
       "sourceHashes": [
         "0xaca03a3990b02abbdfb3479c15740adb67918d89a2b2ba4a789156a84a23895f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647504658,
+      "sinceBlock": 14402864,
       "values": {
         "$immutable": true,
         "bridge": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
@@ -767,16 +861,18 @@
         "mintFeeOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "protocolFeeOwner": "0x65bb797c2B9830d891D87288F029ed8dACc19705"
-      },
-      "derivedName": "Router"
+      }
     },
     {
       "name": "StarGateFeeLibrary7",
       "address": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
+      "type": "Contract",
       "sourceHashes": [
         "0xa8c87025dca83b0d7859efc30fa933d23dc2c4a29483706d9123f2c0248ff35e"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1686244907,
+      "sinceBlock": 17437020,
       "values": {
         "$immutable": true,
         "DELTA_1": "600000000000000000",
@@ -804,6 +900,7 @@
     {
       "name": "LayerZero Relayer",
       "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -814,6 +911,7 @@
         }
       ],
       "sinceTimestamp": 1661531835,
+      "sinceBlock": 15416448,
       "values": {
         "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
         "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f",
@@ -856,9 +954,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -866,6 +966,7 @@
         }
       ],
       "sinceTimestamp": 1661448939,
+      "sinceBlock": 15410443,
       "values": {
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
@@ -874,9 +975,11 @@
     {
       "name": "MAI Pool",
       "address": "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -888,6 +991,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1668566243,
+      "sinceBlock": 15979653,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -928,11 +1032,18 @@
       "derivedName": "Pool"
     },
     {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "mETH Pool",
       "address": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -944,6 +1055,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1706854619,
+      "sinceBlock": 19138880,
       "values": {
         "$immutable": true,
         "batched": false,
@@ -990,9 +1102,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1000,14 +1114,21 @@
         }
       ],
       "sinceTimestamp": 1647317012,
+      "sinceBlock": 14388905,
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
     {
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1016,6 +1137,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1648243585,
+      "sinceBlock": 14457816,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1039,10 +1161,13 @@
     {
       "name": "Google Cloud Oracle",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "type": "Contract",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217107,
+      "sinceBlock": 18095084,
       "values": {
         "$immutable": true,
         "allowlistSize": 0,
@@ -1060,9 +1185,11 @@
     {
       "name": "METIS Pool",
       "address": "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1074,6 +1201,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1673830559,
+      "sinceBlock": 16415911,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -1130,18 +1258,23 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "type": "Contract",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217119,
+      "sinceBlock": 18095085,
       "values": { "$immutable": true }
     },
     {
       "name": "USDC Pool",
       "address": "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1153,6 +1286,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1647511732,
+      "sinceBlock": 14403393,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -1233,9 +1367,11 @@
     {
       "name": "LUSD Pool",
       "address": "0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1247,6 +1383,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1668459587,
+      "sinceBlock": 15970821,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -1283,11 +1420,18 @@
       "derivedName": "Pool"
     },
     {
+      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Frax Pool",
       "address": "0xfA0F307783AC21C39E939ACFF795e27b650F6e68",
+      "type": "Contract",
       "sourceHashes": [
         "0x599edeae7294922e7192ddef4fc4c244c46f9ae0b9b4e8e8207ab02bd956ba93"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1299,6 +1443,7 @@
         "totalWeight"
       ],
       "sinceTimestamp": 1668459527,
+      "sinceBlock": 15970816,
       "values": {
         "$immutable": true,
         "batched": true,
@@ -1335,22 +1480,6 @@
       },
       "derivedName": "Pool"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
-    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
-    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
-    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
-    { "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" },
-    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" }
   ],
   "abis": {
     "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": [

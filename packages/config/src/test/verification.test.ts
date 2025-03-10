@@ -1,22 +1,17 @@
 import { join } from 'path'
-import { ConfigReader } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-} from '@l2beat/discovery-types'
+import {
+  ConfigReader,
+  type DiscoveryOutput,
+  type EntryParameters,
+} from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
+import type { Bridge, ScalingProject } from '../internalTypes'
 import { bridges } from '../projects/bridges'
 import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
 import { refactored } from '../projects/refactored'
-import type {
-  BaseProject,
-  Bridge,
-  Layer2,
-  Layer3,
-  ProjectContract,
-} from '../types'
+import type { BaseProject, ProjectContract } from '../types'
 import { getChainNames } from '../utils/chains'
 
 describe('verification status', () => {
@@ -85,17 +80,11 @@ function containsAllAddresses(
 }
 
 function addressesInDiscovery(discovery: DiscoveryOutput): EthereumAddress[] {
-  const eoas = discovery.eoas.map((eoa) => eoa.address)
-  const contracts = discovery.contracts.flatMap((c) => [
-    c.address,
-    ...getImplementations(c),
-  ])
-
-  return eoas.concat(contracts)
+  return discovery.entries.flatMap((c) => [c.address, ...getImplementations(c)])
 }
 
-function getImplementations(contract: ContractParameters): EthereumAddress[] {
-  const implementations = contract.values?.['$implementation'] ?? []
+function getImplementations(entry: EntryParameters): EthereumAddress[] {
+  const implementations = entry.values?.['$implementation'] ?? []
 
   if (Array.isArray(implementations)) {
     return implementations.map((i) => EthereumAddress(i.toString()))
@@ -103,7 +92,7 @@ function getImplementations(contract: ContractParameters): EthereumAddress[] {
   return [EthereumAddress(implementations.toString())]
 }
 
-type Project = Layer2 | Layer3 | Bridge | BaseProject
+type Project = ScalingProject | Bridge | BaseProject
 
 function withoutDuplicates<T>(arr: T[]): T[] {
   return uniqBy(arr, JSON.stringify)

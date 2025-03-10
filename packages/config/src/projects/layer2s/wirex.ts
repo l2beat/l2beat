@@ -7,13 +7,13 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('wirex')
-const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
+const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'PolygonDataCommittee',
@@ -29,9 +29,9 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const wirex: Layer2 = polygonCDKStack({
-  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
+export const wirex: ScalingProject = polygonCDKStack({
+  addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
@@ -55,10 +55,17 @@ export const wirex: Layer2 = polygonCDKStack({
     name: 'wirex',
     chainId: 31415,
     explorerUrl: 'https://pay-chain-blockscout.wirexpaychain.com',
-    minTimestampForTvl: new UnixTime(1720093223),
+    sinceTimestamp: UnixTime(1720093223),
+    apis: [
+      {
+        type: 'rpc',
+        // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
+        url: 'https://pay-chain-rpc.wirexpaychain.com',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   // associatedTokens: ['WPAY'], // not launched yet
-  rpcUrl: 'https://pay-chain-rpc.wirexpaychain.com', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -91,7 +98,7 @@ export const wirex: Layer2 = polygonCDKStack({
     },
   },
   rollupModuleContract: discovery.getContract('Validium'),
-  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
+  rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -128,7 +135,6 @@ export const wirex: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

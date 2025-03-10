@@ -1,11 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../types'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
-export const aviveworld: Layer3 = upcomingL3({
+export const aviveworld: ScalingProject = upcomingL3({
   id: 'aviveworld',
   capability: 'universal',
-  addedAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
+  addedAt: UnixTime(1719939717), // 2024-07-02T17:01:57Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Avive World',

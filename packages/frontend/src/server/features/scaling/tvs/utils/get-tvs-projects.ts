@@ -1,28 +1,18 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import {
-  bridgeToBackendProject,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
-  layer2ToBackendProject,
-  layer3ToBackendProject,
-  toBackendProject,
 } from '@l2beat/backend-shared'
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
-import { bridges, layer2s, layer3s } from '@l2beat/config'
-import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import type { ChainConfig, Project } from '@l2beat/config'
+import type { AmountConfigEntry, ProjectId, Token } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { isProjectOther } from '../../utils/is-project-other'
 
-export interface BaseProject {
+export interface TvsProject {
   projectId: ProjectId
-  type: BackendProject['type']
-}
-
-export interface TvsProject extends BaseProject {
   minTimestamp: UnixTime
-  slug: string
   sources: Map<
     string,
     {
@@ -33,18 +23,21 @@ export interface TvsProject extends BaseProject {
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }
 
-export function toTvsProject(project: Layer2 | Layer3 | Bridge): TvsProject {
-  const backendProject = toBackendProject(project)
-  const amounts = getTvlAmountsConfigForProject(backendProject)
+export async function toTvsProject(
+  project: Project<'tvlConfig', 'chainConfig'>,
+  chains: ChainConfig[],
+  tokenList: Token[],
+): Promise<TvsProject> {
+  const amounts = getTvlAmountsConfigForProject(project, chains, tokenList)
 
   const minTimestamp = amounts
     .map((x) => x.sinceTimestamp)
-    .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
+    .reduce((a, b) => Math.min(a, b), UnixTime.now())
 
   const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
   for (const amount of amounts) {
     const source = sources.get(amount.dataSource)
-    if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+    if (!source || source.minTimestamp > amount.sinceTimestamp) {
       sources.set(amount.dataSource, {
         name: amount.dataSource,
         minTimestamp: amount.sinceTimestamp,
@@ -53,54 +46,47 @@ export function toTvsProject(project: Layer2 | Layer3 | Bridge): TvsProject {
   }
 
   return {
-    projectId: backendProject.projectId,
+    projectId: project.id,
     minTimestamp,
-    type: backendProject.type,
-    slug: backendProject.slug,
     sources,
   }
 }
 
-const projects = [...layer2s, ...layer3s, ...bridges]
-const backendProjects = [
-  ...layer2s.map(layer2ToBackendProject),
-  ...layer3s.map(layer3ToBackendProject),
-  ...bridges.map(bridgeToBackendProject),
-]
-
-export function getTvsProjects(
-  filter: (p: Layer2 | Layer3 | Bridge) => boolean,
+export async function getTvsProjects(
+  filter: (p: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean,
+  chains: ChainConfig[],
+  tokenList: Token[],
   previewRecategorisation?: boolean,
-): TvsProject[] {
+): Promise<TvsProject[]> {
+  const projects = await ps.getProjects({
+    select: ['statuses', 'tvlConfig'],
+    optional: ['chainConfig', 'scalingInfo', 'isBridge'],
+  })
+
   const filteredProjects = projects
     .filter((p) => filter(p))
-    .map(toBackendProject)
-    .filter(
-      (project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.projectId),
-    )
+    .filter((project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.id))
 
-  const tvsAmounts = getTvlAmountsConfig(backendProjects)
+  const tvsAmounts = getTvlAmountsConfig(projects, chains, tokenList)
   const tvsAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
     tvsAmounts,
     (e) => e.project,
   )
 
-  const result = filteredProjects.flatMap(({ projectId, type, slug }) => {
-    const amounts = tvsAmountsMap[projectId]
+  return filteredProjects.flatMap((project) => {
+    const amounts = tvsAmountsMap[project.id]
     if (!amounts) {
       return []
     }
-    const project = projects.find((p) => p.id === projectId)
-    assert(project, `Project not found: ${projectId}`)
 
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
-      .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
+      .reduce((a, b) => Math.min(a, b), UnixTime.now())
 
     const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
     for (const amount of amounts) {
       const source = sources.get(amount.dataSource)
-      if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+      if (!source || source.minTimestamp > amount.sinceTimestamp) {
         sources.set(amount.dataSource, {
           name: amount.dataSource,
           minTimestamp: amount.sinceTimestamp,
@@ -108,41 +94,37 @@ export function getTvsProjects(
       }
     }
     return {
-      projectId,
+      projectId: project.id,
       minTimestamp,
-      type,
-      slug,
       sources,
       category: getCategory(project, previewRecategorisation),
     }
   })
-
-  return result
 }
 
 function getCategory(
-  p: Layer2 | Layer3 | Bridge,
+  p: Project<never, 'scalingInfo'>,
   previewRecategorisation?: boolean,
 ): 'rollups' | 'validiumsAndOptimiums' | 'others' | undefined {
-  if (p.type === 'bridge') {
+  if (!p.scalingInfo) {
     return undefined
   }
 
-  if (isProjectOther(p, previewRecategorisation)) {
+  if (isProjectOther(p.scalingInfo, previewRecategorisation)) {
     return 'others'
   }
 
   if (
-    p.display.category === 'Optimistic Rollup' ||
-    p.display.category === 'ZK Rollup'
+    p.scalingInfo.type === 'Optimistic Rollup' ||
+    p.scalingInfo.type === 'ZK Rollup'
   ) {
     return 'rollups'
   }
 
   if (
-    p.display.category === 'Validium' ||
-    p.display.category === 'Optimium' ||
-    p.display.category === 'Plasma'
+    p.scalingInfo.type === 'Validium' ||
+    p.scalingInfo.type === 'Optimium' ||
+    p.scalingInfo.type === 'Plasma'
   ) {
     return 'validiumsAndOptimiums'
   }

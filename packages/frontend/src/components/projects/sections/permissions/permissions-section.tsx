@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash'
-import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
+import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-da-solution'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
@@ -27,7 +27,7 @@ export function PermissionsSection({
     <ProjectSection {...sectionProps}>
       {permissionedEntities && permissionedEntities.length > 0 && (
         <h3 className="mt-4 font-bold">
-          The committee has the following members:
+          The DA committee has the following members:
         </h3>
       )}
       {permissionedEntities?.map((entity, i) => (
@@ -77,7 +77,7 @@ export function PermissionsSection({
           <h3 className="mt-4 font-bold">
             The project uses {daSolution.layerName} with the{' '}
             {daSolution.bridgeName} DA Bridge that consist of the following
-            permissions on the {daSolution.hostChain}:
+            permissions on the {daSolution.hostChainName}:
           </h3>
         )}
       {daSolution?.permissions.roles?.map((permission) => (

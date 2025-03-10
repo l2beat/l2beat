@@ -1,4 +1,4 @@
-import type { json } from '@l2beat/shared-pure'
+import type { Block, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
@@ -13,9 +13,32 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
+const TIMESTAMP_SHIFT = 4300
+
 export class PolkadotRpcClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
     super($)
+  }
+
+  async getLatestBlockNumber(): Promise<number> {
+    const block = await this.getBlock()
+    return Number(block.header.number)
+  }
+
+  async getBlockWithTransactions(
+    blockNumber: number | 'latest',
+  ): Promise<Block> {
+    const height = blockNumber === 'latest' ? undefined : blockNumber
+    const block = await this.getBlock(height)
+
+    const bn = Number(block.header.number)
+
+    return {
+      number: bn,
+      hash: 'UNSUPPORTED',
+      timestamp: PolkadotRpcClient.calculateAvailTimestamp(bn),
+      transactions: [], // UNSUPPORTED
+    }
   }
 
   async getBlock(height?: number): Promise<PolkadotBlock> {
@@ -81,5 +104,26 @@ export class PolkadotRpcClient extends ClientCore {
     }
 
     return { success: true }
+  }
+
+  get chain() {
+    return this.$.sourceName
+  }
+
+  static calculateAvailTimestamp(blockNumber: number) {
+    const referenceBlock = 1
+    const referenceTimestamp = 1720082320
+
+    // Define the block time interval in milliseconds (20 seconds)
+    const blockInterval = 20 // 20 seconds
+
+    // Calculate the difference in blocks
+    const blockDifference = blockNumber - referenceBlock
+
+    // Calculate the timestamp by adding the time difference to the reference timestamp
+    const timestamp =
+      referenceTimestamp + blockDifference * blockInterval + TIMESTAMP_SHIFT
+
+    return timestamp
   }
 }

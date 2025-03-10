@@ -2,30 +2,40 @@
   "name": "near",
   "chain": "ethereum",
   "blockNumber": 19531990,
-  "configHash": "0xf82addf50763670a769b46bbf20592567140a8fa9dd83ef88fb66d35424e4f12",
-  "contracts": [
+  "configHash": "0x5961d9d834c975f26564e9fe7f8fd3063dccf833c4d660a3024d3848f83eefa5",
+  "entries": [
     {
       "name": "NearProver",
       "address": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4",
+      "type": "Contract",
       "sourceHashes": [
         "0xcd16841a968d4ea28094de73ada515cdb0661691dec1b02c5c9e86a08bcc5d06"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1615770141,
+      "sinceBlock": 12040114,
       "values": {
         "$immutable": true,
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "bridge": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
         "paused": 0
-      },
-      "derivedName": "NearProver"
+      }
+    },
+    {
+      "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ERC20Locker",
       "address": "0x23Ddd3e3692d1861Ed57EDE224608875809e127f",
+      "type": "Contract",
       "sourceHashes": [
         "0x74501db8a51bd105da4453dc8907e59a99756bc2651ce3a861485f0ffe7cf724"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1615826693,
+      "sinceBlock": 12044301,
       "values": {
         "$immutable": true,
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
@@ -33,12 +43,12 @@
         "nearTokenFactory_": "0x666163746f72792e6272696467652e6e656172",
         "paused": 0,
         "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
-      },
-      "derivedName": "ERC20Locker"
+      }
     },
     {
       "name": "BridgeAdminMultisig",
       "address": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -47,6 +57,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1640737843,
+      "sinceBlock": 13896975,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -70,11 +81,14 @@
     {
       "name": "NearBridge",
       "address": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
+      "type": "Contract",
       "sourceHashes": [
         "0x52e85c821a158edace9ff11f0bda7524bc7bee826844981293fd48259887aaf1"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["bridgeState", "lastValidAt"],
       "sinceTimestamp": 1664198555,
+      "sinceBlock": 15617816,
       "values": {
         "$immutable": true,
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
@@ -90,16 +104,18 @@
         "lockEthAmount": "5000000000000000000",
         "paused": 0,
         "replaceDuration": 18000000000000
-      },
-      "derivedName": "NearBridge"
+      }
     },
     {
       "name": "EthCustodian",
       "address": "0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52",
+      "type": "Contract",
       "sourceHashes": [
         "0x38ac1699854c55e7085ee14f17acf067140394f315915c61dbb7aed0ff7bce59"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1624619784,
+      "sinceBlock": 12702964,
       "values": {
         "$immutable": true,
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
@@ -107,16 +123,28 @@
         "nearProofProducerAccount_": "0x6175726f7261",
         "paused": 0,
         "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
-      },
-      "derivedName": "EthCustodian"
+      }
+    },
+    {
+      "address": "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xed9cB50304991951Cbee747900484E9a041DA464",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF58096A602C960c841Bd83A29DE21c808a9c1ac9",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7" },
-    { "address": "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6" },
-    { "address": "0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d" },
-    { "address": "0xed9cB50304991951Cbee747900484E9a041DA464" },
-    { "address": "0xF58096A602C960c841Bd83A29DE21c808a9c1ac9" }
   ],
   "abis": {
     "0x051AD3F020274910065Dcb421629cd2e6E5b46c4": [

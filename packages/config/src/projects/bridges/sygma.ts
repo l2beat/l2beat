@@ -1,8 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('sygma')
@@ -10,7 +8,7 @@ const discovery = new ProjectDiscovery('sygma')
 export const sygma: Bridge = {
   type: 'bridge',
   id: ProjectId('sygma'),
-  addedAt: new UnixTime(1711107103), // 2024-03-22T11:31:43Z
+  addedAt: UnixTime(1711107103), // 2024-03-22T11:31:43Z
   display: {
     name: 'Sygma',
     slug: 'sygma',
@@ -113,7 +111,7 @@ export const sygma: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'), // sygma erc-20 bridge handler address used to hold liquidity
-        sinceTimestamp: new UnixTime(1685659954),
+        sinceTimestamp: UnixTime(1685659954),
         tokens: ['PHA'],
         chain: 'ethereum',
       },
@@ -173,21 +171,4 @@ export const sygma: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Architecture overview',
-      url: 'https://docs.buildwithsygma.com/protocol',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-    {
-      title: 'Audits',
-      url: 'https://docs.buildwithsygma.com/resources/audits',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Sygma governance',
-      url: 'https://docs.buildwithsygma.com/readme/governance/govintroduction',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 }

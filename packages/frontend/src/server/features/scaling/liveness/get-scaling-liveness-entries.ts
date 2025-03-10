@@ -1,12 +1,12 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
   TableReadyValue,
 } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
+import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
-import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
@@ -23,7 +23,7 @@ export async function getScalingLivenessEntries() {
     getProjectsChangeReport(),
     getLiveness(),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'livenessInfo'],
+      select: ['statuses', 'scalingInfo', 'livenessInfo', 'display'],
       optional: ['scalingDa'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
@@ -42,12 +42,12 @@ export async function getScalingLivenessEntries() {
     .filter((x) => x !== undefined)
     .sort(compareStageAndTvs)
 
-  return groupByTabs(entries)
+  return groupByScalingTabs(entries)
 }
 
 export interface ScalingLivenessEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  stack: ProjectScalingStack | undefined
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
@@ -56,7 +56,10 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
 }
 
 function getScalingLivenessEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'livenessInfo', 'scalingDa'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'livenessInfo' | 'display',
+    'scalingDa'
+  >,
   changes: ProjectChanges,
   liveness: LivenessProject | undefined,
   tvs: number | undefined,
@@ -117,8 +120,8 @@ function getLowestSyncedUntil(liveness: LivenessProject): UnixTime {
     if (!data) {
       continue
     }
-    const syncedUntil = new UnixTime(data.syncedUntil)
-    if (syncedUntil.lt(lowestSyncedUntil)) {
+    const syncedUntil = UnixTime(data.syncedUntil)
+    if (syncedUntil < lowestSyncedUntil) {
       lowestSyncedUntil = syncedUntil
     }
   }

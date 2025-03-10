@@ -21,8 +21,8 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import type { ScalingProject } from '../../internalTypes'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('zksync')
@@ -46,8 +46,12 @@ const securityCouncilMembers = discovery.getContractValue<string[]>(
 const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers.length}`
 
 const upgrades = {
-  upgradableBy: ['ZkSync Multisig'],
-  upgradeDelay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradableBy: [
+    {
+      name: 'ZkSync Multisig',
+      delay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
+    },
+  ],
   upgradeConsiderations:
     'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
 }
@@ -55,12 +59,12 @@ const upgrades = {
 const forcedWithdrawalDelay = HARDCODED.ZKSYNC.PRIORITY_EXPIRATION_PERIOD
 const finalizationPeriod = 0
 
-export const zksynclite: Layer2 = {
+export const zksynclite: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zksync'),
   capability: 'appchain',
-  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
+  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
     slug: 'zksync-lite',
@@ -69,7 +73,6 @@ export const zksynclite: Layer2 = {
     purposes: ['Payments', 'Exchange', 'NFT'],
     stack: 'ZKsync Lite',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -92,18 +95,27 @@ export const zksynclite: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'zksync',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'zksync',
+        url: 'https://api.zksync.io/api/v0.2',
+        callsPerMinute: 3_000,
+      },
+    ],
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
-        sinceTimestamp: new UnixTime(1592218707),
+        sinceTimestamp: UnixTime(1592218707),
         tokens: '*',
       }),
     ],
-    transactionApi: {
-      type: 'zksync',
-      defaultUrl: 'https://api.zksync.io/api/v0.2',
-      defaultCallsPerMinute: 3_000,
+    activityConfig: {
+      type: 'block',
     },
     trackedTxs: [
       {
@@ -116,7 +128,7 @@ export const zksynclite: Layer2 = {
           selector: '0x45269298',
           functionSignature:
             'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,(bytes,uint32)[],uint32,uint32)[])',
-          sinceTimestamp: new UnixTime(1612885558),
+          sinceTimestamp: UnixTime(1612885558),
         },
       },
       {
@@ -132,7 +144,7 @@ export const zksynclite: Layer2 = {
           selector: '0x83981808',
           functionSignature:
             'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestamp: UnixTime(1592218707),
         },
       },
       {
@@ -148,14 +160,14 @@ export const zksynclite: Layer2 = {
           selector: '0xb0705b42',
           functionSignature:
             'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestamp: UnixTime(1592218707),
         },
       },
     ],
     finality: {
       lag: 0,
       type: 'zkSyncLite',
-      minTimestamp: new UnixTime(1592218708),
+      minTimestamp: UnixTime(1592218708),
       stateUpdate: 'disabled',
     },
   },
@@ -220,7 +232,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Validity proofs - ZKsync FAQ',
-          url: 'https://zksync.io/faq/security.html#validity-proofs',
+          url: 'https://docs.lite.zksync.io/userdocs/security/#validity-proofs',
         },
         {
           title:
@@ -234,7 +246,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Cryptography used - ZKsync FAQ',
-          url: 'https://zksync.io/faq/security.html#cryptography-used',
+          url: 'https://docs.lite.zksync.io/userdocs/security/#cryptography-used',
         },
         {
           title: 'PlonkCore.sol#L1193 - Etherscan source code',
@@ -247,7 +259,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Overview - ZKsync documentation',
-          url: 'https://zksync.io/dev/#overview',
+          url: 'https://docs.lite.zksync.io/dev/#overview',
         },
 
         {
@@ -262,7 +274,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'How decentralized is ZKsync - ZKsync FAQ',
-          url: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
+          url: 'https://docs.lite.zksync.io/userdocs/decentralization/#how-decentralized-is-zksync',
         },
         {
           title:
@@ -276,7 +288,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Priority queue - ZKsync FAQ',
-          url: 'https://zksync.io/faq/security.html#priority-queue',
+          url: 'https://docs.lite.zksync.io/userdocs/security/#priority-queue',
         },
         {
           title:
@@ -363,8 +375,7 @@ export const zksynclite: Layer2 = {
         discovery.getContractDetails('TokenGovernance', {
           description:
             'Allows anyone to add new ERC20 tokens to ZKsync Lite given sufficient payment.',
-          upgradableBy: ['ZkSync Multisig'],
-          upgradeDelay: 'No delay',
+          upgradableBy: [{ name: 'ZkSync Multisig', delay: 'no' }],
           references: [
             {
               title: 'Governance.sol#L93 - Etherscan source code',
@@ -374,8 +385,7 @@ export const zksynclite: Layer2 = {
         }),
         discovery.getContractDetails('NftFactory', {
           description: 'Allows for withdrawing NFTs minted on L2 to L1.',
-          upgradableBy: ['ZkSync Multisig'],
-          upgradeDelay: 'No delay',
+          upgradableBy: [{ name: 'ZkSync Multisig', delay: 'no' }],
           references: [
             {
               title: 'Governance.sol#L205 - Etherscan source code',

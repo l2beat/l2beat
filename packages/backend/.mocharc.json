@@ -1,5 +1,5 @@
 {
-  "spec": ["src/**/*.test.ts", "discovery/*.test.ts"],
+  "spec": ["src/**/*.test.ts"],
   "require": ["esbuild-register", "src/test/hooks.ts"],
   "watchExtensions": "ts",
   "extension": "ts",

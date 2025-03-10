@@ -2,20 +2,23 @@
   "name": "across-v3",
   "chain": "ethereum",
   "blockNumber": 21802758,
-  "configHash": "0x89b0b7dc6c30dcf44ed9b4426c54f91cffe299a0335a90c29aa6f3e4b143a6c7",
-  "contracts": [
+  "configHash": "0xa9ed38eb0636af101069410f53ebfa969582fff2f04df5cf3c93bf10ef1de664",
+  "entries": [
     {
       "name": "Zora_Adapter",
       "address": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x6d9e4b79712a4e81c51941fb986f4c55774da36be108106577ca01ccb35a0f87"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1723462727,
+      "sinceBlock": 20512287,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -30,11 +33,14 @@
     {
       "name": "VotingToken",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+      "type": "Contract",
       "sourceHashes": [
         "0x349b0f612f02a8599667c43efe1e547bf4f18a46732001b3afb6b425a87325e9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"],
       "sinceTimestamp": 1578581061,
+      "sinceBlock": 9247089,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -48,21 +54,28 @@
           "100034524092695877009538769",
           "100150034524092695877009517"
         ]
-      },
-      "derivedName": "VotingToken"
+      }
+    },
+    {
+      "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Soneium_Adapter",
       "address": "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1736551439,
+      "sinceBlock": 21597341,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -79,15 +92,18 @@
     {
       "name": "Arbitrum_Adapter",
       "address": "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0xa1c171564a6e837069132a07b8c6d217e08cf53cd6a43151a7f497440d2f1e33"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1732204763,
+      "sinceBlock": 21237154,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -105,17 +121,25 @@
       }
     },
     {
+      "address": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Redstone_Adapter",
       "address": "0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x0c32a0cfde3cb87843b5521bf184be1dd2b0031a8e91c2bc7885a2e10db010c1"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1722504155,
+      "sinceBlock": 20432774,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -128,17 +152,30 @@
       }
     },
     {
+      "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Boba_Adapter",
       "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x9f8b082009430546d55daaa8e166eca77ef9ca17f7831f03de4635bdc4a32b31"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1651747441,
+      "sinceBlock": 14716798,
       "values": {
         "$immutable": true,
         "l1StandardBridge": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
@@ -148,25 +185,40 @@
       }
     },
     {
+      "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AcrossConfigStore",
       "address": "0x3B03509645713718B78951126E0A6de6f10043f5",
+      "type": "Contract",
       "sourceHashes": [
         "0x926aa3c074cb5463671ec24c946524d9e03d3aa56a9847ca738b17b747c0e076"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1651752742,
+      "sinceBlock": 14717196,
       "values": {
         "$immutable": true,
         "owner": "0xB524735356985D2f267FA010D681f061DfF03715"
-      },
-      "derivedName": "AcrossConfigStore"
+      }
+    },
+    {
+      "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Finder",
       "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+      "type": "Contract",
       "sourceHashes": [
         "0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1578580941,
+      "sinceBlock": 9247083,
       "values": {
         "$immutable": true,
         "isOwner": false,
@@ -176,10 +228,13 @@
     {
       "name": "PolygonTokenBridger",
       "address": "0x48d990AbDA20afa1fD1da713AbC041B60a922c65",
+      "type": "Contract",
       "sourceHashes": [
         "0xe3c561b96bc217e32abfe2230f61c22a385dde4d3fcc87ecda9703b78fc89e75"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1651578198,
+      "sinceBlock": 14704448,
       "values": {
         "$immutable": true,
         "destination": "0x6Bb9910c5529Cb3b32c4f0e13E8bC38F903b2534",
@@ -189,17 +244,19 @@
         "l2ChainId": 137,
         "l2WrappedMatic": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
         "maticToken": "0x0000000000000000000000000000000000001010"
-      },
-      "derivedName": "PolygonTokenBridger"
+      }
     },
     {
       "name": "ProposerV2",
       "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+      "type": "Contract",
       "sourceHashes": [
         "0x28c93f7b68e31548857633c6cb61284d9d2860cc0fbbcaaede8f631d364d66a4"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "sinceTimestamp": 1677231527,
+      "sinceBlock": 16697363,
       "values": {
         "$immutable": true,
         "bond": "5000000000000000000000",
@@ -208,26 +265,29 @@
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "ProposerV2"
+      }
     },
     {
       "name": "Ethereum_Adapter",
       "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x14afbe84cefefdcb06132c680d267b8892f0834a39fc23ca0ea563758653a21a"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1651577227,
+      "sinceBlock": 14704381,
       "values": { "$immutable": true }
     },
     {
       "name": "Ethereum_SpokePool",
       "address": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+      "type": "Contract",
       "sourceHashes": [
         "0x669da4e91a9ad0ca23205a174e7f8931e4d7d128453132164ba6458f11f15c72",
         "0x10d81ccfd26fbcb9926942a46436a7bedd3946646911a43f3f0e13dc7eb81517"
@@ -242,6 +302,7 @@
       ],
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "sinceTimestamp": 1682355155,
+      "sinceBlock": 17117454,
       "values": {
         "$admin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "$implementation": "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a",
@@ -312,21 +373,28 @@
         "UPDATE_BYTES32_DEPOSIT_DETAILS_HASH": "0x8d1994e2bbbd77564cdca06dd819e7ee2a5efa06c80dcb59a4a7b6e39edc538f",
         "withdrawalRecipient": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "Ethereum_SpokePool"
+      }
+    },
+    {
+      "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Alephzero_Adapter",
       "address": "0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x1ccce681c671e5131c390787ccaa619eb4c4ee20d444e73484078b4770b12ea1"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1730926523,
+      "sinceBlock": 21131132,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -349,11 +417,14 @@
     {
       "name": "GovernorV2",
       "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+      "type": "Contract",
       "sourceHashes": [
         "0xdf7f17e5c8ba1f0103fcfaf495da624089f8bfb3d5052217537bb064ca8c60b9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "sinceTimestamp": 1677230459,
+      "sinceBlock": 16697276,
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
@@ -364,30 +435,40 @@
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
         "numProposals": 205
-      },
-      "derivedName": "GovernorV2"
+      }
     },
     {
       "name": "LpTokenFactory",
       "address": "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
+      "type": "Contract",
       "sourceHashes": [
         "0x54ab5e1f981929fca37e28c313db9ab35343de3df6907dbaeb29dda3840aadcd"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1651576251,
+      "sinceBlock": 14704307,
       "values": { "$immutable": true }
+    },
+    {
+      "address": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Ink_Adapter",
       "address": "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1734635711,
+      "sinceBlock": 21438590,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -404,15 +485,18 @@
     {
       "name": "Linea_Adapter",
       "address": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x6cc7cfdaa6b4d79d35a624dafc13713137f61d46c6536a4837a2793c3fa3fc4d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1710046163,
+      "sinceBlock": 19402413,
       "values": {
         "$immutable": true,
         "L1_MESSAGE_SERVICE": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -424,6 +508,7 @@
     {
       "name": "EmergencyProposalExecutor",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -432,6 +517,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1597806870,
+      "sinceBlock": 10688070,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -454,15 +540,18 @@
     {
       "name": "Lisk_Adapter",
       "address": "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x4d929bc632eff7818792b2ad5539b8b5dbc8842e7d23c9d9bfb116acb05eb96a"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1719509639,
+      "sinceBlock": 20184545,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -475,8 +564,19 @@
       }
     },
     {
+      "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x868CF19464e17F76D6419ACC802B122c22D2FD34",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimisticGovernor",
       "address": "0x8692B776d1Ff0664177c90465038056Dc64f8991",
+      "type": "Contract",
       "sourceHashes": [
         "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"
       ],
@@ -488,6 +588,7 @@
         }
       ],
       "sinceTimestamp": 1683067175,
+      "sinceBlock": 17176107,
       "values": {
         "$immutable": false,
         "avatar": "0xB524735356985D2f267FA010D681f061DfF03715",
@@ -511,17 +612,19 @@
         "ZodiacModule_guard": "0x0000000000000000000000000000000000000000",
         "ZodiacModule_modules": [],
         "ZodiacModule_target": "0xB524735356985D2f267FA010D681f061DfF03715"
-      },
-      "derivedName": "OptimisticGovernor"
+      }
     },
     {
       "name": "EmergencyProposer",
       "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+      "type": "Contract",
       "sourceHashes": [
         "0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["getCurrentTime"],
       "sinceTimestamp": 1677231923,
+      "sinceBlock": 16697394,
       "values": {
         "$immutable": true,
         "emergencyProposals": [],
@@ -532,21 +635,43 @@
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "EmergencyProposer"
+      }
+    },
+    {
+      "address": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9552a0a6624A23B848060AE5901659CDDa1f83f8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "WorldChain_Adapter",
       "address": "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x20e9061e359e9fafb0e4b70f1fb2e4e7812f00cee7a62ed186f67134d3d9729a"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1728901991,
+      "sinceBlock": 20963234,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -563,15 +688,18 @@
     {
       "name": "Polygon_Adapter",
       "address": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0xf598be4ed345b6b3e83e04dff2cb5472dc4df0b8476f8f74a4c75c473dee6347"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716255695,
+      "sinceBlock": 19915066,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -588,6 +716,7 @@
     {
       "name": "HubPool Multisig",
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -596,6 +725,7 @@
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1636157803,
+      "sinceBlock": 13559776,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -619,15 +749,18 @@
     {
       "name": "Scroll_Adapter",
       "address": "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1721124335,
+      "sinceBlock": 20318360,
       "values": {
         "$immutable": true,
         "L1_GATEWAY_ROUTER": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
@@ -640,18 +773,23 @@
     {
       "name": "CoveredCallFinancialProductLibrary",
       "address": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
+      "type": "Contract",
       "sourceHashes": [
         "0x626fc280735c432e9187554bc59d556389dc73435f1b570e64f424d257f68d09"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1618347170,
+      "sinceBlock": 12234012,
       "values": { "$immutable": true }
     },
     {
       "name": "HubPool",
       "address": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+      "type": "Contract",
       "sourceHashes": [
         "0x3afa0a01f4cde6c678d6ec12443078407e69293b9a4519105445f694671b2dec"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -660,6 +798,7 @@
       ],
       "ignoreInWatchMode": ["rootBundleProposal"],
       "sinceTimestamp": 1653167916,
+      "sinceBlock": 14819537,
       "values": {
         "$immutable": true,
         "Adapters": {
@@ -726,21 +865,33 @@
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "HubPool"
+      }
+    },
+    {
+      "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Base_Adapter",
       "address": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x172a1f27f0fecf665d90a6adc1287223f05a73acd9ed19d9c446972880ccce0f"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716255947,
+      "sinceBlock": 19915087,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -755,15 +906,18 @@
     {
       "name": "Optimism_Adapter",
       "address": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x59784b70d01278196c00fbfe1f237b01ec891dca28b0542cdf8dcc9e672b3849"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716255311,
+      "sinceBlock": 19915034,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -782,15 +936,18 @@
     {
       "name": "ZkSync_Adapter",
       "address": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0xc4f838b87ec9ed41b647f7d3a4a508abdb28aef5a4908a9e0829ccb37f319cc8"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1691158667,
+      "sinceBlock": 17842162,
       "values": {
         "$immutable": true,
         "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
@@ -803,13 +960,21 @@
       }
     },
     {
+      "address": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BondToken",
       "address": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+      "type": "Contract",
       "sourceHashes": [
         "0x1d9754ae4e99e4320201bbc6f0e19aa5ecac917dcacaadba3b70cfa018910754"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1692831647,
+      "sinceBlock": 17980554,
       "values": {
         "$immutable": true,
         "decimals": 18,
@@ -819,16 +984,18 @@
         "proposers": ["0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"],
         "symbol": "ABT",
         "totalSupply": "28095402467539846062"
-      },
-      "derivedName": "BondToken"
+      }
     },
     {
       "name": "UMAOptimisticOracle",
       "address": "0xeE3Afe347D5C74317041E2618C49534dAf887c24",
+      "type": "Contract",
       "sourceHashes": [
         "0xbe561564083bf80216ae0f5510f70415cf97a624ef4bad88fb98a43dc4231dd6"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1635958318,
+      "sinceBlock": 13545034,
       "values": {
         "$immutable": true,
         "ancillaryBytesLimit": 8192,
@@ -839,17 +1006,25 @@
       "derivedName": "SkinnyOptimisticOracle"
     },
     {
+      "address": "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Mode_Adapter",
       "address": "0xf1B59868697f3925b72889ede818B9E7ba0316d0",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x1b1b271fd3f736024fda7dd869d78943819efee5dcbf6f4075af9647cfb16cac"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1716243911,
+      "sinceBlock": 19914094,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -864,15 +1039,18 @@
     {
       "name": "Blast_Adapter",
       "address": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x596bdc0b39f0ff19cde625424cdc037dd3e79355ee2c845bd8a6e5e42b3bc332"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1719955511,
+      "sinceBlock": 20221494,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
@@ -887,17 +1065,25 @@
       }
     },
     {
+      "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DoctorWho_Adapter",
       "address": "0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
+      "type": "Contract",
       "template": "acrossv3/adapter",
       "sourceHashes": [
         "0x26a48559a60b482a96526e1ee27fef2111bb46e40395ee2122284141ffc30e14"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
       ],
       "sinceTimestamp": 1738675907,
+      "sinceBlock": 21773451,
       "values": {
         "$immutable": true,
         "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
@@ -912,10 +1098,13 @@
     {
       "name": "OptimisticOracleV3",
       "address": "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+      "type": "Contract",
       "sourceHashes": [
         "0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1676487275,
+      "sinceBlock": 16636058,
       "values": {
         "$immutable": true,
         "burnedBondPercentage": "500000000000000000",
@@ -926,31 +1115,8 @@
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      },
-      "derivedName": "OptimisticOracleV3"
+      }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64" },
-    { "address": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97" },
-    { "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05" },
-    { "address": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1" },
-    { "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5" },
-    { "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96" },
-    { "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281" },
-    { "address": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75" },
-    { "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe" },
-    { "address": "0x868CF19464e17F76D6419ACC802B122c22D2FD34" },
-    { "address": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096" },
-    { "address": "0x9552a0a6624A23B848060AE5901659CDDa1f83f8" },
-    { "address": "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9" },
-    { "address": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D" },
-    { "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d" },
-    { "address": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF" },
-    { "address": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A" },
-    { "address": "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4" },
-    { "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c" }
   ],
   "abis": {
     "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a": [

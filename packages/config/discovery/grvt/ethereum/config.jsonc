@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "grvt",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E", // GrvtZkEvm
     "0xE17aeD2fC55f4A876315376ffA49FE6358113a65" // GRVTBridgeProxy (permissioned bridge proxy)
@@ -13,9 +14,7 @@
     "0x3Cd52B238Ac856600b22756133eEb31ECb25109a": "GRVTTransactionFilterer",
     "0xE17aeD2fC55f4A876315376ffA49FE6358113a65": "GRVTBridgeProxy"
   },
-  "sharedModules": {
-    "iwashere": "shared-zk-stack"
-  },
+  "sharedModules": ["shared-zk-stack"],
   "overrides": {
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       // local override over the template to fetch the validators from the shared contract

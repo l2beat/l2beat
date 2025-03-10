@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x36669f0d0f09c85e88b997fd811413beeff28f1e
+
+# Diff at Tue, 04 Mar 2025 10:40:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@98d260b45fe0d2195ce5e629bd7b200c8706e8ba block: 26369623
+- current block number: 26369623
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26369623 (main branch discovery), not current.
+
+```diff
+    contract StargatePoolUSDC (0x27a16dc786820B16E5c9028b75B99F6f604b5d26) {
+    +++ description: None
+      sinceBlock:
++        15023835
+    }
+```
+
+```diff
+    contract TokenMessaging (0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47) {
+    +++ description: None
+      sinceBlock:
++        15023838
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7) {
+    +++ description: None
+      sinceBlock:
++        15023831
+    }
+```
+
+Generated with discovered.json: 0xa82bd43f0541946d04ac6d4e41241204fd143ce0
+
+# Diff at Fri, 14 Feb 2025 10:23:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 15999031
+- current block number: 26369623
+
+## Description
+
+Deficit config adjustements affecting fee calculation.
+
+## Watched changes
+
+```diff
+    contract StargatePoolUSDC (0x27a16dc786820B16E5c9028b75B99F6f604b5d26) {
+    +++ description: None
+      values.deficitOffset:
+-        0
++        25000000000000
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7) {
+    +++ description: None
+      values.deficitOffset:
+-        0
++        "11500000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xe1acfdafd466c89fdb3ecd43dfba0bd606e2c5de
 
 # Diff at Mon, 14 Oct 2024 10:59:48 GMT:

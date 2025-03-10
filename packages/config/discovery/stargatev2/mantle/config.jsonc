@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "mantle",
   "name": "stargatev2",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": ["0x41B491285A4f888F9f636cEc8a363AB9770a0AEF"],
   "names": {
     "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": "TokenMessaging"

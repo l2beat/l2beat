@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from '../../types'
+import type { Bridge } from '../../internalTypes'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('ronin')
@@ -33,7 +33,7 @@ const pausable = {
 export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
-  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Ronin V3',
     slug: 'ronin',
@@ -58,13 +58,13 @@ export const ronin: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x1A2a1c938CE3eC39b6D47113c7955bAa9DD454F2'), // old bridge
-        sinceTimestamp: new UnixTime(1611575595),
+        sinceTimestamp: UnixTime(1611575595),
         tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'USDT', 'MATIC', 'LINK'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08'), // new bridge
-        sinceTimestamp: new UnixTime(1655883630),
+        sinceTimestamp: UnixTime(1655883630),
         tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'SLP', 'USDT', 'MATIC', 'LINK'],
         chain: 'ethereum',
       },
@@ -150,8 +150,9 @@ export const ronin: Bridge = {
             'MainchainGateway',
             `Bridge V3 contract handling deposits and withdrawals.`,
           ),
-          upgradableBy: ['MainchainBridgeManager Governors'],
-          upgradeDelay: 'No delay',
+          upgradableBy: [
+            { name: 'MainchainBridgeManager Governors', delay: 'no' },
+          ],
           pausable,
         },
         discovery.getContractDetails(

@@ -13,15 +13,16 @@ import {
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 
 interface Props {
   tokenTvs:
-    | NonNullable<ScalingProjectEntry['header']['tvs']>['tokens']
+    | NonNullable<ProjectScalingEntry['header']['tvs']>['tokens']
     | undefined
+  gasTokens?: string[]
 }
 
-export function TokenBreakdownStat({ tokenTvs }: Props) {
+export function TokenBreakdownStat({ tokenTvs, gasTokens }: Props) {
   const tokenWarnings = tokenTvs?.warnings ?? []
   const anyBadWarnings = tokenWarnings.some((w) => w.sentiment === 'bad')
   const anyWarningWarnings = tokenWarnings.some(
@@ -75,6 +76,7 @@ export function TokenBreakdownStat({ tokenTvs }: Props) {
           associated={tokenTvs.breakdown.associated}
           ether={tokenTvs.breakdown.ether}
           stablecoin={tokenTvs.breakdown.stablecoin}
+          className="h-[18px] w-[88px]"
         />
         {tokenTvs.warnings.length > 0 && (
           <RoundedWarningIcon sentiment={warningSentiment} />
@@ -88,6 +90,7 @@ export function TokenBreakdownStat({ tokenTvs }: Props) {
           stablecoin={tokenTvs.breakdown.stablecoin}
           associatedTokenSymbols={tokenTvs.associatedTokens}
           tvsWarnings={tokenTvs.warnings}
+          gasTokens={gasTokens}
         />
       </TooltipContent>
     </Tooltip>
