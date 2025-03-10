@@ -90,7 +90,7 @@ export class DiscoveryConfig {
 
   isInSharedModules(address: EthereumAddress): boolean {
     return this.sharedModuleDiscovery.some((d) => {
-      const addresses = d.contracts.map((c) => c.address)
+      const addresses = d.entries.map((c) => c.address)
       return addresses.includes(address)
     })
   }

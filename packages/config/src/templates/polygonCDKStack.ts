@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -80,8 +80,8 @@ export interface PolygonCDKStackConfig {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
   isForcedBatchDisallowed: boolean
-  rollupModuleContract: ContractParameters
-  rollupVerifierContract: ContractParameters
+  rollupModuleContract: EntryParameters
+  rollupVerifierContract: EntryParameters
   upgradesAndGovernance?: string
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]

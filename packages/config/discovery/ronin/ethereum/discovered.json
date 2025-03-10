@@ -2,11 +2,47 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 21378535,
-  "configHash": "0x9d8ab6c87830c237f5889c0e888aa57092f37b6a2d0289a57617077bf41b062a",
-  "contracts": [
+  "configHash": "0xacea799aa97352f090f87ed28987f31956ebedc255a26a6c78971ba58342a99c",
+  "entries": [
+    {
+      "address": "0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x063105D0E7215B703909a7274FE38393302F3134",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0d48aDbdc523681c0DEe736dbDc4497E02Bec210",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0DCA20728c8bb7173D3452559F40E95C60915799",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x18471CC6d2d427077CAA7896D7956cD066CAbe49",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x236aF2FFdb611B14e3042A982d13EdA1627d9C96",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "MainchainBridgeManager",
       "address": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
+      "type": "Contract",
       "sourceHashes": [
         "0x33cd2cf791b018347e2c994f787d0a24c830435bccfe913456ab337de909570e",
         "0xb95d73d375b1e25c5ddb15cbfa79b70a14b58ce1467a12bd841a4f59b063e2f9"
@@ -114,9 +150,11 @@
     {
       "name": "RoninManagerMultiSig",
       "address": "0x2DA02aC5f19Ae362a4121718d990e655eB628D96",
+      "type": "Contract",
       "sourceHashes": [
         "0x34de320a4a2a66cb410c0b6b04558c98586ea66fe69b35df6ee3ff7816eae03b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1562142059,
       "sinceBlock": 8077308,
       "values": {
@@ -148,8 +186,59 @@
       "derivedName": "MultiSigWalletWithDailyLimit"
     },
     {
+      "address": "0x32cB6da260726BB2192c4085B857aFD945A215Cb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x332253265e36689D9830E57112CD1aaDB1A773f9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3C583c0c97646a73843aE57b93f33e1995C8DC80",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4620fb95eaBDaB4Bf681D987e116e0aAef1adEF2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x47870D35cdfF193a428C98a3468c833c23488393",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x47cfcb64f8EA44d6Ea7FAB32f13EFa2f8E65Eec1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4a4217d8751a027D853785824eF40522c512A3Fe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4B18CEBEB9797Ea594b5977109cc07b21c37E8c3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4b3844A29CFA5824F53e2137Edb6dc2b54501BeA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4BFEc2a63B72c67e6c3f599fCc40E1d42AE519ff",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RoninAdminMultisig",
       "address": "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -186,8 +275,44 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x54C8C42F07007D43c3049bEF6f10eA68687d43ef",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x564DcB855Eb360826f27D1Eb9c57cbbe6C76F50F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5832C3219c1dA998e828E1a2406B73dbFC02a70C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x58aBcBCAb52dEE942491700CD0DB67826BBAA8C6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5e04DC8156ce222289d52487dbAdCb01C8c990f9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x60c4B72fc62b3e3a74e283aA9Ba20d61dD4d8F1b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MainchainGateway",
       "address": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+      "type": "Contract",
       "sourceHashes": [
         "0xdf743526ddd44d53db1ae516488019ca52e6b6434e33ad8fbd5b060c138653a2",
         "0x2d39ee54cf7dc52198aeac3324e8b8034b0d5db06ad5192305aaa80c1e10fca6"
@@ -271,11 +396,98 @@
       "derivedName": "MainchainGatewayV3"
     },
     {
+      "address": "0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x66225AcC78Be789C57a11C9a18F051C779d678B5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x72A69B04B59C36fCED19ac54209beF878e84FcBF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x73f5B22312B7B2B3B1Cd179fC62269aB369c8206",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x772112C7e5dD4ed663e844e79d77c1569a2E88ce",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x77Ab649Caa7B4b673C9f2cF069900DF48114d79D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8c4AD2DC12AdB9aD115e37EE9aD2e00E343EDf85",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8d4f4e4ba313c4332e720445d8268E087D5C19b8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x944b1282cb9B3e62794f38733F3B6336536c30cc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9B0612E43855ef9a7c329ee89653bA45273B550e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA441f1399C8c023798586fbbBcF35f27279638a1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA91D05b7c6e684F43E8Fe0c25B3c4Bb1747A2a9E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAD23e87306aa3c7B95ee760e86f40F3021E5Fa18",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xbaCB04eA617b3E5EEe0E3f6E8FCB5Ba886B83958",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "WETH9",
       "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "type": "Contract",
       "sourceHashes": [
         "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1513077455,
       "sinceBlock": 4719568,
@@ -288,11 +500,48 @@
       }
     },
     {
+      "address": "0xc092Fa0C772b3c850e676c57d8737BB39084B9AC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc23F2907Bc11848B5d5cEdBB835e915D7b760d99",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcb8225AA9D1029Af2E8cA537027E26bbe3056353",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD9d5b3E58fa693B468a20C716793B18A1195380a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe258f9996723B910712D6E67ADa4EafC15F7F101",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe38aFbE7738b6Ec4280A6bCa1176c1C1A928A19C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PauseEnforcer",
       "address": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
+      "type": "Contract",
       "sourceHashes": [
         "0x38ea3c443d8341f4b59ebeae4d05a6064ff361f2f672ae8e49e2a96514a2261d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1679637023,
       "sinceBlock": 16895391,
       "values": {
@@ -321,67 +570,57 @@
         "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
         "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
       }
+    },
+    {
+      "address": "0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE795F18F2F5DF5a666994e839b98263Dba86C902",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe880802580a1fbdeF67ACe39D1B21c5b2C74f059",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xEC5c90401F95F8c49b1E133E94F09D85b21d96a4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xeD3805fB65FF51a99Fef4676BdBC97abecA93D11",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xED448901cC62be10c5525BA19645dDcA1fD9dA1D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF0c48B7F020BB61e6A3500AbC4b4954Bde7A2039",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf4682B9263d1ba9bd9Db09dA125708607d1eDd3a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xff30Ed09E3AE60D39Bce1727ee3292fD76A6FAce",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9" },
-    { "address": "0x063105D0E7215B703909a7274FE38393302F3134" },
-    { "address": "0x0d48aDbdc523681c0DEe736dbDc4497E02Bec210" },
-    { "address": "0x0DCA20728c8bb7173D3452559F40E95C60915799" },
-    { "address": "0x18471CC6d2d427077CAA7896D7956cD066CAbe49" },
-    { "address": "0x236aF2FFdb611B14e3042A982d13EdA1627d9C96" },
-    { "address": "0x299F344F0c6cC03cbb250E0f2dDdCD22Ae267c0c" },
-    { "address": "0x32cB6da260726BB2192c4085B857aFD945A215Cb" },
-    { "address": "0x332253265e36689D9830E57112CD1aaDB1A773f9" },
-    { "address": "0x3C583c0c97646a73843aE57b93f33e1995C8DC80" },
-    { "address": "0x4620fb95eaBDaB4Bf681D987e116e0aAef1adEF2" },
-    { "address": "0x47870D35cdfF193a428C98a3468c833c23488393" },
-    { "address": "0x47cfcb64f8EA44d6Ea7FAB32f13EFa2f8E65Eec1" },
-    { "address": "0x4a4217d8751a027D853785824eF40522c512A3Fe" },
-    { "address": "0x4B18CEBEB9797Ea594b5977109cc07b21c37E8c3" },
-    { "address": "0x4b3844A29CFA5824F53e2137Edb6dc2b54501BeA" },
-    { "address": "0x4BFEc2a63B72c67e6c3f599fCc40E1d42AE519ff" },
-    { "address": "0x54C8C42F07007D43c3049bEF6f10eA68687d43ef" },
-    { "address": "0x564DcB855Eb360826f27D1Eb9c57cbbe6C76F50F" },
-    { "address": "0x5832C3219c1dA998e828E1a2406B73dbFC02a70C" },
-    { "address": "0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4" },
-    { "address": "0x58aBcBCAb52dEE942491700CD0DB67826BBAA8C6" },
-    { "address": "0x5e04DC8156ce222289d52487dbAdCb01C8c990f9" },
-    { "address": "0x60c4B72fc62b3e3a74e283aA9Ba20d61dD4d8F1b" },
-    { "address": "0x660Ef9c5a8a92070b03fc5BBC2AC006D0B0Ead33" },
-    { "address": "0x66225AcC78Be789C57a11C9a18F051C779d678B5" },
-    { "address": "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0" },
-    { "address": "0x72A69B04B59C36fCED19ac54209beF878e84FcBF" },
-    { "address": "0x73f5B22312B7B2B3B1Cd179fC62269aB369c8206" },
-    { "address": "0x772112C7e5dD4ed663e844e79d77c1569a2E88ce" },
-    { "address": "0x77Ab649Caa7B4b673C9f2cF069900DF48114d79D" },
-    { "address": "0x8c4AD2DC12AdB9aD115e37EE9aD2e00E343EDf85" },
-    { "address": "0x8d4f4e4ba313c4332e720445d8268E087D5C19b8" },
-    { "address": "0x944b1282cb9B3e62794f38733F3B6336536c30cc" },
-    { "address": "0x9B0612E43855ef9a7c329ee89653bA45273B550e" },
-    { "address": "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b" },
-    { "address": "0xA441f1399C8c023798586fbbBcF35f27279638a1" },
-    { "address": "0xA91D05b7c6e684F43E8Fe0c25B3c4Bb1747A2a9E" },
-    { "address": "0xAD23e87306aa3c7B95ee760e86f40F3021E5Fa18" },
-    { "address": "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192" },
-    { "address": "0xbaCB04eA617b3E5EEe0E3f6E8FCB5Ba886B83958" },
-    { "address": "0xc092Fa0C772b3c850e676c57d8737BB39084B9AC" },
-    { "address": "0xc23F2907Bc11848B5d5cEdBB835e915D7b760d99" },
-    { "address": "0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9" },
-    { "address": "0xcb8225AA9D1029Af2E8cA537027E26bbe3056353" },
-    { "address": "0xD9d5b3E58fa693B468a20C716793B18A1195380a" },
-    { "address": "0xe258f9996723B910712D6E67ADa4EafC15F7F101" },
-    { "address": "0xe38aFbE7738b6Ec4280A6bCa1176c1C1A928A19C" },
-    { "address": "0xE5EB222996967BE79468C28bA39D665fd96E8b30" },
-    { "address": "0xE795F18F2F5DF5a666994e839b98263Dba86C902" },
-    { "address": "0xe880802580a1fbdeF67ACe39D1B21c5b2C74f059" },
-    { "address": "0xEC5c90401F95F8c49b1E133E94F09D85b21d96a4" },
-    { "address": "0xeD3805fB65FF51a99Fef4676BdBC97abecA93D11" },
-    { "address": "0xED448901cC62be10c5525BA19645dDcA1fD9dA1D" },
-    { "address": "0xF0c48B7F020BB61e6A3500AbC4b4954Bde7A2039" },
-    { "address": "0xf4682B9263d1ba9bd9Db09dA125708607d1eDd3a" },
-    { "address": "0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031" },
-    { "address": "0xff30Ed09E3AE60D39Bce1727ee3292fD76A6FAce" }
   ],
   "abis": {
     "0x0ac26945032143f6196d4bb5Ae03592BfAf822FD": [

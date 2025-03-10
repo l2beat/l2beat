@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
 import { get$Implementations } from '../discovery/extractors'
@@ -55,12 +55,10 @@ export function mergeContracts(
   return result
 }
 
-export function safeGetImplementation(
-  contract: ContractParameters,
-): EthereumAddress {
-  const implementation = get$Implementations(contract.values)[0]
+export function safeGetImplementation(entry: EntryParameters): EthereumAddress {
+  const implementation = get$Implementations(entry.values)[0]
   if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
+    throw new Error(`No implementation found for ${entry.name}`)
   }
   return implementation
 }

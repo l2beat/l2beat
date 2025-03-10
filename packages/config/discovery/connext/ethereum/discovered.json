@@ -2,14 +2,21 @@
   "name": "connext",
   "chain": "ethereum",
   "blockNumber": 21285557,
-  "configHash": "0xf531ad85752b22c5f294da1c130314ce175f25601d3fc85095ee0584d01603c3",
-  "contracts": [
+  "configHash": "0x14325a16f5b74498826cd09d9932bb25247f6fa5c55d80001833d4b8d48f14be",
+  "entries": [
+    {
+      "address": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "TransactionManager",
       "address": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a10f30a0039faccfa89f130d4f1114d81bb965bf1e050e64d2806982289ad52"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1636004546,
       "sinceBlock": 13548432,
       "values": {
@@ -33,9 +40,11 @@
     {
       "name": "FulfillInterpreter",
       "address": "0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
+      "type": "Contract",
       "sourceHashes": [
         "0xd97bc069bf47ba9568177032f0a27cb51ad0564b0a2c9480fdcd09f5e3dff02d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1636004546,
       "sinceBlock": 13548432,
       "values": {
@@ -43,10 +52,6 @@
         "getTransactionManager": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493" }
   ],
   "abis": {
     "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": [

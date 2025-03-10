@@ -2,11 +2,17 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 124973335,
-  "configHash": "0x361a35b54183f80152887576aaeeda8f642e2f2c84a7bf8370cc5c6225b23053",
-  "contracts": [
+  "configHash": "0xe7ba63b175ee3f3c034c5cedb05c58ac3b6537c56bbf18af52f6542ba6006dee",
+  "entries": [
+    {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "OptimismOwner",
       "address": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -46,8 +52,20 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+        }
+      ]
+    },
+    {
       "name": "zkLink",
       "address": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+      "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -116,8 +134,14 @@
       "derivedName": "ZkLink"
     },
     {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ERC20Bridge",
       "address": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+      "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
@@ -154,11 +178,28 @@
       }
     },
     {
+      "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismProxyAdmin",
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
+      "type": "Contract",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -177,6 +218,7 @@
     {
       "name": "OptimismL2Gateway",
       "address": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
+      "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -208,28 +250,32 @@
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "ZKLINK": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
       }
-    }
-  ],
-  "eoas": [
-    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
-    {
-      "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
-        }
-      ]
     },
-    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
-    { "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15" },
-    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
-    { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
-    { "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d" },
-    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
-    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
-    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
-    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
+    {
+      "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8": [

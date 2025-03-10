@@ -2,11 +2,12 @@
   "name": "zkfair",
   "chain": "ethereum",
   "blockNumber": 21086404,
-  "configHash": "0x914b1351746688236250f169fbd364be0cf65e0273a5bef5987a713435aeb155",
-  "contracts": [
+  "configHash": "0xe6da7f44bdbe6205835b55fb5511cab23ecc2028508934c255f8eda524a5ef82",
+  "entries": [
     {
       "name": "ZKFairAdmin",
       "address": "0x0110B1B231aA3b96a94c900eb3056297526AB725",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -36,8 +37,19 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x061D273bEf947BD0ef2B828526e710eEa0f297ae",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ZKFairValidium",
       "address": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xf130a993ad1c6ad92168bdcb2f36fa45071cfdfccb13dd005d7d45e454089482"
@@ -89,11 +101,43 @@
       "derivedName": "CDKValidium"
     },
     {
+      "address": "0x3226ECf79dc7007063599A334832d015B48aBDBc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x39FcAEb9870cB015f2165e93c51f4663AE970953",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4dba6F06597Ea29A330C06806FA284610c810295",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Timelock",
       "address": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+      "type": "Contract",
       "sourceHashes": [
         "0x1946b3da4b7b9101624b6f56e88c5546848e9acadd62375f5cc8772c0f11f92c"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -157,8 +201,19 @@
       "derivedName": "CDKValidiumTimelock"
     },
     {
+      "address": "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x689752C198f0cEbe9993ee3E13AF0e565C068c25",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GlobalExitRoot",
       "address": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xb7beee2e185ac88119ddf52a7b183100c31b13dbb35154dd5b60e74c16684cba"
@@ -190,11 +245,18 @@
       "derivedName": "PolygonZkEVMGlobalExitRoot"
     },
     {
+      "address": "0x75575Dc1adD71eA794A52D83f836a13F7891C527",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FflonkVerifier",
       "address": "0x769E285d2120472c3400A09684B82A842012F46d",
+      "type": "Contract",
       "sourceHashes": [
         "0x2a8d8b10f3b85cd700a19db2ebb050c5acc6bdfd7bbd10f8b8229541fd5264ab"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1702879247,
       "sinceBlock": 18810958,
       "values": { "$immutable": true }
@@ -202,6 +264,7 @@
     {
       "name": "ZKFairOwner",
       "address": "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -231,8 +294,14 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x9231622437bD57349cC9a15CDEc5383627DEbA17",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ZKFairValidiumDAC",
       "address": "0x997CfB0838544f68E59f877EDc905001456F125b",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x9cc000b5f37484491701d9b554b9a01ea89a6a59f918d1d53c8e173b5b14a0fe"
@@ -294,6 +363,7 @@
     {
       "name": "Bridge",
       "address": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x63f00c3d965d6858168ed7d73fd0c413524877b196c4c5e3cf8fbc6ba40846e8"
@@ -333,12 +403,34 @@
       "derivedName": "PolygonZkEVMBridge"
     },
     {
+      "address": "0x9d8616545C9941138832EebC58Cb498E0ef21a13",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -367,6 +459,7 @@
     {
       "name": "BridgeAdminMultiSig",
       "address": "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -394,31 +487,32 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "address": "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFe1da7CAd939805d4A889822357c348177a5118d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2" },
-    { "address": "0x061D273bEf947BD0ef2B828526e710eEa0f297ae" },
-    { "address": "0x3226ECf79dc7007063599A334832d015B48aBDBc" },
-    { "address": "0x39FcAEb9870cB015f2165e93c51f4663AE970953" },
-    { "address": "0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292" },
-    { "address": "0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976" },
-    { "address": "0x4dba6F06597Ea29A330C06806FA284610c810295" },
-    { "address": "0x4Ea1f0f05E7484Ee85a97303DC88c2dF4288df3e" },
-    { "address": "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba" },
-    { "address": "0x689752C198f0cEbe9993ee3E13AF0e565C068c25" },
-    { "address": "0x75575Dc1adD71eA794A52D83f836a13F7891C527" },
-    { "address": "0x9231622437bD57349cC9a15CDEc5383627DEbA17" },
-    { "address": "0x9d8616545C9941138832EebC58Cb498E0ef21a13" },
-    { "address": "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c" },
-    { "address": "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7" },
-    { "address": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70" },
-    { "address": "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87" },
-    { "address": "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027" },
-    { "address": "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF" },
-    { "address": "0xFe1da7CAd939805d4A889822357c348177a5118d" },
-    { "address": "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D" }
   ],
   "abis": {
     "0x0110B1B231aA3b96a94c900eb3056297526AB725": [
