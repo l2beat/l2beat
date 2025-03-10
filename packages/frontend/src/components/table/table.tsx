@@ -1,6 +1,9 @@
 import * as React from 'react'
+import {
+  HighlightedTableRowProvider,
+  useHighlightedTableRowContext,
+} from '~/components/table/highlighted-table-row-context'
 import { cn } from '~/utils/cn'
-import { LinkWithOnHoverPrefetch } from '../link/link-with-on-hover-prefetch'
 import { TableTooltip } from './table-tooltip'
 
 const Table = ({
@@ -10,12 +13,14 @@ const Table = ({
   return (
     <div className="max-md:-mr-4">
       <div className={cn('relative w-full overflow-auto pb-3 max-md:pr-4')}>
-        <table
-          className={cn('w-full border-collapse text-left', className)}
-          cellSpacing={0}
-          cellPadding={0}
-          {...props}
-        />
+        <HighlightedTableRowProvider>
+          <table
+            className={cn('w-full border-collapse text-left', className)}
+            cellSpacing={0}
+            cellPadding={0}
+            {...props}
+          />
+        </HighlightedTableRowProvider>
       </div>
     </div>
   )
@@ -54,16 +59,23 @@ TableHeaderRow.displayName = 'TableHeaderRow'
 
 const TableRow = ({
   className,
+  slug,
   ...props
-}: React.HTMLAttributes<HTMLTableRowElement>) => (
-  <TableHeaderRow
-    className={cn(
-      'group/row border-b border-b-divider hover:shadow-sm',
-      className,
-    )}
-    {...props}
-  />
-)
+}: React.HTMLAttributes<HTMLTableRowElement> & {
+  slug: string | undefined
+}) => {
+  const { highlightedSlug } = useHighlightedTableRowContext()
+  return (
+    <TableHeaderRow
+      className={cn(
+        'group/row border-b-2 border-b-divider',
+        highlightedSlug && highlightedSlug === slug && 'animate-row-highlight',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 TableRow.displayName = 'TableRow'
 
 const TableHead = ({
@@ -101,40 +113,22 @@ TableHead.displayName = 'TableHead'
 const TableCell = ({
   className,
   children,
-  href,
   align,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
-  href?: string
   align?: 'right' | 'center'
 }) => (
   <td
     className={cn(
       'group h-9 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
-      !href && [
-        'pr-3 first:pl-2 last:pr-2 md:pr-4',
-        align === 'center' && 'text-center',
-        align === 'right' && 'text-right',
-        className,
-      ],
+      'pr-3 first:pl-2 last:pr-4 md:pr-4',
+      align === 'center' && 'text-center *:mx-auto',
+      align === 'right' && 'text-right *:ml-auto',
+      className,
     )}
     {...props}
   >
-    {href ? (
-      <LinkWithOnHoverPrefetch
-        href={href}
-        className={cn(
-          'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
-          align === 'center' && 'justify-center',
-          align === 'right' && 'justify-end',
-          className,
-        )}
-      >
-        {children}
-      </LinkWithOnHoverPrefetch>
-    ) : (
-      children
-    )}
+    {children}
   </td>
 )
 TableCell.displayName = 'TableCell'

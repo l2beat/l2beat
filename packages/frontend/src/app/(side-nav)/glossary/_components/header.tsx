@@ -1,4 +1,4 @@
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { cn } from '~/utils/cn'
 import { AlphabetSelector } from './alphabet-selector/alphabet-selector'
 

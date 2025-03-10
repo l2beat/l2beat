@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'

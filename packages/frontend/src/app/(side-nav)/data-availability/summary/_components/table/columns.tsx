@@ -1,5 +1,7 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
@@ -12,22 +14,35 @@ import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
-export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
-
-const daLayerColumn = columnHelper.accessor('name', {
-  header: 'DA Layer',
-  cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
-  meta: {
-    tooltip:
-      'The data availability layer where the data (transaction data or state diffs) is posted.',
-  },
-})
+const daLayerColumn = (hash?: string) =>
+  columnHelper.accessor('name', {
+    header: 'DA Layer',
+    cell: (ctx) => (
+      <TableLink href={`${ctx.row.original.href}${hash ? `#${hash}` : ''}`}>
+        <ProjectNameCell project={ctx.row.original} />
+      </TableLink>
+    ),
+    meta: {
+      tooltip:
+        'The data availability layer where the data (transaction data or state diffs) is posted.',
+    },
+  })
 
 const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
-    return <GrissiniCell values={ctx.row.original.risks} />
+    return (
+      <GrissiniCell
+        values={ctx.row.original.risks}
+        href={
+          ctx.row.original.id === ProjectId.ETHEREUM
+            ? undefined
+            : `/data-availability/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`
+        }
+        disabledOnMobile
+      />
+    )
   },
   meta: {
     align: 'center',
@@ -42,7 +57,17 @@ const daBridgeRisksColumn = columnHelper.display({
     if (!bridge) {
       return EM_DASH
     }
-    return <GrissiniCell values={bridge.risks} />
+    return (
+      <GrissiniCell
+        values={bridge.risks}
+        href={
+          ctx.row.original.id === ProjectId.ETHEREUM
+            ? undefined
+            : `/data-availability/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`
+        }
+        disabledOnMobile
+      />
+    )
   },
   meta: {
     align: 'center',
@@ -52,9 +77,11 @@ const daBridgeRisksColumn = columnHelper.display({
 const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
   cell: (ctx) => (
-    <div className="w-full pr-5 text-right text-sm font-medium">
-      {formatDollarValueNumber(ctx.row.original.tvs.latest)}
-    </div>
+    <TableLink href={`${ctx.row.original.href}#tvs`}>
+      <div className="w-full text-right text-sm font-medium">
+        {formatDollarValueNumber(ctx.row.original.tvs.latest)}
+      </div>
+    </TableLink>
   ),
   meta: {
     tooltip:
@@ -113,18 +140,6 @@ const fallbackColumn = columnHelper.display({
   },
 })
 
-export const customColumns = [
-  indexColumn,
-  logoColumn,
-  daLayerColumn,
-  daRisksColumn,
-  daBridgeRisksColumn,
-  tvsColumn,
-  membersColumn,
-  fallbackColumn,
-  challengeMechanismColumn,
-]
-
 const daLayerGroup = columnHelper.group({
   header: 'DA Layer',
   columns: [
@@ -176,15 +191,6 @@ const bridgeGroup = columnHelper.group({
   columns: [bridgeRisksColumn, bridgeTvsColumn, bridgeUsedByColumn],
 })
 
-export const publicSystemsColumns = [
-  withSpanByBridges(indexColumn),
-  withSpanByBridges(logoColumn),
-  withSpanByBridges(daLayerColumn),
-  daLayerGroup,
-  bridgeColumn,
-  bridgeGroup,
-]
-
 function sortSlashableStake(
   rowA: Row<DaSummaryEntry>,
   rowB: Row<DaSummaryEntry>,
@@ -194,3 +200,28 @@ function sortSlashableStake(
 
   return rowBValue - rowAValue
 }
+
+const [indexColumn, logoColumn] = getDaCommonProjectColumns(
+  columnHelper,
+  (row) => `${row.href}`,
+)
+
+export const publicSystemsColumns = [
+  withSpanByBridges(indexColumn),
+  withSpanByBridges(logoColumn),
+  withSpanByBridges(daLayerColumn()),
+  daLayerGroup,
+  bridgeColumn,
+  bridgeGroup,
+]
+
+export const customColumns = [
+  ...getDaCommonProjectColumns(columnHelper, (row) => `${row.href}#da-layer`),
+  daLayerColumn('da-layer'),
+  daRisksColumn,
+  daBridgeRisksColumn,
+  tvsColumn,
+  membersColumn,
+  fallbackColumn,
+  challengeMechanismColumn,
+]

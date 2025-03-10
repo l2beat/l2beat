@@ -1,13 +1,16 @@
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { RiskValue } from '../risk-value'
-import type { PizzaRosetteCellProps } from './pizza-rosette-cell'
+import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
 
 export function PizzaRosetteTooltip({
   values,
   isUnderReview,
-}: PizzaRosetteCellProps) {
+}: {
+  values: RosetteValue[]
+  isUnderReview?: boolean
+}) {
   if (isUnderReview) {
     return (
       <div className="w-[300px]">

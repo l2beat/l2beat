@@ -27,6 +27,9 @@
     --link-stroke: 212 100% 86.5%;
     --link: 223 69% 50.6%;
 
+    --row-highlight: 285 62.7% 52.7% / 0.15;
+    --row-highlight-no-opacity: 284 53.5% 91.6%;
+
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
     --chart-ethereum-secondary: 212 100% 66.3%;
@@ -88,6 +91,9 @@
     --link-stroke: 217 56.3% 18.8%;
     --link: 212 100% 66.3%;
 
+    --row-highlight: 284 87.1% 75.7% / 0.15;
+    --row-highlight-no-opacity: 271 20% 20.6%;
+
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
     --chart-ethereum-secondary: 223 69% 50.6%;
@@ -133,9 +139,11 @@
   :root {
     --header-height: 2.5rem;
   }
-
   :root:has(.header-height-glossary) {
     --header-height: 7rem;
+  }
+  :root:has(.header-height-faq) {
+    --header-height: 1.5rem;
   }
 
   @media (min-width: 750px) {
@@ -144,6 +152,9 @@
     }
     :root:has(.header-height-glossary) {
       --header-height: 9rem !important;
+    }
+    :root:has(.header-height-faq) {
+      --header-height: 1.5rem !important;
     }
   }
 
@@ -165,10 +176,6 @@
 }
 
 @layer utilities {
-  .transition-duration-50 {
-    transition-duration: 50ms !important;
-  }
-
   .scrollbar-gutter-stable {
     scrollbar-gutter: stable;
   }

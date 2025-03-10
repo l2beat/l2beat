@@ -2,7 +2,7 @@ import { isArray } from 'lodash'
 import type { Metadata } from 'next'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Markdown } from '~/components/markdown/markdown'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { FaqSideNav } from './_components/faq-side-nav'
@@ -32,7 +32,7 @@ export default async function Page() {
     <>
       <MainPageHeader>FAQ</MainPageHeader>
       <Header />
-      <main className="mt-0 flex gap-8 border-t border-divider md:mt-6 md:border-t-0">
+      <main className="header-height-faq mt-0 flex gap-8 border-t border-divider md:mt-6 md:border-t-0">
         <PrimaryCard>
           {faqItemsWithId.map((item) => {
             const answer = isArray(item.answer)

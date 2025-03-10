@@ -1,6 +1,7 @@
 'use client'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
@@ -33,7 +34,8 @@ export function DaRiskTable({
       <>
         {remainingBridges.map((bridge) => (
           <TableRow
-            key={bridge.href}
+            slug={row.original.slug}
+            key={bridge.slug}
             className={getRowTypeClassNames({
               isEthereum: false,
             })}
@@ -77,25 +79,24 @@ function BridgeCells({
   return (
     <>
       {excludeBridge ? (
-        <TableCell href={bridge.href} />
+        <TableCell />
       ) : (
-        <TableCell
-          href={bridge.href}
-          className="text-sm font-medium group-first:pl-0"
-        >
-          <div className="pl-4">{bridge.name}</div>
+        <TableCell className="text-sm font-medium first:pl-0">
+          <TableLink href={`${bridge.href}#da-bridge`} className="ml-4">
+            {bridge.name}
+          </TableLink>
         </TableCell>
       )}
-      <TableCell href={bridge.href} className="pl-6">
+      <TableCell className="pl-6">
         <TableValueCell
           emptyMode="n/a"
           value={bridge.risks.committeeSecurity}
         />
       </TableCell>
-      <TableCell href={bridge.href}>
+      <TableCell>
         <TableValueCell emptyMode="n/a" value={bridge.risks.upgradeability} />
       </TableCell>
-      <TableCell href={bridge.href}>
+      <TableCell>
         <TableValueCell emptyMode="n/a" value={bridge.risks.relayerFailure} />
       </TableCell>
     </>
