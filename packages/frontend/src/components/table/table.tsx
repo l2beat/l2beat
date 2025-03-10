@@ -68,7 +68,7 @@ const TableRow = ({
   return (
     <TableHeaderRow
       className={cn(
-        'group/row border-b border-b-divider',
+        'group/row border-b-2 border-b-divider',
         highlightedSlug && highlightedSlug === slug && 'animate-row-highlight',
         className,
       )}

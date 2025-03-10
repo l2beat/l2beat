@@ -77,7 +77,7 @@ export function TotalCell(props: TotalCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger disabledOnMobile>
+      <TooltipTrigger disabledOnMobile asChild>
         <TableLink href={props.href}>
           <div className="flex flex-col items-end">
             <div className="flex items-center">
