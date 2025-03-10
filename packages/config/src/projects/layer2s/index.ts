@@ -143,6 +143,7 @@ import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { puffer } from './puffer'
+import { quarkchain } from './quarkchain'
 import { r0ar } from './r0ar'
 import { race } from './race'
 import { real } from './real'
@@ -360,6 +361,7 @@ export const layer2s: ScalingProject[] = [
   polynomial,
   publicgoodsnetwork,
   puffer,
+  quarkchain,
   reddioex,
   reddiozkvm,
   redstone,
