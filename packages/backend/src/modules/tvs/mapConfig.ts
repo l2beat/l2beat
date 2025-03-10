@@ -443,17 +443,3 @@ async function getChains() {
   )
   return new Map(chains.map((c) => [c.name, c]))
 }
-
-function addToken(tokens: Map<string, Token>, token: Token, suffix: string) {
-  if (!tokens.has(token.id)) {
-    tokens.set(token.id, token)
-  } else {
-    const id = TokenId(token.id + `.${suffix}`)
-    tokens.set(id, {
-      ...token,
-      id,
-      symbol: token.symbol + `.${suffix}`,
-      displaySymbol: token.symbol,
-    })
-  }
-}
