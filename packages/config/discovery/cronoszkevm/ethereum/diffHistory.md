@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb975e7b1d488281fdf33e5677587c13704d61506
+
+# Diff at Mon, 10 Mar 2025 13:01:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6b2ef2ec787be68c879ee9da0acd22d1ce397cb8 block: 21766582
+- current block number: 22016636
+
+## Description
+
+ValidatorTimelock governance transfer for ZIP 5.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
 Generated with discovered.json: 0xb91b39e73a92f7945502fc7e37ba9527f8ee9ffb
 
 # Diff at Tue, 04 Mar 2025 10:39:02 GMT:
