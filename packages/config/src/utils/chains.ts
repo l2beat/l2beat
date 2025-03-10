@@ -1,10 +1,8 @@
-import type { Layer3 } from '../internalTypes'
-import type { Layer2 } from '../internalTypes'
-import type { Bridge } from '../internalTypes'
+import type { Bridge, ScalingProject } from '../internalTypes'
 import type { BaseProject, ProjectContract } from '../types'
 
 export function getChainNames(
-  ...projects: (Layer2 | Layer3 | Bridge | BaseProject)[]
+  ...projects: (ScalingProject | Bridge | BaseProject)[]
 ): string[] {
   return projects
     .flatMap(getProjectDevIds)
@@ -12,7 +10,7 @@ export function getChainNames(
 }
 
 function getProjectDevIds(
-  project: Layer2 | Layer3 | Bridge | BaseProject,
+  project: ScalingProject | Bridge | BaseProject,
 ): string[] {
   let escrowContracts: ProjectContract[] = []
   if ('config' in project) {

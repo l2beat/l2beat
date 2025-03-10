@@ -26,13 +26,11 @@ import {
   formatDelay,
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../../internalTypes'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ScalingProject } from '../../../internalTypes'
-import type { ProjectScalingDisplay } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
+  ProjectScalingDisplay,
   ProjectScalingTechnology,
+  ScalingProject,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -184,8 +182,8 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer2Display['category']
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingDisplay['category']
   }
   upgradesAndGovernance?: string
 }
@@ -338,7 +336,7 @@ const wmrValidForBlobstream = [
 const BLOBSTREAM_DELAY_SECONDS = 0
 
 function orbitStackCommon(
-  type: (Layer2 | Layer3)['type'],
+  type: ScalingProject['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
   hostChainDA?: DAProvider,
@@ -659,8 +657,8 @@ function orbitStackCommon(
   }
 }
 
-export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
-  const layer2s = require('..').layer2s as Layer2[]
+export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
+  const layer2s = require('..').layer2s as ScalingProject[]
   const hostChain = templateVars.discovery.chain
 
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
@@ -719,7 +717,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   }
 }
 
-export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
+export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
@@ -934,7 +932,7 @@ function getRiskView(
 }
 
 function getDAProvider(
-  type: (Layer2 | Layer3)['type'],
+  type: ScalingProject['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
   hostChainDA?: DAProvider,
@@ -1199,7 +1197,7 @@ function computedStage(
   )
 }
 
-function hostChainDAProvider(hostChain: Layer2): DAProvider {
+function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
   const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
   assert(DABadge !== undefined, 'Host chain must have data availability badge')
   assert(

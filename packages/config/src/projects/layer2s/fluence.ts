@@ -1,14 +1,14 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('fluence')
 
-export const fluence: Layer2 = orbitStackL2({
+export const fluence: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],

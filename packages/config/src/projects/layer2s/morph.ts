@@ -20,7 +20,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
@@ -50,7 +50,7 @@ const proofWindow = discovery.getContractValue<number>(
   'proofWindow',
 )
 
-export const morph: Layer2 = {
+export const morph: ScalingProject = {
   type: 'layer2',
   id: ProjectId('morph'),
   capability: 'universal',

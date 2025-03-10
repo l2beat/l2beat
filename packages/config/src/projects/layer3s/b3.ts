@@ -1,14 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER } from '../layer2s/templates/opStack'
 import { opStackL3 } from '../layer2s/templates/opStack'
 
 const discovery = new ProjectDiscovery('b3', 'base')
 
-export const b3: Layer3 = opStackL3({
+export const b3: ScalingProject = opStackL3({
   addedAt: UnixTime(1722376845),
   additionalBadges: [
     BADGES.DA.Celestia,

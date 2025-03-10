@@ -8,7 +8,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
@@ -19,7 +19,7 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 )
 const bridge = discovery.getContract('L1SharedBridge')
 
-export const sophon: Layer2 = zkStackL2({
+export const sophon: ScalingProject = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.Avail],

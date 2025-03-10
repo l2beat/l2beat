@@ -2,12 +2,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('lambda')
 
-export const lambda: Layer2 = opStackL2({
+export const lambda: ScalingProject = opStackL2({
   addedAt: UnixTime(1718703383), // 2024-06-18T09:36:23Z
   discovery,
   additionalPurposes: ['Storage'],

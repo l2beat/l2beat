@@ -9,13 +9,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('omgnetwork')
 
 const upgradeDelay = 0
 
-export const omgnetwork: Layer2 = {
+export const omgnetwork: ScalingProject = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
   capability: 'universal',

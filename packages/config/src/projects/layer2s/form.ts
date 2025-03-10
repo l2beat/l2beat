@@ -1,14 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('form')
 const genesisTimestamp = UnixTime(1733419991)
 
-export const form: Layer2 = opStackL2({
+export const form: ScalingProject = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   celestiaDa: {
     sinceBlock: 2943925,

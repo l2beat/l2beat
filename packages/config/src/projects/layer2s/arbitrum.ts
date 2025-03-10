@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { CONTRACTS, RISK_VIEW, SOA, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
@@ -78,7 +78,7 @@ const maxTimeVariation = discovery.getContractValue<{
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
-export const arbitrum: Layer2 = orbitStackL2({
+export const arbitrum: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     BADGES.VM.WasmVM,

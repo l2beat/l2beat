@@ -3,14 +3,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
-export const l3x: Layer3 = orbitStackL3({
+export const l3x: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1718370384), // 2024-06-14T13:06:24Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],

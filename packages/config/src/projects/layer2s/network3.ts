@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const network3: Layer2 = upcomingL2({
+export const network3: ScalingProject = upcomingL2({
   id: 'network3',
   capability: 'universal',
   addedAt: UnixTime(1721807029), // 2024-07-24T07:43:49Z
@@ -10,7 +10,7 @@ export const network3: Layer2 = upcomingL2({
     name: 'Network3',
     slug: 'network3',
     description:
-      'An AIoT Layer2 Empowering Efficient Model Training & Validation.',
+      'An AIoT ScalingProject Empowering Efficient Model Training & Validation.',
     purposes: ['AI', 'Privacy'],
     category: 'Validium',
     links: {

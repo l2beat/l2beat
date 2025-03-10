@@ -9,7 +9,7 @@ import { CONTRACTS, DA_MODES } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('polygon-pos')
@@ -37,7 +37,7 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
   'validatorThreshold',
 )
 
-export const polygonpos: Layer2 = {
+export const polygonpos: ScalingProject = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
   capability: 'universal',

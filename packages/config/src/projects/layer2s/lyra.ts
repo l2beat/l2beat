@@ -2,13 +2,13 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('lyra')
 
-export const lyra: Layer2 = opStackL2({
+export const lyra: ScalingProject = opStackL2({
   addedAt: UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [BADGES.RaaS.Conduit],

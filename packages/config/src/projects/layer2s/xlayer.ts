@@ -7,7 +7,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -29,7 +29,7 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const xlayer: Layer2 = polygonCDKStack({
+export const xlayer: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
   additionalBadges: [BADGES.DA.DAC, BADGES.Infra.AggLayer],

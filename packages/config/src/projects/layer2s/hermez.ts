@@ -11,12 +11,12 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 const upgradeDelay = 604800
 const discovery = new ProjectDiscovery('hermez')
 
-export const hermez: Layer2 = {
+export const hermez: ScalingProject = {
   type: 'layer2',
   id: ProjectId('hermez'),
   capability: 'universal',

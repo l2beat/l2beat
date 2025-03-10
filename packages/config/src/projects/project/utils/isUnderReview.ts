@@ -1,10 +1,8 @@
-import type { Layer3 } from '../../../internalTypes'
-import type { Layer2 } from '../../../internalTypes'
-import type { Bridge } from '../../../internalTypes'
+import type { Bridge, ScalingProject } from '../../../internalTypes'
 import type { TableReadyValue } from '../../../types'
 
 // this function should be updated when new sections that can be under review are added
-export function isUnderReview(project: Layer2 | Bridge | Layer3): boolean {
+export function isUnderReview(project: ScalingProject | Bridge): boolean {
   return (
     !!project.isUnderReview ||
     (project.type === 'layer2' && project.stage.stage === 'UnderReview') ||

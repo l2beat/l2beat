@@ -17,7 +17,7 @@ import {
   getCommittee,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -40,7 +40,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const canvasconnect: Layer2 = {
+export const canvasconnect: ScalingProject = {
   type: 'layer2',
   id: ProjectId('canvasconnect'),
   capability: 'universal',

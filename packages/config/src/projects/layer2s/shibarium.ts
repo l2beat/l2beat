@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
 
-export const shibarium: Layer2 = underReviewL2({
+export const shibarium: ScalingProject = underReviewL2({
   id: 'shibarium',
   capability: 'universal',
   addedAt: UnixTime(1738081310), // 2025-01-28T16:21:50+00:00

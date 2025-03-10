@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('shape')
 
-export const shape: Layer2 = opStackL2({
+export const shape: ScalingProject = opStackL2({
   addedAt: UnixTime(1730131160), // 2024-10-28
   additionalBadges: [BADGES.RaaS.Alchemy],
   discovery,

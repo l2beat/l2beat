@@ -16,7 +16,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
 import { generateDiscoveryDrivenContracts } from './templates/generateDiscoveryDrivenSections'
 
@@ -47,7 +47,7 @@ const escapeBlockUpperBound = 4800 // in blocks, immutable
 const escapeBlockLowerBound = 4560 // in blocks, immutable
 const assumedBlockTime = 12 // in seconds
 
-export const aztecV1: Layer2 = {
+export const aztecV1: ScalingProject = {
   type: 'layer2',
   id: ProjectId('aztec'),
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z

@@ -8,7 +8,7 @@ import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -41,7 +41,7 @@ const vaultWeight =
     'getFundWeight',
   ).vault / 100
 
-export const termstructure: Layer2 = {
+export const termstructure: ScalingProject = {
   id: ProjectId('termstructure'),
   capability: 'appchain',
   addedAt: UnixTime(1709724246), // 2024-03-06T11:24:06Z

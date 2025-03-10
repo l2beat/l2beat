@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const axonum: Layer2 = upcomingL2({
+export const axonum: ScalingProject = upcomingL2({
   id: 'axonum',
   addedAt: UnixTime(1715871969), // 2024-05-16T15:06:09Z
   capability: 'universal',

@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { opStackL2 } from './templates/opStack'
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('ink')
 const l2Discovery = new ProjectDiscovery('ink', 'ink')
 const genesisTimestamp = UnixTime(1733498411)
 
-export const ink: Layer2 = opStackL2({
+export const ink: ScalingProject = opStackL2({
   addedAt: UnixTime(1729797861), // 2024-10-24T21:24:21Z
   additionalBadges: [BADGES.RaaS.Gelato],
   discovery,

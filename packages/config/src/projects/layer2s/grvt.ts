@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { zkStackL2 } from './templates/zkStack'
 
@@ -12,7 +12,7 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
   'zksync2',
 )
 
-export const grvt: Layer2 = zkStackL2({
+export const grvt: ScalingProject = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],

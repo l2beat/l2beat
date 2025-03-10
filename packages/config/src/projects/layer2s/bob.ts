@@ -3,13 +3,13 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
 
-export const bob: Layer2 = opStackL2({
+export const bob: ScalingProject = opStackL2({
   addedAt: UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],

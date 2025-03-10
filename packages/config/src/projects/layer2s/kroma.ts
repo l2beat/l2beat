@@ -21,7 +21,7 @@ import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
@@ -47,7 +47,7 @@ const finalizationPeriod = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const kroma: Layer2 = {
+export const kroma: ScalingProject = {
   type: 'layer2',
   id: ProjectId('kroma'),
   addedAt: UnixTime(1686820004), // 2023-06-15T09:06:44Z
