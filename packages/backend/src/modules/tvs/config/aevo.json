@@ -58,23 +58,6 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
-        "chain": "aevo",
-        "decimals": 6
-      },
-      "sinceTimestamp": 1693882800,
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "aevo-USDC-duplicate",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
@@ -85,6 +68,24 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "aevo-USDC.aevo",
+      "priceId": "usd-coin",
+      "symbol": "USDC.aevo",
+      "name": "USD Coin",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
+        "chain": "aevo",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1693882800,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "displaySymbol": "USDC"
     },
     {
       "mode": "auto",
@@ -147,23 +148,6 @@
       "symbol": "WETH",
       "name": "Wrapped Ether",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
-        "chain": "aevo",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1701477911,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "aevo-WETH-duplicate",
-      "priceId": "weth",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "amount": {
         "type": "balanceOfEscrow",
         "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "chain": "ethereum",
@@ -174,6 +158,24 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "aevo-WETH.aevo",
+      "priceId": "weth",
+      "symbol": "WETH.aevo",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
+        "chain": "aevo",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1701477911,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "displaySymbol": "WETH"
     }
   ]
 }
