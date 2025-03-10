@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 68652420,
+  "blockNumber": 76742307,
   "configHash": "0x4cf69421ac8de5528bf4991041307bacacea9af3cd001095801a8b1f8b37196d",
   "contracts": [
     {
@@ -44,7 +44,7 @@
         "getChainId": 5000,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -153,14 +153,14 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 24163,
-        "getTotalPriorityTxs": 861,
+        "getTotalBatchesExecuted": 50873,
+        "getTotalPriorityTxs": 880,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
-        "paused": false,
-        "totalBatchesExecuted": 24163,
-        "totalPriorityTxs": 861,
-        "totalSyncedPriorityTxs": 861,
-        "totalValidatorForwardFee": "1105664800685749588412",
+        "paused": true,
+        "totalBatchesExecuted": 50873,
+        "totalPriorityTxs": 880,
+        "totalSyncedPriorityTxs": 880,
+        "totalValidatorForwardFee": "1145994696585755653058",
         "totalValidatorForwardFeeWithdrawn": "1105664800685749588412",
         "txGasPrice": 140000000000000
       },

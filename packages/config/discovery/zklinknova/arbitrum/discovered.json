@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "arbitrum",
-  "blockNumber": 249925893,
+  "blockNumber": 314241517,
   "configHash": "0x9eb7e79c45acdbc7eddd86e860fb456575877a3215af7ba7876d6faed8444fce",
   "contracts": [
     {
@@ -105,7 +105,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -209,15 +209,15 @@
         "getGateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
         "getGovernor": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 24163,
-        "getTotalPriorityTxs": 138299,
+        "getTotalBatchesExecuted": 50873,
+        "getTotalPriorityTxs": 138989,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
-        "paused": false,
-        "totalBatchesExecuted": 24163,
-        "totalPriorityTxs": 138299,
-        "totalSyncedPriorityTxs": 138287,
-        "totalValidatorForwardFee": "74394074219084187319",
+        "paused": true,
+        "totalBatchesExecuted": 50873,
+        "totalPriorityTxs": 138989,
+        "totalSyncedPriorityTxs": 138989,
+        "totalValidatorForwardFee": "74745980358110127531",
         "totalValidatorForwardFeeWithdrawn": "74387096004215684280",
         "txGasPrice": 40000000000
       },
