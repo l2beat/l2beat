@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "blockNumber": 847838,
+  "blockNumber": 896679,
   "configHash": "0x1ae5fac8bf7c258e7feb349efc623f7f208f08e60ecde5f6889e700531ac9bc3",
   "contracts": [
     {
@@ -21,6 +21,7 @@
       ],
       "ignoreInWatchMode": ["getCurrentEpoch", "gasConfig"],
       "sinceTimestamp": 1726461018,
+      "sinceBlock": 382,
       "values": {
         "$admin": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
         "$implementation": "0x255aba6E7f08d40B19872D11313688c2ED65d1C9",
@@ -44,7 +45,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 193677,
+        "getCurrentEpoch": 195103,
         "hubGateway": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -79,6 +80,7 @@
         }
       ],
       "sinceTimestamp": 1731646546,
+      "sinceBlock": 265711,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -102,6 +104,7 @@
         "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
       ],
       "sinceTimestamp": 1726461019,
+      "sinceBlock": 383,
       "values": {
         "$immutable": true,
         "acceptanceDelay": 0,
@@ -139,6 +142,7 @@
         }
       ],
       "sinceTimestamp": 1726461025,
+      "sinceBlock": 388,
       "values": {
         "$admin": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
         "$implementation": "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4",
