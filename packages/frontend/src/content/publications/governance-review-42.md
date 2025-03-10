@@ -1,6 +1,6 @@
 ---
   title: "Governance Review #42"
-  description: "It was a busy weeks to many ecosystems."
+  description: "An update on the last 2 weeks in governance."
   publishedOn: "2025-03-10"
   authorId: anastassis-oikonomopoulos
 ---
@@ -97,7 +97,7 @@ You can find us to discuss everything related to Arbitrum’s governance, from c
 
 [Open Discussion of Proposals Governance Call](http://meet.google.com/ggc-rqgh-fsr) - on 11.3 at 16:00.
 
-[Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) - on 11.3 at 17:15..
+[Entropy Advisors - biweekly office hours](https://meet.google.com/rms-unku-wsq) - on 11.3 at 17:15.
 
 [23rd GRC - Arbitrum Reporting Governance Call](meet.google.com/ixo-sqem-fvy) - on 12.3 at 16:00.
 
@@ -131,7 +131,7 @@ GOAT_Network has created an [RFC that proposes](https://gov.uniswap.org/t/rfc-de
 
 ### **在 Uniswap V4 上开发适合短线交易员界面的提议**
 
-Mayby1975[ proposes](https://gov.uniswap.org/t/uniswap-v4/25344) building a Uniswap Pro interface on Uniswap v4 that caters explicitly to short-term traders and perpetual traders. According to the proposal, Uniswap currently focuses on spot swaps and long-term LPs, missing the substantial market of high-frequency and leveraged trading
+Mayby1975 [proposes](https://gov.uniswap.org/t/uniswap-v4/25344) building a Uniswap Pro interface on Uniswap v4 that caters explicitly to short-term traders and perpetual traders. According to the proposal, Uniswap currently focuses on spot swaps and long-term LPs, missing the substantial market of high-frequency and leveraged trading
 
 
 ### **Uniswap DAO Financial Report**
