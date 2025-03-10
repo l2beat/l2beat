@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { BADGES } from '../badges'
+import { BADGES } from '../../common/badges'
 
 import {
   DA_BRIDGES,

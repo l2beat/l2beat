@@ -14,6 +14,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -26,7 +27,6 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { StarkexDAC } from '../../templates/starkex-template'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('sorare')
 const freezeGracePeriod = discovery.getContractValue<number>(

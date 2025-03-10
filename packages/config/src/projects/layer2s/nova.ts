@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { DAC } from '../../templates/dac-template'
@@ -9,7 +10,6 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from '../../templates/orbitStack'
-import { BADGES } from '../badges'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,

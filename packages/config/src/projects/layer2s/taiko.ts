@@ -14,10 +14,10 @@ import {
   DA_MODES,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('taiko')
 

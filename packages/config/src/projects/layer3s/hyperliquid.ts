@@ -6,10 +6,10 @@ import {
 } from '@l2beat/shared-pure'
 import { DA_LAYERS, DA_MODES, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 

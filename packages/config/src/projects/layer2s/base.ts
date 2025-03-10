@@ -18,6 +18,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ESCROW, OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common'
+import { BADGES } from '../../common/badges'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -28,7 +29,6 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { safeGetImplementation } from '../../templates/utils'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('base')
 

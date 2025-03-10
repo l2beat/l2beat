@@ -19,7 +19,9 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
+import { BADGES } from '../common/badges'
 import { formatExecutionDelay } from '../common/formatDelays'
+import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -28,8 +30,6 @@ import type {
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
-import { BADGES } from '../projects/badges'
-import { PROOFS } from '../projects/zk-catalog/common/proofSystems'
 import type {
   Badge,
   ChainConfig,

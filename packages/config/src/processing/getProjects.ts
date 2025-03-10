@@ -4,9 +4,9 @@ import {
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, type Token, UnixTime } from '@l2beat/shared-pure'
+import { badgesCompareFn } from '../common/badges'
 import { PROJECT_COUNTDOWNS } from '../global/countdowns'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
-import { badgesCompareFn } from '../projects/badges'
 import { getTokenList } from '../tokens/tokens'
 import type {
   BaseProject,

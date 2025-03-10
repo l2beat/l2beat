@@ -21,6 +21,7 @@ import {
   pickWorseRisk,
   sumRisk,
 } from '../common'
+import { BADGES } from '../common/badges'
 import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -32,7 +33,6 @@ import type {
   ProjectScalingTechnology,
   ScalingProject,
 } from '../internalTypes'
-import { BADGES } from '../projects/badges'
 import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   Badge,

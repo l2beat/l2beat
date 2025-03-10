@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { type Upgradeability, zkStackL2 } from '../../templates/zkStack'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('zeronetwork')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(

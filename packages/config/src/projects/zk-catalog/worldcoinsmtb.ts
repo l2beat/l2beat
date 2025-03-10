@@ -4,9 +4,8 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { PERFORMED_BY, PROOFS } from '../../common'
 import type { BaseProject } from '../../types'
-import { PERFORMED_BY } from './common/performedBy'
-import { PROOFS } from './common/proofSystems'
 
 export const worldcoinsmtb: BaseProject = {
   id: ProjectId('worldcoinsmtb'),

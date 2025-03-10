@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('river')
 

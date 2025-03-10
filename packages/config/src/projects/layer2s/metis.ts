@@ -11,10 +11,10 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('metis')
 

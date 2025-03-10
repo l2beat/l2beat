@@ -17,12 +17,12 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
+import { BADGES } from '../../common/badges'
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('dydx')
 const maxPriorityDelay = discovery.getContractValue<number>(

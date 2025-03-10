@@ -22,13 +22,13 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
+import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { PERFORMED_BY } from '../../common/performedBy'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import type { ProjectPermissionedAccount } from '../../types'
-import { BADGES } from '../badges'
-import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 
 const discovery = new ProjectDiscovery('linea')
 

@@ -4,9 +4,9 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')

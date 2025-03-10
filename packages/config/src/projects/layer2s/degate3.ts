@@ -21,12 +21,12 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
+import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { PROOFS } from '../zk-catalog/common/proofSystems'
 
 const discovery = new ProjectDiscovery('degate3')
 

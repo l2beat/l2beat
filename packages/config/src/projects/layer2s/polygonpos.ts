@@ -8,9 +8,9 @@ import {
 import { CONTRACTS, DA_MODES } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 

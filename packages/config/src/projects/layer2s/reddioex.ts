@@ -18,6 +18,7 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -28,7 +29,6 @@ import {
 } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('reddioex')
 

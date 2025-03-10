@@ -21,7 +21,9 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ESCROW } from '../../common'
+import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
@@ -30,8 +32,6 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
-import { BADGES } from '../badges'
-import { PROOFS } from '../zk-catalog/common/proofSystems'
 
 const discovery = new ProjectDiscovery('starknet')
 

@@ -1,10 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { languageJoin } from '../../utils/languageJoin'
-import { BRIDGE_RISK_VIEW } from '../../common'
 import {
   INBOUND_PROOF_LIBRARIES,
   OMNICHAIN_ESCROWS,

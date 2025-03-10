@@ -10,7 +10,7 @@
  * Order of types is determined by the order in the BadgeType object.
  */
 
-import type { Badge } from '../../types'
+import type { Badge } from '../types'
 
 export const BadgeType = {
   VM: 'VM',

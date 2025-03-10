@@ -4,8 +4,8 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { PROOFS } from '../../common'
 import type { BaseProject } from '../../types'
-import { PROOFS } from './common/proofSystems'
 
 export const payy: BaseProject = {
   // TODO: This should be part of the payy project, but upcomingL2 doesn't support this :(

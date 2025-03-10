@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../common'
+import { BADGES, badgesCompareFn } from '../common/badges'
 import type { Bridge, ScalingProject } from '../internalTypes'
-import { BADGES, badgesCompareFn } from '../projects/badges'
 import { mergeBadges } from '../templates/utils'
 import type { BaseProject, ChainConfig } from '../types'
 import { isProjectVerified, isVerified } from '../verification/isVerified'

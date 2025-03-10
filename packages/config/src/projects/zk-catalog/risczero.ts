@@ -4,8 +4,8 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { PROOFS } from '../../common'
 import type { BaseProject } from '../../types'
-import { PROOFS } from './common/proofSystems'
 
 export const risczero: BaseProject = {
   id: ProjectId('riskzero'),

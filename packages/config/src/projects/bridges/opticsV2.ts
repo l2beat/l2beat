@@ -6,9 +6,9 @@ import {
 } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
+import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import { BRIDGE_RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('opticsV2')
 const challengeWindowSeconds = discovery.getContractValue<number>(

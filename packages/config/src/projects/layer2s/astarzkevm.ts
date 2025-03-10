@@ -6,11 +6,11 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { polygonCDKStack } from '../../templates/polygonCDKStack'
 import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('astarzkevm')
 const bridge = discovery.getContract('PolygonSharedBridge')

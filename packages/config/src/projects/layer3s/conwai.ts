@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../../templates/underReview'
-import { BADGES } from '../badges'
 
 export const conwai: ScalingProject = underReviewL3({
   id: 'conwai',

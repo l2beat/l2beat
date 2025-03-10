@@ -7,6 +7,7 @@ import {
   UPGRADE_MECHANISM,
 } from '../../common'
 import { ESCROW } from '../../common'
+import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -15,7 +16,6 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from '../../templates/orbitStack'
-import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
