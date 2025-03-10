@@ -83,7 +83,7 @@ export function processAnalysis(
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
           sourceHashes: x.isVerified
-            ? x.sourceBundles.map((b) => b.hash as string)
+            ? undefinedIfEmpty(x.sourceBundles.map((b) => b.hash as string))
             : undefined,
           proxyType: x.proxyType,
           displayName:
