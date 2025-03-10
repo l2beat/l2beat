@@ -6,7 +6,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { polygonCDKStack } from './templates/polygonCDKStack'
+import { polygonCDKStack } from '../../templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
 

@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { opStackL2 } from '../../templates/opStack'
 import { BADGES } from '../badges'
-import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('arenaz')
 const genesisTimestamp = UnixTime(1731366083)

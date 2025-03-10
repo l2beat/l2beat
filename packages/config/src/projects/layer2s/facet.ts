@@ -4,8 +4,8 @@ import { FORCE_TRANSACTIONS, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { opStackL2 } from '../../templates/opStack'
 import { BADGES } from '../badges'
-import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('facet')
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(

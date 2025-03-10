@@ -20,12 +20,12 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from './templates/generateDiscoveryDrivenSections'
+} from '../../templates/generateDiscoveryDrivenSections'
+import { StarkexDAC } from '../../templates/starkex-template'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('apex')
 

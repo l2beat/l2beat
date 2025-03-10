@@ -19,15 +19,18 @@ import {
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-} from '../../../common'
-import { formatExecutionDelay } from '../../../common/formatDelays'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+} from '../common'
+import { formatExecutionDelay } from '../common/formatDelays'
+import { getStage } from '../common/stages/getStage'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
   ProjectScalingTechnology,
   ScalingProject,
-} from '../../../internalTypes'
+} from '../internalTypes'
+import { BADGES } from '../projects/badges'
+import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   Badge,
   ChainConfig,
@@ -45,10 +48,7 @@ import type {
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   TableReadyValue,
-} from '../../../types'
-import { BADGES } from '../../badges'
-import { EXPLORER_URLS } from '../../chains/explorerUrls'
-import { getStage } from '../common/stages/getStage'
+} from '../types'
 import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,

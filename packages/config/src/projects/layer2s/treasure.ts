@@ -3,8 +3,8 @@ import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { type Upgradeability, zkStackL2 } from '../../templates/zkStack'
 import { BADGES } from '../badges'
-import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('treasure')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(

@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { opStackL3 } from '../../templates/opStack'
 import { BADGES } from '../badges'
-import { opStackL3 } from '../layer2s/templates/opStack'
 
 const discovery = new ProjectDiscovery('ham', 'base')
 

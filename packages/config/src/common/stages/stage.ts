@@ -1,5 +1,5 @@
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
-import { PROJECT_COUNTDOWNS } from '../../../../global/countdowns'
+import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type {
   MissingStageDetails,
   Stage,
@@ -7,7 +7,7 @@ import type {
   StageConfiguredMessage,
   StageDowngrade,
   StageSummary,
-} from '../../../../types'
+} from '../../types'
 
 type Satisfied = boolean | 'UnderReview'
 

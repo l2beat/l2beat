@@ -20,19 +20,20 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   pickWorseRisk,
   sumRisk,
-} from '../../../common'
-import {
-  formatChallengePeriod,
-  formatDelay,
-} from '../../../common/formatDelays'
-import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { HARDCODED } from '../../../discovery/values/hardcoded'
+} from '../common'
+import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
+import { getStage } from '../common/stages/getStage'
+import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
   ProjectScalingTechnology,
   ScalingProject,
-} from '../../../internalTypes'
+} from '../internalTypes'
+import { BADGES } from '../projects/badges'
+import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   Badge,
   ChainConfig,
@@ -58,11 +59,7 @@ import type {
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
   TableReadyValue,
-} from '../../../types'
-import { BADGES } from '../../badges'
-import { EXPLORER_URLS } from '../../chains/explorerUrls'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
-import { getStage } from '../common/stages/getStage'
+} from '../types'
 import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
@@ -430,7 +427,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
 }
 
 export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
-  const layer2s = require('..').layer2s as ScalingProject[]
+  const layer2s = require('../projects/layer2s').layer2s as ScalingProject[]
   const hostChain = templateVars.discovery.chain
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)

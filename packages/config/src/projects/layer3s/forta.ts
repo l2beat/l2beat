@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { underReviewL3 } from '../../templates/underReview'
 
 export const forta: ScalingProject = underReviewL3({
   id: 'forta',

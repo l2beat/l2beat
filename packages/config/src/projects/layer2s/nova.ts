@@ -3,18 +3,18 @@ import { RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { DAC } from '../../templates/dac-template'
+import {
+  WASMVM_OTHER_CONSIDERATIONS,
+  getNitroGovernance,
+  orbitStackL2,
+} from '../../templates/orbitStack'
 import { BADGES } from '../badges'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
-import { DAC } from '../da-beat/templates/dac-template'
-import {
-  WASMVM_OTHER_CONSIDERATIONS,
-  getNitroGovernance,
-  orbitStackL2,
-} from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('nova')
 const l2Discovery = new ProjectDiscovery('nova', 'nova')

@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
-import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { ProjectContract, ProjectPermissions } from '../../../types'
+import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import type { ProjectContract, ProjectPermissions } from '../types'
 
 export function generateDiscoveryDrivenContracts(
   discoveries: ProjectDiscovery[],

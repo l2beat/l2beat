@@ -20,15 +20,15 @@ import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
+import { getStage } from '../../common/stages/getStage'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from './templates/generateDiscoveryDrivenSections'
+} from '../../templates/generateDiscoveryDrivenSections'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('paradex')
 

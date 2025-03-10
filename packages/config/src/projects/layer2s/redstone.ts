@@ -3,6 +3,7 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -10,7 +11,6 @@ import {
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
-import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('redstone')
 

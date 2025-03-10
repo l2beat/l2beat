@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { opStackL2 } from './templates/opStack'
+import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('hashkey')
 

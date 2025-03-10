@@ -11,7 +11,7 @@ import type { Bridge } from '../../internalTypes'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from '../layer2s/templates/generateDiscoveryDrivenSections'
+} from '../../templates/generateDiscoveryDrivenSections'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('sonicgateway')

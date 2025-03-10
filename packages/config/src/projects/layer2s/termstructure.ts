@@ -5,12 +5,12 @@ import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
 import { OPERATOR } from '../../common/operator'
 import { RISK_VIEW } from '../../common/riskView'
+import { getStage } from '../../common/stages/getStage'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('termstructure')
 

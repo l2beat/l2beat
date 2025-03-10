@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, SOA } from '../../common'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getStage } from './common/stages/getStage'
-import { opStackL2 } from './templates/opStack'
+import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
 const l2discovery = new ProjectDiscovery('unichain', 'unichain')

@@ -2,10 +2,10 @@ import { expect } from 'earl'
 
 import { assert } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { getTokenList } from '../../tokens/tokens'
-import { chains } from '../chains'
-import { layer2s } from '../layer2s'
-import { layer3s } from './index'
+import { getTokenList } from '../tokens/tokens'
+import { chains } from './chains'
+import { layer2s } from './layer2s'
+import { layer3s } from './layer3s'
 
 const tokenList = getTokenList(chains)
 

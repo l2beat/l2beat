@@ -22,16 +22,16 @@ import {
 } from '../../common'
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { PROOFS } from '../zk-catalog/common/proofSystems'
-import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from './templates/generateDiscoveryDrivenSections'
+} from '../../templates/generateDiscoveryDrivenSections'
+import { BADGES } from '../badges'
+import { PROOFS } from '../zk-catalog/common/proofSystems'
 
 const discovery = new ProjectDiscovery('starknet')
 

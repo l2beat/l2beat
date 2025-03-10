@@ -10,11 +10,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { getStage } from '../layer2s/common/stages/getStage'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 

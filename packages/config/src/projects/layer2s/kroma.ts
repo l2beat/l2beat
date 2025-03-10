@@ -18,17 +18,17 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common/liveness'
 import { RISK_VIEW } from '../../common/riskView'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from './templates/generateDiscoveryDrivenSections'
+} from '../../templates/generateDiscoveryDrivenSections'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('kroma')
 

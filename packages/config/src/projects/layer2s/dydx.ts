@@ -18,11 +18,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { BADGES } from '../badges'
-import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('dydx')
 const maxPriorityDelay = discovery.getContractValue<number>(

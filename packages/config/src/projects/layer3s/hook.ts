@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { underReviewL3 } from '../../templates/underReview'
 
 // inbox on arbitrum: https://arbiscan.io/address/0xb0a00d053160e297324b7689b5e3f3af9a6fa4fb
 export const hook: ScalingProject = underReviewL3({

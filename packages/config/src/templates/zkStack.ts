@@ -18,15 +18,18 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-} from '../../../common'
-import { formatExecutionDelay } from '../../../common/formatDelays'
-import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+} from '../common'
+import { formatExecutionDelay } from '../common/formatDelays'
+import { getStage } from '../common/stages/getStage'
+import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
   ProjectScalingTechnology,
   ScalingProject,
-} from '../../../internalTypes'
+} from '../internalTypes'
+import { BADGES } from '../projects/badges'
+import { PROOFS } from '../projects/zk-catalog/common/proofSystems'
 import type {
   Badge,
   ChainConfig,
@@ -46,10 +49,7 @@ import type {
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
   TableReadyValue,
-} from '../../../types'
-import { BADGES } from '../../badges'
-import { PROOFS } from '../../zk-catalog/common/proofSystems'
-import { getStage } from '../common/stages/getStage'
+} from '../types'
 import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,

@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from './templates/orbitStack'
+import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('parallel')
 

@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
+import { underReviewL2 } from '../../templates/underReview'
 import { BADGES } from '../badges'
-import { underReviewL2 } from '../layer2s/templates/underReview'
 
 export const shibarium: ScalingProject = underReviewL2({
   id: 'shibarium',

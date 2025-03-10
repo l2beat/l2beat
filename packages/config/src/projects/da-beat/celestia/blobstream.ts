@@ -1,10 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { BaseProject } from '../../../types'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from '../../layer2s/templates/generateDiscoveryDrivenSections'
+} from '../../../templates/generateDiscoveryDrivenSections'
+import type { BaseProject } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common/DaCommitteeSecurityRisk'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'

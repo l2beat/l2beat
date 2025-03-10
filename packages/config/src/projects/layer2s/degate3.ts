@@ -22,11 +22,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
-import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('degate3')
 

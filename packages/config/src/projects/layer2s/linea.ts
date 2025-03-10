@@ -23,12 +23,12 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import type { ProjectPermissionedAccount } from '../../types'
 import { BADGES } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
-import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('linea')
 

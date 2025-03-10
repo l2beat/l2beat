@@ -20,16 +20,16 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
+import { StarkexDAC } from '../../templates/starkex-template'
 import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
 } from '../da-beat/common'
-import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import {
-  generateDiscoveryDrivenContracts,
-  generateDiscoveryDrivenPermissions,
-} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('immutablex')
 

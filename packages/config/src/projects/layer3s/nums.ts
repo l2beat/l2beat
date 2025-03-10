@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL3 } from '../layer2s/templates/upcoming'
+import { upcomingL3 } from '../../templates/upcoming'
 
 export const nums: ScalingProject = upcomingL3({
   id: ProjectId('nums'),

@@ -1,14 +1,7 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
-import type {
-  ProjectScalingDisplay,
-  ScalingProject,
-} from '../../../internalTypes'
-import type {
-  Badge,
-  ChainConfig,
-  ProjectScalingCapability,
-} from '../../../types'
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
+import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
+import type { Badge, ChainConfig, ProjectScalingCapability } from '../types'
 
 export interface UpcomingConfigL2 {
   id: string

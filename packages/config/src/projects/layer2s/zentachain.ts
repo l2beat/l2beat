@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from './templates/upcoming'
+import { upcomingL2 } from '../../templates/upcoming'
 
 export const zentachain: ScalingProject = upcomingL2({
   id: 'zentachain',

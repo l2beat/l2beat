@@ -19,14 +19,14 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from './templates/generateDiscoveryDrivenSections'
+} from '../../templates/generateDiscoveryDrivenSections'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('morph')
 

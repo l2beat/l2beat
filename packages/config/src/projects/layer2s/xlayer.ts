@@ -8,9 +8,9 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { polygonCDKStack } from '../../templates/polygonCDKStack'
+import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 import { BADGES } from '../badges'
-import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
-import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('xlayer')
 const bridge = discovery.getContract('PolygonSharedBridge')

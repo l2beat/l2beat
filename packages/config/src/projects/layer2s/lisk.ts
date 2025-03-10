@@ -3,8 +3,8 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { opStackL2 } from '../../templates/opStack'
 import { BADGES } from '../badges'
-import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('lisk')
 

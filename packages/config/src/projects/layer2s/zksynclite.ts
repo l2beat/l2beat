@@ -19,11 +19,11 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('zksync')
 

@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { orbitStackL2 } from '../../templates/orbitStack'
 import { BADGES } from '../badges'
-import { getStage } from './common/stages/getStage'
-import { orbitStackL2 } from './templates/orbitStack'
 
 const discovery = new ProjectDiscovery('kinto')
 const _l2discovery = new ProjectDiscovery('kinto', 'kinto')

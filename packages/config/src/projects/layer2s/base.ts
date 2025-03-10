@@ -17,19 +17,18 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW } from '../../common'
+import { ESCROW, OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
-import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-} from './templates/generateDiscoveryDrivenSections'
-import { safeGetImplementation } from './templates/utils'
+} from '../../templates/generateDiscoveryDrivenSections'
+import { safeGetImplementation } from '../../templates/utils'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('base')
 

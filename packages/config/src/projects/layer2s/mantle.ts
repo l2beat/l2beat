@@ -3,6 +3,7 @@ import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { opStackL2 } from '../../templates/opStack'
 import type { ProjectCustomDa } from '../../types'
 import { BADGES } from '../badges'
 import {
@@ -12,7 +13,6 @@ import {
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
 import { DaRelayerFailureRisk } from '../da-beat/common/DaRelayerFailureRisk'
-import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('mantle')
 

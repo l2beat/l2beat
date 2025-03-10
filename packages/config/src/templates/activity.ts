@@ -1,4 +1,4 @@
-import type { ChainConfig, ProjectActivityConfig } from '../../../types'
+import type { ChainConfig, ProjectActivityConfig } from '../types'
 
 export function getActivityConfig(
   activityConfig: ProjectActivityConfig | undefined,

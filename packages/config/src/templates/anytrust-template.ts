@@ -1,12 +1,12 @@
-import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { DaUpgradeabilityRisk } from '../projects/da-beat/common'
 import type {
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
   DacInfo,
   ProjectCustomDa,
-} from '../../../types'
-import { DaUpgradeabilityRisk } from '../common'
+} from '../types'
 import { DAC } from './dac-template'
 
 interface TemplateVars {

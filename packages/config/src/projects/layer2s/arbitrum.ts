@@ -1,16 +1,21 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { CONTRACTS, RISK_VIEW, SOA, UPGRADE_MECHANISM } from '../../common'
+import {
+  CONTRACTS,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+  RISK_VIEW,
+  SOA,
+  UPGRADE_MECHANISM,
+} from '../../common'
 import { ESCROW } from '../../common'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { BADGES } from '../badges'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { getStage } from './common/stages/getStage'
 import {
   WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
-} from './templates/orbitStack'
+} from '../../templates/orbitStack'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')

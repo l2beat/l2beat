@@ -1,18 +1,15 @@
 import { assert } from '@l2beat/shared-pure'
-import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import {
-  type CommitteeResult,
-  getCommittee,
-} from '../../../discovery/starkware'
+import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { type CommitteeResult, getCommittee } from '../discovery/starkware'
+import { DaUpgradeabilityRisk } from '../projects/da-beat/common'
+import { DaRelayerFailureRisk } from '../projects/da-beat/common/DaRelayerFailureRisk'
 import type {
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
   DacInfo,
   ProjectCustomDa,
-} from '../../../types'
-import { DaUpgradeabilityRisk } from '../common'
-import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+} from '../types'
 import { DAC } from './dac-template'
 
 interface TemplateVars {

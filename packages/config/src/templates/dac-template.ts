@@ -1,17 +1,17 @@
+import {
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
+  DaFraudDetectionRisk,
+  DaUpgradeabilityRisk,
+} from '../projects/da-beat/common'
+import { DaRelayerFailureRisk } from '../projects/da-beat/common/DaRelayerFailureRisk'
 import type {
   DaBridgeRisks,
   DaLayerRisks,
   DaTechnology,
   DacInfo,
   ProjectCustomDa,
-} from '../../../types'
-import {
-  DaCommitteeSecurityRisk,
-  DaEconomicSecurityRisk,
-  DaFraudDetectionRisk,
-  DaUpgradeabilityRisk,
-} from '../common'
-import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+} from '../types'
 
 export interface DacTemplateVars {
   name?: string

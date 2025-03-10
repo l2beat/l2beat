@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
+import { underReviewL2 } from '../../templates/underReview'
 import { BADGES } from '../badges'
-import { underReviewL2 } from './templates/underReview'
 
 export const snaxchain: ScalingProject = underReviewL2({
   id: 'snaxchain',

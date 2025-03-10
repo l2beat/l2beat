@@ -1,13 +1,13 @@
 import type { ContractParameters } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
-import { get$Implementations } from '../../../discovery/extractors'
+import { get$Implementations } from '../discovery/extractors'
 import type {
   Badge,
   ProjectContracts,
   ProjectPermissions,
   ReferenceLink,
-} from '../../../types'
+} from '../types'
 
 export function mergeBadges(
   inherentBadges: Badge[],

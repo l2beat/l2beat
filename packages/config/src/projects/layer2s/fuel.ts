@@ -17,10 +17,10 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('fuel')
 const depositLimitGlobal = formatEther(

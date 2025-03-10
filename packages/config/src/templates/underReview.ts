@@ -1,16 +1,13 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
-import type {
-  ProjectScalingDisplay,
-  ScalingProject,
-} from '../../../internalTypes'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../common'
+import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
 import type {
   Badge,
   ChainConfig,
   ProjectActivityConfig,
   ProjectEscrow,
   ProjectScalingCapability,
-} from '../../../types'
+} from '../types'
 import { getActivityConfig } from './activity'
 
 interface UnderReviewConfigCommon {

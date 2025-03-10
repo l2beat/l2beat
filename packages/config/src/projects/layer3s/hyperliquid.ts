@@ -8,8 +8,8 @@ import { DA_LAYERS, DA_MODES, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { BADGES } from '../badges'
-import { generateDiscoveryDrivenContracts } from '../layer2s/templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 

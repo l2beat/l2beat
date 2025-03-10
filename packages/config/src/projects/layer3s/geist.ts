@@ -3,9 +3,9 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { AnytrustDAC } from '../../templates/anytrust-template'
+import { orbitStackL3 } from '../../templates/orbitStack'
 import { BADGES } from '../badges'
-import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
-import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('geist', 'base')
 
