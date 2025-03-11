@@ -12,9 +12,9 @@
         "type": "totalSupply",
         "address": "0x809B99df4DDd6fA90F2CF305E2cDC310C6AD3C2c",
         "chain": "reya",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729180348
       },
-      "sinceTimestamp": 1729180348,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -30,9 +30,9 @@
         "address": "native",
         "chain": "ethereum",
         "escrowAddress": "0x383c03c4EfF819E73409DbC690755a9992393814",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1709380607
       },
-      "sinceTimestamp": 1709380607,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -47,9 +47,9 @@
         "type": "totalSupply",
         "address": "0x4D3fEB76ab1C7eF40388Cd7a2066edacE1a2237D",
         "chain": "reya",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729180364
       },
-      "sinceTimestamp": 1729180364,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -64,9 +64,9 @@
         "type": "totalSupply",
         "address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
         "chain": "reya",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1713830400
       },
-      "sinceTimestamp": 1713830400,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false

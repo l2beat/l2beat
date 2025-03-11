@@ -13,9 +13,9 @@
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "chain": "ethereum",
         "escrowAddress": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1735877327
       },
-      "sinceTimestamp": 1735877327,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -35,18 +35,19 @@
             "address": "native",
             "chain": "ethereum",
             "escrowAddress": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1735877303
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
             "escrowAddress": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1735877327
           }
         ]
       },
-      "sinceTimestamp": 1735877303,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -62,9 +63,9 @@
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
         "escrowAddress": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1735877327
       },
-      "sinceTimestamp": 1735877327,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -80,9 +81,9 @@
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "chain": "ethereum",
         "escrowAddress": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1735877327
       },
-      "sinceTimestamp": 1735877327,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -98,9 +99,9 @@
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "chain": "ethereum",
         "escrowAddress": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1735877327
       },
-      "sinceTimestamp": 1735877327,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
