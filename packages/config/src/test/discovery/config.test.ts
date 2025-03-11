@@ -25,7 +25,9 @@ export const onChainProjects: string[] = [
 ]
 
 describe('discovery config.jsonc', () => {
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
+  const configReader = new ConfigReader(
+    join(process.cwd(), '../config/discovery'),
+  )
   const templateService = new TemplateService()
 
   const chainConfigs = configReader

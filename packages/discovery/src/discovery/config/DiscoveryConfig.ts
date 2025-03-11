@@ -26,7 +26,7 @@ export class DiscoveryConfig {
   constructor(
     private readonly config: RawDiscoveryConfig,
     configReader: ConfigReader = new ConfigReader(
-      join(process.cwd(), '../config'),
+      join(process.cwd(), '../config/discovery'),
     ),
   ) {
     this.sharedModuleDiscovery = (config.sharedModules ?? []).map(

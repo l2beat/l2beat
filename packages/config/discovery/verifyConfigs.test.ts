@@ -12,7 +12,9 @@ describe('Verify Discovery config files', () => {
     process.chdir(dir)
   })
 
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
+  const configReader = new ConfigReader(
+    join(process.cwd(), '../config/discovery'),
+  )
   const chains = configReader.readAllChains()
 
   for (const chain of chains) {
@@ -30,7 +32,9 @@ describe('Verify Discovery config files', () => {
 
       describe(ConfigReader.prototype.readAllConfigsForChain.name, () => {
         it(`can read all configs for ${chain}`, () => {
-          const configReader = new ConfigReader()
+          const configReader = new ConfigReader(
+            join(process.cwd(), '../config/discovery'),
+          )
 
           const result = configReader.readAllConfigsForChain(chain)
 

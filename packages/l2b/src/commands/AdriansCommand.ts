@@ -1,4 +1,3 @@
-import path from 'node:path'
 import {
   ConfigReader,
   type DiscoveryOutput,
@@ -36,7 +35,7 @@ export const AdriansCommand = command({
   handler: ({ chain, project }) => {
     const discoveryPath = readConfig().discoveryPath
     assert(discoveryPath !== undefined)
-    const configReader = new ConfigReader(path.dirname(discoveryPath))
+    const configReader = new ConfigReader(discoveryPath)
 
     const allDiscoveries = getAllDiscoveriesExcept(configReader, {
       chain,

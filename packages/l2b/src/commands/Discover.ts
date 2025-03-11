@@ -4,8 +4,6 @@ import {
   type DiscoveryModuleConfig,
   getChainConfig,
 } from '@l2beat/discovery'
-
-import path from 'path'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
@@ -39,7 +37,7 @@ const args = {
 
 const config = readConfig()
 assert(config.discoveryPath !== undefined)
-const configReader = new ConfigReader(path.dirname(config.discoveryPath))
+const configReader = new ConfigReader(config.discoveryPath)
 
 export const Discover = command({
   name: 'discover',

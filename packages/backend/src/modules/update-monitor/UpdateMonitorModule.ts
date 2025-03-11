@@ -29,7 +29,8 @@ export function createUpdateMonitorModule(
 
   logger = logger.tag({ feature: 'update_monitor', module: 'update_monitor' })
 
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
+  const rootPath = join(process.cwd(), '../config')
+  const configReader = new ConfigReader(join(rootPath, 'discovery'))
 
   const discordClient = config.updateMonitor.discord
     ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
@@ -55,7 +56,7 @@ export function createUpdateMonitorModule(
   const { chains, cacheEnabled, cacheUri } = config.updateMonitor
   const runners = chains.map((chainConfig) =>
     createDiscoveryRunner(
-      configReader.rootPath,
+      rootPath,
       http,
       peripherals,
       DiscoveryLogger.SILENT,

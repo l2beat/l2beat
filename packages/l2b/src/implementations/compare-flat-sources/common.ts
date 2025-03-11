@@ -30,7 +30,7 @@ export async function computeStackSimilarity(
   matrix: Record<string, Record<string, number>>
   projects: Project[]
 }> {
-  const configReader = new ConfigReader(path.dirname(discoveryPath))
+  const configReader = new ConfigReader(discoveryPath)
   const configs = configReader.readAllConfigs()
 
   const stackProject = await Promise.all(

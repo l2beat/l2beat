@@ -122,7 +122,7 @@ export async function makeConfig(
         ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
         : undefined,
       discord: getDiscordConfig(env, isLocal),
-      chains: new ConfigReader(join(process.cwd(), '../config'))
+      chains: new ConfigReader(join(process.cwd(), '../config/discovery'))
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain, chains)),

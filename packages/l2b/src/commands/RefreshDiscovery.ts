@@ -50,7 +50,7 @@ export const RefreshDiscovery = command({
     const config = readConfig()
     assert(config.discoveryPath !== undefined)
     const rootPath = path.dirname(config.discoveryPath)
-    const configReader = new ConfigReader(rootPath)
+    const configReader = new ConfigReader(config.discoveryPath)
     const templateService = new TemplateService(rootPath)
 
     const chainConfigs = await Promise.all(

@@ -48,7 +48,7 @@ export class ProjectDiscovery {
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
     public readonly configReader = new ConfigReader(
-      join(process.cwd(), '../config'),
+      join(process.cwd(), '../config/discovery'),
     ),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)

@@ -44,7 +44,9 @@ describe('verification status', () => {
 })
 
 function getDiscoveries(project: string, chain: string): DiscoveryOutput[] {
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
+  const configReader = new ConfigReader(
+    join(process.cwd(), '../config/discovery'),
+  )
 
   let discovery = undefined
   try {

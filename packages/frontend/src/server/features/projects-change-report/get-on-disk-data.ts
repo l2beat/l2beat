@@ -2,7 +2,9 @@ import path from 'path'
 import { ConfigReader, type DiscoveryOutput } from '@l2beat/discovery'
 
 export function getOnDiskData() {
-  const configReader = new ConfigReader(path.join(process.cwd(), '../config'))
+  const configReader = new ConfigReader(
+    path.join(process.cwd(), '../config/discovery'),
+  )
   const chains = configReader.readAllChains()
   const projects: Record<string, string[]> = {}
   const discoveries: Record<string, Record<string, DiscoveryOutput>> = {}

@@ -32,7 +32,7 @@ export const SingleDiscoveryCommand = command({
 
     const chainConfigs = getChainConfigs()
     const rootPath = join(process.cwd(), '../config')
-    const configReader = new ConfigReader(rootPath)
+    const configReader = new ConfigReader(join(rootPath, 'discovery'))
     const projectConfig = new DiscoveryConfig(
       {
         name: address.toString(),

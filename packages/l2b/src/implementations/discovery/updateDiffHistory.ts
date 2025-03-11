@@ -16,10 +16,8 @@ import {
   getChainConfig,
 } from '@l2beat/discovery'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
-import { rimraf } from 'rimraf'
-
-import path from 'path'
 import chalk from 'chalk'
+import { rimraf } from 'rimraf'
 import { readConfig } from '../../config/readConfig'
 import { updateDiffHistoryHash } from './hashing'
 
@@ -35,7 +33,7 @@ export async function updateDiffHistory(
   console.log(`Project: ${projectName}`)
   const discoveryPath = readConfig().discoveryPath
   assert(discoveryPath !== undefined)
-  const configReader = new ConfigReader(path.dirname(discoveryPath))
+  const configReader = new ConfigReader(discoveryPath)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
