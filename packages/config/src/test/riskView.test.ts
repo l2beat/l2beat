@@ -1,8 +1,8 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { MochaTestContext } from 'earl/dist/cjs/validators/snapshots/TestContext'
-import { layer2s } from '../projects/layer2s'
-import { layer3s } from '../projects/layer3s'
+import { layer2s } from '../processing/layer2s'
+import { layer3s } from '../processing/layer3s'
 
 describe('riskView', () => {
   for (const l2 of layer2s) {
