@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ink",
-  "blockNumber": 7087697,
+  "blockNumber": 8196210,
   "configHash": "0x4283f030ac4559e0564ed4abe11c7a838b4d903da9aaa8057a83d58cebb376b0",
   "entries": [
     {
@@ -32,7 +32,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620819",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620824",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -74,14 +74,14 @@
         "$upgradeCount": 0,
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 17683022066,
+        "blobBaseFee": 1550258919,
         "blobBaseFeeScalar": 810949,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 1401189011,
+        "l1BaseFee": 608315528,
         "version": "1.3.1-beta.1"
       }
     },
@@ -278,10 +278,10 @@
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "basefee": 1401189011,
+        "basefee": 608315528,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
-        "blobBaseFee": 17683022066,
+        "blobBaseFee": 1550258919,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -290,13 +290,13 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x1eee6ba5ba2c0374fb2672c39095f8f0dcfd539592a86173798361d3e437f254",
+        "hash": "0xedac88464ef9cbf3472b017b5c9731863949a57f7747d91670275ad62f3ff32c",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 21931598,
-        "sequenceNumber": 1,
-        "timestamp": 1740586043,
+        "number": 22023498,
+        "sequenceNumber": 2,
+        "timestamp": 1741694555,
         "version": "1.5.1-beta.1"
       }
     },
@@ -333,8 +333,11 @@
       "name": "OptimismMintableERC721Factory",
       "address": "0x4200000000000000000000000000000000000017",
       "type": "Contract",
-      "unverified": true,
       "template": "opstack/Layer2/OptimismMintableERC721Factory",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xd05d0050b36bb2fb43c345eabc2d7f6e796571360aa2198707da64794c5f4b64"
+      ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
       "issuedPermissions": [
@@ -350,9 +353,11 @@
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
         "$pastUpgrades": [],
-        "$upgradeCount": 0
-      },
-      "derivedName": ""
+        "$upgradeCount": 0,
+        "BRIDGE": "0x4200000000000000000000000000000000000014",
+        "REMOTE_CHAIN_ID": 1,
+        "version": "1.4.1-beta.1"
+      }
     },
     {
       "name": "L2ProxyAdmin",
@@ -1005,6 +1010,15 @@
       "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
       "function messageNonce() view returns (uint256)",
       "function sentMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017": [
+      "constructor(address _bridge, uint256 _remoteChainId)",
+      "event OptimismMintableERC721Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "function BRIDGE() view returns (address)",
+      "function REMOTE_CHAIN_ID() view returns (uint256)",
+      "function createOptimismMintableERC721(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function isOptimismMintableERC721(address) view returns (bool)",
       "function version() view returns (string)"
     ],
     "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [

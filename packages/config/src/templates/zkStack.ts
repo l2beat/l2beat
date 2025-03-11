@@ -142,6 +142,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'ZkProtocolGovernor',
     'votingPeriod',
   )
+
+  const protLateQuorumVoteExtensionS =
+    discovery_ZKstackGovL2.getContractValue<number>(
+      'ZkProtocolGovernor',
+      'votingPeriod',
+    )
   const protTlMinDelayS = discovery_ZKstackGovL2.getContractValue<number>(
     'ProtocolTimelockController',
     'getMinDelay',
@@ -408,9 +414,9 @@ Delegates can start new proposals by reaching a threshold of ${protocolStartProp
 This launches a ${formatSeconds(
         protVotingDelayS,
       )} 'voting delay' after which the ${formatSeconds(protVotingPeriodS)} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
-A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, the voting period is reset to ${formatSeconds(
-        protVotingPeriodS,
-      )}.
+A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, a remaining voting period of ${formatSeconds(
+        protLateQuorumVoteExtensionS,
+      )} is guaranteed by a potential late quorum vote extension.
 In the successful case, it can be queued in the ${formatSeconds(
         protTlMinDelayS,
       )} timelock which forwards it to Ethereum as an L2->L1 log.
