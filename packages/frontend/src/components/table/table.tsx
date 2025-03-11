@@ -69,13 +69,13 @@ const TableRow = ({
   return (
     <tr
       className={cn(
-        'group/row border-b-2 border-b-divider',
+        'group/row border-b border-b-divider',
         isSelected && 'animate-row-highlight',
         className,
       )}
       ref={(node) => {
         if (node && isSelected) {
-          node.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          node.scrollIntoView({ block: 'center' })
         }
       }}
       {...props}
