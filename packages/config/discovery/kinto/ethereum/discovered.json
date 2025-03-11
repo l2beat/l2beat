@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 21988484,
-  "configHash": "0xffb6ef5212bafcb69ec8b367ad3c56b1877db691c2a751eb1e4528fb590c0d77",
+  "configHash": "0x786fad8b7fc7e209cc9e26dfef77de08abb65b8c1ca65d9d858fe31cc258314b",
   "entries": [
     {
       "name": "Hypernative",
@@ -992,7 +992,7 @@
       "derivedName": ""
     },
     {
-      "name": "MamoriLabs2",
+      "name": "KintsugiFoundation",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
       "proxyType": "EOA",

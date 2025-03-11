@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "scroll",
-  "blockNumber": 8983528,
+  "blockNumber": 13948997,
   "configHash": "0xca126e4907b314d340bc948a304fa63e2007fc5ad43ca7233a9dbdcf8bb0ec78",
   "entries": [
     {
@@ -56,14 +56,14 @@
         "getGateway": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
         "getGovernor": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 24163,
-        "getTotalPriorityTxs": 947,
+        "getTotalBatchesExecuted": 50873,
+        "getTotalPriorityTxs": 1006,
         "owner": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
         "paused": false,
-        "totalBatchesExecuted": 24163,
-        "totalPriorityTxs": 947,
-        "totalSyncedPriorityTxs": 947,
-        "totalValidatorForwardFee": "102813605000000000",
+        "totalBatchesExecuted": 50873,
+        "totalPriorityTxs": 1006,
+        "totalSyncedPriorityTxs": 1006,
+        "totalValidatorForwardFee": "108912963250000000",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 0
       },
