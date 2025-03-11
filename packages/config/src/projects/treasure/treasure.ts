@@ -1,10 +1,14 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { type Upgradeability, zkStackL2 } from '../../templates/zkStack'
+import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('treasure')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -59,7 +63,7 @@ export const treasure: ScalingProject = zkStackL2({
     ],
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['MAGIC'],
@@ -75,7 +79,6 @@ export const treasure: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: ['MAGIC'], // will apparently be bridged externally at a later point
       },
-      ...zkStackUpgrades,
     }),
   ],
   daProvider: {

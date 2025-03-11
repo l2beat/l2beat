@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "ethereum",
-  "blockNumber": 22017779,
+  "blockNumber": 22022360,
   "configHash": "0x864635b36be4ad925db2355d5f904d0f049b2c7d4e487dc778d2d2536fbb86e2",
   "entries": [
     {
@@ -98,11 +98,13 @@
       "name": "EthereumProxyAdmin",
       "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
@@ -511,8 +513,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2",
-          "via": []
+          "to": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
+          "via": [{ "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2" }]
         }
       ],
       "sinceTimestamp": 1709295323,
@@ -603,11 +605,22 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+          "via": [{ "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2" }]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
         },
         {
           "permission": "upgrade",
           "from": "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1266,6 +1279,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076",
     "zklinknova/secondaryZkLink": "0xdbd6b1ed71a07098ec5947baced2c9b3f0ac9fc11b1f3b9e9dce0ef3116a752e"

@@ -2,15 +2,15 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
+  ESCROW,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { type Upgradeability, zkStackL2 } from '../../templates/zkStack'
+import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('sophon')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -74,7 +74,7 @@ export const sophon: ScalingProject = zkStackL2({
     },
     bridge: DA_BRIDGES.NONE,
   },
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: [
@@ -104,7 +104,6 @@ export const sophon: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: [], // 'SOPH' not on CG yet
       },
-      ...zkStackUpgrades,
     }),
     discovery.getEscrowDetails({
       address: discovery.getContract('L1USDCBridge').address,

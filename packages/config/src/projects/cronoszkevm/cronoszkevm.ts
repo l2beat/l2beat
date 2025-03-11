@@ -1,10 +1,14 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { type Upgradeability, zkStackL2 } from '../../templates/zkStack'
+import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -75,7 +79,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       ],
     },
   },
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,
       tokens: ['CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN', 'MOON'],
@@ -91,7 +95,6 @@ export const cronoszkevm: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: ['zkCRO'],
       },
-      ...zkStackUpgrades,
     }),
   ],
   // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat

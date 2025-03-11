@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "optimism",
-  "blockNumber": 133013374,
+  "blockNumber": 133041012,
   "configHash": "0xe7ba63b175ee3f3c034c5cedb05c58ac3b6537c56bbf18af52f6542ba6006dee",
   "entries": [
     {
@@ -23,6 +23,17 @@
         {
           "permission": "upgrade",
           "from": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+          "via": [{ "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -150,8 +161,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
-          "via": []
+          "to": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
+          "via": [{ "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4" }]
         }
       ],
       "sinceTimestamp": 1711095511,
@@ -196,11 +207,13 @@
       "name": "OptimismProxyAdmin",
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x5Bd51296423A9079b931414C1De65e7057326EaA"
@@ -488,6 +501,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076",
     "zklinknova/secondaryZkLink": "0xdbd6b1ed71a07098ec5947baced2c9b3f0ac9fc11b1f3b9e9dce0ef3116a752e"

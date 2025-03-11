@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { type Upgradeability, zkStackL2 } from '../../templates/zkStack'
+import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -98,7 +98,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
       },
     },
   ],
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['ETH', 'USDC', 'WBTC', 'USDT'],
@@ -113,7 +113,6 @@ export const zeronetwork: ScalingProject = zkStackL2({
           '0x000000000000000000000000000000000000800A',
         ),
       },
-      ...zkStackUpgrades,
     }),
   ],
   milestones: [

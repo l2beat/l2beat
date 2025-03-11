@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { type Upgradeability, zkStackL2 } from '../../templates/zkStack'
+import { zkStackL2 } from '../../templates/zkStack'
 
 const genesisTimestamp = UnixTime(1729881083)
 const chainId = 2741
@@ -50,7 +50,7 @@ export const abstract: ScalingProject = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   diamondContract: discovery.getContract('AbstractZkEvm'),
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['ETH'], // just assuming here, since USDC, USDT are stargate-routed and we want to reduce strain on TVS sync
@@ -65,7 +65,6 @@ export const abstract: ScalingProject = zkStackL2({
           '0x000000000000000000000000000000000000800A',
         ),
       },
-      ...zkStackUpgrades,
     }),
   ],
   nonTemplateTrackedTxs: [
