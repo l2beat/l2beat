@@ -28,7 +28,9 @@ describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader(
     join(process.cwd(), '../config/discovery'),
   )
-  const templateService = new TemplateService()
+  const templateService = new TemplateService(
+    join(process.cwd(), '../config/discovery'),
+  )
 
   const chainConfigs = configReader
     .readAllChains()

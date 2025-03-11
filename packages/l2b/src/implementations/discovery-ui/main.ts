@@ -19,7 +19,7 @@ export function runDiscoveryUi() {
   assert(discoveryPath !== undefined)
   const rootPath = path.dirname(discoveryPath)
   const configReader = new ConfigReader(discoveryPath)
-  const templateService = new TemplateService(rootPath)
+  const templateService = new TemplateService(join(rootPath, 'discovery'))
 
   app.use(express.json())
 

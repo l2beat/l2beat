@@ -10,6 +10,7 @@ import { AllProviders } from './provider/AllProviders'
 import type { DiscoveryCache } from './provider/DiscoveryCache'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
+import { join } from 'path'
 
 export function getDiscoveryEngine(
   discoveryPath: string,
@@ -27,7 +28,7 @@ export function getDiscoveryEngine(
   const proxyDetector = new ProxyDetector()
   const sourceCodeService = new SourceCodeService()
   const handlerExecutor = new HandlerExecutor()
-  const templateService = new TemplateService(discoveryPath)
+  const templateService = new TemplateService(join(discoveryPath, 'discovery'))
   const addressAnalyzer = new AddressAnalyzer(
     proxyDetector,
     sourceCodeService,

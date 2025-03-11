@@ -1,6 +1,7 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { type Shape, TemplateService } from './TemplateService'
+import { join } from 'path'
 
 const CORRECT_SUPERCHAIN_CONFIG_ADDR = EthereumAddress(
   '0x95703e0982140D16f8ebA6d158FccEde42f04a4C',
@@ -18,7 +19,9 @@ const CORRECT_SUPERCHAIN_SOURCES_HASH = Hash256(
 
 describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
   it("doesn't match opstack/SuperchainConfig because address is not in validAddresses", () => {
-    const templateService = new TemplateService()
+    const templateService = new TemplateService(
+      join(process.cwd(), '../config/discovery'),
+    )
     templateService.getAllShapes = mockFn().returns(templateShapes)
     const result = templateService.findMatchingTemplatesByHash(
       CORRECT_SUPERCHAIN_SOURCES_HASH,
@@ -28,7 +31,9 @@ describe(TemplateService.prototype.findMatchingTemplatesByHash.name, () => {
   })
 
   it('matches ONLY opstack/SuperchainConfig because address is in validAddresses and is more specific', () => {
-    const templateService = new TemplateService()
+    const templateService = new TemplateService(
+      join(process.cwd(), '../config/discovery'),
+    )
     templateService.getAllShapes = mockFn().returns(templateShapes)
     const result = templateService.findMatchingTemplatesByHash(
       CORRECT_SUPERCHAIN_SOURCES_HASH,

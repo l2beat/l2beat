@@ -1,4 +1,4 @@
-import path from 'path'
+import path, { join } from 'path'
 import {
   ConfigReader,
   type DiscoveryConfig,
@@ -51,7 +51,7 @@ export const RefreshDiscovery = command({
     assert(config.discoveryPath !== undefined)
     const rootPath = path.dirname(config.discoveryPath)
     const configReader = new ConfigReader(config.discoveryPath)
-    const templateService = new TemplateService(rootPath)
+    const templateService = new TemplateService(join(rootPath, 'discovery'))
 
     const chainConfigs = await Promise.all(
       configReader
