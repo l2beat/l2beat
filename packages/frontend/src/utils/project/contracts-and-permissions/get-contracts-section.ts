@@ -229,11 +229,12 @@ function makeTechnologyContract(
 
   const additionalReferences: ReferenceLink[] = []
 
-  const usedInProjects = [
-    item.address,
-    ...(item.upgradeability?.implementations ?? []),
-  ].flatMap((address) =>
-    contractUtils.getUsedIn(projectParams.id, item.chain, address),
+  const usedInProjects = uniqBy(
+    [item.address, ...(item.upgradeability?.implementations ?? [])].flatMap(
+      (address) =>
+        contractUtils.getUsedIn(projectParams.id, item.chain, address),
+    ),
+    'id',
   )
 
   return {
@@ -241,7 +242,7 @@ function makeTechnologyContract(
     addresses,
     admins,
     description,
-    usedInProjects: uniqBy(usedInProjects, 'id'),
+    usedInProjects,
     references: (item.references ?? []).concat(additionalReferences),
     chain,
     implementationChanged,
