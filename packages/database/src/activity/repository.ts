@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../BaseRepository'
 import { type ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
@@ -148,10 +148,10 @@ export class ActivityRepository extends BaseRepository {
 
   async getSummedUopsCountForProjectAndTimeRange(
     projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
+    timeRange: [UnixTime | null, UnixTime],
   ): Promise<number | undefined> {
     const [from, to] = timeRange
-    const row = await this.db
+    let query = this.db
       .selectFrom('Activity')
       .select((eb) =>
         eb.fn
@@ -159,40 +159,13 @@ export class ActivityRepository extends BaseRepository {
           .as('count'),
       )
       .where('projectId', '=', projectId.toString())
-      .where('timestamp', '>=', UnixTime.toDate(from))
-      .where('timestamp', '<', UnixTime.toDate(to))
-      .executeTakeFirst()
+      .where('timestamp', '<=', UnixTime.toDate(to))
 
+    if (from) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+    const row = await query.executeTakeFirst()
     return row ? Number(row.count) : undefined
-  }
-
-  async getSummedUopsCountForProjectsAndTimeRange(
-    projectIds: ProjectId[],
-    timeRange: [UnixTime, UnixTime],
-  ): Promise<{ projectId: ProjectId; uopsCount: number }[]> {
-    const [from, to] = timeRange
-    const rows = await this.db
-      .selectFrom('Activity')
-      .select(['projectId'])
-      .select((eb) =>
-        eb.fn
-          .sum(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
-          .as('count'),
-      )
-      .where(
-        'projectId',
-        'in',
-        projectIds.map((p) => p.toString()),
-      )
-      .where('timestamp', '>=', UnixTime.toDate(from))
-      .where('timestamp', '<', UnixTime.toDate(to))
-      .groupBy('projectId')
-      .execute()
-
-    return rows.map((row) => ({
-      projectId: ProjectId(row.projectId),
-      uopsCount: Number(row.count),
-    }))
   }
 
   /**

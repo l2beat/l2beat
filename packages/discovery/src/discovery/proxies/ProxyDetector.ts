@@ -19,6 +19,7 @@ import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
+import { getEverclearProxy } from './manual/EverclearProxy'
 import { getLightLinkProxy } from './manual/LightLinkProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
@@ -58,6 +59,7 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'Optics Beacon proxy': getOpticsBeaconProxy,
   'Axelar proxy': getAxelarProxy,
   'LightLink proxy': getLightLinkProxy,
+  'Everclear proxy': getEverclearProxy,
   immutable: getImmutableProxy,
 }
 

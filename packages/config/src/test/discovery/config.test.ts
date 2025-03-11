@@ -3,9 +3,9 @@ import { isDeepStrictEqual } from 'util'
 import { ConfigReader, TemplateService } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { bridges } from '../../projects/bridges'
-import { layer2s } from '../../projects/layer2s'
-import { layer3s } from '../../projects/layer3s'
+import { bridges } from '../../processing/bridges'
+import { layer2s } from '../../processing/layer2s'
+import { layer3s } from '../../processing/layer3s'
 
 // A list of onchain projects that are not L2s (or prelaunch) or bridges
 // (so we don't show them on the frontend), but we still
