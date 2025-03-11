@@ -1,4 +1,3 @@
-import {} from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
