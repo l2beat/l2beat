@@ -1,3 +1,5 @@
+import { readdirSync } from 'fs'
+import { join } from 'path'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
@@ -35,11 +37,19 @@ interface Props {
   }
 }
 
+function logDir(path: string) {
+  const files = readdirSync(path)
+
+  console.log(path, files)
+}
+
 export default async function Image({ params }: Props) {
   const project = await ps.getProject({
     slug: params.slug,
     where: ['isScaling'],
   })
+  logDir(process.cwd())
+  logDir(join(process.cwd(), '..'))
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
