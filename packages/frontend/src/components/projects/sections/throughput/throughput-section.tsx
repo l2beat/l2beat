@@ -1,9 +1,7 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
-import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
-import { ChartStats } from '~/components/core/chart/chart-stats'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { ClockIcon } from '~/icons/clock'
 import {
@@ -66,54 +64,33 @@ export function ThroughputSection({
       />
       <HorizontalSeparator className="my-4" />
       <ChartStats>
-        <Detail
+        <ChartStatsItem
           label="Past day avg. throughput"
-          value={formatBpsToMbps(pastDayAvgThroughputPerSecond)}
           isSynced={syncStatus.isSynced}
-        />
-        <Detail
+        >
+          {formatBpsToMbps(pastDayAvgThroughputPerSecond)}
+        </ChartStatsItem>
+        <ChartStatsItem
           label="Past day avg. capacity used"
-          value={`${pastDayAvgCapacityUtilization}%`}
           isSynced={syncStatus.isSynced}
-        />
-        <Detail
+        >
+          {`${pastDayAvgCapacityUtilization}%`}
+        </ChartStatsItem>
+        <ChartStatsItem
           label="Past day largest poster"
-          value={
-            largestPoster
-              ? `${largestPoster.name} (${largestPoster.percentage}%)`
-              : undefined
-          }
           isSynced={syncStatus.isSynced}
-        />
-        <Detail
+        >
+          {largestPoster
+            ? `${largestPoster.name} (${largestPoster.percentage}%)`
+            : undefined}
+        </ChartStatsItem>
+        <ChartStatsItem
           label="Past day total data posted"
-          value={formatBytes(totalPosted)}
           isSynced={syncStatus.isSynced}
-        />
+        >
+          {formatBytes(totalPosted)}
+        </ChartStatsItem>
       </ChartStats>
     </ProjectSection>
-  )
-}
-
-function Detail({
-  label,
-  value,
-  isSynced,
-}: { label: string; value: string | undefined; isSynced: boolean }) {
-  return (
-    <div className="flex items-center justify-between gap-2 md:flex-col md:items-start">
-      <span className="whitespace-nowrap text-xs font-medium text-secondary">
-        {label}
-      </span>
-      {value ? (
-        <SyncStatusWrapper isSynced={isSynced}>
-          <span className="text-sm font-medium text-primary xs:text-lg md:font-bold">
-            {value}
-          </span>
-        </SyncStatusWrapper>
-      ) : (
-        <NoDataBadge />
-      )}
-    </div>
   )
 }

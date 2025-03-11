@@ -34,6 +34,8 @@ describe(FunctionSelectorDecoder.name, () => {
     it('can fetch a single target address that is not a proxy', async () => {
       const target = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
         getSource: mockFn().resolvesTo({
@@ -55,6 +57,8 @@ describe(FunctionSelectorDecoder.name, () => {
       const target1 = EthereumAddress.random()
       const target2 = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
         getSource: mockFn().resolvesTo({
@@ -77,6 +81,8 @@ describe(FunctionSelectorDecoder.name, () => {
       const target = EthereumAddress.random()
       const implementation = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn()
           .given(target, EIP1967_IMPLEMENTATION_SLOT)
           .returnsOnce(implementation)
@@ -104,6 +110,8 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation1 = EthereumAddress.random()
       const implementation2 = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().returns(EthereumAddress.ZERO),
         callMethod: mockFn()
           .given(target, EIP2535_METHOD, [])
@@ -133,6 +141,8 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation1 = EthereumAddress.random()
       const implementation2 = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn()
           .given(target1, EIP1967_IMPLEMENTATION_SLOT)
           .returnsOnce(implementation1)
@@ -167,6 +177,8 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation3 = EthereumAddress.random()
       const implementation4 = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().returns(EthereumAddress.ZERO),
         callMethod: mockFn()
           .given(target1, EIP2535_METHOD, [])
@@ -202,6 +214,8 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation2 = EthereumAddress.random()
       const implementation3 = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn()
           .given(target1, EIP1967_IMPLEMENTATION_SLOT)
           .returnsOnce(implementation1)
@@ -245,6 +259,8 @@ describe(FunctionSelectorDecoder.name, () => {
     it('can decode a single selector that is already known', async () => {
       const target = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
         getSource: mockFn().resolvesTo({
@@ -267,6 +283,8 @@ describe(FunctionSelectorDecoder.name, () => {
     it('handles decoding a wrong selector in a contract that is already known', async () => {
       const target = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
         getSource: mockFn().resolvesTo({
@@ -289,6 +307,8 @@ describe(FunctionSelectorDecoder.name, () => {
     it('can decode a single selector that is not known', async () => {
       const target = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
         getSource: mockFn().resolvesTo({
@@ -310,6 +330,8 @@ describe(FunctionSelectorDecoder.name, () => {
     it('handles decoding a wrong selector in a contract that is not known', async () => {
       const target = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
         callMethod: mockFn().executes(callMethodStub),
         getSource: mockFn().resolvesTo({
@@ -335,6 +357,8 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation2 = EthereumAddress.random()
       const implementation3 = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+        getDeployment: mockFn().resolvesTo(undefined),
         getStorageAsAddress: mockFn()
           .given(target1, EIP1967_IMPLEMENTATION_SLOT)
           .returnsOnce(implementation1)

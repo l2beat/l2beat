@@ -19,7 +19,7 @@ export function formatBytes(bytes: number, opts?: FormatBytesOptions) {
   }
 
   if (bytes < 1024) {
-    return `${bytes} B`
+    return `${bytes.toFixed(decimals)} B`
   }
   if (bytes < 1024 ** 2) {
     return `${(bytes / 1024).toFixed(decimals)} KiB`

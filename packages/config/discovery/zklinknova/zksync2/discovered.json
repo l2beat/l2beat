@@ -1,12 +1,18 @@
 {
   "name": "zklinknova",
   "chain": "zksync2",
-  "blockNumber": 43367152,
-  "configHash": "0x47599b74ad33c508efc73e734b51a6026ee571291d54ec73c07b999a4050a046",
-  "contracts": [
+  "blockNumber": 57470008,
+  "configHash": "0xe3fd29102c523f6b258ad32050665f4cc4b9d1d3b85f5758355cad360dec0784",
+  "entries": [
+    {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "EraOwner",
       "address": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -57,8 +63,19 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ERC20Bridge",
       "address": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -92,6 +109,7 @@
     {
       "name": "zkLink",
       "address": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -128,12 +146,34 @@
       "derivedName": ""
     },
     {
+      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EraProxyAdmin",
       "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -148,17 +188,12 @@
         "owner": "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
-    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
-    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
-    { "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7" },
-    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
-    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
-    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
-    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],
   "abis": {
     "0x1727c2c531cf966f902E5927b98490fDFb3b2b70": [

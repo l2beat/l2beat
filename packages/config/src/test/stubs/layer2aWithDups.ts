@@ -8,7 +8,7 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 export const layer2aWithDups = {
   type: 'layer2',
@@ -376,4 +376,4 @@ export const layer2aWithDups = {
     },
     risks: [],
   },
-} as unknown as Layer2
+} as unknown as ScalingProject

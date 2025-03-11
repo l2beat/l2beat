@@ -1,4 +1,237 @@
-Generated with discovered.json: 0x1fe9adce13c15a3b4586ceda3f4450e3b5aa9dcc
+Generated with discovered.json: 0x7a9585ff0df7f4aa277f5502d867069cae9ccba3
+
+# Diff at Tue, 11 Mar 2025 07:55:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6186a4f8e3a9e415d081d4e3e85c2deceaa5530c block: 21944239
+- current block number: 22022274
+
+## Description
+
+update 03/11: old owner (PUH) is fully transfered, new contracts are governing.
+
+Onchain execution of [[ZIP-5] Upgrade Governance Contracts](https://www.tally.xyz/gov/zksync/proposal/32477831455745537024214395992964479454779258818502397012096084176779102554510?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
+
+SC and Guardians redeployed in the same configuration, new ProtocolUpgradeHandler deployed as a proxy referencing and the new ProtocolGovernor on L2.
+
+Currently the new ProtocolUpgradeHandler is the upgrade admin, Elastic Chain admin and pending owner of the shared contracts, and the old PUH remains the owner.
+
+This complicates showing discodriven perms correctly, as the permissions are the same as before but the contracts are doubled.
+Since the old governance contracts on L1 only have the 'owner' role in the shared contracts until the next upgrade, we hide them from the frontend.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      issuedPermissions.1.to:
+-        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      issuedPermissions.1.via.0.address:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.owner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolTimelockController(L2->L1)_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolUpgradeHandler_deprecated (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897)
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil_deprecated (0xBDFfCC71FE84020238F2990a6D2954e87355De0D)
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      values.owner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      issuedPermissions.1.to:
+-        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      issuedPermissions.1.via.0.address:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.owner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Guardians_deprecated (0xD677e09324F8Bb3cC64F009973693f751c33A888)
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      issuedPermissions.1.to:
+-        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      issuedPermissions.1.via.0.address:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.owner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard_deprecated (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29)
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolTimelockController(L2->L1) (0x085b8B6407f150D62adB1EF926F7f304600ec714)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8)
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410)
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6)
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+## Source code changes
+
+```diff
+.../EmergencyUpgradeBoard.sol}                     |   0
+ .../Guardians.sol}                                 |   0
+ .../ProtocolUpgradeHandler.sol}                    | 222 +++++++-
+ .../TransparentUpgradeableProxy.p.sol              | 581 +++++++++++++++++++++
+ ...-0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e.sol | 132 +++++
+ ...0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1.sol} |   0
+ .../SecurityCouncil.sol}                           |   0
+ 7 files changed, 917 insertions(+), 18 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944239 (main branch discovery), not current.
+
+```diff
+    contract ProtocolTimelockController(L2->L1)_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8) {
+    +++ description: None
+      name:
+-        "ProtocolTimelockController(L2->L1)"
++        "ProtocolTimelockController(L2->L1)_deprecated"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler_deprecated (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      name:
+-        "ProtocolUpgradeHandler"
++        "ProtocolUpgradeHandler_deprecated"
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
+    }
+```
+
+```diff
+    contract SecurityCouncil_deprecated (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      name:
+-        "SecurityCouncil"
++        "SecurityCouncil_deprecated"
+      category.name:
+-        "Governance"
++        "Spam"
+      category.priority:
+-        3
++        -1
+    }
+```
+
+```diff
+    contract Guardians_deprecated (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      name:
+-        "Guardians"
++        "Guardians_deprecated"
+      category.name:
+-        "Governance"
++        "Spam"
+      category.priority:
+-        3
++        -1
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard_deprecated (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29) {
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+      name:
+-        "EmergencyUpgradeBoard"
++        "EmergencyUpgradeBoard_deprecated"
+      category.name:
+-        "Governance"
++        "Spam"
+      category.priority:
+-        3
++        -1
+    }
+```
+
+Generated with discovered.json: 0x82a5bd749b650d76f521b2037179ad7ead672671
 
 # Diff at Tue, 04 Mar 2025 10:39:54 GMT:
 

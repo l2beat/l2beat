@@ -2,16 +2,18 @@
   "name": "lumia",
   "chain": "ethereum",
   "blockNumber": 21981677,
-  "configHash": "0x685c291ff21f3f06aad1d48322fd2446f4cb1e976c4ec5f405b5d977d9681d50",
+  "configHash": "0x70e931a1812b1bc50acf1a7b0b25366a3d90645a9d3b96327e0715ab9fdd39de",
   "sharedModules": ["shared-polygon-cdk"],
-  "contracts": [
+  "entries": [
     {
       "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
+      "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
       "sinceBlock": 19505052,
@@ -20,8 +22,32 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x258862dec9a77db57b398c441390783293E2a7A1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        },
+        {
+          "permission": "interact",
+          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "sole address that can force batches."
+        }
+      ]
+    },
+    {
       "name": "PolygonDataCommittee",
       "address": "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -74,8 +100,20 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B"
+        }
+      ]
+    },
+    {
       "name": "Validium",
       "address": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
@@ -167,10 +205,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -183,42 +223,11 @@
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
       }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    {
-      "address": "0x258862dec9a77db57b398c441390783293E2a7A1",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments."
-        },
-        {
-          "permission": "interact",
-          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
-        },
-        {
-          "permission": "interact",
-          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-          "description": "sole address that can force batches."
-        }
-      ]
-    },
-    {
-      "address": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B"
-        }
-      ]
     },
     {
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -233,8 +242,16 @@
         }
       ]
     },
-    { "address": "0xf1cACD549400824D54c8794e63C5368C296FDA00" },
-    { "address": "0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18" }
+    {
+      "address": "0xf1cACD549400824D54c8794e63C5368C296FDA00",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [

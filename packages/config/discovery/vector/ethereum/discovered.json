@@ -2,11 +2,12 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 21635855,
-  "configHash": "0xa50428079d31f9b9e99728464008b7edb0ac4d73dd96033f31cd3ab3562c0e80",
-  "contracts": [
+  "configHash": "0x137dfe8556e771094ed2690c6a55ed9db88fbab4857539b85219d64e67e964d1",
+  "entries": [
     {
       "name": "Vector",
       "address": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
+      "type": "Contract",
       "template": "succinct/SP1Vector",
       "sourceHashes": [
         "0xca64a552160ec278e1bacf8ca23e8c71f49012ace91a33141b797451f4683731",
@@ -91,12 +92,24 @@
       "derivedName": "SP1Vector"
     },
     {
+      "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuccinctGatewaySP1",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Contract",
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
+      "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
       "issuedPermissions": [
         {
@@ -147,8 +160,19 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
+      "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AvailMultisig",
       "address": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -192,8 +216,41 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAD379D3275a18bd4BB741C3b291a3778D51c3304",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
+        }
+      ]
+    },
+    {
       "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -231,9 +288,11 @@
     {
       "name": "SP1Verifier",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+      "type": "Contract",
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1729727135,
       "sinceBlock": 21031662,
       "values": {
@@ -243,11 +302,18 @@
       }
     },
     {
+      "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SP1Verifier",
       "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "type": "Contract",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -262,38 +328,12 @@
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
         "VERSION": "v4.0.0-rc.3"
       }
+    },
+    {
+      "address": "0xE458b870F2F59a49915591282f1Bb688901767AD",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
-        }
-      ]
-    },
-    { "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5" },
-    { "address": "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A" },
-    { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
-    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
-    { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
-    { "address": "0xAD379D3275a18bd4BB741C3b291a3778D51c3304" },
-    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" },
-    { "address": "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2" },
-    {
-      "address": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
-        }
-      ]
-    },
-    { "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e" },
-    { "address": "0xE458b870F2F59a49915591282f1Bb688901767AD" }
   ],
   "abis": {
     "0x02993cdC11213985b9B13224f3aF289F03bf298d": [

@@ -1,10 +1,6 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import path, { basename } from 'path'
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-  EoaParameters,
-} from '../output/types'
+import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,
@@ -18,8 +14,7 @@ export function buildAndSaveModels(
 ) {
   const addressToNameMap = buildAddressToNameMap(
     discoveryOutput.chain,
-    discoveryOutput.contracts,
-    discoveryOutput.eoas,
+    discoveryOutput.entries,
   )
 
   const templateModels = buildTemplateModels(
@@ -46,7 +41,7 @@ export function buildTemplateModels(
   addressToNameMap: Record<string, string>,
 ): Record<string, string[]> {
   const templateModels: Record<string, string[]> = {}
-  for (const contract of discoveryOutput.contracts) {
+  for (const contract of discoveryOutput.entries) {
     if (!contract.template) {
       continue
     }
@@ -86,11 +81,10 @@ export function findTemplateModelFiles(templatePath: string): string[] {
 
 export function buildAddressToNameMap(
   chain: string,
-  contracts: ContractParameters[],
-  eoas: EoaParameters[],
+  entries: EntryParameters[],
 ): Record<string, string> {
   const result: Record<string, string> = {}
-  for (const entity of [...contracts, ...eoas]) {
+  for (const entity of entries) {
     const address = entity.address.toLowerCase()
     const suffix = `_${chain}_${address}`
     result[address] = (entity.name ?? 'eoa') + suffix

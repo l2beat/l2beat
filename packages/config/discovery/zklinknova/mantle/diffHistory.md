@@ -1,4 +1,88 @@
-Generated with discovered.json: 0x1f80ee0694707233fa2020ffcebecb864d60ed0a
+Generated with discovered.json: 0xbefe7fa847427c27ae1fa3af0496a0c66c007923
+
+# Diff at Tue, 11 Mar 2025 08:13:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6186a4f8e3a9e415d081d4e3e85c2deceaa5530c block: 76747606
+- current block number: 76775244
+
+## Description
+
+proxyadmin template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 76747606 (main branch discovery), not current.
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"}
+      receivedPermissions.1.from:
+-        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
+      receivedPermissions.0.from:
+-        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
++        "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"
+      receivedPermissions.0.via:
++        [{"address":"0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"
++        "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60"
+      issuedPermissions.0.via.0:
++        {"address":"0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"}
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"}]
+      template:
++        "global/ProxyAdmin"
+      displayName:
++        "ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"}]
+    }
+```
+
+Generated with discovered.json: 0xf9ed2842d0c2587223c2fc614cbe18fe032c9645
+
+# Diff at Mon, 10 Mar 2025 16:52:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 68652420
+- current block number: 76747606
+
+## Description
+
+zklink core contract paused. this only prevents deposits/ on the affected chains.
+
+## Watched changes
+
+```diff
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x426d4813917798363d8fc2c0fd461a9c8241bd1c
 
 # Diff at Tue, 04 Mar 2025 10:42:43 GMT:
 

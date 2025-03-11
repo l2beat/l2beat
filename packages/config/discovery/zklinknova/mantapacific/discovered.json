@@ -1,16 +1,20 @@
 {
   "name": "zklinknova",
   "chain": "mantapacific",
-  "blockNumber": 3121124,
-  "configHash": "0x27e3e5b73ac2d6a0110fb5ec238c27bcdb9aceda8d1d27d5916473d5da22e927",
-  "contracts": [
+  "blockNumber": 4745686,
+  "configHash": "0x5d9037796eb2e0a83c2da9a5e26d221f8808ca6c8ff0bd511b308ef853179393",
+  "entries": [
     {
       "name": "MantaProxyAdmin",
       "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
-      "receivedPermissions": [
+      "proxyType": "immutable",
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
@@ -26,8 +30,14 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ERC20Bridge",
       "address": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+      "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
@@ -36,8 +46,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
-          "via": []
+          "to": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+          "via": [{ "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05" }]
         }
       ],
       "sinceTimestamp": 1709295839,
@@ -64,11 +74,22 @@
       }
     },
     {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MantaOwner",
       "address": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "via": [{ "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05" }]
+        },
         {
           "permission": "upgrade",
           "from": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
@@ -76,6 +97,12 @@
         {
           "permission": "upgrade",
           "from": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
         }
       ],
       "sinceTimestamp": 1710253339,
@@ -100,8 +127,39 @@
       "derivedName": ""
     },
     {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "zkLink",
       "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+      "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -160,23 +218,29 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 24163,
-        "getTotalPriorityTxs": 6652,
+        "getTotalBatchesExecuted": 50873,
+        "getTotalPriorityTxs": 6709,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-        "paused": false,
-        "totalBatchesExecuted": 24163,
-        "totalPriorityTxs": 6652,
-        "totalSyncedPriorityTxs": 6652,
-        "totalValidatorForwardFee": "3291984284547044944",
+        "paused": true,
+        "totalBatchesExecuted": 50873,
+        "totalPriorityTxs": 6709,
+        "totalSyncedPriorityTxs": 6709,
+        "totalValidatorForwardFee": "3322174073621656292",
         "totalValidatorForwardFeeWithdrawn": "3291984284547044944",
         "txGasPrice": 40000000000
       },
       "derivedName": "ZkLink"
     },
     {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MantaL2Gateway",
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+      "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -224,19 +288,12 @@
         "ZKLINK": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
       },
       "derivedName": "OptimismL2Gateway"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
-    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
-    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
-    { "address": "0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F" },
-    { "address": "0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09" },
-    { "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7" },
-    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
-    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
-    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
-    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],
   "abis": {
     "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": [
@@ -396,6 +453,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076",
     "zklinknova/secondaryZkLink": "0xdbd6b1ed71a07098ec5947baced2c9b3f0ac9fc11b1f3b9e9dce0ef3116a752e"
   }

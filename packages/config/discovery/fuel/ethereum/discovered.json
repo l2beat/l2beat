@@ -2,11 +2,12 @@
   "name": "fuel",
   "chain": "ethereum",
   "blockNumber": 21630407,
-  "configHash": "0x1ad5971ef466cb47dcb893466e7193f8d125537865cb74e4da6294819ac34230",
-  "contracts": [
+  "configHash": "0x6956c7a9c07b8e07f51db1f1263091cb881040843f907448d71260e37c01b7c5",
+  "entries": [
     {
       "name": "FuelSecurityCouncil",
       "address": "0x32da601374b38154f05904B16F44A1911Aa6f314",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -51,8 +52,14 @@
       ]
     },
     {
+      "address": "0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Safe",
       "address": "0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -79,8 +86,69 @@
       }
     },
     {
+      "address": "0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5F5e0C904153789a9E978c286180b4191950d886",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x698F7A879197Dd834c3203b470ddBadD6616A8bF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FuelERC20Gateway",
       "address": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67",
+      "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0x35fac1a306db1eec90fef4226afce6dcef2eee934335f4d2f51625a68f10f273"
@@ -140,8 +208,14 @@
       "derivedName": "FuelERC20GatewayV4"
     },
     {
+      "address": "0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FuelMessagePortal",
       "address": "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf",
+      "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0x1fa3aa6d12bbe8ca52b062a380218f557f1d37748cca158f023af1bc7a0e278b"
@@ -229,8 +303,36 @@
       "derivedName": "FuelMessagePortalV3"
     },
     {
+      "address": "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe7d56c84cEA9b58569fdfe8863085207F9a14881",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Sequencer",
+      "address": "0xEA0337EFC12e98AB118948dA570C07691E8E4b37",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
       "name": "FuelChainState",
       "address": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
+      "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0x183fd58e0c8aaff660b72b7753154fcb311db3b7932357b1a8a1416fdd53caf0"
@@ -283,49 +385,12 @@
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "TIME_TO_FINALIZE": 604800
       }
+    },
+    {
+      "address": "0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
-        }
-      ]
-    },
-    { "address": "0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD" },
-    { "address": "0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e" },
-    { "address": "0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d" },
-    { "address": "0x5F5e0C904153789a9E978c286180b4191950d886" },
-    { "address": "0x698F7A879197Dd834c3203b470ddBadD6616A8bF" },
-    { "address": "0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306" },
-    { "address": "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd" },
-    { "address": "0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4" },
-    { "address": "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6" },
-    { "address": "0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF" },
-    { "address": "0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F" },
-    { "address": "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7" },
-    { "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0" },
-    { "address": "0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8" },
-    { "address": "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2" },
-    { "address": "0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09" },
-    { "address": "0xe7d56c84cEA9b58569fdfe8863085207F9a14881" },
-    { "address": "0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e" },
-    {
-      "name": "Sequencer",
-      "address": "0xEA0337EFC12e98AB118948dA570C07691E8E4b37"
-    },
-    { "address": "0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C" }
   ],
   "abis": {
     "0x2C4df10a82CF077122eD99573acA6daCd76F2E67": [

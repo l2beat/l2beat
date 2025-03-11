@@ -73,8 +73,7 @@ export {
 } from './discovery/modelling/factTypes'
 export type {
   DiscoveryOutput,
-  ContractParameters,
-  EoaParameters,
+  EntryParameters,
   ReceivedPermission,
   ResolvedPermissionPath,
   ContractValue,

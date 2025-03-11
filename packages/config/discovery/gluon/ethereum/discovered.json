@@ -2,14 +2,16 @@
   "name": "gluon",
   "chain": "ethereum",
   "blockNumber": 21686363,
-  "configHash": "0x07fd5586ae5ffcdfcc6eff72a7a9ecf174ae2d00d37f9208a76abfc55f69f1b7",
-  "contracts": [
+  "configHash": "0x7c3a40ed8d10399c4fe1bbb48cca22eaabd28fbd46effd6d95c2fcbc82746a32",
+  "entries": [
     {
       "name": "SpotData",
       "address": "0x0d283D685F0A741C463846176e4c8EFF90D3F9EC",
+      "type": "Contract",
       "sourceHashes": [
         "0x60956e4310b2c0f9e257be22fc2a90fd8fb33c31afde71e079637abfc2003cca"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1573695223,
       "sinceBlock": 8929713,
       "values": {
@@ -25,9 +27,11 @@
     {
       "name": "RegistryData",
       "address": "0x0fC25C7931679B838209c484d49Df0Cb9E633C41",
+      "type": "Contract",
       "sourceHashes": [
         "0xaace81ba02c18429f1f3bbdb0f3ed454c5a1e5b71c806bcafd468ccb0d895f0a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1573694818,
       "sinceBlock": 8929683,
       "values": {
@@ -40,9 +44,11 @@
     {
       "name": "SpotLogic",
       "address": "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
+      "type": "Contract",
       "sourceHashes": [
         "0xd2bd180f3e9f88c9860dc063c2c7980436adacaeca7a3598a05d26dacdb8ff76"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1609784209,
       "sinceBlock": 11589589,
       "values": {
@@ -71,9 +77,11 @@
     {
       "name": "RegistryLogic",
       "address": "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
+      "type": "Contract",
       "sourceHashes": [
         "0x4684cbe7c244176dec5da5457624b1032bfa285743f6efcb53d6e1bd6d08f84c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1573694866,
       "sinceBlock": 8929689,
       "values": {
@@ -89,11 +97,18 @@
       }
     },
     {
+      "address": "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DerivativesData",
       "address": "0x563052914Fd973a2305763269A106a7B0B6D50Cc",
+      "type": "Contract",
       "sourceHashes": [
         "0x6a6c3e88d7035a123ae7218c83a0c2ae43ea59031938a1d2f84b5f10b0971799"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1598562243,
       "sinceBlock": 10744938,
       "values": {
@@ -108,11 +123,18 @@
       }
     },
     {
+      "address": "0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Gluon",
       "address": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+      "type": "Contract",
       "sourceHashes": [
         "0xbeaf3aa965abd0080866e6b7678d9fcd01b57afbcb108dde7cec28201e9bf73b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1573694037,
       "sinceBlock": 8929632,
       "values": {
@@ -132,9 +154,11 @@
     {
       "name": "ApiKeyRegistry",
       "address": "0x7B70aCD346892736f9f6c7F4f196B07400a50Da0",
+      "type": "Contract",
       "sourceHashes": [
         "0xe8ca5c8a73c3851118ee0c57955bbcb56f68bb600dec6bb2cfe1f45c3ad6983d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1550106622,
       "sinceBlock": 7217381,
       "values": {
@@ -150,9 +174,11 @@
     {
       "name": "StakeLogic",
       "address": "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
+      "type": "Contract",
       "sourceHashes": [
         "0xf3c0d8b3babd0cfa68d014bdf409a030133c362c1bef63195ca06e11afcd38bd"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["currentIntervalIndex", "getToBeDistributed"],
       "sinceTimestamp": 1612360715,
       "sinceBlock": 11783715,
@@ -189,9 +215,11 @@
     {
       "name": "StakeData",
       "address": "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
+      "type": "Contract",
       "sourceHashes": [
         "0x50df386c3dc507e245b90c20b9969b4fc26c4d36624723856d758d5f51347048"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1573695152,
       "sinceBlock": 8929704,
       "values": {
@@ -202,11 +230,18 @@
       }
     },
     {
+      "address": "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LegacyTokensExtension",
       "address": "0xDA88EfA53c85Afa30564bb651A2E76b99a232082",
+      "type": "Contract",
       "sourceHashes": [
         "0x7842af2456839eaca09b5cc4cff3de4a54887bce623c2c1edf75642a996f048f"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1604952423,
       "sinceBlock": 11225379,
       "values": {
@@ -226,11 +261,18 @@
       }
     },
     {
+      "address": "0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DerivativesLogic",
       "address": "0xDfBFe895e07e5115773Cb9631CB2148114589caC",
+      "type": "Contract",
       "sourceHashes": [
         "0x55d07767faeba9ec203367433b6cce8b8e03e7881cd40bc3112740eb6efcab7b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1604952429,
       "sinceBlock": 11225380,
       "values": {
@@ -258,13 +300,6 @@
         "visibilityDelay": 1
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A" },
-    { "address": "0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8" },
-    { "address": "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa" },
-    { "address": "0xdB2E992E3026C16b95299457a3F62636Bd67bf50" }
   ],
   "abis": {
     "0x0d283D685F0A741C463846176e4c8EFF90D3F9EC": [

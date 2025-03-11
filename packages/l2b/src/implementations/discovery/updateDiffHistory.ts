@@ -68,20 +68,20 @@ export async function updateDiffHistory(
     codeDiff = rerun.codeDiff
 
     diff = diffDiscovery(
-      rerun.prevDiscovery?.contracts ?? [],
-      curDiscovery.contracts,
+      rerun.prevDiscovery?.entries ?? [],
+      curDiscovery.entries,
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.contracts ?? [],
-      rerun.prevDiscovery?.contracts ?? [],
+      discoveryFromMainBranch?.entries ?? [],
+      rerun.prevDiscovery?.entries ?? [],
     )
   } else {
     console.log(
       'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.contracts ?? [],
-      curDiscovery?.contracts ?? [],
+      discoveryFromMainBranch?.entries ?? [],
+      curDiscovery?.entries ?? [],
     )
   }
 

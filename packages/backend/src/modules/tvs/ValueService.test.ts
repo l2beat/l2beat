@@ -23,7 +23,7 @@ describe(ValueService.name, () => {
         type: 'totalSupply',
         address: EthereumAddress.random(),
         chain: 'chain',
-        decimals: 18,
+        decimals: 0,
       } as TotalSupplyAmountFormula
 
       const amountConfigId = createAmountConfig(amountFormula).id
@@ -46,8 +46,8 @@ describe(ValueService.name, () => {
       const mockDataStorage = mockObject<DataStorage>({
         getAmount: mockFn()
           .given(amountConfigId, mockTimestamp)
-          .resolvesToOnce(10000)
-          .resolvesToOnce(10000),
+          .resolvesToOnce(10000n)
+          .resolvesToOnce(10000n),
         getPrice: mockFn()
           .given(priceId, mockTimestamp)
           .resolvesToOnce(200)
@@ -92,7 +92,7 @@ describe(ValueService.name, () => {
         type: 'totalSupply',
         address: wBTCContractAddress,
         chain: 'bob',
-        decimals: 18,
+        decimals: 0,
       } as TotalSupplyAmountFormula
 
       const wBTCAmountConfigId = createAmountConfig(wBTCAmountFormula).id
@@ -101,7 +101,7 @@ describe(ValueService.name, () => {
         type: 'totalSupply',
         address: solvBTCContractAddress,
         chain: 'bob',
-        decimals: 18,
+        decimals: 0,
       } as TotalSupplyAmountFormula
 
       const solvBTCAmountConfigId = createAmountConfig(solvBTCAmountFormula).id
@@ -110,7 +110,7 @@ describe(ValueService.name, () => {
         type: 'balanceOfEscrow',
         address: wBTCContractAddress,
         chain: 'bob',
-        decimals: 18,
+        decimals: 0,
         escrowAddress: solvBTCEscrowAddress,
       } as BalanceOfEscrowAmountFormula
 
@@ -167,16 +167,16 @@ describe(ValueService.name, () => {
         getAmount: mockFn()
           // totalSupply of WBTC
           .given(wBTCAmountConfigId, mockTimestamp)
-          .resolvesToOnce(10000)
-          .resolvesToOnce(10000)
+          .resolvesToOnce(10000n)
+          .resolvesToOnce(10000n)
           // totalSupply of solvBTC
           .given(solvBTCAmountConfigId, mockTimestamp)
-          .resolvesToOnce(8000)
-          .resolvesToOnce(8000)
-          .resolvesToOnce(8000)
+          .resolvesToOnce(8000n)
+          .resolvesToOnce(8000n)
+          .resolvesToOnce(8000n)
           // balanceOfEscrow of WBTC in solvBTC escrow
           .given(wBTCBalanceOfEscrowConfigId, mockTimestamp)
-          .resolvesToOnce(5000),
+          .resolvesToOnce(5000n),
         getPrice: mockFn()
           // price of WBTC
           .given(wBTCPriceConfigId, mockTimestamp)
@@ -228,13 +228,14 @@ describe(ValueService.name, () => {
         arguments: [
           {
             type: 'const',
-            value: 20000,
+            value: '20000',
+            decimals: 0,
           } as ConstAmountFormula,
           {
             type: 'totalSupply',
             address: EthereumAddress.random(),
             chain: 'chain',
-            decimals: 18,
+            decimals: 0,
           } as TotalSupplyAmountFormula,
         ],
       } as CalculationFormula
@@ -261,8 +262,8 @@ describe(ValueService.name, () => {
       const mockDataStorage = mockObject<DataStorage>({
         getAmount: mockFn()
           .given(amountConfigId, mockTimestamp)
-          .resolvesToOnce(10000)
-          .resolvesToOnce(10000),
+          .resolvesToOnce(10000n)
+          .resolvesToOnce(10000n),
         getPrice: mockFn()
           .given(priceId, mockTimestamp)
           .resolvesToOnce(200)
