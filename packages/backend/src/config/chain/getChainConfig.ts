@@ -26,7 +26,7 @@ export async function getChainConfig(
           indexerApis.push({
             type: api.type,
             url: api.url,
-            apiKey: env.string(Env.key(chain, 'ETHERSCAN_API_KEY'), api.url),
+            apiKey: env.string(Env.key(chain, 'ETHERSCAN_API_KEY')),
           })
           break
         case 'blockscout':
