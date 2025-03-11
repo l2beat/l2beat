@@ -22,6 +22,7 @@ import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
 export async function runDiscovery(
+  rootPath: string,
   http: HttpClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
@@ -41,7 +42,7 @@ export async function runDiscovery(
 
   const logger = DiscoveryLogger.CLI
   const { result, blockNumber, providerStats } = await discover(
-    configReader.rootPath,
+    rootPath,
     chainConfigs,
     projectConfig,
     logger,
@@ -50,10 +51,10 @@ export async function runDiscovery(
     config.overwriteCache,
   )
 
-  const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
+  const templatesFolder = path.join(rootPath, TEMPLATES_PATH)
 
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
-    rootFolder: configReader.rootPath,
+    rootFolder: rootPath,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,

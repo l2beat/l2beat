@@ -49,8 +49,9 @@ export const RefreshDiscovery = command({
   handler: async (args) => {
     const config = readConfig()
     assert(config.discoveryPath !== undefined)
-    const configReader = new ConfigReader(path.dirname(config.discoveryPath))
-    const templateService = new TemplateService(configReader.rootPath)
+    const rootPath = path.dirname(config.discoveryPath)
+    const configReader = new ConfigReader(rootPath)
+    const templateService = new TemplateService(rootPath)
 
     const chainConfigs = await Promise.all(
       configReader

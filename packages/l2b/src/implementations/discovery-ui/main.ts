@@ -17,7 +17,8 @@ export function runDiscoveryUi() {
   const config = readConfig()
   const discoveryPath = config.discoveryPath
   assert(discoveryPath !== undefined)
-  const configReader = new ConfigReader(path.dirname(discoveryPath))
+  const rootPath = path.dirname(discoveryPath)
+  const configReader = new ConfigReader(rootPath)
 
   app.use(express.json())
 
@@ -38,6 +39,7 @@ export function runDiscoveryUi() {
 
   app.get('/api/projects/:project/code/:address', (req, res) => {
     const response = getCode(
+      rootPath,
       configReader,
       req.params.project,
       req.params.address,
@@ -72,6 +74,7 @@ export function runDiscoveryUi() {
       return
     }
     const codePaths = getCodePaths(
+      rootPath,
       configReader,
       project.toString(),
       address.toString(),

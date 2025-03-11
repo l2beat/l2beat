@@ -19,7 +19,7 @@ const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 export class ConfigReader {
   public templateService: TemplateService
 
-  constructor(readonly rootPath: string = '') {
+  constructor(private rootPath: string = '') {
     this.templateService = new TemplateService(rootPath)
   }
 

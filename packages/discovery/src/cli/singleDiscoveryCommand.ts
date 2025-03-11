@@ -31,7 +31,8 @@ export const SingleDiscoveryCommand = command({
     logger.info('Starting')
 
     const chainConfigs = getChainConfigs()
-    const configReader = new ConfigReader(join(process.cwd(), '../config'))
+    const rootPath = join(process.cwd(), '../config')
+    const configReader = new ConfigReader(rootPath)
     const projectConfig = new DiscoveryConfig(
       {
         name: address.toString(),
@@ -43,7 +44,7 @@ export const SingleDiscoveryCommand = command({
     const http = new HttpClient()
 
     const { result, blockNumber } = await discover(
-      configReader.rootPath,
+      rootPath,
       chainConfigs,
       projectConfig,
       DiscoveryLogger.CLI,
@@ -53,7 +54,7 @@ export const SingleDiscoveryCommand = command({
     )
 
     const rootFolder = `./cache/single-discovery`
-    const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
+    const templatesFolder = path.join(rootPath, TEMPLATES_PATH)
 
     await rimraf(rootFolder)
 

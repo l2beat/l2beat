@@ -125,19 +125,14 @@ export async function discover(
   logger: Logger = Logger.DEBUG,
 ): Promise<void> {
   const http = new HttpClient()
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
+  const rootPath = join(process.cwd(), '../config')
+  const configReader = new ConfigReader(rootPath)
 
   if (config.dryRun) {
     logger = logger.for('DryRun')
     logger.info('Starting')
 
-    await dryRunDiscovery(
-      configReader.rootPath,
-      http,
-      configReader,
-      config,
-      chainConfigs,
-    )
+    await dryRunDiscovery(rootPath, http, configReader, config, chainConfigs)
     return
   }
 
@@ -147,5 +142,5 @@ export async function discover(
       config.chain.name,
     )}`,
   )
-  await runDiscovery(http, configReader, config, chainConfigs)
+  await runDiscovery(rootPath, http, configReader, config, chainConfigs)
 }
