@@ -5,44 +5,22 @@ import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-r
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { unstable_cache as cache } from 'next/cache'
-import { env } from '~/env'
 import type { TimeRange } from '~/utils/range/range'
 
-export function getSummedActivityForProjects(
+export async function getSummedActivityForProjects(
   projectIds: string[],
   timeRange: TimeRange,
   rangeByProject: Record<string, [UnixTime, UnixTime]>,
 ) {
-  if (env.MOCK) {
-    return Object.fromEntries(projectIds.map((projectId) => [projectId, 10000]))
-  }
-
-  return getCachedSummedActivityForProjects(
-    projectIds,
-    timeRange,
-    rangeByProject,
+  const db = getDb()
+  const range = getFullySyncedActivityRange(timeRange)
+  const records = await db.activity.getByProjectsAndTimeRange(
+    projectIds.map(ProjectId),
+    range,
   )
+
+  return sumByProject(records, rangeByProject)
 }
-
-const getCachedSummedActivityForProjects = cache(
-  async (
-    projectIds: string[],
-    timeRange: TimeRange,
-    rangeByProject: Record<string, [UnixTime, UnixTime]>,
-  ) => {
-    const db = getDb()
-    const range = getFullySyncedActivityRange(timeRange)
-    const records = await db.activity.getByProjectsAndTimeRange(
-      projectIds.map(ProjectId),
-      range,
-    )
-
-    return sumByProject(records, rangeByProject)
-  },
-  ['summed-activity-for-projects'],
-  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
-)
 
 function sumByProject(
   records: ActivityRecord[],
@@ -53,16 +31,21 @@ function sumByProject(
     Object.entries(groupedByProject).map(([projectId, records]) => {
       const range = rangeByProject[projectId]
       if (!range) return [projectId, 0]
+      const adjustedRange = [
+        UnixTime.toStartOf(range[0], 'day'),
+        UnixTime.toStartOf(range[1], 'day'),
+      ] as const
       const filteredRecords = records.filter(
-        (r) => r.timestamp >= range[0] && r.timestamp <= range[1],
+        (r) =>
+          r.timestamp >= adjustedRange[0] && r.timestamp <= adjustedRange[1],
       )
-      return [
-        projectId,
-        filteredRecords.reduce(
-          (acc, record) => acc + (record.uopsCount ?? record.count),
-          0,
-        ),
-      ]
+
+      const summed = filteredRecords.reduce(
+        (acc, record) => acc + (record.uopsCount ?? record.count),
+        0,
+      )
+
+      return [projectId, summed]
     }),
   )
 }

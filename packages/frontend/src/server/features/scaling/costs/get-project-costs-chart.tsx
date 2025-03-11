@@ -28,17 +28,11 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     getProjectDaThroughputChart(params),
   ])
 
-  const costsRange = getRange(costsChart.map(([timestamp]) => timestamp))
-  const costsUopsCount = await getSummedActivityForProject(
-    params.projectId,
-    costsRange,
-  )
-
   const throughputRange = getRange(throughput.map(([timestamp]) => timestamp))
-  const throughputUopsCount = await getSummedActivityForProject(
-    params.projectId,
-    throughputRange,
-  )
+  const [costsUopsCount, throughputUopsCount] = await Promise.all([
+    getSummedActivityForProject(params.projectId, costs.range),
+    getSummedActivityForProject(params.projectId, throughputRange),
+  ])
 
   const timestampedDaData = Object.fromEntries(throughput ?? [])
   const chart = costsChart.map((cost) => {

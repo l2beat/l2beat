@@ -20,7 +20,7 @@ interface CostsForProject {
 export function getCostsForProject(
   projectId: string,
   timeRange: CostsTimeRange,
-): Promise<CostsForProject> {
+) {
   if (env.MOCK) {
     return getMockedCostsForProject()
   }
@@ -82,7 +82,7 @@ const getCachedCostsForProject = cache(
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
-function getMockedCostsForProject() {
+function getMockedCostsForProject(): CostsForProject {
   return {
     gas: {
       overhead: 1_000_000,
@@ -103,5 +103,6 @@ function getMockedCostsForProject() {
       blobs: 50,
     },
     syncedUntil: UnixTime.now(),
+    range: [-Infinity, Infinity],
   }
 }
