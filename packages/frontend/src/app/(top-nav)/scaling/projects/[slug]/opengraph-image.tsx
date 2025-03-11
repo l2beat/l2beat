@@ -47,8 +47,9 @@ export default async function Image({ params }: Props) {
   logDir(process.cwd())
   logDir(join(process.cwd(), '..'))
   logDir(join(process.cwd(), '../..'))
-  logDir(join(process.cwd(), './node_modules/@l2beat/config'))
-  logDir(join(process.cwd(), './node_modules/@l2beat/config/build'))
+  logDir(join(process.cwd(), '../../node_modules'))
+  logDir(join(process.cwd(), '../../node_modules/@l2beat/config'))
+  logDir(join(process.cwd(), './node_modules'))
 
   const project = await ps.getProject({
     slug: params.slug,
