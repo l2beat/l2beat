@@ -38,13 +38,13 @@ describe(tryCastingToName.name, () => {
 describe(interpolateModelTemplate.name, () => {
   it('properly interpolates the model file', () => {
     const modelTemplate = `
-      msig(@self, #$threshold).
+      msig(@self, &$threshold).
       member(@self, 
-        #$members
+        &$members
       ).
-      myAddr(#$.address, "#$.address:raw").
-      myName("#$.name").
-      myDescription("#$.description")
+      myAddr(&$.address, "&$.address:raw").
+      myName("&$.name").
+      myDescription("&$.description")
     `
     const contract: EntryParameters = {
       type: 'Contract',
@@ -85,7 +85,7 @@ describe(interpolateModelTemplate.name, () => {
   })
 
   it('properly casts to lowercase', () => {
-    const modelTemplate = `msg1("#msg|lower").msg2("#msg:raw|lower").`
+    const modelTemplate = `msg1("&msg|lower").msg2("&msg:raw|lower").`
     const contract: EntryParameters = {
       type: 'Contract',
       address: EthereumAddress.from('0x123'),
@@ -103,8 +103,8 @@ describe(interpolateModelTemplate.name, () => {
 
   it('fails for missing values', () => {
     const modelTemplate = `
-      one(#one).
-      two(#two).
+      one(&one).
+      two(&two).
     `
     const contract: EntryParameters = {
       type: 'Contract',
