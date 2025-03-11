@@ -19,15 +19,15 @@ const addressTemplate: InlineTemplate = {
   content: `
 address(
   @self,
-  "#$.chain",
-  "#$.address:raw").`,
+  "&$.chain",
+  "&$.address:raw").`,
   when: () => true,
 }
 const addressNameTemplate: InlineTemplate = {
   content: `
 addressName(
   @self,
-  "#$.name").`,
+  "&$.name").`,
   when: (c) => c.name !== undefined,
 }
 const addressTypeContractTemplate: InlineTemplate = {
@@ -48,33 +48,33 @@ const addressDescriptionTemplate: InlineTemplate = {
   content: `
 addressDescription(
   @self,
-  "#$.description").`,
+  "&$.description").`,
   when: (c) => c.description !== undefined,
 }
 const permissionTemplate: InlineTemplate = {
   content: `
 permission(
   @self,
-  "#permission.type",
-  #permission.giver).`,
+  "&permission.type",
+  &permission.giver).`,
   when: () => true,
 }
 const permissionDescriptionTemplate: InlineTemplate = {
   content: `
 permissionDescription(
   @self,
-  "#permission.type",
-  #permission.giver,
-  "#permission.description").`,
+  "&permission.type",
+  &permission.giver,
+  "&permission.description").`,
   when: (_, p) => p?.description !== undefined,
 }
 const permissionDelayTemplate: InlineTemplate = {
   content: `
 permissionDelay(
   @self,
-  "#permission.type",
-  #permission.giver,
-  #permission.delay).`,
+  "&permission.type",
+  &permission.giver,
+  &permission.delay).`,
   when: (_, p) => p?.delay !== undefined && p.delay !== 0,
 }
 
