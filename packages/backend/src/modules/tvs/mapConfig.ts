@@ -185,6 +185,12 @@ export function createEscrowToken(
 
   let amountFormula: CalculationFormula | AmountFormula
 
+  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+    legacyToken,
+    escrow,
+    chainOfEscrow,
+  )
+
   if (legacyToken.isPreminted) {
     amountFormula = {
       type: 'calculation',
@@ -192,8 +198,10 @@ export function createEscrowToken(
       arguments: [
         {
           type: 'circulatingSupply',
-          priceId: legacyToken.coingeckoId,
+          apiId: legacyToken.coingeckoId,
           decimals: legacyToken.decimals ?? 0,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
         },
         {
           type: 'balanceOfEscrow',
@@ -201,6 +209,8 @@ export function createEscrowToken(
           escrowAddress: escrow.address,
           chain: escrow.chain,
           decimals: legacyToken.decimals,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
         },
       ],
     }
@@ -211,14 +221,10 @@ export function createEscrowToken(
       chain: escrow.chain,
       escrowAddress: escrow.address,
       decimals: legacyToken.decimals,
-    } as BalanceOfEscrowAmountFormula
+      sinceTimestamp,
+      ...(untilTimestamp ? { untilTimestamp } : {}),
+    }
   }
-
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
-    legacyToken,
-    escrow,
-    chainOfEscrow,
-  )
 
   const source = escrow.source ?? 'canonical'
   const symbol =
@@ -235,6 +241,8 @@ export function createEscrowToken(
         type: 'const',
         value: '0',
         decimals: 0,
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
       },
       priceId: legacyToken.coingeckoId,
     }
@@ -249,8 +257,7 @@ export function createEscrowToken(
     name: legacyToken.name,
     amount: amountFormula,
     ...(valueForTotal ? { valueForTotal } : {}),
-    sinceTimestamp,
-    ...(untilTimestamp ? { untilTimestamp } : {}),
+
     category: legacyToken.category,
     source: source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -269,32 +276,38 @@ export function createToken(
   const id = TokenId.create(project.id, legacyToken.symbol)
   let amountFormula: AmountFormula
 
+  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+    legacyToken,
+    project.chainConfig,
+  )
+
   switch (legacyToken.supply) {
     case 'totalSupply':
+      assert(legacyToken.address, 'Only tokens have total supply')
       amountFormula = {
         type: 'totalSupply',
         address: legacyToken.address,
         chain: project.id,
         decimals: legacyToken.decimals,
-      } as TotalSupplyAmountFormula
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
+      }
+
       break
 
     case 'circulatingSupply':
       amountFormula = {
         type: 'circulatingSupply',
-        priceId: legacyToken.coingeckoId,
+        apiId: legacyToken.coingeckoId,
         decimals: legacyToken.decimals ?? 0,
-      } as CirculatingSupplyAmountFormula
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
+      }
       break
 
     default:
       throw new Error(`Unsupported supply type ${legacyToken.supply}`)
   }
-
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
-    legacyToken,
-    project.chainConfig,
-  )
 
   return {
     mode: 'auto',
@@ -303,8 +316,7 @@ export function createToken(
     symbol: legacyToken.symbol,
     name: legacyToken.name,
     amount: amountFormula,
-    sinceTimestamp,
-    ...(untilTimestamp ? { untilTimestamp } : {}),
+
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -387,7 +399,7 @@ export function createAmountConfig(
       }
     case 'circulatingSupply':
       return {
-        id: hash([formula.type, formula.priceId]),
+        id: hash([formula.type, formula.apiId]),
         ...formula,
       }
   }
