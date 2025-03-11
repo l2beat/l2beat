@@ -1,3 +1,168 @@
+Generated with discovered.json: 0x7910094b1e0b0816459fe74dd6ff06e3524e684f
+
+# Diff at Tue, 11 Mar 2025 11:59:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a75ac906056abb236c14b626853813f468099f57 block: 21829908
+- current block number: 22022908
+
+## Description
+
+as a part of [the Garfield mainnet upgrade](https://www.zircuit.com/blog/zircuit-technical-roadmap-part-i-performant-provers), a new verifier without dummy proof support is deployed. This upgrade only affects L2OutputOracle and the associated proof system. 
+
+### L2OutputOracle
+
+- `proposeL2OutputV2()`, `verifyV2()` added. these target the new verifierV2 which does not accept empty proofs like the previous one
+- `bootstrapV2()` added: this fn is a permissioned switch to migrate from the old to the new verifier. but it can also be called after already having migrated by the permissioned proposer if `withdrawalKeepalivePeriodSeconds` have passed without any state update. can be used as a backdoor because it accepts l2 outputs without proof.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minimumGasLimit:
+-        21000000
++        9000000
+      values.resourceConfig.maxResourceLimit:
+-        20000000
++        8000000
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"}
+      directlyReceivedPermissions.8.from:
+-        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
++        "0xC25D093D3A3f58952252D2e763BEAF2559dc9737"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. This contract also supports dummy proofs via the old 0x6BCe7408c0781dcE7b71494274302D4b75a1447c until a migration to the new 0xC25D093D3A3f58952252D2e763BEAF2559dc9737 has been manually executed.
+      template:
+-        "opstack/L2OutputOracle"
++        "opstack/zircuit/L2OutputOracle"
+      sourceHashes.1:
+-        "0x3190c62a59b62169498d1f61c08c5c722c70cc0a6aaa37b185fd3f8014941b96"
++        "0x60e391caee355fef81909391d0660c897c79e6ba836e46f45d51968313188073"
+      description:
+-        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
++        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. This contract also supports dummy proofs via the old 0x6BCe7408c0781dcE7b71494274302D4b75a1447c until a migration to the new 0xC25D093D3A3f58952252D2e763BEAF2559dc9737 has been manually executed."
+      values.$implementation:
+-        "0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B"
++        "0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4"
+      values.$pastUpgrades.3:
++        ["2025-03-11T01:01:59.000Z","0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",["0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4"]]
+      values.$pastUpgrades.2:
++        ["2025-03-11T01:01:59.000Z","0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",["0xE14b12F4843447114A093D99Dc9322b93a967DE6"]]
+      values.$upgradeCount:
+-        2
++        4
+      values.getL2OutputRootWithFinalization:
+-        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719963923],["0x6377018657879415a6e998472dc6a28b263a8d6dffdb20f8754d4e3944bc7ee7",1720011659],["0x5b51d6381ef6f819d7134be5323374781f3d3f591c552ca39893732df2127984",1720011683],["0xeb12340cbcbc7af2fca27ce389d0162a0cfde9d134bea78a2e538b83ef0faabf",1720011719],["0x55b30b87e1b913e3af502ebe5e12d5df6d4cfd3771b2a3deff43504f9abc8d5f",1720011767]]
+      values.SUBMISSION_INTERVAL:
+-        1
+      values.submissionInterval:
+-        1
+      values.version:
+-        "1.4.0"
++        "2.0.0"
+      values.getL2OutputEx:
++        []
++++ description: As soon as this returns a value, Zircuit has transitioned to the v2 verifier. Remove the v1 verifier description string from the contract template.
++++ severity: HIGH
+      values.getL2OutputExLatest:
++        "EXPECT_REVERT"
+      values.l2ChainId:
++        48900
+      values.verifierV2:
++        "0xC25D093D3A3f58952252D2e763BEAF2559dc9737"
+      values.withdrawalKeepalivePeriodSeconds:
++        14400
+      values.withdrawalKeepalivePeriodSecondsFmt:
++        "4h"
+      errors:
+-        {"getL2OutputRootWithFinalization":"Processing error occurred."}
+      fieldMeta.FINALIZATION_PERIOD_SECONDS:
+-        {"description":"Challenge period (Number of seconds until a state root is finalized)."}
+      fieldMeta.getL2OutputExLatest:
++        {"severity":"HIGH","description":"As soon as this returns a value, Zircuit has transitioned to the v2 verifier. Remove the v1 verifier description string from the contract template."}
+    }
+```
+
+```diff
+    contract ZircuitMultiSig1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.10.from:
+-        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
++        "0xC25D093D3A3f58952252D2e763BEAF2559dc9737"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737)
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+```
+
+## Source code changes
+
+```diff
+.../L2OutputOracle/L2OutputOracle.sol              |  323 ++++-
+ .../zircuit/ethereum/.flat/VerifierV2/Proxy.p.sol  |  201 +++
+ .../ethereum/.flat/VerifierV2/VerifierV2.sol       | 1498 ++++++++++++++++++++
+ 3 files changed, 2003 insertions(+), 19 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829908 (main branch discovery), not current.
+
+```diff
+    contract ZircuitMultiSig2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      name:
+-        "ZircuitGuardianMultiSig"
++        "ZircuitMultiSig2"
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      template:
+-        "opstack/SuperchainConfig_zircuit"
++        "opstack/zircuit/SuperchainConfig"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.getL2OutputRootWithFinalization:
++        [["0x2e746edcf4ff072457c6b8d6297c74251da7bf649ca04bcd2d30ca1a4e6ab292",1719963923],["0x6377018657879415a6e998472dc6a28b263a8d6dffdb20f8754d4e3944bc7ee7",1720011659],["0x5b51d6381ef6f819d7134be5323374781f3d3f591c552ca39893732df2127984",1720011683],["0xeb12340cbcbc7af2fca27ce389d0162a0cfde9d134bea78a2e538b83ef0faabf",1720011719],["0x55b30b87e1b913e3af502ebe5e12d5df6d4cfd3771b2a3deff43504f9abc8d5f",1720011767]]
+      errors:
++        {"getL2OutputRootWithFinalization":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract ZircuitMultiSig1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      name:
+-        "ZircuitAdminMultiSig"
++        "ZircuitMultiSig1"
+    }
+```
+
 Generated with discovered.json: 0x08612676f8b73c8e0f95dafaf09c8f38fe7472bb
 
 # Diff at Tue, 04 Mar 2025 11:26:53 GMT:
