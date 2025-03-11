@@ -15,7 +15,7 @@ export function TableLink({
       <LinkWithOnHoverPrefetch
         className={cn(
           '-mx-3 flex h-[calc(100%_-_8px)] w-max items-center rounded transition-colors md:px-3',
-          'md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/20',
+          'md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/10',
           className,
         )}
         href={href}
