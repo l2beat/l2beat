@@ -1,4 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { Badge } from '~/components/badge/badge'
+import { CombinedGrissiniCell } from '~/components/rosette/grissini/combined-grissini-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   TypeExplanationTooltip,
@@ -78,6 +80,24 @@ export const columns = [
         a.original.dataAvailability.bridge,
         b.original.dataAvailability.bridge,
       ),
+  }),
+  columnHelper.display({
+    header: 'Risks',
+    cell: (ctx) => {
+      if (!ctx.row.original.risks) {
+        return <Badge type="gray">N/A</Badge>
+      }
+
+      return (
+        <CombinedGrissiniCell
+          daLayerRisks={ctx.row.original.risks.daLayer}
+          daBridgeRisks={ctx.row.original.risks.daBridge}
+        />
+      )
+    },
+    meta: {
+      align: 'center',
+    },
   }),
   columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.mode), {
     header: 'Type of data',

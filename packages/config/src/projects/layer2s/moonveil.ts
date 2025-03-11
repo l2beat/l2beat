@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const moonveil: Layer2 = upcomingL2({
+export const moonveil: ScalingProject = upcomingL2({
   id: 'moonveil',
   capability: 'universal',
   addedAt: UnixTime(1721918879), // 2024-07-25T14:47:59Z

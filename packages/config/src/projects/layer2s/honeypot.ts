@@ -12,14 +12,14 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('honeypot')
 
-export const honeypot: Layer2 = {
+export const honeypot: ScalingProject = {
   type: 'layer2',
   id: ProjectId('honeypot'),
   capability: 'appchain',

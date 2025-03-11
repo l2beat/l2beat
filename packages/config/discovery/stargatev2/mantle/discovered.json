@@ -2,14 +2,16 @@
   "name": "stargatev2",
   "chain": "mantle",
   "blockNumber": 75699152,
-  "configHash": "0xc608e5db640e6b75acd43154a094c77cfb19d2c54d35b8e9d0bcb882e0cda0f6",
-  "contracts": [
+  "configHash": "0xf7e9f768422951664d960b160842cc17aab592805f9da69fb822466e731294e1",
+  "entries": [
     {
       "name": "TokenMessaging",
       "address": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837058,
       "sinceBlock": 64353373,
       "values": {
@@ -59,9 +61,11 @@
     {
       "name": "StargatePool",
       "address": "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -102,9 +106,11 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC",
+      "type": "Contract",
       "sourceHashes": [
         "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -147,9 +153,11 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0xB715B85682B731dB9D5063187C450095c91C57FC",
+      "type": "Contract",
       "sourceHashes": [
         "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -190,11 +198,18 @@
       }
     },
     {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StargatePool",
       "address": "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1",
+      "type": "Contract",
       "sourceHashes": [
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -232,10 +247,6 @@
         "tvl": "110589208000000000000"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": [

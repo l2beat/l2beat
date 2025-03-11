@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const polygonmiden: Layer2 = upcomingL2({
+export const polygonmiden: ScalingProject = upcomingL2({
   id: 'polygon-miden',
   capability: 'universal',
   addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z

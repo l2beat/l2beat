@@ -19,7 +19,7 @@ import {
   getCommittee,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import {
@@ -98,7 +98,7 @@ const dacConfig =
         membersCount: usdtCommittee.accounts.length,
       }
 
-export const apex: Layer2 = {
+export const apex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('apex'),
   addedAt: UnixTime(1663927910), // 2022-09-23T10:11:50Z

@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
 
-export const rufus: Layer2 = underReviewL2({
+export const rufus: ScalingProject = underReviewL2({
   id: 'rufus',
   capability: 'universal',
   addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00

@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import {
   DaEconomicSecurityRisk,
@@ -91,7 +91,7 @@ const maxTimeVariation = discovery.getContractValue<{
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
-export const nova: Layer2 = orbitStackL2({
+export const nova: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     BADGES.VM.WasmVM,

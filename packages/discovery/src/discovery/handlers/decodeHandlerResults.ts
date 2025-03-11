@@ -3,7 +3,7 @@ import type {
   DiscoveryContract,
   DiscoveryCustomType,
 } from '../config/RawDiscoveryConfig'
-import type { ContractParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import { TypeApplier } from '../type-casters/TypeApplier'
 import type { HandlerResult } from './Handler'
 
@@ -12,12 +12,12 @@ export function decodeHandlerResults(
   fieldOverrides: DiscoveryContract['fields'],
   types: Record<string, DiscoveryCustomType>,
 ): {
-  values: ContractParameters['values']
+  values: EntryParameters['values']
   errors: Record<string, string>
   usedTypes: DiscoveryCustomType[]
 } {
-  const values: ContractParameters['values'] = {}
-  const errors: ContractParameters['errors'] = {}
+  const values: EntryParameters['values'] = {}
+  const errors: EntryParameters['errors'] = {}
   const typeApplier = new TypeApplier(types)
 
   for (const result of results) {

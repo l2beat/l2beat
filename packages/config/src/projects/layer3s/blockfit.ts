@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const blockfit: Layer3 = underReviewL3({
+export const blockfit: ScalingProject = underReviewL3({
   id: 'blockfit',
   capability: 'universal',
   addedAt: UnixTime(1739285196), // 2025-02-11T14:46:36Z

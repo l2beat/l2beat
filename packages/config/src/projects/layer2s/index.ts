@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../global/milestones'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
@@ -143,6 +143,7 @@ import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { puffer } from './puffer'
+import { quarkchain } from './quarkchain'
 import { r0ar } from './r0ar'
 import { race } from './race'
 import { real } from './real'
@@ -160,6 +161,7 @@ import { shape } from './shape'
 import { shibarium } from './shibarium'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
+import { skatechain } from './skatechain'
 import { snaxchain } from './snaxchain'
 import { socialnetwork } from './socialnetwork'
 import { solo } from './solo'
@@ -214,7 +216,7 @@ import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
 
-export const layer2s: Layer2[] = [
+export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
   aiechain,
@@ -359,6 +361,7 @@ export const layer2s: Layer2[] = [
   polynomial,
   publicgoodsnetwork,
   puffer,
+  quarkchain,
   reddioex,
   reddiozkvm,
   redstone,
@@ -373,6 +376,7 @@ export const layer2s: Layer2[] = [
   scroll,
   silicon,
   singularityfinance,
+  skatechain,
   snaxchain,
   sophon,
   soneium,

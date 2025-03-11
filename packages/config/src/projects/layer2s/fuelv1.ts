@@ -13,13 +13,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('fuelv1')
 
-export const fuelv1: Layer2 = {
+export const fuelv1: ScalingProject = {
   type: 'layer2',
   id: ProjectId('fuelv1'),
   capability: 'appchain',

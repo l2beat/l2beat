@@ -13,7 +13,9 @@
     "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "Kinto SecurityCouncil",
     "0x0f1b7bd7762662B23486320AA91F30312184f70C": "Bridger",
     "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "BridgerOwnerMultisig",
-    "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "TurnkeyMultisig"
+    "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "TurnkeyMultisig",
+    // override since currently globalconfig is broken
+    "0x94561e98DD5E55271f91A103e4979aa6C493745E": "KintsugiFoundation"
   },
   "overrides": {
     "Bridger": {

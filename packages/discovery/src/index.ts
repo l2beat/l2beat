@@ -73,10 +73,10 @@ export {
 } from './discovery/modelling/factTypes'
 export type {
   DiscoveryOutput,
-  ContractParameters,
-  EoaParameters,
+  EntryParameters,
   ReceivedPermission,
   ResolvedPermissionPath,
   ContractValue,
 } from './discovery/output/types'
 export { get$Implementations } from './discovery/utils/extractors'
+export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'

@@ -1,14 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('apechain', 'arbitrum')
 
-export const apechain: Layer3 = orbitStackL3({
+export const apechain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1719939717), // 2024-07-02T17:01:57Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   reasonsForBeingOther: [

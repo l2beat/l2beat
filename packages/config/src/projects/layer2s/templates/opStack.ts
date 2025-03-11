@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -27,13 +27,11 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
-import type { Layer3 } from '../../../internalTypes'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
-import type { ScalingProject } from '../../../internalTypes'
-import type { ProjectScalingDisplay } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
+  ProjectScalingDisplay,
   ProjectScalingTechnology,
+  ScalingProject,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -134,9 +132,9 @@ interface OpStackConfigCommon {
   activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
   finality?: ProjectFinalityConfig
-  l2OutputOracle?: ContractParameters
-  disputeGameFactory?: ContractParameters
-  portal?: ContractParameters
+  l2OutputOracle?: EntryParameters
+  disputeGameFactory?: EntryParameters
+  portal?: EntryParameters
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   milestones?: Milestone[]
@@ -181,8 +179,8 @@ interface OpStackConfigCommon {
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer2Display['category']
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ProjectScalingDisplay['category']
   }
 }
 
@@ -191,7 +189,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 }
 
 function opStackCommon(
-  type: (Layer2 | Layer3)['type'],
+  type: ScalingProject['type'],
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
   hostChainDA?: DAProvider,
@@ -406,7 +404,7 @@ function getDaTracking(
         : undefined
 }
 
-export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
+export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
   const common = opStackCommon(
     'layer2',
     templateVars,
@@ -431,8 +429,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
   }
 }
 
-export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
-  const layer2s = require('..').layer2s as Layer2[]
+export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
+  const layer2s = require('..').layer2s as ScalingProject[]
   const hostChain = templateVars.discovery.chain
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
@@ -1030,13 +1028,13 @@ function getTechnologyExitMechanism(
     case 'Permissionless': {
       const disputeGameFinalityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          portal.name,
+          portal.name ?? portal.address,
           'disputeGameFinalityDelaySeconds',
         )
 
       const proofMaturityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
-          portal.name,
+          portal.name ?? portal.address,
           'proofMaturityDelaySeconds',
         )
 
@@ -1309,9 +1307,7 @@ function ifPostsToEthereum<T>(
   }
 }
 
-function getOptimismPortal(
-  templateVars: OpStackConfigCommon,
-): ContractParameters {
+function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
   if (templateVars.portal !== undefined) {
     return templateVars.portal
   }
@@ -1333,7 +1329,7 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
         templateVars.discovery.getContract('L2OutputOracle')
 
       return templateVars.discovery.getContractValue<number>(
-        l2OutputOracle.name,
+        l2OutputOracle.name ?? l2OutputOracle.address,
         'FINALIZATION_PERIOD_SECONDS',
       )
     }
@@ -1356,7 +1352,7 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
 
   const respectedGameType = templateVars.discovery.getContractValue<number>(
-    portal.name,
+    portal.name ?? portal.address,
     'respectedGameType',
   )
 
@@ -1373,7 +1369,7 @@ function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
 }
 
-function hostChainDAProvider(hostChain: Layer2): DAProvider {
+function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
   const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
   assert(DABadge !== undefined, 'Host chain must have data availability badge')
   assert(

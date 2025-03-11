@@ -1,13 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('mantapacific')
 
-export const mantapacific: Layer2 = opStackL2({
+export const mantapacific: ScalingProject = opStackL2({
   addedAt: UnixTime(1693907285), // 2023-09-05T09:48:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,

@@ -76,6 +76,7 @@ export function TokenBreakdownStat({ tokenTvs, gasTokens }: Props) {
           associated={tokenTvs.breakdown.associated}
           ether={tokenTvs.breakdown.ether}
           stablecoin={tokenTvs.breakdown.stablecoin}
+          className="h-[18px] w-[88px]"
         />
         {tokenTvs.warnings.length > 0 && (
           <RoundedWarningIcon sentiment={warningSentiment} />

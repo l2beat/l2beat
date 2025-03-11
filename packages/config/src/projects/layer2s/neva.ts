@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const neva: Layer2 = upcomingL2({
+export const neva: ScalingProject = upcomingL2({
   id: 'neva',
   capability: 'universal',
   addedAt: UnixTime(1727445360), // 2024-09-27T17:09:00Z

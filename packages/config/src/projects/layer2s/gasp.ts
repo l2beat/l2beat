@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from './templates/underReview'
 
-export const gasp: Layer2 = underReviewL2({
+export const gasp: ScalingProject = underReviewL2({
   id: 'gasp',
   capability: 'universal',
   addedAt: UnixTime(1741266827),

@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
@@ -21,10 +21,11 @@ import {
 } from '../../../common'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { Layer2, Layer2Display } from '../../../internalTypes'
 import type {
   Layer2TxConfig,
+  ProjectScalingDisplay,
   ProjectScalingTechnology,
+  ScalingProject,
 } from '../../../internalTypes'
 import type {
   Badge,
@@ -68,7 +69,7 @@ export interface ZkStackConfigCommon {
   capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
+  display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
     upgradableBy: string[] | undefined
@@ -77,12 +78,12 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
-  diamondContract: ContractParameters
+  diamondContract: EntryParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: ProjectFinalityConfig
-  l2OutputOracle?: ContractParameters
-  portal?: ContractParameters
+  l2OutputOracle?: EntryParameters
+  portal?: EntryParameters
   milestones?: Milestone[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
@@ -123,7 +124,7 @@ export type Upgradeability = {
   upgradableBy?: ProjectUpgradeableActor[]
 }
 
-export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
+export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const { discovery, discovery_ZKstackGovL2 } = templateVars
   const daProvider = templateVars.daProvider
   if (daProvider) {

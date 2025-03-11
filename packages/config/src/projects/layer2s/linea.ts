@@ -24,7 +24,7 @@ import {
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import type { ProjectPermissionedAccount } from '../../types'
 import { BADGES } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
@@ -100,7 +100,7 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
   periodInSeconds,
 )} time window.`
 
-export const linea: Layer2 = {
+export const linea: ScalingProject = {
   type: 'layer2',
   id: ProjectId('linea'),
   capability: 'universal',

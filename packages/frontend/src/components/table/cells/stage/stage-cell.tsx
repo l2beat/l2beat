@@ -30,8 +30,13 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger disabledOnMobile asChild>
-        <TableLink href={href} className={cn(isAppchain && 'md:py-1')}>
-          <div className="flex gap-1 max-md:pb-[5px] max-md:pt-2">
+        <TableLink href={href}>
+          <div
+            className={cn(
+              'flex gap-1',
+              isAppchain && 'max-md:pb-[5px] max-md:pt-2',
+            )}
+          >
             <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
             {hasNotice && (
               <CircleQuestionMarkIcon

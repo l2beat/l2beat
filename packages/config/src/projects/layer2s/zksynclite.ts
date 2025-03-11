@@ -21,7 +21,7 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -59,7 +59,7 @@ const upgrades = {
 const forcedWithdrawalDelay = HARDCODED.ZKSYNC.PRIORITY_EXPIRATION_PERIOD
 const finalizationPeriod = 0
 
-export const zksynclite: Layer2 = {
+export const zksynclite: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zksync'),
   capability: 'appchain',

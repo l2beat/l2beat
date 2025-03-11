@@ -13,7 +13,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('metis')
@@ -25,7 +25,7 @@ const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
   'FRAUD_PROOF_WINDOW',
 )
 
-export const metis: Layer2 = {
+export const metis: ScalingProject = {
   type: 'layer2',
   id: ProjectId('metis'),
   capability: 'universal',

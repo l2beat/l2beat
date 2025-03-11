@@ -1,10 +1,9 @@
 import { join } from 'path'
 import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import type {
-  ContractParameters,
   ContractValue,
   DiscoveryOutput,
-  EoaParameters,
+  EntryParameters,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
 import {
@@ -31,6 +30,7 @@ import type {
 } from '../types'
 import type { PermissionRegistry } from './PermissionRegistry'
 import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
+import { PermissionsFromModel } from './PermissionsFromModel'
 import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 import {
@@ -47,16 +47,21 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    configReader = new ConfigReader(join(process.cwd(), '../config')),
+    public readonly configReader = new ConfigReader(
+      join(process.cwd(), '../config'),
+    ),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
-    this.permissionRegistry = new PermissionsFromDiscovery(this)
     this.discoveries = [
       discovery,
       ...(discovery.sharedModules ?? []).map((module) =>
         configReader.readDiscovery(module, chain),
       ),
     ]
+    this.permissionRegistry =
+      configReader.getDisplayMode(projectName) === 'fromModel'
+        ? new PermissionsFromModel(this)
+        : new PermissionsFromDiscovery(this)
   }
 
   getEOAName(address: EthereumAddress): string {
@@ -88,7 +93,7 @@ export class ProjectDiscovery {
     }
 
     return {
-      name: contract.name,
+      name: contract.name ?? contract.address,
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
@@ -172,11 +177,9 @@ export class ProjectDiscovery {
   }
 
   isEOA(address: EthereumAddress): boolean {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
-    return (
-      eoas.find((x) => x.address.toString() === address.toString()) !==
-      undefined
-    )
+    const eoas = this.discoveries.flatMap((discovery) => discovery.entries)
+    const entry = eoas.find((x) => x.address.toString() === address.toString())
+    return entry?.type === 'EOA'
   }
 
   getMultisigDescription(identifier: string): string[] {
@@ -242,7 +245,7 @@ export class ProjectDiscovery {
     ]
 
     return {
-      name: contract.name,
+      name: contract.name ?? contract.address,
       description: descriptionWithContractNames,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
@@ -259,7 +262,7 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(members)
   }
 
-  getContract(identifier: string): ContractParameters {
+  getContract(identifier: string): EntryParameters {
     try {
       identifier = utils.getAddress(identifier)
     } catch {
@@ -298,7 +301,7 @@ export class ProjectDiscovery {
     return contract !== undefined
   }
 
-  getEOA(identifier: string): EoaParameters {
+  getEOA(identifier: string): EntryParameters {
     try {
       identifier = utils.getAddress(identifier)
     } catch {
@@ -449,7 +452,7 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       isVerified: isEntryVerified(contract),
-      name: contract.name,
+      name: contract.name ?? contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
@@ -457,11 +460,11 @@ export class ProjectDiscovery {
   }
 
   contractAsPermissioned(
-    contract: ContractParameters,
+    contract: EntryParameters,
     description: string,
   ): ProjectPermission {
     return {
-      name: contract.name,
+      name: contract.name ?? contract.address,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
@@ -473,7 +476,7 @@ export class ProjectDiscovery {
   }
 
   eoaAsPermissioned(
-    eoa: EoaParameters,
+    eoa: EntryParameters,
     description: string,
   ): ProjectPermission {
     return {
@@ -548,9 +551,7 @@ export class ProjectDiscovery {
   }
 
   getAllContractAddresses(): EthereumAddress[] {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
+    const contracts = this.getContracts()
     const addressesWithinUpgradeability = contracts.flatMap((contract) =>
       get$Implementations(contract.values),
     )
@@ -560,10 +561,8 @@ export class ProjectDiscovery {
 
   getContractByAddress(
     address: string | EthereumAddress,
-  ): ContractParameters | undefined {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
+  ): EntryParameters | undefined {
+    const contracts = this.getContracts()
     return contracts.find(
       (contract) => contract.address === EthereumAddress(address.toString()),
     )
@@ -571,8 +570,10 @@ export class ProjectDiscovery {
 
   getEOAByAddress(
     address: string | EthereumAddress,
-  ): EoaParameters | undefined {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+  ): EntryParameters | undefined {
+    const eoas = this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'EOA')
     return eoas.find(
       (contract) => contract.address === EthereumAddress(address.toString()),
     )
@@ -580,36 +581,41 @@ export class ProjectDiscovery {
 
   getEntryByAddress(
     address: string | EthereumAddress,
-  ): EoaParameters | ContractParameters | undefined {
-    const entries = this.discoveries.flatMap((discovery) => {
-      return [...discovery.contracts, ...discovery.eoas]
-    })
+  ): EntryParameters | undefined {
+    const entries = this.discoveries.flatMap((discovery) => discovery.entries)
     return entries.find(
       (entry) => entry.address === EthereumAddress(address.toString()),
     )
   }
 
-  private getContractByName(name: string): ContractParameters[] {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
+  private getContractByName(name: string): EntryParameters[] {
+    const contracts = this.discoveries.flatMap((discovery) =>
+      discovery.entries.filter((e) => e.type === 'Contract'),
     )
     return contracts.filter((contract) => contract.name === name)
   }
 
-  private getEOAByName(name: string): EoaParameters[] {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+  private getEOAByName(name: string): EntryParameters[] {
+    const eoas = this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'EOA')
+
     return eoas.filter((eoa) => eoa.name === name)
   }
 
-  getContracts(): ContractParameters[] {
-    return this.discoveries.flatMap((discovery) => discovery.contracts)
+  getContracts(): EntryParameters[] {
+    return this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'Contract')
   }
 
-  getEoas(): EoaParameters[] {
-    return this.discoveries.flatMap((discovery) => discovery.eoas)
+  getEoas(): EntryParameters[] {
+    return this.discoveries
+      .flatMap((discovery) => discovery.entries)
+      .filter((e) => e.type === 'EOA')
   }
 
-  getContractsAndEoas(): (ContractParameters | EoaParameters)[] {
+  getContractsAndEoas(): EntryParameters[] {
     return [...this.getContracts(), ...this.getEoas()]
   }
 
@@ -625,11 +631,9 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccounts(addresses)
   }
 
-  describeGnosisSafeMembership(
-    contractOrEoa: ContractParameters | EoaParameters,
-  ): string[] {
+  describeGnosisSafeMembership(contractOrEoa: EntryParameters): string[] {
     const safesWithThisMember = this.discoveries
-      .flatMap((discovery) => discovery.contracts)
+      .flatMap((discovery) => discovery.entries)
       .filter((contract) => isMultisigLike(contract))
       .filter((contract) =>
         toAddressArray(contract.values?.$members).includes(
@@ -643,7 +647,7 @@ export class ProjectDiscovery {
   }
 
   describeRolePermissions(
-    relevantContracts: (ContractParameters | EoaParameters)[],
+    relevantContracts: EntryParameters[],
   ): ProjectPermission[] {
     const result: ProjectPermission[] = []
     for (const role of RolePermissionEntries) {
@@ -734,7 +738,7 @@ export class ProjectDiscovery {
   }
 
   describeContractOrEoa(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ): string[] {
     return [
@@ -753,18 +757,46 @@ export class ProjectDiscovery {
 
     for (const address of addresses) {
       const contract = this.getContractByAddress(address)
-      if (contract !== undefined) {
+      if (contract !== undefined && contract.name !== undefined) {
         s = s.replace(address, contract.name)
       }
     }
     return s
   }
 
+  getPermissionPriority(entry: EntryParameters): number {
+    if (entry.receivedPermissions === undefined) {
+      return 0
+    }
+
+    const permissions = entry.receivedPermissions.map((p) => p.from)
+    const priority = permissions.reduce((acc, permission) => {
+      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
+    }, 0)
+
+    return priority
+  }
+
   getDiscoveredPermissions(): ProjectPermissions {
-    const relevantContracts = this.permissionRegistry.getPermissionedContracts()
-    const eoas = this.permissionRegistry.getPermissionedEoas()
+    const permissionedContracts = this.permissionRegistry
+      .getPermissionedContracts()
+      .map((address) => this.getContractByAddress(address))
+      .filter(notUndefined)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+    const permissionedEoas = this.permissionRegistry
+      .getPermissionedEoas()
+      .map((address) => this.getEOAByAddress(address))
+      .filter(notUndefined)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+
     const allActors: ProjectPermission[] = []
-    for (const contract of relevantContracts) {
+    for (const contract of permissionedContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
         allActors.push(
@@ -785,10 +817,7 @@ export class ProjectDiscovery {
       }
     }
 
-    for (const eoa of eoas) {
-      if (eoa.receivedPermissions === undefined) {
-        continue
-      }
+    for (const eoa of permissionedEoas) {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
@@ -805,7 +834,10 @@ export class ProjectDiscovery {
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
+    const roles = this.describeRolePermissions([
+      ...permissionedContracts,
+      ...permissionedEoas,
+    ])
 
     // NOTE(radomski): There are two groups of "permissions" we show. Roles and
     // actors.
@@ -836,7 +868,9 @@ export class ProjectDiscovery {
         return true
       }
 
-      const eoa = eoas.find((eoa) => eoa.address === account.address)
+      const eoa = permissionedEoas.find(
+        (eoa) => eoa.address === account.address,
+      )
       assert(eoa?.receivedPermissions !== undefined)
       const hasOnlyRole = eoa.receivedPermissions.every((p) =>
         RolePermissionEntries.map((x) => x.toString()).includes(p.permission),
@@ -905,7 +939,9 @@ export class ProjectDiscovery {
 
   getDiscoveredContracts(): ProjectContract[] {
     const contracts = this.discoveries
-      .flatMap((discovery) => discovery.contracts)
+      .flatMap((discovery) =>
+        discovery.entries.filter((e) => e.type === 'Contract'),
+      )
       .filter((contract) => contract.category?.priority !== -1)
       .sort((a, b) => {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
@@ -969,7 +1005,7 @@ export class ProjectDiscovery {
 }
 
 function getUpgradeability(
-  contract: ContractParameters,
+  contract: EntryParameters,
 ): ProjectContractUpgradeability | undefined {
   if (!contract.proxyType) {
     return undefined
@@ -997,7 +1033,7 @@ export function formatAsBulletPoints(description: string[]): string {
     : description.join(' ')
 }
 
-function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
+function isEntryVerified(entry: EntryParameters): boolean {
   if ('unverified' in entry) {
     return entry.unverified !== true
   }

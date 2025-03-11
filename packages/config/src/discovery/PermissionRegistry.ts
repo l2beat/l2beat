@@ -1,10 +1,11 @@
-import type { ContractParameters, EoaParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export interface PermissionRegistry {
-  getPermissionedContracts(): ContractParameters[]
-  getPermissionedEoas(): EoaParameters[]
+  getPermissionedContracts(): EthereumAddress[]
+  getPermissionedEoas(): EthereumAddress[]
   describePermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean,
   ): string[]
 }

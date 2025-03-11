@@ -11,12 +11,12 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
-export const aztecconnect: Layer2 = {
+export const aztecconnect: ScalingProject = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),

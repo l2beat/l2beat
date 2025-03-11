@@ -24,7 +24,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
     <PrimaryCard
       id={props.id}
       className={cn(
-        'relative md:mt-10 md:rounded-lg md:p-8',
+        'relative border-divider bg-surface-primary px-4 py-8 max-md:border-b max-md:last:border-none md:mt-10 md:rounded-lg md:p-8',
         'data-[highlighted]:before:absolute data-[highlighted]:before:inset-0 data-[highlighted]:before:rounded-lg data-[highlighted]:before:border-2 data-[highlighted]:before:border-brand data-[highlighted]:before:shadow-[0px_4px_12px_10px] data-[highlighted]:before:shadow-[#FF5FFB40]',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,

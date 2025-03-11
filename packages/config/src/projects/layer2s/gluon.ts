@@ -10,12 +10,12 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
 const upgradeDelay = 0
 const discovery = new ProjectDiscovery('gluon')
 
-export const gluon: Layer2 = {
+export const gluon: ScalingProject = {
   type: 'layer2',
   id: ProjectId('gluon'),
   capability: 'universal',

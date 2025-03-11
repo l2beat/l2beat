@@ -22,7 +22,7 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
@@ -61,7 +61,7 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   6,
 )
 
-export const paradex: Layer2 = {
+export const paradex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('paradex'),
   capability: 'universal',

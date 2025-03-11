@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Layer3 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 
-export const syndr: Layer3 = upcomingL3({
+export const syndr: ScalingProject = upcomingL3({
   id: 'syndr',
   capability: 'universal',
   addedAt: UnixTime(1720082709), // 2024-07-04T08:45:09Z

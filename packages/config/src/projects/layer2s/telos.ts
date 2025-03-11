@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const telos: Layer2 = upcomingL2({
+export const telos: ScalingProject = upcomingL2({
   id: 'telos',
   capability: 'universal',
   addedAt: UnixTime(1718018621), // 2024-06-10T11:23:41Z

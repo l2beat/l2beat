@@ -2,14 +2,16 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0xf03d1c96eee541dda06a1987b74f68bde01b171d54d3ba27425b644b14b08523",
-  "contracts": [
+  "configHash": "0x05f77e24b630ac12b347df85908006254d8f8461653f24df83e4184b6154d9e8",
+  "entries": [
     {
       "name": "History",
       "address": "0x04395d494624D2B6e30C0dfDB74498a2839f805d",
+      "type": "Contract",
       "sourceHashes": [
         "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1719500229,
       "sinceBlock": 121950726,
       "values": {
@@ -20,9 +22,11 @@
     {
       "name": "BugBuster",
       "address": "0x3FF5C7383F614256053c3F6B86A47bA974937299",
+      "type": "Contract",
       "sourceHashes": [
         "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1726799059,
       "sinceBlock": 125600141,
       "values": {
@@ -36,9 +40,11 @@
     {
       "name": "Authority",
       "address": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
+      "type": "Contract",
       "sourceHashes": [
         "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1719500229,
       "sinceBlock": 121950726,
       "values": {
@@ -50,30 +56,40 @@
     {
       "name": "InputBox",
       "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
+      "type": "Contract",
       "sourceHashes": [
         "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1690464759,
       "sinceBlock": 107432991,
       "values": { "$immutable": true }
     },
     {
+      "address": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ERC20Portal",
       "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "type": "Contract",
       "sourceHashes": [
         "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1690464775,
       "sinceBlock": 107432999,
       "values": {
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
       }
+    },
+    {
+      "address": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3" },
-    { "address": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5" }
   ],
   "abis": {
     "0x04395d494624D2B6e30C0dfDB74498a2839f805d": [

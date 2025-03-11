@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from './templates/underReview'
 
-export const funki: Layer2 = underReviewL2({
+export const funki: ScalingProject = underReviewL2({
   id: 'funki',
   capability: 'universal',
   addedAt: UnixTime(1728289959), // 2024-10-07T08:32:39Z

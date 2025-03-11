@@ -2,11 +2,22 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 21829908,
-  "configHash": "0x33ba72b5a5fe079223a9067a77fde197d43b07e5491c21a84b8f68c2a67893ff",
-  "contracts": [
+  "configHash": "0xa7f1f34891f4b282e7e28d98fdce0511dd68cb0271cdc163983689a1d1f2e805",
+  "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "OptimismPortal",
       "address": "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -74,6 +85,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -124,6 +136,7 @@
     {
       "name": "ZircuitGuardianMultiSig",
       "address": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -169,8 +182,14 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SystemConfig",
       "address": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -265,6 +284,7 @@
     {
       "name": "L1StandardBridge",
       "address": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -325,12 +345,19 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x38809210f69ed6204E276d2Be6b15cd530698679",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x9097b28161923c9e2353a796f1580ecf8bf3415bae9a69f49102bdf7a1b94da8"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -378,8 +405,24 @@
       }
     },
     {
+      "address": "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x62C688FCa995e07632D64A9586896BB7EcD68567",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x63cbB9fA540F6249AE4A3576f48BF07609b3a355",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Verifier",
       "address": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
+      "type": "Contract",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
         "0xa755414175ee27be390c32c78aaacaaf640fea05cd3198de33257a27f282b91f"
@@ -427,6 +470,7 @@
     {
       "name": "ZircuitSuperchainConfig",
       "address": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
+      "type": "Contract",
       "template": "opstack/SuperchainConfig_zircuit",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -504,6 +548,7 @@
     {
       "name": "L1ERC20TokenBridge",
       "address": "0x912C7271a6A3622dfb8B218eb46a6122aB046C79",
+      "type": "Contract",
       "template": "lido/L1ERC20TokenBridge",
       "sourceHashes": [
         "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
@@ -544,6 +589,7 @@
     {
       "name": "L2OutputOracle",
       "address": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
+      "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -627,6 +673,7 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
+      "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -665,8 +712,35 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0xAE8f771E297AAbfDE7ff35a33FB6D558f4E0a679",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+        }
+      ]
+    },
+    {
+      "address": "0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc3131379C4bf618f2135c29547049B46923F7Dca",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ZircuitAdminMultiSig",
       "address": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -766,6 +840,7 @@
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
+      "type": "Contract",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -797,32 +872,16 @@
         "BRIDGE": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "version": "1.9.0"
       }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb" },
-    { "address": "0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec" },
-    { "address": "0x38809210f69ed6204E276d2Be6b15cd530698679" },
-    { "address": "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4" },
-    { "address": "0x62C688FCa995e07632D64A9586896BB7EcD68567" },
-    { "address": "0x63cbB9fA540F6249AE4A3576f48BF07609b3a355" },
-    { "address": "0xAE8f771E297AAbfDE7ff35a33FB6D558f4E0a679" },
-    {
-      "address": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
-        }
-      ]
     },
-    { "address": "0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966" },
-    { "address": "0xc3131379C4bf618f2135c29547049B46923F7Dca" },
-    { "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4" },
+    {
+      "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
+      "type": "EOA",
+      "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -833,6 +892,8 @@
     },
     {
       "address": "0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -840,7 +901,11 @@
         }
       ]
     },
-    { "address": "0xFF00000000000000000000000000000000048900" }
+    {
+      "address": "0xFF00000000000000000000000000000000048900",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": [

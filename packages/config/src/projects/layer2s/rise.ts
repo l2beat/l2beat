@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from './templates/upcoming'
 
-export const rise: Layer2 = upcomingL2({
+export const rise: ScalingProject = upcomingL2({
   id: 'rise',
   capability: 'universal',
   addedAt: UnixTime(1713776957), // 2024-04-22T09:09:17Z

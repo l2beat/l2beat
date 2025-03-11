@@ -29,14 +29,14 @@ describe(shouldSkip.name, () => {
         name: 'SharedFoo',
         chain: 'ethereum',
         blockNumber: 1234,
-        contracts: [
+        entries: [
           {
+            type: 'Contract',
             name: 'Foo',
             address,
             upgradeability: { type: 'immutable' },
           },
         ],
-        eoas: [],
         abis: {},
         fieldMeta: {},
         configHash: Hash256.random(),

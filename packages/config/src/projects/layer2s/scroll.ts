@@ -22,7 +22,7 @@ import {
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
@@ -58,7 +58,7 @@ const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
 const upgradeDelay = 0
 const finalizationPeriod = 0
 
-export const scroll: Layer2 = {
+export const scroll: ScalingProject = {
   type: 'layer2',
   id: ProjectId('scroll'),
   capability: 'universal',

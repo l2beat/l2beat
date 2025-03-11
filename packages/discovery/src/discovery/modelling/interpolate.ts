@@ -1,4 +1,4 @@
-import type { ContractParameters, EoaParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import type { ContractValue } from '../output/types'
 
 export function interpolateModelTemplate(
@@ -11,9 +11,10 @@ export function interpolateModelTemplate(
     tryCastingToName(String(values['$.address']), addressToNameMap, false),
   )
   const withValuesReplaced = withSelfReplaced.replace(
-    /#([a-zA-Z0-9_$.]+)(:raw)?/g,
-    (_match, key, raw) => {
+    /#([a-zA-Z0-9_$.]+)(:raw)?(\|lower)?/g,
+    (_match, key, raw, lower) => {
       const leaveRaw = raw !== undefined
+      const toLower = lower !== undefined
       const value = values[key]
       if (value === undefined) {
         throw new Error(
@@ -23,9 +24,13 @@ export function interpolateModelTemplate(
       if (Array.isArray(value)) {
         return `(${value
           .map((v) => tryCastingToName(String(v), addressToNameMap, leaveRaw))
+          .map((v) => (toLower ? v.toLowerCase() : v))
           .join('; ')})`
       }
-      return tryCastingToName(String(value), addressToNameMap, leaveRaw)
+      const processedValue = toLower
+        ? String(value).toLowerCase()
+        : String(value)
+      return tryCastingToName(processedValue, addressToNameMap, leaveRaw)
     },
   )
   return withValuesReplaced
@@ -54,14 +59,14 @@ export function normalizeId(s: string) {
 
 export function contractValuesForInterpolation(
   chain: string,
-  contract: ContractParameters | EoaParameters,
+  entry: EntryParameters,
 ): Record<string, ContractValue | undefined> {
-  const values = 'values' in contract ? (contract.values ?? {}) : {}
+  const values = entry.values
   return {
     '$.chain': chain,
-    '$.address': contract.address.toLowerCase(),
-    '$.name': contract.name ?? '',
-    '$.description': contract.description,
+    '$.address': entry.address.toLowerCase(),
+    '$.name': entry.name ?? '',
+    '$.description': entry.description,
     ...values,
   }
 }

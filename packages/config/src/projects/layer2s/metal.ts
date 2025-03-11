@@ -2,13 +2,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('metal')
 
-export const metal: Layer2 = opStackL2({
+export const metal: ScalingProject = opStackL2({
   addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   associatedTokens: ['MTL'],

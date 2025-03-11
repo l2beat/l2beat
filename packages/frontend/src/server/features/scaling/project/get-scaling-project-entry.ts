@@ -198,7 +198,7 @@ export async function getScalingProjectEntry(
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     project.scalingInfo.layer === 'layer2'
-      ? api.costs.chartWithDataPosted.prefetch({
+      ? api.costs.projectChart.prefetch({
           range: '1y',
           projectId: project.id,
         })
@@ -216,7 +216,7 @@ export async function getScalingProjectEntry(
         filter: { type: 'projects', projectIds: [project.id] },
       }),
       project.scalingInfo.layer === 'layer2'
-        ? api.costs.chartWithDataPosted({
+        ? api.costs.projectChart({
             range: '1y',
             projectId: project.id,
           })
@@ -291,7 +291,7 @@ export async function getScalingProjectEntry(
     !project.isUpcoming &&
     trackedTransactions &&
     costsChartData &&
-    costsChartData.length > 0
+    costsChartData.chart.length > 0
   ) {
     sections.push({
       type: 'CostsSection',

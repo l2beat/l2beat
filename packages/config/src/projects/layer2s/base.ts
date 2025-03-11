@@ -21,7 +21,7 @@ import { ESCROW } from '../../common'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
@@ -110,7 +110,7 @@ const permissionlessGameMaxClockExtension =
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
   permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
 
-export const base: Layer2 = {
+export const base: ScalingProject = {
   type: 'layer2',
   id: ProjectId('base'),
   capability: 'universal',

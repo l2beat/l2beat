@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../common'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 
-export const reddiozkvm: Layer2 = {
+export const reddiozkvm: ScalingProject = {
   isUpcoming: true,
   type: 'layer2',
   id: ProjectId('reddiozkvm'),

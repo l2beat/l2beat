@@ -1,13 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('pepeunchained')
 
-export const pepeunchained: Layer2 = opStackL2({
+export const pepeunchained: ScalingProject = opStackL2({
   addedAt: UnixTime(1739541812), // 2025-02-14T14:03:32Z
   daProvider: CELESTIA_DA_PROVIDER,
   celestiaDa: {

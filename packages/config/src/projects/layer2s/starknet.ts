@@ -24,7 +24,7 @@ import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
@@ -234,7 +234,7 @@ const sharpMsThreshold = discovery.getMultisigStats(
   'SHARPVerifierAdminMultisig',
 )
 
-export const starknet: Layer2 = {
+export const starknet: ScalingProject = {
   type: 'layer2',
   id: ProjectId('starknet'),
   capability: 'universal',

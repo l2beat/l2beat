@@ -15,7 +15,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
@@ -124,7 +124,7 @@ assert(
   'Review the technology section and riskView.stateValidation since the number of active tiers changed.',
 )
 
-export const taiko: Layer2 = {
+export const taiko: ScalingProject = {
   id: ProjectId('taiko'),
   capability: 'universal',
   addedAt: UnixTime(1680768480), // 2023-04-06T08:08:00Z

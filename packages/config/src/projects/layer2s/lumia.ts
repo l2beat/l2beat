@@ -7,7 +7,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -29,7 +29,7 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-export const lumia: Layer2 = polygonCDKStack({
+export const lumia: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1718181773), // 2024-06-12T08:42:53Z
   additionalBadges: [BADGES.DA.DAC],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],

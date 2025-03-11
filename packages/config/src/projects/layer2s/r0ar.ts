@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../../internalTypes'
+import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 
-export const r0ar: Layer2 = underReviewL2({
+export const r0ar: ScalingProject = underReviewL2({
   id: 'r0ar',
   capability: 'universal',
   addedAt: UnixTime(1739282637), // 2025-02-11T14:03:57Z
