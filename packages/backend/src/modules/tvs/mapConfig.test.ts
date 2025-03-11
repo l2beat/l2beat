@@ -257,7 +257,6 @@ describe(extractPricesAndAmounts.name, () => {
             chain: 'bob',
             decimals: 18,
             sinceTimestamp: UnixTime(100),
-            untilTimestamp: UnixTime(200),
           },
           valueForProject: {
             type: 'calculation',
@@ -311,7 +310,6 @@ describe(extractPricesAndAmounts.name, () => {
           chain: 'bob',
           decimals: 18,
           sinceTimestamp: UnixTime(100),
-          untilTimestamp: UnixTime(200),
         },
         {
           id: '87ab15cf98f5',
