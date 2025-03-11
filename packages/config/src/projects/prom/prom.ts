@@ -5,7 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const prom: ScalingProject = upcomingL2({
   id: 'prom',
   capability: 'universal',
-  addedAt: new UnixTime(1741702000),
+  addedAt: UnixTime(1741702000),
   display: {
     name: 'Prom',
     slug: 'prom',
