@@ -106,10 +106,10 @@ const MinorityContestBond = utils.formatEther(
 
 assert(
   RISC0cooldownWindow === SP1cooldownWindow &&
-  RISC0provingWindow === SP1provingWindow &&
-  RISC0validityBond === SP1validityBond &&
-  RISC0contestBond === SP1contestBond &&
-  SGXcooldownWindow === RISC0cooldownWindow,
+    RISC0provingWindow === SP1provingWindow &&
+    RISC0validityBond === SP1validityBond &&
+    RISC0contestBond === SP1contestBond &&
+    SGXcooldownWindow === RISC0cooldownWindow,
   'The tier config assumptions have changed, plz review the technology section and riskView.stateValidation.',
 )
 
