@@ -145,7 +145,7 @@ export class PermissionsFromModel implements PermissionRegistry {
   }
 
   getUpgradableBy(
-    contract: ContractParameters,
+    contract: EntryParameters,
   ): { name: string; delay: string }[] {
     const id = this.modelIdRegistry.getModelId(
       this.projectDiscovery.chain,

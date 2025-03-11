@@ -171,7 +171,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getUpgradableBy(
-    contract: ContractParameters,
+    contract: EntryParameters,
   ): { name: string; delay: string }[] {
     const upgradersWithDelay: Record<string, number> = Object.fromEntries(
       contract.issuedPermissions

@@ -14,7 +14,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { isString, sum, uniq } from 'lodash'
+import { isString, uniq } from 'lodash'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import type {
   ProjectContract,
