@@ -3,6 +3,7 @@ import {
   type DiscoveryConfig,
   type DiscoveryOutput,
   type EntryParameters,
+  type TemplateService,
   getChainShortName,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
@@ -53,6 +54,7 @@ function readProject(
 
 export function getProject(
   configReader: ConfigReader,
+  templateService: TemplateService,
   project: string,
 ): ApiProjectResponse {
   const chains = configReader.readAllChainsForProject(project)
@@ -68,8 +70,9 @@ export function getProject(
       .map((entry) => {
         const contarctConfig = config.for(entry.address)
         if (entry.template !== undefined) {
-          const templateValues =
-            configReader.templateService.loadContractTemplate(entry.template)
+          const templateValues = templateService.loadContractTemplate(
+            entry.template,
+          )
           contarctConfig.pushValues(templateValues)
         }
 

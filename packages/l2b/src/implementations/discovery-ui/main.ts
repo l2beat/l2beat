@@ -1,5 +1,5 @@
 import path, { join } from 'path'
-import { ConfigReader } from '@l2beat/discovery'
+import { ConfigReader, TemplateService } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import express from 'express'
 import { readConfig } from '../../config/readConfig'
@@ -19,6 +19,7 @@ export function runDiscoveryUi() {
   assert(discoveryPath !== undefined)
   const rootPath = path.dirname(discoveryPath)
   const configReader = new ConfigReader(rootPath)
+  const templateService = new TemplateService(rootPath)
 
   app.use(express.json())
 
@@ -28,7 +29,11 @@ export function runDiscoveryUi() {
   })
 
   app.get('/api/projects/:project', (req, res) => {
-    const response = getProject(configReader, req.params.project)
+    const response = getProject(
+      configReader,
+      templateService,
+      req.params.project,
+    )
     res.json(response)
   })
 

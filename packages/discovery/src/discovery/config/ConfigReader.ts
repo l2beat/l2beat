@@ -1,14 +1,11 @@
-import { existsSync, readdirSync } from 'fs'
-import { readFileSync } from 'fs'
-import path from 'path'
-
 import { createHash } from 'crypto'
+import { existsSync, readFileSync, readdirSync } from 'fs'
+import path from 'path'
 import { assert, Hash160, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { merge } from 'lodash'
 import type { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
-import { TemplateService } from '../analysis/TemplateService'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
@@ -17,11 +14,7 @@ import { CommonDiscoveryConfig, RawDiscoveryConfig } from './RawDiscoveryConfig'
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
 export class ConfigReader {
-  public templateService: TemplateService
-
-  constructor(private rootPath: string = '') {
-    this.templateService = new TemplateService(rootPath)
-  }
+  constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): DiscoveryConfig {
     assert(
