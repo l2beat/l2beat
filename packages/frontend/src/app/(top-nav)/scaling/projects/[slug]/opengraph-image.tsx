@@ -46,6 +46,10 @@ function logDir(path: string) {
 export default async function Image({ params }: Props) {
   logDir(process.cwd())
   logDir(join(process.cwd(), '..'))
+  logDir(join(process.cwd(), '../..'))
+  logDir(join(process.cwd(), './node_modules/@l2beat/config'))
+  logDir(join(process.cwd(), './node_modules/@l2beat/config/build'))
+
   const project = await ps.getProject({
     slug: params.slug,
     where: ['isScaling'],
