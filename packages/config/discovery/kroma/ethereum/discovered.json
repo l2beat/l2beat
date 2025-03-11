@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 21845178,
-  "configHash": "0x7de3ef8d8aefe115e5aad37814f6459e1aaab659ddf5cce5767e0c30318696d1",
+  "blockNumber": 22022417,
+  "configHash": "0x78a6fa207bca9b6854794f328747d904f6977f150b53e2e2535113a5d3746d05",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -118,12 +118,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 22829400,
-        "latestOutputIndex": 12683,
-        "nextBlockNumber": 22831200,
-        "nextFinalizeOutputIndex": 12515,
-        "nextOutputIndex": 12684,
-        "nextOutputMinL2Timestamp": 1739542789,
+        "latestBlockNumber": 23898600,
+        "latestOutputIndex": 13277,
+        "nextBlockNumber": 23900400,
+        "nextFinalizeOutputIndex": 13109,
+        "nextOutputIndex": 13278,
+        "nextOutputMinL2Timestamp": 1741681189,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -320,7 +320,7 @@
         ],
         "$upgradeCount": 2,
         "activatedValidatorCount": 9,
-        "activatedValidatorTotalWeight": "23522921382943729407013776",
+        "activatedValidatorTotalWeight": "31481521833251569464169815",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -334,7 +334,7 @@
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
         "MPT_FIRST_OUTPUT_INDEX": 12603,
-        "nextValidator": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+        "nextValidator": "0x3A68B16303AF7969aE0E84DEd82dbF865D725547",
         "ROUND_DURATION_SECONDS": 1800,
         "RoundDurationFormatted": "30m",
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
@@ -404,8 +404,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491822,
-          "prevBlockNum": 21838620
+          "prevBoughtGas": 200000,
+          "prevBlockNum": 22015690
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -732,7 +732,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4324,
+        "messageNonce": 4336,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1268,7 +1268,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 21845178,
+        "clock": 22022417,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1660,7 +1660,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 21845178,
+        "clock": 22022417,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1851,7 +1851,7 @@
         "TAX_NUMERATOR": 20,
         "TERMINATE_OUTPUT_INDEX": 10106,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 26,
+        "validatorCount": 24,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.1.0"
       }
