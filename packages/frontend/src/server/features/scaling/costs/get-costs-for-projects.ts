@@ -35,12 +35,8 @@ export async function getCostsForProjects(
   for (const project of trackedTxsProjects) {
     const records = groupedRecords[project.id]
     if (records === undefined) continue
-    const timestamps = records.map((r) => r.timestamp)
-    const from = Math.min(...timestamps)
-    const to = Math.max(...timestamps)
     response[project.id] = {
       ...sumCostValues(records),
-      range: [from, to],
       syncedUntil: project.syncedUntil,
     }
   }

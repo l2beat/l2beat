@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
 import { formatBytes } from '~/utils/number-format/format-bytes'
 import { CostsChart } from './costs-chart'
@@ -86,7 +87,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   const hasPostedData = chartData?.some((cost) => cost.posted !== null)
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
-
+  const resolution = rangeToResolution(range)
   return (
     <div>
       <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
@@ -114,6 +115,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         className="mb-2 mt-4"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
+
       <HorizontalSeparator className="my-4" />
       <ChartStats>
         <ChartStatsItem
@@ -134,7 +136,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           tooltip="The average cost per L2 user operation for the selected time period."
           isLoading={isLoading}
         >
-          {data?.stats.perL2Uop?.[unit]?.total
+          {data?.stats.perL2Uop?.[unit]?.total && resolution !== 'hourly'
             ? formatCostValue(
                 data.stats.perL2Uop[unit].total,
                 unit,
@@ -161,7 +163,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           tooltip="The average posted data size of a L2 user operation for the selected time period."
           isLoading={isLoading}
         >
-          {data?.stats.perL2Uop?.posted
+          {data?.stats.perL2Uop?.posted && resolution !== 'hourly'
             ? formatBytes(data.stats.perL2Uop.posted)
             : undefined}
         </ChartStatsItem>

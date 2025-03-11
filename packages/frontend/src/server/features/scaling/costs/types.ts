@@ -10,11 +10,10 @@ export interface LatestCostsProjectResponse {
   gas: LatestCostsValues
   eth: LatestCostsValues
   usd: LatestCostsValues
-  range: [UnixTime, UnixTime]
   syncedUntil: UnixTime
 }
 
-export interface LatestCostsValues {
+interface LatestCostsValues {
   overhead: number
   calldata: number
   compute: number
