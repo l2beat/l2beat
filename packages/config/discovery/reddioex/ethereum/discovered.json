@@ -2,16 +2,29 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0xe48399162d1ab0b390aa74a230ab2769a4ca1d529da1885ed817635275b2e98f",
+  "configHash": "0x5b0512acca11c3d2cbc353c355dc5b42c374519faf7c8235c8d206968f438efb",
   "sharedModules": ["shared-sharp-verifier"],
-  "contracts": [
+  "entries": [
+    {
+      "address": "0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+        }
+      ]
+    },
     {
       "name": "DACommittee",
       "address": "0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e"
       ],
+      "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
       "sinceTimestamp": 1663498763,
       "sinceBlock": 15559994,
@@ -40,10 +53,12 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
+      "proxyType": "immutable",
       "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
@@ -84,12 +99,58 @@
       ]
     },
     {
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+        }
+      ]
+    },
+    {
+      "address": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+        },
+        {
+          "permission": "interact",
+          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "description": "manage the token admin role."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+        }
+      ]
+    },
+    {
+      "address": "0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
+    },
+    {
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+      "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
+      "proxyType": "immutable",
       "description": "Helper contract for registering limit orders from L1.",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
@@ -100,8 +161,19 @@
       }
     },
     {
+      "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9eA52Cf33f7e52D24E205EF5fc5Fc425e9BeB8a0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarkExchange",
       "address": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+      "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
@@ -250,57 +322,6 @@
       "derivedName": "Proxy",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
-        }
-      ]
-    },
-    {
-      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
-        }
-      ]
-    },
-    {
-      "address": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
-        },
-        {
-          "permission": "interact",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
-          "description": "manage the token admin role."
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
-        }
-      ]
-    },
-    {
-      "address": "0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
-        }
-      ]
-    },
-    { "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5" },
-    { "address": "0x9eA52Cf33f7e52D24E205EF5fc5Fc425e9BeB8a0" }
   ],
   "abis": {
     "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [

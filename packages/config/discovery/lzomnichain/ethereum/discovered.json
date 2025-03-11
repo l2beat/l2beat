@@ -2,14 +2,16 @@
   "name": "lzomnichain",
   "chain": "ethereum",
   "blockNumber": 21995383,
-  "configHash": "0x616fe6990257c23ebeb3a9cdd609ae1bb9a4ca943afddba32d99a7e5dbf68ae8",
-  "contracts": [
+  "configHash": "0xcf36804d8a830a8aa6c1b20db68614b7514bfcc03a32a061d04ddee3f40ae3c1",
+  "entries": [
     {
       "name": "FPValidator",
       "address": "0x07245eEa05826F5984c7c3C8F478b04892e4df89",
+      "type": "Contract",
       "sourceHashes": [
         "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1665890591,
       "sinceBlock": 15757967,
       "values": {
@@ -23,8 +25,24 @@
       }
     },
     {
+      "address": "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x18A5Af69DfC02dc950f7534Ae97A180F34B75d7a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0x19565F4771843467aAD632d6B56c75396785b06C",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -55,20 +73,29 @@
     {
       "name": "BobaEscrow1",
       "address": "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55",
+      "type": "Contract",
       "sourceHashes": [
         "0x4c44eee696dd0864f47fbfe674aef4ae88749ff56e2e3a873171609d0b439e71"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1663003197,
       "sinceBlock": 15522081,
       "values": { "$immutable": true },
       "derivedName": "Lib_ResolvedDelegateProxy"
     },
     {
+      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b",
+      "type": "Contract",
       "sourceHashes": [
         "0x18a9d79116896cd3b8e528eac1b995e7848e0e84b8c4d2cce4ab6efc0406a1b8"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -83,11 +110,33 @@
       }
     },
     {
+      "address": "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3205aFb074BECbEaB6D13Ef835b48789EbfAB60c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x34Eb88EAD486A09CAcD8DaBe013682Dc5F1DC41D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
+      "type": "Contract",
       "sourceHashes": [
         "0x8b908351f18fdaeaf600ae46ef1450c535f741fc95bb25acade77f8b59fdc168"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661529370,
       "sinceBlock": 15416287,
       "values": {
@@ -101,11 +150,23 @@
       }
     },
     {
+      "address": "0x3c1Cb7D4c0ce0dc72eDc7Ea06acC866e62a8f1d8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3CA9A84E7c91F2167007cAce3017BaD23D2b14BC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MPTValidator01",
       "address": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+      "type": "Contract",
       "sourceHashes": [
         "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661529200,
       "sinceBlock": 15416264,
       "values": {
@@ -122,6 +183,7 @@
     {
       "name": "",
       "address": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -143,9 +205,11 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+      "type": "Contract",
       "sourceHashes": [
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -1830,9 +1894,11 @@
     {
       "name": "UsdcEscrow",
       "address": "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E",
+      "type": "Contract",
       "sourceHashes": [
         "0x7242f25c64a6bc6489c9da3281cf3e61090983ebe87a8859580d74133fd9fdb5"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["circulatingSupply"],
       "sinceTimestamp": 1665428735,
       "sinceBlock": 15719673,
@@ -1852,6 +1918,7 @@
     {
       "name": "EuraEscrow",
       "address": "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
+      "type": "Contract",
       "sourceHashes": [
         "0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781",
         "0xebb3af4d8e88b43e1d66732a0650acc3a2616dcb49321d3c59a88e79c0fdd781"
@@ -1886,8 +1953,14 @@
       "derivedName": "LayerZeroBridge"
     },
     {
+      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TSS Oracle",
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -1921,9 +1994,11 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
+      "type": "Contract",
       "sourceHashes": [
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661280206,
       "sinceBlock": 15398311,
       "values": {
@@ -1934,6 +2009,7 @@
     {
       "name": "GnosisSafe",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1966,9 +2042,11 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "type": "Contract",
       "sourceHashes": [
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1647316591,
       "sinceBlock": 14388880,
@@ -1998,6 +2076,7 @@
     {
       "name": "",
       "address": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -2019,9 +2098,11 @@
     {
       "name": "BobaEscrow3",
       "address": "0x6F537839714761388B6d7ED61Bc09579d5dA2F41",
+      "type": "Contract",
       "sourceHashes": [
         "0x4c44eee696dd0864f47fbfe674aef4ae88749ff56e2e3a873171609d0b439e71"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1660932033,
       "sinceBlock": 15372766,
       "values": { "$immutable": true },
@@ -2030,9 +2111,11 @@
     {
       "name": "StoneEscrow",
       "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+      "type": "Contract",
       "sourceHashes": [
         "0x1a8cae05167405ef1f44b7cb7a4bab3f238a55a7bf5aa460008c3d7c129ba951"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
       "sinceTimestamp": 1695535811,
       "sinceBlock": 18203782,
@@ -2063,8 +2146,59 @@
       "derivedName": "Stone"
     },
     {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x83000EF01eD5C15462ef20066091Abd3654e523f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8A7f7C5b556B1298a74c0e89df46Eba117A2F6c1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8c2641b5915171845EfDdC9fcAc20427B9347fF4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LayerZero Relayer",
       "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -2118,9 +2252,11 @@
     {
       "name": "WagmiEscrow",
       "address": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
+      "type": "Contract",
       "sourceHashes": [
         "0x9792608d4255e9f79bcb27779fde9c452f59b73a77a5771491a3816521f79a1f"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["circulatingSupply", "totalSupply"],
       "sinceTimestamp": 1688483015,
       "sinceBlock": 17621321,
@@ -2147,9 +2283,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2168,11 +2306,18 @@
       }
     },
     {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DVN",
       "address": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+      "type": "Contract",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1706489567,
       "sinceBlock": 19108732,
       "values": {
@@ -2191,9 +2336,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2212,19 +2359,33 @@
       }
     },
     {
+      "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "",
       "address": "0xa7b5189bcA84Cd304D8553977c7C614329750d99",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1706489555,
       "sinceBlock": 19108731,
       "values": { "$immutable": true }
     },
     {
+      "address": "0xAC0248e9C78774bA0ef9E71B1Ce1393a10C17E3C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Stargate Token",
       "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+      "type": "Contract",
       "sourceHashes": [
         "0xac50167fb1f106a80bc4b42fa94a317588fdc8c18258beeccf85b89d36daa385"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1647504559,
       "sinceBlock": 14402855,
       "values": {
@@ -2244,17 +2405,30 @@
     {
       "name": "BobaEscrow2",
       "address": "0xB0003eB166654f7e57c0463F8D1a438eB238c490",
+      "type": "Contract",
       "sourceHashes": [
         "0x4c44eee696dd0864f47fbfe674aef4ae88749ff56e2e3a873171609d0b439e71"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1661794745,
       "sinceBlock": 15435468,
       "values": { "$immutable": true },
       "derivedName": "Lib_ResolvedDelegateProxy"
     },
     {
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB9d9BBB9087eE8996Ce24970a3a50924581291FF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -2287,9 +2461,11 @@
     {
       "name": "Google Cloud Oracle",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "type": "Contract",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217107,
       "sinceBlock": 18095084,
       "values": {
@@ -2309,6 +2485,7 @@
     {
       "name": "GnosisSafe",
       "address": "0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -2341,9 +2518,11 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "type": "Contract",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694217119,
       "sinceBlock": 18095085,
       "values": { "$immutable": true }
@@ -2351,6 +2530,7 @@
     {
       "name": "GnosisSafe",
       "address": "0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -2381,9 +2561,11 @@
     {
       "name": "LinkEscrow",
       "address": "0xEe381e476b4335B8584A2026f3E845edaC2c69de",
+      "type": "Contract",
       "sourceHashes": [
         "0x7242f25c64a6bc6489c9da3281cf3e61090983ebe87a8859580d74133fd9fdb5"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["circulatingSupply"],
       "sinceTimestamp": 1663802015,
       "sinceBlock": 15584943,
@@ -2399,38 +2581,17 @@
         "useCustomAdapterParams": true
       },
       "derivedName": "ProxyERC20"
+    },
+    {
+      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf8b3b2aE2C97799249874A32f033b931e59fc349",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x18A5Af69DfC02dc950f7534Ae97A180F34B75d7a" },
-    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
-    { "address": "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1" },
-    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
-    { "address": "0x3205aFb074BECbEaB6D13Ef835b48789EbfAB60c" },
-    { "address": "0x34Eb88EAD486A09CAcD8DaBe013682Dc5F1DC41D" },
-    { "address": "0x3c1Cb7D4c0ce0dc72eDc7Ea06acC866e62a8f1d8" },
-    { "address": "0x3CA9A84E7c91F2167007cAce3017BaD23D2b14BC" },
-    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
-    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
-    { "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326" },
-    { "address": "0x83000EF01eD5C15462ef20066091Abd3654e523f" },
-    { "address": "0x8A7f7C5b556B1298a74c0e89df46Eba117A2F6c1" },
-    { "address": "0x8c2641b5915171845EfDdC9fcAc20427B9347fF4" },
-    { "address": "0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc" },
-    { "address": "0xAC0248e9C78774bA0ef9E71B1Ce1393a10C17E3C" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" },
-    { "address": "0xB9d9BBB9087eE8996Ce24970a3a50924581291FF" },
-    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" },
-    { "address": "0xf8b3b2aE2C97799249874A32f033b931e59fc349" }
   ],
   "abis": {
     "0x07245eEa05826F5984c7c3C8F478b04892e4df89": [

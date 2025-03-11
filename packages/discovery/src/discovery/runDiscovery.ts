@@ -114,10 +114,7 @@ export async function dryRunDiscovery(
     ),
   ])
 
-  const diff = diffDiscovery(
-    discoveredYesterday.contracts,
-    discovered.contracts,
-  )
+  const diff = diffDiscovery(discoveredYesterday.entries, discovered.entries)
 
   if (diff.length > 0) {
     console.log(JSON.stringify(diff, null, 2))

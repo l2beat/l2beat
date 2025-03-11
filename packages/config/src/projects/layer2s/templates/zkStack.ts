@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
@@ -78,12 +78,12 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
-  diamondContract: ContractParameters
+  diamondContract: EntryParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: ProjectFinalityConfig
-  l2OutputOracle?: ContractParameters
-  portal?: ContractParameters
+  l2OutputOracle?: EntryParameters
+  portal?: EntryParameters
   milestones?: Milestone[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>

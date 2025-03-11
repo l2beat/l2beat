@@ -1,65 +1,27 @@
-Generated with discovered.json: 0xe0335026985996b6edef4ce937335bd9f71f5241
+Generated with discovered.json: 0x014390d96de9dabae07e7a62674f6ee4a5e1a7b7
 
-# Diff at Mon, 10 Mar 2025 11:46:07 GMT:
+# Diff at Mon, 10 Mar 2025 16:52:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 3121124
-- current block number: 3121124
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 3121124
+- current block number: 4740158
 
 ## Description
 
-add proxyadmin template.
+zklink core contract paused. this only prevents deposits/ on the affected chains.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 3121124 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"upgrade","from":"0x44a65dc12865A1e5249b45b4868f32b0E37168FF"}]
-      template:
-+        "global/ProxyAdmin"
-      displayName:
-+        "ProxyAdmin"
-      directlyReceivedPermissions:
-+        [{"permission":"upgrade","from":"0x44a65dc12865A1e5249b45b4868f32b0E37168FF"}]
+      values.paused:
+-        false
++        true
     }
 ```
 
-```diff
-    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
-    +++ description: None
-      issuedPermissions.0.to:
--        "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
-+        "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3"
-      issuedPermissions.0.via.0:
-+        {"address":"0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"}
-    }
-```
-
-```diff
-    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
-    +++ description: None
-      receivedPermissions.2:
-+        {"permission":"upgrade","from":"0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"}
-      receivedPermissions.1.from:
--        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
-+        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
-      receivedPermissions.0.from:
--        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
-+        "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
-      receivedPermissions.0.via:
-+        [{"address":"0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"}]
-    }
-```
-
-Generated with discovered.json: 0x4b8d5046405afe163427b7050c444d87112e3dd2
+Generated with discovered.json: 0x1faa3c3b588c643fc7ab5a4739dd56506262f773
 
 # Diff at Tue, 04 Mar 2025 10:42:47 GMT:
 

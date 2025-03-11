@@ -1,62 +1,27 @@
-Generated with discovered.json: 0xe14b385016e64968e657259ad4a5df15a172614f
+Generated with discovered.json: 0xea30fd5179c42efcde5f0a910309d802f09fae17
 
-# Diff at Mon, 10 Mar 2025 11:46:04 GMT:
+# Diff at Mon, 10 Mar 2025 16:52:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 249925893
-- current block number: 249925893
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 249925893
+- current block number: 314283899
 
 ## Description
 
-add proxyadmin template.
+zklink core contract paused. this only prevents deposits/ on the affected chains.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 249925893 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract ArbitrumProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    contract zkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"upgrade","from":"0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"}]
-      template:
-+        "global/ProxyAdmin"
-      displayName:
-+        "ProxyAdmin"
-      directlyReceivedPermissions:
-+        [{"permission":"upgrade","from":"0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"}]
+      values.paused:
+-        false
++        true
     }
 ```
 
-```diff
-    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
-    +++ description: None
-      receivedPermissions.2:
-+        {"permission":"upgrade","from":"0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"}
-      receivedPermissions.1.from:
--        "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
-+        "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
-      receivedPermissions.1.via:
-+        [{"address":"0x48698A17D193bFc882395AC06a1DEdbb222F2917"}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"0x48698A17D193bFc882395AC06a1DEdbb222F2917"}]
-    }
-```
-
-```diff
-    contract L1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
-    +++ description: None
-      issuedPermissions.0.to:
--        "0x48698A17D193bFc882395AC06a1DEdbb222F2917"
-+        "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F"
-      issuedPermissions.0.via.0:
-+        {"address":"0x48698A17D193bFc882395AC06a1DEdbb222F2917"}
-    }
-```
-
-Generated with discovered.json: 0x8653b5422b89f05d3dc098c2d4ac47408ec677b3
+Generated with discovered.json: 0x14134b88a53978cb7bebab48977da43192beab78
 
 # Diff at Tue, 04 Mar 2025 10:40:30 GMT:
 

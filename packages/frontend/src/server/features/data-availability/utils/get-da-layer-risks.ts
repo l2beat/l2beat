@@ -6,12 +6,12 @@ export function getDaLayerRisks(
   economicSecurity: number | undefined,
 ) {
   return {
+    ...daLayer.risks,
     economicSecurity: getEconomicSecurity(
       daLayer,
       totalValueSecured,
       economicSecurity,
     ),
-    fraudDetection: daLayer.risks.fraudDetection,
   }
 }
 

@@ -1,17 +1,19 @@
 {
   "name": "zeronetwork",
   "chain": "ethereum",
-  "blockNumber": 22016637,
-  "configHash": "0x77ba7577189c6b48d3ca89e70cedf648ff1369dc6174d767d8f30da3fdafc026",
+  "blockNumber": 21766584,
+  "configHash": "0x98cb387c771a3842548de7381d2f076e4021739fb8dae0742c96979045807467",
   "sharedModules": ["shared-zk-stack"],
-  "contracts": [
+  "entries": [
     {
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "type": "Contract",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "proxyType": "immutable",
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
       "sinceBlock": 21081436,
@@ -22,8 +24,20 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
       "name": "ZeroNetworkChainAdminMultisig",
       "address": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -68,12 +82,35 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0x3Bc72A56F9036B94ad14BF082bF93731e0545255",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
+      "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
@@ -113,12 +150,24 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc858a504d6c267fe2d462D240b68A7D939B1fEC9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ZeroNetworkZkEvmAdmin",
       "address": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3",
+      "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -148,6 +197,7 @@
     {
       "name": "ZeroNetworkZkEvm",
       "address": "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+      "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
@@ -367,42 +417,12 @@
       },
       "derivedName": "DiamondProxy",
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0xF322467cec88d3CDFa9376B19bD5AD40da665277",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3",
-          "description": "set the conversion factor for gas token deposits."
-        }
-      ]
-    },
-    {
-      "address": "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
-    },
-    { "address": "0x3Bc72A56F9036B94ad14BF082bF93731e0545255" },
-    { "address": "0x3Ec90fA056A39e7281a5b4c8c044B86667D770e1" },
-    {
-      "address": "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
-    },
-    { "address": "0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E" },
-    { "address": "0xc858a504d6c267fe2d462D240b68A7D939B1fEC9" },
-    { "address": "0xF322467cec88d3CDFa9376B19bD5AD40da665277" }
   ],
   "abis": {
     "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66": [

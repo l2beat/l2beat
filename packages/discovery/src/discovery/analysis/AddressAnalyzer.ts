@@ -29,10 +29,8 @@ import { type ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
-export interface AnalyzedContract {
-  type: 'Contract'
+interface AnalyzedCommon {
   address: EthereumAddress
-  name: string
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
   derivedName: string | undefined
@@ -55,19 +53,21 @@ export interface AnalyzedContract {
   category?: DiscoveryCategory
 }
 
+export type AnalyzedContract = {
+  type: 'Contract'
+  name: string
+} & AnalyzedCommon
+
 export interface ExtendedTemplate {
   template: string
   reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
   templateHash: Hash256
 }
 
-interface AnalyzedEOA {
+export type AnalyzedEOA = {
   type: 'EOA'
-  name?: string
-  address: EthereumAddress
-  combinedMeta?: ContractMeta
-  category?: DiscoveryCategory
-}
+  name: string | undefined
+} & AnalyzedCommon
 
 export type AddressesWithTemplates = Record<string, Set<string>>
 
@@ -86,16 +86,7 @@ export class AddressAnalyzer {
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
-    if (codeIsEOA(code)) {
-      return {
-        type: 'EOA',
-        name: config.name,
-        address,
-        category: resolveCategory(config),
-      }
-    }
-
-    const deployment = await provider.getDeployment(address)
+    const isEOA = codeIsEOA(code)
 
     const templateErrors: Record<string, string> = {}
     let extendedTemplate: ExtendedTemplate | undefined = undefined
@@ -136,14 +127,13 @@ export class AddressAnalyzer {
       address,
       config.proxyType,
     )
-    const implementations = get$Implementations(proxy?.values)
-    const beacons = get$Beacons(proxy?.values)
-    const pastUpgrades = get$PastUpgrades(proxy?.values)
+    const implementations = get$Implementations(proxy.values)
+    const beacons = get$Beacons(proxy.values)
+    const pastUpgrades = get$PastUpgrades(proxy.values)
 
     const sources = await this.sourceCodeService.getSources(
       provider,
-      address,
-      implementations,
+      proxy.addresses,
       config.manualSourcePaths,
     )
 
@@ -173,7 +163,7 @@ export class AddressAnalyzer {
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(provider, address, sources.abi, config)
 
-    const proxyResults = Object.entries(proxy?.values ?? {}).map(
+    const proxyResults = Object.entries(proxy.values).map(
       ([field, value]): HandlerResult => ({ field, value }),
     )
 
@@ -190,17 +180,14 @@ export class AddressAnalyzer {
     )
 
     const mergedValues = {
-      ...(!proxy ? { $immutable: true } : {}),
-      ...(proxy?.values ?? {}),
+      ...proxy.values,
       ...(values ?? {}),
     }
 
-    const analysisWithoutMeta: Omit<
-      AnalyzedContract,
-      'selfMeta' | 'targetsMeta'
-    > = {
-      type: 'Contract',
-      name: config.name ?? sources.name,
+    const deployment = proxy.deployment
+    const analysisWithoutMeta: Omit<Analysis, 'selfMeta' | 'targetsMeta'> = {
+      type: isEOA ? 'EOA' : 'Contract',
+      name: isEOA ? config.name : (config.name ?? sources.name),
       derivedName:
         config.name !== undefined && config.name !== sources.name
           ? sources.name
@@ -224,7 +211,7 @@ export class AddressAnalyzer {
       category: resolveCategory(config),
     }
 
-    const analysis: AnalyzedContract = {
+    const analysis: Analysis = {
       ...analysisWithoutMeta,
       selfMeta: getSelfMeta(config, analysisWithoutMeta),
       targetsMeta: getTargetsMeta(
@@ -233,7 +220,8 @@ export class AddressAnalyzer {
         config.fields,
         analysisWithoutMeta,
       ),
-    }
+    } as Analysis
+
     return analysis
   }
 

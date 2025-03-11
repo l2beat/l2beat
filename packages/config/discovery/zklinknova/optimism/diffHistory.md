@@ -1,57 +1,27 @@
-Generated with discovered.json: 0x9f1f26a85fdb70fe7fc3e6e876e959fc87c5548f
+Generated with discovered.json: 0x02cf017dbd09638578826e1417623dde29e92dd1
 
-# Diff at Mon, 10 Mar 2025 11:46:05 GMT:
+# Diff at Mon, 10 Mar 2025 16:52:08 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f6da90223c6b91864899f5bf128309f4edb196f1 block: 124973335
-- current block number: 124973335
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 124973335
+- current block number: 133013374
 
 ## Description
 
-add proxyadmin template.
+zklink core contract paused. this only prevents deposits/ on the affected chains.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 124973335 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
     +++ description: None
-      receivedPermissions.1:
-+        {"permission":"upgrade","from":"0x5Bd51296423A9079b931414C1De65e7057326EaA","via":[{"address":"0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"}]}
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"}]
+      values.paused:
+-        false
++        true
     }
 ```
 
-```diff
-    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA) {
-    +++ description: None
-      issuedPermissions.0.to:
--        "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
-+        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
-      issuedPermissions.0.via.0:
-+        {"address":"0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"}
-    }
-```
-
-```diff
-    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"upgrade","from":"0x5Bd51296423A9079b931414C1De65e7057326EaA"}]
-      template:
-+        "global/ProxyAdmin"
-      displayName:
-+        "ProxyAdmin"
-      directlyReceivedPermissions:
-+        [{"permission":"upgrade","from":"0x5Bd51296423A9079b931414C1De65e7057326EaA"}]
-    }
-```
-
-Generated with discovered.json: 0xe1056a1216ee07174e348a7f99b4f8f4ce1ae398
+Generated with discovered.json: 0x1ee9479542f8e165cc0d73e94bb15b320bcbd35b
 
 # Diff at Tue, 04 Mar 2025 10:40:39 GMT:
 
