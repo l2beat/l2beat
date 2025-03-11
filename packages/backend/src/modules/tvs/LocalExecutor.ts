@@ -18,7 +18,7 @@ import { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider
 import { PriceProvider } from './providers/PriceProvider'
 import { RpcClientPOC } from './providers/RpcClientPOC'
 import { TotalSupplyProvider } from './providers/TotalSupplyProvider'
-import type { AmountConfig, TokenValue, TvsConfig } from './types'
+import type { AmountConfig, ProjectTvsConfig, TokenValue } from './types'
 
 export class LocalExecutor {
   private readonly storage: LocalStorage
@@ -34,7 +34,7 @@ export class LocalExecutor {
   }
 
   async run(
-    config: TvsConfig,
+    config: ProjectTvsConfig,
     timestamps: UnixTime[],
     latestMode: boolean,
   ): Promise<Map<number, TokenValue[]>> {
