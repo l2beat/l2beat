@@ -2,14 +2,16 @@
   "name": "chainport",
   "chain": "ethereum",
   "blockNumber": 21744139,
-  "configHash": "0x6cfcafe91f6cb81c1a85791010a5d3c1d59c5f5712bd0835a09fdf97e93d54a5",
-  "contracts": [
+  "configHash": "0x58245c93985803dc5a8f74bf447561e637ef20ecc904eacefe8dec311bcffe8d",
+  "entries": [
     {
       "name": "ChainportCongressMembersRegistry",
       "address": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
+      "type": "Contract",
       "sourceHashes": [
         "0x3a8dc61e76d801c8f238572cf0ed2aff6136a21f2b1730dff7360717e9b32db7"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1621598125,
       "sinceBlock": 12477538,
       "values": {
@@ -33,8 +35,14 @@
       }
     },
     {
+      "address": "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MultisigVault2",
       "address": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -65,9 +73,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -84,6 +94,7 @@
     {
       "name": "Vault6",
       "address": "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -167,6 +178,7 @@
     {
       "name": "MultisigVault1",
       "address": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -195,11 +207,25 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "EOAVault5",
+      "address": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
+      "address": "0x894107B7b5051409f279E8300774B2f62Febe057",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ChainportCongress",
       "address": "0xB6b4C7aC240b1f176c5589d064733066a83884a1",
+      "type": "Contract",
       "sourceHashes": [
         "0x6fc47885abd30d6674764b88e43a68f4c96a8dd3dd28c11c769a1089b41158cc"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1621598093,
       "sinceBlock": 12477537,
       "values": {
@@ -214,21 +240,24 @@
           "description": "The amount of proposals ever created. Goes up by 1 for each proposal."
         }
       }
-    }
-  ],
-  "eoas": [
-    { "address": "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd" },
-    {
-      "name": "EOAVault5",
-      "address": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87"
     },
-    { "address": "0x894107B7b5051409f279E8300774B2f62Febe057" },
-    { "address": "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7" },
+    {
+      "address": "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "EOAVault3",
-      "address": "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
+      "address": "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
     },
-    { "address": "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609" }
+    {
+      "address": "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa": [

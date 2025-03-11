@@ -2,11 +2,17 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 21802913,
-  "configHash": "0x895af4f9193188971c4949140263cdd241db789c242ae7ad4e0296bb5caee5f9",
-  "contracts": [
+  "configHash": "0x0887667785f0feb28adfa7199af55b51edf2665794c16a422c1d4ccac6d876de",
+  "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+      "type": "Contract",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -48,6 +54,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
@@ -103,10 +110,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x1d29007e3a6ea19186d632b4d79251aa21baae9b59fbc0b4c88ff3958b5c2730"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -153,8 +162,14 @@
       }
     },
     {
+      "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SystemConfig",
       "address": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -256,6 +271,7 @@
     {
       "name": "L1StandardBridge",
       "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xe60978aadd7b7babd6a7af621f97d7f7e58f1e93f631dd66a13fe4eae9b14761",
@@ -292,6 +308,7 @@
     {
       "name": "OptimismPortal",
       "address": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -357,12 +374,19 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x381e2495e683868F693AA5B1414F712f21d34b40",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EtherRouter",
       "address": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+      "type": "Contract",
       "template": "fraxtal/EtherRouter",
       "sourceHashes": [
         "0x9e03a8813acf697f471971579204060db51665091a061d90320d055fcf64d4f5"
       ],
+      "proxyType": "immutable",
       "description": "ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.",
       "issuedPermissions": [
         {
@@ -396,10 +420,12 @@
     {
       "name": "frxETH Token",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
+      "type": "Contract",
       "template": "fraxtal/frxETH",
       "sourceHashes": [
         "0x35d2793b796cde40be8f1ddaa988ae1c8fd2ad9f55b4b4d74946d35832703efa"
       ],
+      "proxyType": "immutable",
       "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
       "issuedPermissions": [
         {
@@ -448,8 +474,20 @@
       "derivedName": "frxETH"
     },
     {
+      "address": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+        }
+      ]
+    },
+    {
       "name": "SuperchainConfig",
       "address": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+      "type": "Contract",
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -503,6 +541,7 @@
     {
       "name": "L2OutputOracle",
       "address": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+      "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -591,12 +630,24 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "frxETH Minter",
       "address": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+      "type": "Contract",
       "template": "fraxtal/FraxEtherMinter",
       "sourceHashes": [
         "0x69f04bb460f0627fa685c48813134972ea72a339b1add8185fdde04f92a6e1f3"
       ],
+      "proxyType": "immutable",
       "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
       "issuedPermissions": [
         {
@@ -636,6 +687,7 @@
     {
       "name": "frxETHMultisig",
       "address": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -692,10 +744,12 @@
     {
       "name": "FrxEthTimelock",
       "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+      "type": "Contract",
       "template": "fraxtal/Timelock",
       "sourceHashes": [
         "0xf74d5abe93255d485a607a353bb85161caf16d07541125865eb5fd9220bce6c7"
       ],
+      "proxyType": "immutable",
       "description": "Allows for time-delayed execution of transactions. Current delay is 2d.",
       "directlyReceivedPermissions": [
         {
@@ -726,10 +780,12 @@
     {
       "name": "AddressManager",
       "address": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
+      "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -747,8 +803,14 @@
       }
     },
     {
+      "address": "0x8da4E997e051605878c9C0B793c496556EACC2C0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1ERC721Bridge",
       "address": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+      "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -799,9 +861,11 @@
     {
       "name": "sfrxETH",
       "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+      "type": "Contract",
       "sourceHashes": [
         "0xfe65651a8179606cdf20c60070a93224cb7b8fd4e89fb0d668b795503e8da33c"
       ],
+      "proxyType": "immutable",
       "description": "Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.",
       "ignoreInWatchMode": [
         "lastRewardAmount",
@@ -832,6 +896,7 @@
     {
       "name": "FraxtalTimelockMultisig",
       "address": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -895,10 +960,12 @@
     {
       "name": "frxETH Minter",
       "address": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+      "type": "Contract",
       "template": "fraxtal/FrxEthMinter",
       "sourceHashes": [
         "0xeb2d3e06200c7350a7bcb0c3b1b64c466c15459f1119fb068ae8a69483c30d55"
       ],
+      "proxyType": "immutable",
       "description": "Accepts user-supplied ETH and converts it to frxETH.",
       "issuedPermissions": [
         {
@@ -942,8 +1009,29 @@
       "derivedName": "frxETHMinter"
     },
     {
+      "address": "0xc28339c70054bC22255A74E927a0B9e9A475F224",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FraxtalMultisig",
       "address": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1040,40 +1128,11 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can mint frxETH tokens."
-        }
-      ]
     },
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e" },
-    { "address": "0x381e2495e683868F693AA5B1414F712f21d34b40" },
-    {
-      "address": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
-        }
-      ]
-    },
-    { "address": "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2" },
-    { "address": "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2" },
-    { "address": "0x8da4E997e051605878c9C0B793c496556EACC2C0" },
-    { "address": "0xc28339c70054bC22255A74E927a0B9e9A475F224" },
-    { "address": "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C" },
-    { "address": "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228" },
-    { "address": "0xcbc616D595D38483e6AdC45C7E426f44bF230928" },
     {
       "address": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
+      "type": "EOA",
+      "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -1082,7 +1141,11 @@
         }
       ]
     },
-    { "address": "0xfF000000000000000000000000000000000420fC" }
+    {
+      "address": "0xfF000000000000000000000000000000000420fC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x0d9C39c64CF8eDA1EdFeBD78AFa895bAA797eFc4": [

@@ -2,15 +2,17 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 56755451,
-  "configHash": "0x2ff4a748267927c93feaae320418b14c02b98f130f94cebb82fe9329cddaa032",
-  "contracts": [
+  "configHash": "0x6397eb64ec25cb7a0f3b1925abca097cbda4a11d6bee6e0687c4206c7797944e",
+  "entries": [
     {
       "name": "ProtocolTimelockController",
       "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+      "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
+      "proxyType": "immutable",
       "description": "This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.",
       "issuedPermissions": [
         {
@@ -88,10 +90,12 @@
     {
       "name": "ZkTokenGovernor",
       "address": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+      "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
+      "proxyType": "immutable",
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
       "issuedPermissions": [
         {
@@ -203,10 +207,12 @@
     {
       "name": "TokenTimelockController",
       "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+      "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
+      "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
         {
@@ -296,10 +302,12 @@
     {
       "name": "ZkGovOpsGovernor",
       "address": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+      "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
       ],
+      "proxyType": "immutable",
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "issuedPermissions": [
         {
@@ -392,6 +400,7 @@
     {
       "name": "ZkToken",
       "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "type": "Contract",
       "template": "shared-zk-stack/ZkToken",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -512,10 +521,12 @@
     {
       "name": "ZkProtocolGovernor",
       "address": "0x76705327e682F2d96943280D99464Ab61219e34f",
+      "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x82c5a05996248ee29f451f121ff0f973a3b17f7c7a8ed31878d30c5eaa51b245"
       ],
+      "proxyType": "immutable",
       "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
@@ -590,12 +601,39 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "name": "ProtocolUpgradeHandler_l2Alias",
+      "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "control all roles in the ZkToken access control, including the minter roles."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+        }
+      ],
+      "derivedName": ""
+    },
+    {
       "name": "GovOpsTimelockController",
       "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+      "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
+      "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
         {
@@ -678,12 +716,28 @@
       "derivedName": "TimelockController"
     },
     {
+      "name": "ZKFoundationMultisig_l2Alias",
+      "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
+        }
+      ],
+      "derivedName": ""
+    },
+    {
       "name": "ZkTokenProxyAdmin",
       "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -698,45 +752,12 @@
         "owner": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
       },
       "derivedName": "ProxyAdmin"
-    }
-  ],
-  "eoas": [
-    {
-      "name": "ProtocolUpgradeHandler_l2Alias",
-      "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles."
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
-        }
-      ]
-    },
-    {
-      "name": "ZKFoundationMultisig_l2Alias",
-      "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
-          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
-        }
-      ]
     },
     {
       "name": "Guardians_l2Alias",
       "address": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -748,7 +769,8 @@
           "from": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
         }
-      ]
+      ],
+      "derivedName": ""
     }
   ],
   "abis": {

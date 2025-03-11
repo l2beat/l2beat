@@ -2,16 +2,18 @@
   "name": "myria",
   "chain": "ethereum",
   "blockNumber": 21981354,
-  "configHash": "0xc8becfa58e265afe33f75cfca3c4733fec635ded1f81dad421e060753ccb082e",
+  "configHash": "0xa26b75b2b03be1a7e2a5216e7bdfb9274d00d130e90160d2bb779515e4226a7a",
   "sharedModules": ["shared-sharp-verifier"],
-  "contracts": [
+  "entries": [
     {
       "name": "DACommittee",
       "address": "0x1e601435E181423e7A8430813d7500012a6169cB",
+      "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
         "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
       ],
+      "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.",
       "sinceTimestamp": 1659542607,
       "sinceBlock": 15270396,
@@ -42,6 +44,7 @@
     {
       "name": "StarkExchange",
       "address": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
+      "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
@@ -204,12 +207,24 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
+      "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
+      "proxyType": "immutable",
       "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
@@ -252,10 +267,12 @@
     {
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+      "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
         "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
       ],
+      "proxyType": "immutable",
       "description": "Helper contract for registering limit orders from L1.",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
@@ -264,13 +281,11 @@
         "hasRegisteredFact": false,
         "identify": "StarkWare_OrderRegistry_2021_1"
       }
-    }
-  ],
-  "eoas": [
-    { "address": "0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8" },
-    { "address": "0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714" },
+    },
     {
       "address": "0x86ED881374a81efcc1Aa9f82cA9740B40F0FCbfe",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -281,6 +296,8 @@
     },
     {
       "address": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
+      "type": "EOA",
+      "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -299,9 +316,15 @@
         }
       ]
     },
-    { "address": "0xC7544ad893710Bd0bf780bf78dE5547706da75c5" },
+    {
+      "address": "0xC7544ad893710Bd0bf780bf78dE5547706da75c5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "0xe997ece81cb8A686206ea6042886B594Ecf6DdED",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
@@ -309,8 +332,16 @@
         }
       ]
     },
-    { "address": "0xf365CDB8C33849d3684AcFf5475E7B6F075F9F0F" },
-    { "address": "0xfBA93b5f744c853648d62C1357532582f77ed394" }
+    {
+      "address": "0xf365CDB8C33849d3684AcFf5475E7B6F075F9F0F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xfBA93b5f744c853648d62C1357532582f77ed394",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x1e601435E181423e7A8430813d7500012a6169cB": [

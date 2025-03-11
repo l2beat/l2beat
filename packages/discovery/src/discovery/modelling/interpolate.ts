@@ -1,4 +1,4 @@
-import type { ContractParameters, EoaParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import type { ContractValue } from '../output/types'
 
 export function interpolateModelTemplate(
@@ -59,14 +59,14 @@ export function normalizeId(s: string) {
 
 export function contractValuesForInterpolation(
   chain: string,
-  contract: ContractParameters | EoaParameters,
+  entry: EntryParameters,
 ): Record<string, ContractValue | undefined> {
-  const values = 'values' in contract ? (contract.values ?? {}) : {}
+  const values = entry.values
   return {
     '$.chain': chain,
-    '$.address': contract.address.toLowerCase(),
-    '$.name': contract.name ?? '',
-    '$.description': contract.description,
+    '$.address': entry.address.toLowerCase(),
+    '$.name': entry.name ?? '',
+    '$.description': entry.description,
     ...values,
   }
 }

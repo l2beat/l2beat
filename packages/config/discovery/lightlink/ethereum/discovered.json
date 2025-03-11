@@ -2,11 +2,17 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 21995407,
-  "configHash": "0x6efceb705f550e80e80fdb76f75befaeb93bcab52d8cfaf35f5242883797d270",
-  "contracts": [
+  "configHash": "0x8124bbb03cb91b8f14969eed6366866dba69e3eca470229a3f583ad590edc019",
+  "entries": [
+    {
+      "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "Challenge",
       "address": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+      "type": "Contract",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x90fc7abf9460afe3940188c51d98ab5da40ece530f7fc0e6e10c459a1b7f35f5"
@@ -62,6 +68,7 @@
     {
       "name": "ChainOracle",
       "address": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+      "type": "Contract",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47"
@@ -98,9 +105,11 @@
     {
       "name": "LightLinkMultisig",
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+      "type": "Contract",
       "sourceHashes": [
         "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -135,6 +144,7 @@
     {
       "name": "LightLinkBridge",
       "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
+      "type": "Contract",
       "sourceHashes": [
         "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
         "0x71f4b3f45f14bd6064069c36b9bb52b9b3efa4e4b40344614eaad2e50f5b78c6"
@@ -169,8 +179,14 @@
       "derivedName": "L1NativeTokenPredicate"
     },
     {
+      "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
+      "type": "Contract",
       "sourceHashes": [
         "0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d",
         "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
@@ -214,6 +230,7 @@
     {
       "name": "LightLinkERC20Bridge",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+      "type": "Contract",
       "sourceHashes": [
         "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
         "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
@@ -250,6 +267,7 @@
     {
       "name": "CanonicalStateChain",
       "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+      "type": "Contract",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x7c0a4f7fb2f2948ffde2e5550debf14c02fa682bec9a57aac718daf43c80c2c7"
@@ -321,8 +339,29 @@
       }
     },
     {
+      "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6F17201F241231f183CE52212e4C47B009036421",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6f933814903561F79137099587737DFB24c6E86D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7F17A74942c5b22b340688f099c99A79426447e1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LightLinkMultisig2",
       "address": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -365,28 +404,37 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RLPReader",
       "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
+      "type": "Contract",
       "sourceHashes": [
         "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1717522283,
       "sinceBlock": 20019965,
       "values": { "$immutable": true }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118" },
-    { "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC" },
-    { "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91" },
-    { "address": "0x6F17201F241231f183CE52212e4C47B009036421" },
-    { "address": "0x6f933814903561F79137099587737DFB24c6E86D" },
-    { "address": "0x7F17A74942c5b22b340688f099c99A79426447e1" },
-    { "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9" },
-    { "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df" },
-    { "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938" },
-    { "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590" }
   ],
   "abis": {
     "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": [
