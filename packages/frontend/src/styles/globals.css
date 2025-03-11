@@ -27,8 +27,8 @@
     --link-stroke: 212 100% 86.5%;
     --link: 223 69% 50.6%;
 
-    --row-highlight: 285 62.7% 52.7% / 0.15;
-    --row-highlight-no-opacity: 284 53.5% 91.6%;
+    --row-highlight: 285 62.7% 52.7% / 0.4;
+    --row-highlight-no-opacity: 284deg 58.8% 80%;
 
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
@@ -91,8 +91,8 @@
     --link-stroke: 217 56.3% 18.8%;
     --link: 212 100% 66.3%;
 
-    --row-highlight: 284 87.1% 75.7% / 0.15;
-    --row-highlight-no-opacity: 271 20% 20.6%;
+    --row-highlight: 284 70.5% 43.9% / 0.4;
+    --row-highlight-no-opacity: 281 51.6% 25.1%;
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
