@@ -1,30 +1,28 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
-import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
-import type { TimeRange } from '~/utils/range/range'
 
 export function getSummedActivityForProject(
   projectId: string,
-  timeRange: TimeRange,
+  range: [UnixTime, UnixTime],
 ) {
   if (env.MOCK) {
     return 10000
   }
 
-  return getCachedSummedActivityForProject(projectId, timeRange)
+  return getCachedSummedActivityForProject(projectId, range)
 }
 
 const getCachedSummedActivityForProject = cache(
-  async (projectId: string, timeRange: TimeRange) => {
+  async (projectId: string, range: [UnixTime, UnixTime]) => {
     const db = getDb()
-    const range = getFullySyncedActivityRange(timeRange)
+    const [from, to] = range
     return db.activity.getSummedUopsCountForProjectAndTimeRange(
       ProjectId(projectId),
-      range,
+      [UnixTime.toStartOf(from, 'day'), UnixTime.toStartOf(to, 'day')],
     )
   },
   ['summed-activity-for-project'],
