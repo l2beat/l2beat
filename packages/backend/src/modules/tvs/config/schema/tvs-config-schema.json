@@ -1,282 +1,326 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "BalanceOfEscrowAmountFormula": {
-      "properties": {
-        "address": {
-          "type": "string"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "BalanceOfEscrowAmountFormula": {
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "chain": {
+                    "type": "string"
+                },
+                "decimals": {
+                    "type": "number"
+                },
+                "escrowAddress": {
+                    "type": "string"
+                },
+                "sinceTimestamp": {
+                    "type": "number"
+                },
+                "type": {
+                    "const": "balanceOfEscrow",
+                    "type": "string"
+                },
+                "untilTimestamp": {
+                    "type": "number"
+                }
+            },
+            "type": "object"
         },
-        "chain": {
-          "type": "string"
+        "CalculationFormula": {
+            "properties": {
+                "arguments": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/CalculationFormula"
+                            },
+                            {
+                                "properties": {
+                                    "amount": {
+                                        "anyOf": [
+                                            {
+                                                "$ref": "#/definitions/CalculationFormula"
+                                            },
+                                            {
+                                                "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
+                                            },
+                                            {
+                                                "$ref": "#/definitions/TotalSupplyAmountFormula"
+                                            },
+                                            {
+                                                "$ref": "#/definitions/CirculatingSupplyAmountFormula"
+                                            },
+                                            {
+                                                "$ref": "#/definitions/ConstAmountFormula"
+                                            }
+                                        ]
+                                    },
+                                    "priceId": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "const": "value",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
+                            },
+                            {
+                                "$ref": "#/definitions/TotalSupplyAmountFormula"
+                            },
+                            {
+                                "$ref": "#/definitions/CirculatingSupplyAmountFormula"
+                            },
+                            {
+                                "$ref": "#/definitions/ConstAmountFormula"
+                            }
+                        ]
+                    },
+                    "type": "array"
+                },
+                "operator": {
+                    "$ref": "#/definitions/Operator"
+                },
+                "type": {
+                    "const": "calculation",
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
-        "decimals": {
-          "type": "number"
+        "CirculatingSupplyAmountFormula": {
+            "properties": {
+                "apiId": {
+                    "type": "string"
+                },
+                "decimals": {
+                    "type": "number"
+                },
+                "sinceTimestamp": {
+                    "type": "number"
+                },
+                "type": {
+                    "const": "circulatingSupply",
+                    "type": "string"
+                },
+                "untilTimestamp": {
+                    "type": "number"
+                }
+            },
+            "type": "object"
         },
-        "escrowAddress": {
-          "type": "string"
+        "ConstAmountFormula": {
+            "properties": {
+                "decimals": {
+                    "type": "number"
+                },
+                "sinceTimestamp": {
+                    "type": "number"
+                },
+                "type": {
+                    "const": "const",
+                    "type": "string"
+                },
+                "untilTimestamp": {
+                    "type": "number"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
-        "type": {
-          "const": "balanceOfEscrow",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "CalculationFormula": {
-      "properties": {
-        "arguments": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/CalculationFormula"
-              },
-              {
-                "properties": {
-                  "amount": {
+        "Operator": {
+            "enum": [
+                "diff",
+                "max",
+                "min",
+                "sum"
+            ],
+            "type": "string"
+        },
+        "Token": {
+            "properties": {
+                "amount": {
                     "anyOf": [
-                      {
-                        "$ref": "#/definitions/CalculationFormula"
-                      },
-                      {
-                        "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
-                      },
-                      {
-                        "$ref": "#/definitions/TotalSupplyAmountFormula"
-                      },
-                      {
-                        "$ref": "#/definitions/CirculatingSupplyAmountFormula"
-                      },
-                      {
-                        "$ref": "#/definitions/ConstAmountFormula"
-                      }
+                        {
+                            "$ref": "#/definitions/CalculationFormula"
+                        },
+                        {
+                            "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
+                        },
+                        {
+                            "$ref": "#/definitions/TotalSupplyAmountFormula"
+                        },
+                        {
+                            "$ref": "#/definitions/CirculatingSupplyAmountFormula"
+                        },
+                        {
+                            "$ref": "#/definitions/ConstAmountFormula"
+                        }
                     ]
-                  },
-                  "priceId": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "const": "value",
-                    "type": "string"
-                  }
                 },
-                "type": "object"
-              },
-              {
-                "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
-              },
-              {
-                "$ref": "#/definitions/TotalSupplyAmountFormula"
-              },
-              {
-                "$ref": "#/definitions/CirculatingSupplyAmountFormula"
-              },
-              {
-                "$ref": "#/definitions/ConstAmountFormula"
-              }
-            ]
-          },
-          "type": "array"
-        },
-        "operator": {
-          "$ref": "#/definitions/Operator"
-        },
-        "type": {
-          "const": "calculation",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "CirculatingSupplyAmountFormula": {
-      "properties": {
-        "priceId": {
-          "type": "string"
-        },
-        "type": {
-          "const": "circulatingSupply",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ConstAmountFormula": {
-      "properties": {
-        "type": {
-          "const": "const",
-          "type": "string"
-        },
-        "value": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Operator": {
-      "enum": ["diff", "max", "min", "sum"],
-      "type": "string"
-    },
-    "Token": {
-      "properties": {
-        "amount": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/CalculationFormula"
-            },
-            {
-              "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
-            },
-            {
-              "$ref": "#/definitions/TotalSupplyAmountFormula"
-            },
-            {
-              "$ref": "#/definitions/CirculatingSupplyAmountFormula"
-            },
-            {
-              "$ref": "#/definitions/ConstAmountFormula"
-            }
-          ]
-        },
-        "category": {
-          "enum": ["ether", "other", "stablecoin"],
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "isAssociated": {
-          "type": "boolean"
-        },
-        "mode": {
-          "enum": ["auto", "custom"],
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "priceId": {
-          "type": "string"
-        },
-        "sinceTimestamp": {
-          "type": "number"
-        },
-        "source": {
-          "enum": ["canonical", "external", "native"],
-          "type": "string"
-        },
-        "symbol": {
-          "type": "string"
-        },
-        "untilTimestamp": {
-          "type": "number"
-        },
-        "valueForProject": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/CalculationFormula"
-            },
-            {
-              "properties": {
-                "amount": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/CalculationFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/TotalSupplyAmountFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/CirculatingSupplyAmountFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/ConstAmountFormula"
-                    }
-                  ]
+                "category": {
+                    "enum": [
+                        "ether",
+                        "other",
+                        "stablecoin"
+                    ],
+                    "type": "string"
+                },
+                "displaySymbol": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isAssociated": {
+                    "type": "boolean"
+                },
+                "mode": {
+                    "enum": [
+                        "auto",
+                        "custom"
+                    ],
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 },
                 "priceId": {
-                  "type": "string"
+                    "type": "string"
                 },
-                "type": {
-                  "const": "value",
-                  "type": "string"
+                "source": {
+                    "enum": [
+                        "canonical",
+                        "external",
+                        "native"
+                    ],
+                    "type": "string"
+                },
+                "symbol": {
+                    "type": "string"
+                },
+                "valueForProject": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/CalculationFormula"
+                        },
+                        {
+                            "properties": {
+                                "amount": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/definitions/CalculationFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/TotalSupplyAmountFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/CirculatingSupplyAmountFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/ConstAmountFormula"
+                                        }
+                                    ]
+                                },
+                                "priceId": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "const": "value",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ]
+                },
+                "valueForTotal": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/CalculationFormula"
+                        },
+                        {
+                            "properties": {
+                                "amount": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/definitions/CalculationFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/TotalSupplyAmountFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/CirculatingSupplyAmountFormula"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/ConstAmountFormula"
+                                        }
+                                    ]
+                                },
+                                "priceId": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "const": "value",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ]
                 }
-              },
-              "type": "object"
-            }
-          ]
-        },
-        "valueForTotal": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/CalculationFormula"
             },
-            {
-              "properties": {
-                "amount": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/CalculationFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/TotalSupplyAmountFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/CirculatingSupplyAmountFormula"
-                    },
-                    {
-                      "$ref": "#/definitions/ConstAmountFormula"
-                    }
-                  ]
+            "type": "object"
+        },
+        "TotalSupplyAmountFormula": {
+            "properties": {
+                "address": {
+                    "type": "string"
                 },
-                "priceId": {
-                  "type": "string"
+                "chain": {
+                    "type": "string"
+                },
+                "decimals": {
+                    "type": "number"
+                },
+                "sinceTimestamp": {
+                    "type": "number"
                 },
                 "type": {
-                  "const": "value",
-                  "type": "string"
+                    "const": "totalSupply",
+                    "type": "string"
+                },
+                "untilTimestamp": {
+                    "type": "number"
                 }
-              },
-              "type": "object"
-            }
-          ]
+            },
+            "type": "object"
         }
-      },
-      "type": "object"
     },
-    "TotalSupplyAmountFormula": {
-      "properties": {
-        "address": {
-          "type": "string"
+    "properties": {
+        "projectId": {
+            "type": "string"
         },
-        "chain": {
-          "type": "string"
-        },
-        "decimals": {
-          "type": "number"
-        },
-        "type": {
-          "const": "totalSupply",
-          "type": "string"
+        "tokens": {
+            "items": {
+                "$ref": "#/definitions/Token"
+            },
+            "type": "array"
         }
-      },
-      "type": "object"
-    }
-  },
-  "properties": {
-    "projectId": {
-      "type": "string"
     },
-    "tokens": {
-      "items": {
-        "$ref": "#/definitions/Token"
-      },
-      "type": "array"
-    }
-  },
-  "type": "object"
+    "type": "object"
 }
+
