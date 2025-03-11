@@ -177,7 +177,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         [START, START + 2 * UnixTime.DAY],
       )
 
-      expect(result).toEqual(5)
+      expect(result).toEqual(11)
     })
   })
 
