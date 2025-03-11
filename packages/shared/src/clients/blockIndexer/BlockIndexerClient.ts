@@ -1,6 +1,7 @@
 import type { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { HttpClient } from '../http/HttpClient'
+import { RetryHandler, type RetryHandlerVariant } from '../../tools'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
@@ -19,6 +20,7 @@ interface BlockscoutOptions {
 // TODO: add retries, use HttpClient
 export class BlockIndexerClient {
   chain: string
+  private readonly retryHandler: RetryHandler
 
   // If you ask for a timestamp
   // and there were no blocks for <timestamp - binTimeWidth, timestamp>
@@ -30,19 +32,29 @@ export class BlockIndexerClient {
     private readonly httpClient: HttpClient,
     private readonly rateLimiter: RateLimiter,
     private readonly options: EtherscanOptions | BlockscoutOptions,
+    logger: Logger,
+    retryStrategy: RetryHandlerVariant = 'RELIABLE',
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
     this.binTimeWidth = options.type === 'etherscan' ? 10 : 1
     this.maximumCallsForBlockTimestamp = options.type === 'etherscan' ? 3 : 10
     this.chain = options.chain
+    this.retryHandler = RetryHandler.create(retryStrategy, logger)
   }
 
   static create(
     services: { httpClient: HttpClient; logger: Logger },
     rateLimiter: RateLimiter,
     options: EtherscanOptions | BlockscoutOptions,
+    retryStrategy: RetryHandlerVariant = 'RELIABLE',
   ) {
-    return new BlockIndexerClient(services.httpClient, rateLimiter, options)
+    return new BlockIndexerClient(
+      services.httpClient, 
+      rateLimiter, 
+      options, 
+      services.logger,
+      retryStrategy
+    )
   }
 
   // There is a case when there is not enough activity on a given chain
@@ -53,10 +65,12 @@ export class BlockIndexerClient {
     let counter = 1
     while (counter <= this.maximumCallsForBlockTimestamp) {
       try {
-        const result = await this.call('block', 'getblocknobytime', {
-          timestamp: current.toString(),
-          closest: 'before',
-        })
+        const result = await this.retryHandler.retry(() => 
+          this.call('block', 'getblocknobytime', {
+            timestamp: current.toString(),
+            closest: 'before',
+          })
+        )
 
         return BlockTimestampResponse.parse(result)
       } catch (error) {
