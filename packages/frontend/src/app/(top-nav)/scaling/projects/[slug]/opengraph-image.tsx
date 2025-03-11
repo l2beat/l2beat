@@ -44,12 +44,13 @@ function logDir(path: string) {
 }
 
 export default async function Image({ params }: Props) {
+  logDir(process.cwd())
+  logDir(join(process.cwd(), '..'))
   const project = await ps.getProject({
     slug: params.slug,
     where: ['isScaling'],
   })
-  logDir(process.cwd())
-  logDir(join(process.cwd(), '..'))
+
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
