@@ -7,8 +7,10 @@ export function sumCostValues(
     AggregatedL2CostRecord,
     'timestamp' | 'projectId' | `total${string}`
   >[],
-): Omit<LatestCostsProjectResponse, 'syncedUntil'> {
-  return records.reduce<Omit<LatestCostsProjectResponse, 'syncedUntil'>>(
+): Omit<LatestCostsProjectResponse, 'syncedUntil' | 'range'> {
+  return records.reduce<
+    Omit<LatestCostsProjectResponse, 'syncedUntil' | 'range'>
+  >(
     (acc, record) => {
       return {
         gas: {
