@@ -65,13 +65,19 @@ const TableRow = ({
   slug: string | undefined
 }) => {
   const { highlightedSlug } = useHighlightedTableRowContext()
+  const isSelected = highlightedSlug && highlightedSlug === slug
   return (
-    <TableHeaderRow
+    <tr
       className={cn(
         'group/row border-b-2 border-b-divider',
-        highlightedSlug && highlightedSlug === slug && 'animate-row-highlight',
+        isSelected && 'animate-row-highlight',
         className,
       )}
+      ref={(node) => {
+        if (node && isSelected) {
+          node.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }}
       {...props}
     />
   )
