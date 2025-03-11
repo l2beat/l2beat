@@ -81,7 +81,7 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
 
 1. Read the specification in `packages/config/src/types.ts`. It contains an annotated
    data format for the project definition.
-2. Add a .ts file to describe your project inside `packages/config/src/projects/`. You can use the
+2. Add a .ts file to describe your project inside `packages/config/src/projects/<project-name>/<project-name>.ts`. You can use the
    existing projects and templates (e.g. OP stack and Orbit stack templates in `packages/config/src/templates/`) as reference.
 3. Add your project into `packages/config/src/processing/layer2s.ts`. The order of the projects should be
    kept alphabetical.
@@ -106,7 +106,7 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
 
 1. Read the specification in `packages/config/src/types.ts`. It contains an annotated
    data format for the project definition.
-2. Add a .ts file to describe your project inside `packages/config/src/projects/`. You can use the
+2. Add a .ts file to describe your project inside `packages/config/src/projects/<project-name>/<project-name>.ts`. You can use the
    existing projects and templates (e.g. OP stack and Orbit stack templates in `packages/config/src/templates/`) as reference. Remember to specify host chain on which your project is based on.
    Take `projectId` of host chain and add it to `hostChain` property.
 3. Add your project to `packages/config/src/processing/layer3s/index.ts`. The order of the projects should be
