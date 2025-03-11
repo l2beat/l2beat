@@ -63,7 +63,7 @@ const getCachedCostsForProject = cache(
       }
 
     const records = await db.aggregatedL2Cost.getByProjectAndTimeRange(
-      trackedTxsProject.id,
+      project.id,
       fullySyncedRange,
     )
     const timestamps = records.map((r) => r.timestamp)

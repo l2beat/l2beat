@@ -19,9 +19,10 @@ export function getSummedActivityForProject(
 const getCachedSummedActivityForProject = cache(
   async (projectId: string, range: [UnixTime, UnixTime]) => {
     const db = getDb()
+    const [from, to] = range
     return db.activity.getSummedUopsCountForProjectAndTimeRange(
       ProjectId(projectId),
-      range,
+      [UnixTime.toStartOf(from, 'day'), UnixTime.toStartOf(to, 'day')],
     )
   },
   ['summed-activity-for-project'],

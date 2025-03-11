@@ -51,7 +51,6 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
   const total = withTotal({
     ...costs,
     posted: summedThroughput,
-    range: costs.range,
   })
 
   const resolution = rangeToResolution(params.range)
