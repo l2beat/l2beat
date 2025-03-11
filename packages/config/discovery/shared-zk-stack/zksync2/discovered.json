@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 56755451,
-  "configHash": "0x6397eb64ec25cb7a0f3b1925abca097cbda4a11d6bee6e0687c4206c7797944e",
+  "blockNumber": 57469400,
+  "configHash": "0x4950f6d5308b58b223108cd374d66791373a7758836d073fc0cf2ef771dc697a",
   "entries": [
     {
       "name": "ProtocolTimelockController",
@@ -96,21 +96,7 @@
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
-          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xe788e09324F8bb3cc64f009973693f751C33b999",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "via": []
-        }
-      ],
+      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -159,7 +145,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741600878,
+        "clock": 1741679905,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -197,10 +183,12 @@
     {
       "name": "ProtocolTimelockController_deprecated",
       "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+      "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
+      "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 0s.",
       "issuedPermissions": [
         {
@@ -376,15 +364,7 @@
         "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xe788e09324F8bb3cc64f009973693f751C33b999",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
-          "via": []
-        }
-      ],
+      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -433,7 +413,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741600878,
+        "clock": 1741679905,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -562,7 +542,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1741600878,
+        "clock": 1741679905,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -586,6 +566,25 @@
         "totalSupply": "12990000568015200000000000000"
       },
       "derivedName": "ZkTokenV2"
+    },
+    {
+      "name": "Guardians_l2Alias",
+      "address": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
+        },
+        {
+          "permission": "interact",
+          "from": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
+        }
+      ],
+      "derivedName": ""
     },
     {
       "name": "ZkProtocolGovernor",
@@ -663,7 +662,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741600878,
+        "clock": 1741679905,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -681,7 +680,7 @@
         "lateQuorumVoteExtension": 259200,
         "name": "ZkProtocolGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 6,
+        "proposalQueuedCount": 7,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
@@ -695,16 +694,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "ProtocolUpgradeHandler_l2Alias",
+      "name": "ProtocolUpgradeHandler_l2Alias_deprecated",
       "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles."
-        },
         {
           "permission": "upgrade",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
@@ -720,7 +714,124 @@
       "derivedName": ""
     },
     {
-      "name": "GovOpsTimelockController",
+      "name": "ZkTokenGovernor",
+      "address": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+      "type": "Contract",
+      "template": "shared-zk-stack/ZkGovernor",
+      "sourceHashes": [
+        "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
+      ],
+      "proxyType": "immutable",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
+          "via": [
+            {
+              "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            {
+              "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "interact",
+          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "description": "propose transactions."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "delay": 259200
+        }
+      ],
+      "ignoreInWatchMode": ["clock"],
+      "sinceTimestamp": 1739000132,
+      "sinceBlock": 55519658,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
+        "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
+        "clock": 1741679905,
+        "CLOCK_MODE": "mode=timestamp",
+        "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
+        "currentQuorum": "630000000000000000000000000",
+        "currentQuorum_MTokens": "630",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "ZkTokenGovernor",
+          "version": "1",
+          "chainId": 324,
+          "verifyingContract": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "isProposeGuarded": false,
+        "lateQuorumVoteExtension": 604800,
+        "name": "ZkTokenGovernor",
+        "proposalCreatedCount": 0,
+        "proposalQueuedCount": 0,
+        "proposalThreshold": "21000000000000000000000000",
+        "proposalThreshold_MTokens": "21",
+        "PROPOSE_GUARDIAN": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+        "state": [],
+        "timelock": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+        "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "version": "1",
+        "VETO_GUARDIAN": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+        "votingDelay": 604800,
+        "votingPeriod": 604800
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "GovOpsTimelockController_deprecated",
       "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
       "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
@@ -813,10 +924,12 @@
     {
       "name": "GovOpsTimelockController",
       "address": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+      "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
+      "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
         {
@@ -906,7 +1019,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
         }
       ],
@@ -937,8 +1050,208 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "name": "Guardians_l2Alias",
+      "name": "ZkTokenTimelockController",
+      "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+      "type": "Contract",
+      "template": "shared-zk-stack/TimelockController",
+      "sourceHashes": [
+        "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
+      ],
+      "proxyType": "immutable",
+      "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            {
+              "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "description": "propose transactions.",
+          "via": []
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."
+        },
+        {
+          "permission": "interact",
+          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay."
+        }
+      ],
+      "sinceTimestamp": 1739000122,
+      "sinceBlock": 55519651,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"]
+          }
+        },
+        "Canceller": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "Executor": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 259200,
+        "getMinDelay_formatted": "3d",
+        "Proposer": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "timelockAdminAC": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
+      },
+      "derivedName": "TimelockController"
+    },
+    {
+      "name": "Guardians_l2Alias_deprecated",
       "address": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
+      "name": "ZkGovOpsGovernor",
+      "address": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+      "type": "Contract",
+      "template": "shared-zk-stack/ZkGovernor",
+      "sourceHashes": [
+        "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
+      ],
+      "proxyType": "immutable",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "delay": 259200,
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            {
+              "address": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "interact",
+          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "description": "propose transactions."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "delay": 259200
+        }
+      ],
+      "ignoreInWatchMode": ["clock"],
+      "sinceTimestamp": 1738971666,
+      "sinceBlock": 55500650,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
+        "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
+        "clock": 1741679905,
+        "CLOCK_MODE": "mode=timestamp",
+        "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
+        "currentQuorum": "630000000000000000000000000",
+        "currentQuorum_MTokens": "630",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "ZkGovOpsGovernor",
+          "version": "1",
+          "chainId": 324,
+          "verifyingContract": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "lateQuorumVoteExtension": 604800,
+        "name": "ZkGovOpsGovernor",
+        "proposalCreatedCount": 0,
+        "proposalQueuedCount": 0,
+        "proposalThreshold": "21000000000000000000000000",
+        "proposalThreshold_MTokens": "21",
+        "state": [],
+        "timelock": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+        "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "version": "1",
+        "VETO_GUARDIAN": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+        "votingDelay": 604800,
+        "votingPeriod": 604800
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "ProtocolUpgradeHandler_l2Alias",
+      "address": "0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
