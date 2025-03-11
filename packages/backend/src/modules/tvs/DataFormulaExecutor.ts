@@ -110,16 +110,16 @@ export class DataFormulaExecutor {
           const latestCirculatingSupplies =
             await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
               circulatingSupplies.map((p) => ({
-                priceId: p.priceId,
+                priceId: p.apiId,
                 decimals: p.decimals,
               })),
             )
 
           for (const c of circulatingSupplies) {
-            const latest = latestCirculatingSupplies.get(c.priceId)
+            const latest = latestCirculatingSupplies.get(c.apiId)
             assert(
               latest !== undefined,
-              `${c.priceId}: No latest circulating supply found`,
+              `${c.apiId}: No latest circulating supply found`,
             )
 
             await this.storage.writeAmount(c.id, timestamp, latest)
@@ -185,17 +185,17 @@ export class DataFormulaExecutor {
     config: CirculatingSupplyAmountConfig,
     timestamp: UnixTime,
   ): Promise<bigint> {
-    this.logger.debug(`Fetching circulating supply for ${config.priceId}`)
+    this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
 
     try {
       return await this.circulatingSupplyProvider.getCirculatingSupply(
-        config.priceId,
+        config.apiId,
         config.decimals,
         timestamp,
       )
     } catch {
       this.logger.error(
-        `Error fetching circulating supply for ${config.priceId}. Assuming 0`,
+        `Error fetching circulating supply for ${config.apiId}. Assuming 0`,
       )
       return 0n
     }

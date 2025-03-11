@@ -12,9 +12,9 @@
         "type": "totalSupply",
         "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
         "chain": "galxegravity",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1732233600
       },
-      "sinceTimestamp": 1732233600,
       "category": "ether",
       "source": "external",
       "isAssociated": false
@@ -30,9 +30,9 @@
         "address": "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649",
         "chain": "ethereum",
         "escrowAddress": "0x7983403dDA368AA7d67145a9b81c5c517F364c42",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1721260800
       },
-      "sinceTimestamp": 1721260800,
       "category": "other",
       "source": "canonical",
       "isAssociated": true
@@ -47,9 +47,9 @@
         "type": "totalSupply",
         "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
         "chain": "galxegravity",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1720481296
       },
-      "sinceTimestamp": 1720481296,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -64,9 +64,9 @@
         "type": "totalSupply",
         "address": "0x816E810f9F787d669FB71932DeabF6c83781Cd48",
         "chain": "galxegravity",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1720481298
       },
-      "sinceTimestamp": 1720481298,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -81,9 +81,9 @@
         "type": "totalSupply",
         "address": "0xf6f832466Cd6C21967E0D954109403f36Bc8ceaA",
         "chain": "galxegravity",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1720481294
       },
-      "sinceTimestamp": 1720481294,
       "category": "ether",
       "source": "external",
       "isAssociated": false

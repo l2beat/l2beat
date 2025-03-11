@@ -8,14 +8,14 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
-      "sinceTimestamp": 1729881083,
       "category": "ether",
       "source": "canonical",
       "amount": {
         "type": "totalSupply",
         "address": "0x000000000000000000000000000000000000800A",
         "chain": "abstract",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729881083
       },
       "isAssociated": false
     },
@@ -29,9 +29,9 @@
         "type": "totalSupply",
         "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
         "chain": "abstract",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1734639568
       },
-      "sinceTimestamp": 1734639568,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -46,9 +46,9 @@
         "type": "totalSupply",
         "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
         "chain": "abstract",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1734648290
       },
-      "sinceTimestamp": 1734648290,
       "category": "other",
       "source": "external",
       "isAssociated": false
