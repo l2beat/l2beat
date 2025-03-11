@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "arbitrum",
-  "blockNumber": 314283899,
+  "blockNumber": 314504547,
   "configHash": "0xb3986a3e288db7ec3510d49c4c1984dc7e95f8f452a6d8259bacd90e47b5c80b",
   "entries": [
     {
@@ -13,11 +13,13 @@
       "name": "ArbitrumProxyAdmin",
       "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"

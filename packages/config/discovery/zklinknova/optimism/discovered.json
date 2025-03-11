@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "optimism",
-  "blockNumber": 133013374,
+  "blockNumber": 133041012,
   "configHash": "0xe7ba63b175ee3f3c034c5cedb05c58ac3b6537c56bbf18af52f6542ba6006dee",
   "entries": [
     {
@@ -207,11 +207,13 @@
       "name": "OptimismProxyAdmin",
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x5Bd51296423A9079b931414C1De65e7057326EaA"

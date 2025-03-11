@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "blast",
-  "blockNumber": 16407862,
+  "blockNumber": 16435499,
   "configHash": "0x73639da995bb3267da6553e1ceaf6df5967228d34bd017a2730c0192df0034c2",
   "entries": [
     {
@@ -237,11 +237,13 @@
       "name": "BlastProxyAdmin",
       "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"

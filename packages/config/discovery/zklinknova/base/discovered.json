@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "base",
-  "blockNumber": 27418087,
+  "blockNumber": 27445725,
   "configHash": "0xf3f6bacd6c077407a787123baf8475063f6e0c0aa3d06ceba4817d3fd2795c78",
   "entries": [
     {
@@ -120,11 +120,13 @@
       "name": "BaseProxyAdmin",
       "address": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"

@@ -1,18 +1,20 @@
 {
   "name": "zklinknova",
   "chain": "mantapacific",
-  "blockNumber": 4740158,
+  "blockNumber": 4745686,
   "configHash": "0x5d9037796eb2e0a83c2da9a5e26d221f8808ca6c8ff0bd511b308ef853179393",
   "entries": [
     {
       "name": "MantaProxyAdmin",
       "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"

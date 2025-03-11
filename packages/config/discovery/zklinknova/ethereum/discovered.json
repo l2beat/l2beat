@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "ethereum",
-  "blockNumber": 22017779,
+  "blockNumber": 22022360,
   "configHash": "0x864635b36be4ad925db2355d5f904d0f049b2c7d4e487dc778d2d2536fbb86e2",
   "entries": [
     {
@@ -98,11 +98,13 @@
       "name": "EthereumProxyAdmin",
       "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"

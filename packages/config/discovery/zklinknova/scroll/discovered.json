@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "scroll",
-  "blockNumber": 13948997,
+  "blockNumber": 13963893,
   "configHash": "0xca126e4907b314d340bc948a304fa63e2007fc5ad43ca7233a9dbdcf8bb0ec78",
   "entries": [
     {
@@ -132,11 +132,13 @@
       "name": "ScrollProxyAdmin",
       "address": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"

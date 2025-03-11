@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 76747606,
+  "blockNumber": 76775244,
   "configHash": "0xc054e16b3c1de3011cb8dbd5461374914a8b3400a327219bd87e3247aa1ec2d7",
   "entries": [
     {
@@ -277,11 +277,13 @@
       "name": "MantleProxyAdmin",
       "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"

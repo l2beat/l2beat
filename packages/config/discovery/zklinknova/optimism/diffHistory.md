@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x1555f48fdb0abfc3add9123de0368138588d6456
+
+# Diff at Tue, 11 Mar 2025 08:13:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6186a4f8e3a9e415d081d4e3e85c2deceaa5530c block: 133013374
+- current block number: 133041012
+
+## Description
+
+proxyadmin template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133013374 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0x5Bd51296423A9079b931414C1De65e7057326EaA","via":[{"address":"0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
++        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+      issuedPermissions.0.via.0:
++        {"address":"0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"}
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x5Bd51296423A9079b931414C1De65e7057326EaA"}]
+      template:
++        "global/ProxyAdmin"
+      displayName:
++        "ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x5Bd51296423A9079b931414C1De65e7057326EaA"}]
+    }
+```
+
 Generated with discovered.json: 0x02cf017dbd09638578826e1417623dde29e92dd1
 
 # Diff at Mon, 10 Mar 2025 16:52:08 GMT:
