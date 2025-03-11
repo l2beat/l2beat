@@ -10,7 +10,7 @@ import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import { zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('sophon')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -74,7 +74,7 @@ export const sophon: ScalingProject = zkStackL2({
     },
     bridge: DA_BRIDGES.NONE,
   },
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
       tokens: [
@@ -104,7 +104,6 @@ export const sophon: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: [], // 'SOPH' not on CG yet
       },
-      ...zkStackUpgrades,
     }),
     discovery.getEscrowDetails({
       address: discovery.getContract('L1USDCBridge').address,

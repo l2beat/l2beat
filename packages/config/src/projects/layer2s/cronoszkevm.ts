@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { BADGES } from '../badges'
-import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import { zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -75,7 +75,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       ],
     },
   },
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
+  nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,
       tokens: ['CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN', 'MOON'],
@@ -91,7 +91,6 @@ export const cronoszkevm: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: ['zkCRO'],
       },
-      ...zkStackUpgrades,
     }),
   ],
   // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat
