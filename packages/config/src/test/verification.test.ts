@@ -1,8 +1,8 @@
 import { join } from 'path'
 import {
   ConfigReader,
-  type ContractParameters,
   type DiscoveryOutput,
+  type EntryParameters,
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
@@ -80,17 +80,11 @@ function containsAllAddresses(
 }
 
 function addressesInDiscovery(discovery: DiscoveryOutput): EthereumAddress[] {
-  const eoas = discovery.eoas.map((eoa) => eoa.address)
-  const contracts = discovery.contracts.flatMap((c) => [
-    c.address,
-    ...getImplementations(c),
-  ])
-
-  return eoas.concat(contracts)
+  return discovery.entries.flatMap((c) => [c.address, ...getImplementations(c)])
 }
 
-function getImplementations(contract: ContractParameters): EthereumAddress[] {
-  const implementations = contract.values?.['$implementation'] ?? []
+function getImplementations(entry: EntryParameters): EthereumAddress[] {
+  const implementations = entry.values?.['$implementation'] ?? []
 
   if (Array.isArray(implementations)) {
     return implementations.map((i) => EthereumAddress(i.toString()))

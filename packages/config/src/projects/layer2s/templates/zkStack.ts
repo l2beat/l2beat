@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
@@ -78,17 +78,17 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
-  diamondContract: ContractParameters
+  diamondContract: EntryParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: ProjectFinalityConfig
-  l2OutputOracle?: ContractParameters
-  portal?: ContractParameters
+  l2OutputOracle?: EntryParameters
+  portal?: EntryParameters
   milestones?: Milestone[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
-  nonTemplateContracts?: (upgrades: Upgradeability) => ProjectContract[]
-  nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
+  nonTemplateContracts?: ProjectContract[]
+  nonTemplateEscrows?: ProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -228,17 +228,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const scThresholdString = `${scMainThreshold} / ${scMemberCount}`
   const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
 
-  const upgrades: Upgradeability = {
-    upgradableBy: [
-      {
-        name: 'ProtocolUpgradeHandler',
-        delay: `${formatSeconds(
-          upgradeDelayWithScApprovalS,
-        )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
-      },
-    ],
-  }
-
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
   return {
     type: 'layer2',
@@ -288,7 +277,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
-          ? templateVars.nonTemplateEscrows(upgrades)
+          ? templateVars.nonTemplateEscrows
           : []),
       ],
       activityConfig: getActivityConfig(

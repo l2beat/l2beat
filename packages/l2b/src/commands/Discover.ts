@@ -133,9 +133,7 @@ function addressPredicate(
 ): boolean {
   const discovery = configReader.readDiscovery(haystackProject, haystackChain)
 
-  const hasContract =
-    discovery.contracts.find((c) => c.address === needleAddress) !== undefined
-  const hasEOA =
-    discovery.eoas.find((c) => c.address === needleAddress) !== undefined
-  return hasContract || hasEOA
+  return (
+    discovery.entries.find((c) => c.address === needleAddress) !== undefined
+  )
 }

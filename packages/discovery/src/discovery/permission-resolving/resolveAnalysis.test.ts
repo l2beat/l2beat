@@ -300,7 +300,17 @@ describe(resolveAnalysis.name, () => {
     const input: Analysis[] = [
       {
         type: 'EOA',
+        name: undefined,
         address: eoaAddress,
+        derivedName: undefined,
+        isVerified: false,
+        implementations: [],
+        values: {},
+        fieldsMeta: {},
+        errors: {},
+        abis: {},
+        sourceBundles: [],
+        relatives: {},
         combinedMeta: {
           permissions: [
             {
@@ -335,6 +345,16 @@ describe(resolveAnalysis.name, () => {
     const input: Analysis[] = [
       {
         type: 'EOA',
+        name: undefined,
+        derivedName: undefined,
+        isVerified: false,
+        implementations: [],
+        values: {},
+        fieldsMeta: {},
+        errors: {},
+        abis: {},
+        sourceBundles: [],
+        relatives: {},
         address: EthereumAddress.random(),
       },
     ]

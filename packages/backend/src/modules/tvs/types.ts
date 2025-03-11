@@ -50,11 +50,13 @@ export interface TotalSupplyAmountFormula {
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
   priceId: string
+  decimals: number
 }
 
 export interface ConstAmountFormula {
   type: 'const'
-  value: number
+  value: string
+  decimals: number
 }
 
 export interface AmountConfigBase {
@@ -83,8 +85,9 @@ export interface Token {
   // by default it is set to coingeckoId
   priceId: string
   symbol: string
+  displaySymbol?: string
   name: string
-  amount: AmountFormula | CalculationFormula
+  amount: CalculationFormula | AmountFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)

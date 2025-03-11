@@ -1,7 +1,7 @@
 import { type DiscoveryOutput, neuterErrors } from '@l2beat/discovery'
 
 export function sanitizeDiscoveryOutput(discovery: DiscoveryOutput) {
-  const sanitizedContracts = discovery.contracts.map((c) => {
+  const sanitizedEntries = discovery.entries.map((c) => {
     if (c.errors !== undefined) {
       c.errors = neuterErrors(c.errors)
     }
@@ -11,6 +11,6 @@ export function sanitizeDiscoveryOutput(discovery: DiscoveryOutput) {
 
   return {
     ...discovery,
-    contracts: sanitizedContracts,
+    entries: sanitizedEntries,
   }
 }

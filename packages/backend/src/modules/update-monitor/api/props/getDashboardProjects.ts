@@ -48,8 +48,8 @@ export async function getDiff(
   )
 
   let diff: DiscoveryDiff[] = []
-  if (latest?.discovery.contracts) {
-    diff = diffDiscovery(discovery.contracts, latest.discovery.contracts)
+  if (latest?.discovery.entries) {
+    diff = diffDiscovery(discovery.entries, latest.discovery.entries)
   }
   return diff
 }

@@ -1,4 +1,57 @@
-Generated with discovered.json: 0xe022a1427389cbff5e7e9a99a53a53afc968eabc
+Generated with discovered.json: 0x2a00d3d103bf2086d2f2c58a97989c30b2b58cfc
+
+# Diff at Tue, 11 Mar 2025 08:13:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6186a4f8e3a9e415d081d4e3e85c2deceaa5530c block: 16407862
+- current block number: 16435499
+
+## Description
+
+proxyadmin template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16407862 (main branch discovery), not current.
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b","via":[{"address":"0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
++        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      issuedPermissions.0.via.0:
++        {"address":"0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"}
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"}]
+      template:
++        "global/ProxyAdmin"
+      displayName:
++        "ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"}]
+    }
+```
+
+Generated with discovered.json: 0x31a6a65a64f8db0c780818aa1b28b6e519cc755e
 
 # Diff at Tue, 04 Mar 2025 10:42:45 GMT:
 

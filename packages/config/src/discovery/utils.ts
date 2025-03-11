@@ -1,15 +1,13 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import { formatSeconds } from '@l2beat/shared-pure'
 
-export function isMultisigLike(
-  contract: ContractParameters | undefined,
-): boolean {
-  if (contract === undefined) {
+export function isMultisigLike(entry: EntryParameters | undefined): boolean {
+  if (entry === undefined) {
     return false
   }
 
-  const hasMembers = contract.values?.['$members'] !== undefined
-  const hasThreshold = contract.values?.['$threshold'] !== undefined
+  const hasMembers = entry.values?.['$members'] !== undefined
+  const hasThreshold = entry.values?.['$threshold'] !== undefined
 
   return hasMembers && hasThreshold
 }

@@ -11,16 +11,16 @@ export type ContractsMeta = Record<
 export function getMeta(discoveries: DiscoveryOutput[]): ContractsMeta {
   const meta: Record<string, { name?: string; type: ApiAddressType }> = {}
   for (const discovery of discoveries) {
-    for (const contract of discovery.contracts) {
-      const address = contract.address.toString()
-      meta[address] = {
-        name: contract.name || undefined,
-        type: getContractType(contract),
+    for (const entry of discovery.entries) {
+      const address = entry.address.toString()
+      if (entry.type === 'EOA') {
+        meta[address] = { name: entry.name || undefined, type: 'EOA' }
+      } else {
+        meta[address] = {
+          name: entry.name || undefined,
+          type: getContractType(entry),
+        }
       }
-    }
-    for (const eoa of discovery.eoas) {
-      const address = eoa.address.toString()
-      meta[address] = { name: eoa.name || undefined, type: 'EOA' }
     }
   }
   meta[EthereumAddress.ZERO] = { name: 'ZERO', type: 'Unknown' }

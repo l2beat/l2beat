@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xab9a036a6cd39f92fa50a2898a15a0a44759afd8
+
+# Diff at Mon, 10 Mar 2025 14:56:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5f0894cc624e3206ceca83cdf36ddd08f1e90538 block: 26689586
+- current block number: 30784081
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract OpticsV2Governor (0x070c2843402Aa0637ae0F2E2edf601aAB5E72509)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeacon (0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x63c079444e07D82d33399DE7D56d6E48740494c7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7519Db53B63d72721470319A5F4462D587Bb3008)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconProxy (0x913EE05036f3cbc94Ee4afDea87ceb430524648a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xa725898D6F73C512f803B564A89DFbd96cF298EC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XAppConnectionManager (0xaa099aF87ACE9E437b9B410a687F263eeaeC4321)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxy (0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xd85DC9A21378EF738A248236E970c2e0be89C9c2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0xDB2E83bA806C637086Be7174e3636bd7aCE3ae0e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xeE2b1e23e71052860C14f69E84AAF78478606D63)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0xFCcD3516d6BB62b009088aDae1E349430dDF6e77)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8c8ec2092b76355e66b19ad5eca12231a09f63ae
 
 # Diff at Thu, 27 Feb 2025 11:12:13 GMT:

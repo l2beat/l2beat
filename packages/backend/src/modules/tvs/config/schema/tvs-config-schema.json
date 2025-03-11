@@ -106,7 +106,7 @@
           "type": "string"
         },
         "value": {
-          "type": "number"
+          "type": "string"
         }
       },
       "type": "object"
