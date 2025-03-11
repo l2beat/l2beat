@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { extractPricesAndAmounts, mapConfig } from './mapConfig'
-import { type Token, TokenId, type TvsConfig } from './types'
+import { type ProjectTvsConfig, type Token, TokenId } from './types'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
@@ -114,7 +114,7 @@ describe(mapConfig.name, () => {
 
 describe(extractPricesAndAmounts.name, () => {
   it('should map amount formulas to sync configs', async () => {
-    const tvsConfig = mockObject<TvsConfig>({
+    const tvsConfig = mockObject<ProjectTvsConfig>({
       tokens: [
         mockObject<Token>({
           priceId: 'price-ARB',
@@ -231,7 +231,7 @@ describe(extractPricesAndAmounts.name, () => {
       '0xA9cF190a5b7daE4CB1b3BD68fABf310cf1982185',
     )
 
-    const tvsConfig = mockObject<TvsConfig>({
+    const tvsConfig = mockObject<ProjectTvsConfig>({
       tokens: [
         // WBTC with amount formula as totalSupply on L2
         mockObject<Token>({

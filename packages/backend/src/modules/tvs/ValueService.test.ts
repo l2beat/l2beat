@@ -7,11 +7,11 @@ import {
   type BalanceOfEscrowAmountFormula,
   type CalculationFormula,
   type ConstAmountFormula,
+  type ProjectTvsConfig,
   type Token,
   TokenId,
   type TokenValue,
   type TotalSupplyAmountFormula,
-  type TvsConfig,
 } from './types'
 
 describe(ValueService.name, () => {
@@ -28,7 +28,7 @@ describe(ValueService.name, () => {
 
       const amountConfigId = createAmountConfig(amountFormula).id
 
-      const tvsConfig = mockObject<TvsConfig>({
+      const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
           mockObject<Token>({
@@ -118,7 +118,7 @@ describe(ValueService.name, () => {
         wBTCBalanceOfEscrowFormula,
       ).id
 
-      const tvsConfig = mockObject<TvsConfig>({
+      const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('bob'),
         tokens: [
           // WBTC with amount formula as totalSupply on L2
@@ -244,7 +244,7 @@ describe(ValueService.name, () => {
         amountFormula.arguments[1] as TotalSupplyAmountFormula,
       ).id
 
-      const tvsConfig = mockObject<TvsConfig>({
+      const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
           mockObject<Token>({

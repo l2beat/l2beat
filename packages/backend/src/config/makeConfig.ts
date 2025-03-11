@@ -12,6 +12,7 @@ import { getDaBeatConfig } from './features/dabeat'
 import { getFinalityConfig } from './features/finality'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvlConfig } from './features/tvl'
+import { getTvsConfig } from './features/tvs'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getVerifiersConfig } from './features/verifiers'
 import { getGitCommitHash } from './getGitCommitHash'
@@ -107,6 +108,7 @@ export async function makeConfig(
     tvl:
       flags.isEnabled('tvl') &&
       (await getTvlConfig(ps, flags, env, chains, minTimestampOverride)),
+    tvs: flags.isEnabled('tvs') && (await getTvsConfig(ps, flags)),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),

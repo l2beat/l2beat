@@ -6,6 +6,7 @@ import type {
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
+import { uniqBy } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
@@ -228,11 +229,12 @@ function makeTechnologyContract(
 
   const additionalReferences: ReferenceLink[] = []
 
-  const usedInProjects = [
-    item.address,
-    ...(item.upgradeability?.implementations ?? []),
-  ].flatMap((address) =>
-    contractUtils.getUsedIn(projectParams.id, item.chain, address),
+  const usedInProjects = uniqBy(
+    [item.address, ...(item.upgradeability?.implementations ?? [])].flatMap(
+      (address) =>
+        contractUtils.getUsedIn(projectParams.id, item.chain, address),
+    ),
+    'id',
   )
 
   return {

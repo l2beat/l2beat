@@ -9,12 +9,10 @@ import {
   interpolateModelTemplate,
 } from './interpolate'
 
-type ContractOrEoa = EntryParameters & { isEoa?: boolean }
-
 const RELATIONS_FILENAME = 'relations.lp'
 interface InlineTemplate {
   content: string
-  when: (c: ContractOrEoa, p?: ReceivedPermission) => boolean
+  when: (c: EntryParameters, p?: ReceivedPermission) => boolean
 }
 
 const addressTemplate: InlineTemplate = {
@@ -37,14 +35,14 @@ const addressTypeContractTemplate: InlineTemplate = {
 addressType(
   @self,
   contract).`,
-  when: (c) => !c.isEoa,
+  when: (c) => c.type === 'Contract',
 }
 const addressTypeEOATemplate: InlineTemplate = {
   content: `
 addressType(
   @self,
   eoa).`,
-  when: (c) => !!c.isEoa,
+  when: (c) => c.type === 'EOA',
 }
 const addressDescriptionTemplate: InlineTemplate = {
   content: `
@@ -85,10 +83,7 @@ export function buildRelationsModels(
   addressToNameMap: Record<string, string>,
 ): Record<string, string[]> {
   const relationsModel: string[] = []
-  const contractsAndEOAs = discoveryOutput.entries.map((e) => ({
-    ...e,
-    isEoa: e.type === 'EOA',
-  }))
+  const contractsAndEOAs = discoveryOutput.entries
 
   for (const contractOrEoa of contractsAndEOAs) {
     const contractValues = contractValuesForInterpolation(

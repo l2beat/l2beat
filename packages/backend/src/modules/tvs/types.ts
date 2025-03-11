@@ -123,7 +123,7 @@ interface CoinMarketCapPriceSource {
   coinMarketCapId: string
 }
 
-export type TvsConfig = {
+export type ProjectTvsConfig = {
   projectId: ProjectId
   tokens: Token[]
 }
