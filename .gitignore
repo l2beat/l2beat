@@ -7,6 +7,7 @@ yarn-error.log
 # IDEs
 .vscode
 .idea
+.*.sw[op]
 
 # Next.js
 .next

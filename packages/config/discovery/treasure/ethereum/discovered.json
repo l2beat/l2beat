@@ -2,16 +2,18 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 21786543,
-  "configHash": "0xccf4e71c9f37c153033b05b005971326703bd23973033368db72580a61cce5b5",
+  "configHash": "0xd8abd7f315206cfe3ccf14ebabcfd82c59f86cc181d519407fe711521ec0d957",
   "sharedModules": ["shared-zk-stack"],
-  "contracts": [
+  "entries": [
     {
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "type": "Contract",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "proxyType": "immutable",
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
       "sinceBlock": 21081436,
@@ -22,8 +24,35 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1c68007a9A7E5Adc862da9b54938112352B97f17",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1ee4324F7BD44A4c7c335C2D4e758639B60E8726",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2572835e02b59078711aa0800490e80975e4169d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
       "name": "TreasureChainAdminMultisig",
       "address": "0x282370D1e925ee897CB29Cb3beC13aAe0743067C",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -69,12 +98,30 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
+      "address": "0x58244EA236D2ff57c023A4028E228f77dc328894",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
+      "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
@@ -116,6 +163,7 @@
     {
       "name": "TreasureZkEvm",
       "address": "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
+      "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
@@ -339,10 +387,12 @@
     {
       "name": "TreasureZkEvmAdmin",
       "address": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871",
+      "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
+      "proxyType": "immutable",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -376,35 +426,16 @@
       },
       "derivedName": "ChainAdmin",
       "category": { "name": "Governance", "priority": 3 }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0" },
-    { "address": "0x1c68007a9A7E5Adc862da9b54938112352B97f17" },
-    { "address": "0x1ee4324F7BD44A4c7c335C2D4e758639B60E8726" },
-    {
-      "address": "0x2572835e02b59078711aa0800490e80975e4169d",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
     },
     {
-      "address": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
+      "address": "0xBAe65c4bA62799F68817Cbb2bB353Da4572C23Ae",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
-    { "address": "0x58244EA236D2ff57c023A4028E228f77dc328894" },
-    { "address": "0xBAe65c4bA62799F68817Cbb2bB353Da4572C23Ae" },
     {
       "address": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -413,7 +444,11 @@
         }
       ]
     },
-    { "address": "0xe25AdA29FA5873A24afEe1342422BD14e5809e03" }
+    {
+      "address": "0xe25AdA29FA5873A24afEe1342422BD14e5809e03",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66": [

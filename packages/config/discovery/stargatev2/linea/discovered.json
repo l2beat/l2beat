@@ -2,14 +2,16 @@
   "name": "stargatev2",
   "chain": "linea",
   "blockNumber": 15810734,
-  "configHash": "0x375e63146692fb605d7d95b6f824456ccce059e1258e56ca7e185fb59989340e",
-  "contracts": [
+  "configHash": "0x21e18fe4bca478277cfd068dc9018edee26a155fd2e67c4e55b4316b6c4770e6",
+  "entries": [
     {
       "name": "TokenMessaging",
       "address": "0x5f688F563Dc16590e570f97b542FA87931AF2feD",
+      "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716837017,
       "sinceBlock": 4931061,
       "values": {
@@ -50,9 +52,11 @@
     {
       "name": "StargatePoolNative",
       "address": "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075",
+      "type": "Contract",
       "sourceHashes": [
         "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -89,11 +93,12 @@
         "treasuryFee": 28120607,
         "tvl": "4456999350000000000000"
       }
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x5f688F563Dc16590e570f97b542FA87931AF2feD": [

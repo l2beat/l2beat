@@ -1,35 +1,35 @@
-import type { ConfigReader, ContractParameters } from '@l2beat/discovery'
+import type { ConfigReader, EntryParameters } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { findUnknownContracts } from './findUnknownContracts'
+import { findUnknownEntries } from './findUnknownEntries'
 
 const A = { address: EthereumAddress.random() }
 const B = { address: EthereumAddress.random() }
 const C = { address: EthereumAddress.random() }
 
-describe(findUnknownContracts.name, () => {
-  it('finds contracts not present in discovered.json', () => {
+describe(findUnknownEntries.name, () => {
+  it('finds entries not present in discovered.json', () => {
     const configReader = mockObject<ConfigReader>({
       readDiscovery: mockFn().returns({
-        contracts: [A, B],
+        entries: [A, B],
       }),
     })
 
-    const contracts = [A, B, C] as ContractParameters[]
-    const result = findUnknownContracts('', contracts, configReader, 'ethereum')
+    const entries = [A, B, C] as EntryParameters[]
+    const result = findUnknownEntries('', entries, configReader, 'ethereum')
     expect(result).toEqual([C.address])
   })
 
   it('works for empty arrays', () => {
     const configReader = mockObject<ConfigReader>({
       readDiscovery: mockFn().returns({
-        contracts: [],
+        entries: [],
       }),
     })
 
-    const contracts: ContractParameters[] = []
-    const result = findUnknownContracts('', contracts, configReader, 'ethereum')
+    const entries: EntryParameters[] = []
+    const result = findUnknownEntries('', entries, configReader, 'ethereum')
     expect(result).toEqual([])
   })
 })

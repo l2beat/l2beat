@@ -1,4 +1,4 @@
-import type { ContractParameters } from '@l2beat/discovery'
+import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -136,11 +136,11 @@ interface OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingDisplay['category']
   }
-  bridge: ContractParameters
+  bridge: EntryParameters
   blockNumberOpcodeTimeSeconds?: number
   finality?: ProjectFinalityConfig
-  rollupProxy: ContractParameters
-  sequencerInbox: ContractParameters
+  rollupProxy: EntryParameters
+  sequencerInbox: EntryParameters
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>

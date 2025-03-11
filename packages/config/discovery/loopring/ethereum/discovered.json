@@ -2,11 +2,12 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 21973864,
-  "configHash": "0xdee244cac6cf3252f7be1be1c68b027929bf8fa91e7c9ee9542a16ac6038ed15",
-  "contracts": [
+  "configHash": "0x03de5cfee7813f737781bf3b0b0bb5213720ac9c505656ff7088ec8ecefe391b",
+  "entries": [
     {
       "name": "ExchangeV3",
       "address": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+      "type": "Contract",
       "sourceHashes": [
         "0x09274cec6469e731822a31ef5a200ae33fc319aca366cf599f707b6359f97613",
         "0x7e59ed579f658f2c8c645a1794f79626a3d8578e8700d19bbd866122f9dd9b8e"
@@ -111,11 +112,18 @@
       }
     },
     {
+      "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LoopringIOExchangeOwner",
       "address": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
+      "type": "Contract",
       "sourceHashes": [
         "0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1616396742,
       "sinceBlock": 12087157,
       "values": {
@@ -142,11 +150,43 @@
       }
     },
     {
+      "address": "0x1F28F10176F89F4E9985873B84d14e75751BB3D1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x212e75BF264C4FB3133fA5ef6f47A34367020A1A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x238b649E62a0C383b54060b1625516b489183843",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2Fc617E933a52713247CE25730f6695920B3befe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AgentRegistry",
       "address": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
+      "type": "Contract",
       "sourceHashes": [
         "0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1603946693,
       "sinceBlock": 11149547,
       "values": {
@@ -296,11 +336,33 @@
       }
     },
     {
+      "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4374D3d032B3c96785094ec9f384f07077792768",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4774d954D20DB98492B0487BC9F91dc401dBA3aE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProtocolFeeVault",
       "address": "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
+      "type": "Contract",
       "sourceHashes": [
         "0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1583852946,
       "sinceBlock": 9644449,
       "values": {
@@ -328,9 +390,11 @@
     {
       "name": "ForcedWithdrawalAgent",
       "address": "0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470",
+      "type": "Contract",
       "sourceHashes": [
         "0xa8b1d474b6c7b4007833dea307178402243d15952eb22c992be9b107651cbc2f"
       ],
+      "proxyType": "immutable",
       "description": "Auxiliary contract able to force withdrawals from L1 on behalf of users.",
       "sinceTimestamp": 1615357743,
       "sinceBlock": 12009173,
@@ -349,11 +413,28 @@
       }
     },
     {
+      "address": "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BlockVerifier",
       "address": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
+      "type": "Contract",
       "sourceHashes": [
         "0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1603946469,
       "sinceBlock": 11149533,
       "values": {
@@ -365,9 +446,11 @@
     {
       "name": "DefaultDepositContract",
       "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+      "type": "Contract",
       "sourceHashes": [
         "0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1603949642,
       "sinceBlock": 11149779,
       "values": {
@@ -378,11 +461,38 @@
       }
     },
     {
+      "address": "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LRC_v2",
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+      "type": "Contract",
       "sourceHashes": [
         "0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1554948637,
       "sinceBlock": 7544036,
       "values": {
@@ -395,8 +505,19 @@
       }
     },
     {
+      "address": "0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xDB5C4078eC50Ad4Cdc47F4597a377528B1d7bcdB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LoopringMultisig",
       "address": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -436,9 +557,11 @@
     {
       "name": "LoopringV3",
       "address": "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
+      "type": "Contract",
       "sourceHashes": [
         "0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1603955371,
       "sinceBlock": 11150215,
       "values": {
@@ -458,21 +581,45 @@
       }
     },
     {
+      "address": "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xeadb3d065f8d15cc05e92594523516aD36d1c834",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FastWithdrawalAgent",
       "address": "0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31",
+      "type": "Contract",
       "sourceHashes": [
         "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1603946697,
       "sinceBlock": 11149548,
       "values": { "$immutable": true }
     },
     {
+      "address": "0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UserStakingPool",
       "address": "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b",
+      "type": "Contract",
       "sourceHashes": [
         "0x99d65209b6a37a5338021e870cb30cc131cd3d701c0b30fa072bbe3615d2c71f"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"],
       "sinceTimestamp": 1574241665,
       "sinceBlock": 8967548,
@@ -493,34 +640,6 @@
         }
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438" },
-    { "address": "0x1F28F10176F89F4E9985873B84d14e75751BB3D1" },
-    { "address": "0x212e75BF264C4FB3133fA5ef6f47A34367020A1A" },
-    { "address": "0x238b649E62a0C383b54060b1625516b489183843" },
-    { "address": "0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46" },
-    { "address": "0x2Fc617E933a52713247CE25730f6695920B3befe" },
-    { "address": "0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2" },
-    { "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1" },
-    { "address": "0x4374D3d032B3c96785094ec9f384f07077792768" },
-    { "address": "0x4774d954D20DB98492B0487BC9F91dc401dBA3aE" },
-    { "address": "0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341" },
-    { "address": "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234" },
-    { "address": "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98" },
-    { "address": "0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374" },
-    { "address": "0x7414eA41bd1844f61e8990b209a1Dc301489baa9" },
-    { "address": "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191" },
-    { "address": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97" },
-    { "address": "0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc" },
-    { "address": "0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB" },
-    { "address": "0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42" },
-    { "address": "0xDB5C4078eC50Ad4Cdc47F4597a377528B1d7bcdB" },
-    { "address": "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095" },
-    { "address": "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907" },
-    { "address": "0xeadb3d065f8d15cc05e92594523516aD36d1c834" },
-    { "address": "0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5" }
   ],
   "abis": {
     "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": [
