@@ -21,10 +21,10 @@ import {
   type CalculationFormula,
   type CirculatingSupplyAmountFormula,
   type PriceConfig,
+  type ProjectTvsConfig,
   type Token,
   TokenId,
   type TotalSupplyAmountFormula,
-  type TvsConfig,
   type ValueFormula,
 } from './types'
 
@@ -32,7 +32,7 @@ export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   logger: Logger,
   rpcClient?: RpcClient,
-): Promise<TvsConfig> {
+): Promise<ProjectTvsConfig> {
   const CHAINS = await getChains()
   const getChain = (name: string) => {
     const chain = CHAINS.get(name)
@@ -313,7 +313,7 @@ export function createToken(
   }
 }
 
-export function extractPricesAndAmounts(config: TvsConfig): {
+export function extractPricesAndAmounts(config: ProjectTvsConfig): {
   amounts: AmountConfig[]
   prices: PriceConfig[]
 } {

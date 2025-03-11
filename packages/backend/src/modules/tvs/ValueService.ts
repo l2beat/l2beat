@@ -5,8 +5,8 @@ import { createAmountConfig } from './mapConfig'
 import type {
   AmountFormula,
   CalculationFormula,
+  ProjectTvsConfig,
   TokenValue,
-  TvsConfig,
   ValueFormula,
 } from './types'
 
@@ -14,7 +14,7 @@ export class ValueService {
   constructor(private readonly storage: DataStorage) {}
 
   async calculate(
-    config: TvsConfig,
+    config: ProjectTvsConfig,
     timestamps: UnixTime[],
   ): Promise<Map<number, TokenValue[]>> {
     const result = new Map<number, TokenValue[]>()
