@@ -58,6 +58,7 @@ export const rhinofi: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
+    architectureImage: 'starkex',
     name: 'rhino.fi',
     slug: 'rhinofi',
     headerWarning:

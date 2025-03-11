@@ -59,6 +59,7 @@ export const myria: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
+    architectureImage: 'starkex',
     name: 'Myria',
     slug: 'myria',
     description:
