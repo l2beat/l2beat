@@ -28,13 +28,12 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     getProjectDaThroughputChart(params),
   ])
 
-  const throughputRange = getRange(throughput.map(([timestamp]) => timestamp))
   const [costsUopsCount, throughputUopsCount] = await Promise.all([
     getSummedActivityForProject(params.projectId, costs.range),
-    getSummedActivityForProject(params.projectId, throughputRange),
+    getSummedActivityForProject(params.projectId, throughput.range),
   ])
 
-  const timestampedDaData = Object.fromEntries(throughput ?? [])
+  const timestampedDaData = Object.fromEntries(throughput.chart ?? [])
   const chart = costsChart.map((cost) => {
     const dailyTimestamp = UnixTime.toStartOf(cost[0], 'day')
     const isHourlyRange = params.range === '1d' || params.range === '7d'
@@ -45,13 +44,12 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     ] as const
   })
 
-  const summedThroughput = throughput.reduce((acc, [_, throughput]) => {
+  const summedThroughput = throughput.chart.reduce((acc, [_, throughput]) => {
     return acc + throughput
   }, 0)
   const total = withTotal({
     ...costs,
     posted: summedThroughput,
-    range: costs.range,
   })
 
   const resolution = rangeToResolution(params.range)
@@ -137,10 +135,4 @@ function mapToPerL2UopsCost(
     posted:
       data.posted !== undefined ? data.posted / uops.throughput : undefined,
   }
-}
-
-function getRange(timestamps: UnixTime[]): [UnixTime, UnixTime] {
-  const from = Math.min(...timestamps)
-  const to = Math.max(...timestamps)
-  return [from, to]
 }

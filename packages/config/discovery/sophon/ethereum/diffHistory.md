@@ -1,3 +1,111 @@
+Generated with discovered.json: 0xc440757927dd057747d00754c6fa4b72cf43a5de
+
+# Diff at Tue, 11 Mar 2025 08:00:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6186a4f8e3a9e415d081d4e3e85c2deceaa5530c block: 21786541
+- current block number: 22022297
+
+## Description
+
+ValidatorTimelock governance transfer for ZIP 5.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract undefined (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8)
+    +++ description: None
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.owner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897)
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D)
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+```
+
+```diff
+-   Status: DELETED
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888)
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29)
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+```
+
+```diff
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) {
+    +++ description: None
+      values.owner:
+-        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+## Source code changes
+
+```diff
+.../EmergencyUpgradeBoard.sol => /dev/null         | 1233 -----------------
+ .../.flat@21786541/Guardians.sol => /dev/null      | 1439 --------------------
+ .../ProtocolUpgradeHandler.sol => /dev/null        |  605 --------
+ .../SecurityCouncil.sol => /dev/null               | 1389 -------------------
+ 4 files changed, 4666 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786541 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract undefined (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897)
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D)
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+```
+
+```diff
++   Status: CREATED
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888)
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29)
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+```
+
 Generated with discovered.json: 0x206f683473df44bbe86bb34e1c0a51e4df746ed4
 
 # Diff at Tue, 04 Mar 2025 10:40:00 GMT:

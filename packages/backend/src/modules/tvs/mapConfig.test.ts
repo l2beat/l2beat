@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { extractPricesAndAmounts, mapConfig } from './mapConfig'
-import { type Token, TokenId, type TvsConfig } from './types'
+import { type ProjectTvsConfig, type Token, TokenId } from './types'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
@@ -40,15 +40,6 @@ describe(mapConfig.name, () => {
             chain: 'ethereum',
             escrowAddress: EthereumAddress(
               '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
-            ),
-            decimals: 18,
-          },
-          {
-            type: 'balanceOfEscrow',
-            address: 'native',
-            chain: 'ethereum',
-            escrowAddress: EthereumAddress(
-              '0xcEe284F754E854890e311e3280b767F80797180d',
             ),
             decimals: 18,
           },
@@ -91,6 +82,7 @@ describe(mapConfig.name, () => {
       amount: {
         type: 'circulatingSupply',
         priceId: 'arbitrum',
+        decimals: 18,
       },
       sinceTimestamp: UnixTime(1679529600),
       category: 'other',
@@ -120,7 +112,7 @@ describe(mapConfig.name, () => {
 
 describe(extractPricesAndAmounts.name, () => {
   it('should map amount formulas to sync configs', async () => {
-    const tvsConfig = mockObject<TvsConfig>({
+    const tvsConfig = mockObject<ProjectTvsConfig>({
       tokens: [
         mockObject<Token>({
           priceId: 'price-ARB',
@@ -133,7 +125,6 @@ describe(extractPricesAndAmounts.name, () => {
             escrowAddress: EthereumAddress(
               '0xcEe284F754E854890e311e3280b767F80797180d',
             ),
-
             decimals: 18,
           },
           valueForProject: undefined,
@@ -144,6 +135,7 @@ describe(extractPricesAndAmounts.name, () => {
           amount: {
             type: 'circulatingSupply',
             priceId: 'price-ARB',
+            decimals: 18,
           },
           valueForProject: undefined,
           valueForTotal: undefined,
@@ -156,7 +148,8 @@ describe(extractPricesAndAmounts.name, () => {
             arguments: [
               {
                 type: 'const',
-                value: 100,
+                value: '100',
+                decimals: 0,
               },
               {
                 type: 'totalSupply',
@@ -193,6 +186,7 @@ describe(extractPricesAndAmounts.name, () => {
           id: '4ffda8b9b469',
           priceId: 'price-ARB',
           type: 'circulatingSupply',
+          decimals: 18,
         },
         {
           id: '9c352c5b1183',
@@ -226,7 +220,7 @@ describe(extractPricesAndAmounts.name, () => {
       '0xA9cF190a5b7daE4CB1b3BD68fABf310cf1982185',
     )
 
-    const tvsConfig = mockObject<TvsConfig>({
+    const tvsConfig = mockObject<ProjectTvsConfig>({
       tokens: [
         // WBTC with amount formula as totalSupply on L2
         mockObject<Token>({

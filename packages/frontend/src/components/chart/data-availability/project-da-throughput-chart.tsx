@@ -24,7 +24,7 @@ export function ProjectDaThroughputChart({
   configuredThroughputs,
   milestones,
 }: Props) {
-  const [range, setRange] = useState<DaThroughputTimeRange>('30d')
+  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
   const [showMax, setShowMax] = useState(true)
 
   const { data, isLoading } = api.da.projectChart.useQuery({
@@ -33,12 +33,12 @@ export function ProjectDaThroughputChart({
   })
 
   const chartRange = useMemo(
-    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
     [data],
   )
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
-    data,
+    data?.chart,
     configuredThroughputs,
   )
 

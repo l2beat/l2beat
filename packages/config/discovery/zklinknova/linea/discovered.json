@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "linea",
-  "blockNumber": 16779726,
+  "blockNumber": 16804518,
   "configHash": "0x0fa5063b11a74071797c4f47931ee100d73efca58416ef49d5944334b9d9a58b",
   "entries": [
     {
@@ -292,7 +292,7 @@
           }
         ],
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "getFirstUnprocessedPriorityTx": 268867,
+        "getFirstUnprocessedPriorityTx": 268868,
         "getGateway": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "getGovernor": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "getL2BootloaderBytecodeHash": "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d",
@@ -301,15 +301,15 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 22,
+        "getPriorityQueueSize": 21,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 18,
-        "getTotalBatchesCommitted": 51778,
-        "getTotalBatchesExecuted": 50873,
-        "getTotalBatchesVerified": 51763,
-        "getTotalBlocksCommitted": 51778,
-        "getTotalBlocksExecuted": 50873,
-        "getTotalBlocksVerified": 51763,
+        "getTotalBatchesCommitted": 51868,
+        "getTotalBatchesExecuted": 51023,
+        "getTotalBatchesVerified": 51764,
+        "getTotalBlocksCommitted": 51868,
+        "getTotalBlocksExecuted": 51023,
+        "getTotalBlocksVerified": 51764,
         "getTotalPriorityTxs": 268889,
         "getVerifier": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
         "getVerifierParams": {
@@ -319,8 +319,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xe9437ff7f1aa6d8346adf3cfac1745d8386477f77fd446c8f670ed88265bf617",
-          "expirationTimestamp": 1741074686,
+          "canonicalTxHash": "0xae9dbf8d6dc4a22e706e655fc53f9cb7c1324b7f124908bf95dcf09537f21203",
+          "expirationTimestamp": 1741169427,
           "layer2Tip": 0
         },
         "validators": [

@@ -44,7 +44,7 @@ export function TvsBreakdownSummaryBox(props: Props) {
         label={
           <>
             <span className="max-md:hidden">Canonically Bridged</span>
-            <span className="max-sm:hidden md:hidden">
+            <span className="max-xs:hidden md:hidden">
               Canonically Bridged Value
             </span>
             <span className="xs:hidden">Canonical</span>
@@ -61,7 +61,7 @@ export function TvsBreakdownSummaryBox(props: Props) {
         label={
           <>
             <span className="max-md:hidden">Natively Minted</span>
-            <span className="max-sm:hidden md:hidden">
+            <span className="max-xs:hidden md:hidden">
               Natively Minted Tokens
             </span>
             <span className="xs:hidden">Native</span>
@@ -78,7 +78,7 @@ export function TvsBreakdownSummaryBox(props: Props) {
         label={
           <>
             <span className="max-md:hidden">Externally Bridged</span>
-            <span className="max-sm:hidden md:hidden">
+            <span className="max-xs:hidden md:hidden">
               Externally Bridged Value
             </span>
             <span className="xs:hidden">External</span>

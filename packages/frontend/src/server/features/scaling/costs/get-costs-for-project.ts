@@ -44,7 +44,7 @@ const getCachedCostsForProject = cache(
       return {
         ...sumCostValues([]),
         syncedUntil: UnixTime.now(),
-        range: [-Infinity, Infinity],
+        range: fullySyncedRange,
       }
     const configurations = await db.indexerConfiguration.getByIndexerId(
       'tracked_txs_indexer',
@@ -59,11 +59,11 @@ const getCachedCostsForProject = cache(
       return {
         ...sumCostValues([]),
         syncedUntil: UnixTime.now(),
-        range: [-Infinity, Infinity],
+        range: fullySyncedRange,
       }
 
     const records = await db.aggregatedL2Cost.getByProjectAndTimeRange(
-      trackedTxsProject.id,
+      project.id,
       fullySyncedRange,
     )
     const timestamps = records.map((r) => r.timestamp)
