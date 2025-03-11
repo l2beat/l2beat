@@ -6,6 +6,7 @@ import { underReviewL2 } from './templates/underReview'
 export const pandasea: ScalingProject = underReviewL2({
   id: 'pandasea',
   capability: 'universal',
+  isArchived: true,
   addedAt: UnixTime(1729797861), // 2024-10-24T21:24:21Z
   badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
