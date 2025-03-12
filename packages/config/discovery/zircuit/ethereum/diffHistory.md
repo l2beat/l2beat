@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x589c54416be8183b90ad3f744be87009c2ecb803
+
+# Diff at Wed, 12 Mar 2025 10:21:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d56fc86cf5944647644b8653ca9717b11d4adae8 block: 22022908
+- current block number: 22029918
+
+## Description
+
+Zircuit has transitioned to the new Verifier, which does not allow dummy proofs. The old verifier cannot be used anymore. The backdoor for proofless state updates in the L2OutputOracle is still present.
+
+Changed the category to ZK Rollup.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022908 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.
+      description:
+-        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. This contract also supports dummy proofs via the old 0x6BCe7408c0781dcE7b71494274302D4b75a1447c until a migration to the new 0xC25D093D3A3f58952252D2e763BEAF2559dc9737 has been manually executed."
++        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h."
+      values.getL2OutputEx:
+-        []
+      values.getL2OutputExLatest:
+-        "EXPECT_REVERT"
+      fieldMeta.getL2OutputExLatest:
+-        {"severity":"HIGH","description":"As soon as this returns a value, Zircuit has transitioned to the v2 verifier. Remove the v1 verifier description string from the contract template."}
+    }
+```
+
 Generated with discovered.json: 0x7910094b1e0b0816459fe74dd6ff06e3524e684f
 
 # Diff at Tue, 11 Mar 2025 11:59:58 GMT:

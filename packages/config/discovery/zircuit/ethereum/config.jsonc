@@ -15,6 +15,7 @@
   },
   "overrides": {
     "Verifier": {
+      "category": "spam", // cannot be used, see L2OutputOracle
       "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
     }
   }

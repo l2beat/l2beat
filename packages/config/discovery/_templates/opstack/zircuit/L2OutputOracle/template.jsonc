@@ -1,13 +1,14 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in {{withdrawalKeepalivePeriodSecondsFmt}}. This contract also supports dummy proofs via the old {{verifier}} until a migration to the new {{verifierV2}} has been manually executed.",
+  "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in {{withdrawalKeepalivePeriodSecondsFmt}}.",
   "ignoreMethods": [
     "getL2OutputAfter",
     "getL2OutputIndexAfter",
     "getL2Output",
     "computeL2Timestamp",
-    "getL2OutputRootWithFinalization"
+    "getL2OutputRootWithFinalization",
+    "getL2OutputEx"
   ],
   "ignoreInWatchMode": [
     "latestBlockNumber",
@@ -43,16 +44,6 @@
         "args": []
       },
       "returnType": "(FormatSeconds)"
-    },
-    "getL2OutputExLatest": {
-      "severity": "HIGH",
-      "description": "As soon as this returns a value, Zircuit has transitioned to the v2 verifier. Remove the v1 verifier description string from the contract template.",
-      "handler": {
-        "type": "call",
-        "method": "function getL2OutputEx(uint256 _l2OutputIndex) view returns (tuple(uint256 batchIndex, bytes32 batchHash, bytes32 poseidonStateRoot))",
-        "args": ["{{latestOutputIndex}}"],
-        "expectRevert": true
-      }
     }
   }
 }
