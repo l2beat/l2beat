@@ -20,9 +20,10 @@ import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
+import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 
 export async function runDiscovery(
-  rootPath: string,
+  paths: DiscoveryPaths,
   http: HttpClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
@@ -42,7 +43,7 @@ export async function runDiscovery(
 
   const logger = DiscoveryLogger.CLI
   const { result, blockNumber, providerStats } = await discover(
-    rootPath,
+    paths.discovery,
     chainConfigs,
     projectConfig,
     logger,
@@ -51,10 +52,10 @@ export async function runDiscovery(
     config.overwriteCache,
   )
 
-  const templatesFolder = path.join(rootPath, TEMPLATES_PATH)
+  const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
-    rootFolder: rootPath,
+    paths,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,

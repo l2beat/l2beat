@@ -13,9 +13,10 @@ import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
 import type { DiscoveryOutput } from './types'
+import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 
 export interface SaveDiscoveryResultOptions {
-  rootFolder: string
+  paths: DiscoveryPaths
   sourcesFolder?: string
   flatSourcesFolder?: string
   discoveryFilename?: string
@@ -34,8 +35,7 @@ export async function saveDiscoveryResult(
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const projectDiscoveryFolder = posix.join(
-    options.rootFolder,
-    'discovery',
+    options.paths.discovery,
     config.name,
     config.chain,
   )
@@ -55,7 +55,7 @@ export async function saveDiscoveryResult(
     )
   }
   if (options.buildProjectPageFacts) {
-    await buildProjectPageFacts(config.name, options.rootFolder)
+    await buildProjectPageFacts(config.name, options.paths)
   }
 }
 

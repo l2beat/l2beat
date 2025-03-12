@@ -1,4 +1,3 @@
-import { join } from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import chalk from 'chalk'
@@ -18,6 +17,7 @@ import type {
   DiscoveryModuleConfig,
 } from '../config/types'
 import { ConfigReader } from '../discovery/config/ConfigReader'
+import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { ChainValue } from './types'
 
@@ -125,14 +125,20 @@ export async function discover(
   logger: Logger = Logger.DEBUG,
 ): Promise<void> {
   const http = new HttpClient()
-  const rootPath = join(process.cwd(), '../config')
-  const configReader = new ConfigReader(join(rootPath, 'discovery'))
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
 
   if (config.dryRun) {
     logger = logger.for('DryRun')
     logger.info('Starting')
 
-    await dryRunDiscovery(rootPath, http, configReader, config, chainConfigs)
+    await dryRunDiscovery(
+      paths.discovery,
+      http,
+      configReader,
+      config,
+      chainConfigs,
+    )
     return
   }
 
@@ -142,5 +148,5 @@ export async function discover(
       config.chain.name,
     )}`,
   )
-  await runDiscovery(rootPath, http, configReader, config, chainConfigs)
+  await runDiscovery(paths, http, configReader, config, chainConfigs)
 }

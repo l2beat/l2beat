@@ -5,6 +5,7 @@ import { z } from 'zod'
 const CONFIG_FILENAME = '.discovery.json'
 
 export interface DiscoveryPaths {
+  root: string
   discovery: string
   cache: string
 }
@@ -39,7 +40,7 @@ const ConfigInput = z.object({
   cache: z.string().optional(),
 })
 
-const DEFAULT_CONFIG: DiscoveryPaths = {
+const DEFAULT_CONFIG: Omit<DiscoveryPaths, 'root'> = {
   discovery: 'discovery',
   cache: 'cache/discovery.sqlite',
 }
@@ -48,6 +49,7 @@ function readConfig(root: string): DiscoveryPaths {
   const source = readFileSync(join(root, CONFIG_FILENAME), 'utf-8')
   const parsed = ConfigInput.parse(JSON.parse(source))
   return {
+    root: resolve(root),
     discovery: resolve(root, parsed.discovery ?? DEFAULT_CONFIG.discovery),
     cache: resolve(root, parsed.cache ?? DEFAULT_CONFIG.cache),
   }
