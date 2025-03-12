@@ -187,8 +187,7 @@ function toTechnologyContract(
       description: permission.description,
       participants,
       references: permission.references ?? [],
-      implementationChanged: false,
-      highSeverityFieldChanged: false,
+      impactfulChange: false,
     },
   ]
 
