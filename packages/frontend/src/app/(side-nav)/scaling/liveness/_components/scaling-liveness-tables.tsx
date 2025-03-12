@@ -77,9 +77,9 @@ export function ScalingLivenessTables(props: Props) {
     <>
       <Controls
         entries={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
       />
       <DirectoryTabs value={tab} onValueChange={setTab}>

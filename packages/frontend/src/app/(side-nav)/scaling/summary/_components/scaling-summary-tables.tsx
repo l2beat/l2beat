@@ -68,9 +68,9 @@ export function ScalingSummaryTables(props: Props) {
       <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
       <ScalingSummaryFilters
         entries={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
         className="mt-4"
       />
