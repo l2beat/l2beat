@@ -2,9 +2,9 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
+import { TableLink } from '~/components/table/table-link'
 import { useTable } from '~/hooks/use-table'
 import type {
   DaBridgeSummaryEntry,

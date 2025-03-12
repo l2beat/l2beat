@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { ColumnHelper } from '@tanstack/react-table'
-import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
+import { TableLink } from '~/components/table/table-link'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { ProjectNameCell } from '../../cells/project-name-cell'
 import type { CommonProjectColumnsOptions } from './common-project-columns'

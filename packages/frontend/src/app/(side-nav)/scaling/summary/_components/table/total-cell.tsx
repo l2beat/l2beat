@@ -16,7 +16,7 @@ import {
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
-import { TableLink } from './table-link'
+import { TableLink } from '../../../../../../components/table/table-link'
 
 export interface TotalCellProps {
   breakdown:

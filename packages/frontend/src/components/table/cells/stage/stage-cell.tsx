@@ -1,6 +1,5 @@
 import type { ProjectScalingStage } from '@l2beat/config'
 
-import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import {
   StageBadge,
   getStageTextClassname,
@@ -10,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { TableLink } from '~/components/table/table-link'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import { StopwatchIcon } from '~/icons/stopwatch'
 import { cn } from '~/utils/cn'

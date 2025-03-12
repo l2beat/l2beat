@@ -12,7 +12,7 @@ import {
 } from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
-import { TableLink } from '../../../summary/_components/table/table-link'
+import { TableLink } from '../../../../../../components/table/table-link'
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()
 

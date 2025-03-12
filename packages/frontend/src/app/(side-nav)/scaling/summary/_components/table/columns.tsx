@@ -19,9 +19,9 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { sortStages } from '~/components/table/sorting/sort-stages'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { TableLink } from '../../../../../../components/table/table-link'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import type { ScalingSummaryTableRow } from '../../_utils/to-table-rows'
-import { TableLink } from './table-link'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 

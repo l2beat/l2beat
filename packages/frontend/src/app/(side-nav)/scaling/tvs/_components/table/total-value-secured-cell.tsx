@@ -11,7 +11,7 @@ import {
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
-import { TableLink } from '../../../summary/_components/table/table-link'
+import { TableLink } from '../../../../../../components/table/table-link'
 
 export interface TotalValueSecuredCellProps {
   href: string

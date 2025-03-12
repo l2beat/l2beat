@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
-import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
+import { TableLink } from '~/components/table/table-link'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import {

@@ -1,9 +1,9 @@
 'use client'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TableCell, TableRow } from '~/components/table/table'
+import { TableLink } from '~/components/table/table-link'
 import { useTable } from '~/hooks/use-table'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import {

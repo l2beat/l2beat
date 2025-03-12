@@ -1,4 +1,4 @@
-import { TableLink } from '~/app/(side-nav)/scaling/summary/_components/table/table-link'
+import { TableLink } from '~/components/table/table-link'
 import { cn } from '~/utils/cn'
 import {
   Tooltip,
