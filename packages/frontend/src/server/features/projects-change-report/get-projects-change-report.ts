@@ -25,8 +25,7 @@ export type ProjectsChangeReport = Awaited<
 >
 
 export interface ProjectChanges {
-  implementationChanged: boolean
-  highSeverityFieldChanged: boolean
+  impactfulChange: boolean
 }
 
 async function getProjectsChangeReportWithFns() {
@@ -35,8 +34,10 @@ async function getProjectsChangeReportWithFns() {
     projects: result,
     getChanges: function (projectId: string): ProjectChanges {
       return {
-        implementationChanged: this.hasImplementationChanged(projectId),
-        highSeverityFieldChanged: this.hasHighSeverityFieldChanged(projectId),
+        impactfulChange:
+          this.hasImplementationChanged(projectId) ||
+          this.hasHighSeverityFieldChanged(projectId) ||
+          this.hasUpgradeChange(projectId),
       }
     },
     hasImplementationChanged: function (projectId: string) {
@@ -54,6 +55,10 @@ async function getProjectsChangeReportWithFns() {
         !!ethereumChanges &&
         ethereumChanges.fieldHighSeverityContaining.length > 0
       )
+    },
+    hasUpgradeChange: function (projectId: string) {
+      const ethereumChanges = this.projects[projectId]?.ethereum
+      return !!ethereumChanges && ethereumChanges.upgradeChanges.length > 0
     },
   }
 }
@@ -144,8 +149,8 @@ const getCachedProjectsChangeReport = cache(
             }
             const index = parseInt(indexString)
 
-            const entry = onDiskContracts.find(
-              (e) => (e.address = discoveryDiff.address),
+            const entry = latestContracts.find(
+              (e) => e.address === discoveryDiff.address,
             )
 
             return entry?.issuedPermissions?.[index]?.permission === 'upgrade'
@@ -205,11 +210,11 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
   return {
     projects: {},
     getChanges: () => ({
-      implementationChanged: false,
-      highSeverityFieldChanged: false,
+      impactfulChange: false,
     }),
     hasImplementationChanged: () => false,
     hasHighSeverityFieldChanged: () => false,
+    hasUpgradeChange: () => false,
   }
 }
 
