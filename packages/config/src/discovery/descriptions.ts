@@ -5,7 +5,7 @@ export const DirectPermissionToPrefix: {
 } = {
   interact: 'Can be used to interact with',
   upgrade: 'Can be used to upgrade implementation of',
-  act: 'Can act on behalf of',
+  act: 'Can be used to act on behalf of',
   guard: 'Can act as a Guardian',
   challenge: 'Can act as a Challenger',
   propose: 'Can act as a Proposer',
@@ -28,7 +28,7 @@ export const UltimatePermissionToPrefix: {
 } = {
   interact: 'Is allowed to interact with',
   upgrade: 'Can upgrade the implementation of',
-  act: undefined,
+  act: `Can act on behalf of`,
   guard: 'A Guardian',
   challenge: 'A Challenger',
   propose: 'A Proposer',
