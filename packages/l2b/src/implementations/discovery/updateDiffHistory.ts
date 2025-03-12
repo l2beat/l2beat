@@ -6,7 +6,6 @@
 
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
-import { join } from 'path'
 import {
   ConfigReader,
   type DiscoveryDiff,
@@ -35,7 +34,7 @@ export async function updateDiffHistory(
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
-  const discoveryFolder = join(paths.discovery, projectName, chain)
+  const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
   const discoveryFromMainBranch =
