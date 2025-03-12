@@ -39,7 +39,7 @@ export const getScalingActivityColumns = (
     (row) =>
       row.id === ProjectId.ETHEREUM
         ? undefined
-        : `/scaling/projects/${row.slug}?highlight=activity`,
+        : `/scaling/projects/${row.slug}#activity`,
     opts,
   ),
   columnHelper.accessor('data.pastDayCount', {

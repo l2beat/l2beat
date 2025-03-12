@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 export const scalingTvsColumns = [
   ...getScalingCommonProjectColumns(
     columnHelper,
-    (row) => `/scaling/projects/${row.slug}?highlight=tvs`,
+    (row) => `/scaling/projects/${row.slug}#tvs`,
   ),
   columnHelper.group({
     id: 'data',
@@ -80,7 +80,7 @@ export const scalingTvsColumns = [
         <TableLink
           href={
             data.breakdown.canonical > 0
-              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown?highlight=canonical`
+              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#canonical`
               : undefined
           }
         >
@@ -114,7 +114,7 @@ export const scalingTvsColumns = [
         <TableLink
           href={
             data.breakdown.native > 0
-              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown?highlight=native`
+              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#native`
               : undefined
           }
         >
@@ -148,7 +148,7 @@ export const scalingTvsColumns = [
         <TableLink
           href={
             data.breakdown.external > 0
-              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown?highlight=external`
+              ? `/scaling/projects/${ctx.row.original.slug}/tvs-breakdown#external`
               : undefined
           }
         >

@@ -25,7 +25,7 @@ export const scalingArchivedColumns = [
 
       return (
         <PizzaRosetteCell
-          href={`/scaling/projects/${ctx.row.original.slug}?highlight=risk-analysis`}
+          href={`/scaling/projects/${ctx.row.original.slug}#risk-analysis`}
           values={risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
         />

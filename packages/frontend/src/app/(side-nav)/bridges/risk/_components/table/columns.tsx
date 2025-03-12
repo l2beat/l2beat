@@ -13,7 +13,7 @@ const columnHelper = createColumnHelper<BridgesRiskEntry>()
 export const bridgesRisksColumns = [
   ...getBridgesCommonProjectColumns(
     columnHelper,
-    (row) => `/bridges/projects/${row.slug}?highlight=risk-analysis`,
+    (row) => `/bridges/projects/${row.slug}#risk-analysis`,
   ),
   columnHelper.accessor((e) => adjustTableValue(e.destination), {
     header: 'Destination',
