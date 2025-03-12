@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/popover'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
 import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
 import { useNewTableFilterContext } from './new-table-filter-context'
@@ -23,6 +24,13 @@ export function NewTableFilterCombobox<
   T extends { filterable: FilterableValue[] },
 >({ entries }: { entries: T[] }) {
   const [open, setOpen] = useState(false)
+
+  useEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'f') {
+      e.preventDefault()
+      setOpen((open) => !open)
+    }
+  })
 
   return (
     <>
