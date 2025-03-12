@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
   "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId"],
   "description": "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.",

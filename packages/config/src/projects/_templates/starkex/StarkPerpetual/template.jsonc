@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "StarkPerpetual",
   "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
   "category": "core",

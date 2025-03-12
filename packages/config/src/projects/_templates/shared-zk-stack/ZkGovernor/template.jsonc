@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "A token governance contract that allows token holders to create and vote on proposals. At least {{proposalThreshold_MTokens}}M tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed. The accepted token is {{token}}.",
   "ignoreInWatchMode": ["clock"],
   "ignoreMethods": [

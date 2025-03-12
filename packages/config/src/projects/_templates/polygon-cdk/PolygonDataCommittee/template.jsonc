@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PolygonDataCommittee",
   "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently {{getAmountOfMembers}}/{{requiredAmountOfSignatures}}).",
   "fields": {

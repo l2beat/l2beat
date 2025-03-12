@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "A simple Timelock contract with an immutable delay of {{executionDelayFmt}}. The owner ({{owner}}) can queue transactions.",
   "category": "gov",
   "fields": {

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SHARPVerifierCallProxy",
   "description": "Upgradable contract through which the SHARPVerifier can be called. This allows {{$admin}} to change the otherwise immutable verifier contract with {{upgradeActivationDelayFmt}} delay.",
   "category": "shared",

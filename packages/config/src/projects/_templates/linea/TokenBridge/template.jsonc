@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TokenBridge",
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {

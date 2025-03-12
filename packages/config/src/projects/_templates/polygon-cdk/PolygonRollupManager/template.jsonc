@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PolygonRollupManager",
   "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the {{emergencyCouncilAdminAC}} or by anyone able to prove a non-deterministic pending state or after {{_HALT_AGGREGATION_TIMEOUT}} of inactive verifiers.",
   "types": {

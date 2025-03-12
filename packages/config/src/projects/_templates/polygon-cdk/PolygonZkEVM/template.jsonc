@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PolygonZkEVM",
   "description": "The main system contract defining the {{networkName}} Layer 2 logic. Entry point for sequencing batches.",
   "ignoreInWatchMode": ["lastAccInputHash"],

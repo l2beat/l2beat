@@ -7,7 +7,7 @@
 // shared-module on zksync2. This should be resolved when we handle
 // shared-modules better.
 {
-  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
   "chain": "zksync2",
   "name": "cronoszkevm",
   "import": ["../../globalConfig.jsonc"],

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Custom Multisig implementation that has a general threshold of {{EIP1271_THRESHOLD}} but also specific thresholds for upgrade approvals ({{APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD}}) or soft freezes ({{softFreezeThreshold}}).",
   "ignoreMethods": ["members"],
   "fields": {

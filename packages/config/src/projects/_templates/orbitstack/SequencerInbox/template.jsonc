@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SequencerInbox",
   "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
   "ignoreMethods": ["inboxAccs"],

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1ERC20TokenBridge",
   "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
   "ignoreRelatives": [

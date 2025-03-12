@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Custom Multisig implementation that has a general threshold of {{EIP1271_THRESHOLD}} and a specific threshold for extending the legal voting period of {{EXTEND_LEGAL_VETO_THRESHOLD}}.",
   "ignoreMethods": ["members"],
   "fields": {

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "frxETH Minter",
   "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
   "fields": {

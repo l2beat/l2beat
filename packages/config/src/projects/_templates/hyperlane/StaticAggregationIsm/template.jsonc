@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
   // uses the metaproxy standard, meaning the immutable storage is appeded to the end of the proxy's bytecode following '3457fd5bf3' (so modules and threshold are set at deployment time)
   // also, our flattener ignores this part :(

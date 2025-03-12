@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
   "ignoreMethods": [
     "sharesToUnderlying",

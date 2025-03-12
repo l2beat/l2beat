@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Timelock contract allowing the queueing of transactions with a minimum delay of {{getMinDelay_formatted}}.",
   "fields": {
     "getMinDelay_formatted": {

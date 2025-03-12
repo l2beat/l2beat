@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2ArbitrumToken",
   "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of {{ mintCapPerYer }}%.",
   "ignoreMethods": ["getPastTotalSupply"],

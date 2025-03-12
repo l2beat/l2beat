@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to {{withdrawLimitPct}}% of the locked funds per 24 hours.", // The withdrawal limit is {{withdrawalLimitStatus}}.
   "category": "bridge-canonical",
   "ignoreRelatives": ["l2TokenContract", "bridgedToken"],
