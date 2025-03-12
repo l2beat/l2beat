@@ -6,6 +6,7 @@
 
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import { join } from 'path'
 import {
   ConfigReader,
   type DiscoveryDiff,
@@ -20,7 +21,6 @@ import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
-import { join } from 'path'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 

@@ -27,7 +27,7 @@ export function createUpdateMonitorModule(
 
   logger = logger.tag({ feature: 'update_monitor', module: 'update_monitor' })
 
-  const rootPath = config.updateMonitor.paths.discovery
+  const paths = config.updateMonitor.paths
   const configReader = config.updateMonitor.configReader
 
   const discordClient = config.updateMonitor.discord
@@ -54,7 +54,7 @@ export function createUpdateMonitorModule(
   const { chains, cacheEnabled, cacheUri } = config.updateMonitor
   const runners = chains.map((chainConfig) =>
     createDiscoveryRunner(
-      rootPath,
+      paths,
       http,
       peripherals,
       DiscoveryLogger.SILENT,
