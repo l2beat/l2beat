@@ -1,0 +1,119 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "bsc",
+  "name": "lzomnichain",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["0x4D73AdB72bC3DD368966edD0f0b2148401A178E2"],
+  "names": {
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
+    "0x3c2269811836af69497E5F486A85D7316753cf62": "Endpoint",
+    "0x8D452629c5FfCDDE407069da48c096e1F8beF22c": "LayerZero Multisig",
+    "0x6694340fc020c5E6B96567843da2df01b2CE1eb6": "Stargate Bridge",
+    "0xB0D502E938ed5f4df2E681fE6E419ff29631d62b": "Stargate Token"
+  },
+  "overrides": {
+    "Stargate Bridge": {
+      "ignoreDiscovery": true
+    },
+    "Stargate Token": {
+      "ignoreDiscovery": true
+    },
+    "Endpoint": {
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
+      "fields": {
+        "libraryLookup": {
+          "handler": {
+            "type": "array",
+            "method": "libraryLookup",
+            "startIndex": 1,
+            "length": "{{ latestVersion }}",
+            // ignoring because discovered.json gets clattered with ULNv1 and ULNv2RADAR.
+            "ignoreRelative": true
+          }
+        }
+      }
+    },
+    "LayerZero Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "UltraLightNodeV2": {
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
+      "fields": {
+        "chainAddressSizeMap": {
+          "handler": {
+            "type": "event",
+            "select": "size",
+            "set": { "event": "SetChainAddressSize" },
+            "groupBy": "chainId"
+          }
+        },
+        "ulnLookup": {
+          "handler": {
+            "type": "event",
+            "select": "uln",
+            "set": { "event": "SetRemoteUln" },
+            "groupBy": "chainId"
+          }
+        },
+        "defaultAppConfig": {
+          "handler": {
+            "type": "event",
+            "select": [
+              "inboundProofLib",
+              "inboundBlockConfirm",
+              "outboundProofType",
+              "outboundBlockConfirm",
+              "oracle",
+              "relayer"
+            ],
+            "set": { "event": "SetDefaultConfigForChainId" },
+            "groupBy": "chainId"
+          }
+        },
+        "defaultAdapterParams": {
+          "handler": {
+            "type": "event",
+            "select": ["proofType", "adapterParams"],
+            "set": { "event": "SetDefaultAdapterParamsForChainId" },
+            "groupBy": "chainId"
+          }
+        },
+        "inboundProofLibrary": {
+          "handler": {
+            "type": "event",
+            "select": "lib",
+            "add": { "event": "AddInboundProofLibraryForChain" },
+            "groupBy": "chainId"
+          }
+        },
+        "supportedOutboundProof": {
+          "handler": {
+            "type": "event",
+            "select": "proofType",
+            "add": { "event": "EnableSupportedOutboundProof" },
+            "groupBy": "chainId"
+          }
+        }
+      }
+    },
+    /* Ignoring, it causes stargate and related pools to be discovered bumping amount of contracts from 32 to ~200 */
+    // RelayerV2Radar
+    "0xde19274c009A22921E3966a1Ec868cEba40A5DaC": {
+      "ignoreRelatives": ["uln"]
+    },
+    // UltraLightNodeV2Radar
+    "0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877": {
+      "ignoreRelatives": ["dappRadar"]
+    },
+    "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182": {
+      "ignoreRelatives": ["stargateBridgeAddr", "stargateComposer"]
+    }
+  }
+}

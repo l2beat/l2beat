@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MIPS",
+  "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute."
+}

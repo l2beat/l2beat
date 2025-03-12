@@ -1,7 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "CustomGateway",
-  "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
-  "ignoreMethods": ["whitelist"], // deprecated
-  "category": "bridge-external"
-}

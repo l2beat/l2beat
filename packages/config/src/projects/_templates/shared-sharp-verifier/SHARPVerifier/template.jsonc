@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SHARPVerifier",
+  "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+  "category": "shared",
+  "ignoreRelatives": ["referenceFactRegistry"], // referral expired: see isValidOnReference() in the contract
+  "fields": {
+    "bootloaderProgramContractAddress": {
+      "handler": {
+        "type": "storage",
+        "slot": 3,
+        "returnType": "address"
+      }
+    },
+    "memoryPageFactRegistry": {
+      "handler": {
+        "type": "storage",
+        "slot": 4,
+        "returnType": "address"
+      }
+    },
+    "cpuFrilessVerifiers": {
+      "handler": {
+        "type": "dynamicArray",
+        "slot": 5,
+        "returnType": "address"
+      },
+      "target": {
+        "template": "shared-sharp-verifier/CpuFrilessVerifier"
+      }
+    }
+  }
+}

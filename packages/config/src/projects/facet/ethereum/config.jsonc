@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "facet",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x8F75466D69a52EF53C7363F38834bEfC027A2909", // L1StandardBridge,
+    "0x0000000000000b07ed001607f5263d85bf28ce4c" // OrbiterStyleBridge
+  ],
+  "names": {
+    "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e": "SystemConfig",
+    "0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
+    "0xb2B01DeCb6cd36E7396b78D3744482627F22C525": "FacetMultisig",
+    "0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1StandardBridge"
+  },
+  "ignoreDiscovery": "0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9", // idk why it get discovered, should be ignored
+  "overrides": {
+    "FacetEtherBridgeV6": {
+      "extends": "facet/FacetEtherBridge",
+      "manualSourcePaths": {
+        // Facet proxy deployed through ERC1967 factory by Solady
+        "0x0000000000000b07ED001607f5263D85bf28Ce4C": "https://github.com/vectorized/solady/blob/main/src/utils/ERC1967Factory.sol"
+      }
+    },
+    "SystemConfig": {
+      "ignoreInWatchMode": ["scalar", "overhead"],
+      "ignoreRelatives": ["gasPayingToken"],
+      "fields": {
+        "sequencerInbox": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x00000000000000000000000000000000000FacE7"
+          }
+        },
+        "sequencerAddress": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x0000000000000000000000000000000000000000"
+          }
+        },
+        "batcherHash": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x0000000000000000000000000000000000000000"
+          }
+        },
+        "gasLimit": {
+          "description": "Gas limit for blocks on L2.",
+          "severity": "LOW"
+        },
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

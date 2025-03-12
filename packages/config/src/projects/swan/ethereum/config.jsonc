@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "swan",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xed7525946A09056C6AaE29941b8323017382050e" // bridge
+  ],
+  "names": {
+    "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c": "Swan Network Multisig"
+  }
+}

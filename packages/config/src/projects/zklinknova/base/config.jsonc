@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "base",
+  "name": "zklinknova",
+  "import": ["../../baseConfig.jsonc"],
+  "initialAddresses": [
+    "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
+    "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"
+  ],
+  "names": {
+    "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd": "zkLink",
+    "0x80d12A78EfE7604F00ed07aB2f16F643301674D5": "L1ERC20Bridge",
+    "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011": "BaseL2Gateway",
+    "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C": "BaseOwner",
+    "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE": "BaseProxyAdmin"
+  },
+  "overrides": {
+    "BaseL2Gateway": {
+      "extends": "zklinknova/secondaryGateway"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SystemConfig",
+  "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+  "fields": {
+    // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+    "batcherHash": {
+      "target": {
+        "permissions": [{ "type": "sequence" }]
+      },
+      "handler": {
+        "type": "call",
+        "method": "function batcherHash() view returns (address)",
+        "args": []
+      }
+    },
+    "opStackDA": {
+      "handler": {
+        "type": "opStackDA",
+        "sequencerAddress": "{{ batcherHash }}"
+      }
+    },
+    "sequencerInbox": {
+      "handler": {
+        "type": "opStackSequencerInbox",
+        "sequencerAddress": "{{ batcherHash }}"
+      }
+    },
+    "gasLimit": {
+      "description": "Gas limit for blocks on L2.",
+      "severity": "LOW"
+    },
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+          }
+        ]
+      }
+    }
+  },
+  "ignoreInWatchMode": ["scalar", "overhead"],
+  "ignoreRelatives": ["gasPayingToken"],
+  "category": "core"
+}

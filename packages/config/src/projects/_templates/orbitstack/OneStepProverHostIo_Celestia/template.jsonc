@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OneStepProverHostIo",
+  "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the [Blobstream DA bridge](https://arbiscan.io/address/{{BLOBSTREAM}}) as source of truth for the DA referenced by the fault proof.",
+  "ignoreRelatives": ["BLOBSTREAM"]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getTransmitters",
+    "getSupportedTokens",
+    "getDestinationTokens",
+    "getAllowList",
+    "currentRateLimiterState",
+    "lastUpdated"
+  ],
+  "ignoreRelatives": ["owner"],
+  "fields": {
+    "commitStore": {
+      "handler": {
+        "type": "call",
+        "method": "getStaticConfig",
+        "args": [],
+        "pickFields": ["commitStore"]
+      }
+    },
+    "getStaticConfig": {
+      "returnType": "(tuple(address commitStore, ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address prevOffRamp, address rmnProxy, address tokenAdminRegistry))"
+    }
+  }
+}

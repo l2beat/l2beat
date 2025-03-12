@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Inbox",
+  "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+  "fields": {},
+  "category": "bridge-canonical"
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": ["nonce"],
+  "ignoreMethods": ["getThreshold", "getOwners"],
+  // needed to override the standard GnosisSafe template because it gives 'act' to all modules which creates an infinite loop in this case
+  "references": [
+    {
+      "text": "Security Council members - Arbitrum Foundation Docs",
+      "href": "https://docs.arbitrum.foundation/security-council-members"
+    }
+  ]
+}

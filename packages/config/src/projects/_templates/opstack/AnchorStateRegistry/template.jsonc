@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AnchorStateRegistry",
+  "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game."
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
+  "ignoreRelatives": ["wards", "dai"],
+  "fields": {
+    "wards": {
+      "handler": {
+        "type": "event",
+        "select": "usr",
+        "add": { "event": "Rely" },
+        "remove": { "event": "Deny" }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "access all tokens in the escrow and manage the wards role."
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "L2LPTGateway",
-  "description": "Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.",
-  "ignoreRelatives": ["l1Lpt", "l2Lpt"],
-  "ignoreMethods": ["l2LPTDataCache"]
-}

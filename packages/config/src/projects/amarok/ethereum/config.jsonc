@@ -1,0 +1,294 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "amarok",
+  "import": ["../../ethereumConfig.jsonc"],
+  "maxAddresses": 150,
+  "names": {
+    "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": "ConnextBridge",
+    "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc": "MainnetSpokeConnector",
+    "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d": "WatcherManager",
+    "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": "RootManager",
+    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
+    "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": "Connext Fee Multisig",
+    "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": "Connext Multisig Member",
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": "OptimisticGovernor",
+    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer",
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9",
+    "0x56Ab287e5c33Ee70158c951f34818bd095446255": "LineaHubConnector",
+    "0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A": "OptimismHubConnector",
+    "0x83096c7455f24E593aaC9A7c73f849d36d3EEb82": "ArbitrumHubConnector",
+    "0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA": "WormholeHubConnector",
+    "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": "GnosisHubConnector",
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
+    "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": "PolygonHubConnector",
+    "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": "NewWormholeHubConnector",
+    "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": "MantleHubConnector",
+    "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "BaseHubConnector", // currently removed
+    "0x7ed49D0a13255802A281C08688563bd8D5f726b1": "PolygonZkHubConnector",
+    "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": "MetisHubConnector",
+    "0x7b2bE683266909A6a4068e743083dd40621d663E": "ModeHubConnector",
+    "0x279fDA9AdDB854541f0bb86733d924e28c24c625": "xLayerZkHubConnector",
+
+    // Relayers
+    "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": "RelayerProxyHub1",
+    "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28": "RelayerProxyHub2",
+    "0xB4F8D176466f5F544bAd53737bffAaeA17185c05": "RelayerProxyHub3",
+
+    "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92": "Relayer1",
+    "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2": "Relayer2",
+    "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9": "Relayer3",
+    "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47": "Relayer4",
+    "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007": "Relayer5",
+    "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE": "Relayer6",
+    "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "Relayer7",
+    "0x43728A95386D64384C76Afd416Dcc8118869BA6c": "Relayer8",
+    "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6": "Relayer9",
+    "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99": "Relayer10",
+    "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0": "Relayer11"
+  },
+  "maxDepth": 9,
+  "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
+  "overrides": {
+    "Connext Fee Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "ConnextBridge": {
+      "fields": {
+        "SEQUENCERS": {
+          "handler": {
+            "type": "event",
+            "select": "sequencer",
+            "add": { "event": "SequencerAdded" },
+            "remove": { "event": "SequencerRemoved" }
+          }
+        },
+        "RELAYERS": {
+          "handler": {
+            "type": "event",
+            "select": "relayer",
+            "add": { "event": "RelayerAdded" },
+            "remove": { "event": "RelayerRemoved" }
+          }
+        },
+        "ROUTERS": {
+          "description": "Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination.",
+          "handler": {
+            "type": "event",
+            "select": "router",
+            "add": { "event": "RouterAdded" },
+            "remove": { "event": "RouterRemoved" }
+          }
+        },
+        "relayerFeeVault": {
+          "description": "This address receives the bridge fees",
+          "severity": "LOW"
+        }
+      },
+      "ignoreInWatchMode": ["nonce", "proposedTimestamp", "ROUTERS"],
+      "ignoreRelatives": ["lpTokenTargetAddress"]
+    },
+    "MainnetSpokeConnector": {
+      "fields": {
+        "optimisticMode": {
+          "description": "When it's disabled, all roots must be passed via canonical rollup AMBs."
+        }
+      },
+      "ignoreMethods": ["snapshotRoots"],
+      "ignoreInWatchMode": [
+        "getLastCompletedSnapshotId",
+        "lastSentBlock",
+        "outboundRoot",
+        "proposedTimestamp",
+        "proposed",
+        "rateLimitBlocks"
+      ]
+    },
+    "WatcherManager": {
+      "fields": {
+        "WATCHERS": {
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "severity": "LOW",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "event",
+            "select": "watcher",
+            "add": { "event": "WatcherAdded" },
+            "remove": { "event": "WatcherRemoved" }
+          }
+        }
+      },
+      "ignoreInWatchMode": ["proposedTimestamp", "proposed"]
+    },
+    "RootManager": {
+      "fields": {
+        "optimisticMode": {
+          "description": "When it's disabled, all roots must be passed via canonical rollup AMBs."
+        },
+        "connectors": {
+          "handler": {
+            "type": "array",
+            "method": "connectors",
+            "maxLength": 15
+          }
+        },
+        "domains": {
+          "handler": {
+            "type": "array",
+            "method": "domains",
+            "maxLength": 15
+          }
+        },
+        "connectorsHash": {
+          "description": "Hash of all connectors' addresses. Changes when a connector is added or removed.",
+          "severity": "LOW"
+        },
+        "watcherManager": {
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        }
+      },
+      "ignoreMethods": ["validAggregateRoots"],
+      "ignoreInWatchMode": [
+        "domains",
+        "domainsHash",
+        "lastSavedAggregateRootTimestamp",
+        "getPendingInboundRootsCount",
+        "pendingInboundRoots",
+        "proposedTimestamp",
+        "proposed"
+      ]
+    },
+    "PolygonHubConnector": {
+      "ignoreRelatives": [
+        "fxChildTunnel",
+        "mirrorConnector",
+        "ROOT_MANAGER",
+        "checkpointManager",
+        "fxRoot",
+        "AMB"
+      ],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "ArbitrumHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "rollup", "outbox"],
+      "ignoreMethods": ["processed"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "WormholeHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreMethods": ["processed"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "OptimismHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "GnosisHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "LineaHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "NewWormholeHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "MantleHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "BaseHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "PolygonZkHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "xLayerZkHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "MetisHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "ModeHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "RootChain": {
+      "ignoreMethods": ["headerBlocks"]
+    },
+    "Connext Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "GovernorV2": {
+      "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"],
+      "ignoreInWatchMode": ["numProposals"]
+    },
+    "ProposerV2": {
+      "ignoreMethods": ["bondedProposals"],
+      "ignoreInWatchMode": ["bond", "getCurrentTime"]
+    },
+    // Old ZkSyncHubConnector
+    "0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB": {
+      "ignoreDiscovery": true
+    },
+    "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": {
+      // OptimisticOracleV3 cachedOracle
+      "ignoreDiscovery": true
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "OptimisticGovernor": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "EmergencyProposer": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "WETH9": {
+      "ignoreDiscovery": true
+    },
+    "OptimisticOracleV3": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
+      // ProposerV2 Voting Token
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": {
+      // EmergencyProposer Executor
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "0x2C217D709A9309b1D30323bAcE28438eDe7E4e05": {
+      "ignoreDiscovery": true
+    },
+    "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44": {
+      "ignoreDiscovery": true
+    },
+    "RelayerProxyHub1": { "extends": "amarok/RelayerProxyHub" },
+    "RelayerProxyHub2": { "extends": "amarok/RelayerProxyHub" },
+    "RelayerProxyHub3": { "extends": "amarok/RelayerProxyHub" },
+    "Relayer1": { "extends": "amarok/Relayer" },
+    "Relayer2": { "extends": "amarok/Relayer" },
+    "Relayer3": { "extends": "amarok/Relayer" },
+    "Relayer4": { "extends": "amarok/Relayer" },
+    "Relayer5": { "extends": "amarok/Relayer" },
+    "Relayer6": { "extends": "amarok/Relayer" },
+    "Relayer7": { "extends": "amarok/Relayer" },
+    "Relayer8": { "extends": "amarok/Relayer" },
+    "Relayer9": { "extends": "amarok/Relayer" },
+    "Relayer10": { "extends": "amarok/Relayer" },
+    "Relayer11": { "extends": "amarok/Relayer" }
+  }
+}

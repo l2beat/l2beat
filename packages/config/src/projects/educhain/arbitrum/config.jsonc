@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "educhain",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8", // Bridge
+    "0x419e439e5c0B839d6e31d7C438939EEE1A4f4184", // StandardGateway
+    "0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759" //CustomGateway
+  ],
+  "names": {
+    "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b": "EduFastConfirmerMultisig"
+  },
+  "overrides": {
+    // noisy, extending the template
+    "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914": {
+      "ignoreInWatchMode": [
+        "stakerCount",
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated",
+        "lastStakeBlock"
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1StandardBridge",
+  "description": "The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.",
+  "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
+  "fields": {
+    "$admin": {
+      "target": {
+        "permissions": [
+          {
+            "type": "upgrade",
+            "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
+          }
+        ]
+      }
+    },
+    "superchainConfig": {
+      "target": {
+        "category": "Upgrades&Governance"
+      }
+    },
+    "messenger": {
+      "target": {
+        "category": "Core"
+      }
+    }
+  },
+  "category": "bridge-canonical"
+}

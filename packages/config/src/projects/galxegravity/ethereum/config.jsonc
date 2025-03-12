@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "galxegravity",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x7983403dDA368AA7d67145a9b81c5c517F364c42" //erc20bridge
+  ],
+  "names": {
+    "0x7983403dDA368AA7d67145a9b81c5c517F364c42": "Bridge",
+    "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239": "RollupProxy",
+    "0x68466622Aae5a9Ffd02530247d75Dd107f06B333": "ChallengeManager",
+    "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF": "Outbox",
+    "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3": "SequencerInbox",
+    "0xa5D23c69894241825dAffB570c3c742C0F52df96": "UpgradeExecutor",
+    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorUtils",
+    "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19": "Inbox",
+    "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649": "G",
+    "0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D": "TokenOwnerMultisig"
+  },
+  "overrides": {
+    "ValidatorUtils": {
+      "fields": {
+        "GRAVITY_STAKERS": {
+          "handler": {
+            "type": "call",
+            "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+            "args": ["0xf993AF239770932A0EDaB88B6A5ba3708Bd58239", 0, 10] // args are RollupProxy address, startIndex, max no. of stakers returned
+          }
+        }
+      },
+      "ignoreRelatives": ["SXNETWORK_STAKERS"]
+    },
+    "G": {
+      "ignoreMethods": ["totalSupply"]
+    },
+    "TokenOwnerMultisig": {
+      "ignoreDiscovery": true
+    }
+  }
+}

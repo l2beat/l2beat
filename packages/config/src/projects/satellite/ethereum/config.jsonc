@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "satellite",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x4F4495243837681061C4743b74B3eEdf548D56A5",
+    "0x2d5d7d31F671F86C782533cc367F14109a082712"
+  ],
+  "names": {
+    "0x4F4495243837681061C4743b74B3eEdf548D56A5": "Gateway",
+    "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0": "AxelarAuthWeighted",
+    "0x2d5d7d31F671F86C782533cc367F14109a082712": "AxelarGasService",
+    "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": "AxelarGasServiceOperators"
+  },
+  "overrides": {
+    "Gateway": {
+      "proxyType": "Axelar proxy"
+    },
+    "AxelarAuthWeighted": {
+      "ignoreMethods": ["hashForEpoch"],
+      "ignoreInWatchMode": ["currentEpoch"]
+    }
+  }
+}

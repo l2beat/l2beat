@@ -1,0 +1,201 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "zksync",
+  "import": ["../../ethereumConfig.jsonc"],
+  "names": {
+    "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": "ZkSync",
+    "0x38A43F4330f24fe920F943409709fc9A6084C939": "UpgradeGatekeeper",
+    "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": "Governance",
+    "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": "ZkSync Multisig",
+    "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "NftFactory",
+    "0x35cc31f63deef017c38d51B038891bAE7d614e86": "TokenGovernance",
+    "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D": "Verifier",
+    // Other
+    "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346": "Multisig 1",
+    "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567": "Multisig 2",
+    "0x225d3822De44E58eE935440E0c0B829C4232086e": "Multisig 3",
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": "Dai"
+  },
+  "initialAddresses": ["0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"],
+  "overrides": {
+    "UpgradeGatekeeper": {
+      // "ignoreMethods": ["nextTargets"],
+      "fields": {
+        "managedContracts": {
+          "handler": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "ZkSync": {
+      "proxyType": "zkSync Lite proxy",
+      "fields": {
+        "upgradePreparationActive": {
+          "handler": {
+            "type": "storage",
+            "slot": 0,
+            "returnType": "number" // TODO: boolean
+          }
+        },
+        "upgradePreparationActivationTime": {
+          "handler": {
+            "type": "storage",
+            "slot": 1,
+            "returnType": "number"
+          }
+        },
+        "verifier": {
+          "handler": {
+            "type": "storage",
+            "slot": 2,
+            "returnType": "address"
+          }
+        },
+        "governance": {
+          "handler": {
+            "type": "storage",
+            "slot": 3,
+            "returnType": "address"
+          }
+        },
+        "approvedUpgradeNoticePeriod": {
+          "handler": {
+            "type": "storage",
+            "slot": 20,
+            "returnType": "number"
+          }
+        },
+        "upgradeStartTimestamp": {
+          "handler": {
+            "type": "storage",
+            "slot": 21,
+            "returnType": "number"
+          }
+        },
+        "UPGRADE_NOTICE_PERIOD": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 1814400
+          }
+        },
+        "securityCouncilThreshold": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 9
+          }
+        },
+        "securityCouncilMembers": {
+          "handler": {
+            "type": "hardcoded",
+            "value": [
+              "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769",
+              "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",
+              "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346",
+              "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3",
+              "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11",
+              "0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190",
+              "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6",
+              "0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6",
+              "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567",
+              "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
+              "0x399a6a13D298CF3F41a562966C1a450136Ea52C2",
+              "0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB",
+              "0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f",
+              "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B",
+              "0x225d3822De44E58eE935440E0c0B829C4232086e"
+            ]
+          }
+        },
+        "revertedBlocks": {
+          "handler": {
+            "type": "event",
+            "select": ["totalBlocksCommitted", "totalBlocksVerified"],
+            "add": { "event": "BlocksRevert" }
+          }
+        }
+      },
+      "ignoreMethods": [
+        "getMaster",
+        "getTarget",
+        "firstPriorityRequestId",
+        "totalBlocksCommitted",
+        "totalBlocksExecuted",
+        "totalBlocksProven",
+        "totalOpenPriorityRequests"
+      ]
+    },
+    "Governance": {
+      "fields": {
+        // network governor can pause tokens and add validators
+        "validators": {
+          "handler": {
+            "type": "event",
+            "select": "validatorAddress",
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["=", "#isActive", true]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!=", "#isActive", true]
+            }
+          }
+        }
+      },
+      "ignoreMethods": ["getMaster", "getTarget"],
+      "ignoreInWatchMode": ["totalTokens"]
+    },
+    "TokenGovernance": {
+      "fields": {
+        "tokenListers": {
+          "handler": {
+            "type": "event",
+            "select": "tokenLister",
+            "add": {
+              "event": "TokenListerUpdate",
+              "where": ["=", "#isActive", true]
+            },
+            "remove": {
+              "event": "TokenListerUpdate",
+              "where": ["!=", "#isActive", true]
+            }
+          }
+        }
+      }
+    },
+    "Verifier": {
+      "ignoreMethods": ["getMaster", "getTarget"]
+    },
+    "NftFactory": {
+      "ignoreMethods": [
+        "tokenURI",
+        "getCreatorFingerprint",
+        "getSerialId",
+        "getContentHash",
+        "getCreatorAccountId",
+        "getCreatorAddress",
+        "tokenByIndex",
+        "getApproved",
+        "ownerOf"
+      ],
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "ZkSync Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Multisig 1": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Multisig 2": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Multisig 3": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Dai": {
+      "ignoreDiscovery": true
+    }
+  }
+}

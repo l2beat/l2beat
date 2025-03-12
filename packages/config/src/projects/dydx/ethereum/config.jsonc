@@ -1,0 +1,268 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "dydx",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"],
+  "maxDepth": 10,
+  "names": {
+    "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": "StarkPerpetual",
+    "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": "DydxGovernor",
+    "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "SafetyModule",
+    "0x92D6C1e31e14520e676a687F0a93788B716BEff5": "DydxToken",
+    "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor",
+    "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": "LongTimelockExecutor",
+    "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": "ShortTimelockExecutor",
+    "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": "MerklePauserExecutor",
+    "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C": "SafetyModuleProxyAdmin",
+    "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d": "TreasuryProxyAdmin",
+    "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0": "MerkleDistributorProxyAdmin",
+    "0xAc5D8bCD13da463bea96c75f9085c4e40037F790": "LiquidityStakingProxyAdmin",
+    "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941": "LiquidityStaking",
+    "0x01d3348601968aB85b4bb028979006eac235a588": "MerkleDistributor",
+    "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354": "ChainlinkAdapter",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3": "GpsStatementVerifier",
+    "0x4922f8750DFd040954b44F23980160342e308863": "CpuFrilessVerifier",
+    "0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92": "PedersenHashPointsYColumn",
+    "0x9Bcf13C6b68450B427bfa86698D61901A8a3456D": "PedersenHashPointsXColumn",
+    "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5": "EcdsaPointsXColumn",
+    "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15": "EcdsaPointsYColumn",
+    "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": "Committee",
+    "0xb9431E19B29B952d9358025f680077C3Fd37292f": "TreasuryVester",
+    "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9": "WrappedEthereumDydxToken",
+    "0xc2f5F3505910Da80F0592a3Cc023881C50b16505": "GovernanceStrategyV2",
+    "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C": "FinalizableGpsFactAdapter"
+  },
+  "overrides": {
+    "StarkPerpetual": {
+      "ignoreMethods": [
+        "configurationHash",
+        "getQuantum",
+        "isAssetRegistered",
+        "identify"
+      ],
+      "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
+      "fields": {
+        "OPERATORS": {
+          "handler": {
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "LogOperatorAdded" },
+            "remove": { "event": "LogOperatorRemoved" }
+          }
+        },
+        "escapeVerifier": {
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          }
+        }
+      }
+    },
+    "Committee": {
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs"
+          }
+        }
+      }
+    },
+    "GpsStatementVerifier": {
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs"
+          }
+        }
+      }
+    },
+    "CpuFrilessVerifier": {
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs"
+          }
+        }
+      }
+    },
+    "PedersenHashPointsYColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "PedersenHashPointsXColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "EcdsaPointsXColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "EcdsaPointsYColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "DydxGovernor": {
+      "ignoreMethods": ["getProposalById", "getProposalState"],
+      "ignoreInWatchMode": ["getProposalsCount"],
+      "fields": {
+        "EXECUTORS": {
+          "handler": {
+            "type": "event",
+            "select": "executor",
+            "add": { "event": "ExecutorAuthorized" },
+            "remove": { "event": "ExecutorUnauthorized" }
+          }
+        },
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "SafetyModule": {
+      "ignoreMethods": [
+        "getExchangeRateSnapshot",
+        "getStartOfEpoch",
+        "getCurrentEpoch",
+        "getEpochParameters",
+        "getTimeRemainingInCurrentEpoch",
+        "getTotalActiveBalanceCurrentEpoch",
+        "getTotalActiveBalanceNextEpoch",
+        "getTotalInactiveBalanceCurrentEpoch",
+        "getTotalInactiveBalanceNextEpoch"
+      ],
+      "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        },
+        "slashings": {
+          "handler": {
+            "type": "event",
+            "select": ["amount", "recipient", "newExchangeRate"],
+            "add": { "event": "Slashed" }
+          }
+        }
+      }
+    },
+    "LiquidityStaking": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        },
+        "BORROWERS_LIST": {
+          "handler": {
+            "type": "event",
+            "select": "borrower",
+            "add": { "event": "ScheduledBorrowerAllocationChange" }
+          }
+        }
+      },
+      "ignoreRelatives": ["BORROWERS_LIST"],
+      "ignoreMethods": ["getStartOfEpoch"],
+      "ignoreInWatchMode": [
+        "decimals",
+        "DISTRIBUTION_END",
+        "DISTRIBUTION_START",
+        "getBlackoutWindow",
+        "getContractBalanceAvailableToBorrow",
+        "getContractBalanceAvailableToWithdraw",
+        "getCurrentEpoch",
+        "getEpochParameters",
+        "getShortfall",
+        "getShortfallCount",
+        "getTimeRemainingInCurrentEpoch",
+        "getTotalActiveBalanceCurrentEpoch",
+        "getTotalActiveBalanceNextEpoch",
+        "getTotalBorrowedBalance",
+        "getTotalBorrowerDebtBalance",
+        "getTotalDebtAvailableToWithdraw",
+        "getTotalInactiveBalanceCurrentEpoch",
+        "getTotalInactiveBalanceNextEpoch",
+        "hasEpochZeroStarted",
+        "inBlackoutWindow",
+        "totalSupply",
+        "TOTAL_ALLOCATION"
+      ],
+      "methods": {
+        "getRewardsPerSecond": "This value is set to zero, which means that the staking is disabled."
+      }
+    },
+    "DydxToken": {
+      "ignoreMethods": ["_totalSupplySnapshots"]
+    },
+    "PriorityExecutor": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"],
+      "fields": {
+        "PRIORITY_CONTROLLERS": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
+              "where": ["=", "#isPriorityController", true]
+            }
+          }
+        }
+      }
+    },
+    "LongTimelockExecutor": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
+    },
+    "ShortTimelockExecutor": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
+    },
+    "MerklePauserExecutor": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
+    },
+    "MerkleDistributor": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      },
+      "ignoreMethods": [
+        "getActiveRoot",
+        "getProposedRoot",
+        "getRewardsParameters",
+        "getNextRootEpoch"
+      ],
+      "ignoreInWatchMode": [
+        "getCurrentEpoch",
+        "getEpochParameters",
+        "getIpfsEpoch",
+        "getIpnsName",
+        "getWaitingPeriodEnd",
+        "hasPendingRoot",
+        "TRADER_SCORE_ALPHA_BASE",
+        "WAITING_PERIOD"
+      ]
+    },
+    "ChainlinkAdapter": {
+      "ignoreRelatives": [
+        "CHAINLINK_TOKEN",
+        "ORACLE_CONTRACT",
+        "ORACLE_EXTERNAL_ADAPTER"
+      ],
+      "ignoreMethods": ["read"]
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "TreasuryVester": {
+      "ignoreInWatchMode": ["lastUpdate"]
+    },
+    "WrappedEthereumDydxToken": {
+      "ignoreInWatchMode": ["_nextAvailableBridgeId", "totalSupply"]
+    },
+    "GovernanceStrategyV2": {
+      "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
+    }
+  }
+}

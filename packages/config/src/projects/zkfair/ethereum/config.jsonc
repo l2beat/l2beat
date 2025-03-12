@@ -1,0 +1,104 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "zkfair",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x9cb4706e20A18E59a48ffa7616d700A3891e1861"],
+  "names": {
+    "0x9cb4706e20A18E59a48ffa7616d700A3891e1861": "Bridge",
+    "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5": "ZKFairValidium",
+    "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b": "GlobalExitRoot",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x6dfAF52259d494C29596F5Eb16573B105693E78f": "ZKF_MATIC",
+    "0x52882c7564fAca480549145fAc4d0b09eD0D9c17": "Timelock",
+    "0x0110B1B231aA3b96a94c900eb3056297526AB725": "ZKFairAdmin",
+    "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F": "BridgeAdminMultiSig",
+    "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88": "ZKFairOwner",
+    "0x997CfB0838544f68E59f877EDc905001456F125b": "ZKFairValidiumDAC"
+  },
+  "overrides": {
+    "ZKFairValidium": {
+      "ignoreMethods": [
+        "checkStateRootInsidePrime",
+        "pendingStateTransitions",
+        "batchFee",
+        "calculateRewardPerBatch",
+        "getForcedBatchFee",
+        "getLastVerifiedBatch",
+        "lastBatchSequenced",
+        "lastForceBatch",
+        "lastForceBatchSequenced",
+        "lastPendingState",
+        "lastPendingStateConsolidated",
+        "lastTimestamp",
+        "lastVerifiedBatch",
+        "multiplierBatchFee"
+      ],
+      "fields": {
+        "_HALT_AGGREGATION_TIMEOUT": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 604800
+          }
+        },
+        "nondeterminsiticPendingState": {
+          "handler": {
+            "type": "event",
+            "select": ["storedStateRoot", "provedStateRoot"],
+            "add": { "event": "ProveNonDeterministicPendingState" }
+          }
+        }
+      }
+    },
+    "Timelock": {
+      "ignoreMethods": [
+        "CANCELLER_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "EXECUTOR_ROLE",
+        "PROPOSER_ROLE",
+        "TIMELOCK_ADMIN_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "GlobalExitRoot": {
+      "ignoreMethods": [
+        "getLastGlobalExitRoot",
+        "lastMainnetExitRoot",
+        "lastRollupExitRoot"
+      ]
+    },
+    "Bridge": {
+      "ignoreMethods": [
+        "claimedBitMap",
+        "isClaimed",
+        "depositCount",
+        "lastUpdatedDepositCount",
+        "getDepositRoot"
+      ],
+      "fields": {}
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "ZKF_MATIC": {
+      "ignoreDiscovery": true
+    },
+    "ZKFairValidiumDAC": {
+      "description": "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.",
+      "fields": {
+        "members": {
+          "description": "URL and address of the DAC member",
+          "handler": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Implements the ZK proof verification logic.",
+  "category": "core"
+}

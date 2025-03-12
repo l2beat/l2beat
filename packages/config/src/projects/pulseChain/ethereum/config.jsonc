@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "pulseChain",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x8AC4ae65b3656e26dC4e0e69108B392283350f55"],
+  "names": {
+    "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": "WETHOmnibridgeRouter",
+    "0x1715a3E4A142d8b698131108995174F37aEBA10D": "ForeignOmnibridge",
+    "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": "ForeignAMB",
+    "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": "BridgeValidators"
+  },
+  "overrides": {
+    "WETHOmnibridgeRouter": {
+      "ignoreMethods": ["WETH"]
+    },
+    "ForeignOmnibridge": {
+      "ignoreInWatchMode": ["getCurrentDay"],
+      "proxyType": "Eternal Storage proxy"
+    },
+    "ForeignAMB": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "BridgeValidators": {
+      "proxyType": "Eternal Storage proxy"
+    }
+  }
+}

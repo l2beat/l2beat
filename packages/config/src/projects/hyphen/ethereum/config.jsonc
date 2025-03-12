@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "hyphen",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x2A5c2568b10A0E826BfA892Cf21BA7218310180b"],
+  "overrides": {
+    "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9": {
+      "ignoreMethods": ["getSuppliedLiquidity", "getFeeAccumulatedOnNft"]
+    }
+  }
+}

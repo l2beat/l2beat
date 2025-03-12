@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "guardian": {
+      "target": {
+        "permissions": [{ "type": "guard" }]
+      }
+    },
+    "GUARDIAN": {
+      "target": {
+        "permissions": [{ "type": "guard" }]
+      }
+    }
+  },
+  "category": "core"
+}

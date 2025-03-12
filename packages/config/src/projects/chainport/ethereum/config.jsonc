@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "chainport",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+    "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a",
+    "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+    "0xD2238E8c085E5059F8DFC52256530210bc7250F6",
+    "0x873089bC765a1C0AFAd48e34fCd305d17D81be87"
+  ],
+  "names": {
+    "0xB6b4C7aC240b1f176c5589d064733066a83884a1": "ChainportCongress",
+    "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa": "ChainportCongressMembersRegistry",
+    "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19": "MultisigVault1",
+    "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9": "MultisigVault2",
+    "0xD2238E8c085E5059F8DFC52256530210bc7250F6": "EOAVault3",
+    "0x873089bC765a1C0AFAd48e34fCd305d17D81be87": "EOAVault5",
+    "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a": "Vault6"
+  },
+  "overrides": {
+    "ChainportCongress": {
+      "ignoreMethods": ["getActions", "proposals"],
+      "fields": {
+        "proposalCount": {
+          "description": "The amount of proposals ever created. Goes up by 1 for each proposal.",
+          "severity": "MEDIUM"
+        }
+      }
+    },
+    "MultisigVault1": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "MultisigVault2": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}

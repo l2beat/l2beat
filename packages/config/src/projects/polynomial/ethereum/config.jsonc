@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "polynomial",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x994233366C8E11da5c525AB903c04e7AFB2915bD", // OptimismMintableERC20FactoryProxy
+    "0xD5890BBAFaFdce942597757385E55174569e8d1A" // L1ERC721BridgeProxy
+  ],
+  "names": {}
+}

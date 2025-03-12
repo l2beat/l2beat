@@ -1,0 +1,229 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "mantle",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012", //L1StandardBridge
+    "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
+    "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
+    "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+    "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+    "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+    "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+  ],
+  "names": {
+    "0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "L1MantleToken",
+    "0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "MantleTokenProxyAdmin",
+    "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "MantleSecurityMultisig",
+    "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "MantleEngineeringMultisig",
+    "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A": "EigenDataLayerChain",
+    "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798": "Delegation", // check mermaid to see what's going on from now on
+    "0x23754725a49c0f003C349A6C7869fF8609a7CEfd": "InvestmentManager",
+    "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1": "MantleFirstStrat",
+    "0xA937660031787C4408587D2c6A67Ec4B260630F5": "MantleSecondStrat",
+    "0x1e70dc4B6f41c16B23cF0EE674B4d5471C63F2e7": "SlashRecorder",
+    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67": "BLSRegistry",
+    "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1": "DataLayrServiceManager",
+    "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a": "PubkeyCompendium",
+    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01": "RegistryPermission",
+    "0x075a48633dc6845f92339741E9c96b88f1b2A86f": "PauserRegistry",
+    "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0": "PauserRegistry2",
+    "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
+    "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap",
+    "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a": "VerifierEntry",
+    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": "DataLayrChallengeUtils"
+  },
+  "overrides": {
+    "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": {
+      "extends": "opstack/AddressManager" // shape does not work (tofix)
+    },
+    "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83": {
+      "extends": "global/ProxyAdmin" // shape does not work (tofix)
+    },
+    "0x47D58744D8515d9aaEAf961bc03625118bd91EBb": {
+      "extends": "global/ProxyAdmin" // shape does not work (tofix)
+    },
+    "MantleTokenProxyAdmin": {
+      "extends": "global/ProxyAdmin" // shape does not work (tofix)
+    },
+    "InvestmentManager": {
+      "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
+      "fields": {
+        "pauserRegistry": {
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "defines addresses that can pause or unpause ability to invest into strategies."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "L1MantleToken": {
+      "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "EigenDataLayerChain": {
+      "ignoreMethods": [
+        "getRollupStoreByRollupBatchIndex",
+        "reRollupBatchIndex",
+        "rollupBatchIndexRollupStores"
+      ],
+      "ignoreInWatchMode": [
+        "getL2ConfirmedBlockNumber",
+        "getL2StoredBlockNumber",
+        "l2ConfirmedBlockNumber",
+        "l2StoredBlockNumber",
+        "rollupBatchIndex"
+      ]
+    },
+    "DataLayrServiceManager": {
+      "description": "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.",
+      "ignoreMethods": [
+        "zeroPolynomialCommitmentMerkleRoots",
+        "taskNumber",
+        "latestTime"
+      ],
+      "ignoreInWatchMode": ["dataStoresForDuration"]
+    },
+    "BLSRegistry": {
+      "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
+      "ignoreMethods": [
+        "apk",
+        "apkHashes",
+        "apkUpdateBlockNumbers",
+        "apkUpdates",
+        "getTotalStakeFromIndex",
+        "totalOperatorsHistory",
+        "quorumBips",
+        "getLengthOfTotalOperatorsHistory",
+        "getLengthOfTotalStakeHistory"
+      ],
+      "fields": {
+        "operatorList": {
+          "handler": {
+            "type": "array",
+            "method": "operatorList",
+            "length": "{{ numOperators }}"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "sign data commitments for the DA bridge."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "TssStakingSlashing": {
+      "ignoreMethods": [
+        "sharesToUnderlying",
+        "sharesToUnderlyingView",
+        "underlyingToShares",
+        "underlyingToSharesView"
+      ]
+    },
+    "AssertionMap": {
+      "ignoreMethods": [
+        "assertions",
+        "getDeadline",
+        "getInboxSize",
+        "getParentID",
+        "getProposalTime",
+        "getStateHash",
+        "getNumStakers"
+      ]
+    },
+    "MantleSecondStrat": {
+      "description": "Basic do-nothing investment strategy.",
+      "ignoreMethods": [
+        "sharesToUnderlying",
+        "sharesToUnderlyingView",
+        "underlyingToShares",
+        "underlyingToSharesView"
+      ],
+      "fields": {
+        "pauserRegistry": {
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "MantleFirstStrat": {
+      "description": "Basic do-nothing investment strategy.",
+      "ignoreMethods": [
+        "sharesToUnderlying",
+        "sharesToUnderlyingView",
+        "underlyingToShares",
+        "underlyingToSharesView"
+      ],
+      "fields": {
+        "pauserRegistry": {
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "DataLayrChallengeUtils": {
+      "ignoreMethods": ["nextPowerOf2"]
+    },
+    "RegistryPermission": {
+      "fields": {
+        "permissionPerson": {
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "can register or change status of DA node operators."
+              }
+            ]
+          }
+        },
+        "dataStorePermission": {
+          "handler": {
+            "type": "event",
+            "select": "pusher",
+            "add": { "event": "AddDataStoreRollupPermission" },
+            "remove": { "event": "ChangeDataStoreRollupPermission" }
+          }
+        },
+        "registerOperatorPermission": {
+          "handler": {
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "AddOperatorRegisterPermission" },
+            "remove": { "event": "ChangeOperatorRegisterPermission" }
+          }
+        },
+        "deregisterOperatorPermission": {
+          "handler": {
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "AddOperatorDeregisterPermission" },
+            "remove": { "event": "ChangeOperatorDeregisterPermission" }
+          }
+        }
+      }
+    }
+  }
+}

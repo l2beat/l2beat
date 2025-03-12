@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
+  "category": "bridge-external",
+  "ignoreRelatives": ["l1Token"]
+}

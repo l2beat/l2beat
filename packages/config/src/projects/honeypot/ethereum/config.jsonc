@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "honeypot",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+    "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366"
+  ],
+  "names": {
+    "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": "Honeypot",
+    "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": "History",
+    "0x59b22D57D4f067708AB0c00552767405926dc768": "InputBox",
+    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": "ERC20Portal",
+    "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": "Authority"
+  },
+  "overrides": {}
+}

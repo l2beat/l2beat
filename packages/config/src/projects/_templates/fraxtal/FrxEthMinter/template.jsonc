@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "frxETH Minter",
+  "description": "Accepts user-supplied ETH and converts it to frxETH.",
+  "ignoreRelatives": ["depositContract"],
+  "ignoreMethods": ["getValidator"],
+  "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
+  "fields": {
+    "timelock_address": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Ethereum Beacon Chain deposit contract.",
+  "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"]
+}

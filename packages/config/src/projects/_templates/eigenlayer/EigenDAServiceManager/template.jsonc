@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
+  "ignoreRelatives": ["getRestakeableStrategies"],
+  "ignoreInWatchMode": ["batchId", "taskNumber"],
+  "fields": {
+    "BLOCK_STALE_MEASURE": {
+      "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert.",
+      "severity": "MEDIUM",
+      "type": "RISK_PARAMETER"
+    },
+    "quorumAdversaryThresholdPercentages": {
+      "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.",
+      "severity": "MEDIUM",
+      "type": "RISK_PARAMETER"
+    },
+    "quorumConfirmationThresholdPercentages": {
+      "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.",
+      "severity": "MEDIUM",
+      "type": "RISK_PARAMETER"
+    },
+    "batchConfirmers": {
+      "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.",
+      "severity": "MEDIUM",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "batchConfirmer",
+        "add": {
+          "event": "BatchConfirmerStatusChanged",
+          "where": ["=", "#status", true]
+        },
+        "remove": {
+          "event": "BatchConfirmerStatusChanged",
+          "where": ["!=", "#status", true]
+        }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can confirm batches to the DA bridge."
+          }
+        ]
+      }
+    },
+    "pauserRegistry": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can pause the DA bridge"
+          }
+        ]
+      }
+    },
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer"
+          }
+        ]
+      }
+    },
+    "rewardsInitiator": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can create rewards submissions."
+          }
+        ]
+      }
+    }
+  }
+}

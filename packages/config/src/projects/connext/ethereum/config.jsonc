@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "connext",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"],
+  "overrides": {}
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "layer2financezk",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+
+    // NOTE(radomski): All addresses below this comment were added into the
+    // initialAddresses automatically during the process of removing the
+    // check-verified-contracts. When going over this project again please bear in
+    // mind that these addresses could not be used by the project anymore. Decide
+    // for yourself whether keep them here or should they be removed or fetched
+    // from some fields of other contracts.
+    "0x5b000954F70B0410685193B0afd3074B744B5C97",
+
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" // SHARP Verifier Governor
+  ],
+  "names": {
+    "0x5b000954F70B0410685193B0afd3074B744B5C97": "StrategyCompound",
+    "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9": "Committee"
+  },
+  "sharedModules": ["shared-sharp-verifier"],
+  "overrides": {
+    "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": {
+      "ignoreMethods": [
+        "actualPrices",
+        "prices",
+        "rideDeparted",
+        "rideInfos",
+        "ridesShares",
+        "slippages"
+      ]
+    },
+    "0x82123571C8a5e0910280C066bc634c4945FFcbC8": {
+      "ignoreMethods": [
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "initializerSize",
+        "isAssetRegistered"
+      ],
+      "fields": {
+        "GOVERNORS": {
+          "handler": {
+            "type": "event",
+            "select": "acceptedGovernor",
+            "add": {
+              "event": "event LogNewGovernorAccepted(address governor)"
+            },
+            "remove": {
+              "event": "event LogRemovedGovernor(address governor)"
+            }
+          }
+        },
+        "OPERATORS": {
+          "handler": {
+            "type": "event",
+            "select": "operator",
+            "add": {
+              "event": "event LogOperatorAdded(address operator)"
+            },
+            "remove": {
+              "event": "event LogOperatorRemoved(address operator)"
+            }
+          }
+        }
+      }
+    },
+    "StrategyCompound": {
+      "ignoreRelatives": ["uniswap", "weth"]
+    }
+  }
+}

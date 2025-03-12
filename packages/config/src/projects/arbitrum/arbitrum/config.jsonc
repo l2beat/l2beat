@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "arbitrum",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4", // TreasuryGovernor
+    "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9", // CoreGovernor
+    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933", // L2GatewayRouter
+    "0xCaD7828a19b363A2B44717AFB1786B5196974D8E", // L2ARBGateway
+    "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B", // L2WethGateway
+    "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65", // L2DAIGateway
+    "0x6D2457a4ad276000A615295f7A80F79E48CcD318", // L2LPTGateway
+    "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649", // L2BaseFee
+    "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d", // L2SurplusFee
+    "0x1D62fFeB72e4c360CcBbacf7c965153b00260417" // ConstitutionHash
+  ],
+  "names": {
+    "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": "CoreGovernor",
+    "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": "L2Timelock",
+    "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": "TreasuryGovernor",
+    "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "TreasuryTimelock",
+    "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "L2UpgradeExecutor",
+    "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": "SecurityCouncilManager",
+    "0x1D62fFeB72e4c360CcBbacf7c965153b00260417": "ConstitutionHash",
+    "0xdb216562328215E010F819B5aBe947bad4ca961e": "L2ProxyAdmin",
+    "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649": "L2BaseFee",
+    "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d": "L2SurplusFee",
+    "0x912CE59144191C1204E64559FE8253a0e49E6548": "L2ArbitrumToken",
+    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": "L2GatewayRouter",
+    "0x09e9222E96E7B4AE2a407B98d48e330053351EEe": "L2ERC20Gateway",
+    "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B": "L2WethGateway",
+    "0xCaD7828a19b363A2B44717AFB1786B5196974D8E": "L2ARBGateway",
+    "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L2DAIGateway",
+    "0x6D2457a4ad276000A615295f7A80F79E48CcD318": "L2LPTGateway",
+    "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": "L2GatewaysProxyAdmin",
+    "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641": "L2SecurityCouncilEmergency",
+    "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941": "L2SecurityCouncilPropose",
+
+    "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder",
+    "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": "SecurityCouncilMemberSyncAction",
+    "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
+    "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock_l2alias"
+  },
+  "overrides": {
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
+      // unused security council on L2 with the same address on L1. we speculate that its purpose was to prevent address sniping
+      "ignoreDiscovery": true
+    }
+  }
+}

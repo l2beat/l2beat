@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DeputyGuardianModule",
+  "description": "allows the {{ deputyGuardian }}, called the deputy guardian, to act on behalf of the Gnosis Safe.",
+  "fields": {
+    "deputyGuardian": {
+      "target": {
+        "description": "Deputy Guardian of {{ $.address }}. It can act on behalf of the {{ safe }}.",
+        "permissions": [
+          {
+            "type": "act",
+            "condition": "not revoked by the Security Council"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1EscrowDAI",
+  "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
+  "category": "bridge-external",
+  "ignoreRelatives": ["wards", "dai"],
+  "fields": {
+    "wards": {
+      "handler": {
+        "type": "event",
+        "select": "usr",
+        "add": { "event": "Rely" },
+        "remove": { "event": "Deny" }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "close the gateway (preventing deposits and forced withdrawals), set ceiling and max deposits and manage the wards role."
+          }
+        ]
+      }
+    }
+  }
+}

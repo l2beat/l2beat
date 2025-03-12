@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
+  // uses the metaproxy standard, meaning the immutable storage is appeded to the end of the proxy's bytecode following '3457fd5bf3' (so modules and threshold are set at deployment time)
+  // also, our flattener ignores this part :(
+  "fields": {
+    "modulesAndThreshold": {
+      "description": "The modules and threshold of a random bridging tx from eclipse to ethereum.",
+      "handler": {
+        "type": "call",
+        "method": "modulesAndThreshold",
+        "args": [
+          "0x03000282fc53f990bd8751a99baf21a9cbc78e891d99ad8ca04bca545f5b668671a07cd0ec107923d2000000010000000000000000000000005b4e223de74ef8c3218e66eecc541003cab3121a000000000000000000000000ab6247d122c109f00aec1353859682c0775f4cd4000000000000000000000000000000000000000000000000000000000003a980"
+        ]
+      }
+    }
+  }
+}

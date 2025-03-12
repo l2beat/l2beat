@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ParentToChildRewardRouter",
+  "description": "Collects the excess stake when rival nodes are created and allows to send them to the L2 treasury."
+}

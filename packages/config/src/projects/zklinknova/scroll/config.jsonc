@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "scroll",
+  "name": "zklinknova",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
+    "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
+  ],
+  "names": {
+    "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2": "zkLink",
+    "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": "L1ERC20Bridge",
+    "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": "ScrollL2Gateway",
+    "0xC4673dAbfAf04D2A430e244B63F040D27199102f": "ScrollProxyAdmin",
+    "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "ScrollOwner"
+  },
+  "overrides": {
+    "zkLink": {
+      "extends": "zklinknova/secondaryZkLink"
+    },
+    "ScrollL2Gateway": {
+      "extends": "zklinknova/secondaryGateway"
+    }
+  }
+}

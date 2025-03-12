@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["L1_USDC_TOKEN"],
+  "ignoreMethods": ["l2BridgeAddress"],
+  "category": "bridge-external"
+}

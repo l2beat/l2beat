@@ -1,0 +1,132 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "base",
+  "name": "blobstream",
+  "import": ["../../baseConfig.jsonc"],
+  "initialAddresses": ["0xa83ca7775bc2889825bcdedffa5b758cf69e8794"],
+  "names": {
+    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "Blobstream",
+    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway", // deprecated, SP1 now used
+    "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "SuccinctGatewayMultisig",
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1",
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
+    "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": "BlobstreamMultisig",
+    "0xF2415C44F47983F7dD22003B46A034B1F1d04e44": "HeaderRangeVerifier",
+    "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6": "NextHeaderVerifier"
+  },
+  "overrides": {
+    // deprecated
+    "SuccinctGateway": {
+      "fields": {
+        "headerRangeVerifier": {
+          "handler": {
+            "type": "call",
+            "method": "verifiers",
+            "args": [
+              // should be BlobstreamX.headerRangeFunctionId(), manually pasted here
+              "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca"
+            ]
+          }
+        },
+        "nextHeaderVerifier": {
+          "handler": {
+            "type": "call",
+            "method": "verifiers",
+            "args": [
+              // should be BlobstreamX.nextHeaderFunctionId(), manually pasted here
+              "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"
+            ]
+          }
+        },
+        // catch the provers/relayers for Blobstream X from the SuccinctGateway:
+        // Event ProverUpdated(bytes32 indexed functionId, address indexed prover, bool added);
+        "headerRangeProvers": {
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.",
+          "severity": "LOW",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "event",
+            "select": "prover",
+            "add": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca"
+                ],
+                ["=", "#added", true]
+              ]
+            },
+            "remove": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca"
+                ],
+                ["!=", "#added", true]
+              ]
+            }
+          }
+        },
+        "headerRangeVerifierOwner": {
+          "handler": {
+            // can add/remove provers and set whitelist status for the functionID
+            "type": "call",
+            "method": "verifierOwners",
+            "args": [
+              "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca"
+            ]
+          }
+        },
+        "nextHeaderProvers": {
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
+          "severity": "LOW",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "event",
+            "select": "prover",
+            "add": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"
+                ],
+                ["=", "#added", true]
+              ]
+            },
+            "remove": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"
+                ],
+                ["!=", "#added", true]
+              ]
+            }
+          }
+        },
+        "nextHeaderVerifierOwner": {
+          "handler": {
+            // can add/remove provers and set whitelist status for the functionID
+            "type": "call",
+            "method": "verifierOwners",
+            "args": [
+              "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

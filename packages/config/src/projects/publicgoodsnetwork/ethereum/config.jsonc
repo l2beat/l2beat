@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "publicgoodsnetwork",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"],
+  "names": {
+    "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84": "PgnMultisig"
+  },
+  "overrides": {}
+}

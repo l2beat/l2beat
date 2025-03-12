@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PolygonGlobalExitRootV2",
+  "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
+  "ignoreMethods": [
+    "getLastGlobalExitRoot",
+    "lastMainnetExitRoot",
+    "lastRollupExitRoot"
+  ],
+  "ignoreInWatchMode": ["getRoot", "depositCount"],
+  "category": "shared"
+}

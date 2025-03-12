@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "edgeless",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x7E0bc314535f430122caFEF18eAbd508d62934bf", // EdgelessDeposit
+    "0x6a1B2ea25c3099CAFcbd4E60a3Ae251E52B69e78", // L1ERC20Gateway
+    "0x99790790B030CF116efed1c7577e2262072EfCc9" // L1CustomGateway
+  ],
+  "names": {
+    "0x7E0bc314535f430122caFEF18eAbd508d62934bf": "EdgelessDeposit",
+    "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227": "StakingManager",
+    "0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b": "EthStrategy",
+    "0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9": "RenzoStrategy",
+    "0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4": "EdgelessMultisig",
+    "0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006": "OrbitProxyAdmin",
+    "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281": "StrategiesProxyAdmin",
+    "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7": "WrappedToken"
+  },
+  "overrides": {
+    "StakingManager": {
+      "description": "Manages strategies to be used with funds forwarded from the EdgelessDeposit contract.",
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "strategies": {
+          "handler": {
+            "type": "event",
+            "select": "strategy",
+            "add": { "event": "AddStrategy" },
+            "remove": { "event": "RemoveStrategy" }
+          }
+        },
+        "activeStrategiesIndex": {
+          "handler": {
+            "type": "event",
+            "select": "index",
+            "set": { "event": "SetActiveStrategy" },
+            "groupBy": "asset"
+          }
+        }
+      }
+    },
+    "WrappedToken": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "EdgelessDeposit": {
+      "description": "Receives deposits and issues ewETH tokens. Funds are forwarded to the StakingManger contract.",
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "EthStrategy": {
+      "description": "Deposits funds into the Lido protocol.",
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["underlyingAssetAmount", "ethUnderWithdrawal"]
+    },
+    "RenzoStrategy": {
+      "description": "Deposits funds into the Renzo protocol.",
+      "ignoreRelatives": ["renzo", "ezETH"],
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["underlyingAssetAmount"]
+    }
+  }
+}

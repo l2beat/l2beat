@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1DaiGateway",
+  "description": "Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.",
+  "category": "bridge-external"
+}

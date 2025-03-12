@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "debridge",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"],
+  "names": {
+    "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": "SignatureVerifier",
+    "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": "DeBridgeGate",
+    "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": "Admin Multisig",
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "Weth",
+    "0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59": "WethGate"
+  },
+  "overrides": {
+    "SignatureVerifier": {
+      "fields": {
+        "oracles": {
+          "handler": {
+            "type": "array",
+            "method": "oracleAddresses",
+            "maxLength": 200
+          }
+        }
+      },
+      "ignoreMethods": ["oracleAddresses"],
+      "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"]
+    },
+    "DeBridgeGate": {
+      "ignoreMethods": ["getChainFromConfig", "getChainToConfig"],
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Admin Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "WethGate": {
+      "ignoreDiscovery": true
+    },
+    "Weth": {
+      "ignoreDiscovery": true
+    }
+  }
+}

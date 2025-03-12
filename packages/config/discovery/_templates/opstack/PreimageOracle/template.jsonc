@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "PreimageOracle",
-  "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
-  "ignoreMethods": ["zeroHashes"]
-}

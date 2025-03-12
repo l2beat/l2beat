@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "inevm",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE", // Inbox
+    "0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae", // erc20gw
+    "0x0bFd15d408c856aA5CC65f49B3A1d4441D9Cb11e" // customgw
+  ]
+}

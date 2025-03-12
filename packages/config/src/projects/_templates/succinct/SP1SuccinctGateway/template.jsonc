@@ -1,0 +1,96 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+  "ignoreRelatives": [
+    "oldVerifier",
+    "oldVerifier2",
+    "oldVerifier3",
+    "oldVerifier4"
+  ],
+  "fields": {
+    "oldVerifier": {
+      "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04.",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address verifier, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0xc430ff7f"
+        ]
+      }
+    },
+    "oldVerifier2": {
+      "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21.",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address verifier, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0xc865c1b6"
+        ]
+      }
+    },
+    "oldVerifier3": {
+      "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01.",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address prover, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0x09069090"
+        ]
+      }
+    },
+    "oldVerifier4": {
+      "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08.",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address verifier, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0x4aca240a"
+        ]
+      }
+    },
+    "oldVerifier5": {
+      "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address prover, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0x54bdcae3"
+        ]
+      }
+    },
+    "verifier": {
+      "description": "The prover contract address for SP1, and whether it is frozen (true if frozen).",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address prover, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0x1b34fe11"
+        ]
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+          }
+        ]
+      }
+    },
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+          }
+        ]
+      }
+    }
+  }
+}

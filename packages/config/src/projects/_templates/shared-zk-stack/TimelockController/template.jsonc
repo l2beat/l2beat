@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Timelock contract allowing the queueing of transactions with a minimum delay of {{getMinDelay_formatted}}.",
+  "fields": {
+    "getMinDelay_formatted": {
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "timelockAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "delay": "{{getMinDelay}}",
+            "description": "manage all access control roles and change the minimum delay."
+          }
+        ]
+      }
+    },
+    "Proposer": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "propose transactions."
+          }
+        ]
+      }
+    },
+    "Canceller": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "cancel queued transactions."
+          }
+        ]
+      }
+    },
+    "Executor": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "execute transactions that are ready."
+          },
+          {
+            "type": "act", // this should be limited to a party that is proposer, executor and canceller at the same time but in practice this is currently always a single party
+            "delay": "{{getMinDelay}}"
+          }
+        ]
+      }
+    }
+  }
+}

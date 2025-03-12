@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SHARPVerifierCallProxy",
+  "description": "Upgradable contract through which the SHARPVerifier can be called. This allows {{$admin}} to change the otherwise immutable verifier contract with {{upgradeActivationDelayFmt}} delay.",
+  "category": "shared",
+  "fields": {
+    "$admin": {
+      "severity": "HIGH",
+      "target": {
+        "permissions": [
+          {
+            "type": "upgrade",
+            "delay": "{{getUpgradeActivationDelay}}"
+          }
+        ]
+      }
+    },
+    "upgradeActivationDelayFmt": {
+      "handler": {
+        "type": "call",
+        "method": "getUpgradeActivationDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
+  "fields": {
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "act"
+          }
+        ]
+      }
+    },
+    "tokenMultiplierSetter": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "set the conversion factor for gas token deposits."
+          }
+        ]
+      }
+    },
+    "upgradeTimestamps": {
+      "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",
+      "handler": {
+        "type": "event",
+        "select": ["_protocolVersion", "_upgradeTimestamp"],
+        "add": { "event": "UpdateUpgradeTimestamp" }
+      }
+    }
+  },
+  "category": "gov"
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "brine",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x1390f521A79BaBE99b69B37154D63D431da27A07"],
+  "sharedModules": ["shared-sharp-verifier"]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProxyAdmin",
+  "fields": {
+    "OP_SIGNER": {
+      "target": {
+        "permissions": [{ "type": "act" }]
+      }
+    },
+    "OTHER_SIGNER": {
+      "target": {
+        "permissions": [{ "type": "act" }]
+      }
+    }
+  }
+}

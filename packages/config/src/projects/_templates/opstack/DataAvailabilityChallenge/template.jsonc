@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DataAvailabilityChallenge",
+  "description": "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.",
+  "ignoreMethods": [
+    "getNumToResolve",
+    "resolutionCheckpoints",
+    "resolvedSubgames"
+  ],
+  "fields": {
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+          }
+        ]
+      }
+    }
+  },
+  "category": "core"
+}

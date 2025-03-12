@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
+  "ignoreInWatchMode": ["latestPress", "canPress"],
+  "fields": {
+    "latestPress": {
+      "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals.",
+      "severity": "LOW"
+    },
+    "getHopperConfiguration": {
+      "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds.",
+      "severity": "MEDIUM"
+    }
+  }
+}

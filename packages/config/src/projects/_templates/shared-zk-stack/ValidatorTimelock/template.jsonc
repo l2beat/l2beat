@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_fmt}}.",
+  "ignoreMethods": ["committedBlockTimestamp", "getCommittedBatchTimestamp"],
+  "fields": {
+    "executionDelay_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "executionDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    },
+    "revertedBlocks": {
+      "handler": {
+        "type": "event",
+        "select": [
+          "totalBlocksCommitted",
+          "totalBlocksVerified",
+          "totalBlocksExecuted"
+        ],
+        "add": { "event": "BlocksRevert" }
+      }
+    }
+  },
+  "category": "shared"
+}

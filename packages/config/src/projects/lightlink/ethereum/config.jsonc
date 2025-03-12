@@ -1,0 +1,120 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "lightlink",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x3ca373F5ecB92ac762f9876f6e773082A4589995", // eth bridge
+    "0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9", // erc20 bridge
+    "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE" // CanonicalStateChain
+    //"0x670E1C42A7A5962348138110E3ede3F422c10e2f", // SystemConfig TODO: research
+    //"0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c" // L1StandardBridge TODO: research
+  ],
+  "names": {
+    "0x3ca373F5ecB92ac762f9876f6e773082A4589995": "LightLinkBridge",
+    "0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9": "LightLinkERC20Bridge",
+    "0x624631881655a310adcF0d1336658Cc977609b72": "L1BridgeRegistry",
+    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": "LightLinkMultisig",
+    "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": "CanonicalStateChain",
+    "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": "Challenge",
+    "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": "ChainOracle",
+    "0x670E1C42A7A5962348138110E3ede3F422c10e2f": "SystemConfig",
+    "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": "L1StandardBridge",
+    "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": "LightLinkMultisig2"
+  },
+  "overrides": {
+    //    "SystemConfig": {
+    //      "extends": "opstack/SystemConfig"
+    //    },
+    //    "L1CrossDomainMessenger": {
+    //      "extends": "opstack/L1CrossDomainMessenger"
+    //    },
+    "LightLinkBridge": {
+      "proxyType": "LightLink proxy",
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "LightLinkERC20Bridge": {
+      "proxyType": "LightLink proxy",
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "L1BridgeRegistry": {
+      "proxyType": "LightLink proxy",
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "LightLinkMultisig": {
+      "ignoreMethods": [
+        "getTransaction", // too many values
+        "transactions" // too many values
+      ]
+    },
+    "CanonicalStateChain": {
+      "ignoreMethods": [
+        "chain", // too many values
+        "getHeaderByNum", // too many values
+        "getL2Output"
+      ],
+      "ignoreInWatchMode": ["chainHead", "getHead"],
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "ChainOracle": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "Challenge": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    }
+  }
+}

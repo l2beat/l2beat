@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1ERC20TokenBridge",
+  "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
+  "ignoreRelatives": [
+    "L1_TOKEN_NON_REBASABLE",
+    "L1_TOKEN_REBASABLE",
+    "L2_TOKEN_NON_REBASABLE",
+    "L2_TOKEN_REBASABLE",
+    "WSTETH",
+    "l2TokenBridge",
+    "$admin",
+    "ACCOUNTING_ORACLE",
+    "proxy__getAdmin"
+  ],
+  "fields": {
+    "accesscontrol": {
+      "handler": {
+        "type": "accessControl",
+        "ignoreRelative": true
+      }
+    }
+  }
+}

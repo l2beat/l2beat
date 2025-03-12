@@ -1,5 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "FacetSafeProxy",
-  "description": "Helper of the Safe Module that allows to send Facet transactions."
-}

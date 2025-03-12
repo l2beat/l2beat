@@ -1,0 +1,7 @@
+.code
+.code@*
+.flat
+.flat@*
+**/*.lp
+!_templates/**/*.lp
+!_clingo/**/*.lp

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "eigenda",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+  ],
+  "names": {
+    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
+    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerOwningMultisig",
+    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
+    "0x5050389572f2d220ad927CcbeA0D406831012390": "EigenLayerPauserMultisig",
+    "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": "EigenLayerRewardsInitiatorMultisig",
+    "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
+    "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerProtocolCouncil"
+  },
+  "overrides": {
+    "EIGEN Token": {
+      "ignoreRelatives": ["bEIGEN"]
+    },
+    "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {
+      "extends": "eigenlayer/Strategy" // temporary manual override until the proxy is verified and the shape fits
+    }
+  }
+}

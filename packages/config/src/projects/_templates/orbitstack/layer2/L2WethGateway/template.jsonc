@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2WethGateway",
+  "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
+  "ignoreRelatives": ["l1Weth", "l2Weth"],
+  "ignoreMethods": ["exitNum"]
+}

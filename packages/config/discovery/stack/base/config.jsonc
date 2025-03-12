@@ -1,9 +1,0 @@
-{
-  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "chain": "base",
-  "name": "stack",
-  "import": ["../../baseConfig.jsonc"],
-  "initialAddresses": ["0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"], //L1StandardBridge
-  "names": {},
-  "overrides": {}
-}

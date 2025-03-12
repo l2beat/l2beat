@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TurboVerifier",
+  "description": "Turbo Plonk ZK verifier."
+}

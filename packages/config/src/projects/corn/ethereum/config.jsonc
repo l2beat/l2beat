@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "corn",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x00943b11764176C3a8323aEFCBd6fE70CFb6272d", // wBTC Escrow
+    "0x957c9dc25de6b8e46a7fa0d081ba749dd005b54f", // cbBTC Escrow
+    "0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C" // bridge
+    // 0xB1fFCe57CAC2fD215276037ACe92Ee1fd1f6A4A7 // farming vault, bridging function disabled
+  ],
+  "names": {
+    "0x386E7A3a0c0919c9d53c3b04FF67E73Ff9e45Fb6": "Bitcorn", // gastoken
+    "0x00943b11764176C3a8323aEFCBd6fE70CFb6272d": "wBTC Escrow",
+    "0x957c9dc25de6b8e46a7fa0d081ba749dd005b54f": "cbBTC Escrow",
+    "0xCff1ad9f09b32252171207e8525c90B18D4E2C7D": "CornMultisig"
+  },
+  "overrides": {
+    "wBTC Escrow": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "cbBTC Escrow": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "Bitcorn": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalSupply"]
+    }
+  }
+}

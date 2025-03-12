@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "immutablezkevm",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"],
+  "names": {
+    "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6": "Bridge",
+    "0xD2C37fC6fD89563187f3679304975655e448D192": "OwnerMultisig",
+    "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932": "RootAxelarBridgeAdaptor"
+  },
+  "overrides": {
+    "RootAxelarBridgeAdaptor": {
+      "ignoreRelatives": ["gasService"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "Bridge": {
+      "ignoreRelatives": ["rootWETHToken", "rootIMXToken"],
+      "ignoreInWatchMode": ["withdrawalQueueActivated"],
+      "fields": {
+        "withdrawalDelay": {
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "withdrawalQueueActivated": {
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
+    },
+    "OwnerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}

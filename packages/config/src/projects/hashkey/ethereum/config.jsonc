@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "hashkey",
+  "chain": "ethereum",
+  "initialAddresses": ["0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3"],
+  "import": ["../../ethereumConfig.jsonc"],
+  "names": {
+    "0x441F31C4cdf772558D4EA31f3114de59aE145E7c": "HashkeyUpgradeMultisig",
+    "0xC7fCbE26c1Db751d63869F72F782a56710f6be5A": "HashkeyGuardianMultisig",
+    "0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3": "HashkeyOpsMultisig"
+  },
+  "overrides": {
+    "0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50": {
+      // permissionedGamesTotal from the template ignored as they are using permissioned games by default
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "0xb321dEC8b39b54a740bbD0fbbD14D48fa9CC8f65": {
+      "proxyType": "immutable"
+    },
+    "0x6319563FD2B6aC5DbD5c946E74f9DaD60d028F22": {
+      "proxyType": "immutable"
+    }
+  }
+}

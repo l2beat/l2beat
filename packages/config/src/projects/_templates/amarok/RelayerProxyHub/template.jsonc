@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["lastProposeAggregateRootAt"],
+  "ignoreRelatives": [
+    "autonolas",
+    "connext",
+    "feeCollector",
+    "gelatoRelayer",
+    "hubConnector",
+    "keep3r",
+    "proposed",
+    "rootManager",
+    "spokeConnector"
+  ]
+}

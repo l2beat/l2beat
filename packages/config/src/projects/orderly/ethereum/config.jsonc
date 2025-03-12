@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "orderly",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1", //L1StandardBridge
+    "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC"
+  ],
+  "names": {
+    "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4": "OrderlyMultisig"
+  },
+  "overrides": {}
+}

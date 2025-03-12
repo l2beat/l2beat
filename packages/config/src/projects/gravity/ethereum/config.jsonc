@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "gravity",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906"],
+  "names": {
+    "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": "Gravity"
+  },
+  "overrides": {
+    "Gravity": {
+      "ignoreInWatchMode": [
+        "state_gravityId",
+        "state_lastEventNonce",
+        "state_lastValsetCheckpoint",
+        "state_lastValsetNonce"
+      ]
+    }
+  }
+}

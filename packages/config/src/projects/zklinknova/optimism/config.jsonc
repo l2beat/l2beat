@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "optimism",
+  "name": "zklinknova",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+    "0x5Bd51296423A9079b931414C1De65e7057326EaA"
+  ],
+  "names": {
+    "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b": "zkLink",
+    "0x5Bd51296423A9079b931414C1De65e7057326EaA": "L1ERC20Bridge",
+    "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": "OptimismL2Gateway",
+    "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9": "OptimismOwner",
+    "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": "OptimismProxyAdmin"
+  },
+  "overrides": {
+    "OptimismL2Gateway": {
+      "extends": "zklinknova/secondaryGateway"
+    }
+  }
+}

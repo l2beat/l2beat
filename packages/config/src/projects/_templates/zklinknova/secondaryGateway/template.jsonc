@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": [
+    "MESSAGE_SERVICE",
+    "ARB_SYS",
+    "getRemoteGateway",
+    "ethToken",
+    "INBOX"
+  ]
+}

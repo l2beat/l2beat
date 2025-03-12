@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "immutablex",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"],
+  "names": {
+    "0xD2C37fC6fD89563187f3679304975655e448D192": "IMXAdminMultisig"
+  },
+  "sharedModules": ["shared-sharp-verifier"]
+}

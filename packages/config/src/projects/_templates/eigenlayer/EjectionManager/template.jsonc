@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
+  "fields": {
+    "ejectors": {
+      "handler": {
+        "type": "event",
+        "select": "ejector",
+        "add": {
+          "event": "EjectorUpdated",
+          "where": ["=", "#status", true]
+        },
+        "remove": {
+          "event": "EjectorUpdated",
+          "where": ["!=", "#status", true]
+        }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can eject DA operators from a quorum."
+          }
+        ]
+      }
+    },
+    "ejectionRateLimitWindow": {
+      "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",
+      "handler": {
+        "type": "event",
+        "select": "rateLimitWindow",
+        "add": { "event": "QuorumEjectionParamsSet" }
+      }
+    },
+    "ejectableStakePercent": {
+      "description": "Max stake to be ejectable per time delta.",
+      "handler": {
+        "type": "event",
+        "select": "ejectableStakePercent",
+        "add": { "event": "QuorumEjectionParamsSet" }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "paradex",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+    "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+  ],
+  "names": {
+    "0xF338cad020D506e8e3d9B4854986E0EcE6C23640": "Paradex",
+    "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": "USDC Bridge",
+    "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "ParadexAdminMultisig"
+  },
+  "sharedModules": ["shared-sharp-verifier"],
+  "overrides": {}
+}

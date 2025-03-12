@@ -1,0 +1,96 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "polygonzkevm",
+  "name": "lzomnichain",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4"],
+  "names": {
+    "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4": "Endpoint",
+    "0xFe7C30860D01e28371D40434806F4A8fcDD3A098": "UltraLightNodeV2",
+    "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827": "LayerZeroMultisig_pzkevm"
+  },
+  "overrides": {
+    "Endpoint": {
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
+      "fields": {
+        "libraryLookup": {
+          "handler": {
+            "type": "array",
+            "method": "libraryLookup",
+            "startIndex": 1,
+            "length": "{{ latestVersion }}",
+            // ignoring because discovered.json gets clattered with ULNv1 and ULNv2RADAR.
+            "ignoreRelative": true
+          }
+        }
+      }
+    },
+    "UltraLightNodeV2": {
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
+      "fields": {
+        "chainAddressSizeMap": {
+          "handler": {
+            "type": "event",
+            "select": "size",
+            "set": { "event": "SetChainAddressSize" },
+            "groupBy": "chainId"
+          }
+        },
+        "ulnLookup": {
+          "handler": {
+            "type": "event",
+            "select": "uln",
+            "set": { "event": "SetRemoteUln" },
+            "groupBy": "chainId"
+          }
+        },
+        "defaultAppConfig": {
+          "handler": {
+            "type": "event",
+            "select": [
+              "inboundProofLib",
+              "inboundBlockConfirm",
+              "outboundProofType",
+              "outboundBlockConfirm",
+              "oracle",
+              "relayer"
+            ],
+            "set": { "event": "SetDefaultConfigForChainId" },
+            "groupBy": "chainId"
+          }
+        },
+        "defaultAdapterParams": {
+          "handler": {
+            "type": "event",
+            "select": ["proofType", "adapterParams"],
+            "set": { "event": "SetDefaultAdapterParamsForChainId" },
+            "groupBy": "chainId"
+          }
+        },
+        "inboundProofLibrary": {
+          "handler": {
+            "type": "event",
+            "select": "lib",
+            "add": { "event": "AddInboundProofLibraryForChain" },
+            "groupBy": "chainId"
+          }
+        },
+        "supportedOutboundProof": {
+          "handler": {
+            "type": "event",
+            "select": "proofType",
+            "add": { "event": "EnableSupportedOutboundProof" },
+            "groupBy": "chainId"
+          }
+        }
+      }
+    }
+  }
+}

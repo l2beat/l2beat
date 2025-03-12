@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "spam",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs"
+      },
+      "target": {
+        "template": "shared-sharp-verifier/ignoreComputeSpam"
+      }
+    }
+  }
+}

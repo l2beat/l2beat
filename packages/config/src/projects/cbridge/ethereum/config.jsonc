@@ -1,0 +1,131 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "cbridge",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
+    "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b"
+  ],
+  "names": {
+    "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": "MessageBusOwner",
+    "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": "SimpleGovernance",
+    "0xB37D31b2A74029B5951a2778F959282E2D518595": "OriginalTokenVault",
+    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Liquidity Network",
+    "0x8E339115b295DeD49880eA62C1F06d1dbec3496b": "SentinelProxyAdmin",
+    "0x1b9dFC56e38b0F92448659C114e2347Bd803911c": "SentinelAdmin",
+    "0xF140024969F6c76494a78518D9a99c8776B55f70": "Sentinel"
+  },
+  "overrides": {
+    "MessageBusOwner": {
+      "ignoreMethods": ["countVotes", "nextProposalId", "proposals", "voters"]
+    },
+    "Liquidity Network": {
+      "fields": {
+        "pausers": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": { "event": "PauserAdded" },
+            "remove": { "event": "PauserRemoved" }
+          }
+        },
+        "governors": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": { "event": "GovernorAdded" },
+            "remove": { "event": "GovernorRemoved" }
+          }
+        }
+      },
+      "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"]
+    },
+    "OriginalTokenVault": {
+      "fields": {
+        "pausers": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": { "event": "PauserAdded" },
+            "remove": { "event": "PauserRemoved" }
+          }
+        },
+        "governors": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": { "event": "GovernorAdded" },
+            "remove": { "event": "GovernorRemoved" }
+          }
+        }
+      }
+    },
+    "SimpleGovernance": {
+      "ignoreMethods": ["voters", "proposals"],
+      "ignoreInWatchMode": ["nextProposalId"]
+    },
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      // WETH9
+      "ignoreDiscovery": true
+    },
+    "Sentinel": {
+      "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
+      "fields": {
+        "governors": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "event GovernorUpdated(address account, bool added)",
+              "where": ["=", "#added", true]
+            },
+            "remove": {
+              "event": "event GovernorUpdated(address account, bool added)",
+              "where": ["!=", "#added", true]
+            }
+          }
+        },
+        "pausersPauseOnly": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["=", "#role", 1]
+            },
+            "remove": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["not", ["=", "#role", 1]]
+            }
+          }
+        },
+        "pausersFull": {
+          "handler": {
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["=", "#role", 2]
+            },
+            "remove": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["not", ["=", "#role", 2]]
+            }
+          }
+        },
+        "numRelaxedGuards": {
+          "description": "Number of relaxed guards in the Sentinel."
+        },
+        "relaxThreshold": {
+          "description": "Threshold of relaxed Guards needed to relax the Sentinel",
+          "severity": "MEDIUM"
+        },
+        "relaxed": {
+          "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)",
+          "severity": "MEDIUM"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "base",
+  "name": "degen",
+  "import": ["../../baseConfig.jsonc"],
+  "initialAddresses": [
+    "0xD34F3a11F10DB069173b32d84F02eDA578709143", // rollup proxy
+    "0x43019F8BE1F192587883b67dEA2994999f5a2de2", // main bridge (stargate/layerzero?)
+    "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF" // relay bridge
+  ],
+  "names": {
+    "0x43019F8BE1F192587883b67dEA2994999f5a2de2": "UTBDecent", // Decent omnichain service (LayerZero)
+    "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": "Relay Bridge", // EOA Bridge / Liquidity network https://relay.link/transactions/
+    "0xDb8E759859058952c34953c8469f464109826e52": "OrbitERC20OFTAdapter",
+    "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2": "OftAdapterEOA",
+    "0xc207cbC35DD3CD172059730380A45aE14eb0e403": "DegenFastConfirmerMultisig"
+  },
+  "overrides": {
+    "OrbitERC20OFTAdapter": {
+      "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
+      "ignoreRelatives": ["endpoint", "token"],
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "UTBDecent": {
+      "description": "The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.",
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

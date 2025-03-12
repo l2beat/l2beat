@@ -1,3 +1,5 @@
+import { join } from 'path'
+import { type DiscoveryPaths, getDiscoveryPaths } from '@l2beat/discovery'
 import { command, restPositionals } from 'cmd-ts'
 import dotenv from 'dotenv'
 import { Contract, utils as ethersUtils, providers } from 'ethers'
@@ -165,11 +167,16 @@ export const TokenScreening = command({
   },
   handler: async (args) => {
     const chains = ['arbitrum', 'optimism', 'base']
+    const paths = getDiscoveryPaths()
 
     // Load discovered.json files to get escrow addresses
     const escrows: { [key: string]: string[] } = {}
     for (const chain of chains) {
-      const discoveredPath = `../../../config/discovery/${chain}/ethereum/discovered.json`
+      const discoveredPath = join(
+        paths.discovery,
+        chain,
+        'ethereum/discovered.json',
+      )
       const discovered = require(discoveredPath)
       escrows[chain] = [getCanonicalEscrow(discovered, chain)]
     }
@@ -179,6 +186,7 @@ export const TokenScreening = command({
       for (const chain of chains) {
         // get L2 token address from escrow
         const l2Address = await getL2TokenAddress(
+          paths,
           tokenAddress.toString(),
           chain,
           escrows,
@@ -218,6 +226,7 @@ export const TokenScreening = command({
 
             const minters = await getL2Minters(l2Address, chain)
             const mintersType = await checkMintersType(
+              paths,
               minters.map((m) => ({
                 address: m.address,
                 name: m.name || 'Unknown',
@@ -362,6 +371,7 @@ export const TokenScreening = command({
           // minter analysis
           const l2Minters = await getL2Minters(l2AddressFromCoingecko, chain)
           const mintersType = await checkMintersType(
+            paths,
             l2Minters.map((m) => ({
               address: m.address,
               name: m.name || 'Unknown',
@@ -447,6 +457,7 @@ function getCanonicalEscrow(
 }
 
 async function getL2TokenAddress(
+  paths: DiscoveryPaths,
   l1TokenAddress: string,
   network: string,
   escrows?: { [key: string]: string[] },
@@ -458,7 +469,11 @@ async function getL2TokenAddress(
       canonicalEscrowAddress = escrows[network][0]
     } else {
       // Dynamically load the discovered.json file based on network
-      const discoveredPath = `../../../config/discovery/${network}/ethereum/discovered.json`
+      const discoveredPath = join(
+        paths.discovery,
+        network,
+        'ethereum/discovered.json',
+      )
       const discovered = require(discoveredPath)
       canonicalEscrowAddress = getCanonicalEscrow(discovered, network)
     }
@@ -770,6 +785,7 @@ async function getL2Minters(l2Address: string, network: string) {
 }
 
 async function checkMintersType(
+  paths: DiscoveryPaths,
   l2Minters: Array<{ address: string | null; name: string }>,
 ) {
   try {
@@ -826,7 +842,11 @@ async function checkMintersType(
     // Check each bridge's discovered.json
     for (const bridgeName of bridgeNames) {
       try {
-        const discoveredPath = `../../../config/discovery/${bridgeName}/ethereum/discovered.json`
+        const discoveredPath = join(
+          paths.discovery,
+          bridgeName,
+          'ethereum/discovered.json',
+        )
         const discovered = require(discoveredPath)
 
         // Extract contract addresses from discovered.json

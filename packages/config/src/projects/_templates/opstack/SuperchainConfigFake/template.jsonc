@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SuperchainConfig",
+  "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+  "fields": {
+    "guardian": {
+      "target": {
+        "permissions": [{ "type": "guard" }]
+      }
+    }
+  },
+  "category": "gov"
+}

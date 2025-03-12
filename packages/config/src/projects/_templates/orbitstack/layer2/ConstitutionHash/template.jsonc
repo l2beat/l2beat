@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ConstitutionHash",
+  "description": "Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor."
+}

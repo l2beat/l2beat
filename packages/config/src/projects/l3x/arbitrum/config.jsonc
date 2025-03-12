@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "l3x",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44", // Bridge
+    "0x4fF3E70f30f0394Ad62428751Fe3858740595908" // L1ERC20Gateway
+  ]
+}

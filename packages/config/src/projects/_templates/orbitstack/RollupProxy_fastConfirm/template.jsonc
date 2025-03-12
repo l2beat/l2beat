@@ -1,0 +1,99 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RollupProxy",
+  "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+  "ignoreMethods": ["proxiableUUID"],
+  "category": "core",
+  "ignoreInWatchMode": [
+    "firstUnresolvedNode",
+    "latestConfirmed",
+    "latestNodeCreated",
+    "lastStakeBlock"
+  ],
+  "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox"],
+  "fields": {
+    "isPostBoLD": {
+      "handler": {
+        "type": "hardcoded",
+        "value": false
+      }
+    },
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          }
+        ]
+      }
+    },
+    "validators": {
+      "target": {
+        "permissions": [
+          {
+            "type": "validate",
+            "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+          }
+        ]
+      },
+      "handler": {
+        "type": "arbitrumActors",
+        "actorType": "validator"
+      }
+    },
+    "anyTrustFastConfirmer": {
+      "target": {
+        "permissions": [
+          {
+            "type": "fastconfirm",
+            "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+          }
+        ]
+      }
+    },
+    "minimumAssertionPeriod": {
+      "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
+    },
+    "confirmPeriodBlocks": {
+      "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
+    },
+    "wasmModuleRoot": {
+      "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+    },
+    "arbOsFromWmRoot": {
+      "description": "ArbOS version derived from known wasmModuleRoots.",
+      "handler": {
+        "type": "call",
+        "method": "wasmModuleRoot",
+        "args": []
+      },
+      "returnType": "(ArbOsWasmModuleRoot)"
+    },
+    "setValidatorCount": {
+      "description": "Increments on each Validator change.",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          // event OwnerFunctionCalled(uint256 indexed id);
+          "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+          // id == 6 is emitted inside setValidator()
+          "0x0000000000000000000000000000000000000000000000000000000000000006"
+        ]
+      }
+    },
+    "challenges": {
+      "description": "Emitted on createChallenge() in RollupUserLogic.",
+      "handler": {
+        "type": "event",
+        "select": [
+          "challengeIndex",
+          "asserter",
+          "challenger",
+          "challengedNode"
+        ],
+        "add": { "event": "RollupChallengeStarted" }
+      }
+    }
+  }
+}

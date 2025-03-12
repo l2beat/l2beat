@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
+  "ignoreMethods": [
+    "sharesToUnderlying",
+    "sharesToUnderlyingView",
+    "underlyingToShares",
+    "underlyingToSharesView",
+    "EIGEN"
+  ],
+  "ignoreRelatives": ["underlyingToken"],
+  "ignoreInWatchMode": ["totalShares"],
+  "fields": {
+    "getTVLLimits": {
+      "description": "Maximum TVL of the strategy.",
+      "severity": "LOW",
+      "type": "RISK_PARAMETER"
+    },
+    "maxPerDeposit": {
+      "description": "Maximum value of one deposit transaction",
+      "severity": "LOW",
+      "type": "RISK_PARAMETER"
+    },
+    "maxTotalDeposits": {
+      "description": "Same as TVL limit",
+      "severity": "LOW",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

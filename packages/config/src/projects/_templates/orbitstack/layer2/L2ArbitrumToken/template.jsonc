@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2ArbitrumToken",
+  "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of {{ mintCapPerYer }}%.",
+  "ignoreMethods": ["getPastTotalSupply"],
+  "fields": {
+    "mintCapPerYer": {
+      "handler": {
+        "type": "call",
+        "method": "MINT_CAP_NUMERATOR",
+        "args": []
+      },
+      "returnType": "(Undecimal2)",
+      "description": "The percentage of the total supply that can be minted by the owner once per year."
+    }
+  }
+}

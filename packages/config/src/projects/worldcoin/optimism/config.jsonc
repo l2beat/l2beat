@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "optimism",
+  "name": "worldcoin",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d"],
+  "names": {
+    "0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d": "RecurringGrantDrop",
+    "0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674": "WLDGrant",
+    "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": "OpWorldID_One",
+    "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": "OpWorldID_Zero",
+    "0x57f928158C3EE7CDad1e4D8642503c4D0201f611": "WorldIDRouterV1",
+    "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1": "WLD token",
+    "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a": "WorldIDIdentityManagerV2"
+  },
+  "overrides": {
+    "WorldIDIdentityManagerV2": {
+      "ignoreMethods": ["proxiableUUID", "queryRoot"],
+      "ignoreInWatchMode": ["latestRoot"]
+    },
+    "WLD token": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "0x4200000000000000000000000000000000000010": {
+      "ignoreDiscovery": true
+    },
+    "RecurringGrantDrop": {
+      "ignoreMethods": ["nullifierHashes"]
+    },
+    "WLDGrant": {
+      "ignoreMethods": ["getAmount"],
+      "ignoreInWatchMode": ["getCurrentId"]
+    },
+    "OpWorldID_One": {
+      "description": "A contract that manages the root history of the Semaphore identity merkle tree on Optimism.",
+      "ignoreMethods": ["rootHistory", "latestRoot"],
+      "fields": {
+        "verifier": {
+          "handler": {
+            "type": "storage",
+            "slot": 3,
+            "returnType": "address"
+          }
+        }
+      }
+    },
+    "OpWorldID_Zero": {
+      "ignoreMethods": ["rootHistory"],
+      "fields": {
+        "verifier": {
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          }
+        }
+      }
+    },
+    "WorldIDRouterV1": {
+      "ignoreMethods": ["proxiableUUID"]
+    }
+  }
+}

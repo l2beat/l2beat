@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "sophon",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3", // SophonZkEvm
+    "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987" // L1USDCBridge
+  ],
+  "names": {
+    "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "SophonZkEvm",
+    "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "SophonZkEvmAdmin",
+    "0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig"
+  },
+  "sharedModules": ["shared-zk-stack"],
+  "overrides": {
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+      // local override over the template to fetch the validators from the shared contract
+      "fields": {
+        "validatorsVTL": {
+          "handler": {
+            "type": "event",
+            "select": ["validator"],
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 50104]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 50104]
+            }
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "validateZkStack"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

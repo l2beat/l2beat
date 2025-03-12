@@ -1,0 +1,224 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PolygonRollupManager",
+  "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the {{emergencyCouncilAdminAC}} or by anyone after {{_HALT_AGGREGATION_TIMEOUT}} of inactive verifiers.",
+  "types": {
+    "IsGreaterThanOne": {
+      "typeCaster": "GreaterThan",
+      "arg": {
+        "value": 1
+      }
+    }
+  },
+  "ignoreMethods": [
+    "checkStateRootInsidePrime",
+    "pendingStateTransitions",
+    "batchFee",
+    "calculateRewardPerBatch",
+    "getForcedBatchFee",
+    "getLastVerifiedBatch",
+    "lastBatchSequenced",
+    "lastForceBatch",
+    "lastForceBatchSequenced",
+    "lastPendingState",
+    "lastPendingStateConsolidated",
+    "lastTimestamp",
+    "lastVerifiedBatch",
+    "multiplierBatchFee"
+  ],
+  "ignoreInWatchMode": [
+    "getRollupExitRoot",
+    "lastAggregationTimestamp",
+    "totalSequencedBatches",
+    "totalVerifiedBatches"
+  ],
+  "ignoreRelatives": ["pol"],
+  "fields": {
+    "_HALT_AGGREGATION_TIMEOUT": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "1 week"
+      }
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xac75d24dbb35ea80e25fab167da4dea46c1915260426570db84f184891f5f590": "ADD_ROLLUP_TYPE",
+          "0xab66e11c4f712cd06ab11bf9339b48bef39e12d4a22eeef71d2860a0c90482bd": "OBSOLETE_ROLLUP_TYPE",
+          "0xa0fab074aba36a6fa69f1a83ee86e5abfb8433966eb57efb13dc2fc2f24ddd08": "CREATE_ROLLUP",
+          "0x3dfe277d2a2c04b75fb2eb3743fa00005ae3678a20c299e65fdf4df76517f68e": "ADD_EXISTING_ROLLUP",
+          "0x66156603fe29d13f97c6f3e3dff4ef71919f9aa61c555be0182d954e94221aac": "UPDATE_ROLLUP",
+          "0x084e94f375e9d647f87f5b2ceffba1e062c70f6009fdbcf80291e803b5c9edd4": "TRUSTED_AGGREGATOR",
+          "0x73cb0569fdbea2544dae03fdb2fe10eda92a72a2e8cd2bd496e85b762505a3f0": "TRUSTED_AGGREGATOR_ADMIN",
+          "0xa5c5790f581d443ed43873ab47cfb8c5d66a6db268e58b5971bb33fc66e07db1": "TWEAK_PARAMETERS",
+          "0x8cf807f6970720f8e2c208c7c5037595982c7bd9ed93c380d09df743d0dcc3fb": "SET_FEE",
+          "0x62ba6ba2ffed8cfe316b583325ea41ac6e7ba9e5864d2bc6fabba7ac26d2f0f4": "STOP_EMERGENCY",
+          "0x141f8f32ce6198eee741f695cec728bfd32d289f1acf73621fb303581000545e": "EMERGENCY_COUNCIL",
+          "0x9b6f082d8d3644ae2f24a3c32e356d6f2d9b2844d9b26164fbc82663ff285951": "EMERGENCY_COUNCIL_ADMIN"
+        }
+      }
+    },
+    "trustedAggregatorAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x084e94f375e9d647f87f5b2ceffba1e062c70f6009fdbcf80291e803b5c9edd4": "TRUSTED_AGGREGATOR"
+        },
+        "pickRoleMembers": "TRUSTED_AGGREGATOR"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "aggregatePolygon"
+          }
+        ]
+      }
+    },
+    "defaultAdminAC": {
+      // assuming they also have ADD_ROLLUP_TYPE, ADD_EXISTING_ROLLUP, UPDATE_ROLLUP roles
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+          }
+        ]
+      }
+    },
+    "tweakParametersAC": {
+      // assuming they also have UPDATE_ROLLUP, OBSOLETE_ROLLUP_TYPE, STOP_EMERGENCY, TRUSTED_AGGREGATOR_ADMIN, SET_FEE roles
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xa5c5790f581d443ed43873ab47cfb8c5d66a6db268e58b5971bb33fc66e07db1": "TWEAK_PARAMETERS"
+        },
+        "pickRoleMembers": "TWEAK_PARAMETERS"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
+          }
+        ]
+      }
+    },
+    "createRollupAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xa0fab074aba36a6fa69f1a83ee86e5abfb8433966eb57efb13dc2fc2f24ddd08": "CREATE_ROLLUP"
+        },
+        "pickRoleMembers": "CREATE_ROLLUP"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+          }
+        ]
+      }
+    },
+    "emergencyCouncilAdminAC": {
+      // assuming they also have the EMERGENCY_COUNCIL role
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x9b6f082d8d3644ae2f24a3c32e356d6f2d9b2844d9b26164fbc82663ff285951": "EMERGENCY_COUNCIL_ADMIN"
+        },
+        "pickRoleMembers": "EMERGENCY_COUNCIL_ADMIN"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."
+          }
+        ]
+      }
+    },
+    "isEmergencyState": {
+      "severity": "HIGH",
+      "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
+    },
+    "emergencyStateCount": {
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x2261efe5aef6fedc1fd1550b25facc9181745623049c7901287030b9ad1a5497"
+        ]
+      }
+    },
+    "rollupsDataV2": {
+      "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "array",
+        "method": "rollupIDToRollupDataV2",
+        "startIndex": 1,
+        "pickFields": [
+          "rollupContract",
+          "chainID",
+          "verifier",
+          "forkID",
+          "rollupTypeID",
+          "rollupVerifierType",
+          "programVKey"
+        ],
+        "length": "{{ rollupCount }}",
+        "ignoreRelative": true
+      }
+    },
+    "rollupTypes": {
+      "description": "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey",
+      "handler": {
+        "type": "array",
+        "method": "rollupTypeMap",
+        "startIndex": 1,
+        "length": "{{ rollupTypeCount }}",
+        "pickFields": [
+          "consensusImplementation",
+          "verifier",
+          "forkID",
+          "rollupVerifierType",
+          "obsolete",
+          "programVKey"
+        ],
+        "ignoreRelative": true
+      }
+    },
+    "isVerifyingBatches": {
+      "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1.",
+      "handler": {
+        "type": "array",
+        "method": "rollupIDToRollupData",
+        "startIndex": 1,
+        "length": "{{ rollupCount }}",
+        "pickFields": ["lastVerifiedBatch"]
+      },
+      "returnType": "(IsGreaterThanOne[][])"
+    },
+    "pessimisticProofSenders": {
+      "description": "Lists any rollupID that sends a pessimistic proof.",
+      "handler": {
+        "type": "event",
+        "select": "rollupID",
+        "add": {
+          "event": "VerifyBatchesTrustedAggregator",
+          "where": [
+            "=",
+            "#stateRoot",
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ]
+        }
+      }
+    }
+  },
+  "category": "shared"
+}

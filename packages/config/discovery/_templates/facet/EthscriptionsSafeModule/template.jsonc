@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "EthscriptionsSafeModule",
-  "description": "Module that allows the Safe to interact with Ethscriptions.",
-  "canActIndependently": false
-}

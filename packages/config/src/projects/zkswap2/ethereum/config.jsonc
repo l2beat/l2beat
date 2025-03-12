@@ -1,0 +1,101 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "zkswap2",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"],
+  "names": {
+    "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7": "UpgradeGatekeeper",
+    "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513": "VerifierExit",
+    "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0": "ZkSyncExit"
+  },
+  "overrides": {
+    "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7": {
+      "fields": {
+        "getMaster": {
+          "handler": {
+            "type": "call",
+            "method": "function getMaster() view returns (address)",
+            "args": []
+          }
+        },
+        "mainContract": {
+          "handler": {
+            "type": "call",
+            "method": "function mainContract() view returns (address)",
+            "args": []
+          }
+        },
+        "managedContracts": {
+          "handler": {
+            "type": "array",
+            "method": "function managedContracts(uint256 i) view returns (address)"
+          }
+        }
+      }
+    },
+    "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B": {
+      "fields": {
+        "validators": {
+          "handler": {
+            "type": "event",
+            "select": "validatorAddress",
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["=", "#isActive", true]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!=", "#isActive", true]
+            }
+          }
+        }
+      }
+    },
+    "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3": {
+      "fields": {
+        "verifier": {
+          "handler": {
+            "type": "storage",
+            "slot": 5,
+            "returnType": "address"
+          }
+        },
+        "verifierExit": {
+          "handler": {
+            "type": "storage",
+            "slot": 6,
+            "returnType": "address"
+          }
+        },
+        "governance": {
+          "handler": {
+            "type": "storage",
+            "slot": 7,
+            "returnType": "address"
+          }
+        },
+        "pairManager": {
+          "handler": {
+            "type": "storage",
+            "slot": 8,
+            "returnType": "address"
+          }
+        }
+      },
+      "ignoreInWatchMode": [
+        "firstPendingWithdrawalIndex",
+        "firstPriorityRequestId",
+        "totalBlocksChecked",
+        "totalBlocksCommitted",
+        "totalBlocksVerified",
+        "totalCommittedPriorityRequests",
+        "totalOpenPriorityRequests",
+        "numberOfPendingWithdrawals"
+      ]
+    },
+    "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D": {
+      "ignoreMethods": ["allPairs"]
+    }
+  }
+}
