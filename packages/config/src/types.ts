@@ -127,6 +127,8 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
+  /** Array of EOA addresses that have high upgrade permissions, used to highlight them in UI */
+  highRiskEoaAddresses?: string[]
   // countdowns
   otherMigration?: {
     expiresAt: number

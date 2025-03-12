@@ -33,6 +33,7 @@ export async function generateMetadata(props: Props) {
     select: ['display'],
     where: ['scalingInfo'],
   })
+
   if (!project) {
     notFound()
   }
@@ -82,6 +83,9 @@ export default async function Page(props: Props) {
       'trackedTxsConfig',
     ],
   })
+
+  console.dir(project?.statuses, { depth: null })
+
   if (!project) {
     notFound()
   }

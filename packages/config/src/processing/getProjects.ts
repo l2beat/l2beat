@@ -27,6 +27,7 @@ import { isVerified } from './isVerified'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
+import { analyzeEoaUpgradePermissions } from './utils/eoaUpgradePermissions'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -51,6 +52,13 @@ function layer2Or3ToProject(
   layer2s: ScalingProject[],
   tokenList: Token[],
 ): BaseProject {
+  // Check for EOA upgrade permissions
+  const eoaAnalysis = analyzeEoaUpgradePermissions(p.permissions, p.contracts)
+  const redWarning = getEoaUpgradeWarning(p.display.redWarning, eoaAnalysis)
+
+  // Convert Set to Array for serialization
+  const highRiskEoaAddresses = Array.from(eoaAnalysis.highRiskEoaAddresses)
+
   return {
     id: p.id,
     name: p.display.name,
@@ -60,9 +68,11 @@ function layer2Or3ToProject(
     // data
     statuses: {
       yellowWarning: p.display.headerWarning,
-      redWarning: p.display.redWarning,
+      redWarning,
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
+      highRiskEoaAddresses:
+        highRiskEoaAddresses.length > 0 ? highRiskEoaAddresses : undefined,
       // countdowns
       otherMigration:
         p.reasonsForBeingOther && p.display.category !== 'Other'
@@ -187,6 +197,13 @@ function getFinality(
 }
 
 function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
+  // Check for EOA upgrade permissions
+  const eoaAnalysis = analyzeEoaUpgradePermissions(p.permissions, p.contracts)
+  const redWarning = getEoaUpgradeWarning(p.display.warning, eoaAnalysis)
+
+  // Convert Set to Array for serialization
+  const highRiskEoaAddresses = Array.from(eoaAnalysis.highRiskEoaAddresses)
+
   return {
     id: p.id,
     name: p.display.name,
@@ -196,9 +213,11 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     // data
     statuses: {
       yellowWarning: p.display.warning,
-      redWarning: undefined,
+      redWarning,
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
+      highRiskEoaAddresses:
+        highRiskEoaAddresses.length > 0 ? highRiskEoaAddresses : undefined,
     },
     display: {
       description: p.display.description,
@@ -359,4 +378,34 @@ function toProjectEscrow(
         isPreminted: !!escrow.premintedTokens?.includes(token.symbol),
       })),
   }
+}
+
+/**
+ * Gets the redWarning message considering EOA upgrade permissions
+ */
+function getEoaUpgradeWarning(
+  configuredRedWarning: string | undefined | false,
+  eoaAnalysis: ReturnType<typeof analyzeEoaUpgradePermissions>,
+): string | undefined {
+  // If redWarning is explicitly set to false in the config, don't override it
+  if (configuredRedWarning === false) {
+    return
+  }
+
+  // If redWarning is already set in the config, keep it
+  if (configuredRedWarning) {
+    return configuredRedWarning
+  }
+
+  if (!eoaAnalysis.shouldWarn) {
+    return
+  }
+
+  // Set warning if EOA has too many upgrade permissions
+  const suffix =
+    eoaAnalysis.highRiskEoaAddresses.size > 1
+      ? 'EOAs which could result in the loss of all funds.'
+      : 'an EOA which could result in the loss of all funds.'
+
+  return `Critical contracts can be upgraded by ${suffix}`
 }
