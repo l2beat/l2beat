@@ -9,6 +9,7 @@
   "overrides": {
     // hub
     "0xa05A3380889115bf313f1Db9d5f335157Be4D816": {
+      "proxyType": "Everclear proxy",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["getCurrentEpoch", "gasConfig"],
       "fields": {
