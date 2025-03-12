@@ -15,6 +15,7 @@ const PopoverTrigger = ({
     ref={ref}
     className={cn(
       'group inline-flex cursor-pointer select-none items-center gap-1.5 whitespace-pre rounded-lg bg-surface-primary px-3 py-1 text-sm font-medium leading-none transition-colors data-[state=selected]:hover:bg-surface-secondary primary-card:bg-surface-secondary primary-card:data-[state=selected]:hover:bg-surface-tertiary',
+      'focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand',
       className,
     )}
     {...props}

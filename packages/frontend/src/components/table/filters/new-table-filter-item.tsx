@@ -2,7 +2,9 @@ import { partition } from 'lodash'
 import { useState } from 'react'
 import {
   Command,
+  CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
   CommandList,
 } from '~/components/core/command'
@@ -37,7 +39,7 @@ export function NewTableFilterItem({
       </div>
       <VerticalSeparator className="h-[30px]" />
       <Popover open={conditionOpen} onOpenChange={setConditionOpen}>
-        <PopoverTrigger className="flex h-full items-center justify-center px-2 font-semibold">
+        <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-semibold">
           {conditionLabel(filter)}
         </PopoverTrigger>
         <PopoverContent align="start" className="p-0">
@@ -73,11 +75,17 @@ export function NewTableFilterItem({
       </Popover>
       <VerticalSeparator className="h-[30px]" />
       <Popover>
-        <PopoverTrigger className="flex h-full items-center justify-center px-2 font-semibold">
+        <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-semibold">
           {filter.values.join(', ')}
         </PopoverTrigger>
         <PopoverContent align="start" className="p-0">
           <Command>
+            <CommandInput
+              placeholder={`Search ${filterIdToLabel[filter.id].toLowerCase()}...`}
+            />
+            <CommandEmpty>
+              No {filterIdToLabel[filter.id].toLowerCase()} found.
+            </CommandEmpty>
             <CommandList>
               {selectedValues.length > 0 && (
                 <CommandGroup>
@@ -133,7 +141,7 @@ export function NewTableFilterItem({
       </Popover>
       <VerticalSeparator className="h-[30px]" />
       <button
-        className="h-full pl-2 pr-2.5"
+        className="h-full rounded-r-lg pl-2 pr-2.5 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
         onClick={() => dispatch({ type: 'remove', payload: { id: filter.id } })}
       >
         <div className="inline-flex size-3 items-center justify-center rounded-sm bg-brand">
