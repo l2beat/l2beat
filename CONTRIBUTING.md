@@ -75,53 +75,35 @@ General token prerequisites (without these your token CANNOT be added):
 
 Refer to the [docs - tvl.md](docs/tvl.md) for further token insights.
 
-## Add your Layer 2 project to the website
+## Add your project project to the website
 
-If you want to add a new Layer 2 project you can do that by opening a PR. To do this you need to:
+If you want to add a new project you can do that by opening a PR. To do this you need to:
 
-1. Read the specification in `packages/config/src/projects/layer2s/types/Layer2.ts`. It contains an annotated
-   data format for the project definition.
-2. Add a .ts file to describe your project inside `packages/config/src/projects/layer2s`. You can use the
-   existing projects and templates (e.g. OP stack and Orbit stack templates in `packages/config/src/projects/layer2s/templates/`) as reference.
-3. Add your project into `packages/config/src/projects/layer2s/index.ts`. The order of the projects should be
-   kept alphabetical.
+1. Read the specification in `packages/config/src/internalTypes.ts`. It
+   contains an annotated data format for the project definition.
+2. Add a directory to describe your project inside
+   `packages/config/src/projects`. You can use the existing projects and
+   templates (e.g. OP stack and Orbit stack templates in
+   `packages/config/src/templates/`) as reference.
+3. Add your project into `packages/config/src/processing/layer2s.ts` or
+   `packages/config/src/processing/layer3s.ts`. The order of the projects
+   should be kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels to
-   `packages/frontend/public/icons`. From the `packages/frontend` directory run `pnpm tinify-logos` afterwards to reduce its size.
+   `packages/frontend/public/icons`. From the `packages/frontend` directory run
+   `pnpm tinify-logos` afterwards to reduce its size.
 5. Run the website locally to check out your changes. (optional, see above)
 6. Make sure that things like linting, formatting and tests are all passing. To
-   check their status you can run `pnpm lint:fix`, `pnpm format:fix` or `pnpm test`
-   respectively. We greatly encourage doing this before the last step as it
-   shortens the amount of time needed for your project to be added.
+   check their status you can run `pnpm lint:fix`, `pnpm format:fix` or `pnpm
+   test` respectively. We greatly encourage doing this before the last step as
+   it shortens the amount of time needed for your project to be added.
 7. Open a PR :D
 8. If your changes contain any errors we might want to fix them ourselves. To
-   make this as easy as possible please enable **"Allow edits by maintainers"**.
-   Otherwise the latency before we can merge a PR greatly increases.
+   make this as easy as possible please enable **"Allow edits by
+   maintainers"**. Otherwise the latency before we can merge a PR greatly
+   increases.
 
 Adding a new project in this way will automatically update both the data fetching logic as well as
 the frontend.
-
-## Add your Layer 3 project to the website
-
-If you want to add a new Layer 3 project you can do that by opening a PR. To do this you need to:
-
-1. Read the specification in `packages/config/src/projects/layer3s/types/Layer3.ts`. It contains an annotated
-   data format for the project definition.
-2. Add a .ts file to describe your project inside `packages/config/src/projects/layer3s`. You can use the
-   existing projects and templates (e.g. OP stack and Orbit stack templates in `packages/config/src/projects/layer2s/templates/`) as reference. Remember to specify host chain on which your project is based on.
-   Take `projectId` of host chain and add it to `hostChain` property.
-3. Add your project to `packages/config/src/projects/layer3s/index.ts`. The order of the projects should be
-   kept alphabetical.
-4. Add a square PNG project icon with a minimum size of 128x128 pixels into
-   packages/frontend/src/static/icons. From the `packages/frontend` directory
-   run `pnpm tinify-logos` afterwards to reduce its size.
-6. Make sure that things like linting, formatting and tests are all passing. To
-   check their status you can run `pnpm lint:fix`, `pnpm format:fix` or `pnpm test`
-   respectively. We greatly encourage doing this before the last step as it
-   shortens the amount of time needed for your project to be added.
-7. Open a PR :D
-8. If your changes contain any errors we might want to fix them ourselves. To
-   make this as easy as possible please enable **"Allow edits by maintainers"**.
-   Otherwise the latency before we can merge a PR greatly increases.
 
 ## Contribute research
 
