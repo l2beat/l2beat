@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22029699,
+  "blockNumber": 22030561,
   "configHash": "0x71855febe3a1f40ef64a239209565db6f663472d4562500daaea2def7a3d4c67",
   "entries": [
     {
@@ -239,7 +239,8 @@
         "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
         "upgradeTimestamps": [
           { "_protocolVersion": 103079215106, "_upgradeTimestamp": 1722521507 },
-          { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1736517600 }
+          { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1736517600 },
+          { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1741773600 }
         ]
       },
       "fieldMeta": {
@@ -592,7 +593,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 178,
+        "nonce": 179,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

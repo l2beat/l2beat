@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd8351088e75d7d4683a99dcb8238ec2b87174235
+Generated with discovered.json: 0x6efbd6780b58fc5887ada743f9acb8c8882483e8
 
-# Diff at Wed, 12 Mar 2025 09:29:05 GMT:
+# Diff at Wed, 12 Mar 2025 11:43:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d56fc86cf5944647644b8653ca9717b11d4adae8 block: 22022274
-- current block number: 22029699
+- current block number: 22030561
 
 ## Description
 
@@ -16,6 +16,15 @@ Part of the protocol version 26 upgrade: New L2 logic [deployed to the STM](http
 ML MS signer change.
 
 ## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.2:
++        {"_protocolVersion":111669149696,"_upgradeTimestamp":1741773600}
+    }
+```
 
 ```diff
     contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
