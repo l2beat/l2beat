@@ -89,8 +89,7 @@ export function getScalingCostsColumns(metric: CostsMetric) {
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-sky-550',
-          'dark:before:bg-sky-500',
+          'before:bg-[hsl(var(--chart-costs-calldata))]',
         ),
         tooltip:
           'The cost for posting data as calldata on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
@@ -114,8 +113,7 @@ export function getScalingCostsColumns(metric: CostsMetric) {
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-orange-400',
-          'dark:before:bg-yellow-100',
+          'before:bg-[hsl(var(--chart-costs-blobs))]',
         ),
         tooltip:
           'The cost for posting data as blobs on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
@@ -142,7 +140,7 @@ export function getScalingCostsColumns(metric: CostsMetric) {
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-pink-100',
+          'before:bg-[hsl(var(--chart-costs-compute))]',
         ),
         tooltip:
           'The cost for carrying out different operations within a transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
@@ -169,7 +167,7 @@ export function getScalingCostsColumns(metric: CostsMetric) {
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-purple-100',
+          'before:bg-[hsl(var(--chart-costs-overhead))]',
         ),
         tooltip:
           'The cost of the fixed 21,000 GAS overhead per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
