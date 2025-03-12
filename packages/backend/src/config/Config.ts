@@ -6,7 +6,11 @@ import type {
   ProjectDaTrackingConfig,
   ProjectFinalityConfig,
 } from '@l2beat/config'
-import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type {
+  ConfigReader,
+  DiscoveryChainConfig,
+  DiscoveryPaths,
+} from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
@@ -175,6 +179,8 @@ export interface MetricsAuthConfig {
 }
 
 export interface UpdateMonitorConfig {
+  readonly configReader: ConfigReader
+  readonly paths: DiscoveryPaths
   readonly runOnStart?: boolean
   readonly cacheEnabled?: boolean
   readonly cacheUri: string
