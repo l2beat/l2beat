@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xf56d0a6a1f34ce5332c84ffc90345031e988ab7e
+
+# Diff at Tue, 11 Mar 2025 16:09:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b567159bfa1d1fb03ba2dbc6915b5acc47e00c0 block: 21981156
+- current block number: 21981156
+
+## Description
+
+config: starknet/ex operator role description updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981156 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "operateStarkEx"
+    }
+```
+
+```diff
+    contract undefined (0x63881ac44293E22F3c3183a0C4113586ABb3e653) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "operateStarknet"
++        "operateStarkEx"
+    }
+```
+
+```diff
+    contract StarkExchange (0xF5C9F957705bea56a7e806943f98F7777B995826) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.7.permission:
+-        "operateStarknet"
++        "operateStarkEx"
+      issuedPermissions.6.permission:
+-        "operateStarknet"
++        "operateStarkEx"
+    }
+```
+
 Generated with discovered.json: 0x05734b41eaf16f17e62c200acf0bdc95eee8cc0c
 
 # Diff at Thu, 06 Mar 2025 15:20:35 GMT:

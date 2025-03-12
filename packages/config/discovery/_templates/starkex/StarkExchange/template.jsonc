@@ -79,7 +79,7 @@
       "target": {
         "permissions": [
           {
-            "type": "operateStarknet"
+            "type": "operateStarkEx"
           }
         ]
       }

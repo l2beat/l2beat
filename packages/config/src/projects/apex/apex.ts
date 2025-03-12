@@ -111,6 +111,7 @@ export const apex: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
+    architectureImage: 'starkex',
     name: 'ApeX',
     slug: 'apex',
     description: `ApeX Pro is a non-custodial trading platform that delivers
