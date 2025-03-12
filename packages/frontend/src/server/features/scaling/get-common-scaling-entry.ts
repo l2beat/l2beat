@@ -1,11 +1,11 @@
 import type { Project } from '@l2beat/config'
 import type { ActivityChartType } from '~/components/chart/activity/activity-chart'
+import type { FilterableValue } from '~/components/table/filters/new-types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
 
 export interface FilterableScalingValues {
-  isRollup: boolean
   type: string
   stack: string
   stage: string
@@ -16,7 +16,7 @@ export interface FilterableScalingValues {
 }
 
 export interface FilterableScalingEntry {
-  filterable: FilterableScalingValues | undefined
+  filterable: FilterableValue[]
 }
 
 export interface CommonScalingEntry
@@ -69,16 +69,40 @@ export function getCommonScalingEntry({
         ? 'Rollups'
         : 'ValidiumsAndOptimiums',
     stageOrder: getStageOrder(project.scalingInfo.stage),
-    filterable: {
-      isRollup,
-      type: project.scalingInfo.type,
-      stack: project.scalingInfo.stack ?? 'No stack',
-      stage: project.scalingInfo.stage,
-      purposes: project.scalingInfo.purposes,
-      hostChain: project.scalingInfo.hostChain.name,
-      daLayer: project.scalingInfo.daLayer,
-      raas: project.scalingInfo.raas ?? 'No RaaS',
-    },
+    // filterable: {
+    //   type: project.scalingInfo.type,
+    //   stack: project.scalingInfo.stack ?? 'No stack',
+    //   stage: project.scalingInfo.stage,
+    //   purposes: project.scalingInfo.purposes,
+    //   hostChain: project.scalingInfo.hostChain.name,
+    //   daLayer: project.scalingInfo.daLayer,
+    //   raas: project.scalingInfo.raas ?? 'No RaaS',
+    // },
+    filterable: [
+      { id: 'type', label: 'Type', value: project.scalingInfo.type },
+      {
+        id: 'stack',
+        label: 'Stack',
+        value: project.scalingInfo.stack ?? 'No stack',
+      },
+      { id: 'stage', label: 'Stage', value: project.scalingInfo.stage },
+      ...project.scalingInfo.purposes.map((purpose) => ({
+        id: 'purposes',
+        label: 'Purposes',
+        value: purpose,
+      })),
+      {
+        id: 'hostChain',
+        label: 'Host Chain',
+        value: project.scalingInfo.hostChain.name,
+      },
+      { id: 'daLayer', label: 'DA Layer', value: project.scalingInfo.daLayer },
+      {
+        id: 'raas',
+        label: 'RaaS',
+        value: project.scalingInfo.raas ?? 'No RaaS',
+      },
+    ],
     description: project.display?.description,
     badges: project.display.badges,
   }

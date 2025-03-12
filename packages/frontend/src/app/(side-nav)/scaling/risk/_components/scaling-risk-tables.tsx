@@ -15,11 +15,12 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingRiskTable } from './table/scaling-risk-table'
 
@@ -58,15 +59,16 @@ export function ScalingRiskTables(props: Props) {
 
   return (
     <>
-      <ScalingFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
-        ]}
-        className="max-md:mt-4"
-        showHostChainFilter
-      />
+      <NewTableFilterContextProvider>
+        <NewTableFilters
+          entries={[
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ]}
+        />
+      </NewTableFilterContextProvider>
+
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
