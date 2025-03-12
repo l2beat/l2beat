@@ -76,32 +76,29 @@ export function ShowMoreText({
       <div className="md:hidden">
         <div
           ref={mobileContentRef}
-          className={cn('relative line-clamp-3', textClassName)}
+          className={cn('relative line-clamp-2', textClassName)}
         >
           {children}
-          {isTruncatedMobile && (
-            <Drawer>
-              <DrawerTrigger className="absolute bottom-0 right-0 inline-flex items-center bg-background">
-                <span>...</span>
-                <div
-                  className={cn('ml-1 cursor-pointer underline', textClassName)}
-                >
-                  Show more
-                </div>
-              </DrawerTrigger>
-              <DrawerContent className="pb-8">
-                <DrawerHeader>
-                  <DrawerTitle className="mb-2.5 text-lg font-semibold text-primary">
-                    {pageTitle}
-                  </DrawerTitle>
-                  <DrawerDescription className={textClassName}>
-                    {children}
-                  </DrawerDescription>
-                </DrawerHeader>
-              </DrawerContent>
-            </Drawer>
-          )}
         </div>
+        {isTruncatedMobile && (
+          <Drawer>
+            <DrawerTrigger
+              className={cn('cursor-pointer underline', textClassName)}
+            >
+              Show more
+            </DrawerTrigger>
+            <DrawerContent className="pb-8">
+              <DrawerHeader>
+                <DrawerTitle className="mb-2.5 text-lg font-semibold text-primary">
+                  {pageTitle}
+                </DrawerTitle>
+                <DrawerDescription className={textClassName}>
+                  {children}
+                </DrawerDescription>
+              </DrawerHeader>
+            </DrawerContent>
+          </Drawer>
+        )}
       </div>
 
       {/* Desktop  */}

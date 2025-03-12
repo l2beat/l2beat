@@ -17,7 +17,7 @@ export function MainPageHeader({ children, description, className }: Props) {
   return (
     <header
       className={cn(
-        'ml-6 flex h-20 items-center justify-between max-lg:hidden',
+        'ml-2 flex h-20 items-center justify-between max-lg:hidden',
         className,
       )}
     >

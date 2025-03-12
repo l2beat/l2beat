@@ -12,7 +12,7 @@ export function PageDescription({
   warning?: React.ReactElement | string
 }) {
   return (
-    <div className="flex flex-col pl-0 md:flex-col-reverse md:gap-2 md:pb-4 lg:pl-6">
+    <div className="flex flex-col pl-0 md:flex-col-reverse md:gap-2 md:pb-4 lg:pl-2">
       {warning && <Warning>{warning}</Warning>}
       {description && (
         <ShowMoreText
