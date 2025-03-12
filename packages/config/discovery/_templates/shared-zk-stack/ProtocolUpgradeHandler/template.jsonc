@@ -42,6 +42,16 @@
       "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)",
       "severity": "HIGH"
     },
+    "emergencyUpgradeProposals": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "_id",
+        "add": {
+          "event": "EmergencyUpgradeExecuted"
+        }
+      }
+    },
     "STANDARD_LEGAL_VETO_PERIOD": {
       "handler": {
         "type": "hardcoded",

@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x6efbd6780b58fc5887ada743f9acb8c8882483e8
+
+# Diff at Wed, 12 Mar 2025 11:43:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d56fc86cf5944647644b8653ca9717b11d4adae8 block: 22022274
+- current block number: 22030561
+
+## Description
+
+Part of the protocol version 26 upgrade: New L2 logic [deployed to the STM](https://app.blocksec.com/explorer/tx/eth/0x93e4efe078b08019c40dc11046abaa531b75263f297ec014c2d7901c0e1ff243), from where it will be distributed to the zk stack chains:
+- `setNewVersionUpgrade()` called: diamond cut data for the v26 upgrade for existing chains
+- `setChainCreationParams()` called: new genesis diamond cut data for new zk stack chains
+- `setValidatorTimelock()` called: adds the new ValidatorTimelock as a reference to the STM
+
+ML MS signer change.
+
+## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.2:
++        {"_protocolVersion":111669149696,"_upgradeTimestamp":1741773600}
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      values.$members.7:
++        "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
+      values.$members.6:
+-        "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
++        "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
+      values.$members.5:
+-        "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
++        "0xFAdb20191Ab38362C50f52909817B74214CA79AE"
+      values.$members.4:
+-        "0xFAdb20191Ab38362C50f52909817B74214CA79AE"
++        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$members.3:
+-        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
++        "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
+      values.$members.2:
+-        "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
++        "0x8A23548a640De1137e58e2D9600e1c5913E3D674"
+      values.$members.1:
+-        "0x8A23548a640De1137e58e2D9600e1c5913E3D674"
++        "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481"
+      values.$members.0:
+-        "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481"
++        "0x4A333c167Ce76C46149c6B0197977ae02aaeC929"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "5 of 8 (63%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GenesisUpgrade (0x6e2BC597F1e83F9fC7c1f69157F2C12476873971)
+    +++ description: Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts.
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      values.genesisUpgrade:
+-        "0x6e2BC597F1e83F9fC7c1f69157F2C12476873971"
++        "0x0000000000000000000000000000000000000001"
+      values.getSemverProtocolVersion.1:
+-        25
++        26
+      values.initialCutHash:
+-        "0x0b30ec2102ea8e2cf92d22857c347d3b29bde8dfaf6f2ae19045f19c5a94ba5a"
++        "0xaf3397d2d574e3fb4a729df5b561afe890323a5eab21980fe9aae230f5934458"
+      values.protocolVersion:
+-        107374182400
++        111669149696
+      values.storedBatchZero:
+-        "0x83325e26523f69ee6ea60aea582325d22f3c6a85db5e4890e14d62a377635a6b"
++        "0xbb3c62fb5577f094f9290297114948e6f6fb8d04083a366ba3dadb3569fb5c4f"
+      values.validatorTimelock:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x0000000000000000000000000000000000000001)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x4A333c167Ce76C46149c6B0197977ae02aaeC929)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@22022274/GenesisUpgrade.sol => /dev/null | 2806 --------------------
+ 1 file changed, 2806 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022274 (main branch discovery), not current.
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradeProposals:
++        ["0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"]
+      fieldMeta.emergencyUpgradeProposals:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x7a9585ff0df7f4aa277f5502d867069cae9ccba3
 
 # Diff at Tue, 11 Mar 2025 07:55:57 GMT:

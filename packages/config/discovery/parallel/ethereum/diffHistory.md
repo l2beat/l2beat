@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x5a93af8e06e6a0e2025ca5ca08eb4b723e085cf3
+
+# Diff at Wed, 12 Mar 2025 08:49:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5d64c565c3cc90f1414096f72fffbafe42bc364 block: 21465432
+- current block number: 22029694
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract undefined (0x17816E9A858b161c3E37016D139cf618056CaCD4)
+    +++ description: None
+```
+
+```diff
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a) {
+    +++ description: None
+      values.$members.2:
+-        "0x17816E9A858b161c3E37016D139cf618056CaCD4"
++        "0x13E83b0423534Eb6D542237F590096CEE5077056"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x13E83b0423534Eb6D542237F590096CEE5077056)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x42b49955412b8d516daa3a80f1caf6d22622a737
 
 # Diff at Thu, 06 Mar 2025 09:39:05 GMT:
