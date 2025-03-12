@@ -21,7 +21,7 @@
           "description": "manage the token admin role."
         },
         {
-          "permission": "operateStarknet",
+          "permission": "operateStarkEx",
           "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
         },
         {
@@ -162,12 +162,12 @@
           "via": []
         },
         {
-          "permission": "operateStarknet",
+          "permission": "operateStarkEx",
           "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
           "via": []
         },
         {
-          "permission": "operateStarknet",
+          "permission": "operateStarkEx",
           "to": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
           "via": []
         },
@@ -297,7 +297,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarknet",
+          "permission": "operateStarkEx",
           "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
         }
       ]
@@ -768,6 +768,6 @@
   "usedTemplates": {
     "starkex/GpsFactRegistryAdapter": "0xc60e8d2a607d6e461e47bf15f6cb9e5cba1f13a2933a2aa8afa93c3b801a45f3",
     "starkex/OrderRegistry": "0x0ffe907cb8a8111c330638d3c73ccff6cbd95d81237cf9b4ce8cc541ae6921dd",
-    "starkex/StarkExchange": "0xec41b17021bbb76a2fd61c781b5fb3aefc466dcd725b28f957e1504424b779da"
+    "starkex/StarkExchange": "0xb7e45fd285be90d6624e1a1596e8f41fe89e2d8419a82baf7698d0af064fde3d"
   }
 }

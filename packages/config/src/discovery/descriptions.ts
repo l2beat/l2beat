@@ -19,6 +19,7 @@ export const DirectPermissionToPrefix: {
   validateBridge2: 'Can act as a Validator',
   aggregatePolygon: 'Can act as a trusted Aggregator',
   operateStarknet: 'Can act as an Operator',
+  operateStarkEx: 'Can act as an Operator',
   governStarknet: 'Can act as a Governor',
   member: 'Is a member of',
 }
@@ -42,6 +43,7 @@ export const UltimatePermissionToPrefix: {
   validateBridge2: 'A Validator',
   aggregatePolygon: 'A trusted Aggregator',
   operateStarknet: 'An Operator',
+  operateStarkEx: 'An Operator',
   governStarknet: 'A Governor',
   member: 'Is a member of',
 }
@@ -117,7 +119,12 @@ export const RoleDescriptions: {
   operateStarknet: {
     name: 'Operator',
     description:
-      'Permissioned to regularly update and prove the state of the L2 on L1.',
+      'Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.',
+  },
+  operateStarkEx: {
+    name: 'Operator',
+    description:
+      'Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.',
   },
   governStarknet: {
     name: 'Governor',

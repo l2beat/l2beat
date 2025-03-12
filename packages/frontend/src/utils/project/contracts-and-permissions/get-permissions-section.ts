@@ -123,6 +123,8 @@ function getDaSolution(
     ? {
         layerName: projectParams.daSolution.layerName,
         bridgeName: projectParams.daSolution.bridgeName,
+        layerSlug: projectParams.daSolution.layerSlug,
+        bridgeSlug: projectParams.daSolution.bridgeSlug,
         hostChainName: projectParams.daSolution.hostChainName,
         permissions: {
           roles:
@@ -187,8 +189,7 @@ function toTechnologyContract(
       description: permission.description,
       participants,
       references: permission.references ?? [],
-      implementationChanged: false,
-      highSeverityFieldChanged: false,
+      impactfulChange: false,
     },
   ]
 

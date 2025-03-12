@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 21679349,
+  "blockNumber": 22029702,
   "configHash": "0x0b4e5d0f4004416fedd20c951950a9d87db15b0f2a2d2c542a8d77c769f1bdb7",
   "entries": [
     {
@@ -139,13 +139,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 120185165,
+        "l2BaseFee": 40534634,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 950471,
-        "nextUnfinalizedQueueIndex": 950469,
+        "nextCrossDomainMessageIndex": 952210,
+        "nextUnfinalizedQueueIndex": 952207,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 950470,
+        "pendingQueueIndex": 952209,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -307,14 +307,14 @@
           "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
-          "0x568993632c34604098e35a184C52aD390c70f754"
+          "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
         ],
         "$threshold": 1,
         "domainSeparator": "0xe9a5efc52797721f6bd4d9839b18dcdc4162a6e91c2fe8ce6e0d679f65e814a4",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -358,6 +358,11 @@
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "whitelisted": ["0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"]
       }
+    },
+    {
+      "address": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ZkEvmVerifierV2",
@@ -537,11 +542,6 @@
     },
     {
       "address": "0x5300000000000000000000000000000000000004",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x568993632c34604098e35a184C52aD390c70f754",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1627,7 +1627,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 353493,
+        "lastFinalizedBatchIndex": 356430,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -1784,14 +1784,14 @@
           "0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "0x568993632c34604098e35a184C52aD390c70f754"
+          "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
         ],
         "$threshold": 2,
         "domainSeparator": "0x7fefd60c480c008b3e78bd9438ded85b15722eff470797839b69ed8f36a54f6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 153,
+        "nonce": 155,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2111,7 +2111,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 19661614051270,
+        "totalBridgedUSDC": 18231081410272,
         "withdrawPaused": false
       }
     },

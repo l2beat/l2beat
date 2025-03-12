@@ -13,10 +13,18 @@ const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
     'FINALIZATION_PERIOD_SECONDS',
   )
 
+const withdrawalKeepalivePeriodSecondsFmt: number =
+  discovery.getContractValue<number>(
+    'L2OutputOracle',
+    'withdrawalKeepalivePeriodSecondsFmt',
+  )
+
+// the opstack template automatically applies the correct risk rosette slices, so we do not override them
+// as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
+// we should update the opstack.ts or not use it anymore
 const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
   name: 'Validity proofs (when available) ensure state correctness, but not DA', // proof is the only input to the Verifier
-  description:
-    'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently proofs are optional and state (by default) is considered optimistically to be valid. Moreover, the system doesn’t check that the transactions applied to the state are the ones published by the sequencer.',
+  description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently state updates do not require a proof if the last state update was made >= ${withdrawalKeepalivePeriodSecondsFmt} ago and is optimistically considered to be valid. Moreover, the system doesn't check that the transactions applied to the state are the ones published by the sequencer.`,
   risks: [
     {
       category: 'Funds can be stolen if',
@@ -27,8 +35,13 @@ const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
   ],
   references: [
     {
-      title: 'Verifier.sol - Etherscan source code',
-      url: 'https://etherscan.io/address/0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e#code#F1#L9',
+      title:
+        'L2OutputOracle.sol - Etherscan source code - bootstrapV2() function',
+      url: 'https://etherscan.io/address//0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4#code#F1#L302',
+    },
+    {
+      title: 'VerifierV2.sol - Etherscan source code',
+      url: 'https://etherscan.io/address/0xd5b424ac36928e2da7da9eca9807938a56988f5a#code',
     },
   ],
 }
@@ -40,8 +53,9 @@ export const zircuit: ScalingProject = opStackL2({
   display: {
     name: 'Zircuit',
     slug: 'zircuit',
+    category: 'ZK Rollup',
     description:
-      'Zircuit is a universal Rollup that aims to use zk proofs in the future. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
+      'Zircuit is a universal ZK Rollup. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
     links: {
       websites: ['https://zircuit.com/'],
       apps: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],

@@ -10,5 +10,17 @@
   ],
   "names": {
     "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b": "EduFastConfirmerMultisig"
+  },
+  "overrides": {
+    // noisy, extending the template
+    "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914": {
+      "ignoreInWatchMode": [
+        "stakerCount",
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated",
+        "lastStakeBlock"
+      ]
+    }
   }
 }

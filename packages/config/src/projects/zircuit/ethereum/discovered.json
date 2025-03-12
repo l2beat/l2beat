@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 22022908,
-  "configHash": "0x1f064b6e7b8a4b02b1ca1db2ed8541a020a141d743b5e48a72b3b5618d2e4083",
+  "blockNumber": 22029918,
+  "configHash": "0x346062d2a2e8266749a545649ad03387378b8a933c7c76ec2d9ea1008c229639",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -71,8 +71,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 369917,
-          "prevBlockNum": 22022603,
+          "prevBoughtGas": 287624,
+          "prevBlockNum": 22029680,
           "prevTxCount": 1
         },
         "paused": false,
@@ -115,7 +115,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637717",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637747",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -469,7 +469,8 @@
         ],
         "$upgradeCount": 4,
         "version": "c3131379c4bf618f2135c29547049b46923f7dca"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ZircuitSuperchainConfig",
@@ -600,7 +601,7 @@
         "0x60e391caee355fef81909391d0660c897c79e6ba836e46f45d51968313188073"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. This contract also supports dummy proofs via the old 0x6BCe7408c0781dcE7b71494274302D4b75a1447c until a migration to the new 0xC25D093D3A3f58952252D2e763BEAF2559dc9737 has been manually executed.",
+      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -657,15 +658,13 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 14400,
         "finalizationPeriodSeconds": 14400,
-        "getL2OutputEx": [],
-        "getL2OutputExLatest": "EXPECT_REVERT",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 10874445,
-        "latestOutputIndex": 31397,
-        "nextBlockNumber": 10874446,
-        "nextOutputIndex": 31398,
+        "latestBlockNumber": 10909936,
+        "latestOutputIndex": 31471,
+        "nextBlockNumber": 10909937,
+        "nextOutputIndex": 31472,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -681,11 +680,7 @@
       "fieldMeta": {
         "proposer": { "severity": "HIGH" },
         "challenger": { "severity": "HIGH" },
-        "deletedOutputs": { "severity": "HIGH" },
-        "getL2OutputExLatest": {
-          "severity": "HIGH",
-          "description": "As soon as this returns a value, Zircuit has transitioned to the v2 verifier. Remove the v1 verifier description string from the contract template."
-        }
+        "deletedOutputs": { "severity": "HIGH" }
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1489,7 +1484,7 @@
     "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
     "opstack/OptimismPortal": "0x750f5e07f37ab3d0a766982dc74c1c619779a2044e8a1484ed1e2859854ec514",
     "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15",
-    "opstack/zircuit/L2OutputOracle": "0x4b906491b6052b69e44e7345b2598d6538608f562ec19a6614fd23dca93b4bec",
+    "opstack/zircuit/L2OutputOracle": "0x27bb0531f6152828abb4eaf7c3c04e4c3e90c723bc5542a80ef0123ee60b76bd",
     "opstack/zircuit/SuperchainConfig": "0x1718570525f125c182760d228e2598c73cdc61486218304c0f0f79e8498e4ae0",
     "opstack/zircuit/Verifier": "0x1b4b7b1725cd6042a0a82eef309cc11a60b148ddaffddfaab34f8ce8636a9f88"
   }

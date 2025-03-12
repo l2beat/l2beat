@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xabbeed0a41fe30355582a3964e106741f8c8269a
+
+# Diff at Wed, 12 Mar 2025 08:50:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5d64c565c3cc90f1414096f72fffbafe42bc364 block: 21679349
+- current block number: 22029702
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract ScrollExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.3:
+-        "0x568993632c34604098e35a184C52aD390c70f754"
++        "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract undefined (0x568993632c34604098e35a184C52aD390c70f754)
+    +++ description: None
+```
+
+```diff
+    contract ScrollEmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.3:
+-        "0x568993632c34604098e35a184C52aD390c70f754"
++        "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract undefined (0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xefc1fea72b9603481851d16bfa38635f6782781e
 
 # Diff at Tue, 04 Mar 2025 10:39:45 GMT:
