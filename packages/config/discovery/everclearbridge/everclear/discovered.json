@@ -1,14 +1,9 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "blockNumber": 908739,
+  "blockNumber": 909780,
   "configHash": "0x3c75b9937ffa537f8e2d919fa2bbcfcb659afef5415d1a302512b099142c0f88",
   "entries": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
       "type": "EOA",
@@ -20,41 +15,12 @@
       "proxyType": "EOA"
     },
     {
-      "name": "HubMessageReceiver",
-      "address": "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x7128ff67025fb2bcb219505d0a80a78e76013becea566de4efba404b7869bc9f"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1726461022,
-      "sinceBlock": 386,
-      "values": {
-        "$immutable": true,
-        "acceptanceDelay": 0,
-        "epochLength": 0,
-        "expiryTimeBuffer": 0,
-        "gasConfig": {
-          "settlementBaseGasUnits": 0,
-          "averageGasUnitsPerSettlement": 0,
-          "bufferDBPS": 0
-        },
-        "hubGateway": "0x0000000000000000000000000000000000000000",
-        "initialized": false,
-        "lighthouse": "0x0000000000000000000000000000000000000000",
-        "minSolverSupportedDomains": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "paymentNonce": 0,
-        "PROCESS_QUEUE_VIA_RELAYER_TYPEHASH": "0x9ee676d393dd5facc07ae4ba72101da49596c33d1358807aba1cc4687c098eb9",
-        "proposedOwner": "0x0000000000000000000000000000000000000000",
-        "proposedOwnershipTimestamp": 0,
-        "watchtower": "0x0000000000000000000000000000000000000000"
-      },
-      "errors": { "getCurrentEpoch": "Processing error occurred." }
+      "address": "0x5d334979C6f565b9646975AEdD2358D01f3db4c1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "address": "0x5d334979C6f565b9646975AEdD2358D01f3db4c1",
+      "address": "0x6281ea3060B26352b558C4F45767C90db482c4fd",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -62,40 +28,6 @@
       "address": "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Settler",
-      "address": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x8225b12393daa7489701089347eb52c11b768a1c177a6cd227092c9aefd97b85"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1726461021,
-      "sinceBlock": 384,
-      "values": {
-        "$immutable": true,
-        "acceptanceDelay": 0,
-        "epochLength": 0,
-        "expiryTimeBuffer": 0,
-        "gasConfig": {
-          "settlementBaseGasUnits": 0,
-          "averageGasUnitsPerSettlement": 0,
-          "bufferDBPS": 0
-        },
-        "hubGateway": "0x0000000000000000000000000000000000000000",
-        "initialized": false,
-        "lighthouse": "0x0000000000000000000000000000000000000000",
-        "minSolverSupportedDomains": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "paymentNonce": 0,
-        "PROCESS_QUEUE_VIA_RELAYER_TYPEHASH": "0x9ee676d393dd5facc07ae4ba72101da49596c33d1358807aba1cc4687c098eb9",
-        "proposedOwner": "0x0000000000000000000000000000000000000000",
-        "proposedOwnershipTimestamp": 0,
-        "watchtower": "0x0000000000000000000000000000000000000000"
-      },
-      "errors": { "getCurrentEpoch": "Processing error occurred." }
     },
     {
       "address": "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
@@ -107,7 +39,12 @@
       "address": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
       "type": "Contract",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x62c0ff182f9767f2e54f31e47ffd6587cc114b97ea994c85864c11c8116eb229",
+        "0x8225b12393daa7489701089347eb52c11b768a1c177a6cd227092c9aefd97b85",
+        "0x1e60affed7805f9a7e3ab1afdf31c05e81f9a8977725c508d6222e816b67806f",
+        "0x7128ff67025fb2bcb219505d0a80a78e76013becea566de4efba404b7869bc9f",
+        "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
       ],
       "proxyType": "Everclear proxy",
       "issuedPermissions": [
@@ -122,17 +59,59 @@
       "sinceBlock": 382,
       "values": {
         "$admin": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
-        "$implementations": [
+        "$implementation": [
+          "0x255aba6E7f08d40B19872D11313688c2ED65d1C9",
           "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
           "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99",
           "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
           "0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
         ],
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "managerModule": "0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
+        "$pastUpgrades": [
+          [
+            "2024-09-16T04:30:18.000Z",
+            "0x9ee081ca278159d6b98301c61ae69a12b68141557106086a5e77b189a6568715",
+            [
+              "0x255aba6E7f08d40B19872D11313688c2ED65d1C9",
+              "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
+              "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99",
+              "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
+              "0xe0F010e465f15dcD42098dF9b99F1038c11B3056",
+              "0x0000000000000000000000000000000000000000"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "acceptanceDelay": 345600,
+        "activeRoles": {
+          "1": ["0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874"],
+          "2": ["0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed"]
+        },
+        "epochLength": 40,
+        "expiryTimeBuffer": 43200,
+        "gasConfig": {
+          "settlementBaseGasUnits": 40000,
+          "averageGasUnitsPerSettlement": 50000,
+          "bufferDBPS": 10000
+        },
+        "getCurrentEpoch": 195481,
+        "hubGateway": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
+        "initialized": false,
+        "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
+        "managerModule": "0xe0F010e465f15dcD42098dF9b99F1038c11B3056",
+        "minSolverSupportedDomains": 2,
+        "owner": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
+        "paused": false,
+        "paymentNonce": 3,
+        "PROCESS_QUEUE_VIA_RELAYER_TYPEHASH": "0x9ee676d393dd5facc07ae4ba72101da49596c33d1358807aba1cc4687c098eb9",
+        "proposedOwner": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
+        "proposedOwnershipTimestamp": 1731649154,
+        "supportedDomains": [
+          1, 56, 10, 42161, 8453, 48900, 81457, 59144, 137, 43114, 534352,
+          167000, 33139, 34443, 130, 324, 2020
+        ],
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "watchtower": "0x6281ea3060B26352b558C4F45767C90db482c4fd"
       },
-      "errors": { "activeRoles": "Processing error occurred." },
       "fieldMeta": {
         "activeRoles": { "description": "role 1: ADMIN, role 2: ASSET_MANAGER" }
       }
@@ -168,6 +147,11 @@
       }
     },
     {
+      "address": "0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
       "type": "EOA",
       "proxyType": "EOA",
@@ -179,77 +163,14 @@
       ]
     },
     {
-      "name": "Manager",
-      "address": "0xe0F010e465f15dcD42098dF9b99F1038c11B3056",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1726461019,
-      "sinceBlock": 383,
-      "values": {
-        "$immutable": true,
-        "acceptanceDelay": 0,
-        "epochLength": 0,
-        "expiryTimeBuffer": 0,
-        "gasConfig": {
-          "settlementBaseGasUnits": 0,
-          "averageGasUnitsPerSettlement": 0,
-          "bufferDBPS": 0
-        },
-        "hubGateway": "0x0000000000000000000000000000000000000000",
-        "initialized": false,
-        "lighthouse": "0x0000000000000000000000000000000000000000",
-        "minSolverSupportedDomains": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "paymentNonce": 0,
-        "PROCESS_QUEUE_VIA_RELAYER_TYPEHASH": "0x9ee676d393dd5facc07ae4ba72101da49596c33d1358807aba1cc4687c098eb9",
-        "proposedOwner": "0x0000000000000000000000000000000000000000",
-        "proposedOwnershipTimestamp": 0,
-        "supportedDomains": [],
-        "watchtower": "0x0000000000000000000000000000000000000000"
-      }
+      "address": "0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Handler",
-      "address": "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1e60affed7805f9a7e3ab1afdf31c05e81f9a8977725c508d6222e816b67806f"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1726461021,
-      "sinceBlock": 385,
-      "values": {
-        "$immutable": true,
-        "acceptanceDelay": 0,
-        "epochLength": 0,
-        "expiryTimeBuffer": 0,
-        "gasConfig": {
-          "settlementBaseGasUnits": 0,
-          "averageGasUnitsPerSettlement": 0,
-          "bufferDBPS": 0
-        },
-        "hubGateway": "0x0000000000000000000000000000000000000000",
-        "initialized": false,
-        "lighthouse": "0x0000000000000000000000000000000000000000",
-        "minSolverSupportedDomains": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "paymentNonce": 0,
-        "PROCESS_QUEUE_VIA_RELAYER_TYPEHASH": "0x9ee676d393dd5facc07ae4ba72101da49596c33d1358807aba1cc4687c098eb9",
-        "proposedOwner": "0x0000000000000000000000000000000000000000",
-        "proposedOwnershipTimestamp": 0,
-        "watchtower": "0x0000000000000000000000000000000000000000"
-      },
-      "errors": { "getCurrentEpoch": "Processing error occurred." }
     },
     {
       "name": "",
@@ -281,6 +202,169 @@
     }
   ],
   "abis": {
+    "0x255aba6E7f08d40B19872D11313688c2ED65d1C9": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AssetManager_SetTokenConfigs_FeesExceedsDenominator()",
+      "error AssetManager_SetTokenConfigs_TickerHashMismatch()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error Handler_HandleExpiredIntents_InvalidStatus(bytes32 _intentId, uint8 _status)",
+      "error Handler_HandleExpiredIntents_NotExpired(bytes32 _intentId, uint256 _blockTimestamp, uint256 _expirationTimestamp)",
+      "error Handler_HandleExpiredIntents_ZeroTTL(bytes32 _intentId)",
+      "error Handler_ReturnUnsupportedIntent_InvalidStatus()",
+      "error Handler_WithdrawFees_InsufficientFunds()",
+      "error Handler_WithdrawFees_UnsupportedDomain(uint32 _domain)",
+      "error Handler_WithdrawFees_ZeroAmount()",
+      "error HubMessageReceiver_ReceiveMessage_InvalidMessageType()",
+      "error HubStorage_InvalidAddress()",
+      "error HubStorage_InvalidDbpsValue()",
+      "error HubStorage_InvalidSignature()",
+      "error HubStorage_OnlyOwner()",
+      "error HubStorage_Pause_NotAuthorized()",
+      "error HubStorage_Paused()",
+      "error HubStorage_ProcessQueue_OnlyLighthouse()",
+      "error HubStorage_Unauthorized()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ProtocolManager_AcceptOwnership_DelayNotElapsed()",
+      "error ProtocolManager_AcceptOwnership_NotProposedOwner()",
+      "error ProtocolManager_AddSupportedDomains_SupportedDomainAlreadyAdded(uint32 _domain)",
+      "error ProtocolManager_InvalidRole()",
+      "error ProtocolManager_RemoveSupportedDomains_SupportedDomainNotFound(uint32 _domain)",
+      "error ProtocolManager_SetMaxDiscountDbps_InvalidDiscount()",
+      "error ProtocolManager_Unauthorized()",
+      "error ProtocolManager_UpdateEpochLength_InvalidEpochLength()",
+      "error Settler_DomainBlockGasLimitReached(uint256 _domainBlockGasLimit, uint256 _settlementBatchGasLimit)",
+      "error Settler_DomainNotSupported()",
+      "error Settler_InsufficientSettlements()",
+      "error Settler_ProcessDepositsAndInvoices_InvalidTickerHash()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UsersManager_SetUser_DomainNotSupported(uint32 _domain)",
+      "error UsersManager_SetUser_DuplicatedSupportedDomain(uint32 _domain)",
+      "error UsersManager_SetUser_MinimumSupportedDomainsNotMet(uint256 _minSupportedDomains, uint256 _supportedDomainsLength)",
+      "event AcceptanceDelayUpdated(uint256 _oldAcceptanceDelay, uint256 _newAcceptanceDelay)",
+      "event AssetConfigSet(tuple(bytes32 tickerHash, bytes32 adopted, uint32 domain, bool approval, uint8 strategy) _config)",
+      "event ClosedEpochsProcessed(bytes32 indexed _tickerHash, uint48 _lastClosedEpochProcessed)",
+      "event DepositEnqueued(uint48 indexed _epoch, uint32 indexed _domain, bytes32 indexed _tickerHash, bytes32 _intentId, uint256 _amount)",
+      "event DepositProcessed(uint48 indexed _epoch, uint32 indexed _domain, bytes32 indexed _tickerHash, bytes32 _intentId, uint256 _amountAndRewards)",
+      "event DiscountPerEpochSet(bytes32 _tickerHash, uint24 _oldDiscountPerEpoch, uint24 _newDiscountPerEpoch)",
+      "event EpochLengthUpdated(uint48 _oldEpochLength, uint48 _newEpochLength)",
+      "event ExpiredIntentsHandled(bytes32[] _intentIds)",
+      "event ExpiryTimeBufferUpdated(uint48 _oldExpiryTimeBuffer, uint48 _newExpiryTimeBuffer)",
+      "event FeesWithdrawn(address _withdrawer, bytes32 _feeRecipient, bytes32 _tickerHash, uint256 _amount, bytes32 _paymentId)",
+      "event FillProcessed(bytes32 indexed _intentId, uint8 _status)",
+      "event GasConfigUpdated(tuple(uint256 settlementBaseGasUnits, uint256 averageGasUnitsPerSettlement, uint256 bufferDBPS) _oldGasConfig, tuple(uint256 settlementBaseGasUnits, uint256 averageGasUnitsPerSettlement, uint256 bufferDBPS) _newGasConfig)",
+      "event GatewayUpdated(address _oldGateway, address _newGateway)",
+      "event GatewayUpdated(bytes32 _gateway, uint32[] _domains, bytes32[] _messageIds)",
+      "event IncreaseVirtualBalanceSet(bytes32 indexed _user, bool _status)",
+      "event Initialized(uint64 version)",
+      "event IntentProcessed(bytes32 indexed _intentId, uint8 indexed _status)",
+      "event InvoiceEnqueued(bytes32 indexed _intentId, bytes32 indexed _tickerHash, uint48 indexed _entryEpoch, uint256 _amount, bytes32 _owner)",
+      "event LastEpochProcessedSet(tuple(uint48 lastEpochProcessed, bytes32[] tickerHashes) _params)",
+      "event LighthouseUpdated(address _oldLighthouse, address _newLighthouse, bytes32[] _messageIds)",
+      "event MailboxUpdated(bytes32 _mailbox, uint32[] _domains, bytes32[] _messageIds)",
+      "event MaxDiscountDbpsSet(bytes32 _tickerHash, uint24 _oldMaxDiscountDbps, uint24 _newMaxDiscountDbps)",
+      "event MinSolverSupportedDomainsUpdated(uint8 _oldMinSolverSupportedDomains, uint8 _newMinSolverSupportedDomains)",
+      "event ModuleAddressUpdated(bytes32 _type, address _previousAddress, address _newAddress)",
+      "event OwnershipProposed(address indexed _proposedOwner, uint256 _timestamp)",
+      "event OwnershipTransferred(address indexed _oldOwner, address indexed _newOwner)",
+      "event Paused()",
+      "event PrioritizedStrategySet(bytes32 _tickerHash, uint8 _strategy)",
+      "event ReturnUnsupportedIntent(uint32 indexed _domain, bytes32 _messageId, bytes32 _intentId)",
+      "event RoleAssigned(address indexed _account, uint8 _role)",
+      "event SecurityModuleUpdated(address _securityModule, uint32[] _domains, bytes32[] _messageIds)",
+      "event SettlementEnqueued(bytes32 indexed _intentId, uint32 indexed _domain, uint48 indexed _entryEpoch, bytes32 _asset, uint256 _amount, bool _updateVirtualBalance, bytes32 _owner)",
+      "event SettlementQueueProcessed(bytes32 _messageId, uint32 _domain, uint32 _amount, uint256 _quote)",
+      "event SettlementsProcessed(bytes32 _messageId, bytes32[] _intentIds, uint32 _domain, uint256 _quote)",
+      "event SolverConfigUpdated(bytes32 indexed _solver, uint32[] _supportedDomains)",
+      "event SupportedDomainsAdded(tuple(uint32 id, uint256 blockGasLimit)[] _domains)",
+      "event SupportedDomainsRemoved(uint32[] _domains)",
+      "event TokenConfigsSet(tuple(bytes32 tickerHash, bool initLastClosedEpochProcessed, uint8 prioritizedStrategy, uint24 maxDiscountDbps, uint24 discountPerEpoch, tuple(address recipient, uint24 fee)[] fees, tuple(bytes32 tickerHash, bytes32 adopted, uint32 domain, bool approval, uint8 strategy)[] adoptedForAssets)[] _configs)",
+      "event Unpaused()",
+      "event Upgraded(address indexed implementation)",
+      "event WatchtowerUpdated(address _oldWatchtower, address _newWatchtower, bytes32[] _messageIds)",
+      "function PROCESS_QUEUE_VIA_RELAYER_TYPEHASH() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function acceptOwnership()",
+      "function acceptanceDelay() view returns (uint256)",
+      "function addSupportedDomains(tuple(uint32 id, uint256 blockGasLimit)[])",
+      "function adoptedForAssets(bytes32 _assetHash) view returns (tuple(bytes32 tickerHash, bytes32 adopted, uint32 domain, bool approval, uint8 strategy) _config)",
+      "function assetHash(bytes32 _tickerHash, uint32 _domain) view returns (bytes32 _assetHash)",
+      "function assignRole(address, uint8)",
+      "function contexts(bytes32 _intentId) view returns (tuple(bytes32 solver, uint24 fee, uint24 totalProtocolFee, uint256 fillTimestamp, uint256 amountAfterFees, uint256 pendingRewards, uint8 status, tuple(bytes32 initiator, bytes32 receiver, bytes32 inputAsset, bytes32 outputAsset, uint24 maxFee, uint32 origin, uint64 nonce, uint48 timestamp, uint48 ttl, uint256 amount, uint32[] destinations, bytes data) intent) _intentContext)",
+      "function custodiedAssets(bytes32 _assetHash) view returns (uint256 _amount)",
+      "function deposits(uint48 _epoch, uint32 _domain, bytes32 _tickerHash) view returns (uint256 first, uint256 last, uint256 firstDepositWithPurchasePower)",
+      "function depositsAvailableInEpoch(uint48 _epoch, uint32 _domain, bytes32 _tickerHash) view returns (uint256 _available)",
+      "function discountPerEpoch(bytes32 _tickerHash) view returns (uint24 _discountPerEpoch)",
+      "function domainGasLimit(uint32 _domain) view returns (uint256 _blockGasLimit)",
+      "function epochLength() view returns (uint48)",
+      "function expiryTimeBuffer() view returns (uint48)",
+      "function feeVault(bytes32 _tickerHash, address _recipient) view returns (uint256 _amount)",
+      "function gasConfig() view returns (uint256 settlementBaseGasUnits, uint256 averageGasUnitsPerSettlement, uint256 bufferDBPS)",
+      "function getCurrentEpoch() view returns (uint48 _currentEpoch)",
+      "function handleExpiredIntents(bytes32[]) payable",
+      "function hubGateway() view returns (address)",
+      "function initialize(tuple(address owner, address admin, address manager, address settler, address handler, address messageReceiver, address lighthouse, address hubGateway, uint256 acceptanceDelay, uint48 expiryTimeBuffer, uint48 epochLength, uint24 discountPerEpoch, uint8 minSolverSupportedDomains, uint256 settlementBaseGasUnits, uint256 averageGasUnitsPerSettlement, uint256 bufferDBPS) _init)",
+      "function initialized() view returns (bool)",
+      "function invoices(bytes32 _tickerHash) view returns (bytes32 head, bytes32 tail, uint256 nonce, uint256 length)",
+      "function lastClosedEpochsProcessed(bytes32 _tickerHash) view returns (uint48 _lastClosedEpochProcessed)",
+      "function lighthouse() view returns (address)",
+      "function minSolverSupportedDomains() view returns (uint8)",
+      "function modules(bytes32 _moduleType) view returns (address _module)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function paymentNonce() view returns (uint64)",
+      "function processDepositsAndInvoices(bytes32, uint32, uint32, uint32)",
+      "function processSettlementQueue(uint32, uint32) payable",
+      "function processSettlementQueueViaRelayer(uint32, uint32, address, uint256, uint256, uint256, bytes)",
+      "function proposeOwner(address)",
+      "function proposedOwner() view returns (address)",
+      "function proposedOwnershipTimestamp() view returns (uint256)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function receiveMessage(bytes)",
+      "function removeChainGateway(uint32)",
+      "function removeSupportedDomains(uint32[])",
+      "function returnUnsupportedIntent(bytes32) payable",
+      "function roles(address _account) view returns (uint8 _role)",
+      "function setAdoptedForAsset(tuple(bytes32 tickerHash, bytes32 adopted, uint32 domain, bool approval, uint8 strategy))",
+      "function setDiscountPerEpoch(bytes32, uint24)",
+      "function setLastClosedEpochProcessed(tuple(uint48 lastEpochProcessed, bytes32[] tickerHashes))",
+      "function setMaxDiscountDbps(bytes32, uint24)",
+      "function setPrioritizedStrategy(bytes32, uint8)",
+      "function setTokenConfigs(tuple(bytes32 tickerHash, bool initLastClosedEpochProcessed, uint8 prioritizedStrategy, uint24 maxDiscountDbps, uint24 discountPerEpoch, tuple(address recipient, uint24 fee)[] fees, tuple(bytes32 tickerHash, bytes32 adopted, uint32 domain, bool approval, uint8 strategy)[] adoptedForAssets)[])",
+      "function setUpdateVirtualBalance(bool)",
+      "function setUserSupportedDomains(uint32[])",
+      "function settlements(uint32 _domain) view returns (uint256 first, uint256 last)",
+      "function supportedDomains() view returns (uint32[] __supportedDomains)",
+      "function tokenConfigs(bytes32 _tickerHash) view returns (uint24 _maxDiscountDbps, uint24 _discountPerEpoch, uint8 _prioritizedStrategy)",
+      "function tokenFees(bytes32 _tickerHash) view returns (tuple(address recipient, uint24 fee)[] _fees)",
+      "function unpause()",
+      "function updateAcceptanceDelay(uint256)",
+      "function updateChainGateway(uint32, bytes32)",
+      "function updateEpochLength(uint48)",
+      "function updateExpiryTimeBuffer(uint48)",
+      "function updateGasConfig(tuple(uint256 settlementBaseGasUnits, uint256 averageGasUnitsPerSettlement, uint256 bufferDBPS))",
+      "function updateGateway(bytes32, uint32[]) payable",
+      "function updateGateway(address)",
+      "function updateLighthouse(address) payable",
+      "function updateMailbox(address)",
+      "function updateMailbox(bytes32, uint32[]) payable",
+      "function updateMinSolverSupportedDomains(uint8)",
+      "function updateModuleAddress(bytes32 _type, address _newAddress)",
+      "function updateSecurityModule(address)",
+      "function updateVirtualBalance(bytes32 _user) view returns (bool _updateVirtualBalance)",
+      "function updateWatchtower(address) payable",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function userSupportedDomains(bytes32 _owner) view returns (uint32[] _supportedDomains)",
+      "function watchtower() view returns (address)",
+      "function withdrawFees(bytes32, bytes32, uint256, uint32[])"
+    ],
     "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66": [
       "error HubMessageReceiver_ReceiveMessage_InvalidMessageType()",
       "error HubStorage_InvalidAddress()",

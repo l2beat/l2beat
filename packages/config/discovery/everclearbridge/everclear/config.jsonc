@@ -13,15 +13,6 @@
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["getCurrentEpoch", "gasConfig"],
       "fields": {
-        "managerModule": {
-          "handler": {
-            "type": "call",
-            "method": "function modules(bytes32 _moduleType) view returns (address _module)",
-            "args": [
-              "0xbf068c0764ea506c843c3f32c133889110d2da98699c31460a430f0d0f1b6af4"
-            ]
-          }
-        },
         "activeRoles": {
             "description": "role 1: ADMIN, role 2: ASSET_MANAGER",
           "handler": {
@@ -38,10 +29,6 @@
           }
         }
       }
-    },
-    // manager
-    "0xe0F010e465f15dcD42098dF9b99F1038c11B3056":{
-        "ignoreMethods": ["getCurrentEpoch"]
     }
   }
 }

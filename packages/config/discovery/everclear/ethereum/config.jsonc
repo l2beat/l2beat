@@ -9,5 +9,10 @@
   ],
   "names": {
     "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501": "EverclearFastconfirmerMultisig"
+  },
+  "overrides": {
+    // "0xa05A3380889115bf313f1Db9d5f335157Be4D816":{
+    //   "proxyType": "Everclear proxy",
+    // }
   }
 }
