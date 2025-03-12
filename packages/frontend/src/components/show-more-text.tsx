@@ -1,6 +1,7 @@
 'use client'
 import type { ReactNode } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import {
   Drawer,
@@ -25,29 +26,27 @@ export function ShowMoreText({
   className,
 }: ShowMoreTextProps) {
   const [expanded, setExpanded] = useState(false)
-  const [isTruncatedMobile, setIsTruncatedMobile] = useState(false)
-  const [isOverflowingDesktop, setIsOverflowingDesktop] = useState(false)
-
-  const mobileContentRef = useRef<HTMLDivElement>(null)
-  const desktopContentRef = useRef<HTMLDivElement>(null)
+  const [isOverflowing, setIsOverflowing] = useState(false)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const checkOverflow = () => {
-      if (mobileContentRef.current) {
-        const { scrollHeight, offsetHeight } = mobileContentRef.current
-        setIsTruncatedMobile(scrollHeight > offsetHeight)
-      }
-
-      if (desktopContentRef.current) {
-        const { scrollWidth, clientWidth } = desktopContentRef.current
-        setIsOverflowingDesktop(scrollWidth > clientWidth)
+      if (contentRef.current) {
+        if (isMobile) {
+          const { scrollHeight, offsetHeight } = contentRef.current
+          setIsOverflowing(scrollHeight > offsetHeight)
+        } else {
+          const { scrollWidth, clientWidth } = contentRef.current
+          setIsOverflowing(scrollWidth > clientWidth)
+        }
       }
     }
 
     checkOverflow()
     window.addEventListener('resize', checkOverflow)
     return () => window.removeEventListener('resize', checkOverflow)
-  }, [children])
+  }, [children, isMobile])
 
   const toggleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
@@ -72,18 +71,41 @@ export function ShowMoreText({
 
   return (
     <div className={cn('w-full', className)}>
-      {/* Mobile  */}
-      <div className="md:hidden">
+      <div className="relative">
         <div
-          ref={mobileContentRef}
-          className={cn('relative line-clamp-2', textClassName)}
+          ref={contentRef}
+          className={cn(
+            'md:truncate md:pr-[75px]',
+            'line-clamp-2 md:line-clamp-none',
+            textClassName,
+          )}
         >
           {children}
         </div>
-        {isTruncatedMobile && (
+
+        {/* Desktop Show More */}
+        {isOverflowing && (
+          <button
+            className={cn(
+              'absolute right-0 top-0 cursor-pointer pl-1 underline',
+              'hidden md:block',
+              textClassName,
+            )}
+            onClick={toggleExpand}
+          >
+            Show more
+          </button>
+        )}
+
+        {/* Mobile Show More */}
+        {isOverflowing && (
           <Drawer>
             <DrawerTrigger
-              className={cn('cursor-pointer underline', textClassName)}
+              className={cn(
+                'cursor-pointer underline',
+                'md:hidden',
+                textClassName,
+              )}
             >
               Show more
             </DrawerTrigger>
@@ -99,27 +121,6 @@ export function ShowMoreText({
             </DrawerContent>
           </Drawer>
         )}
-      </div>
-
-      {/* Desktop  */}
-      <div className="hidden md:block">
-        <div
-          ref={desktopContentRef}
-          className={cn('relative truncate pr-[75px]', textClassName)}
-        >
-          {children}
-          {isOverflowingDesktop && (
-            <button
-              className={cn(
-                'absolute right-0 top-0 cursor-pointer pl-1 underline',
-                textClassName,
-              )}
-              onClick={toggleExpand}
-            >
-              Show more
-            </button>
-          )}
-        </div>
       </div>
     </div>
   )
