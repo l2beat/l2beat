@@ -1,3 +1,9 @@
+import { Command, CommandItem, CommandList } from '~/components/core/command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/core/popover'
 import { VerticalSeparator } from '~/components/core/vertical-separator'
 import { CloseIcon } from '~/icons/close'
 import { useNewTableFilterContext } from './new-table-filter-context'
@@ -13,9 +19,37 @@ export function NewTableFilterItem({
         {filter.label}
       </div>
       <VerticalSeparator className="h-[30px]" />
-      <div className="flex h-full items-center justify-center px-2">
-        {conditionLabel(filter)}
-      </div>
+      <Popover>
+        <PopoverTrigger className="flex h-full items-center justify-center px-2 font-semibold">
+          {conditionLabel(filter)}
+        </PopoverTrigger>
+        <PopoverContent align="start">
+          <Command>
+            <CommandList>
+              <CommandItem
+                onSelect={() =>
+                  dispatch({
+                    type: 'setReversed',
+                    payload: { id: filter.id, value: false },
+                  })
+                }
+              >
+                {filter.values.length > 1 ? 'is any of' : 'is'}
+              </CommandItem>
+              <CommandItem
+                onSelect={() =>
+                  dispatch({
+                    type: 'setReversed',
+                    payload: { id: filter.id, value: true },
+                  })
+                }
+              >
+                is not
+              </CommandItem>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
       <VerticalSeparator className="h-[30px]" />
       <div className="flex h-full items-center justify-center px-2">
         {filter.values.join(', ')}
@@ -34,8 +68,9 @@ export function NewTableFilterItem({
 }
 
 function conditionLabel(filter: FilterState[number]) {
-  if (filter.values.length > 1) {
-    return filter.reversed ? 'is not any of' : 'is any of'
+  if (filter.reversed) {
+    return 'is not'
   }
-  return filter.reversed ? 'is not' : 'is'
+
+  return filter.values.length > 1 ? 'is any of' : 'is'
 }

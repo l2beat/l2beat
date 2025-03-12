@@ -1,8 +1,8 @@
 import { getDefaultMetadata } from '~/utils/metadata'
 
 import { MainPageHeader } from '~/components/main-page-header'
+import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
 import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingRiskTables } from './_components/scaling-risk-tables'
 
 export const metadata = getDefaultMetadata({
@@ -17,9 +17,9 @@ export default async function Page() {
   return (
     <>
       <MainPageHeader>Risk Analysis</MainPageHeader>
-      <ScalingFilterContextProvider>
+      <NewTableFilterContextProvider>
         <ScalingRiskTables {...entries} />
-      </ScalingFilterContextProvider>
+      </NewTableFilterContextProvider>
     </>
   )
 }

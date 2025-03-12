@@ -10,11 +10,19 @@ type Filter = {
 }
 export type FilterState = Filter[]
 
-type FilterAction = AddFilterAction | RemoveFilterAction | ClearFilterAction
+type FilterAction =
+  | AddFilterAction
+  | RemoveFilterAction
+  | ClearFilterAction
+  | SetReversedFilterAction
 
 type AddFilterAction = {
   type: 'add'
-  payload: Filter
+  payload: {
+    id: string
+    label: string
+    value: string
+  }
 }
 
 type RemoveFilterAction = {
@@ -24,6 +32,14 @@ type RemoveFilterAction = {
 
 type ClearFilterAction = {
   type: 'clear'
+}
+
+type SetReversedFilterAction = {
+  type: 'setReversed'
+  payload: {
+    id: string
+    value: boolean
+  }
 }
 
 // Our reducer function that uses a switch statement to handle our actions
@@ -37,19 +53,30 @@ function filterReducer(state: FilterState, action: FilterAction) {
         return state.map((filter) =>
           filter.id === action.payload.id
             ? {
-                ...action.payload,
-                values: uniq([
-                  ...existingFilter.values,
-                  ...action.payload.values,
-                ]),
+                ...filter,
+                values: uniq([...existingFilter.values, action.payload.value]),
               }
             : filter,
         )
       }
 
-      return [...state, action.payload]
+      return [
+        ...state,
+        {
+          id: action.payload.id,
+          label: action.payload.label,
+          values: [action.payload.value],
+          reversed: false,
+        },
+      ]
     case 'remove':
       return state.filter((filter) => filter.id !== action.id)
+    case 'setReversed':
+      return state.map((filter) =>
+        filter.id === action.payload.id
+          ? { ...filter, reversed: action.payload.value }
+          : filter,
+      )
     case 'clear':
       return []
     default:

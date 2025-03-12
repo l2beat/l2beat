@@ -94,8 +94,7 @@ function Content<T extends { filterable: FilterableValue[] }>({
                   payload: {
                     id: selectedId,
                     label: selectedFilterable.label,
-                    values: [value],
-                    reversed: false,
+                    value,
                   },
                 })
               }}

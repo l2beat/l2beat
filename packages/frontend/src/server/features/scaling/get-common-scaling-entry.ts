@@ -87,8 +87,8 @@ export function getCommonScalingEntry({
       },
       { id: 'stage', label: 'Stage', value: project.scalingInfo.stage },
       ...project.scalingInfo.purposes.map((purpose) => ({
-        id: 'purposes',
-        label: 'Purposes',
+        id: 'purpose',
+        label: 'Purpose',
         value: purpose,
       })),
       {
