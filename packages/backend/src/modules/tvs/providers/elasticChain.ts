@@ -75,8 +75,6 @@ export async function getElasticChainTokens(
         priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
-        sinceTimestamp,
-        ...(untilTimestamp ? { untilTimestamp } : {}),
         category: token.category,
         source: 'canonical' as const,
         isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -88,6 +86,8 @@ export async function getElasticChainTokens(
           chain: project.id,
           // Assumption: decimals on destination network are the same
           decimals: token.decimals,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
         },
       }
     })
@@ -101,8 +101,6 @@ export async function getElasticChainTokens(
     priceId: 'ethereum',
     symbol: 'ETH',
     name: 'Ethereum',
-    sinceTimestamp,
-    ...(untilTimestamp ? { untilTimestamp } : {}),
     category: 'ether' as const,
     source: 'canonical' as const,
     amount: {
@@ -110,6 +108,8 @@ export async function getElasticChainTokens(
       address: escrow.sharedEscrow.l2EtherAddress,
       chain: project.id,
       decimals: 18,
+      sinceTimestamp,
+      ...(untilTimestamp ? { untilTimestamp } : {}),
     },
     isAssociated: false,
   }

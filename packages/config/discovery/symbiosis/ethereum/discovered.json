@@ -1,8 +1,8 @@
 {
   "name": "symbiosis",
   "chain": "ethereum",
-  "blockNumber": 21141679,
-  "configHash": "0x15b2d41ff211191cf06caa4b718d1fba4edd15968fe7303f6ac988f526382461",
+  "blockNumber": 22022451,
+  "configHash": "0x8dea7d41b6193c6a52ec69b71ddd8cd2e77683379c91db7bc2b2de3ebfd7f392",
   "entries": [
     {
       "address": "0x0ee552336134B6f8F0a72927b6124f8A81865928",
@@ -95,7 +95,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 45,
+        "nonce": 57,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -131,10 +131,10 @@
         ],
         "$upgradeCount": 1,
         "currentChainId": 1,
-        "mpc": "0xeAc9340AE80c2d62E4e9b1A137eFb23Fa53a9A03",
-        "newMPC": "0xeAc9340AE80c2d62E4e9b1A137eFb23Fa53a9A03",
-        "newMPCEffectiveTime": 1726816907,
-        "oldMPC": "0xaF4A61f99306Be8dFE69a1e369e5f8480Ea3687A",
+        "mpc": "0x4357fe57e016EBC0738F67d323bB552617FE5A7C",
+        "newMPC": "0x4357fe57e016EBC0738F67d323bB552617FE5A7C",
+        "newMPCEffectiveTime": 1740379559,
+        "oldMPC": "0xE2eC0D84eD285576a5e9ca60052Bb787bfADE9d7",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
       }
     },
@@ -145,11 +145,6 @@
     },
     {
       "address": "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xaF4A61f99306Be8dFE69a1e369e5f8480Ea3687A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -217,7 +212,7 @@
         "metaRouter": "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 31929,
+        "requestCount": 49022,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       }
@@ -273,11 +268,6 @@
     },
     {
       "address": "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xeAc9340AE80c2d62E4e9b1A137eFb23Fa53a9A03",
       "type": "EOA",
       "proxyType": "EOA"
     },

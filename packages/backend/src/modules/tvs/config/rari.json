@@ -17,14 +17,16 @@
             "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
             "chain": "arbitrum",
             "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           },
           {
             "type": "balanceOfEscrow",
             "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
             "chain": "arbitrum",
             "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           }
         ]
       },
@@ -33,11 +35,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1705716148
         },
         "priceId": "arbitrum"
       },
-      "sinceTimestamp": 1705716148,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -57,21 +59,24 @@
             "address": "native",
             "chain": "arbitrum",
             "escrowAddress": "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716145
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "arbitrum",
             "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "arbitrum",
             "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           }
         ]
       },
@@ -80,11 +85,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1705716145
         },
         "priceId": "ethereum"
       },
-      "sinceTimestamp": 1705716145,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -104,14 +109,16 @@
             "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
             "chain": "arbitrum",
             "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           },
           {
             "type": "balanceOfEscrow",
             "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
             "chain": "arbitrum",
             "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           }
         ]
       },
@@ -120,11 +127,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1705716148
         },
         "priceId": "chainlink"
       },
-      "sinceTimestamp": 1705716148,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -144,14 +151,16 @@
             "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
             "chain": "arbitrum",
             "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
-            "decimals": 6
+            "decimals": 6,
+            "sinceTimestamp": 1705716148
           },
           {
             "type": "balanceOfEscrow",
             "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
             "chain": "arbitrum",
             "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
-            "decimals": 6
+            "decimals": 6,
+            "sinceTimestamp": 1705716148
           }
         ]
       },
@@ -160,11 +169,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1705716148
         },
         "priceId": "usd-coin"
       },
-      "sinceTimestamp": 1705716148,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -179,9 +188,9 @@
         "type": "totalSupply",
         "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
         "chain": "rari",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1716939237
       },
-      "sinceTimestamp": 1716939237,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -201,14 +210,16 @@
             "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
             "chain": "arbitrum",
             "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
-            "decimals": 6
+            "decimals": 6,
+            "sinceTimestamp": 1705716148
           },
           {
             "type": "balanceOfEscrow",
             "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
             "chain": "arbitrum",
             "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
-            "decimals": 6
+            "decimals": 6,
+            "sinceTimestamp": 1705716148
           }
         ]
       },
@@ -217,11 +228,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1705716148
         },
         "priceId": "usd-coin"
       },
-      "sinceTimestamp": 1705716148,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -237,9 +248,9 @@
         "type": "totalSupply",
         "address": "0x362FAE9A75B27BBc550aAc28a7c1F96C8D483120",
         "chain": "rari",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1716939239
       },
-      "sinceTimestamp": 1716939239,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -259,14 +270,16 @@
             "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
             "chain": "arbitrum",
             "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           },
           {
             "type": "balanceOfEscrow",
             "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
             "chain": "arbitrum",
             "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1705716148
           }
         ]
       },
@@ -275,11 +288,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1705716148
         },
         "priceId": "weth"
       },
-      "sinceTimestamp": 1705716148,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false

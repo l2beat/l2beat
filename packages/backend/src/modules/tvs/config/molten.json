@@ -17,14 +17,16 @@
             "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
             "chain": "arbitrum",
             "escrowAddress": "0xE1d32C985825562edAa906fAC39295370Db72195",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1712102400
           },
           {
             "type": "balanceOfEscrow",
             "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
             "chain": "arbitrum",
             "escrowAddress": "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1712102400
           }
         ]
       },
@@ -33,11 +35,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1712102400
         },
         "priceId": "molten-2"
       },
-      "sinceTimestamp": 1712102400,
       "category": "other",
       "source": "canonical",
       "isAssociated": true
@@ -53,18 +55,19 @@
         "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "chain": "arbitrum",
         "escrowAddress": "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1712019098
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1712019098
         },
         "priceId": "usd-coin"
       },
-      "sinceTimestamp": 1712019098,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -80,18 +83,19 @@
         "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "chain": "arbitrum",
         "escrowAddress": "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712019098
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1712019098
         },
         "priceId": "weth"
       },
-      "sinceTimestamp": 1712019098,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false

@@ -13,18 +13,19 @@
         "address": "native",
         "chain": "arbitrum",
         "escrowAddress": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1700367819
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1700367819
         },
         "priceId": "ethereum"
       },
-      "sinceTimestamp": 1700367819,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
