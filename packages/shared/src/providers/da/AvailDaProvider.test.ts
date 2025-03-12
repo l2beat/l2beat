@@ -22,14 +22,14 @@ describe(AvailDaProvider.name, () => {
           type: 'avail',
           daLayer: 'avail',
           appId: '1',
-          blockTimestamp: new UnixTime(1720092420),
+          blockTimestamp: UnixTime(1720092420),
           size: 64n,
         } as AvailBlob,
         {
           type: 'avail',
           daLayer: 'avail',
           appId: '2',
-          blockTimestamp: new UnixTime(1720092420),
+          blockTimestamp: UnixTime(1720092420),
           size: 77n,
         } as AvailBlob,
       ])

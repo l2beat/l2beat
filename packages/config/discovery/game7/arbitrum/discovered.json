@@ -2,15 +2,17 @@
   "name": "game7",
   "chain": "arbitrum",
   "blockNumber": 307386152,
-  "configHash": "0x91d37951fdfc1c0fccc60f764b16bb266ee2ab838d4451f8586f34aff81181a9",
-  "contracts": [
+  "configHash": "0x794d4fd554e8b717e53b8c6785ad0e13f326d9fc141ce92267d5c0a0bec20dde",
+  "entries": [
     {
       "name": "OneStepProverHostIo",
       "address": "0x0446E34D1cC4eBA5F336627BaAe82332c8607043",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049087,
       "sinceBlock": 248391505,
@@ -19,10 +21,12 @@
     {
       "name": "ValidatorUtils",
       "address": "0x08Ca9925b88c54100568c8d41eFAF8Fecc695d3a",
+      "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
       ],
+      "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1725049139,
       "sinceBlock": 248391713,
@@ -31,6 +35,7 @@
     {
       "name": "GnosisSafeL2",
       "address": "0x1a8902780F37e0526788198Dee30b8375A0B24Bc",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -68,6 +73,7 @@
     {
       "name": "Bridge",
       "address": "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
+      "type": "Contract",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -110,12 +116,35 @@
         ],
         "allowedOutboxList": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "delayedMessageCount": 260,
+        "inboxHistory": [
+          "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
+          "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
+        ],
         "nativeToken": "0xF18e4466F26B4cA55bbAb890b314a54976E45B17",
         "nativeTokenDecimals": 18,
+        "outboxHistory": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
         "sequencerMessageCount": 536,
         "sequencerReportedSubMessageCount": 486670
+      },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -123,10 +152,12 @@
     {
       "name": "OneStepProofEntry",
       "address": "0x23264394923E4aEB990234180c37Bf757667C6f7",
+      "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049096,
       "sinceBlock": 248391542,
@@ -139,12 +170,29 @@
       }
     },
     {
+      "address": "0x36921bAAD215c5f3c5dffa89B1C2A5CF4BDAdC77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3944783afD953e76cD41d8967772468eeB1bC576",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OneStepProverMemory",
       "address": "0x4012CF2dce28079c8F7f92CecB2E494F4AcB9351",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049070,
       "sinceBlock": 248391437,
@@ -153,10 +201,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0x401eCb1D350407f13ba348573E5630B83638E30D",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -173,6 +223,7 @@
     {
       "name": "L1OrbitUSDCGateway",
       "address": "0x404922a9B29b4a5205a6074AbA31A7392BD28944",
+      "type": "Contract",
       "template": "circle/L1OrbitUSDCGateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -214,6 +265,7 @@
     {
       "name": "RollupEventInbox",
       "address": "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
+      "type": "Contract",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -252,10 +304,12 @@
     {
       "name": "OneStepProverMath",
       "address": "0x461bDAfaaba542C6eCcEa882BdF85542Ed7158C5",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049080,
       "sinceBlock": 248391475,
@@ -264,6 +318,7 @@
     {
       "name": "SequencerInbox",
       "address": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+      "type": "Contract",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -343,8 +398,19 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RollupProxy",
       "address": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+      "type": "Contract",
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
@@ -422,6 +488,7 @@
         "firstUnresolvedNode": 150,
         "inbox": "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
+        "isPostBoLD": false,
         "lastStakeBlock": 20938249,
         "latestConfirmed": 149,
         "latestNodeCreated": 149,
@@ -504,6 +571,7 @@
     {
       "name": "ConduitMultisig2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -629,8 +697,14 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "address": "0x7Ca9c81d2AdD8bff46CEE9813d52bD84d94901DD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GatewayRouter",
       "address": "0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7",
+      "type": "Contract",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -674,6 +748,7 @@
     {
       "name": "ChallengeManager",
       "address": "0x832CF28be3042b6F60D7225E393E924D7f0936F6",
+      "type": "Contract",
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -715,6 +790,7 @@
     {
       "name": "UpgradeExecutor",
       "address": "0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
+      "type": "Contract",
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -784,18 +860,60 @@
     {
       "name": "OneStepProver0",
       "address": "0x91F12800C6b5b4e7d88fE785558213F8EF3F4586",
+      "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049060,
       "sinceBlock": 248391392,
       "values": { "$immutable": true }
     },
     {
+      "address": "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Inbox",
       "address": "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
+      "type": "Contract",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -839,10 +957,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0xd12478d6edD1db996313E2F4350F2FD99c118B6E",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -889,8 +1009,27 @@
       }
     },
     {
+      "address": "0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x404922a9B29b4a5205a6074AbA31A7392BD28944",
+          "via": [{ "address": "0x401eCb1D350407f13ba348573E5630B83638E30D" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x401eCb1D350407f13ba348573E5630B83638E30D"
+        }
+      ]
+    },
+    {
       "name": "ERC20Gateway",
       "address": "0xe41363751bd1C305384375F428585C20e3dF516A",
+      "type": "Contract",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -932,8 +1071,36 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Outbox",
       "address": "0xfbe537816d181888fAbE52338a5D921eE131E9Db",
+      "type": "Contract",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -978,78 +1145,6 @@
       "derivedName": "ERC20Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-          "description": "Add/remove batchPosters (Sequencers)."
-        }
-      ]
-    },
-    { "address": "0x36921bAAD215c5f3c5dffa89B1C2A5CF4BDAdC77" },
-    { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
-    { "address": "0x3944783afD953e76cD41d8967772468eeB1bC576" },
-    { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
-    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
-    { "address": "0x7Ca9c81d2AdD8bff46CEE9813d52bD84d94901DD" },
-    {
-      "address": "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0",
-      "receivedPermissions": [
-        {
-          "permission": "fastconfirm",
-          "from": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "via": [{ "address": "0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }]
-        },
-        {
-          "permission": "validate",
-          "from": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": [{ "address": "0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }]
-        },
-        {
-          "permission": "validate",
-          "from": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-        }
-      ]
-    },
-    { "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2" },
-    { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
-    { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
-    {
-      "address": "0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x404922a9B29b4a5205a6074AbA31A7392BD28944",
-          "via": [{ "address": "0x401eCb1D350407f13ba348573E5630B83638E30D" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x401eCb1D350407f13ba348573E5630B83638E30D"
-        }
-      ]
-    },
-    {
-      "address": "0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
-        }
-      ]
-    },
-    { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
-    { "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0" },
-    { "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D" }
   ],
   "abis": {
     "0x0446E34D1cC4eBA5F336627BaAe82332c8607043": [
@@ -1857,7 +1952,7 @@
     "circle/L1OrbitUSDCGateway": "0xfadb184ab15a78d5aa2a9b75bcab34fb46021bea30ab93ceef86b4809e710903",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
     "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",
@@ -1869,7 +1964,7 @@
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
     "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x3a9246a912d738821e12f469caa2b045470c35e714b11f5761fb5ed8944002af",
+    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"

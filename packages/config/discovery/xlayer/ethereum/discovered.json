@@ -2,12 +2,13 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 21764788,
-  "configHash": "0xc0be4694459378a2201ccbb27952c2b52a5fdcae2dda65ef18bb35c6e5f8aa4d",
+  "configHash": "0x3f1cb4b7677637facc3a464d450e7b28c99980dbc50deba29e9811e38750407b",
   "sharedModules": ["shared-polygon-cdk"],
-  "contracts": [
+  "entries": [
     {
       "name": "PolygonDataCommittee",
       "address": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -60,12 +61,19 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -82,6 +90,7 @@
     {
       "name": "Validium",
       "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
@@ -173,22 +182,23 @@
     {
       "name": "Verifier",
       "address": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x88e9672f9076cd809934d036a15eb65c30e0e253eccbfc4a15962b6580c8fcd3"
       ],
+      "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1734710375,
       "sinceBlock": 21444781,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier_13",
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    }
-  ],
-  "eoas": [
-    { "address": "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08" },
+    },
     {
       "address": "0x491619874b866c3cDB7C8553877da223525ead01",
+      "type": "EOA",
+      "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -205,6 +215,8 @@
     },
     {
       "address": "0xa90B4C8B8807569980F6cC958c8905383136B5eA",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -215,6 +227,8 @@
     },
     {
       "address": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "sequence",
@@ -224,6 +238,8 @@
     },
     {
       "address": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -238,7 +254,11 @@
         }
       ]
     },
-    { "address": "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5" }
+    {
+      "address": "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x05652Ec92366F3C2255991a265c499E01Ba58e6a": [

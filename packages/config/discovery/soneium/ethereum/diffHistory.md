@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x184054763cf09c5f3f16d1f78b5f011c55c07cd8
+Generated with discovered.json: 0x714ba7d70cd991789372144dbac0de1752ec5795
+
+# Diff at Fri, 07 Mar 2025 13:56:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21967100
+- current block number: 21995440
+
+## Description
+
+Single member added to SoneiumMultisig.
+
+## Watched changes
+
+```diff
+    contract SoneiumMultisig (0x509182eC226b3B71D36A3255A80EF0b1A9D43033) {
+    +++ description: None
+      values.$members.5:
++        "0xba1a565d2bF6D27F451a459308f423219478c5cB"
+      values.$members.4:
+-        "0xba1a565d2bF6D27F451a459308f423219478c5cB"
++        "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a"
+      values.$members.3:
+-        "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a"
++        "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452"
+      values.$members.2:
+-        "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452"
++        "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B"
+      values.$members.1:
+-        "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B"
++        "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E"
+      values.$members.0:
+-        "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E"
++        "0xd45F9F3990C48AfA5C90404c7a748b4c23FB2cba"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xaaf55dc8427ef3c11d29a220970a49d59a91f0b0
 
 # Diff at Tue, 04 Mar 2025 11:26:31 GMT:
 

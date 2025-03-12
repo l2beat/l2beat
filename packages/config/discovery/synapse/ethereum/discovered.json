@@ -2,14 +2,21 @@
   "name": "synapse",
   "chain": "ethereum",
   "blockNumber": 21387773,
-  "configHash": "0x5f7fbe1fb246360c808be233899e5e76eea6aa2a6302f2582b8a01fd807a2c08",
-  "contracts": [
+  "configHash": "0x91335b2efdaa4382a3820c85b79b01eec741f888197abbaa135d30c72554f9cc",
+  "entries": [
+    {
+      "address": "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "Liquidity Pool",
       "address": "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8",
+      "type": "Contract",
       "sourceHashes": [
         "0xda336842ad358274289356ce376a6f9e6cd728ad4c4d74609f3a65768c9c95b9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["getAdminBalance", "getVirtualPrice"],
       "sinceTimestamp": 1629082839,
       "sinceBlock": 13033711,
@@ -43,9 +50,11 @@
     {
       "name": "LPToken",
       "address": "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F",
+      "type": "Contract",
       "sourceHashes": [
         "0x8bcd2f8e4f39141963f6232b1fb1679eff06e88b0f5127e427cf7c7992b84d44"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1629082839,
       "sinceBlock": 13033711,
       "values": {
@@ -57,8 +66,14 @@
       }
     },
     {
+      "address": "0x230A1AC45690B9Ae1176389434610B9526d2f21b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SynapseBridge",
       "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
+      "type": "Contract",
       "sourceHashes": [
         "0xb9b3a683fe4dda991e2c9f0c79d7b8f5b2dd518535c692b5887aa3c03a030de3",
         "0x81d007102ce6d41c4e245cc562c41b762d6fe49738f3dac3eb5e159caa6dc853"
@@ -161,9 +176,11 @@
     {
       "name": "TimelockController",
       "address": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
+      "type": "Contract",
       "sourceHashes": [
         "0xb8860ecb88ce9ef535fd75652844536335a1ab72f54ccfd0159be7e57422dc03"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1630038897,
       "sinceBlock": 13105394,
       "values": {
@@ -195,9 +212,11 @@
     {
       "name": "L1BridgeZap",
       "address": "0x6571d6be3d8460CF5F7d6711Cd9961860029D85F",
+      "type": "Contract",
       "sourceHashes": [
         "0xf7a803ef034ab7bcc0da9be0f9ef3781751290ab0651cf78d3f4255dc2f7b62c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1637716982,
       "sinceBlock": 13674290,
       "values": {
@@ -213,6 +232,7 @@
     {
       "name": "Bridge Multisig",
       "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -243,9 +263,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+      "type": "Contract",
       "sourceHashes": [
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -260,11 +282,28 @@
       }
     },
     {
+      "address": "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa31C04BFD3545E6d00A80573a0B009F7557D958D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb3DAD3C24A861b84fDF380B212662620627D4e15",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AllowanceModule",
       "address": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+      "type": "Contract",
       "sourceHashes": [
         "0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -282,13 +321,6 @@
         "VERSION": "0.1.0"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC" },
-    { "address": "0x230A1AC45690B9Ae1176389434610B9526d2f21b" },
-    { "address": "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3" },
-    { "address": "0xa31C04BFD3545E6d00A80573a0B009F7557D958D" },
-    { "address": "0xb3DAD3C24A861b84fDF380B212662620627D4e15" }
   ],
   "abis": {
     "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": [

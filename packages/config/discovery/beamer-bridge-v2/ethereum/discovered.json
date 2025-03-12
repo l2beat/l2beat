@@ -2,14 +2,16 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0x4972e58bb76a9faddea6645de4650cbcef8e1e26f5002b91ce3dd2e5d40af874",
-  "contracts": [
+  "configHash": "0x50e73c39beae66b17410876369b7df6eb402773c8f4a6450173d18e0e4ec1562",
+  "entries": [
     {
       "name": "EthereumL1Messenger",
       "address": "0x12B8489913E2afBCed131d52c345C380BBB65baf",
+      "type": "Contract",
       "sourceHashes": [
         "0x53a70d11cd7796a36186bc6faf5761365984bd862be2a0a8e30f96d0510e40bc"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1680258323,
       "sinceBlock": 16946577,
       "values": {
@@ -20,9 +22,11 @@
     {
       "name": "EthereumL2Messenger",
       "address": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
+      "type": "Contract",
       "sourceHashes": [
         "0x8ce69cb7eef1745342d1a5730155558e6a15cf3530e4d28816fb4d7c7301cea9"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1680258335,
       "sinceBlock": 16946578,
       "values": {
@@ -32,11 +36,18 @@
       }
     },
     {
+      "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismL1Messenger",
       "address": "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
+      "type": "Contract",
       "sourceHashes": [
         "0x4b9b7280455da961659b45ac59c98334d9cef746991718d2ec48b8e9a90a69d3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1680258563,
       "sinceBlock": 16946597,
       "values": {
@@ -48,9 +59,11 @@
     {
       "name": "ArbitrumL1Messenger",
       "address": "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
+      "type": "Contract",
       "sourceHashes": [
         "0x95eb429107814a5f14a897acd61975d017790ae60ad9314ae5e35524a3ec1a5c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1680258503,
       "sinceBlock": 16946592,
       "values": {
@@ -63,9 +76,11 @@
     {
       "name": "EthereumRequestManager",
       "address": "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
+      "type": "Contract",
       "sourceHashes": [
         "0xa82fa8fc1e5ff96f0cfb766de691af0d8f797facacd18dd6b472ac890c1f9ab9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["chains", "currentNonce"],
       "sinceTimestamp": 1680258347,
       "sinceBlock": 16946579,
@@ -117,9 +132,11 @@
     {
       "name": "Resolver",
       "address": "0xCb60516819a28431233195A8b7E0227C288B61AD",
+      "type": "Contract",
       "sourceHashes": [
         "0x6f0996aaa83416e4ef529a91847760e8b44f88c827adfeb579723ed0b708cbf3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1680258311,
       "sinceBlock": 16946576,
       "values": {
@@ -130,9 +147,11 @@
     {
       "name": "EthereumFillManager",
       "address": "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
+      "type": "Contract",
       "sourceHashes": [
         "0xb8bd718248dbf8a521e10a055b52eb5ddcf6ddedf62a4259dbdf50574289ea5b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1680258395,
       "sinceBlock": 16946583,
       "values": {
@@ -143,11 +162,12 @@
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
       "derivedName": "FillManager"
+    },
+    {
+      "address": "0xdC256EC77E97448d29D88118e55C82067150b768",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70" },
-    { "address": "0xdC256EC77E97448d29D88118e55C82067150b768" }
   ],
   "abis": {
     "0x12B8489913E2afBCed131d52c345C380BBB65baf": [

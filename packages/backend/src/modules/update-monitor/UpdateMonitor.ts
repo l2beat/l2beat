@@ -23,7 +23,7 @@ import type { DiscoveryRunner } from './DiscoveryRunner'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
-import { findUnknownContracts } from './utils/findUnknownContracts'
+import { findUnknownEntries } from './utils/findUnknownEntries'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -91,7 +91,7 @@ export class UpdateMonitor {
           runner.chain,
         )
 
-        const diff = diffDiscovery(committed.contracts, discovery.contracts)
+        const diff = diffDiscovery(committed.entries, discovery.entries)
         const severityCounts = countSeverities(diff)
 
         if (diff.length > 0) {
@@ -123,8 +123,8 @@ export class UpdateMonitor {
       chain: runner.chain,
       projects: projectConfigs.length,
       blockNumber,
-      timestamp: timestamp.toNumber(),
-      date: timestamp.toDate().toISOString(),
+      timestamp: timestamp,
+      date: UnixTime.toDate(timestamp).toISOString(),
     })
 
     for (const projectConfig of projectConfigs) {
@@ -160,8 +160,8 @@ export class UpdateMonitor {
     this.logger.info('Update finished', {
       chain: runner.chain,
       blockNumber,
-      timestamp: timestamp.toNumber(),
-      date: timestamp.toDate().toISOString(),
+      timestamp: timestamp,
+      date: UnixTime.toDate(timestamp).toISOString(),
     })
   }
 
@@ -192,9 +192,10 @@ export class UpdateMonitor {
       projectConfig.name,
       projectConfig.chain,
     )
-    const unverifiedContracts = deployedDiscovered.contracts
+    const unverifiedEntries = deployedDiscovered.entries
       .filter((c) => c.unverified)
       .map((c) => c.name)
+      .filter((c) => c !== undefined)
 
     this.logErrorsInDiscovery(discovery, this.logger)
 
@@ -202,9 +203,9 @@ export class UpdateMonitor {
     const sanitizedDiscovery = sanitizeDiscoveryOutput(discovery)
 
     const diff = diffDiscovery(
-      prevSanitizedDiscovery.contracts,
-      sanitizedDiscovery.contracts,
-      unverifiedContracts,
+      prevSanitizedDiscovery.entries,
+      sanitizedDiscovery.entries,
+      unverifiedEntries,
     )
 
     await this.handleDiff(
@@ -238,7 +239,7 @@ export class UpdateMonitor {
     discovery: DiscoveryOutput,
     logger: Logger,
   ): void {
-    for (const contract of discovery.contracts) {
+    for (const contract of discovery.entries) {
       if (contract.errors !== undefined) {
         for (const [field, error] of Object.entries(contract.errors)) {
           logger.warn(`There was an error during discovery`, {
@@ -299,9 +300,9 @@ export class UpdateMonitor {
         chain,
         this.configReader,
       )
-      const unknownContracts = findUnknownContracts(
+      const unknownEntries = findUnknownEntries(
         discovery.name,
-        discovery.contracts,
+        discovery.entries,
         this.configReader,
         chain,
       )
@@ -311,7 +312,7 @@ export class UpdateMonitor {
         blockNumber,
         ChainId(this.chainConverter.toChainId(chain)),
         dependents,
-        unknownContracts,
+        unknownEntries,
         timestamp,
       )
     }

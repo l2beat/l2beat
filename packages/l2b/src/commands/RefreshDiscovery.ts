@@ -1,14 +1,12 @@
-import path from 'path'
 import {
   ConfigReader,
   type DiscoveryConfig,
   TemplateService,
   getChainConfig,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
-import { readConfig } from '../config/readConfig'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 
 export const RefreshDiscovery = command({
@@ -47,10 +45,9 @@ export const RefreshDiscovery = command({
     }),
   },
   handler: async (args) => {
-    const config = readConfig()
-    assert(config.discoveryPath !== undefined)
-    const configReader = new ConfigReader(path.dirname(config.discoveryPath))
-    const templateService = new TemplateService(configReader.rootPath)
+    const paths = getDiscoveryPaths()
+    const configReader = new ConfigReader(paths.discovery)
+    const templateService = new TemplateService(paths.discovery)
 
     const chainConfigs = await Promise.all(
       configReader

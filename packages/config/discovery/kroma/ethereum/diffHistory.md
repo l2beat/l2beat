@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xe98ba44a7f3a95bbb8f87e62e3496a0ddb951d1e
+
+# Diff at Thu, 06 Mar 2025 15:18:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21845178
+- current block number: 21845178
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21845178 (main branch discovery), not current.
+
+```diff
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      description:
+-        "A timelock with access control. The current minimum delay is 0s."
++        "A standard timelock with access control. The current minimum delay is 0s."
+      issuedPermissions.3.description:
+-        "manage all access control roles."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.2.description:
+-        "manage all access control roles."
++        "manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.1.description:
+-        "manage all access control roles."
++        "manage all access control roles and change the minimum delay."
+      values.Canceller:
+-        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.Executor:
+-        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.getMinDelayFormatted:
+-        "0s"
+      values.Proposer:
+-        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.cancellerAC:
++        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.executorAC:
++        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.minDelayFormatted:
++        "0s"
+      values.proposerAC:
++        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+      directlyReceivedPermissions.3.description:
+-        "manage all access control roles."
++        "manage all access control roles and change the minimum delay."
+    }
+```
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      receivedPermissions.3.description:
+-        "manage all access control roles."
++        "manage all access control roles and change the minimum delay."
+      receivedPermissions.2.description:
+-        "manage all access control roles."
++        "manage all access control roles and change the minimum delay."
+    }
+```
+
 Generated with discovered.json: 0x3da7b6094dd1f71ab5888e107b835e9df12647c4
 
 # Diff at Tue, 04 Mar 2025 11:25:53 GMT:

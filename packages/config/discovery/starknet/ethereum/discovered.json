@@ -2,12 +2,13 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21973410,
-  "configHash": "0x1845249c98115aca91c24067db7cc44a8f47c2122daa4182eae8ebf7e513c969",
+  "configHash": "0x438164b4c622d8cc183ca81a4f9b3b3e3395e1a54f59c2dd7ecb0c9770a33a96",
   "sharedModules": ["shared-sharp-verifier"],
-  "contracts": [
+  "entries": [
     {
       "name": "StarkgateBridgeMultisig",
       "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -315,10 +316,12 @@
     {
       "name": "LORDSBridge",
       "address": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+      "type": "Contract",
       "template": "starknet/LordsL1Bridge",
       "sourceHashes": [
         "0x2f705f817a66ebdf99961fe9f40d30fe99be28e3a316d15a490048e7cb149b67"
       ],
+      "proxyType": "immutable",
       "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
       "sinceTimestamp": 1687524587,
       "sinceBlock": 17542373,
@@ -332,12 +335,24 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0x030ceEE5D4CBc304287234720B11E00f47695755",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DAIBridge",
       "address": "0x0437465dfb5B79726e35F08559B0cBea55bb585C",
+      "type": "Contract",
       "template": "maker/L1Escrow",
       "sourceHashes": [
         "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
       ],
+      "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1652101038,
       "sinceBlock": 14742550,
@@ -354,6 +369,7 @@
     {
       "name": "StarkgateManager",
       "address": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+      "type": "Contract",
       "template": "starknet/StarkgateManager",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
@@ -473,8 +489,14 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarkgateRegistry",
       "address": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+      "type": "Contract",
       "template": "starknet/StarkgateRegistry",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
@@ -541,6 +563,7 @@
     {
       "name": "StarknetSecurityCouncil",
       "address": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -589,15 +612,21 @@
       "derivedName": "Safe"
     },
     {
+      "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "WBTCBridge",
       "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -772,15 +801,59 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarknet",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        }
+      ]
+    },
+    {
+      "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+        }
+      ]
+    },
+    {
+      "address": "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FXSBridge",
       "address": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -928,8 +1001,19 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarkgateSecurityAgentMultisig",
       "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -958,8 +1042,24 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarknetAdminMultisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1020,12 +1120,19 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1DaiGateway",
       "address": "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
+      "type": "Contract",
       "template": "starknet/L1EscrowDAI",
       "sourceHashes": [
         "0xea3ba1600e1949cef23ec7d1ebcf724de2bb6be9602c2339dd29582e6c00c9f5"
       ],
+      "proxyType": "immutable",
       "displayName": "L1EscrowDAI",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
       "sinceTimestamp": 1666446647,
@@ -1049,15 +1156,21 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ETHBridge",
       "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "type": "Contract",
       "template": "starknet/StarknetEthBridge",
       "sourceHashes": [
         "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
         "0x7e4d647efdbbd67f7c4af48b29a4ece562fe1383101cd94625402008a572ba87"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "StarkGate canonical bridge escrow for ETH. Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1229,13 +1342,14 @@
     {
       "name": "USDTBridge",
       "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1412,13 +1526,14 @@
     {
       "name": "wstETHBridge",
       "address": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x53dd98b4b8b7867686e1dba07dd739c1bdb6b4a5e11d04efbbe743cb975dbc8c",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1573,15 +1688,21 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Starknet",
       "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "type": "Contract",
       "template": "starknet/Starknet",
       "sourceHashes": [
         "0xce548bceca83c22eb3686987781754a8d9527dde81c86ae4a13d5a9ba5395d62",
         "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message. Critical configuration values for the L2's logic are defined here by various governance roles.",
+      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
           "permission": "governStarknet",
@@ -1687,6 +1808,7 @@
           ]
         ],
         "$upgradeCount": 9,
+        "aggregatorHashMapped": "Starknet Aggregator (since v0.13.3)",
         "aggregatorProgramHash": "15787695375210609250491147414005894154890873413229882671403677761527504080",
         "configHash": "2590421891839256512113614983194993186457498815986333310670788206383913888162",
         "getMaxL1MsgFee": "1000000000000000000",
@@ -1715,6 +1837,7 @@
           "3383082961563516565935611087683915026448707331436034043529592588079494402084",
           "853638403225561750106379562222782223909906501242604214771127703946595519856"
         ],
+        "programHashMapped": "StarkNet OS (Starknet)",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
@@ -1731,7 +1854,7 @@
         },
         "isFinalized": {
           "severity": "HIGH",
-          "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
+          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
         },
         "programHash": {
           "severity": "HIGH",
@@ -1739,15 +1862,44 @@
           "type": "CODE_CHANGE"
         }
       },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
+            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (Starknet)",
+            "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
+            "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
+            "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
+            "770346231394331402493200980986217737662224545740427952627288191358999988146": "ApeX-USDT",
+            "3174901404014912024702042974619036870715605532092680335571201877913899936957": "StarkEx Spot v4.0 (RhinoFi, Sorare)",
+            "16830627573509542901909952446321116535677491650708854009406762893086223513": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)",
+            "2530337539466159944237001094809327283009177793361359619481044346150483328860": "ApeX-USDC 20250130",
+            "3114724292040200590153042023978438629733352741898912919152162079752811928849": "StarkEx Perp v2.0 ApeX-USDC",
+            "217719352201300445998518619904782191262194843262573339166404641663770051805": "StarkNet (old)",
+            "3003515909324298587247571665454372831319437787162989623104387385306791861180": "StarkNet (old)",
+            "1161178844461337253856226043908368523817098764221830529880464854589141231910": "StarkNet Aggregator (old)",
+            "1921772108187713503530008849184725638117898887391063185252422808224349294626": "StarkNet (old)",
+            "3258367057337572248818716706664617507069572185152472699066582725377748079373": "StarkNet (old)",
+            "407700941260678649793204927710478760533239334662847444187959202896452163393": "StarkNet (old)",
+            "1865367024509426979036104162713508294334262484507712987283009063059134893433": "StarkNet (old)",
+            "54878256403880350656938046611252303365750679698042371543935159963667935317": "StarkNet (old)",
+            "2479841346739966073527450029179698923866252973805981504232089731754042431018": "StarkNet (old)",
+            "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
+          }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DelayedExecutor",
       "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+      "type": "Contract",
       "template": "starknet/DelayedExecutor",
       "sourceHashes": [
         "0x6a59350278d90840dff5cb37a714e105c3003955a6c304046fb1222f61374eed"
       ],
+      "proxyType": "immutable",
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
       "severity": "HIGH",
       "directlyReceivedPermissions": [
@@ -1774,13 +1926,14 @@
     {
       "name": "STRKBridge",
       "address": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1952,15 +2105,21 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "rETHBridge",
       "address": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2113,15 +2272,21 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "sfrxETHBridge",
       "address": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2271,13 +2436,14 @@
     {
       "name": "FRAXBridge",
       "address": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2425,15 +2591,21 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LUSDBridge",
       "address": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2582,13 +2754,14 @@
     {
       "name": "MultiBridge",
       "address": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+      "type": "Contract",
       "template": "starknet/StarknetMultiBridge",
       "sourceHashes": [
         "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
         "0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "StarkGate Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.",
+      "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2757,13 +2930,14 @@
     {
       "name": "USDCBridge",
       "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2938,8 +3112,14 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StarknetSCMinorityMultisig",
       "address": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -2985,13 +3165,14 @@
     {
       "name": "UNIBridge",
       "address": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+      "type": "Contract",
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x28ffce7fadb62d041968d5ce5d5fe471d2bedf36c28e342957a33d63a00b872c",
         "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Standard StarkGate bridge escrow (single token). Withdrawals can be throttled to 5 of the locked funds per 24 hours.",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -3137,116 +3318,17 @@
         }
       ],
       "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "deactivate bridging for deposits into the escrow."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "deactivate bridging for deposits into the escrow."
-        }
-      ]
-    },
-    { "address": "0x030ceEE5D4CBc304287234720B11E00f47695755" },
-    { "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2" },
-    { "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac" },
-    { "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD" },
-    { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
-    {
-      "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
-        }
-      ]
-    },
-    { "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b" },
-    {
-      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
-        }
-      ]
-    },
-    { "address": "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C" },
-    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
-    { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
-    { "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0" },
-    { "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560" },
-    { "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E" },
-    { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
-    { "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874" },
-    { "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5" },
-    { "address": "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc" },
-    { "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7" },
-    { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
-    { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
-    { "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645" },
-    { "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b" },
-    { "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0" },
-    { "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90" }
   ],
   "abis": {
     "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": [
@@ -4341,9 +4423,9 @@
     "starknet/LordsL1Bridge": "0xfc89ced3e21bae61dfc4abffb8fec98b920463aa7b2605f895caf626b4f54c18",
     "starknet/StarkgateManager": "0xf6401586405cca1328e5b0b0816c24e362fa7e7f090de0377ae01fa930047aac",
     "starknet/StarkgateRegistry": "0x613178017ba4f030754f316d800cc74f2cb1cd6c26d274dffa2feed755341fc7",
-    "starknet/Starknet": "0x69f36405e7bd29f8f8e4bd2eb1f581f9036173f8c41fcf31a7da1a5a52769601",
-    "starknet/StarknetERC20Bridge": "0x1327c44d622cf611664687f6236f6c1543efb6da64a0643e517f20a2c2749413",
-    "starknet/StarknetEthBridge": "0x8cfb1b54495e4e041ac0fa2c9cbe233e328e26d747fbf29b2bc3e41e01b36614",
-    "starknet/StarknetMultiBridge": "0x4712d4a1da956acb467a1955ab6193dfca6fe43ef5a23c422771731684563501"
+    "starknet/Starknet": "0xebe5ae41eaeb1d93c4e851cda25f1a4d64b70f6622f4de1aa5d92f744e813262",
+    "starknet/StarknetERC20Bridge": "0x44547f029ed96803504a04745eecd15111d42373717f3f6b7e16bf251255ec25",
+    "starknet/StarknetEthBridge": "0x11040d009b59811da765704f486c5b464490621c1bda2ab5371652d0a9b9dd3d",
+    "starknet/StarknetMultiBridge": "0x5a6d2f9f38f07271db5134aa28d533bfe3447dafec36af9dc295e556f0f33e7a"
   }
 }

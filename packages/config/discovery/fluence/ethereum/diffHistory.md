@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x38d7cb6adfc8dec39d60d3767566a9374108b950
+
+# Diff at Fri, 07 Mar 2025 09:14:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@454ef41fea41bcea030780b23fd1f11519ff78d2 block: 21895095
+- current block number: 21994038
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21895095 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
+Generated with discovered.json: 0x5c8d9d4e5b98a890da7eb3a2db7b6e25fe7b33f2
+
+# Diff at Thu, 06 Mar 2025 09:39:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 21895095
+- current block number: 21895095
+
+## Description
+
+Config related: set severity for arbitrum inbox/outbox changes to high and add historical In- and Outboxes via events.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21895095 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory:
++        ["0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95","0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"]
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory:
++        ["0x50Df2E43aDefee3b6510b637697d30e7dc155e13"]
+      fieldMeta:
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
+    }
+```
+
 Generated with discovered.json: 0xea30807906a1922cf77c25f8a44c357c0ee40fce
 
 # Diff at Tue, 04 Mar 2025 10:39:09 GMT:

@@ -2,14 +2,26 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 21872493,
-  "configHash": "0xee7c176d8afaa8554e2375cccbe57898197d098e532d9af41a49f7b6b61f6450",
-  "contracts": [
+  "configHash": "0xb4f8aeacf5a5f679d56c57f6a86a0af173db9918aba9b014e6b52d68c995cf56",
+  "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x00da2F87c56C3a19BD863613995705095F55b524",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "PauserRegistry",
       "address": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
+      "type": "Contract",
       "sourceHashes": [
         "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -36,12 +48,26 @@
       }
     },
     {
+      "address": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
       "name": "MantleTokenProxyAdmin",
       "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -58,8 +84,21 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "address": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
       "name": "BLSRegistry",
       "address": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"
@@ -180,8 +219,21 @@
       }
     },
     {
+      "address": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+          "description": "can register or change status of DA node operators."
+        }
+      ]
+    },
+    {
       "name": "InvestmentManager",
       "address": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"
@@ -232,10 +284,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -266,8 +320,20 @@
       }
     },
     {
+      "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+        }
+      ]
+    },
+    {
       "name": "MantleEngineeringMultisig",
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -310,8 +376,14 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L2OutputOracle",
       "address": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
@@ -382,6 +454,7 @@
     {
       "name": "L1MantleToken",
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+      "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x13e07c3c64aef03cfd7f5c01b2b1b443fd1dfb19c4128447fe316bb5fcd128cd"
@@ -429,8 +502,14 @@
       }
     },
     {
+      "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SystemConfig",
       "address": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
@@ -507,10 +586,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -541,11 +622,23 @@
       }
     },
     {
+      "address": "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PauserRegistry2",
       "address": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
+      "type": "Contract",
       "sourceHashes": [
         "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1687931903,
       "sinceBlock": 17575887,
       "values": {
@@ -558,6 +651,7 @@
     {
       "name": "MantleSecurityMultisig",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -745,8 +839,14 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x50dCf0B40E593301aA75DcB54f36f379607595CE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EigenDataLayerChain",
       "address": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
+      "type": "Contract",
       "sourceHashes": [
         "0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781",
         "0x5333d2d13f53d445ff99fbe5845e2658fbafd68944683fb56a2644d76e5a4f36"
@@ -796,8 +896,26 @@
       "derivedName": "BVM_EigenDataLayrChain"
     },
     {
+      "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DataLayrServiceManager",
       "address": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"
@@ -867,12 +985,24 @@
       }
     },
     {
+      "address": "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TimelockController",
       "address": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
+      "type": "Contract",
       "template": "global/TimelockController",
       "sourceHashes": [
         "0xc4d0d6be09d9d589447b5e4983d9fb98fc772a22d463cef44caa7bd943eff26d"
       ],
+      "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 1d.",
       "issuedPermissions": [
         {
@@ -963,8 +1093,20 @@
       }
     },
     {
+      "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+        }
+      ]
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "address": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
@@ -1019,10 +1161,12 @@
     {
       "name": "AddressManager",
       "address": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0x763c5728a19538783edf38c17731f9cf79ff6f38bfa4bce61333cef0aac5452e"
       ],
+      "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -1041,8 +1185,62 @@
       "derivedName": "Lib_AddressManager"
     },
     {
+      "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PubkeyCompendium",
       "address": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x8ae883de7991fc1ec2291f58deabd148cec4b61384f2eafa6c703304b9a2c757"
@@ -1081,6 +1279,7 @@
     {
       "name": "L1StandardBridge",
       "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
@@ -1113,8 +1312,14 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MantleSecondStrat",
       "address": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
@@ -1159,8 +1364,26 @@
       "derivedName": "InvestmentStrategyBase"
     },
     {
+      "address": "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
       "name": "RegistryPermission",
       "address": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xc65400995a550bff2a6272beee2e54f8cf8f9369406fe8531bd5d39add1635b7"
@@ -1219,8 +1442,36 @@
       }
     },
     {
+      "address": "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0xC37642355c18ec9c3b3268AAC67e33516aa115eb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc4143711aA5bd6d37F1b0A690120AA5859e32A93",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismPortal",
       "address": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
@@ -1272,6 +1523,7 @@
     {
       "name": "DataLayrChallenge",
       "address": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xe8b1ba037124dea50d3eec5112ed3b8507e29739b723810a9f6f00976b9e2d08"
@@ -1311,10 +1563,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0xca35F8338054739D138884685e08b39EE2217794",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1351,6 +1605,7 @@
     {
       "name": "MantleFirstStrat",
       "address": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
@@ -1397,6 +1652,7 @@
     {
       "name": "DataLayrChallengeUtils",
       "address": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0x9dc36b80e92cea40c02d3b9d2684d85d4141dcab44cf882b91cf3148476432ee"
@@ -1436,8 +1692,31 @@
       }
     },
     {
+      "address": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "description": "sign data commitments for the DA bridge."
+        }
+      ]
+    },
+    {
+      "address": "0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Delegation",
       "address": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xa961eebaaac6cb33d38501294b0f98165b96d04af2f99311bd99b282798990be"
@@ -1478,158 +1757,17 @@
         "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
       },
       "derivedName": "EigenLayrDelegation"
+    },
+    {
+      "address": "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x00da2F87c56C3a19BD863613995705095F55b524" },
-    {
-      "address": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "description": "can register or change status of DA node operators."
-        }
-      ]
-    },
-    {
-      "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
-        }
-      ]
-    },
-    { "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb" },
-    { "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8" },
-    { "address": "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1" },
-    { "address": "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498" },
-    { "address": "0x50dCf0B40E593301aA75DcB54f36f379607595CE" },
-    {
-      "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317" },
-    { "address": "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3" },
-    { "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad" },
-    {
-      "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
-        }
-      ]
-    },
-    {
-      "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a" },
-    { "address": "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F" },
-    { "address": "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc" },
-    {
-      "address": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e" },
-    {
-      "address": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0xC37642355c18ec9c3b3268AAC67e33516aa115eb" },
-    { "address": "0xc4143711aA5bd6d37F1b0A690120AA5859e32A93" },
-    {
-      "address": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    { "address": "0xdC3644e172813ADbF6D130262e2416975Ac48Af3" },
-    { "address": "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B" },
-    { "address": "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070" },
-    { "address": "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089" }
   ],
   "abis": {
     "0x075a48633dc6845f92339741E9c96b88f1b2A86f": [

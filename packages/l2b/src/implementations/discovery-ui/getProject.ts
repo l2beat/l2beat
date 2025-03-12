@@ -1,8 +1,9 @@
 import {
   type ConfigReader,
-  type ContractParameters,
   type DiscoveryConfig,
   type DiscoveryOutput,
+  type EntryParameters,
+  type TemplateService,
   getChainShortName,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
@@ -53,6 +54,7 @@ function readProject(
 
 export function getProject(
   configReader: ConfigReader,
+  templateService: TemplateService,
   project: string,
 ): ApiProjectResponse {
   const chains = configReader.readAllChainsForProject(project)
@@ -63,19 +65,21 @@ export function getProject(
   const response: ApiProjectResponse = { entries: [] }
   for (const { chain, config, discovery } of data) {
     const meta = getMeta([discovery])
-    const contracts = discovery.contracts
-      .map((contract) => {
-        const contarctConfig = config.for(contract.address)
-        if (contract.template !== undefined) {
-          const templateValues =
-            configReader.templateService.loadContractTemplate(contract.template)
+    const contracts = discovery.entries
+      .filter((e) => e.type === 'Contract')
+      .map((entry) => {
+        const contarctConfig = config.for(entry.address)
+        if (entry.template !== undefined) {
+          const templateValues = templateService.loadContractTemplate(
+            entry.template,
+          )
           contarctConfig.pushValues(templateValues)
         }
 
         return contractFromDiscovery(
           chain,
           meta,
-          contract,
+          entry,
           contarctConfig,
           discovery.abis,
         )
@@ -94,7 +98,8 @@ export function getProject(
       discoveredContracts: contracts.filter(
         (x) => !initialAddresses.includes(x.address),
       ),
-      eoas: discovery.eoas
+      eoas: discovery.entries
+        .filter((e) => e.type === 'EOA')
         .filter((x) => x.address !== EthereumAddress.ZERO)
         .map(
           (x): ApiAddressEntry => ({
@@ -129,7 +134,7 @@ function orderAddressEntries(a: ApiAddressEntry, b: ApiAddressEntry) {
 function contractFromDiscovery(
   chain: string,
   meta: Record<string, { name?: string; type: ApiAddressType }>,
-  contract: ContractParameters,
+  contract: EntryParameters,
   contractConfig: ContractConfig,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {

@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
   type CleanDateRange,
@@ -20,8 +20,8 @@ export class PriceRepository extends BaseRepository {
       .selectFrom('Price')
       .select(selectPrice)
       .where('configurationId', 'in', configIds)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .where('timestamp', '<=', toInclusive.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .orderBy('timestamp')
       .execute()
     return rows.map(toRecord)
@@ -44,7 +44,7 @@ export class PriceRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('Price')
       .select(selectPrice)
-      .where('timestamp', '=', timestamp.toDate())
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
       .orderBy('timestamp')
       .execute()
     return rows.map(toRecord)
@@ -58,7 +58,7 @@ export class PriceRepository extends BaseRepository {
       .selectFrom('Price')
       .select(selectPrice)
       .where('configurationId', '=', configId)
-      .where('timestamp', '=', timestamp.toDate())
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
       .limit(1)
       .executeTakeFirst()
     return row && toRecord(row)
@@ -82,8 +82,8 @@ export class PriceRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('Price')
       .where('configurationId', '=', configId)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .where('timestamp', '<=', toInclusive.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

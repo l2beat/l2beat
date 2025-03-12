@@ -2,15 +2,17 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 25722659,
-  "configHash": "0xfaef58d2983d5e4f176cffe4ce2100ee58dff77e3275899a2b17cf8697b82c9e",
-  "contracts": [
+  "configHash": "0x88d0f5d3d12700158af72df7f75ea5c2e56a764ec2ac6dec93794d791684b66a",
+  "entries": [
     {
       "name": "OneStepProofEntry",
       "address": "0x15D2a9A14de6Ea03AADE944641eAb497a3A4c9DF",
+      "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
         "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148739,
       "sinceBlock": 18679696,
@@ -25,10 +27,12 @@
     {
       "name": "OneStepProverMemory",
       "address": "0x173FCB92df1854c3B78dC8696C23B1c88437b892",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
         "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148715,
       "sinceBlock": 18679684,
@@ -37,6 +41,7 @@
     {
       "name": "Inbox",
       "address": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
+      "type": "Contract",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -80,33 +85,92 @@
     {
       "name": "ValidatorUtils",
       "address": "0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51",
+      "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
         "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
       ],
+      "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1709320645,
       "sinceBlock": 11265649,
       "values": { "$immutable": true }
     },
     {
+      "address": "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OneStepProverHostIo",
       "address": "0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
         "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148731,
       "sinceBlock": 18679692,
       "values": { "$immutable": true }
     },
     {
+      "address": "0x39CF304731099e756204219BF0a8cCc4738dE9dD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OftAdapterEOA",
+      "address": "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xDb8E759859058952c34953c8469f464109826e52",
+          "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
+        }
+      ],
+      "derivedName": ""
+    },
+    {
+      "address": "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UTBDecent",
       "address": "0x43019F8BE1F192587883b67dEA2994999f5a2de2",
+      "type": "Contract",
       "sourceHashes": [
         "0xdf38c41dfed5147dbd3a1a8d8947ff056a36aa5d6232aa2c5c9dd2b5f4d1ca42"
       ],
+      "proxyType": "immutable",
       "description": "The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.",
       "issuedPermissions": [
         {
@@ -131,8 +195,14 @@
       "derivedName": "UTB"
     },
     {
+      "address": "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SequencerInbox",
       "address": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
+      "type": "Contract",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -221,6 +291,7 @@
     {
       "name": "ChallengeManager",
       "address": "0x67812161Bbb6aCF891aA6028BC614a660961ceD8",
+      "type": "Contract",
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -270,8 +341,21 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x43019F8BE1F192587883b67dEA2994999f5a2de2",
+          "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
+        }
+      ]
+    },
+    {
       "name": "RollupEventInbox",
       "address": "0x766DD3A13d17C6D175975C89225bde89F052dBc4",
+      "type": "Contract",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -310,6 +394,7 @@
     {
       "name": "AlchemyMultisig2",
       "address": "0x871e290d5447b958131F6d44f915F10032436ee6",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
@@ -417,10 +502,12 @@
     {
       "name": "OneStepProver0",
       "address": "0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc",
+      "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
         "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148707,
       "sinceBlock": 18679680,
@@ -429,6 +516,7 @@
     {
       "name": "UpgradeExecutor",
       "address": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028",
+      "type": "Contract",
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -496,8 +584,14 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DegenFastConfirmerMultisig",
       "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -534,8 +628,21 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "address": "0xc98A32DdD1b30B3788670C9992f3B18EF83Da491",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+        }
+      ]
+    },
+    {
       "name": "RollupProxy",
       "address": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+      "type": "Contract",
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
@@ -621,6 +728,7 @@
         "firstUnresolvedNode": 2763,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
+        "isPostBoLD": false,
         "lastStakeBlock": 23492774,
         "latestConfirmed": 2762,
         "latestNodeCreated": 2828,
@@ -703,9 +811,11 @@
     {
       "name": "OrbitERC20OFTAdapter",
       "address": "0xDb8E759859058952c34953c8469f464109826e52",
+      "type": "Contract",
       "sourceHashes": [
         "0xa6648e861cb9df5f8a3d15fc05c8f842f7f8a47136470f83c5d452f2b4eca4e6"
       ],
+      "proxyType": "immutable",
       "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
       "issuedPermissions": [
         {
@@ -738,10 +848,12 @@
     {
       "name": "OneStepProverMath",
       "address": "0xDf6C4562e853C4F775285710B467e2EE4Ca8D22c",
+      "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
         "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
       ],
+      "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148725,
       "sinceBlock": 18679689,
@@ -750,6 +862,7 @@
     {
       "name": "Outbox",
       "address": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
+      "type": "Contract",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -797,6 +910,7 @@
     {
       "name": "Bridge",
       "address": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
+      "type": "Contract",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
@@ -842,22 +956,58 @@
           "0xDb8E759859058952c34953c8469f464109826e52"
         ],
         "delayedMessageCount": 148412,
+        "inboxHistory": [
+          "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
+          "0x766DD3A13d17C6D175975C89225bde89F052dBc4",
+          "0x311556934459Cc8037E203Dc8ee5bd2cEcAD38F4"
+        ],
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "outboxHistory": [
+          "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
+          "0xDb8E759859058952c34953c8469f464109826e52"
+        ],
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
         "sequencerMessageCount": 33134,
         "sequencerReportedSubMessageCount": 25378208
       },
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
+      },
       "derivedName": "ERC20Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "Relay Bridge",
+      "address": "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0xFB48D385Fa3da33762B350e1d705b9E46054E677",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -894,80 +1044,6 @@
         "$immutable": true,
         "owner": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
       }
-    }
-  ],
-  "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-          "description": "Add/remove batchPosters (Sequencers)."
-        }
-      ]
-    },
-    { "address": "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21" },
-    { "address": "0x39CF304731099e756204219BF0a8cCc4738dE9dD" },
-    {
-      "name": "OftAdapterEOA",
-      "address": "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xDb8E759859058952c34953c8469f464109826e52",
-          "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
-      "receivedPermissions": [
-        {
-          "permission": "fastconfirm",
-          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
-        },
-        {
-          "permission": "validate",
-          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
-        },
-        {
-          "permission": "validate",
-          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-        }
-      ]
-    },
-    { "address": "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6" },
-    { "address": "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01" },
-    {
-      "address": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x43019F8BE1F192587883b67dEA2994999f5a2de2",
-          "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
-        }
-      ]
-    },
-    { "address": "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063" },
-    {
-      "address": "0xc98A32DdD1b30B3788670C9992f3B18EF83Da491",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
-        }
-      ]
-    },
-    {
-      "name": "Relay Bridge",
-      "address": "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF"
     }
   ],
   "abis": {
@@ -1723,7 +1799,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
     "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
     "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
@@ -1733,7 +1809,7 @@
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
     "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x3a9246a912d738821e12f469caa2b045470c35e714b11f5761fb5ed8944002af",
+    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"

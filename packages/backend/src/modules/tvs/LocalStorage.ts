@@ -4,13 +4,13 @@ import type { DataStorage } from './DataStorage'
 
 interface LocalStorageJSON {
   prices: Record<string, number>
-  amounts: Record<string, number>
+  amounts: Record<string, string>
   blocks: Record<string, number>
 }
 
 export class LocalStorage implements DataStorage {
   private prices: Map<string, number>
-  private amounts: Map<string, number>
+  private amounts: Map<string, string>
   private blocks: Map<string, number>
 
   constructor(private readonly filePath: string) {
@@ -39,9 +39,9 @@ export class LocalStorage implements DataStorage {
   async writeAmount(
     id: string,
     timestamp: UnixTime,
-    amount: number,
+    amount: bigint,
   ): Promise<void> {
-    this.amounts.set(key(id, timestamp), amount)
+    this.amounts.set(key(id, timestamp), amount.toString())
     this.saveToFile()
     return await Promise.resolve()
   }
@@ -49,10 +49,10 @@ export class LocalStorage implements DataStorage {
   async getAmount(
     id: string,
     timestamp: UnixTime,
-  ): Promise<number | undefined> {
+  ): Promise<bigint | undefined> {
     const amount = this.amounts.get(key(id, timestamp))
 
-    return await Promise.resolve(amount)
+    return await Promise.resolve(amount ? BigInt(amount) : undefined)
   }
 
   async writeBlockNumber(
@@ -80,9 +80,7 @@ export class LocalStorage implements DataStorage {
         prices: new Map(
           Object.entries(data.prices).map(([k, v]) => [k, Number(v)]),
         ),
-        amounts: new Map(
-          Object.entries(data.amounts).map(([k, v]) => [k, Number(v)]),
-        ),
+        amounts: new Map(Object.entries(data.amounts).map(([k, v]) => [k, v])),
         blocks: new Map(
           Object.entries(data.blocks).map(([k, v]) => [k, Number(v)]),
         ),
@@ -100,7 +98,7 @@ export class LocalStorage implements DataStorage {
     const data = {
       prices: Object.fromEntries(this.prices),
       amounts: Object.fromEntries(
-        Array.from(this.amounts.entries()).map(([k, v]) => [k, v.toString()]),
+        Array.from(this.amounts.entries()).map(([k, v]) => [k, v]),
       ),
       blocks: Object.fromEntries(
         Array.from(this.blocks.entries()).map(([k, v]) => [k, v.toString()]),
@@ -111,5 +109,5 @@ export class LocalStorage implements DataStorage {
 }
 
 export function key(id: string, timestamp: UnixTime): string {
-  return `${id}-${timestamp.toNumber()}`
+  return `${id}-${timestamp}`
 }

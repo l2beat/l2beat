@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xec3682f6f47fd625806a10d787c071b2a904874e
+
+# Diff at Thu, 06 Mar 2025 15:19:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21744158
+- current block number: 21981875
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Watched changes
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.adapters.0:
+-        "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5"
++        "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
+    }
+```
+
 Generated with discovered.json: 0x50a086bdf86b2f41065d6a596c34836168a3c496
 
 # Diff at Tue, 04 Mar 2025 10:39:30 GMT:

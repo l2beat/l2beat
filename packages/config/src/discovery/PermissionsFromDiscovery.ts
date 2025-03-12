@@ -1,12 +1,15 @@
 import type {
-  ContractParameters,
-  EoaParameters,
+  EntryParameters,
   Permission,
   ReceivedPermission,
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
-import { notUndefined } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import {
+  type EthereumAddress,
+  formatSeconds,
+  notUndefined,
+} from '@l2beat/shared-pure'
+import { groupBy, sum } from 'lodash'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {
@@ -23,7 +26,7 @@ import {
 export class PermissionsFromDiscovery implements PermissionRegistry {
   constructor(private readonly projectDiscovery: ProjectDiscovery) {}
 
-  getPermissionedContracts(): ContractParameters[] {
+  getPermissionedContracts(): EthereumAddress[] {
     const contracts = this.projectDiscovery.getContracts()
 
     return [
@@ -39,23 +42,18 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           contract.receivedPermissions === undefined &&
           isMultisigLike(contract),
       ),
-    ]
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
+    ].map((e) => e.address)
   }
 
-  getPermissionedEoas(): EoaParameters[] {
+  getPermissionedEoas(): EthereumAddress[] {
     return this.projectDiscovery
       .getEoas()
-      .filter((e) => (e.category?.priority ?? 0) >= 0)
-      .sort((a, b) => {
-        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
-      })
+      .filter((e) => e.receivedPermissions !== undefined)
+      .map((e) => e.address)
   }
+
   describePermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ) {
     return [
@@ -66,25 +64,8 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     ].filter(notUndefined)
   }
 
-  getPermissionPriority(entry: ContractParameters | EoaParameters): number {
-    if (entry.receivedPermissions === undefined) {
-      return 0
-    }
-
-    const permissions = entry.receivedPermissions.map((p) => p.from)
-    const priority = permissions.reduce((acc, permission) => {
-      return (
-        acc +
-        (this.projectDiscovery.getEntryByAddress(permission)?.category
-          ?.priority ?? 0)
-      )
-    }, 0)
-
-    return priority
-  }
-
   describeDirectlyReceivedPermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
   ): string[] {
     return Object.entries(
       groupBy(
@@ -131,7 +112,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   describeUltimatelyReceivedPermissions(
-    contractOrEoa: ContractParameters | EoaParameters,
+    contractOrEoa: EntryParameters,
   ): string[] {
     const formatVia = (via: ResolvedPermissionPath[]) =>
       `- acting via ${via.map((p) => this.projectDiscovery.formatViaPath(p)).join(', ')}`
@@ -187,5 +168,33 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
         .join(' ')
         .trim()}.`
     })
+  }
+
+  getUpgradableBy(
+    contract: EntryParameters,
+  ): { name: string; delay: string }[] {
+    const upgradersWithDelay: Record<string, number> = Object.fromEntries(
+      contract.issuedPermissions
+        ?.filter((p) => p.permission === 'upgrade')
+        .map((p) => {
+          const entry = this.projectDiscovery.getEntryByAddress(p.to)
+          const address =
+            entry?.name ??
+            (this.projectDiscovery.isEOA(p.to)
+              ? this.projectDiscovery.getEOAName(p.to)
+              : p.to.toString())
+          const delay =
+            (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
+          return [address, delay]
+        }) ?? [],
+    )
+
+    return Object.keys(upgradersWithDelay).map((actor) => ({
+      name: actor,
+      delay:
+        upgradersWithDelay[actor] === 0
+          ? 'no'
+          : formatSeconds(upgradersWithDelay[actor]),
+    }))
   }
 }

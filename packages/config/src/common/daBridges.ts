@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { probabilityOfCompromise } from '../projects/da-beat/common'
+import { probabilityOfCompromise } from '../common'
 import { type DaProjectTableValue, getDacSentiment } from './dataAvailability'
 
 const NONE: DaProjectTableValue = {

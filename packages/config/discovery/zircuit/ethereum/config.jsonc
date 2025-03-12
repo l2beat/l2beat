@@ -9,22 +9,13 @@
   ],
   "names": {
     "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0": "ZircuitSuperchainConfig",
-    "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "ZircuitAdminMultiSig",
-    "0x2c0B27F7C8F083B539557a0bA787041BF22DB276": "ZircuitGuardianMultiSig",
+    "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "ZircuitMultiSig1",
+    "0x2c0B27F7C8F083B539557a0bA787041BF22DB276": "ZircuitMultiSig2",
     "0x6BCe7408c0781dcE7b71494274302D4b75a1447c": "Verifier"
   },
   "overrides": {
     "Verifier": {
       "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
-    },
-    "0x92Ef6Af472b39F1b363da45E35530c24619245A4": {
-      "ignoreMethods": [
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "getL2Output",
-        "computeL2Timestamp",
-        "getL2OutputRootWithFinalization"
-      ]
     }
   }
 }

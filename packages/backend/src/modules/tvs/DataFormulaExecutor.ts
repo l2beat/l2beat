@@ -44,7 +44,7 @@ export class DataFormulaExecutor {
     const promises: Promise<void>[] = []
 
     for (const timestamp of timestamps) {
-      const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
+      const blockNumbers = blockNumbersToTimestamps.get(timestamp)
       assert(blockNumbers)
 
       promises.push(
@@ -109,14 +109,17 @@ export class DataFormulaExecutor {
           )
           const latestCirculatingSupplies =
             await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
-              circulatingSupplies.map((p) => p.priceId),
+              circulatingSupplies.map((p) => ({
+                priceId: p.apiId,
+                decimals: p.decimals,
+              })),
             )
 
           for (const c of circulatingSupplies) {
-            const latest = latestCirculatingSupplies.get(c.priceId)
+            const latest = latestCirculatingSupplies.get(c.apiId)
             assert(
               latest !== undefined,
-              `${c.priceId}: No latest circulating supply found`,
+              `${c.apiId}: No latest circulating supply found`,
             )
 
             await this.storage.writeAmount(c.id, timestamp, latest)
@@ -181,33 +184,33 @@ export class DataFormulaExecutor {
   async fetchCirculatingSupply(
     config: CirculatingSupplyAmountConfig,
     timestamp: UnixTime,
-  ): Promise<number> {
-    this.logger.debug(`Fetching circulating supply for ${config.priceId}`)
+  ): Promise<bigint> {
+    this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
 
     try {
       return await this.circulatingSupplyProvider.getCirculatingSupply(
-        config.priceId,
+        config.apiId,
+        config.decimals,
         timestamp,
       )
     } catch {
       this.logger.error(
-        `Error fetching circulating supply for ${config.priceId}. Assuming 0`,
+        `Error fetching circulating supply for ${config.apiId}. Assuming 0`,
       )
-      return 0
+      return 0n
     }
   }
 
   async fetchTotalSupply(
     config: TotalSupplyAmountConfig,
     blockNumber: number,
-  ): Promise<number> {
+  ): Promise<bigint> {
     this.logger.debug(
       `Fetching total supply for ${config.address} on ${config.chain}`,
     )
     return await this.totalSupplyProvider.getTotalSupply(
       config.chain,
       config.address,
-      config.decimals,
       blockNumber,
     )
   }
@@ -215,7 +218,7 @@ export class DataFormulaExecutor {
   async fetchEscrowBalance(
     config: BalanceOfEscrowAmountFormula,
     blockNumber: number,
-  ): Promise<number> {
+  ): Promise<bigint> {
     this.logger.debug(
       `Fetching balance of ${config.address} token for escrow ${config.escrowAddress} on ${config.chain}`,
     )
@@ -224,14 +227,12 @@ export class DataFormulaExecutor {
         ? await this.balanceProvider.getNativeAssetBalance(
             config.chain,
             config.escrowAddress,
-            config.decimals,
             blockNumber,
           )
         : await this.balanceProvider.getTokenBalance(
             config.chain,
             config.address,
             config.escrowAddress,
-            config.decimals,
             blockNumber,
           )
 
@@ -258,13 +259,13 @@ export class DataFormulaExecutor {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.debug(
-        `Fetching latest block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching latest block number for timestamp ${timestamp} on ${chain}`,
       )
       const latestBlock = await block.getLatestBlockNumber()
       result.set(chain, latestBlock)
     }
 
-    return new Map([[timestamp.toNumber(), result]])
+    return new Map([[timestamp, result]])
   }
 
   async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
@@ -272,7 +273,7 @@ export class DataFormulaExecutor {
 
     for (const timestamp of timestamps) {
       result.set(
-        timestamp.toNumber(),
+        timestamp,
         await this.getTimestampToBlockNumbersMapping(chains, timestamp),
       )
     }
@@ -295,7 +296,7 @@ export class DataFormulaExecutor {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.info(
-        `Fetching block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching block number for timestamp ${timestamp} on ${chain}`,
       )
       const blockNumber = await block.getBlockNumberAtOrBefore(timestamp)
       result.set(chain, blockNumber)

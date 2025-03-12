@@ -10,9 +10,11 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
-import { bridges } from '../projects/bridges'
-import { chains } from '../projects/chains'
-import { tokenList } from './tokens'
+import { bridges } from '../processing/bridges'
+import { chains } from '../processing/chains'
+import { getTokenList } from './tokens'
+
+const tokenList = getTokenList(chains)
 
 // Github actions sets env as an empty string when secret is not set
 // this resulted in a bug on the outside contributors PRs

@@ -21,6 +21,7 @@ export async function get7dTokenBreakdownData({
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
+  const tokenList = await ps.getTokens()
   const projectsToQuery = await getTvsProjects(
     (project) =>
       type === 'all'
@@ -29,6 +30,7 @@ export async function get7dTokenBreakdownData({
           ? !!project.scalingInfo
           : !!project.isBridge,
     chains,
+    tokenList,
   )
 
   const tvsValues = await getTvsValuesForProjects(projectsToQuery, '7d')

@@ -27,6 +27,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     <ProjectStat
       key="tokens"
       title="Tokens"
+      valueClassName="max-md:-mt-0.5"
       value={
         <TokenBreakdownStat
           tokenTvs={project.header.tvs?.tokens}
@@ -73,6 +74,8 @@ export function ProjectScalingStats({ project, className }: Props) {
     project.stageConfig.stage !== 'NotApplicable' ? (
       <ProjectStat
         title="Stage"
+        className="md:gap-2.5"
+        valueClassName="max-md:-mt-0.5"
         value={
           <a href="#stage">
             <StageCell
@@ -114,7 +117,9 @@ export function ProjectScalingStats({ project, className }: Props) {
 
         return (
           <Fragment key={i}>
-            {statGroup.map((stat) => stat)}
+            {statGroup.map((stat) => (
+              <Fragment key={stat.key}>{stat}</Fragment>
+            ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
             )}
@@ -130,18 +135,22 @@ interface ProjectStat {
   value: ReactNode
   tooltip?: string
   className?: string
+  valueClassName?: string
 }
 
 function ProjectStat(props: ProjectStat) {
   return (
     <li
+      key={props.title}
       className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-secondary">{props.title}</span>
+        <span className="text-xs leading-normal text-secondary">
+          {props.title}
+        </span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
@@ -152,7 +161,12 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:font-bold">
+      <span
+        className={cn(
+          'text-lg font-medium !leading-none md:font-bold',
+          props.valueClassName,
+        )}
+      >
         {props.value}
       </span>
     </li>

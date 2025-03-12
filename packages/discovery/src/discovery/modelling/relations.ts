@@ -1,7 +1,6 @@
 import type {
-  ContractParameters,
   DiscoveryOutput,
-  EoaParameters,
+  EntryParameters,
   ReceivedPermission,
 } from '../output/types'
 import type { ContractValue } from '../output/types'
@@ -10,27 +9,25 @@ import {
   interpolateModelTemplate,
 } from './interpolate'
 
-type ContractOrEoa = (ContractParameters | EoaParameters) & { isEoa?: boolean }
-
 const RELATIONS_FILENAME = 'relations.lp'
 interface InlineTemplate {
   content: string
-  when: (c: ContractOrEoa, p?: ReceivedPermission) => boolean
+  when: (c: EntryParameters, p?: ReceivedPermission) => boolean
 }
 
 const addressTemplate: InlineTemplate = {
   content: `
 address(
   @self,
-  "#$.chain",
-  "#$.address:raw").`,
+  "&$.chain",
+  "&$.address:raw").`,
   when: () => true,
 }
 const addressNameTemplate: InlineTemplate = {
   content: `
 addressName(
   @self,
-  "#$.name").`,
+  "&$.name").`,
   when: (c) => c.name !== undefined,
 }
 const addressTypeContractTemplate: InlineTemplate = {
@@ -38,46 +35,46 @@ const addressTypeContractTemplate: InlineTemplate = {
 addressType(
   @self,
   contract).`,
-  when: (c) => !c.isEoa,
+  when: (c) => c.type === 'Contract',
 }
 const addressTypeEOATemplate: InlineTemplate = {
   content: `
 addressType(
   @self,
   eoa).`,
-  when: (c) => !!c.isEoa,
+  when: (c) => c.type === 'EOA',
 }
 const addressDescriptionTemplate: InlineTemplate = {
   content: `
 addressDescription(
   @self,
-  "#$.description").`,
+  "&$.description").`,
   when: (c) => c.description !== undefined,
 }
 const permissionTemplate: InlineTemplate = {
   content: `
 permission(
   @self,
-  "#permission.type",
-  #permission.giver).`,
+  "&permission.type",
+  &permission.giver).`,
   when: () => true,
 }
 const permissionDescriptionTemplate: InlineTemplate = {
   content: `
 permissionDescription(
   @self,
-  "#permission.type",
-  #permission.giver,
-  "#permission.description").`,
+  "&permission.type",
+  &permission.giver,
+  "&permission.description").`,
   when: (_, p) => p?.description !== undefined,
 }
 const permissionDelayTemplate: InlineTemplate = {
   content: `
 permissionDelay(
   @self,
-  "#permission.type",
-  #permission.giver,
-  #permission.delay).`,
+  "&permission.type",
+  &permission.giver,
+  &permission.delay).`,
   when: (_, p) => p?.delay !== undefined && p.delay !== 0,
 }
 
@@ -86,10 +83,8 @@ export function buildRelationsModels(
   addressToNameMap: Record<string, string>,
 ): Record<string, string[]> {
   const relationsModel: string[] = []
-  const contractsAndEOAs = [
-    ...discoveryOutput.contracts,
-    ...discoveryOutput.eoas.map((eoa) => ({ ...eoa, isEoa: true })),
-  ]
+  const contractsAndEOAs = discoveryOutput.entries
+
   for (const contractOrEoa of contractsAndEOAs) {
     const contractValues = contractValuesForInterpolation(
       discoveryOutput.chain,
@@ -145,7 +140,7 @@ export function buildRelationsModels(
 }
 
 export function findAllDirectlyReceivedPermissions(
-  contractOrEoa: ContractParameters | EoaParameters,
+  contractOrEoa: EntryParameters,
 ) {
   return [
     ...(contractOrEoa.directlyReceivedPermissions ?? []),

@@ -1,16 +1,28 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21965308,
-  "configHash": "0xc0d918344f3b3f55bcdef0dad0a62f018b54bcf4a22373d7ba3fc3b0c9a4da2a",
-  "contracts": [
+  "blockNumber": 21988681,
+  "configHash": "0x74f9345db7d9646da76d5e9c19dfac1a09557f1da3f9c06c42a3c3d9335ea5a8",
+  "entries": [
+    {
+      "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
@@ -35,8 +47,25 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
+    {
+      "address": "0x21887c89368bf918346c62460e0c339113801C28",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonAdminMultisig",
       "address": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -57,7 +86,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -69,19 +98,23 @@
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay"
         },
         {
           "permission": "upgrade",
@@ -91,7 +124,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -103,7 +136,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -115,7 +148,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         }
@@ -125,7 +158,7 @@
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
-          "condition": "there is no emergency state, in which case there is no delay"
+          "condition": "there is no emergency state, in which case there would be no delay"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -144,7 +177,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 67,
+        "nonce": 68,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -152,6 +185,7 @@
     {
       "name": "PolygonSharedBridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonSharedBridge",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
@@ -167,7 +201,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -196,7 +230,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xa777bbb6119f1f4068336ce11742e0e016b34d8fb277dc2c32e76e7b1a857af2",
+        "getRoot": "0x4d08fc6d2fab0c5912083715d67584a1212938eba5d111823194aca51865914a",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -213,8 +247,14 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonSecurityCouncil",
       "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -255,8 +295,24 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonRollupManager_pessimistic",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -289,7 +345,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         },
@@ -318,7 +374,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -444,7 +500,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xdb708c1d661a786ebd0a73e4773c55b810509573725dcdecfd9a6bf1399cb25d",
+        "getRollupExitRoot": "0x0c6dfd136cf29c7472b5c7e15d3d75a6d1c1fa5326e6abd784c402610692cfa3",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -465,7 +521,7 @@
           [false],
           [false]
         ],
-        "lastAggregationTimestamp": 1740991967,
+        "lastAggregationTimestamp": 1741274075,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -529,9 +585,9 @@
           [
             "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
             994873017,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            9,
-            4,
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            12,
+            7,
             0,
             "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
@@ -692,8 +748,8 @@
             "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
-        "totalSequencedBatches": 642321,
-        "totalVerifiedBatches": 641683,
+        "totalSequencedBatches": 650652,
+        "totalVerifiedBatches": 649960,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -725,6 +781,7 @@
     {
       "name": "PolygonGlobalExitRootV2",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonGlobalExitRootV2",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -740,7 +797,7 @@
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -771,16 +828,58 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 55217,
-        "getRoot": "0xf7df6423e1d2a31f745e6db1f6e3ad30d854bf651b35629bb3afdad2979a9785",
+        "depositCount": 55420,
+        "getRoot": "0x2b2da55ad685088041bf97683c718b4f5c85abd83fa1fed65d2c8783db716c73",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
+    {
+      "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonCreateRollupMultisig",
       "address": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -821,29 +920,55 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Timelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+      "type": "Contract",
       "template": "polygon-cdk/Timelock",
       "sourceHashes": [
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
       ],
+      "proxyType": "immutable",
       "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
       "issuedPermissions": [
         {
           "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay",
           "via": []
         },
         {
           "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
-              "condition": "there is no emergency state, in which case there is no delay"
+              "condition": "there is no emergency state, in which case there would be no delay"
             }
           ]
         }
@@ -857,7 +982,7 @@
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
-          "condition": "there is no emergency state, in which case there is no delay"
+          "condition": "there is no emergency state, in which case there would be no delay"
         },
         {
           "permission": "interact",
@@ -867,7 +992,9 @@
         {
           "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
+          "delay": 259200,
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay"
         }
       ],
       "sinceTimestamp": 1679653187,
@@ -1209,46 +1336,12 @@
       },
       "derivedName": "PolygonZkEVMTimelock",
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6" },
-    { "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77" },
-    {
-      "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-        }
-      ]
-    },
-    { "address": "0x21887c89368bf918346c62460e0c339113801C28" },
-    { "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5" },
-    { "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622" },
-    { "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86" },
-    { "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891" },
-    {
-      "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-        }
-      ]
-    },
-    { "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496" },
-    { "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0" },
-    { "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227" },
-    { "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31" },
-    { "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D" },
-    { "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf" },
-    { "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9" },
-    { "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc" },
-    { "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC" },
-    { "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2" },
-    { "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b" }
   ],
   "abis": {
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
@@ -1612,6 +1705,6 @@
     "polygon-cdk/PolygonGlobalExitRootV2": "0x75cc9862e96eb2a8e076fd553e1c729decfc584304d456003762d3723ee3e596",
     "polygon-cdk/PolygonRollupManager_pessimistic": "0x8574f67c4c0c0f40efb066c6029a163cc79af6464e05c04b046eb34199784ea9",
     "polygon-cdk/PolygonSharedBridge": "0x7c6fe6c28a9c090b0f04dcb3b30a58343dd07fd39421e73f2a7317828767e522",
-    "polygon-cdk/Timelock": "0x27daafce564beac7f1a3b4ddb0321c30d7630d1db27ad0e585a8b2e9faa82f7d"
+    "polygon-cdk/Timelock": "0x57977b80a99b9ab24f98df7a4d1b615609f3dff107f7667a6fe28c8048452c54"
   }
 }

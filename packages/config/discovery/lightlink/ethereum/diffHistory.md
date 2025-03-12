@@ -1,4 +1,77 @@
-Generated with discovered.json: 0xb538ac776e6d392e5d2edc5000daec15b69d1546
+Generated with discovered.json: 0xe59fe25b1d184c00660b389ff8563d949a6d4dbc
+
+# Diff at Fri, 07 Mar 2025 13:54:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c5dbe2ef6b8273c834507deba40dda8a1affce55 block: 21965148
+- current block number: 21995407
+
+## Description
+
+Some admin / owner permissions moved from EOA to 3/3 Safe (Lightlink is moving to an op stack deployment).
+
+## Watched changes
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+      values.$admin:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+      values.owner:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+      values.$admin:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+      values.owner:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+      values.$admin:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+      values.owner:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
++        "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LightLinkMultisig2 (0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/LightLinkMultisig2/Safe.sol     | 1088 ++++++++++++++++++++
+ .../.flat/LightLinkMultisig2/SafeProxy.p.sol       |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+Generated with discovered.json: 0x13930dbbea129921bcf7b679eb9666e1091da8b7
 
 # Diff at Tue, 04 Mar 2025 10:39:21 GMT:
 

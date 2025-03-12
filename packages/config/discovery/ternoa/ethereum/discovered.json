@@ -2,12 +2,63 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 21766747,
-  "configHash": "0x32afa95589f1c7f5be05ded69e95ecd2c3f9d585688481354482847977535f4d",
+  "configHash": "0x7ba4341d4528ff5ca6806bfc99c43724e54e68e1f06df8718c1b1b99491a39e0",
   "sharedModules": ["shared-polygon-cdk"],
-  "contracts": [
+  "entries": [
+    {
+      "address": "0x129A94208bb3030D809c36849d43b50d13e0cACf",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
+        }
+      ]
+    },
+    {
+      "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "description": "sole address that can force batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0xB408a216927d31A27fd96176dbF1B825630f0301",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xB408a216927d31A27fd96176dbF1B825630f0301",
+          "via": [{ "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"
+        }
+      ]
+    },
+    {
+      "address": "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "Validium",
       "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+      "type": "Contract",
       "unverified": true,
       "template": "polygon-cdk/PolygonZkEVM",
       "proxyType": "EIP1967 proxy",
@@ -91,10 +142,12 @@
     {
       "name": "Verifier",
       "address": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
       ],
+      "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1729157663,
       "sinceBlock": 20984421,
@@ -105,6 +158,7 @@
     {
       "name": "PolygonDataCommittee",
       "address": "0xB408a216927d31A27fd96176dbF1B825630f0301",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -155,10 +209,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -172,51 +228,6 @@
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    {
-      "address": "0x129A94208bb3030D809c36849d43b50d13e0cACf",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
-        }
-      ]
-    },
-    {
-      "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
-        },
-        {
-          "permission": "interact",
-          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
-          "description": "sole address that can force batches."
-        },
-        {
-          "permission": "interact",
-          "from": "0xB408a216927d31A27fd96176dbF1B825630f0301",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments."
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xB408a216927d31A27fd96176dbF1B825630f0301",
-          "via": [{ "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"
-        }
-      ]
-    },
-    { "address": "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0" }
   ],
   "abis": {
     "0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11": [

@@ -1,7 +1,8 @@
-import type { ContractParameters, DiscoveryOutput } from '@l2beat/discovery'
+import type { DiscoveryOutput, EntryParameters } from '@l2beat/discovery'
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
-export const contractStub: ContractParameters = {
+export const contractStub: EntryParameters = {
+  type: 'Contract',
   name: 'MockedContract',
   address: EthereumAddress('0x0D4C1222f5e839a911e2053860e45F18921D72ac'),
   proxyType: 'StarkWare diamond',
@@ -34,9 +35,10 @@ export const discoveredJsonStub: DiscoveryOutput = {
   name: 'mockedproject',
   chain: 'ethereum',
   blockNumber: 16154924,
-  contracts: [
+  entries: [
     contractStub,
     {
+      type: 'Contract',
       name: 'DuplicatedNameContractMock',
       address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
       values: {
@@ -52,6 +54,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
       },
     },
     {
+      type: 'Contract',
       name: 'DuplicatedNameContractMock',
       address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
       values: {
@@ -66,9 +69,8 @@ export const discoveredJsonStub: DiscoveryOutput = {
         startStandardExitBondSize: '14000000000000000',
       },
     },
-  ],
-  eoas: [
     {
+      type: 'EOA',
       address: EthereumAddress.from('0xaa11'),
       receivedPermissions: [
         {
@@ -78,6 +80,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
       ],
     },
     {
+      type: 'EOA',
       address: EthereumAddress.from('0xbb22'),
       receivedPermissions: [
         {

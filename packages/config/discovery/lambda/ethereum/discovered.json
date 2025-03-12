@@ -2,11 +2,17 @@
   "name": "lambda",
   "chain": "ethereum",
   "blockNumber": 20914730,
-  "configHash": "0x621515af349a6c3e7cc040f0abec0677823fe285c9a0e9860651831fad8b4400",
-  "contracts": [
+  "configHash": "0x607567e9ae74d1676889133ed5a8fd84b6f2c9ca069c9fda2ac61c0e18576fd0",
+  "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "SuperchainConfig",
       "address": "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
+      "type": "Contract",
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -53,10 +59,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -105,6 +113,7 @@
     {
       "name": "GnosisSafe",
       "address": "0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -136,6 +145,7 @@
     {
       "name": "L2OutputOracle",
       "address": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+      "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -212,8 +222,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x4C61Be5626D1Fb101324f0F41542Da30C0aDa4D4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismMintableERC20Factory",
       "address": "0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4",
+      "type": "Contract",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -252,10 +268,12 @@
     {
       "name": "AddressManager",
       "address": "0x624808dc4A34B79B90C3c085942D2100F09A0376",
+      "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
         "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
       ],
+      "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
@@ -278,6 +296,7 @@
     {
       "name": "OptimismPortal",
       "address": "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -335,6 +354,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
@@ -380,6 +400,7 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0x8334f9A70294556101527bfB9bdEdeF7EB382D94",
+      "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -421,8 +442,21 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
+        }
+      ]
+    },
+    {
       "name": "SystemConfig",
       "address": "0xae809d42f861A6381b0DFCf7216556e95362a7a8",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
@@ -515,60 +549,9 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "L1StandardBridge",
-      "address": "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
-      "template": "opstack/L1StandardBridge",
-      "sourceHashes": [
-        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "via": [
-            { "address": "0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" },
-            { "address": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" }
-          ]
-        }
-      ],
-      "sinceTimestamp": 1713347147,
-      "sinceBlock": 19674384,
-      "values": {
-        "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
-        "$implementation": "0x3aF70e7103d29a9466663514DE3C421769b30382",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "messenger": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
-        "MESSENGER": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
-        "otherBridge": "0x4200000000000000000000000000000000000010",
-        "paused": false,
-        "superchainConfig": "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
-        "version": "2.1.0"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
-    }
-  ],
-  "eoas": [
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x4C61Be5626D1Fb101324f0F41542Da30C0aDa4D4" },
-    {
-      "address": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
-        }
-      ]
-    },
-    {
       "address": "0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
+      "type": "EOA",
+      "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -579,6 +562,8 @@
     },
     {
       "address": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -663,6 +648,8 @@
     },
     {
       "address": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "sequence",
@@ -670,7 +657,51 @@
         }
       ]
     },
-    { "address": "0xfF00000000000000000000000000000000056026" }
+    {
+      "name": "L1StandardBridge",
+      "address": "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
+      "type": "Contract",
+      "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
+        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [
+            { "address": "0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501" },
+            { "address": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f" }
+          ]
+        }
+      ],
+      "sinceTimestamp": 1713347147,
+      "sinceBlock": 19674384,
+      "values": {
+        "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
+        "$implementation": "0x3aF70e7103d29a9466663514DE3C421769b30382",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
+        "messenger": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
+        "MESSENGER": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
+        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
+        "otherBridge": "0x4200000000000000000000000000000000000010",
+        "paused": false,
+        "superchainConfig": "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
+        "version": "2.1.0"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "0xfF00000000000000000000000000000000056026",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c": [

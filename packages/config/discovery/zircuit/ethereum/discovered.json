@@ -1,12 +1,23 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 21829908,
-  "configHash": "0x53c8a6e5330b59be7ed987c4f519ad5eca83ebc0ce7fa83cac3c5d08bd90b4eb",
-  "contracts": [
+  "blockNumber": 22022908,
+  "configHash": "0x1f064b6e7b8a4b02b1ca1db2ed8541a020a141d743b5e48a72b3b5618d2e4083",
+  "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "OptimismPortal",
       "address": "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
+      "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -60,8 +71,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 287624,
-          "prevBlockNum": 21829676,
+          "prevBoughtGas": 369917,
+          "prevBlockNum": 22022603,
           "prevTxCount": 1
         },
         "paused": false,
@@ -74,6 +85,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
+      "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -103,7 +115,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637108",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637717",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -122,8 +134,9 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ZircuitGuardianMultiSig",
+      "name": "ZircuitMultiSig2",
       "address": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -169,8 +182,14 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SystemConfig",
       "address": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
+      "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -224,7 +243,7 @@
         "l1StandardBridge": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "L2_OUTPUT_ORACLE_SLOT": "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815",
         "l2OutputOracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-        "minimumGasLimit": 21000000,
+        "minimumGasLimit": 9000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -237,7 +256,7 @@
         "overhead": 0,
         "owner": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "resourceConfig": {
-          "maxResourceLimit": 20000000,
+          "maxResourceLimit": 8000000,
           "elasticityMultiplier": 10,
           "baseFeeMaxChangeDenominator": 8,
           "maxTransactionLimit": 8,
@@ -265,6 +284,7 @@
     {
       "name": "L1StandardBridge",
       "address": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
+      "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -325,12 +345,19 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x38809210f69ed6204E276d2Be6b15cd530698679",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x9097b28161923c9e2353a796f1580ecf8bf3415bae9a69f49102bdf7a1b94da8"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -367,6 +394,10 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xC25D093D3A3f58952252D2e763BEAF2559dc9737"
+        },
+        {
+          "permission": "upgrade",
           "from": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
         }
       ],
@@ -378,8 +409,24 @@
       }
     },
     {
+      "address": "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x62C688FCa995e07632D64A9586896BB7EcD68567",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x63cbB9fA540F6249AE4A3576f48BF07609b3a355",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Verifier",
       "address": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
+      "type": "Contract",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
         "0xa755414175ee27be390c32c78aaacaaf640fea05cd3198de33257a27f282b91f"
@@ -427,7 +474,8 @@
     {
       "name": "ZircuitSuperchainConfig",
       "address": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-      "template": "opstack/SuperchainConfig_zircuit",
+      "type": "Contract",
+      "template": "opstack/zircuit/SuperchainConfig",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
         "0x39037837abcc5e06ffe85b07ad5f5ce901ed8551155a1b3b81cfd181bd683593"
@@ -504,6 +552,7 @@
     {
       "name": "L1ERC20TokenBridge",
       "address": "0x912C7271a6A3622dfb8B218eb46a6122aB046C79",
+      "type": "Contract",
       "template": "lido/L1ERC20TokenBridge",
       "sourceHashes": [
         "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
@@ -544,13 +593,14 @@
     {
       "name": "L2OutputOracle",
       "address": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-      "template": "opstack/L2OutputOracle",
+      "type": "Contract",
+      "template": "opstack/zircuit/L2OutputOracle",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x3190c62a59b62169498d1f61c08c5c722c70cc0a6aaa37b185fd3f8014941b96"
+        "0x60e391caee355fef81909391d0660c897c79e6ba836e46f45d51968313188073"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. This contract also supports dummy proofs via the old 0x6BCe7408c0781dcE7b71494274302D4b75a1447c until a migration to the new 0xC25D093D3A3f58952252D2e763BEAF2559dc9737 has been manually executed.",
       "issuedPermissions": [
         {
           "permission": "challenge",
@@ -569,16 +619,16 @@
         }
       ],
       "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
         "latestBlockNumber",
-        "latestOutputIndex"
+        "latestOutputIndex",
+        "nextBlockNumber",
+        "nextOutputIndex"
       ],
       "sinceTimestamp": 1719936515,
       "sinceBlock": 20219923,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B",
+        "$implementation": "0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4",
         "$pastUpgrades": [
           [
             "2024-07-02T16:12:59.000Z",
@@ -589,44 +639,60 @@
             "2025-02-12T09:23:47.000Z",
             "0x19e7944c32b28126488482597f707797b60c4c3201abacdba5b9ea00b31cfbb4",
             ["0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B"]
+          ],
+          [
+            "2025-03-11T01:01:59.000Z",
+            "0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",
+            ["0xE14b12F4843447114A093D99Dc9322b93a967DE6"]
+          ],
+          [
+            "2025-03-11T01:01:59.000Z",
+            "0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",
+            ["0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 4,
         "challenger": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 14400,
         "finalizationPeriodSeconds": 14400,
+        "getL2OutputEx": [],
+        "getL2OutputExLatest": "EXPECT_REVERT",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9709411,
-        "latestOutputIndex": 27725,
-        "nextBlockNumber": 9709412,
-        "nextOutputIndex": 27726,
+        "l2ChainId": 48900,
+        "latestBlockNumber": 10874445,
+        "latestOutputIndex": 31397,
+        "nextBlockNumber": 10874446,
+        "nextOutputIndex": 31398,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
         "startingTimestamp": 1719935831,
-        "SUBMISSION_INTERVAL": 1,
-        "submissionInterval": 1,
         "systemOwner": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "verifier": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
         "VERIFIER": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
-        "version": "1.4.0"
+        "verifierV2": "0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
+        "version": "2.0.0",
+        "withdrawalKeepalivePeriodSeconds": 14400,
+        "withdrawalKeepalivePeriodSecondsFmt": "4h"
       },
       "fieldMeta": {
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": "Challenge period (Number of seconds until a state root is finalized)."
-        },
         "proposer": { "severity": "HIGH" },
         "challenger": { "severity": "HIGH" },
-        "deletedOutputs": { "severity": "HIGH" }
+        "deletedOutputs": { "severity": "HIGH" },
+        "getL2OutputExLatest": {
+          "severity": "HIGH",
+          "description": "As soon as this returns a value, Zircuit has transitioned to the v2 verifier. Remove the v1 verifier description string from the contract template."
+        }
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "L1ERC721Bridge",
       "address": "0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
+      "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -665,8 +731,70 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ZircuitAdminMultiSig",
+      "address": "0xAE8f771E297AAbfDE7ff35a33FB6D558f4E0a679",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+        }
+      ]
+    },
+    {
+      "address": "0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "VerifierV2",
+      "address": "0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
+      "type": "Contract",
+      "template": "opstack/zircuit/Verifier",
+      "sourceHashes": [
+        "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
+        "0xaf075d81d9fd983d155a21617c104cfab25f4ad9e8f039fd8a15c1220e3d6227"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
+          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
+        }
+      ],
+      "sinceTimestamp": 1741569827,
+      "sinceBlock": 22013168,
+      "values": {
+        "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
+        "$implementation": "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a",
+        "$pastUpgrades": [
+          [
+            "2025-03-11T01:01:59.000Z",
+            "0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",
+            ["0xD5B424AC36928E2da7dA9eCA9807938a56988F5a"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "digest": "0x1d544a5de23a23d1e94ae793352208593bfa28c3d76d455f09ea3f9c25c402b8"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0xc3131379C4bf618f2135c29547049B46923F7Dca",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ZircuitMultiSig1",
       "address": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -727,6 +855,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
+          "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
           "via": [{ "address": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }]
         }
@@ -758,7 +891,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -766,6 +899,7 @@
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
+      "type": "Contract",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
@@ -797,32 +931,16 @@
         "BRIDGE": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "version": "1.9.0"
       }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb" },
-    { "address": "0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec" },
-    { "address": "0x38809210f69ed6204E276d2Be6b15cd530698679" },
-    { "address": "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4" },
-    { "address": "0x62C688FCa995e07632D64A9586896BB7EcD68567" },
-    { "address": "0x63cbB9fA540F6249AE4A3576f48BF07609b3a355" },
-    { "address": "0xAE8f771E297AAbfDE7ff35a33FB6D558f4E0a679" },
-    {
-      "address": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
-        }
-      ]
     },
-    { "address": "0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966" },
-    { "address": "0xc3131379C4bf618f2135c29547049B46923F7Dca" },
-    { "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4" },
+    {
+      "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
+      "type": "EOA",
+      "proxyType": "EOA",
       "severity": "HIGH",
       "receivedPermissions": [
         {
@@ -833,6 +951,8 @@
     },
     {
       "address": "0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -840,7 +960,11 @@
         }
       ]
     },
-    { "address": "0xFF00000000000000000000000000000000048900" }
+    {
+      "address": "0xFF00000000000000000000000000000000048900",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
   ],
   "abis": {
     "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": [
@@ -1100,43 +1224,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B": [
-      "constructor()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "event Initialized(uint64 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function VERIFIER() view returns (address)",
-      "function challenger() view returns (address)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function getL2OutputRootWithFinalization(uint256 _l2OutputIndex) view returns (bytes32 outputRoot, uint256 finalizedTimestamp)",
-      "function initialize(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, address _verifier, uint256 _finalizationPeriodSeconds, address _systemOwner)",
-      "function l2BlockTime() view returns (uint256)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _proof) payable",
-      "function proposer() view returns (address)",
-      "function setFinalizationPeriodSeconds(uint256 newFinalizationPeriodLength)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function submissionInterval() view returns (uint256)",
-      "function systemOwner() view returns (address)",
-      "function verifier() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "0x994eEb321F9cD79B077a5455fC248c77f30Dd244": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1276,6 +1363,16 @@
       "function systemConfig() view returns (address)",
       "function version() view returns (string)"
     ],
+    "0xC25D093D3A3f58952252D2e763BEAF2559dc9737": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": [
       "constructor(address _singleton)"
     ],
@@ -1288,6 +1385,53 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xD5B424AC36928E2da7dA9eCA9807938a56988F5a": [
+      "function digest() view returns (bytes32)"
+    ],
+    "0xeE646fEA9b1D7f89ae92266c5d7E799158416ca4": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "event Initialized(uint64 version)",
+      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
+      "event OutputProposedV2(bytes32 indexed poseidonStateRoot, uint256 indexed l2OutputIndex, uint256 batchIndex, bytes32 batchHash)",
+      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
+      "function CHALLENGER() view returns (address)",
+      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function PROPOSER() view returns (address)",
+      "function VERIFIER() view returns (address)",
+      "function bootstrapV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)",
+      "function challenger() view returns (address)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function deleteL2Outputs(uint256 _l2OutputIndex)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputEx(uint256 _l2OutputIndex) view returns (tuple(uint256 batchIndex, bytes32 batchHash, bytes32 poseidonStateRoot))",
+      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
+      "function getL2OutputRootWithFinalization(uint256 _l2OutputIndex) view returns (bytes32 outputRoot, uint256 finalizedTimestamp)",
+      "function initialize(uint256 _l2ChainId, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, address _verifier, address _verifierV2, uint256 _finalizationPeriodSeconds, uint256 _withdrawalKeepalivePeriodSeconds, address _systemOwner)",
+      "function l2BlockTime() view returns (uint256)",
+      "function l2ChainId() view returns (uint256)",
+      "function latestBlockNumber() view returns (uint256)",
+      "function latestOutputIndex() view returns (uint256)",
+      "function nextBlockNumber() view returns (uint256)",
+      "function nextOutputIndex() view returns (uint256)",
+      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _proof) payable",
+      "function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable",
+      "function proposer() view returns (address)",
+      "function setFinalizationPeriodSeconds(uint256 newFinalizationPeriodLength)",
+      "function setWithdrawalKeepalivePeriodSeconds(uint256 _withdrawalKeepalivePeriodSeconds)",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingTimestamp() view returns (uint256)",
+      "function systemOwner() view returns (address)",
+      "function verifier() view returns (address)",
+      "function verifierV2() view returns (address)",
+      "function verifyV2(bytes bundleProof, bytes publicInput) view",
+      "function version() view returns (string)",
+      "function withdrawalKeepalivePeriodSeconds() view returns (uint256)"
     ],
     "0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b": [
       "constructor()",
@@ -1342,10 +1486,11 @@
     "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
     "opstack/L1ERC721Bridge": "0x75f13310a0c37850676bb421a095318b633336022aeb2fb69c7f961890b6f69c",
     "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
-    "opstack/L2OutputOracle": "0x1f3a79744f58781fffa6c018ccd268ad7f3f33c1e89ec7268d7bd19bda0867be",
     "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
     "opstack/OptimismPortal": "0x750f5e07f37ab3d0a766982dc74c1c619779a2044e8a1484ed1e2859854ec514",
-    "opstack/SuperchainConfig_zircuit": "0x1718570525f125c182760d228e2598c73cdc61486218304c0f0f79e8498e4ae0",
-    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15"
+    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15",
+    "opstack/zircuit/L2OutputOracle": "0x4b906491b6052b69e44e7345b2598d6538608f562ec19a6614fd23dca93b4bec",
+    "opstack/zircuit/SuperchainConfig": "0x1718570525f125c182760d228e2598c73cdc61486218304c0f0f79e8498e4ae0",
+    "opstack/zircuit/Verifier": "0x1b4b7b1725cd6042a0a82eef309cc11a60b148ddaffddfaab34f8ce8636a9f88"
   }
 }

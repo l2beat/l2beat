@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x99ebcf0ad52a4b2262f7f7a3c78012109623925e
+
+# Diff at Mon, 10 Mar 2025 16:53:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef4d1036423fe7d398c41e6cf238a209cc1ff8f3 block: 21988484
+- current block number: 21988484
+
+## Description
+
+changed EOA signer of the Kinto SecurityCouncil.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21988484 (main branch discovery), not current.
+
+```diff
+    contract KintsugiFoundation (0x94561e98DD5E55271f91A103e4979aa6C493745E) {
+    +++ description: None
+      name:
+-        "MamoriLabs2"
++        "KintsugiFoundation"
+    }
+```
+
+Generated with discovered.json: 0x4d18726190c34736596855ef23ed853f1b25431c
+
+# Diff at Fri, 07 Mar 2025 09:06:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@454ef41fea41bcea030780b23fd1f11519ff78d2 block: 21872461
+- current block number: 21988484
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872461 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
+Generated with discovered.json: 0x350bab3c23cf9ecee648af508bd14b5cc255e8fe
+
+# Diff at Thu, 06 Mar 2025 09:39:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7119c715545bc86a4194761f42815f811ac6307a block: 21872461
+- current block number: 21872461
+
+## Description
+
+Config related: set severity for arbitrum inbox/outbox changes to high and add historical In- and Outboxes via events.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872461 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory:
++        ["0xBFfaA85c1756472fFC37e6D172A7eC0538C14474","0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"]
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory:
++        ["0x655761AD5FC251F414D6993A73184B0669F278c8"]
+      fieldMeta:
++        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
+    }
+```
+
 Generated with discovered.json: 0x7e4c189edbbafb3e8c4f992b91ca6b2102ede1cd
 
 # Diff at Tue, 04 Mar 2025 10:39:18 GMT:

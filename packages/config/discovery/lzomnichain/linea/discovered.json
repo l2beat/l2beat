@@ -1,15 +1,22 @@
 {
   "name": "lzomnichain",
   "chain": "linea",
-  "blockNumber": 15810626,
-  "configHash": "0x89646f3746e7a5816bf172d8fdb1ea0698b7cedb951e2caa76ba4626da7ef822",
-  "contracts": [
+  "blockNumber": 16658503,
+  "configHash": "0x08d005dcc8b632dae79fe072c494580ebaa65817b0a1e6c8e1042fbf41e10431",
+  "entries": [
+    {
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "MPTValidator01",
       "address": "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+      "type": "Contract",
       "sourceHashes": [
         "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689350896,
       "sinceBlock": 649,
       "values": {
@@ -26,9 +33,11 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+      "type": "Contract",
       "sourceHashes": [
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -901,6 +910,7 @@
     {
       "name": "LayerZero Multisig",
       "address": "0x5e306343ecf32B605d88c1e44f3879699ab5144D",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -925,7 +935,7 @@
         "getChainId": 59144,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 114,
+        "nonce": 120,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -933,9 +943,11 @@
     {
       "name": "NonceContract",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "type": "Contract",
       "sourceHashes": [
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689350908,
       "sinceBlock": 650,
       "values": {
@@ -944,11 +956,23 @@
       }
     },
     {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TreasuryV2",
       "address": "0x980205D352F198748B626f6f7C38A8a5663Ec981",
+      "type": "Contract",
       "sourceHashes": [
         "0x9a8a40656962f8df570994ee72e4262dc5beb926ffc7686740df457bade87efb"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689350932,
       "sinceBlock": 652,
       "values": {
@@ -962,8 +986,14 @@
       }
     },
     {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -1001,9 +1031,11 @@
     {
       "name": "Endpoint",
       "address": "0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
+      "type": "Contract",
       "sourceHashes": [
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1689350872,
       "sinceBlock": 647,
@@ -1029,11 +1061,18 @@
       }
     },
     {
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FPValidator",
       "address": "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36",
+      "type": "Contract",
       "sourceHashes": [
         "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689350884,
       "sinceBlock": 648,
       "values": {
@@ -1049,7 +1088,9 @@
     {
       "name": "",
       "address": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1689351852,
       "sinceBlock": 657,
       "values": { "$immutable": true }
@@ -1057,9 +1098,11 @@
     {
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "type": "Contract",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694219109,
       "sinceBlock": 378338,
       "values": {
@@ -1078,9 +1121,11 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "type": "Contract",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694219121,
       "sinceBlock": 378339,
       "values": { "$immutable": true }
@@ -1088,7 +1133,9 @@
     {
       "name": "",
       "address": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1099,14 +1146,6 @@
       "sinceBlock": 653,
       "values": { "$immutable": true }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" }
   ],
   "abis": {
     "0x179548Da4C1709b947a965bbBBba76Cb68003ef4": [

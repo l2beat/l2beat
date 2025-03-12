@@ -2,15 +2,32 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 21880791,
-  "configHash": "0x0098a7fc06fbb5a9b7c1b701b682bf0b900eb77fd80b59e948c3199cbaf820ff",
-  "contracts": [
+  "configHash": "0xe88c99914d9c1b7739c238757ad584240afe41790ed1a25ff845c3d9d5bef4ee",
+  "entries": [
+    {
+      "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x070165FA21c612FE7f1Be90Bc16D0fd11574C0cA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0F753619d5CAd05C6e0cDFA5f992914Ee22E1e89",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "ProxyAdmin",
       "address": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -25,8 +42,21 @@
       }
     },
     {
+      "address": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
+    {
       "name": "HyperlaneMultisig",
       "address": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -125,21 +155,67 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "UnknownIsm",
       "address": "0x3ed820384Dd2Af9b937803bdE6aE5F7a5689D835",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1739918699,
       "sinceBlock": 21876325,
       "values": { "$immutable": true },
       "derivedName": ""
     },
     {
+      "address": "0x478be6076f31E9666123B9721D0B6631baD944AF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
+    {
       "name": "StaticAggregationIsm_default",
       "address": "0x57e1787fbdCCf7516721DC621CE17C45509cc2DB",
+      "type": "Contract",
       "template": "hyperlane/StaticAggregationIsm",
       "sourceHashes": [
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
+      "proxyType": "immutable",
       "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0x3ed820384Dd2Af9b937803bdE6aE5F7a5689D835,0xc72f634784EA020b703E11e88582Beb5903792b9] ISM contracts successfully verify a message.",
       "receivedPermissions": [
         {
@@ -176,6 +252,7 @@
     {
       "name": "HypERC20Collateral",
       "address": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+      "type": "Contract",
       "template": "hyperlane/HypERC20Collateral",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -220,8 +297,19 @@
       }
     },
     {
+      "address": "0x5b73A98165778BCCE72979B4EE3faCdb31728b8E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5dd9a0814022A61777938263308EBB336174f13D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "HypERC20Collateral",
       "address": "0x647C621CEb36853Ef6A907E397Adf18568E70543",
+      "type": "Contract",
       "template": "hyperlane/HypERC20Collateral",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -266,12 +354,19 @@
       }
     },
     {
+      "address": "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -302,12 +397,34 @@
       }
     },
     {
+      "address": "0x7C96179df8619E49B389784ECDBBcA7090a5D08F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x95A2115018b84cfe0630C16CCA277E1569a84BEf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x9Fca159607687AE26367d66166e680A930af0780",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -324,10 +441,12 @@
     {
       "name": "StaticAggregationIsm_eclipse",
       "address": "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c",
+      "type": "Contract",
       "template": "hyperlane/StaticAggregationIsm",
       "sourceHashes": [
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
+      "proxyType": "immutable",
       "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.",
       "sinceTimestamp": 1726246067,
       "sinceBlock": 20742981,
@@ -358,6 +477,7 @@
     {
       "name": "GnosisSafe",
       "address": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -409,11 +529,23 @@
       }
     },
     {
+      "address": "0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xaC011Fe273794Ab1E07538CFA8099f2599103F64",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StaticMerkleRootMultisigIsm",
       "address": "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896",
+      "type": "Contract",
       "sourceHashes": [
         "0x4da033269a6a7f9325fe80af4d4890a8181a0c28e33a596acae5bf6f4e736681"
       ],
+      "proxyType": "immutable",
       "description": "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.",
       "sinceTimestamp": 1726246031,
       "sinceBlock": 20742978,
@@ -447,6 +579,7 @@
     {
       "name": "Mailbox",
       "address": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+      "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
         "0xcdbd6523f24febe7f9e5073c6256eed72f19e06caf1d1d6c5e0c9f3035a1090f"
@@ -502,6 +635,7 @@
     {
       "name": "HypERC20Collateral",
       "address": "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+      "type": "Contract",
       "template": "hyperlane/HypERC20Collateral",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -545,11 +679,18 @@
       }
     },
     {
+      "address": "0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DomainRoutingIsm",
       "address": "0xc72f634784EA020b703E11e88582Beb5903792b9",
+      "type": "Contract",
       "sourceHashes": [
         "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
       ],
+      "proxyType": "immutable",
       "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.",
       "issuedPermissions": [
         {
@@ -589,8 +730,14 @@
       }
     },
     {
+      "address": "0xcb3bD5d7C40844fb599c14413F281A0241C45DFB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0xCEA8039076E35a825854c5C2f85659430b06ec96",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -639,8 +786,14 @@
       }
     },
     {
+      "address": "0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "HypERC20Collateral",
       "address": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+      "type": "Contract",
       "template": "hyperlane/HypERC20Collateral",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -687,6 +840,7 @@
     {
       "name": "HypERC20Collateral",
       "address": "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+      "type": "Contract",
       "template": "hyperlane/HypERC20Collateral",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -730,8 +884,43 @@
       }
     },
     {
+      "address": "0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
+    {
+      "address": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
+    {
       "name": "HypERC20Collateral",
       "address": "0xef899e92DA472E014bE795Ecce948308958E25A2",
+      "type": "Contract",
       "template": "hyperlane/HypERC20Collateral",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -776,11 +965,18 @@
       }
     },
     {
+      "address": "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StaticMessageIdMultisigIsm",
       "address": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+      "type": "Contract",
       "sourceHashes": [
         "0xcbe0772264e40c53d9f37e0b741f047eedea2a861fac2bf97d68c334b088ccf1"
       ],
+      "proxyType": "immutable",
       "description": "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.",
       "issuedPermissions": [
         {
@@ -833,73 +1029,6 @@
         }
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961" },
-    { "address": "0x070165FA21c612FE7f1Be90Bc16D0fd11574C0cA" },
-    { "address": "0x0F753619d5CAd05C6e0cDFA5f992914Ee22E1e89" },
-    {
-      "address": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
-        }
-      ]
-    },
-    { "address": "0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599" },
-    { "address": "0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad" },
-    { "address": "0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f" },
-    { "address": "0x478be6076f31E9666123B9721D0B6631baD944AF" },
-    { "address": "0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5" },
-    { "address": "0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb" },
-    {
-      "address": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
-        }
-      ]
-    },
-    { "address": "0x5b73A98165778BCCE72979B4EE3faCdb31728b8E" },
-    { "address": "0x5dd9a0814022A61777938263308EBB336174f13D" },
-    { "address": "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA" },
-    { "address": "0x7C96179df8619E49B389784ECDBBcA7090a5D08F" },
-    { "address": "0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898" },
-    { "address": "0x95A2115018b84cfe0630C16CCA277E1569a84BEf" },
-    { "address": "0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f" },
-    { "address": "0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba" },
-    { "address": "0xaC011Fe273794Ab1E07538CFA8099f2599103F64" },
-    { "address": "0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA" },
-    { "address": "0xcb3bD5d7C40844fb599c14413F281A0241C45DFB" },
-    { "address": "0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B" },
-    { "address": "0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39" },
-    { "address": "0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424" },
-    {
-      "address": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
-        }
-      ]
-    },
-    {
-      "address": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge2",
-          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
-        }
-      ]
-    },
-    { "address": "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8" }
   ],
   "abis": {
     "0x0371AE4960FC4Dd8ef08464080331573D386D6b4": [

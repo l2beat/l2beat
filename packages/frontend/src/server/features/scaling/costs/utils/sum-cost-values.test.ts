@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { sumValues } from './sum-cost-values'
+import { sumCostValues } from './sum-cost-values'
 
 describe('sumValues', () => {
   it('should sum single record correctly', () => {
@@ -20,7 +20,7 @@ describe('sumValues', () => {
       },
     ]
 
-    const result = sumValues(records)
+    const result = sumCostValues(records)
 
     expect(result).toEqual({
       gas: {
@@ -76,7 +76,7 @@ describe('sumValues', () => {
       },
     ]
 
-    const result = sumValues(records)
+    const result = sumCostValues(records)
 
     expect(result).toEqual({
       gas: {
@@ -101,7 +101,7 @@ describe('sumValues', () => {
   })
 
   it('should handle empty records array', () => {
-    const result = sumValues([])
+    const result = sumCostValues([])
 
     expect(result).toEqual({
       gas: {
@@ -143,7 +143,7 @@ describe('sumValues', () => {
       },
     ]
 
-    const result = sumValues(records)
+    const result = sumCostValues(records)
 
     expect(result).toEqual({
       gas: {
@@ -199,7 +199,7 @@ describe('sumValues', () => {
       },
     ]
 
-    const result = sumValues(records)
+    const result = sumCostValues(records)
 
     expect(result).toEqual({
       gas: {

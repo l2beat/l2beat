@@ -53,7 +53,10 @@ async function getLivenessData() {
   const records = await db.aggregatedLiveness.getByProjectIds(projectIds)
   const recordsByProjectId = groupBy(records, (r) => r.projectId)
 
-  const last30Days = UnixTime.now().add(-30, 'days').toStartOf('day')
+  const last30Days = UnixTime.toStartOf(
+    UnixTime.now() - 30 * UnixTime.DAY,
+    'day',
+  )
   const anomalyRecords = await db.anomalies.getByProjectIdsFrom(
     projectIds,
     last30Days,
@@ -128,8 +131,7 @@ function mapAggregatedLivenessRecords(
   const todaysAnomalies = anomalies.filter(
     (a) =>
       a.subtype === subtype &&
-      a.timestamp.toNumber() + a.duration >=
-        UnixTime.now().toStartOf('day').toNumber(),
+      a.timestamp + a.duration >= UnixTime.toStartOf(UnixTime.now(), 'day'),
   )
   const maxAnomalyDuration = Math.max(...todaysAnomalies.map((a) => a.duration))
 
@@ -162,14 +164,14 @@ function mapAggregatedLivenessRecords(
           maximumInSeconds: Math.max(max.max, maxAnomalyDuration),
         }
       : undefined,
-    syncedUntil: syncedUntil.toNumber(),
+    syncedUntil: syncedUntil,
   }
 }
 
 function mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
   return records.map((a) => ({
     // TODO: validate if it makes sense to pass the end of anomaly rather than the start
-    timestamp: a.timestamp.toNumber(),
+    timestamp: a.timestamp,
     durationInSeconds: a.duration,
     type: a.subtype,
   }))
@@ -201,16 +203,16 @@ function getMockLivenessData(): LivenessResponse {
         '30d': generateDataPoint(),
         '90d': generateDataPoint(),
         max: generateDataPoint(),
-        syncedUntil: UnixTime.now()
-          .add(-2, 'hours')
-          .toStartOf('hour')
-          .toNumber(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 2 * UnixTime.HOUR,
+          'hour',
+        ),
       },
       proofSubmissions: {
         '30d': generateDataPoint(),
         '90d': generateDataPoint(),
         max: generateDataPoint(),
-        syncedUntil: UnixTime.now().toStartOf('hour').toNumber(),
+        syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
       },
     },
     dydx: {
@@ -219,19 +221,19 @@ function getMockLivenessData(): LivenessResponse {
         '30d': generateDataPoint(),
         '90d': generateDataPoint(),
         max: generateDataPoint(),
-        syncedUntil: UnixTime.now()
-          .add(-2, 'hours')
-          .toStartOf('hour')
-          .toNumber(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 2 * UnixTime.HOUR,
+          'hour',
+        ),
       },
       proofSubmissions: {
         '30d': generateDataPoint(),
         '90d': generateDataPoint(),
         max: generateDataPoint(),
-        syncedUntil: UnixTime.now()
-          .add(-4, 'hours')
-          .toStartOf('hour')
-          .toNumber(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 4 * UnixTime.HOUR,
+          'hour',
+        ),
       },
     },
   }
@@ -243,13 +245,13 @@ function generateMockData(): LivenessProject {
       '30d': generateDataPoint(),
       '90d': generateDataPoint(),
       max: generateDataPoint(),
-      syncedUntil: UnixTime.now().toStartOf('hour').toNumber(),
+      syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
     },
     stateUpdates: {
       '30d': generateDataPoint(),
       '90d': generateDataPoint(),
       max: generateDataPoint(),
-      syncedUntil: UnixTime.now().toStartOf('hour').toNumber(),
+      syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
     },
     anomalies: generateAnomalies(),
   }
@@ -275,14 +277,11 @@ function generateAnomalies(): LivenessAnomaly[] {
           ({
             type: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
 
-            timestamp: UnixTime.now()
-              .add(
-                // TODO: (liveness) should we include current day
-                Math.round(Math.random() * -29) - 1,
-                'days',
-              )
-              .add(Math.round(Math.random() * 172800), 'seconds')
-              .toNumber(),
+            timestamp:
+              UnixTime.now() +
+              // TODO: (liveness) should we include current day
+              UnixTime(Math.round(Math.random() * -29) - 1) * UnixTime.DAY +
+              UnixTime(Math.round(Math.random() * 172800)),
 
             durationInSeconds: generateRandomTime(),
           }) as const,

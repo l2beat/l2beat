@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xe05d209a6ca56eb19a8a09230ba7f6528cd1e894
+
+# Diff at Thu, 06 Mar 2025 15:18:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64eed24a033030dd2d128180f3ee3f87c3c39f7c block: 21943925
+- current block number: 21943925
+
+## Description
+
+config: updates timelock templates, added starknet proghashes to global config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21943925 (main branch discovery), not current.
+
+```diff
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        ""
++        "BlockedMessageLib"
+      unverified:
+-        true
+      values.messageLibType:
++        2
+      values.version:
++        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      sourceHashes:
++        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+    }
+```
+
 Generated with discovered.json: 0x5006145c4f11b6071c929e8e8d3da0eb73ad406c
 
 # Diff at Tue, 04 Mar 2025 11:25:54 GMT:

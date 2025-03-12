@@ -2,13 +2,15 @@ import type { AggregatedL2CostRecord } from '@l2beat/database'
 import type { LatestCostsProjectResponse } from '../types'
 import { addIfDefined } from './add-if-defined'
 
-export function sumValues(
+export function sumCostValues(
   records: Omit<
     AggregatedL2CostRecord,
     'timestamp' | 'projectId' | `total${string}`
   >[],
-): Omit<LatestCostsProjectResponse, 'syncedUntil'> {
-  return records.reduce<Omit<LatestCostsProjectResponse, 'syncedUntil'>>(
+): Omit<LatestCostsProjectResponse, 'syncedUntil' | 'range'> {
+  return records.reduce<
+    Omit<LatestCostsProjectResponse, 'syncedUntil' | 'range'>
+  >(
     (acc, record) => {
       return {
         gas: {

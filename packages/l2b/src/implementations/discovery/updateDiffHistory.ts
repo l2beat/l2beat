@@ -6,6 +6,7 @@
 
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import { join } from 'path'
 import {
   ConfigReader,
   type DiscoveryDiff,
@@ -14,13 +15,11 @@ import {
   discover,
   discoveryDiffToMarkdown,
   getChainConfig,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
-import { rimraf } from 'rimraf'
-
-import path from 'path'
 import chalk from 'chalk'
-import { readConfig } from '../../config/readConfig'
+import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
@@ -33,11 +32,10 @@ export async function updateDiffHistory(
 ) {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
-  const discoveryPath = readConfig().discoveryPath
-  assert(discoveryPath !== undefined)
-  const configReader = new ConfigReader(path.dirname(discoveryPath))
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
-  const discoveryFolder = `./discovery/${projectName}/${chain}`
+  const discoveryFolder = join(paths.discovery, projectName, chain)
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
   const discoveryFromMainBranch =
@@ -68,20 +66,20 @@ export async function updateDiffHistory(
     codeDiff = rerun.codeDiff
 
     diff = diffDiscovery(
-      rerun.prevDiscovery?.contracts ?? [],
-      curDiscovery.contracts,
+      rerun.prevDiscovery?.entries ?? [],
+      curDiscovery.entries,
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.contracts ?? [],
-      rerun.prevDiscovery?.contracts ?? [],
+      discoveryFromMainBranch?.entries ?? [],
+      rerun.prevDiscovery?.entries ?? [],
     )
   } else {
     console.log(
       'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.contracts ?? [],
-      curDiscovery?.contracts ?? [],
+      discoveryFromMainBranch?.entries ?? [],
+      curDiscovery?.entries ?? [],
     )
   }
 

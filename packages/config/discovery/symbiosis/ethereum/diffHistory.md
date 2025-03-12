@@ -1,4 +1,34 @@
-Generated with discovered.json: 0xa17d3c25e75f79f81f7841b90f4a982951f3d0f6
+Generated with discovered.json: 0x838ebf410eb324710dbd9191233b58113f4beef9
+
+# Diff at Tue, 11 Mar 2025 09:21:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0b012a6e8cdfbbeee0ff5077be6231e8c6bed55f block: 21141679
+- current block number: 22022451
+
+## Description
+
+Ignore mpc relatives.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141679 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract undefined (0xaF4A61f99306Be8dFE69a1e369e5f8480Ea3687A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract undefined (0xeAc9340AE80c2d62E4e9b1A137eFb23Fa53a9A03)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3c6fb80e779e201739672b78f2bf2133abf24dc6
 
 # Diff at Tue, 04 Mar 2025 10:40:06 GMT:
 

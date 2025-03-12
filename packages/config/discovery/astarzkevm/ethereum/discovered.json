@@ -2,16 +2,18 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0x7256a86c940e5f5e40a7ac5b3cbafe20fd9150c2a5eaeedb5fe548711ae12c79",
+  "configHash": "0xd9e25e0dd356c6a76abbf20a0d8b08413b906a312d2eaefc722bf8948337ff0f",
   "sharedModules": ["shared-polygon-cdk"],
-  "contracts": [
+  "entries": [
     {
       "name": "Verifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
+      "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
       "sinceBlock": 19505052,
@@ -20,12 +22,19 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
+      "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -40,8 +49,14 @@
       }
     },
     {
+      "address": "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Validium",
       "address": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
@@ -131,8 +146,34 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4324c3960c7B2567D0C13ba17493bb364c407937",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0x6c4876Ecb5de33f76700f44d547C593065806dAC",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -160,8 +201,14 @@
       }
     },
     {
+      "address": "0x83cC8195856b0463dEd5f052021009b7985FDa2C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PolygonDataCommittee",
       "address": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+      "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
@@ -226,8 +273,45 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
+        }
+      ]
+    },
+    {
+      "address": "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xC4ad70e848f36925FcbDfb252f5e258D06647320",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AstarMultisig",
       "address": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -287,31 +371,6 @@
       },
       "derivedName": "GnosisSafe"
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb" },
-    { "address": "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470" },
-    { "address": "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C" },
-    { "address": "0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8" },
-    { "address": "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1" },
-    { "address": "0x4324c3960c7B2567D0C13ba17493bb364c407937" },
-    { "address": "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58" },
-    { "address": "0x83cC8195856b0463dEd5f052021009b7985FDa2C" },
-    {
-      "address": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
-        }
-      ]
-    },
-    { "address": "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0" },
-    { "address": "0xC4ad70e848f36925FcbDfb252f5e258D06647320" },
-    { "address": "0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa" },
-    { "address": "0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0" },
-    { "address": "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917" }
   ],
   "abis": {
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [

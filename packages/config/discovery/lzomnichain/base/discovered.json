@@ -1,12 +1,18 @@
 {
   "name": "lzomnichain",
   "chain": "base",
-  "blockNumber": 25643771,
-  "configHash": "0x0e7b6c425b485a643eb27c573c2d3a46949814c657a542e4cc1f14d679ab6aed",
-  "contracts": [
+  "blockNumber": 27282893,
+  "configHash": "0x4453ded4958ff7426923a856366c88f5948fd8f24a223244db464f4b2618d2ec",
+  "entries": [
+    {
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "LayerZero Multisig",
       "address": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -31,7 +37,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 169,
+        "nonce": 185,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -39,9 +45,11 @@
     {
       "name": "MPTValidator01",
       "address": "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+      "type": "Contract",
       "sourceHashes": [
         "0x965651ae50a316c3ab842d2c8c9242c34d6e40eefa61f7c731bba9a1faf2ccea"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689301017,
       "sinceBlock": 1255835,
       "values": {
@@ -56,11 +64,23 @@
       }
     },
     {
+      "name": "",
+      "address": "0x31F748a368a893Bdb5aBB67ec95F232507601A73",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1710216115,
+      "sinceBlock": 11713384,
+      "values": { "$immutable": true }
+    },
+    {
       "name": "UltraLightNodeV2",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+      "type": "Contract",
       "sourceHashes": [
         "0x38c85ab54f670eaa1fc2b351aee39913bc12e2b26c460ee31cf89d3f1f7d59b9"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -130,7 +150,11 @@
           "292": 20,
           "301": 20,
           "317": 20,
-          "332": 20
+          "320": 20,
+          "324": 20,
+          "327": 20,
+          "332": 20,
+          "362": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -363,7 +387,23 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "320": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "324": {
+            "proofType": 2,
+            "adapterParams": "0x000100000000000000000000000000000000000000000000000000000000003d0900"
+          },
+          "327": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "332": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "362": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -817,7 +857,39 @@
             "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
             "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
           },
+          "320": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "324": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xcd37CA043f8479064e10635020c65FfC005d36f6",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "327": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
           "332": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "362": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
             "outboundProofType": 2,
@@ -1043,7 +1115,20 @@
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
+          "320": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "324": ["0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"],
+          "327": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
           "332": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "362": [
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ]
@@ -1109,7 +1194,11 @@
           "292": [2],
           "301": [2],
           "317": [2],
-          "332": [2]
+          "320": [2],
+          "324": [2],
+          "327": [2],
+          "332": [2],
+          "362": [2]
         },
         "treasuryContract": "0x980205D352F198748B626f6f7C38A8a5663Ec981",
         "treasuryZROFees": 0,
@@ -1170,16 +1259,22 @@
           "292": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
           "301": "0x000000000000000000000000fe5dfa6b4d6be848b57dd378b0798af60f1e6d35",
           "317": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+          "320": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "324": "0x000000000000000000000000fe5dfa6b4d6be848b57dd378b0798af60f1e6d35",
+          "327": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "362": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       }
     },
     {
       "name": "NonceContract",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "type": "Contract",
       "sourceHashes": [
         "0x895867397d61409de8476975bae4d871fec1c289e52fe97b31872726808dae38"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689301077,
       "sinceBlock": 1255865,
       "values": {
@@ -1188,11 +1283,23 @@
       }
     },
     {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TreasuryV2",
       "address": "0x980205D352F198748B626f6f7C38A8a5663Ec981",
+      "type": "Contract",
       "sourceHashes": [
         "0x9a8a40656962f8df570994ee72e4262dc5beb926ffc7686740df457bade87efb"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689301089,
       "sinceBlock": 1255871,
       "values": {
@@ -1206,9 +1313,16 @@
       }
     },
     {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "",
       "address": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1689302073,
       "sinceBlock": 1256363,
       "values": { "$immutable": true }
@@ -1216,9 +1330,11 @@
     {
       "name": "Endpoint",
       "address": "0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7",
+      "type": "Contract",
       "sourceHashes": [
         "0x945c3299d0cf62b9ea7a77d6328295d54327299d6a153e1e7b48d85fa9b77215"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1689300955,
       "sinceBlock": 1255804,
@@ -1244,11 +1360,18 @@
       }
     },
     {
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FPValidator",
       "address": "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36",
+      "type": "Contract",
       "sourceHashes": [
         "0x0d505ac1b08cd930c4b902daa632eaa029531d5c1aa50c45169b63c310b2da62"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1689300991,
       "sinceBlock": 1255822,
       "values": {
@@ -1264,6 +1387,7 @@
     {
       "name": "",
       "address": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -1299,11 +1423,36 @@
       }
     },
     {
+      "name": "DVN",
+      "address": "0xcd37CA043f8479064e10635020c65FfC005d36f6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1710216407,
+      "sinceBlock": 11713530,
+      "values": {
+        "$immutable": true,
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "paused": false,
+        "priceFeed": "0x3c2269811836af69497E5F486A85D7316753cf62",
+        "quorum": 1,
+        "signerSize": 3,
+        "vid": 184,
+        "workerFeeLib": "0x31F748a368a893Bdb5aBB67ec95F232507601A73"
+      }
+    },
+    {
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "type": "Contract",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694219063,
       "sinceBlock": 3714858,
       "values": {
@@ -1322,9 +1471,11 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "type": "Contract",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1694219069,
       "sinceBlock": 3714861,
       "values": { "$immutable": true }
@@ -1332,7 +1483,9 @@
     {
       "name": "",
       "address": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1343,14 +1496,6 @@
       "sinceBlock": 1255922,
       "values": { "$immutable": true }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
-    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
-    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
-    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" }
   ],
   "abis": {
     "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0": [
@@ -1538,6 +1683,82 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xcd37CA043f8479064e10635020c65FfC005d36f6": [
+      "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
+      "error DVN_DuplicatedHash(bytes32 executableHash)",
+      "error DVN_InstructionExpired()",
+      "error DVN_InvalidRole(bytes32 role)",
+      "error DVN_InvalidSignatures()",
+      "error DVN_InvalidTarget(address target)",
+      "error DVN_InvalidVid(uint32 vid)",
+      "error DVN_OnlySelf()",
+      "error MultiSig_OnlySigner()",
+      "error MultiSig_QuorumIsZero()",
+      "error MultiSig_SignersSizeIsLessThanQuorum(uint64 signersSize, uint64 quorum)",
+      "error MultiSig_StateAlreadySet(address signer, bool active)",
+      "error MultiSig_UnorderedSigners()",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "error Worker_NotAllowed()",
+      "error Worker_OnlyMessageLib()",
+      "error Worker_RoleRenouncingDisabled()",
+      "event ExecuteFailed(uint256 _index, bytes _data)",
+      "event HashAlreadyUsed(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) param, bytes32 _hash)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] params)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetSupportedOptionTypes(uint32 dstEid, uint8[] optionTypes)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event UpdateQuorum(uint64 _quorum)",
+      "event UpdateSigner(address _signer, bool _active)",
+      "event VerifierFeePaid(uint256 fee)",
+      "event VerifySignaturesFailed(uint256 idx)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(tuple(uint32 dstEid, bytes packetHeader, bytes32 payloadHash, uint64 confirmations, address sender) _param, bytes _options) payable returns (uint256 totalFee)",
+      "function assignJob(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) returns (uint256 totalFee)",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)",
+      "function execute(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures)[] _params)",
+      "function getFee(uint32 _dstEid, uint64 _confirmations, address _sender, bytes _options) view returns (uint256 fee)",
+      "function getFee(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSupportedOptionTypes(uint32 _eid) view returns (uint8[])",
+      "function grantRole(bytes32 _role, address _account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashCallData(uint32 _vid, address _target, bytes _callData, uint256 _expiration) pure returns (bytes32)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function quorum() view returns (uint64)",
+      "function quorumChangeAdmin(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) _param)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 _role, address _account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setQuorum(uint64 _quorum)",
+      "function setSigner(address _signer, bool _active)",
+      "function setSupportedOptionTypes(uint32 _eid, uint8[] _optionTypes)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function signerSize() view returns (uint64)",
+      "function signers(address signer) view returns (bool active)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function usedHashes(bytes32 executableHash) view returns (bool used)",
+      "function verifySignatures(bytes32 _hash, bytes _signatures) view returns (bool, uint8)",
+      "function vid() view returns (uint32)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
     ],
     "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",

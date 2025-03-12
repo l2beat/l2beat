@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ContractParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,
@@ -37,16 +37,17 @@ describe(tryCastingToName.name, () => {
 
 describe(interpolateModelTemplate.name, () => {
   it('properly interpolates the model file', () => {
-    const modelFile = `
-      msig(@self, #$threshold).
+    const modelTemplate = `
+      msig(@self, &$threshold).
       member(@self, 
-        #$members
+        &$members
       ).
-      myAddr(#$.address, "#$.address:raw").
-      myName("#$.name").
-      myDescription("#$.description")
+      myAddr(&$.address, "&$.address:raw").
+      myName("&$.name").
+      myDescription("&$.description")
     `
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress.from('0x123'),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
@@ -67,7 +68,11 @@ describe(interpolateModelTemplate.name, () => {
     }
 
     const values = contractValuesForInterpolation('ethereum', contract)
-    const result = interpolateModelTemplate(modelFile, values, addressToNameMap)
+    const result = interpolateModelTemplate(
+      modelTemplate,
+      values,
+      addressToNameMap,
+    )
     expect(result).toEqual(`
       msig(contactMsigA, 2).
       member(contactMsigA, 
@@ -79,12 +84,30 @@ describe(interpolateModelTemplate.name, () => {
     `)
   })
 
+  it('properly casts to lowercase', () => {
+    const modelTemplate = `msg1("&msg|lower").msg2("&msg:raw|lower").`
+    const contract: EntryParameters = {
+      type: 'Contract',
+      address: EthereumAddress.from('0x123'),
+      name: 'ContractA',
+      description: 'Description of ContractA',
+      values: {
+        msg: 'Hello, WORLD!',
+      },
+    }
+
+    const values = contractValuesForInterpolation('ethereum', contract)
+    const result = interpolateModelTemplate(modelTemplate, values, {})
+    expect(result).toEqual('msg1("hello, world!").msg2("hello, world!").')
+  })
+
   it('fails for missing values', () => {
-    const modelFile = `
-      one(#one).
-      two(#two).
+    const modelTemplate = `
+      one(&one).
+      two(&two).
     `
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress.from('0x123'),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
@@ -94,7 +117,7 @@ describe(interpolateModelTemplate.name, () => {
     }
 
     const values = contractValuesForInterpolation('ethereum', contract)
-    expect(() => interpolateModelTemplate(modelFile, values, {})).toThrow(
+    expect(() => interpolateModelTemplate(modelTemplate, values, {})).toThrow(
       'Field "two" not found in contract ContactMsigA',
     )
   })
@@ -102,7 +125,8 @@ describe(interpolateModelTemplate.name, () => {
 
 describe(contractValuesForInterpolation.name, () => {
   it('properly prepares values for interpolation', () => {
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress('0x00000000000000000000000000000000DeaDBeef'),
       name: 'ContractA',
       description: 'Description of ContractA',

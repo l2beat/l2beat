@@ -1,8 +1,10 @@
 import path, { join } from 'path'
-import { ConfigReader } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
+import {
+  ConfigReader,
+  TemplateService,
+  getDiscoveryPaths,
+} from '@l2beat/discovery'
 import express from 'express'
-import { readConfig } from '../../config/readConfig'
 import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode, getCodePaths } from './getCode'
 import { getPreview } from './getPreview'
@@ -14,10 +16,10 @@ export function runDiscoveryUi() {
   const port = 2021
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
-  const config = readConfig()
-  const discoveryPath = config.discoveryPath
-  assert(discoveryPath !== undefined)
-  const configReader = new ConfigReader(path.dirname(discoveryPath))
+
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
+  const templateService = new TemplateService(paths.discovery)
 
   app.use(express.json())
 
@@ -27,7 +29,11 @@ export function runDiscoveryUi() {
   })
 
   app.get('/api/projects/:project', (req, res) => {
-    const response = getProject(configReader, req.params.project)
+    const response = getProject(
+      configReader,
+      templateService,
+      req.params.project,
+    )
     res.json(response)
   })
 
@@ -38,6 +44,7 @@ export function runDiscoveryUi() {
 
   app.get('/api/projects/:project/code/:address', (req, res) => {
     const response = getCode(
+      paths,
       configReader,
       req.params.project,
       req.params.address,
@@ -60,7 +67,7 @@ export function runDiscoveryUi() {
       return
     }
     executeTerminalCommand(
-      `(cd ${path.dirname(discoveryPath)} && l2b discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
+      `(cd ${path.dirname(paths.discovery)} && l2b discover ${chain} ${project} ${devMode === 'true' ? '--dev' : ''})`,
       res,
     )
   })
@@ -72,6 +79,7 @@ export function runDiscoveryUi() {
       return
     }
     const codePaths = getCodePaths(
+      paths,
       configReader,
       project.toString(),
       address.toString(),
@@ -82,7 +90,7 @@ export function runDiscoveryUi() {
       against === 'templates' ? './discovery/_templates/' : './discovery/'
 
     executeTerminalCommand(
-      `(cd ${path.dirname(discoveryPath)} && l2b match-flat file "${implementationPath}" "${againstPath}")`,
+      `(cd ${path.dirname(paths.discovery)} && l2b match-flat file "${implementationPath}" "${againstPath}")`,
       res,
     )
   })

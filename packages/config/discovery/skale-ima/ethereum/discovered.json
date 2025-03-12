@@ -2,11 +2,12 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 21744185,
-  "configHash": "0x61ba7ab95cb0808b0ee781b1ece0eb45cce126258f73eb477a1e85a526d88cd5",
-  "contracts": [
+  "configHash": "0xbb972bd1365561bd591c7eff2ad140fb39c73e0e6df06fa1e4195b7be1c95169",
+  "entries": [
     {
       "name": "ProxyAdminOwner",
       "address": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -37,8 +38,14 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DepositBoxERC1155",
       "address": "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xf1249b1702e937c0b400c431224c31f04de782b043f625ab4e1dd18d9ba95863"
@@ -108,8 +115,14 @@
       }
     },
     {
+      "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DepositBoxEth",
       "address": "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x85c164a0c91eb9d4eb34a3a81e63e66c588a8acd2ec2cdbb4cbcf227807eb359"
@@ -181,6 +194,7 @@
     {
       "name": "CommunityPool",
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xf86e44103e5d07e9f6a25146ea2cfc4946eba19bbb8731b704b9f5047202b6b7"
@@ -259,6 +273,7 @@
     {
       "name": "Linker",
       "address": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x64d57ba715ab14476dad60dec42ebcc0f939e5c516d5a33d0d2b2c142c8c8995"
@@ -318,6 +333,7 @@
     {
       "name": "DepositBoxERC721",
       "address": "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xafde9f814c1cf9acd1b9fe1079c4a8b2dad9af902314bae9c98ecc95d370023a"
@@ -389,6 +405,7 @@
     {
       "name": "MessageProxyForMainnet",
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x35e9599e33157eeee63fd0fb0b76fbb7d42b14c7f969abc8b765417abbae91d5"
@@ -485,8 +502,14 @@
       }
     },
     {
+      "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DepositBoxERC20",
       "address": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x6d6c213f615227669bc439b652e8d47403e0c630f5182fc3221d871255939029"
@@ -564,6 +587,7 @@
     {
       "name": "DepositBoxERC721WithMetadata",
       "address": "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
+      "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xc330381a32c8728fbbdb79c094a22af35e910194c1397147dd089acf552b0c64"
@@ -615,9 +639,11 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -658,15 +684,22 @@
         "$immutable": true,
         "owner": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
       }
+    },
+    {
+      "address": "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
-  ],
-  "eoas": [
-    { "address": "0x315537a8004A7E598f807e8e0ce2F92e6a497E18" },
-    { "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245" },
-    { "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F" },
-    { "address": "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd" },
-    { "address": "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e" },
-    { "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A" }
   ],
   "abis": {
     "0x0AE92a5105111281151b980A0aD680b890bf1944": [

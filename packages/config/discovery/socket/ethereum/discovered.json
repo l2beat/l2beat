@@ -1,15 +1,17 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 21579626,
-  "configHash": "0xc2be8825a3cbba8d84c86df91e98a54d8cf10ba5b4411189dd87acdedb5079cd",
-  "contracts": [
+  "blockNumber": 21995661,
+  "configHash": "0x1f1aac9d10ffc803988f4ac6cec823c61f8f6f14b30eaa045a302b7c01387943",
+  "entries": [
     {
       "name": "WETH Vault Kinto",
       "address": "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716142367,
       "sinceBlock": 19905691,
       "values": {
@@ -23,9 +25,11 @@
     {
       "name": "PolygonL1Switchboard",
       "address": "0x053407DFA30267f6332f3c94a9e9F704A55e62CD",
+      "type": "Contract",
       "sourceHashes": [
         "0x1173a4411a4a452037ed000a299c3136ab3d547cca61ee51628aa7c54ff20651"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700128991,
       "sinceBlock": 18583724,
@@ -59,9 +63,18 @@
       }
     },
     {
+      "name": "KintoFoundation",
+      "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
       "name": "sdeUSD Vault Reya",
       "address": "0x0A5A19376064fED2A0A9f3120B2426c957BC289D",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1729182095,
       "sinceBlock": 20986446,
       "values": { "$immutable": true },
@@ -70,7 +83,9 @@
     {
       "name": "deUSD Vault Reya",
       "address": "0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1729182155,
       "sinceBlock": 20986451,
       "values": { "$immutable": true },
@@ -79,9 +94,11 @@
     {
       "name": "OptimismSwitchboard2",
       "address": "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA",
+      "type": "Contract",
       "sourceHashes": [
         "0x5ce8017c8b58163d4cf21dc4e0dec9218e5b4e093c40fb19d970e8c807fbf4d4"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700136851,
       "sinceBlock": 18584376,
@@ -116,9 +133,11 @@
     {
       "name": "MKR Vault Kinto",
       "address": "0x0fC783f611A888A2cAbC3dA482Add3215334dCc2",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721252735,
       "sinceBlock": 20329021,
       "values": {
@@ -132,9 +151,11 @@
     {
       "name": "CapacitorFactory",
       "address": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
+      "type": "Contract",
       "sourceHashes": [
         "0x6464768c2bcc3c1a2d6c108a2366460fe668d285547a02040bdac245de51ca89"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1700126135,
       "sinceBlock": 18583488,
       "values": {
@@ -148,9 +169,11 @@
     {
       "name": "DAI Vault Kinto",
       "address": "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1715972567,
       "sinceBlock": 19891645,
       "values": {
@@ -164,9 +187,11 @@
     {
       "name": "OptimismSwitchboard",
       "address": "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
+      "type": "Contract",
       "sourceHashes": [
         "0x5ce8017c8b58163d4cf21dc4e0dec9218e5b4e093c40fb19d970e8c807fbf4d4"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700136875,
       "sinceBlock": 18584378,
@@ -200,25 +225,29 @@
     {
       "name": "USDT Vault Zora",
       "address": "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB",
+      "type": "Contract",
       "sourceHashes": [
         "0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1726140671,
       "sinceBlock": 20734248,
       "values": {
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xE328a0B1e0bE7043c9141c2073e408D1086E1175"
+        "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
       },
       "derivedName": "Vault"
     },
     {
       "name": "USDT Vault Kinto",
       "address": "0x1D18263107a138C7fb0De65b4a78d193ff9664c1",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730654567,
       "sinceBlock": 21108579,
       "values": {
@@ -232,9 +261,11 @@
     {
       "name": "WBTC Vault Reya",
       "address": "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1714061603,
       "sinceBlock": 19733498,
       "values": {
@@ -248,6 +279,7 @@
     {
       "name": "LyraMultisig",
       "address": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
@@ -270,7 +302,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 377,
+        "nonce": 407,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -278,9 +310,11 @@
     {
       "name": "eBTC Vault Derive",
       "address": "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1727390399,
       "sinceBlock": 20837834,
       "values": {
@@ -294,9 +328,11 @@
     {
       "name": "PAXG Vault Kinto",
       "address": "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721253827,
       "sinceBlock": 20329110,
       "values": {
@@ -310,9 +346,11 @@
     {
       "name": "USDe Vault Derive",
       "address": "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1724140487,
       "sinceBlock": 20568476,
       "values": {
@@ -326,9 +364,11 @@
     {
       "name": "KINTO Vault Kinto",
       "address": "0x2f87464d5F5356dB350dcb302FE28040986783a7",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1719239375,
       "sinceBlock": 20162145,
       "values": {
@@ -342,9 +382,11 @@
     {
       "name": "ENA Vault Kinto",
       "address": "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716142919,
       "sinceBlock": 19905737,
       "values": {
@@ -358,9 +400,11 @@
     {
       "name": "rsETH Vault Derive",
       "address": "0x35d4D9bc79B0a543934b1769304B90d752691caD",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1717724723,
       "sinceBlock": 20036749,
       "values": {
@@ -374,9 +418,11 @@
     {
       "name": "WBTC Vault Derive",
       "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+      "type": "Contract",
       "sourceHashes": [
         "0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1705069499,
       "sinceBlock": 18991397,
       "values": {
@@ -389,9 +435,11 @@
     {
       "name": "sUSDe Vault Kinto",
       "address": "0x43b718Aa5e678b08615CA984cbe25f690B085b32",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716143855,
       "sinceBlock": 19905815,
       "values": {
@@ -403,11 +451,18 @@
       "derivedName": "Vault"
     },
     {
+      "address": "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "rswETH Vault Derive",
       "address": "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1715855051,
       "sinceBlock": 19881920,
       "values": {
@@ -419,43 +474,54 @@
       "derivedName": "Vault"
     },
     {
+      "address": "0x4cEa25e9c999E69F45765539783D149024f99F12",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "KLAUS Vault Zora",
       "address": "0x528DBFcf6e2cbC62B05d7a74711AA7C44FF43cA2",
+      "type": "Contract",
       "sourceHashes": [
         "0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730654903,
       "sinceBlock": 21108607,
       "values": {
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xE328a0B1e0bE7043c9141c2073e408D1086E1175"
+        "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
       },
       "derivedName": "Vault"
     },
     {
       "name": "USDC Vault Zora",
       "address": "0x58CDCf55f2c8660674F17561334F6370cbaDeEF8",
+      "type": "Contract",
       "sourceHashes": [
         "0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1726140539,
       "sinceBlock": 20734237,
       "values": {
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xE328a0B1e0bE7043c9141c2073e408D1086E1175"
+        "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
       },
       "derivedName": "Vault"
     },
     {
       "name": "sDAI Vault Kinto",
       "address": "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716143807,
       "sinceBlock": 19905811,
       "values": {
@@ -469,9 +535,11 @@
     {
       "name": "Hasher",
       "address": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
+      "type": "Contract",
       "sourceHashes": [
         "0x621783ceb3c37cf9cd41112e917d760d40dbfa18e43c59f5c925fe9f7037f9be"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1700126123,
       "sinceBlock": 18583487,
       "values": {
@@ -481,11 +549,18 @@
       }
     },
     {
+      "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "USDT Vault Derive",
       "address": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+      "type": "Contract",
       "sourceHashes": [
         "0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1705566299,
       "sinceBlock": 19032542,
       "values": {
@@ -496,11 +571,18 @@
       "derivedName": "Vault"
     },
     {
+      "address": "0x5ECfd6968593159e5b4f06832857943409122849",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "cbBTC Vault Derive",
       "address": "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1727390087,
       "sinceBlock": 20837808,
       "values": {
@@ -514,7 +596,9 @@
     {
       "name": "sUSDe Vault Reya",
       "address": "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3",
+      "type": "Contract",
       "unverified": true,
+      "proxyType": "immutable",
       "sinceTimestamp": 1724767355,
       "sinceBlock": 20620391,
       "values": { "$immutable": true },
@@ -523,9 +607,11 @@
     {
       "name": "sDAI Vault Derive",
       "address": "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1724140379,
       "sinceBlock": 20568467,
       "values": {
@@ -539,9 +625,11 @@
     {
       "name": "sDAI Vault Polynomial",
       "address": "0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc",
+      "type": "Contract",
       "sourceHashes": [
         "0x6a891f3b93e83143ab3b768e2a7a5e2fee324b1f98745e241faaf97608eaa3ae"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721219231,
       "sinceBlock": 20326243,
       "values": {
@@ -555,9 +643,11 @@
     {
       "name": "WETH Vault Reya",
       "address": "0x64dF894688c5052BeAdC35371cF69151Ebc5D658",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716322511,
       "sinceBlock": 19920603,
       "values": {
@@ -571,9 +661,11 @@
     {
       "name": "USDC Vault Derive",
       "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+      "type": "Contract",
       "sourceHashes": [
         "0x7388ebff48e70528bc58f3586fb97581b1a933f704450fa7ed625674671cfef2"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1700227943,
       "sinceBlock": 18591914,
       "values": {
@@ -586,9 +678,11 @@
     {
       "name": "USDC Vault Kinto",
       "address": "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716142595,
       "sinceBlock": 19905710,
       "values": {
@@ -602,9 +696,11 @@
     {
       "name": "LBTC Vault Derive",
       "address": "0x76624ff43D610F64177Bb9c194A2503642e9B803",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1725056027,
       "sinceBlock": 20644303,
       "values": {
@@ -616,11 +712,23 @@
       "derivedName": "Vault"
     },
     {
+      "address": "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SNX Vault Derive",
       "address": "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
+      "type": "Contract",
       "sourceHashes": [
         "0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1708294763,
       "sinceBlock": 19257597,
       "values": {
@@ -633,9 +741,11 @@
     {
       "name": "DAI Vault Derive",
       "address": "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91",
+      "type": "Contract",
       "sourceHashes": [
         "0x31b99c44ab28174db25b94c3cca9ad4f335866894a5437384040c7bd682fca11"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1724140259,
       "sinceBlock": 20568457,
       "values": {
@@ -649,9 +759,11 @@
     {
       "name": "weETH Vault Derive",
       "address": "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1715846411,
       "sinceBlock": 19881204,
       "values": {
@@ -665,9 +777,11 @@
     {
       "name": "cbBTC Vault Kinto",
       "address": "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730657447,
       "sinceBlock": 21108816,
       "values": {
@@ -681,9 +795,11 @@
     {
       "name": "Socket",
       "address": "0x943AC2775928318653e91d350574436A1b9b16f9",
+      "type": "Contract",
       "sourceHashes": [
         "0x0a472e41e2b0da865c051222fc77f1a0e9a6f6462383cbf9a6e4da8b9b332167"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["globalMessageCount"],
       "sinceTimestamp": 1700126147,
       "sinceBlock": 18583489,
@@ -692,7 +808,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 9901,
+        "globalMessageCount": 11902,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -855,7 +971,8 @@
           "0x95c879322BA01e1c7Fe5EB3F3724C49C6aF7e426",
           "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E",
           "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD",
-          "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5"
+          "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5",
+          "0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -872,11 +989,20 @@
       }
     },
     {
+      "name": "MamoriLabs2",
+      "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
       "name": "ETHFI Vault Kinto",
       "address": "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716216227,
       "sinceBlock": 19911811,
       "values": {
@@ -890,9 +1016,11 @@
     {
       "name": "ExecutionManager",
       "address": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
+      "type": "Contract",
       "sourceHashes": [
         "0x4090ed28f96c48d603c9a606a131adf14f1ac4c81c478cde49b5b62ea4310ac3"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721659427,
       "sinceBlock": 20362743,
       "values": {
@@ -906,11 +1034,23 @@
       "derivedName": "ExecutionManagerDF"
     },
     {
+      "address": "0x9eab2223d84060E212354BfA620BF687b6E9Ae20",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SOL Vault Kinto",
       "address": "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1725992651,
       "sinceBlock": 20721977,
       "values": {
@@ -924,9 +1064,11 @@
     {
       "name": "LINK Vault Kinto",
       "address": "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730655983,
       "sinceBlock": 21108695,
       "values": {
@@ -940,9 +1082,11 @@
     {
       "name": "LOOKS Vault Blast",
       "address": "0xa83B4006c16DAeAb2718294696c0122519195137",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1717743623,
       "sinceBlock": 20038317,
       "values": {
@@ -956,9 +1100,11 @@
     {
       "name": "USDe Vault Reya",
       "address": "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35",
+      "type": "Contract",
       "sourceHashes": [
         "0x1ca1782228ebefdeb92c0a3be06dac3dca400826838bb68b5500e8b8f3fac727"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1722533111,
       "sinceBlock": 20435172,
       "values": {
@@ -970,11 +1116,45 @@
       "derivedName": "Vault"
     },
     {
+      "address": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb69F2341F008f673F757B49104c165C8022CD0df",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "MamoriLabs",
+      "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "derivedName": ""
+    },
+    {
+      "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "wstETH Vault Kinto",
       "address": "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716128303,
       "sinceBlock": 19904529,
       "values": {
@@ -988,9 +1168,11 @@
     {
       "name": "sUSDe Vault Polynomial",
       "address": "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
+      "type": "Contract",
       "sourceHashes": [
         "0x6a891f3b93e83143ab3b768e2a7a5e2fee324b1f98745e241faaf97608eaa3ae"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721382935,
       "sinceBlock": 20339816,
       "values": {
@@ -1004,6 +1186,7 @@
     {
       "name": "LooksRareMultisig",
       "address": "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1028,7 +1211,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 413,
+        "nonce": 414,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1036,9 +1219,11 @@
     {
       "name": "XAUt Vault Kinto",
       "address": "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721253935,
       "sinceBlock": 20329119,
       "values": {
@@ -1052,9 +1237,11 @@
     {
       "name": "SPX Vault Kinto",
       "address": "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1730147723,
       "sinceBlock": 21066552,
       "values": {
@@ -1068,9 +1255,11 @@
     {
       "name": "WETH Vault Derive",
       "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
+      "type": "Contract",
       "sourceHashes": [
         "0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1705069895,
       "sinceBlock": 18991429,
       "values": {
@@ -1083,9 +1272,11 @@
     {
       "name": "FastSwitchboard",
       "address": "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD",
+      "type": "Contract",
       "sourceHashes": [
         "0x4c26d29d2554c606bb1c2391ea7b837be27ba2f6cc80d7a022bbd672f534fba4"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1700128955,
       "sinceBlock": 18583721,
       "values": {
@@ -1106,11 +1297,18 @@
       }
     },
     {
+      "address": "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "eUSD Vault Kinto",
       "address": "0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1728165731,
       "sinceBlock": 20902195,
       "values": {
@@ -1124,9 +1322,11 @@
     {
       "name": "EIGEN Vault Kinto",
       "address": "0xdb161cdc9c11892922F7121a409b196f3b00e640",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716143711,
       "sinceBlock": 19905803,
       "values": {
@@ -1140,9 +1340,11 @@
     {
       "name": "USDC Vault Polynomial",
       "address": "0xDE1617Ddb7C8A250A409D986930001985cfad76F",
+      "type": "Contract",
       "sourceHashes": [
         "0x6a891f3b93e83143ab3b768e2a7a5e2fee324b1f98745e241faaf97608eaa3ae"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1721277431,
       "sinceBlock": 20331066,
       "values": {
@@ -1156,9 +1358,11 @@
     {
       "name": "USDe Vault Kinto",
       "address": "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716143207,
       "sinceBlock": 19905761,
       "values": {
@@ -1172,9 +1376,11 @@
     {
       "name": "ArbitrumL1Switchboard",
       "address": "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe",
+      "type": "Contract",
       "sourceHashes": [
         "0xdacec605e22dae6e18ca1d184d8aec5d3307537166fbd48449491dc2227c6497"
       ],
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700129015,
       "sinceBlock": 18583726,
@@ -1209,9 +1415,11 @@
     {
       "name": "USD0++ Vault Polynomial",
       "address": "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F",
+      "type": "Contract",
       "sourceHashes": [
         "0xc3321c0d760c3f5fe8845b9fdd3fb32455ca5317920d929526142e921ddc68d9"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1728993695,
       "sinceBlock": 20970833,
       "values": {
@@ -1225,9 +1433,11 @@
     {
       "name": "USDC Vault Reya",
       "address": "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1712326631,
       "sinceBlock": 19590078,
       "values": {
@@ -1241,9 +1451,11 @@
     {
       "name": "sUSDe Vault Derive",
       "address": "0xE3E96892D30E0ee1a8131BAf87c891201F7137bf",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1719833675,
       "sinceBlock": 20211402,
       "values": {
@@ -1257,9 +1469,11 @@
     {
       "name": "weETH Vault Kinto",
       "address": "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
+      "type": "Contract",
       "sourceHashes": [
         "0x5a961d4cd1fe9b96535b53aaf638b45677b06e22d26037a62ccf6adc9c29f79d"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1716143951,
       "sinceBlock": 19905823,
       "values": {
@@ -1273,9 +1487,11 @@
     {
       "name": "wstETH Vault Derive",
       "address": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
+      "type": "Contract",
       "sourceHashes": [
         "0xfd7de25c0b5615fb9cdd221236caa984819b6dd0511764ecfc6d0c724721741c"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1709517155,
       "sinceBlock": 19358636,
       "values": {
@@ -1288,9 +1504,11 @@
     {
       "name": "TransmitManager",
       "address": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
+      "type": "Contract",
       "sourceHashes": [
         "0x20fd759cdae5666df50f4b5723ba03796b69ef7b2b3ec33712cb158d77b97133"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1700128943,
       "sinceBlock": 18583720,
       "values": {
@@ -1311,6 +1529,7 @@
     {
       "name": "",
       "address": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
+      "type": "Contract",
       "unverified": true,
       "proxyType": "gnosis safe",
       "sinceTimestamp": 1735913351,
@@ -1327,6 +1546,7 @@
     {
       "name": "KintoMultisig",
       "address": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -1351,7 +1571,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 216,
+        "nonce": 220,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1359,9 +1579,11 @@
     {
       "name": "SignatureVerifier",
       "address": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
+      "type": "Contract",
       "sourceHashes": [
         "0x92dc8defa29353a843ae6cb6d7508811be7c65f617fe92ef87739ccdbc3fa95b"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1700126111,
       "sinceBlock": 18583486,
       "values": {
@@ -1370,35 +1592,6 @@
         "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
       }
     }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    {
-      "name": "KintoFoundation",
-      "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
-    },
-    { "address": "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58" },
-    { "address": "0x4cEa25e9c999E69F45765539783D149024f99F12" },
-    { "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e" },
-    { "address": "0x5ECfd6968593159e5b4f06832857943409122849" },
-    { "address": "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52" },
-    {
-      "name": "MamoriLabs2",
-      "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E"
-    },
-    { "address": "0x9eab2223d84060E212354BfA620BF687b6E9Ae20" },
-    { "address": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8" },
-    { "address": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332" },
-    { "address": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836" },
-    { "address": "0xb69F2341F008f673F757B49104c165C8022CD0df" },
-    { "address": "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65" },
-    {
-      "name": "MamoriLabs",
-      "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
-    },
-    { "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC" },
-    { "address": "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369" },
-    { "address": "0xE328a0B1e0bE7043c9141c2073e408D1086E1175" }
   ],
   "abis": {
     "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": [

@@ -1,12 +1,18 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 21965148,
-  "configHash": "0x39613d278859e94c77e632242c2ec5f0688a52b57180edd0e8eeab5f5070b113",
-  "contracts": [
+  "blockNumber": 21995407,
+  "configHash": "0x8124bbb03cb91b8f14969eed6366866dba69e3eca470229a3f583ad590edc019",
+  "entries": [
+    {
+      "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "Challenge",
       "address": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+      "type": "Contract",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x90fc7abf9460afe3940188c51d98ab5da40ece530f7fc0e6e10c459a1b7f35f5"
@@ -15,14 +21,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
           "via": []
         }
       ],
       "sinceTimestamp": 1717522343,
       "sinceBlock": 20019970,
       "values": {
-        "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "$implementation": "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B",
         "$pastUpgrades": [
           [
@@ -54,7 +60,7 @@
         "isHeaderChallengeEnabled": true,
         "isL2HeaderChallengeEnabled": false,
         "maxBundleSize": 42000,
-        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       }
@@ -62,6 +68,7 @@
     {
       "name": "ChainOracle",
       "address": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+      "type": "Contract",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47"
@@ -70,14 +77,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
           "via": []
         }
       ],
       "sinceTimestamp": 1717522307,
       "sinceBlock": 20019967,
       "values": {
-        "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "$implementation": "0x79B3E839333a74137e78b0DaF84FC12512a8c704",
         "$pastUpgrades": [
           [
@@ -89,7 +96,7 @@
         "$upgradeCount": 1,
         "canonicalStateChain": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
         "daOracle": "0x0000000000000000000000000000000000000000",
-        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "proxiableUUID": "EXPECT_REVERT",
         "rlpReader": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -98,9 +105,11 @@
     {
       "name": "LightLinkMultisig",
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+      "type": "Contract",
       "sourceHashes": [
         "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
       ],
+      "proxyType": "immutable",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -135,6 +144,7 @@
     {
       "name": "LightLinkBridge",
       "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
+      "type": "Contract",
       "sourceHashes": [
         "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
         "0x71f4b3f45f14bd6064069c36b9bb52b9b3efa4e4b40344614eaad2e50f5b78c6"
@@ -169,8 +179,14 @@
       "derivedName": "L1NativeTokenPredicate"
     },
     {
+      "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
+      "type": "Contract",
       "sourceHashes": [
         "0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d",
         "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
@@ -214,6 +230,7 @@
     {
       "name": "LightLinkERC20Bridge",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+      "type": "Contract",
       "sourceHashes": [
         "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
         "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
@@ -250,6 +267,7 @@
     {
       "name": "CanonicalStateChain",
       "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+      "type": "Contract",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x7c0a4f7fb2f2948ffde2e5550debf14c02fa682bec9a57aac718daf43c80c2c7"
@@ -258,7 +276,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
           "via": []
         }
       ],
@@ -266,7 +284,7 @@
       "sinceTimestamp": 1717522271,
       "sinceBlock": 20019964,
       "values": {
-        "$admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "$implementation": "0xeFE38Bd58ADDf23eFab1FFa16312030384929289",
         "$pastUpgrades": [
           [
@@ -281,39 +299,39 @@
           ]
         ],
         "$upgradeCount": 2,
-        "chainHead": 1151,
+        "chainHead": 1168,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {
-          "epoch": 21963579,
-          "l2Height": 131398249,
-          "prevHash": "0x1b38e8b21f5f73d8301ec27fac74d0447cab6f63a4b3c697d7d3153a161124b0",
-          "outputRoot": "0x48726bf913be0537436b2630b91b876bd2dc30e05c2c96869c0ac892ef0f5ff0",
+          "epoch": 21993309,
+          "l2Height": 132108607,
+          "prevHash": "0x0357f67f6fa768ac91770152e7bebe923951d349f2648f8886c87c63d737e9dc",
+          "outputRoot": "0x62314ae58400e70955d971703a83315a1cf702aef43d048e47f39cbf9925efb7",
           "celestiaPointers": [
-            { "height": 4273309, "shareStart": 4160, "shareLen": 3333 },
-            { "height": 4273316, "shareStart": 3776, "shareLen": 3568 },
-            { "height": 4273323, "shareStart": 3520, "shareLen": 3383 },
-            { "height": 4273330, "shareStart": 4416, "shareLen": 3330 },
-            { "height": 4273338, "shareStart": 3008, "shareLen": 3395 },
-            { "height": 4273345, "shareStart": 6528, "shareLen": 3340 },
-            { "height": 4273354, "shareStart": 2368, "shareLen": 3517 },
-            { "height": 4273361, "shareStart": 6848, "shareLen": 3502 },
-            { "height": 4273372, "shareStart": 3712, "shareLen": 3337 },
-            { "height": 4273380, "shareStart": 1024, "shareLen": 3269 },
-            { "height": 4273388, "shareStart": 1216, "shareLen": 3403 },
-            { "height": 4273395, "shareStart": 1856, "shareLen": 3317 },
-            { "height": 4273405, "shareStart": 5760, "shareLen": 3664 },
-            { "height": 4273413, "shareStart": 6080, "shareLen": 3567 },
-            { "height": 4273423, "shareStart": 1600, "shareLen": 3529 },
-            { "height": 4273433, "shareStart": 2432, "shareLen": 3255 },
-            { "height": 4273441, "shareStart": 2432, "shareLen": 3274 },
-            { "height": 4273450, "shareStart": 3776, "shareLen": 3189 },
-            { "height": 4273458, "shareStart": 4224, "shareLen": 3147 },
-            { "height": 4273468, "shareStart": 5376, "shareLen": 3652 },
-            { "height": 4273476, "shareStart": 3328, "shareLen": 3250 }
+            { "height": 4336090, "shareStart": 6912, "shareLen": 3658 },
+            { "height": 4336102, "shareStart": 9344, "shareLen": 3663 },
+            { "height": 4336118, "shareStart": 4096, "shareLen": 3662 },
+            { "height": 4336127, "shareStart": 4352, "shareLen": 3663 },
+            { "height": 4336143, "shareStart": 6784, "shareLen": 3664 },
+            { "height": 4336161, "shareStart": 3840, "shareLen": 3665 },
+            { "height": 4336175, "shareStart": 1792, "shareLen": 3664 },
+            { "height": 4336193, "shareStart": 7744, "shareLen": 3635 },
+            { "height": 4336210, "shareStart": 1344, "shareLen": 3664 },
+            { "height": 4336227, "shareStart": 9920, "shareLen": 3664 },
+            { "height": 4336241, "shareStart": 6784, "shareLen": 3546 },
+            { "height": 4336258, "shareStart": 1792, "shareLen": 3652 },
+            { "height": 4336273, "shareStart": 2688, "shareLen": 3465 },
+            { "height": 4336284, "shareStart": 6080, "shareLen": 3655 },
+            { "height": 4336303, "shareStart": 3456, "shareLen": 3657 },
+            { "height": 4336314, "shareStart": 5376, "shareLen": 3664 },
+            { "height": 4336329, "shareStart": 4352, "shareLen": 3665 },
+            { "height": 4336343, "shareStart": 6208, "shareLen": 3664 },
+            { "height": 4336358, "shareStart": 6848, "shareLen": 3529 },
+            { "height": 4336373, "shareStart": 4416, "shareLen": 3664 },
+            { "height": 4336382, "shareStart": 6976, "shareLen": 3415 }
           ]
         },
         "maxPointers": 21,
-        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "proxiableUUID": "EXPECT_REVERT",
         "publisher": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
         "startingTimestamp": 1717522271,
@@ -321,28 +339,35 @@
       }
     },
     {
-      "name": "RLPReader",
-      "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
-      "sourceHashes": [
-        "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
-      ],
-      "sinceTimestamp": 1717522283,
-      "sinceBlock": 20019965,
-      "values": { "$immutable": true }
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118" },
-    { "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC" },
-    { "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91" },
-    { "address": "0x6f933814903561F79137099587737DFB24c6E86D" },
-    { "address": "0x7F17A74942c5b22b340688f099c99A79426447e1" },
-    { "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9" },
-    { "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df" },
-    { "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938" },
+      "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
-      "address": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+      "address": "0x6F17201F241231f183CE52212e4C47B009036421",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6f933814903561F79137099587737DFB24c6E86D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7F17A74942c5b22b340688f099c99A79426447e1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "LightLinkMultisig2",
+      "address": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -356,9 +381,60 @@
           "permission": "upgrade",
           "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
         }
-      ]
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1740666983,
+      "sinceBlock": 21938311,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
+          "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+          "0x6F17201F241231f183CE52212e4C47B009036421"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xfc26165dd2190870ea8f65dffadcf120d5820ce42cb7de2f7a3a1b595f28ef64",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 3 (100%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe"
     },
-    { "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590" }
+    {
+      "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RLPReader",
+      "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1717522283,
+      "sinceBlock": 20019965,
+      "values": { "$immutable": true }
+    }
   ],
   "abis": {
     "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": [
@@ -405,6 +481,54 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x468b89D930ca7974196D7195033600B658011756": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -561,6 +685,9 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": [
+      "constructor(address _singleton)"
+    ],
     "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -668,5 +795,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+  }
 }

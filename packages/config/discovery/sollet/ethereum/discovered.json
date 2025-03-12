@@ -2,14 +2,21 @@
   "name": "sollet",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0x0208421fb28384a22f556928b9d663ac1a8d127e389307d15b9c4d8c52e4c25a",
-  "contracts": [
+  "configHash": "0xa6ace430b436b8b48a28ce7d5c95c2579be7173b73cb06db6e5184db999df263",
+  "entries": [
+    {
+      "address": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "SplTokenSwap",
       "address": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+      "type": "Contract",
       "sourceHashes": [
         "0xa9306a9cf233bd50fb86a2e4aa8e1346513fe1efc80a25bf5706100e2f75b972"
       ],
+      "proxyType": "immutable",
       "sinceTimestamp": 1599794859,
       "sinceBlock": 10838129,
       "values": {
@@ -19,7 +26,6 @@
       }
     }
   ],
-  "eoas": [{ "address": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361" }],
   "abis": {
     "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a": [
       "event NonceUsed(uint256 indexed nonce, bytes signature)",

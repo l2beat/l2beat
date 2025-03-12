@@ -1,8 +1,14 @@
-import { type ChainConfig, tokenList } from '@l2beat/config'
-import { assert, type PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import type { ChainConfig } from '@l2beat/config'
+import {
+  assert,
+  type PriceConfigEntry,
+  type Token,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 
 export function getTvlPricesConfig(
   chains: ChainConfig[],
+  tokenList: Token[],
   minTimestampOverride?: UnixTime,
 ): PriceConfigEntry[] {
   const prices = new Map<string, PriceConfigEntry>()
@@ -16,11 +22,11 @@ export function getTvlPricesConfig(
     assert(prices.get(key) === undefined, 'Every price should be unique')
 
     assert(chain.sinceTimestamp, 'Chain should have sinceTimestamp')
-    const chainMinTimestamp = UnixTime.max(
+    const chainMinTimestamp = Math.max(
       chain.sinceTimestamp,
-      minTimestampOverride ?? new UnixTime(0),
+      minTimestampOverride ?? 0,
     )
-    const sinceTimestamp = UnixTime.max(chainMinTimestamp, token.sinceTimestamp)
+    const sinceTimestamp = Math.max(chainMinTimestamp, token.sinceTimestamp)
 
     prices.set(key, {
       type: 'coingecko',

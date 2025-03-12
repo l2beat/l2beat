@@ -1,17 +1,19 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 21766582,
-  "configHash": "0xd28b9d61ac5061713a25967a0755b55d57a80886fad0b37a9b886cbb71f88134",
+  "blockNumber": 22022296,
+  "configHash": "0xe86bb0b0f46743e51427d966600dee96a380948120c5d1ee9a8816efbecb17de",
   "sharedModules": ["shared-zk-stack"],
-  "contracts": [
+  "entries": [
     {
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "type": "Contract",
       "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "proxyType": "immutable",
       "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
       "sinceBlock": 21081436,
@@ -22,8 +24,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x149f3850AcfC5caa3ecF31dCF922A75eD2944a5e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CronosChainAdminMultisig",
       "address": "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -66,12 +74,19 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0x5628D5EF2bAd701617b4003F6a2e34eeB89F2ADa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
+      "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
@@ -99,7 +114,7 @@
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
         "getName": "ValidatorTimelock",
-        "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
+        "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
@@ -113,9 +128,11 @@
     {
       "name": "CronosZkEVMAdmin",
       "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+      "type": "Contract",
       "sourceHashes": [
         "0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"
       ],
+      "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -179,6 +196,7 @@
     {
       "name": "CronosZkEvm",
       "address": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+      "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
@@ -380,26 +398,26 @@
         "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3974,
+        "getFirstUnprocessedPriorityTx": 4132,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 2,
+        "getPriorityQueueSize": 6,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 286,
-        "getTotalBatchesExecuted": 282,
-        "getTotalBatchesVerified": 282,
-        "getTotalBlocksCommitted": 286,
-        "getTotalBlocksExecuted": 282,
-        "getTotalBlocksVerified": 282,
-        "getTotalPriorityTxs": 3976,
+        "getTotalBatchesCommitted": 339,
+        "getTotalBatchesExecuted": 337,
+        "getTotalBatchesVerified": 338,
+        "getTotalBlocksCommitted": 339,
+        "getTotalBlocksExecuted": 337,
+        "getTotalBlocksVerified": 338,
+        "getTotalPriorityTxs": 4138,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -428,11 +446,24 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
       "name": "TransactionFiltererDenyList",
       "address": "0xA8998F231a660Eca365B382943c71ad9b7619139",
+      "type": "Contract",
       "sourceHashes": [
         "0x69b34ba871ceb0dbecab437be2d0701a5d768bb541a738bb3a7d2883d10a403e"
       ],
+      "proxyType": "immutable",
       "severity": "HIGH",
       "issuedPermissions": [
         {
@@ -458,8 +489,25 @@
       }
     },
     {
+      "address": "0xAaC5b858d10107900e642681a97887D33FC3c9E9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
       "name": "TxFiltererOwnerMultisig",
       "address": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
+      "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
@@ -507,35 +555,21 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    }
-  ],
-  "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x149f3850AcfC5caa3ecF31dCF922A75eD2944a5e" },
-    { "address": "0x5628D5EF2bAd701617b4003F6a2e34eeB89F2ADa" },
-    {
-      "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
     },
-    { "address": "0xAaC5b858d10107900e642681a97887D33FC3c9E9" },
     {
-      "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        }
-      ]
+      "address": "0xc7e3F37766627b5DAF734f5bb5e43Ae9327011D8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
-    { "address": "0xc7e3F37766627b5DAF734f5bb5e43Ae9327011D8" },
-    { "address": "0xE9A03EB4C2262A7d01981cAD1f2c1FFa05CB64Fb" },
+    {
+      "address": "0xE9A03EB4C2262A7d01981cAD1f2c1FFa05CB64Fb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
+      "type": "EOA",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
