@@ -20,9 +20,11 @@ import type { FilterableValue } from './new-types'
 export function NewTableFilterCombobox<
   T extends { filterable: FilterableValue[] },
 >({ entries }: { entries: T[] }) {
+  const [open, setOpen] = useState(false)
+
   return (
     <>
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger className="flex gap-1.5">
           <FilterIcon />
           <span className="text-base font-semibold">Filters</span>
@@ -31,7 +33,7 @@ export function NewTableFilterCombobox<
           </kbd>
         </PopoverTrigger>
         <PopoverContent className="p-0" align="start">
-          <Content entries={entries} />
+          <Content entries={entries} setOpen={setOpen} />
         </PopoverContent>
       </Popover>
     </>
@@ -40,7 +42,8 @@ export function NewTableFilterCombobox<
 
 function Content<T extends { filterable: FilterableValue[] }>({
   entries,
-}: { entries: T[] }) {
+  setOpen,
+}: { entries: T[]; setOpen: (open: boolean) => void }) {
   const { dispatch } = useNewTableFilterContext()
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
   const uniqFilterables = uniqBy(
@@ -89,6 +92,8 @@ function Content<T extends { filterable: FilterableValue[] }>({
               key={value}
               value={value}
               onSelect={(value) => {
+                setOpen(false)
+
                 dispatch({
                   type: 'add',
                   payload: {
