@@ -74,21 +74,26 @@ const daBridgeRisksColumn = columnHelper.display({
   },
 })
 
-const tvsColumn = columnHelper.accessor('tvs', {
-  header: 'TVS',
-  cell: (ctx) => (
-    <TableLink href={`${ctx.row.original.href}#tvs`}>
-      <div className="w-full text-right text-sm font-medium">
-        {formatDollarValueNumber(ctx.row.original.tvs.latest)}
-      </div>
-    </TableLink>
-  ),
-  meta: {
-    tooltip:
-      'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
-    align: 'right',
-  },
-})
+const tvsColumn = (href?: (row: DaSummaryEntry) => string) =>
+  columnHelper.accessor('tvs', {
+    header: 'TVS',
+    cell: (ctx) => (
+      <TableLink
+        href={
+          ctx.row.original.tvs.latest > 0 ? href?.(ctx.row.original) : undefined
+        }
+      >
+        <div className="w-full text-right text-sm font-medium">
+          {formatDollarValueNumber(ctx.row.original.tvs.latest)}
+        </div>
+      </TableLink>
+    ),
+    meta: {
+      tooltip:
+        'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
+      align: 'right',
+    },
+  })
 
 const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   header: () => <span className="text-right">Slashable</span>,
@@ -144,7 +149,7 @@ const daLayerGroup = columnHelper.group({
   header: 'DA Layer',
   columns: [
     withSpanByBridges(daRisksColumn),
-    withSpanByBridges(tvsColumn),
+    withSpanByBridges(tvsColumn()),
     withSpanByBridges(slashableStakeColumn),
   ],
 })
@@ -220,7 +225,7 @@ export const customColumns = [
   daLayerColumn('da-layer'),
   daRisksColumn,
   daBridgeRisksColumn,
-  tvsColumn,
+  tvsColumn((row) => `${row.href}#tvs`),
   membersColumn,
   fallbackColumn,
   challengeMechanismColumn,
