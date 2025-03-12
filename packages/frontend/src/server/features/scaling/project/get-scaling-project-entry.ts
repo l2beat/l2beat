@@ -414,7 +414,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const technologySection = await getScalingTechnologySection(project)
+  const technologySection = getScalingTechnologySection(project)
   if (technologySection) {
     sections.push({
       type: 'TechnologySection',
@@ -427,18 +427,19 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const dataAvailabilitySection = getDataAvailabilitySection(project)
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolution,
+  )
   if (dataAvailabilitySection) {
     sections.push({
-      type: 'Group',
+      type: dataAvailabilitySection.type,
       props: {
         id: 'da-layer',
         title: 'Data availability',
-        items: dataAvailabilitySection,
-        description: project.customDa?.description,
-        isUnderReview: project.statuses.isUnderReview,
+        ...dataAvailabilitySection.props,
       },
-    })
+    } as ProjectDetailsSection)
   }
 
   if (project.scalingTechnology.stateDerivation) {
