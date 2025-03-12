@@ -233,11 +233,9 @@ function ValueWithChange({
         <InfoTooltip text={tooltip} />
       </div>
       <div className="flex items-end gap-0.5 md:gap-1.5">
-        <pre>
-          <span className="text-xl font-semibold [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:!leading-[32px]">
-            {value}
-          </span>
-        </pre>
+        <span className="whitespace-pre text-xl font-semibold [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:!leading-[32px]">
+          {value}
+        </span>
         <PercentChange
           value={change}
           className="mt-1"

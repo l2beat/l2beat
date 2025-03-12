@@ -180,7 +180,7 @@ export function BasicDaTable<T extends BasicEntry>({
           return (
             <React.Fragment key={row.id}>
               <TableRow
-                slug={`${row.original.slug}`}
+                slug={row.original.slug}
                 className={cn(
                   getRowTypeClassNames({
                     isEthereum: row.original.slug === 'ethereum',

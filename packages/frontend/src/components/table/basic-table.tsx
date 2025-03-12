@@ -310,17 +310,6 @@ export function getBasicTableGroupParams<T>(column: Column<T>) {
   }
 }
 
-export function getBasicTableHref(
-  href: string | undefined,
-  hash: string | undefined,
-) {
-  if (!hash) {
-    return href
-  }
-
-  return `${href}#${hash}`
-}
-
 function getTableRows<T extends CommonProjectEntry>(table: TanstackTable<T>) {
   const rows = table.getRowModel().rows
 

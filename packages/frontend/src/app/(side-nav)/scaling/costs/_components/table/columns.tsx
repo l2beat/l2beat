@@ -65,7 +65,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
           ),
           sortUndefined: 'last',
           meta: {
-            hash: 'onchain-costs',
             align: 'center',
             tooltip: `The ${metric === 'total' ? 'total cost' : 'average cost per L2 user operation'} that is a sum of the costs for calldata, computation, blobs, and overhead.`,
           },
@@ -89,7 +88,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
@@ -114,7 +112,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
@@ -142,7 +139,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
@@ -169,7 +165,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
@@ -207,7 +202,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       },
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         tooltip: 'Total number of L2 User ops over the selected time period.',
       },

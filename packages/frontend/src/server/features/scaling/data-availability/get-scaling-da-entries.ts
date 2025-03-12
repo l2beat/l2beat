@@ -4,7 +4,7 @@ import type {
   ProjectScalingDa,
   ProjectScalingStack,
 } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -87,7 +87,12 @@ export interface ScalingDaEntry extends CommonScalingEntry {
   stack: ProjectScalingStack | undefined
   tvsOrder: number
   risks: EntryRisks | undefined
-  daHref: string | undefined
+  daHref:
+    | {
+        summary: string
+        risk: string | undefined
+      }
+    | undefined
 }
 
 function getScalingDaEntry(
@@ -169,7 +174,10 @@ function getDaHref(
   daLayers: Project<'daLayer'>[],
 ) {
   if (project.customDa) {
-    return `/data-availability/summary?tab=custom&highlight=${project.slug}`
+    return {
+      summary: `/data-availability/summary?tab=custom&highlight=${project.slug}`,
+      risk: `/data-availability/risk?tab=custom&highlight=${project.slug}`,
+    }
   }
 
   const daLayer = daLayers.find(
@@ -180,5 +188,11 @@ function getDaHref(
     return undefined
   }
 
-  return `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`
+  return {
+    summary: `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
+    risk:
+      daLayer.id === ProjectId.ETHEREUM
+        ? undefined
+        : `/data-availability/risk?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
+  }
 }

@@ -13,15 +13,17 @@ import {
 } from '../../core/tooltip/tooltip'
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
+import { TableLink } from '../table-link'
 import { NoInfoCell } from './no-info-cell'
 import { TwoRowCell } from './two-row-cell'
 
 interface Props {
   value: TableReadyValue | undefined
+  href?: string
   emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data'
 }
 
-export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
+export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
       return (
@@ -44,7 +46,7 @@ export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
   }
 
   const trigger = (
-    <TwoRowCell className="w-max">
+    <TwoRowCell>
       <TwoRowCell.First className="flex items-center gap-1">
         <SentimentText sentiment={value.sentiment ?? 'neutral'}>
           {value.value}
@@ -67,7 +69,9 @@ export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
   if (value.description) {
     return (
       <Tooltip>
-        <TooltipTrigger>{trigger}</TooltipTrigger>
+        <TooltipTrigger disabledOnMobile className="h-full">
+          <TableLink href={href}>{trigger}</TableLink>
+        </TooltipTrigger>
         <TooltipContent>
           {value.warning && (
             <WarningBar

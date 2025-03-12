@@ -50,9 +50,10 @@ export const columns = [
         'The data availability layer where the data (transaction data or state diffs) is published.',
     },
     cell: (ctx) => (
-      <TableLink href={ctx.row.original.daHref}>
-        <TableValueCell value={ctx.row.original.dataAvailability.layer} />
-      </TableLink>
+      <TableValueCell
+        value={ctx.row.original.dataAvailability.layer}
+        href={ctx.row.original.daHref?.summary}
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -69,9 +70,10 @@ export const columns = [
         'The DA bridge used for informing Ethereum contracts if data has been made available.',
     },
     cell: (ctx) => (
-      <TableLink href={ctx.row.original.daHref}>
-        <TableValueCell value={ctx.row.original.dataAvailability.bridge} />
-      </TableLink>
+      <TableValueCell
+        value={ctx.row.original.dataAvailability.bridge}
+        href={ctx.row.original.daHref?.risk}
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -89,10 +91,12 @@ export const columns = [
       }
 
       return (
-        <CombinedGrissiniCell
-          daLayerRisks={ctx.row.original.risks.daLayer}
-          daBridgeRisks={ctx.row.original.risks.daBridge}
-        />
+        <TableLink href={ctx.row.original.daHref?.risk}>
+          <CombinedGrissiniCell
+            daLayerRisks={ctx.row.original.risks.daLayer}
+            daBridgeRisks={ctx.row.original.risks.daBridge}
+          />
+        </TableLink>
       )
     },
     meta: {

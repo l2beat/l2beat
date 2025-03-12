@@ -151,19 +151,16 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
         return <NoDataBadge />
       }
       return (
-        <TableLink
+        <TableValueCell
+          value={{
+            ...latestValue.layer,
+            secondLine:
+              latestValue.bridge.value === 'None'
+                ? 'No bridge'
+                : latestValue.bridge.value,
+          }}
           href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-        >
-          <TableValueCell
-            value={{
-              ...latestValue.layer,
-              secondLine:
-                latestValue.bridge.value === 'None'
-                  ? 'No bridge'
-                  : latestValue.bridge.value,
-            }}
-          />
-        </TableLink>
+        />
       )
     },
   }),
