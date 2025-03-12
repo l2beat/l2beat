@@ -21,12 +21,12 @@ export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
   const values = [
     {
       value: props.canonical,
-      className: 'bg-purple-100',
+      className: 'bg-[hsl(var(--chart-stacked-purple))]',
     },
-    { value: props.native, className: 'bg-pink-100' },
+    { value: props.native, className: 'bg-[hsl(var(--chart-stacked-pink))]' },
     {
       value: props.external,
-      className: 'bg-yellow-200',
+      className: 'bg-[hsl(var(--chart-stacked-yellow))]',
     },
   ]
 

@@ -241,11 +241,11 @@ function TokenChartUnitControls({
 function sourceToColor(source: ProjectToken['source']) {
   switch (source) {
     case 'native':
-      return 'hsl(var(--chart-tvs-native))'
+      return 'hsl(var(--chart-stacked-pink))'
     case 'canonical':
-      return 'hsl(var(--chart-tvs-canonical))'
+      return 'hsl(var(--chart-stacked-purple))'
     case 'external':
-      return 'hsl(var(--chart-tvs-external))'
+      return 'hsl(var(--chart-stacked-yellow))'
     default:
       assertUnreachable(source)
   }

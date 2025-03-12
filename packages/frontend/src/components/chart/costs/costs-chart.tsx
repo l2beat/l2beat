@@ -27,22 +27,22 @@ import { formatNumber } from '~/utils/number-format/format-number'
 const chartMeta = {
   calldata: {
     label: 'Calldata',
-    color: 'hsl(var(--chart-costs-calldata))',
+    color: 'hsl(var(--chart-stacked-blue))',
     indicatorType: { shape: 'square' },
   },
   blobs: {
     label: 'Blobs',
-    color: 'hsl(var(--chart-costs-blobs))',
+    color: 'hsl(var(--chart-stacked-yellow))',
     indicatorType: { shape: 'square' },
   },
   compute: {
     label: 'Compute',
-    color: 'hsl(var(--chart-costs-compute))',
+    color: 'hsl(var(--chart-stacked-pink))',
     indicatorType: { shape: 'square' },
   },
   overhead: {
     label: 'Overhead',
-    color: 'hsl(var(--chart-costs-overhead))',
+    color: 'hsl(var(--chart-stacked-purple))',
     indicatorType: { shape: 'square' },
   },
   posted: {
