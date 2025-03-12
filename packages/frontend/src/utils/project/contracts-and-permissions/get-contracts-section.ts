@@ -5,7 +5,7 @@ import type {
   ReferenceLink,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
@@ -210,18 +210,17 @@ function makeTechnologyContract(
   }
 
   const changes = Object.values(projectChangeReport ?? {}).flat()
-  const impactfulChange = addresses.some((a) => {
-    changes.some((c) => {
-      return (
-        c.upgradeChanges.includes(EthereumAddress(a.address)) ||
-        c.implementationContaining.includes(EthereumAddress(a.address)) ||
-        c.upgradeChanges.includes(EthereumAddress(a.address))
-      )
-    })
-  })
+  const impactfulChangeAddresses = changes.flatMap((c) =>
+    c.implementationContaining
+      .concat(c.fieldHighSeverityContaining)
+      .concat(c.upgradeChanges),
+  )
+
+  const impactfulChange = impactfulChangeAddresses.some((changedAddress) =>
+    addresses.map((a) => a.address).includes(changedAddress),
+  )
 
   const additionalReferences: ReferenceLink[] = []
-
   const usedInProjects = uniqBy(
     [item.address, ...(item.upgradeability?.implementations ?? [])].flatMap(
       (address) =>

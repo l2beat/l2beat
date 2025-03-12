@@ -120,15 +120,8 @@ const getCachedProjectsChangeReport = cache(
               .flatMap((d) => _TEMP_getEntries(d.discovery)),
           ),
         ]
-        const discoveryDiffs = diffDiscovery(onDiskContracts, latestContracts)
-        if (project === 'zksync2') {
-          console.log(
-            project,
-            onDiskChain,
-            JSON.stringify(discoveryDiffs, null, 2),
-          )
-        }
 
+        const discoveryDiffs = diffDiscovery(onDiskContracts, latestContracts)
         const implementationChanges = discoveryDiffs.filter((discoveryDiff) =>
           discoveryDiff.diff?.some(
             (f) => f.key && f.key === 'values.$implementation',
