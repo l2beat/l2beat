@@ -1,4 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { uniq } from 'lodash'
 import { useReducer } from 'react'
 
 type Filter = {
@@ -28,6 +29,23 @@ type ClearFilterAction = {
 function filterReducer(state: FilterState, action: FilterAction) {
   switch (action.type) {
     case 'add':
+      const existingFilter = state.find(
+        (filter) => filter.id === action.payload.id,
+      )
+      if (existingFilter) {
+        return state.map((filter) =>
+          filter.id === action.payload.id
+            ? {
+                ...action.payload,
+                values: uniq([
+                  ...existingFilter.values,
+                  ...action.payload.values,
+                ]),
+              }
+            : filter,
+        )
+      }
+
       return [...state, action.payload]
     case 'remove':
       return state.filter((filter) => filter.id !== action.id)
