@@ -11,6 +11,7 @@ import { utils } from 'ethers'
 import { zip } from 'lodash'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
+import { getImplementation } from '../auto/Eip1967Proxy'
 import type { DateAddresses } from '../pastUpgrades'
 
 // keccak256('settlement_module');
@@ -67,9 +68,10 @@ async function getPastUpgrades(
 ): Promise<DateAddresses[]> {
   const abi = new utils.Interface([
     'event ModuleAddressUpdated(bytes32 type, address previousAddress, address newAddress)',
+    'event Upgraded(address indexed implementation)',
   ])
   const logs = await provider.getLogs(address, [
-    [abi.getEventTopic('ModuleAddressUpdated')],
+    [abi.getEventTopic('ModuleAddressUpdated'), abi.getEventTopic('Upgraded')],
   ])
 
   const blockNumbers = [...new Set(logs.map((l) => l.blockNumber))]
@@ -85,9 +87,11 @@ async function getPastUpgrades(
   const modules = Object.keys(current)
   const addressEvolution: Record<string, EthereumAddress[]> = {}
   for (const log of logs.map((l) => abi.parseLog(l))) {
-    const module = log.args.type
-    addressEvolution[module] ??= []
-    addressEvolution[module].push(EthereumAddress(log.args.previousAddress))
+    if (log.name === 'ModuleAddressUpdated') {
+      const module = log.args.type
+      addressEvolution[module] ??= []
+      addressEvolution[module].push(EthereumAddress(log.args.previousAddress))
+    }
   }
 
   for (const [module, address] of Object.entries(current)) {
@@ -95,18 +99,28 @@ async function getPastUpgrades(
     addressEvolution[module].push(address)
   }
 
+  let mainAddress: EthereumAddress | undefined
   return logs.map((l) => {
     const parsed = abi.parseLog(l)
-    addressEvolution[parsed.args.type]?.shift()
 
-    const implementations = modules.map((m) => {
-      const address = addressEvolution[m]?.[0]
-      assert(
-        address !== undefined,
-        `Missing address for module ${m} at block ${l.blockNumber}. Ensure addressEvolution is properly populated.`,
-      )
-      return address
-    })
+    if (parsed.name === 'ModuleAddressUpdated') {
+      addressEvolution[parsed.args.type]?.shift()
+    } else if (parsed.name === 'Upgraded') {
+      mainAddress = parsed.args.implementation
+    }
+
+    assert(mainAddress !== undefined, 'Unexpected event state')
+    const implementations = [
+      mainAddress,
+      ...modules.map((m) => {
+        const address = addressEvolution[m]?.[0]
+        assert(
+          address !== undefined,
+          `Missing address for module ${m} at block ${l.blockNumber}. Ensure addressEvolution is properly populated.`,
+        )
+        return address
+      }),
+    ]
 
     return [
       dateMap[l.blockNumber] ?? 'ERROR',
@@ -120,7 +134,8 @@ export async function getEverclearProxy(
   provider: IProvider,
   address: EthereumAddress,
 ): Promise<ProxyDetails | undefined> {
-  const implementations = await Promise.all(
+  const mainImplementation = await getImplementation(provider, address)
+  const moduleImplementations = await Promise.all(
     modules.map((module) => getModule(provider, address, module)),
   )
 
@@ -130,18 +145,21 @@ export async function getEverclearProxy(
     [],
   )
 
-  const implementationsMap = Object.fromEntries(zip(modules, implementations))
+  const implementationsMap = Object.fromEntries(
+    zip(modules, moduleImplementations),
+  )
   const pastUpgrades = await getPastUpgrades(
     provider,
     address,
     implementationsMap,
   )
 
+  const implementations = [mainImplementation, ...moduleImplementations]
   return {
     type: 'Everclear proxy',
     values: {
       $admin: (admin ?? EthereumAddress.ZERO).toString(),
-      $implementations: implementations.filter(
+      $implementation: implementations.filter(
         (i) => i !== EthereumAddress.ZERO,
       ),
       $pastUpgrades: pastUpgrades as ContractValue,
