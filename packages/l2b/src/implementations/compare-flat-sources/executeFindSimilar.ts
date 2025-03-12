@@ -1,7 +1,7 @@
 import path from 'path'
-import { keyInYN } from 'readline-sync'
-
+import type { DiscoveryPaths } from '@l2beat/discovery'
 import type { CliLogger } from '@l2beat/shared'
+import { keyInYN } from 'readline-sync'
 import { powerdiff } from '../powerdiff'
 import {
   computeComparisonBetweenProjects,
@@ -18,7 +18,7 @@ import {
 export interface FindSimilarCommand {
   projectPath: string
   forceTable: boolean
-  discoveryPath: string
+  paths: DiscoveryPaths
   logger: CliLogger
 }
 
@@ -29,7 +29,7 @@ export async function executeFindSimilar(
 
   const { matrix: perProjectMatrix } = await computeStackSimilarity(
     command.logger,
-    command.discoveryPath,
+    command.paths,
   )
   const mostSimilar = getMostSimilar(perProjectMatrix)
 
@@ -39,7 +39,7 @@ export async function executeFindSimilar(
       command.logger,
       command.projectPath,
       `${otherChain}:${otherName}`,
-      command.discoveryPath,
+      command.paths,
     )
 
   printComparisonBetweenProjects(
@@ -58,16 +58,9 @@ export async function executeFindSimilar(
   }
 
   if (keyInYN('Run powerdiff?')) {
-    const path1 = path.join(
-      command.discoveryPath,
-      'discovery',
-      name,
-      chain,
-      '.flat',
-    )
+    const path1 = path.join(command.paths.discovery, name, chain, '.flat')
     const path2 = path.join(
-      command.discoveryPath,
-      'discovery',
+      command.paths.discovery,
       otherName,
       otherChain,
       '.flat',

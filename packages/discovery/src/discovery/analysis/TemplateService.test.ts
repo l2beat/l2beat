@@ -1,7 +1,7 @@
+import { join } from 'path'
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { type Shape, TemplateService } from './TemplateService'
-import { join } from 'path'
 
 const CORRECT_SUPERCHAIN_CONFIG_ADDR = EthereumAddress(
   '0x95703e0982140D16f8ebA6d158FccEde42f04a4C',

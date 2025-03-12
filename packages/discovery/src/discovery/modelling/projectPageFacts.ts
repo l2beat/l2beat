@@ -1,8 +1,8 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { ConfigReader } from '../config/ConfigReader'
-import { parseClingoFact } from './clingoparser'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
+import { parseClingoFact } from './clingoparser'
 
 export async function runClingo(program: string) {
   // import full clingo-wasm only if this function is called

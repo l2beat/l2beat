@@ -14,11 +14,11 @@ import {
   discover,
   discoveryDiffToMarkdown,
   getChainConfig,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
-import { readConfig } from '../../config/readConfig'
 import { updateDiffHistoryHash } from './hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
@@ -31,9 +31,8 @@ export async function updateDiffHistory(
 ) {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
-  const discoveryPath = readConfig().discoveryPath
-  assert(discoveryPath !== undefined)
-  const configReader = new ConfigReader(discoveryPath)
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =

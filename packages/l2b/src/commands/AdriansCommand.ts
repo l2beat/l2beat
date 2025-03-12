@@ -2,10 +2,9 @@ import {
   ConfigReader,
   type DiscoveryOutput,
   type EntryParameters,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
-import { readConfig } from '../config/readConfig'
 
 interface TemplateFieldRelation {
   sourceTemplate: string
@@ -33,9 +32,8 @@ export const AdriansCommand = command({
     }),
   },
   handler: ({ chain, project }) => {
-    const discoveryPath = readConfig().discoveryPath
-    assert(discoveryPath !== undefined)
-    const configReader = new ConfigReader(discoveryPath)
+    const paths = getDiscoveryPaths()
+    const configReader = new ConfigReader(paths.discovery)
 
     const allDiscoveries = getAllDiscoveriesExcept(configReader, {
       chain,

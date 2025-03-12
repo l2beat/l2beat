@@ -10,10 +10,10 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import {
+  assert,
   EthereumAddress,
   type TokenBridgedUsing,
   UnixTime,
-  assert,
   formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'

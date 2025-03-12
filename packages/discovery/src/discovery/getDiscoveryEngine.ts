@@ -1,3 +1,4 @@
+import { join } from 'path'
 import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { DiscoveryChainConfig } from '../config/types'
@@ -10,7 +11,6 @@ import { AllProviders } from './provider/AllProviders'
 import type { DiscoveryCache } from './provider/DiscoveryCache'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
-import { join } from 'path'
 
 export function getDiscoveryEngine(
   discoveryPath: string,

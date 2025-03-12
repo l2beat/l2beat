@@ -3,11 +3,11 @@ import {
   DiscoverCommandArgs,
   type DiscoveryModuleConfig,
   getChainConfig,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
-import { readConfig } from '../config/readConfig'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 
 // NOTE(radomski): We need to modify the args object because the only allowed
@@ -35,9 +35,8 @@ const args = {
   }),
 }
 
-const config = readConfig()
-assert(config.discoveryPath !== undefined)
-const configReader = new ConfigReader(config.discoveryPath)
+const paths = getDiscoveryPaths()
+const configReader = new ConfigReader(paths.discovery)
 
 export const Discover = command({
   name: 'discover',

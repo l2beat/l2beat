@@ -1,11 +1,11 @@
+import { isDeepStrictEqual } from 'util'
 import {
   ConfigReader,
-  getDiscoveryPaths,
   TemplateService,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { isDeepStrictEqual } from 'util'
 import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'

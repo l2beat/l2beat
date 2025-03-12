@@ -6,6 +6,7 @@ import { rimraf } from 'rimraf'
 import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { buildAndSaveModels } from '../modelling/build'
 import { buildProjectPageFacts } from '../modelling/projectPageFacts'
 import { removeSharedNesting } from '../source/removeSharedNesting'
@@ -13,7 +14,6 @@ import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
 import type { DiscoveryOutput } from './types'
-import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 
 export interface SaveDiscoveryResultOptions {
   paths: DiscoveryPaths

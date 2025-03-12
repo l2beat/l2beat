@@ -12,6 +12,7 @@ import type { Analysis } from './analysis/AddressAnalyzer'
 import { TEMPLATES_PATH } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { DiscoveryConfig } from './config/DiscoveryConfig'
+import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
 import { printTemplatization } from './output/printTemplatization'
@@ -20,7 +21,6 @@ import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
-import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 
 export async function runDiscovery(
   paths: DiscoveryPaths,

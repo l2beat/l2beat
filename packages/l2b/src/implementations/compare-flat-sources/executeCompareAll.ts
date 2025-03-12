@@ -1,10 +1,11 @@
+import type { DiscoveryPaths } from '@l2beat/discovery'
 import type { CliLogger } from '@l2beat/shared'
 import { computeStackSimilarity } from './common'
 import { generateAndOpenGraph } from './graph'
 import { colorMap } from './output'
 
 export interface CompareAllCommand {
-  discoveryPath: string
+  paths: DiscoveryPaths
   minProjectSimilarity: number
   minClusterSimilarity: number
   showGraph: boolean
@@ -14,10 +15,7 @@ export interface CompareAllCommand {
 export async function executeCompareAll(
   command: CompareAllCommand,
 ): Promise<void> {
-  const { matrix } = await computeStackSimilarity(
-    command.logger,
-    command.discoveryPath,
-  )
+  const { matrix } = await computeStackSimilarity(command.logger, command.paths)
 
   const clusters = computeClusters(
     matrix,

@@ -1,4 +1,4 @@
-import type { EntryParameters } from '@l2beat/discovery'
+import type { DiscoveryPaths, EntryParameters } from '@l2beat/discovery'
 import { ConfigReader } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 
@@ -64,9 +64,9 @@ const descriptions: Record<string, string> = {
 }
 
 export async function analyseAllOrbitChains(
-  discoveryPath: string,
+  paths: DiscoveryPaths,
 ): Promise<void> {
-  const configReader = new ConfigReader(discoveryPath)
+  const configReader = new ConfigReader(paths.discovery)
   const rollups: EntryParameters[] = []
   for (const [chain, mapping] of Object.entries(chainMapping)) {
     const discovery = configReader.readDiscovery(chain, mapping)
@@ -149,10 +149,10 @@ export async function analyseAllOrbitChains(
 export async function compareTwoOrbitChain(
   firstProject: string,
   secondProject: string,
-  discoveryPath: string,
+  paths: DiscoveryPaths,
 ): Promise<void> {
   console.log(`Analyzing ${firstProject} and ${secondProject}`)
-  const configReader = new ConfigReader(discoveryPath)
+  const configReader = new ConfigReader(paths.discovery)
 
   const discovery1 = getSafeDiscovery(configReader, firstProject)
   const discovery2 = getSafeDiscovery(configReader, secondProject)
