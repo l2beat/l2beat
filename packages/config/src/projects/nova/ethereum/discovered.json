@@ -506,13 +506,12 @@
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "delay": 259200,
-          "description": "update the minimum delay and manage all access control roles of the timelock."
+          "description": "cancel queued transactions."
         },
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "cancel queued transactions."
+          "description": "update the minimum delay and manage all access control roles of the timelock."
         },
         {
           "permission": "interact",
@@ -885,19 +884,6 @@
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "delay": 259200,
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "description": "cancel queued transactions.",
           "via": [
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
@@ -911,6 +897,18 @@
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "via": [
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -2084,19 +2082,6 @@
         {
           "permission": "interact",
           "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-          "delay": 259200,
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [
-            {
-              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "delay": 259200
-            },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "description": "cancel queued transactions.",
           "via": [
             {
@@ -2114,15 +2099,26 @@
         },
         {
           "permission": "interact",
-          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "delay": 259200,
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "description": "update the minimum delay and manage all access control roles of the timelock.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+          "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
         },
         {
           "permission": "interact",
           "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
           "description": "cancel queued transactions.",
+          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
@@ -3732,14 +3728,13 @@
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "delay": 259200,
-          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "description": "cancel queued transactions.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
           "permission": "interact",
           "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "cancel queued transactions.",
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
@@ -5222,7 +5217,7 @@
     "orbitstack/RollupProxy": "0x23008c1256ac001023fb7343b4740c018f305d7bf8596af189533f7cf7624f49",
     "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
-    "orbitstack/Timelock": "0xef7d35a3d44e286c427681f05bea89b31593f88325d42e2fcaefaf70d00accc2",
+    "orbitstack/Timelock": "0x3548083a8f68fe20dc020b39ed8ed83cedf25667a3f77d5ef0d7f9f3a167e8b0",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }
