@@ -1,6 +1,7 @@
 .code
 .code@*
-.flat*
-mermaid
-.mermaid
 .flat
+.flat@*
+**/*.lp
+!_templates/**/*.lp
+!_clingo/**/*.lp
