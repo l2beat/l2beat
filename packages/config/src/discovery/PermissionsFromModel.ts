@@ -8,7 +8,11 @@ import {
   parseExportedFacts,
 } from '@l2beat/discovery'
 import { groupFacts } from '@l2beat/discovery/dist/discovery/modelling/KnowledgeBase'
-import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  isDefined,
+} from '@l2beat/shared-pure'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {
@@ -28,12 +32,14 @@ export interface GroupedTransitivePermissionFact {
     number,
     TransitivePermissionVia[],
     'isFinal' | 'nonFinal',
+    'isActive' | 'isInactive',
+    string | undefined, // ConditionDescription
   ]
 }
 
 interface TransitivePermissionVia {
   atom: 'tuple'
-  params: [string, string, number]
+  params: [string, string, number, string | undefined]
 }
 
 export const PermissionsRequiringTarget: Permission[] = [
@@ -116,11 +122,17 @@ export class PermissionsFromModel implements PermissionRegistry {
     const _totalDelay = fact.params[5]
     const viaList = fact.params[6]
     const isFinal = fact.params[7]
+    const status = fact.params[8]
+    const conditionDescription = fact.params[9]
 
     const permissionToPrefixMapping =
       isFinal === 'isFinal'
         ? UltimatePermissionToPrefix
         : DirectPermissionToPrefix
+
+    if (status === 'isInactive') {
+      result.push('[Currently inactive]')
+    }
 
     result.push(
       permissionToPrefixMapping[permission] ??
@@ -141,6 +153,17 @@ export class PermissionsFromModel implements PermissionRegistry {
         `- acting via ${reversedViaList.map(renderTransitivePermissionVia).join(', ')}`,
       )
     }
+
+    const conditionDescriptions = [
+      conditionDescription,
+      ...(viaList ?? []).map((x) => x.params[3]),
+    ]
+      .filter(isDefined)
+      .map(trimTrailingDots)
+    if (conditionDescriptions.length > 0) {
+      result.push(`if ${conditionDescriptions.join(' and ')}`)
+    }
+
     return result.join(' ') + '.'
   }
 
