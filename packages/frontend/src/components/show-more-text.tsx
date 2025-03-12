@@ -97,8 +97,7 @@ export function ShowMoreText({
             <Drawer>
               <DrawerTrigger
                 className={cn(
-                  'cursor-pointer underline',
-                  'md:hidden',
+                  'cursor-pointer underline md:hidden',
                   textClassName,
                 )}
               >
