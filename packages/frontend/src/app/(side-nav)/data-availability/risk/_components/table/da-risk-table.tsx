@@ -82,7 +82,7 @@ function BridgeCells({
         <TableCell />
       ) : (
         <TableCell className="text-sm font-medium first:pl-0">
-          <TableLink href={`${bridge.href}#da-bridge`} className="ml-4">
+          <TableLink href={`${bridge.href}#da-bridge`} className="ml-4 md:ml-1">
             {bridge.name}
           </TableLink>
         </TableCell>
