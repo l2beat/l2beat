@@ -51,7 +51,7 @@ export function HighlightedPrimaryCardProvider({
 
     const timeoutId = setTimeout(() => {
       setHighlightedId(undefined)
-    }, 3000)
+    }, 1500)
 
     return () => clearTimeout(timeoutId)
   }, [highlightedId])
