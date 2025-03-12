@@ -1,3 +1,114 @@
+Generated with discovered.json: 0xf2981e85d59eacef4706cc48609f84a6d5118868
+
+# Diff at Wed, 12 Mar 2025 16:12:48 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@83f499294acff3972f9246f27e07b7a531a5d4d2 block: 21892618
+- current block number: 21892618
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+Removed delay on Timelock's ADMIN interact permission.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21892618 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      receivedPermissions.3.description:
+-        "propose transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.3.via.2:
++        {"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}
+      receivedPermissions.3.via.1:
++        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      receivedPermissions.3.via.0.address:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.2.description:
+-        "cancel queued transactions."
++        "propose transactions."
+      receivedPermissions.2.via.2:
+-        {"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}
+      receivedPermissions.2.via.1:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      receivedPermissions.2.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.1.delay:
+-        259200
+      receivedPermissions.1.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "cancel queued transactions."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.5.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      directlyReceivedPermissions.4.delay:
+-        259200
+      directlyReceivedPermissions.4.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "cancel queued transactions."
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions.4.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      issuedPermissions.3.delay:
+-        259200
+      issuedPermissions.3.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "cancel queued transactions."
+      issuedPermissions.2.description:
+-        "propose transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      issuedPermissions.2.via.2:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.2.via.1:
++        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      issuedPermissions.1.description:
+-        "cancel queued transactions."
++        "propose transactions."
+      issuedPermissions.1.via.2:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.1.via.1:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      issuedPermissions.0.delay:
+-        259200
+      issuedPermissions.0.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "cancel queued transactions."
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      receivedPermissions.2.description:
+-        "cancel queued transactions."
++        "update the minimum delay and manage all access control roles of the timelock."
+      receivedPermissions.1.delay:
+-        259200
+      receivedPermissions.1.description:
+-        "update the minimum delay and manage all access control roles of the timelock."
++        "cancel queued transactions."
+    }
+```
+
 Generated with discovered.json: 0x3480e18612df53e760ea0d668dd67d5343120562
 
 # Diff at Wed, 12 Mar 2025 15:36:00 GMT:
