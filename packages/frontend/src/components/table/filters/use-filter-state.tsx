@@ -4,6 +4,7 @@ import { useReducer } from 'react'
 
 type Filter = {
   id: string
+  label: string
   values: string[]
   reversed: boolean
 }

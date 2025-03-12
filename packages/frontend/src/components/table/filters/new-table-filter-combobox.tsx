@@ -71,8 +71,9 @@ function Content<T extends { filterable: FilterableValue[] }>({
       </Command>
     )
   }
+  const selectedFilterable = uniqFilterables.find((f) => f.id === selectedId)!
 
-  const values = uniq(
+  const selectedFilterableValues = uniq(
     entries.flatMap(
       (e) => e.filterable?.find((f) => f.id === selectedId)?.value,
     ),
@@ -83,7 +84,7 @@ function Content<T extends { filterable: FilterableValue[] }>({
       <CommandList>
         <CommandEmpty>No value found.</CommandEmpty>
         <CommandGroup>
-          {values.map((value) => (
+          {selectedFilterableValues.map((value) => (
             <CommandItem
               key={value}
               value={value}
@@ -92,6 +93,7 @@ function Content<T extends { filterable: FilterableValue[] }>({
                   type: 'add',
                   payload: {
                     id: selectedId,
+                    label: selectedFilterable.label,
                     values: [value],
                     reversed: false,
                   },
