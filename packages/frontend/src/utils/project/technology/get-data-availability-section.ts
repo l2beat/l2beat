@@ -7,7 +7,7 @@ import {
 import type { GroupSectionProps } from '~/components/projects/sections/group-section'
 import type { TechnologySectionProps } from '~/components/projects/sections/technology-section'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { ps } from '~/server/projects'
+import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
@@ -22,17 +22,21 @@ type DataAvailabilitySection =
       props: Omit<TechnologySectionProps, 'id' | 'title' | 'sectionOrder'>
     }
 
-export async function getDataAvailabilitySection(
+export function getDataAvailabilitySection(
   project: Project<'statuses', 'customDa' | 'scalingTechnology' | 'scalingDa'>,
-): Promise<DataAvailabilitySection | undefined> {
+  daSolution?: DaSolution,
+): DataAvailabilitySection | undefined {
   if (project.customDa) {
     return getCustomDaSection(project)
   }
   if (project.scalingTechnology?.dataAvailability) {
-    return await getTechnologySection({
-      ...project,
-      scalingTechnology: project.scalingTechnology,
-    })
+    return getTechnologySection(
+      {
+        ...project,
+        scalingTechnology: project.scalingTechnology,
+      },
+      daSolution,
+    )
   }
 }
 
@@ -88,36 +92,26 @@ function getCustomDaSection(
   }
 }
 
-async function getTechnologySection(
+function getTechnologySection(
   project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
-): Promise<
-  Extract<DataAvailabilitySection, { type: 'TechnologySection' }> | undefined
-> {
+  daSolution?: DaSolution,
+): Extract<DataAvailabilitySection, { type: 'TechnologySection' }> | undefined {
   assert(
     project.scalingTechnology?.dataAvailability,
     'dataAvailability is required',
   )
-
-  const layerId = project.scalingDa?.layer.projectId
-  const bridgeId = project.scalingDa?.bridge.projectId
-
-  // TODO: having those slugs in config would be easier
-  const [layer, bridge] = await Promise.all([
-    layerId && ps.getProject({ id: layerId }),
-    bridgeId && ps.getProject({ id: bridgeId }),
-  ])
 
   const props = getTechnologySectionProps(project, [
     makeTechnologyChoice(
       'data-availability',
       project.scalingTechnology.dataAvailability,
       {
-        relatedProjectBanner: layer
+        relatedProjectBanner: daSolution
           ? {
               text: 'Learn more about the DA layer here:',
               project: {
-                name: layer.name,
-                slug: `${layer.slug}/${bridge?.slug ?? 'no-bridge'}`,
+                name: daSolution.layerName,
+                slug: `${daSolution.layerName}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
                 type: 'data-availability',
               },
             }

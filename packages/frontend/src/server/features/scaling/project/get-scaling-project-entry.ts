@@ -427,7 +427,10 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const dataAvailabilitySection = await getDataAvailabilitySection(project)
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolution,
+  )
   if (dataAvailabilitySection) {
     sections.push({
       type: dataAvailabilitySection.type,
