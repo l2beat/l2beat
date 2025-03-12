@@ -84,7 +84,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                     />
                   ))}
                   {changedContracts.length > 0 && (
-                    <ImplementationHasChangedContracts
+                    <ContractsWithImpactfulChanges
                       contracts={changedContracts}
                     />
                   )}
@@ -129,7 +129,7 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             ))}
             {changedEscrows.length > 0 && (
-              <ImplementationHasChangedContracts contracts={changedEscrows} />
+              <ContractsWithImpactfulChanges contracts={changedEscrows} />
             )}
           </div>
         </>
@@ -155,7 +155,7 @@ function ChainNameHeader(props: { children: React.ReactNode }) {
   )
 }
 
-function ImplementationHasChangedContracts(props: {
+function ContractsWithImpactfulChanges(props: {
   contracts: TechnologyContract[]
 }) {
   return (
