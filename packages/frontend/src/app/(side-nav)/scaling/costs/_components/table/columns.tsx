@@ -41,7 +41,7 @@ export function getScalingCostsColumns(metric: CostsMetric) {
   return [
     ...getScalingCommonProjectColumns(
       columnHelper,
-      (row) => `/scaling/projects/${row.slug}#onchain-costs`,
+      (row) => `/scaling/projects/${row.slug}?highlight=onchain-costs`,
     ),
     columnHelper.group({
       id: 'total-cost-group',

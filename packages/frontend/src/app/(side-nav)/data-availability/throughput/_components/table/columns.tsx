@@ -16,7 +16,7 @@ const columnHelper = createColumnHelper<DaThroughputTableData>()
 
 export const [indexColumn, logoColumn] = getDaCommonProjectColumns(
   columnHelper,
-  (row) => `${row.href}#throughput`,
+  (row) => `${row.href}?highlight=throughput`,
 )
 
 export const publicSystemsColumns = [
@@ -25,7 +25,7 @@ export const publicSystemsColumns = [
   columnHelper.accessor('name', {
     header: 'DA Layer',
     cell: (ctx) => (
-      <TableLink href={`${ctx.row.original.href}#throughput`}>
+      <TableLink href={`${ctx.row.original.href}?highlight=throughput`}>
         <ProjectNameCell project={ctx.row.original} />
       </TableLink>
     ),

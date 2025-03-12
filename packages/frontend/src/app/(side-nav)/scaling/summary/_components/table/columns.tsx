@@ -75,7 +75,7 @@ export const scalingSummaryColumns = [
       id: 'stage',
       cell: (ctx) => (
         <StageCell
-          href={`/scaling/projects/${ctx.row.original.slug}#stage`}
+          href={`/scaling/projects/${ctx.row.original.slug}?highlight=stage`}
           stageConfig={ctx.row.original.stage}
           isAppchain={ctx.row.original.capability === 'appchain'}
         />

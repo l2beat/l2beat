@@ -18,7 +18,9 @@ const daLayerColumn = (hash?: string) =>
   columnHelper.accessor('name', {
     header: 'DA Layer',
     cell: (ctx) => (
-      <TableLink href={`${ctx.row.original.href}${hash ? `#${hash}` : ''}`}>
+      <TableLink
+        href={`${ctx.row.original.href}${hash ? `?highlight=${hash}` : ''}`}
+      >
         <ProjectNameCell project={ctx.row.original} />
       </TableLink>
     ),
@@ -221,11 +223,14 @@ export const publicSystemsColumns = [
 ]
 
 export const customColumns = [
-  ...getDaCommonProjectColumns(columnHelper, (row) => `${row.href}#da-layer`),
+  ...getDaCommonProjectColumns(
+    columnHelper,
+    (row) => `${row.href}?highlight=da-layer`,
+  ),
   daLayerColumn('da-layer'),
   daRisksColumn,
   daBridgeRisksColumn,
-  tvsColumn((row) => `${row.href}#tvs`),
+  tvsColumn((row) => `${row.href}?highlight=tvs`),
   membersColumn,
   fallbackColumn,
   challengeMechanismColumn,

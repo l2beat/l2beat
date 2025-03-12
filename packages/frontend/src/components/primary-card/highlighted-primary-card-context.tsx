@@ -7,7 +7,6 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { useEventListener } from '~/hooks/use-event-listener'
 
 interface HighlightedPrimaryCardContextType {
   highlightedId: string | undefined
@@ -29,10 +28,11 @@ export function HighlightedPrimaryCardProvider({
   const [highlightedId, setHighlightedId] = useState(defaultValue)
 
   const handleHashChange = useCallback(() => {
-    const hash = window.location.hash
-    if (!hash) return
+    const params = new URLSearchParams(window.location.search)
+    const highlight = params.get('highlight')
+    if (!highlight) return
 
-    const element = document.querySelector(hash)
+    const element = document.getElementById(highlight)
     if (!element) return
 
     const parentPrimaryCard = Array.from(
@@ -44,7 +44,6 @@ export function HighlightedPrimaryCardProvider({
   }, [])
 
   useEffect(handleHashChange, [handleHashChange])
-  useEventListener('hashchange', handleHashChange)
 
   useEffect(() => {
     if (!highlightedId) return
