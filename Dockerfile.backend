@@ -24,6 +24,7 @@ RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY --from=pruner /src/out/json/ .
 RUN pnpm install
+COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
 RUN pnpm build:backend
 
