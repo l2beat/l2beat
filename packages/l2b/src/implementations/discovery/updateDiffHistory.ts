@@ -6,6 +6,7 @@
 
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import path, { join, relative } from 'path'
 import {
   ConfigReader,
   type DiscoveryDiff,
@@ -34,7 +35,10 @@ export async function updateDiffHistory(
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
-  const discoveryFolder = `./discovery/${projectName}/${chain}`
+  const discoveryFolder =
+    '.' +
+    path.sep +
+    relative(process.cwd(), join(paths.discovery, projectName, chain))
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
   const discoveryFromMainBranch =
@@ -56,6 +60,7 @@ export async function updateDiffHistory(
 
   if ((discoveryFromMainBranch?.blockNumber ?? 0) < curDiscovery.blockNumber) {
     const rerun = await performDiscoveryOnPreviousBlock(
+      discoveryFolder,
       discoveryFromMainBranch,
       projectName,
       chain,
@@ -156,6 +161,7 @@ async function revertDiffHistory(
 }
 
 async function performDiscoveryOnPreviousBlock(
+  discoveryFolder: string,
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
   chain: string,
@@ -168,10 +174,9 @@ async function performDiscoveryOnPreviousBlock(
 
   // To check for changes to source code,
   // download sources for block number from main branch
-  const root = `discovery/${projectName}/${chain}`
   // Remove any old sources we fetched before, so that their count doesn't grow
-  await rimraf(`${root}/.code@*`, { glob: true })
-  await rimraf(`${root}/.flat@*`, { glob: true })
+  await rimraf(`${discoveryFolder}/.code@*`, { glob: true })
+  await rimraf(`${discoveryFolder}/.flat@*`, { glob: true })
 
   const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
 
@@ -187,18 +192,20 @@ async function performDiscoveryOnPreviousBlock(
   })
 
   const prevDiscoveryFile = readFileSync(
-    `${root}/discovered@${blockNumberFromMainBranch}.json`,
+    `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,
     'utf-8',
   )
   const prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
 
   // Remove discovered@... file, we don't need it
-  await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
+  await rimraf(
+    `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,
+  )
 
   // get code diff with main branch
   const flatDiff = compareFolders(
-    `${root}/.flat@${blockNumberFromMainBranch}`,
-    `${root}/.flat`,
+    `${discoveryFolder}/.flat@${blockNumberFromMainBranch}`,
+    `${discoveryFolder}/.flat`,
   )
 
   return { prevDiscovery, codeDiff: flatDiff === '' ? undefined : flatDiff }
