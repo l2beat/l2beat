@@ -1,7 +1,7 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 21465432,
+  "blockNumber": 22029694,
   "configHash": "0x12157ed777084cf451b7f2753e1d6e52caeff57130675e11d45ac7297a5b6480",
   "entries": [
     {
@@ -61,6 +61,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x13E83b0423534Eb6D542237F590096CEE5077056",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1WethGateway",
       "address": "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
       "type": "Contract",
@@ -105,11 +110,6 @@
         "l2Weth": "0xe3bb30f7742eC97Be5D60789A2b1273e462C0287",
         "router": "0x5D657b905275F36AD62C3d5C36966975613aFB96"
       }
-    },
-    {
-      "address": "0x17816E9A858b161c3E37016D139cf618056CaCD4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverHostIo",
@@ -251,7 +251,7 @@
         "$members": [
           "0xb6559478b59836376dA9937c4C697dDb21779E49",
           "0x9EBe5cabad9748263DbE1304064AdAb285c0f515",
-          "0x17816E9A858b161c3E37016D139cf618056CaCD4",
+          "0x13E83b0423534Eb6D542237F590096CEE5077056",
           "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd",
           "0x909e36B512Ed45250fdff513523119d825647695"
         ],
@@ -260,7 +260,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 223,
+        "nonce": 225,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -480,7 +480,7 @@
           "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
         ],
         "allowedOutboxList": ["0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"],
-        "delayedMessageCount": 3765,
+        "delayedMessageCount": 3778,
         "inboxHistory": [
           "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
           "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
@@ -488,8 +488,8 @@
         "outboxHistory": ["0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"],
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerInbox": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-        "sequencerMessageCount": 1290,
-        "sequencerReportedSubMessageCount": 534416
+        "sequencerMessageCount": 1301,
+        "sequencerReportedSubMessageCount": 534465
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -639,13 +639,13 @@
         "confirmPeriodBlocks": 43200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 40320,
-        "firstUnresolvedNode": 1185,
+        "firstUnresolvedNode": 1186,
         "inbox": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20468408,
-        "latestConfirmed": 1184,
-        "latestNodeCreated": 1184,
+        "latestConfirmed": 1185,
+        "latestNodeCreated": 1185,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
@@ -1023,7 +1023,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 1290,
+        "batchCount": 1301,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4",
@@ -1054,7 +1054,7 @@
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 3764,
+        "totalDelayedMessagesRead": 3777,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
