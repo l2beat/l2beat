@@ -1,6 +1,7 @@
 import type { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { UnixTime, type json } from '@l2beat/shared-pure'
-import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { HttpClient } from '../http/HttpClient'
+import { RetryHandler, type RetryHandlerVariant } from '../../tools'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
@@ -16,20 +17,35 @@ interface BlockscoutOptions {
   chain: string
 }
 
-interface Dependencies extends ClientCoreDependencies {
-  options: EtherscanOptions | BlockscoutOptions
-}
+export class BlockIndexerClient {
+  chain: string
 
-export class BlockIndexerClient extends ClientCore {
-  private readonly binTimeWidth: number
-  private readonly maximumCallsForBlockTimestamp: number
-  private readonly options: EtherscanOptions | BlockscoutOptions
+  // If you ask for a timestamp
+  // and there were no blocks for <timestamp - binTimeWidth, timestamp>
+  // API will return the error
+  private readonly binTimeWidth
+  private readonly maximumCallsForBlockTimestamp
+  private readonly retryHandler: RetryHandler
 
-  constructor(private readonly $: Dependencies) {
-    super($)
-    this.options = $.options
-    this.binTimeWidth = this.options.type === 'etherscan' ? 10 : 1
-    this.maximumCallsForBlockTimestamp = this.options.type === 'etherscan' ? 3 : 10
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly rateLimiter: RateLimiter,
+    private readonly options: EtherscanOptions | BlockscoutOptions,
+    logger?: Logger,
+    retryStrategy: RetryHandlerVariant = 'RELIABLE',
+  ) {
+    this.call = this.rateLimiter.wrap(this.call.bind(this))
+    this.binTimeWidth = options.type === 'etherscan' ? 10 : 1
+    this.maximumCallsForBlockTimestamp = options.type === 'etherscan' ? 3 : 10
+    this.chain = options.chain
+    this.retryHandler = logger 
+      ? RetryHandler.create(retryStrategy, logger)
+      : new RetryHandler({
+          logger: { warn: () => {} } as Logger,
+          maxRetries: 3,
+          initialRetryDelayMs: 1000,
+          maxRetryDelayMs: 10000,
+        })
   }
 
   static create(
@@ -37,14 +53,12 @@ export class BlockIndexerClient extends ClientCore {
     rateLimiter: RateLimiter,
     options: EtherscanOptions | BlockscoutOptions,
   ) {
-    return new BlockIndexerClient({
-      http: services.httpClient,
-      logger: services.logger,
-      sourceName: options.chain,
-      callsPerMinute: rateLimiter.callsPerMinute,
-      retryStrategy: 'RELIABLE',
+    return new BlockIndexerClient(
+      services.httpClient, 
+      rateLimiter, 
       options,
-    })
+      services.logger
+    )
   }
 
   // There is a case when there is not enough activity on a given chain
@@ -73,7 +87,7 @@ export class BlockIndexerClient extends ClientCore {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-this.binTimeWidth * UnixTime.MINUTE)
+        current -= this.binTimeWidth * UnixTime.MINUTE
       }
       counter++
     }
@@ -93,35 +107,22 @@ export class BlockIndexerClient extends ClientCore {
     }
     const url = `${this.options.url}?${query.toString()}`
 
-    const response = await this.fetch(url, {})
-    return response
-  }
+    const response = await this.retryHandler.retry(() => 
+      this.httpClient.fetch(url, {})
+    )
 
-  override validateResponse(response: json): {
-    success: boolean
-    message?: string
-  } {
     const etherscanResponse = EtherscanResponse.safeParse(response)
 
     if (etherscanResponse.success === false) {
-      return {
-        success: false,
-        message: `Invalid Etherscan response [${JSON.stringify(response)}]`,
-      }
+      const message = `Invalid Etherscan response [${JSON.stringify(response)}] for request [${url}].`
+      throw new TypeError(message)
     }
 
     if (etherscanResponse.data.message === 'NOTOK') {
-      return {
-        success: false,
-        message: JSON.stringify(etherscanResponse.data.result),
-      }
+      throw new Error(JSON.stringify(etherscanResponse.data.result))
     }
 
-    return { success: true }
-  }
-
-  get chain(): string {
-    return this.options.chain
+    return etherscanResponse.data.result
   }
 }
 
