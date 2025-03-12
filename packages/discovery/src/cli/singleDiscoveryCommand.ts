@@ -44,7 +44,7 @@ export const SingleDiscoveryCommand = command({
     const http = new HttpClient()
 
     const { result, blockNumber } = await discover(
-      paths.discovery,
+      paths,
       chainConfigs,
       projectConfig,
       DiscoveryLogger.CLI,
