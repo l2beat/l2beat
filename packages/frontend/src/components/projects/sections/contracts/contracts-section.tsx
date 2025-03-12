@@ -161,7 +161,8 @@ function ImplementationHasChangedContracts(props: {
   return (
     <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        {statusToText()}
+        There are impactful changes to the following contracts, and part of the
+        information might be outdated.
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry
@@ -174,26 +175,3 @@ function ImplementationHasChangedContracts(props: {
     </div>
   )
 }
-
-function statusToText() {
-  return 'There are impactful changes to the following contracts, and part of the information might be outdated.'
-}
-
-// TODO(radomski): Bring this back
-//function statusToText({
-//  hasImplementationChanged,
-//  hasHighSeverityFieldChanged,
-//}: {
-//  hasImplementationChanged: boolean
-//  hasHighSeverityFieldChanged: boolean
-//}) {
-//  if (hasImplementationChanged && hasHighSeverityFieldChanged) {
-//    return "There are changes to the following contracts' implementations and properties, and part of the information might be outdated."
-//  }
-//  if (hasImplementationChanged) {
-//    return 'There are implementation changes and part of the information might be outdated.'
-//  }
-//  if (hasHighSeverityFieldChanged) {
-//    return "There are changes to the following contracts' properties, and part of the information might be outdated."
-//  }
-//}
