@@ -1,5 +1,3 @@
-import { join } from 'path'
-import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import type {
   ContractValue,
   DiscoveryOutput,
@@ -7,10 +5,15 @@ import type {
   ResolvedPermissionPath,
 } from '@l2beat/discovery'
 import {
-  assert,
+  ConfigReader,
+  RolePermissionEntries,
+  getDiscoveryPaths,
+} from '@l2beat/discovery'
+import {
   EthereumAddress,
   type TokenBridgedUsing,
   UnixTime,
+  assert,
   formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
@@ -40,16 +43,17 @@ import {
   trimTrailingDots,
 } from './utils'
 
+const paths = getDiscoveryPaths()
+
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
+
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    public readonly configReader = new ConfigReader(
-      join(process.cwd(), '../config/discovery'),
-    ),
+    public readonly configReader = new ConfigReader(paths.discovery),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
     this.discoveries = [

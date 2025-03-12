@@ -1,6 +1,6 @@
-import path, { join } from 'path'
-import { ConfigReader } from '@l2beat/discovery'
+import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import { expect } from 'earl'
+import path from 'path'
 
 describe('Verify Discovery config files', () => {
   const dir = process.cwd()
@@ -12,9 +12,8 @@ describe('Verify Discovery config files', () => {
     process.chdir(dir)
   })
 
-  const configReader = new ConfigReader(
-    join(process.cwd(), '../config/discovery'),
-  )
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
   const chains = configReader.readAllChains()
 
   for (const chain of chains) {
@@ -32,9 +31,7 @@ describe('Verify Discovery config files', () => {
 
       describe(ConfigReader.prototype.readAllConfigsForChain.name, () => {
         it(`can read all configs for ${chain}`, () => {
-          const configReader = new ConfigReader(
-            join(process.cwd(), '../config/discovery'),
-          )
+          const configReader = new ConfigReader(paths.discovery)
 
           const result = configReader.readAllConfigsForChain(chain)
 
