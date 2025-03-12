@@ -73,25 +73,38 @@ const cmd = command({
       logger.info(`Generating TVS config for project ${project.id}`)
       const tvsConfig = await generateConfigForProject(project, logger)
 
-      // when running for the first time we want to dump the config in case TVS execution fails
-      const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
-      if (!fs.existsSync(filePath)) {
-        writeToFile(filePath, project.id, tvsConfig.tokens)
+      let newConfig: Token[] = []
+      if (tvsConfig.tokens.length > 0) {
+        logger.info('Executing TVS to exclude zero-valued tokens')
+        const localExecutor = new LocalExecutor(ps, env, logger)
+        const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
+
+        const currentTvs = tvs.get(timestamp)
+
+        assert(currentTvs, 'No data for timestamp')
+
+        const valueForProject = currentTvs.reduce((acc, token) => {
+          return acc + token.valueForProject
+        }, 0)
+
+        const valueForTotal = currentTvs.reduce((acc, token) => {
+          return acc + token.valueForTotal
+        }, 0)
+
+        totalTvs += valueForTotal
+
+        logger.info(`TVS for project ${toDollarString(valueForProject)}`)
+        logger.info(`Total TVS ${toDollarString(totalTvs)}`)
+
+        newConfig = currentTvs
+          .filter((token) => token.value !== 0)
+          .map((token) => token.tokenConfig)
+          .sort((a, b) => a.id.localeCompare(b.id))
+      } else {
+        logger.info('No tokens found')
       }
 
-      logger.info('Executing TVS to exclude zero-valued tokens')
-      const localExecutor = new LocalExecutor(ps, env, logger)
-      const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
-
-      const currentTvs = tvs.get(timestamp)
-
-      assert(currentTvs, 'No data for timestamp')
-
-      const newConfig = currentTvs
-        .filter((token) => token.value !== 0)
-        .map((token) => token.tokenConfig)
-        .sort((a, b) => a.id.localeCompare(b.id))
-
+      const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
       const currentConfig = readFromFile(filePath)
       const mergedTokens = mergeWithExistingConfig(
         newConfig,
@@ -99,21 +112,10 @@ const cmd = command({
         logger,
       )
 
-      const valueForProject = currentTvs.reduce((acc, token) => {
-        return acc + token.valueForProject
-      }, 0)
-
-      const valueForTotal = currentTvs.reduce((acc, token) => {
-        return acc + token.valueForTotal
-      }, 0)
-
-      totalTvs += valueForTotal
-
-      logger.info(`TVS for project ${toDollarString(valueForProject)}`)
-      logger.info(`Total TVS ${toDollarString(totalTvs)}`)
-
-      logger.info(`Writing results to file: ${filePath}`)
-      writeToFile(filePath, project.id, mergedTokens)
+      if (mergedTokens.length > 0) {
+        logger.info(`Writing results to file: ${filePath}`)
+        writeToFile(filePath, project.id, mergedTokens)
+      }
     }
 
     process.exit(0)

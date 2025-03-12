@@ -136,6 +136,24 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lisk-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
+        "decimals": 18,
+        "sinceTimestamp": 1714730063
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     }
   ]
 }
