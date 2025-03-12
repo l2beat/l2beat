@@ -1,9 +1,14 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22022274,
+  "blockNumber": 22029699,
   "configHash": "0x71855febe3a1f40ef64a239209565db6f663472d4562500daaea2def7a3d4c67",
   "entries": [
+    {
+      "address": "0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "GnosisSafe",
       "address": "0x015318c16AE443a20DE0A776dB06a59F0D279057",
@@ -526,6 +531,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x4A333c167Ce76C46149c6B0197977ae02aaeC929",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Matter Labs Multisig",
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "type": "Contract",
@@ -568,6 +578,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x4A333c167Ce76C46149c6B0197977ae02aaeC929",
           "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
           "0x8A23548a640De1137e58e2D9600e1c5913E3D674",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
@@ -576,12 +587,12 @@
           "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2",
           "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
         ],
-        "$threshold": 4,
+        "$threshold": 5,
         "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 177,
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 178,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -906,20 +917,6 @@
       "address": "0x6DA259FD6b42D6bAB9D22C01418F87c13a271478",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "GenesisUpgrade",
-      "address": "0x6e2BC597F1e83F9fC7c1f69157F2C12476873971",
-      "type": "Contract",
-      "template": "shared-zk-stack/GenesisUpgrade",
-      "sourceHashes": [
-        "0x397ec6a954a442e44c9ca54398210cdd9b24211f3488cd6cfc0693407a4041a2"
-      ],
-      "proxyType": "immutable",
-      "description": "Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts.",
-      "sinceTimestamp": 1730396975,
-      "sinceBlock": 21087222,
-      "values": { "$immutable": true }
     },
     {
       "address": "0x6F2A8Ee9452ba7d336b3fba03caC27f7818AeAD6",
@@ -1288,7 +1285,7 @@
         "$upgradeCount": 3,
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "genesisUpgrade": "0x6e2BC597F1e83F9fC7c1f69157F2C12476873971",
+        "genesisUpgrade": "0x0000000000000000000000000000000000000001",
         "getAllHyperchainChainIDs": [
           324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320
         ],
@@ -1305,14 +1302,14 @@
           "0xF2704433d11842d15aa76BBF0E00407267a99C92"
         ],
         "getChainAdmin": [],
-        "getSemverProtocolVersion": [0, 25, 0],
-        "initialCutHash": "0x0b30ec2102ea8e2cf92d22857c347d3b29bde8dfaf6f2ae19045f19c5a94ba5a",
+        "getSemverProtocolVersion": [0, 26, 0],
+        "initialCutHash": "0xaf3397d2d574e3fb4a729df5b561afe890323a5eab21980fe9aae230f5934458",
         "MAX_NUMBER_OF_HYPERCHAINS": 100,
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "protocolVersion": 107374182400,
-        "storedBatchZero": "0x83325e26523f69ee6ea60aea582325d22f3c6a85db5e4890e14d62a377635a6b",
-        "validatorTimelock": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        "protocolVersion": 111669149696,
+        "storedBatchZero": "0xbb3c62fb5577f094f9290297114948e6f6fb8d04083a366ba3dadb3569fb5c4f",
+        "validatorTimelock": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -1554,6 +1551,9 @@
         "$upgradeCount": 1,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "emergencyUpgradeBoard": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+        "emergencyUpgradeProposals": [
+          "0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"
+        ],
         "EXTENDED_LEGAL_VETO_PERIOD": 604800,
         "guardians": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
         "HARD_FREEZE_PERIOD": 604800,
@@ -1573,7 +1573,8 @@
         "protocolFrozenUntil": {
           "severity": "HIGH",
           "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
-        }
+        },
+        "emergencyUpgradeProposals": { "severity": "HIGH" }
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -1881,36 +1882,6 @@
     ],
     "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": [
       "constructor(address _singleton)"
-    ],
-    "0x6e2BC597F1e83F9fC7c1f69157F2C12476873971": [
-      "error InvalidTxType(uint256 txType)",
-      "error InvalidUpgradeTxn(uint8)",
-      "error L2BytecodeHashMismatch(bytes32 expected, bytes32 provided)",
-      "error L2UpgradeNonceNotEqualToNewProtocolVersion(uint256 nonce, uint256 protocolVersion)",
-      "error LengthIsNotDivisibleBy32(uint256 length)",
-      "error MalformedBytecode(uint8)",
-      "error PatchCantSetUpgradeTxn()",
-      "error PatchUpgradeCantSetBootloader()",
-      "error PatchUpgradeCantSetDefaultAccount()",
-      "error PreviousUpgradeBatchNotCleared()",
-      "error PreviousUpgradeNotFinalized(bytes32 txHash)",
-      "error ProtocolMajorVersionNotZero()",
-      "error ProtocolVersionDeltaTooLarge(uint256 _proposedDelta, uint256 _maxDelta)",
-      "error ProtocolVersionTooSmall()",
-      "error PubdataGreaterThanLimit(uint256 limit, uint256 length)",
-      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
-      "error TooManyFactoryDeps()",
-      "error TooMuchGas()",
-      "error TxnBodyGasLimitNotEnoughGas()",
-      "error UnexpectedNumberOfFactoryDeps()",
-      "error ValidateTxnNotEnoughGas()",
-      "event NewL2BootloaderBytecodeHash(bytes32 indexed previousBytecodeHash, bytes32 indexed newBytecodeHash)",
-      "event NewL2DefaultAccountBytecodeHash(bytes32 indexed previousBytecodeHash, bytes32 indexed newBytecodeHash)",
-      "event NewProtocolVersion(uint256 indexed previousProtocolVersion, uint256 indexed newProtocolVersion)",
-      "event NewVerifier(address indexed oldVerifier, address indexed newVerifier)",
-      "event NewVerifierParams(tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) oldVerifierParams, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) newVerifierParams)",
-      "event UpgradeComplete(uint256 indexed newProtocolVersion, bytes32 indexed l2UpgradeTxHash, tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes[] factoryDeps, bytes32 bootloaderHash, bytes32 defaultAccountHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) upgrade)",
-      "function upgrade(tuple(tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) l2ProtocolUpgradeTx, bytes[] factoryDeps, bytes32 bootloaderHash, bytes32 defaultAccountHash, address verifier, tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash) verifierParams, bytes l1ContractsUpgradeCalldata, bytes postUpgradeCalldata, uint256 upgradeTimestamp, uint256 newProtocolVersion) _proposedUpgrade) returns (bytes32)"
     ],
     "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A": [
       "constructor(address _singleton)"
@@ -2236,10 +2207,9 @@
     "shared-zk-stack/BridgeHub": "0xde0af5a3f8a91464429b95799ce4283902cf96e2c28439e7146b6d967dc914f9",
     "shared-zk-stack/ChainAdmin": "0x21362d1e1f6039b145ce8e607cf8c1f6f2d4b7e32cea642e1253fe0302cdb5d6",
     "shared-zk-stack/EmergencyUpgradeBoard": "0x948712aabe7f05cbc6e1633d6843efe53638a67d5c14d20bd45ec7f7a41c3d44",
-    "shared-zk-stack/GenesisUpgrade": "0x72a1c243c1a0b0bd5ca442b3746ffc2f7ffa645ed13529bad13e515264e18d6b",
     "shared-zk-stack/Guardians": "0x16f50acae053e052f68e51a684cce1b26ae63463f998b5da0c5ed4e163e2198d",
     "shared-zk-stack/L1SharedBridge": "0x5388c2d5f463b7fd28ed2a90a5cac7b7e0ff2ced789fb7a38dd0672a7a98a5af",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0xf34bc34991e8766debc1512713b7e184dc643c084a590a10ce130aeafbc45ef7",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0xeb6b04e146f0ca77cb2460aa4bdb38131f656cb142b969cbf4741fef9ccfbd4d",
     "shared-zk-stack/SecurityCouncil": "0x87e0adc2a1e574876e1221c8f98856984803a02867ad94dc110cb2c6708cb7b9",
     "shared-zk-stack/StateTransitionManager": "0xb1344a1a1ee8c6443e263eb382d17777f08477c985763c4e737cf0d457034c29"
   }
