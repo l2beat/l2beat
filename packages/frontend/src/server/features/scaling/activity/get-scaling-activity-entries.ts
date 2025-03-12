@@ -106,7 +106,8 @@ function getEthereumEntry(
     tab,
     // Ethereum is always at the top so it is always stageOrder 3
     stageOrder: 3,
-    filterable: undefined,
+    // TODO: Add non-filterable entry abstraction
+    filterable: [],
     data: {
       tps: data.tps,
       uops: data.uops,
