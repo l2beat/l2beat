@@ -15,13 +15,13 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingArchivedTable } from './table/scaling-archived-table'
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
 
 export function ScalingArchivedTables(
   props: TabbedScalingEntries<ScalingArchivedEntry>,

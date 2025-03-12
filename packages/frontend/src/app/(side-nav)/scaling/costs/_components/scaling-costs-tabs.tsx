@@ -14,13 +14,13 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { compareCosts } from '~/server/features/scaling/costs/utils/compare-stage-and-cost'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingCostsTable } from './table/scaling-costs-table'
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
 
 type Props = TabbedScalingEntries<ScalingCostsEntry> & {
   milestones: Milestone[]
