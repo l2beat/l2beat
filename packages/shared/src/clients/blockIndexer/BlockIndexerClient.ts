@@ -1,7 +1,6 @@
 import type { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
-import type { HttpClient } from '../http/HttpClient'
-import { RetryHandler, type RetryHandlerVariant } from '../../tools'
+import { UnixTime, type json } from '@l2beat/shared-pure'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
@@ -17,44 +16,35 @@ interface BlockscoutOptions {
   chain: string
 }
 
-// TODO: add retries, use HttpClient
-export class BlockIndexerClient {
-  chain: string
-  private readonly retryHandler: RetryHandler
+interface Dependencies extends ClientCoreDependencies {
+  options: EtherscanOptions | BlockscoutOptions
+}
 
-  // If you ask for a timestamp
-  // and there were no blocks for <timestamp - binTimeWidth, timestamp>
-  // API will return the error
-  private readonly binTimeWidth
-  private readonly maximumCallsForBlockTimestamp
+export class BlockIndexerClient extends ClientCore {
+  private readonly binTimeWidth: number
+  private readonly maximumCallsForBlockTimestamp: number
+  private readonly options: EtherscanOptions | BlockscoutOptions
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly rateLimiter: RateLimiter,
-    private readonly options: EtherscanOptions | BlockscoutOptions,
-    logger: Logger,
-    retryStrategy: RetryHandlerVariant = 'RELIABLE',
-  ) {
-    this.call = this.rateLimiter.wrap(this.call.bind(this))
-    this.binTimeWidth = options.type === 'etherscan' ? 10 : 1
-    this.maximumCallsForBlockTimestamp = options.type === 'etherscan' ? 3 : 10
-    this.chain = options.chain
-    this.retryHandler = RetryHandler.create(retryStrategy, logger)
+  constructor(private readonly $: Dependencies) {
+    super($)
+    this.options = $.options
+    this.binTimeWidth = this.options.type === 'etherscan' ? 10 : 1
+    this.maximumCallsForBlockTimestamp = this.options.type === 'etherscan' ? 3 : 10
   }
 
   static create(
     services: { httpClient: HttpClient; logger: Logger },
     rateLimiter: RateLimiter,
     options: EtherscanOptions | BlockscoutOptions,
-    retryStrategy: RetryHandlerVariant = 'RELIABLE',
   ) {
-    return new BlockIndexerClient(
-      services.httpClient, 
-      rateLimiter, 
-      options, 
-      services.logger,
-      retryStrategy
-    )
+    return new BlockIndexerClient({
+      http: services.httpClient,
+      logger: services.logger,
+      sourceName: options.chain,
+      callsPerMinute: rateLimiter.callsPerMinute,
+      retryStrategy: 'RELIABLE',
+      options,
+    })
   }
 
   // There is a case when there is not enough activity on a given chain
@@ -65,12 +55,10 @@ export class BlockIndexerClient {
     let counter = 1
     while (counter <= this.maximumCallsForBlockTimestamp) {
       try {
-        const result = await this.retryHandler.retry(() => 
-          this.call('block', 'getblocknobytime', {
-            timestamp: current.toString(),
-            closest: 'before',
-          })
-        )
+        const result = await this.call('block', 'getblocknobytime', {
+          timestamp: current.toString(),
+          closest: 'before',
+        })
 
         return BlockTimestampResponse.parse(result)
       } catch (error) {
@@ -85,18 +73,12 @@ export class BlockIndexerClient {
           throw new Error(errorObject.message)
         }
 
-        current -= this.binTimeWidth * UnixTime.MINUTE
+        current = current.add(-this.binTimeWidth * UnixTime.MINUTE)
       }
       counter++
     }
 
-    throw new Error('Could not fetch block number', {
-      cause: {
-        current,
-        timestamp,
-        calls: this.maximumCallsForBlockTimestamp,
-      },
-    })
+    throw new Error('Could not fetch block number')
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
@@ -111,19 +93,39 @@ export class BlockIndexerClient {
     }
     const url = `${this.options.url}?${query.toString()}`
 
-    const response = await this.httpClient.fetch(url, {})
+    const response = await this.fetch(url, {})
+    return response
+  }
 
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
     const etherscanResponse = EtherscanResponse.safeParse(response)
 
     if (etherscanResponse.success === false) {
-      const message = `Invalid Etherscan response [${JSON.stringify(response)}] for request [${url}].`
-      throw new TypeError(message)
+      return {
+        success: false,
+        message: `Invalid Etherscan response [${JSON.stringify(response)}]`,
+      }
     }
 
     if (etherscanResponse.data.message === 'NOTOK') {
-      throw new Error(JSON.stringify(etherscanResponse.data.result))
+      return {
+        success: false,
+        message: JSON.stringify(etherscanResponse.data.result),
+      }
     }
 
-    return etherscanResponse.data.result
+    return { success: true }
   }
+
+  get chain(): string {
+    return this.options.chain
+  }
+}
+
+// This is needed for type checking in the constructor
+interface HttpClient {
+  fetch(url: string, init: Record<string, unknown>): Promise<json>
 }
