@@ -20,6 +20,7 @@ import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
+import { join } from 'path'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -34,7 +35,7 @@ export async function updateDiffHistory(
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const curDiscovery = configReader.readDiscovery(projectName, chain)
-  const discoveryFolder = `./discovery/${projectName}/${chain}`
+  const discoveryFolder = join(paths.discovery, projectName, chain)
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
   const discoveryFromMainBranch =
