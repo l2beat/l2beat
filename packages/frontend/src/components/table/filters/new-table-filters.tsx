@@ -1,3 +1,4 @@
+import { uniq } from 'lodash'
 import { NewTableFilterClearButton } from './new-table-filter-clear-button'
 import { NewTableFilterCombobox } from './new-table-filter-combobox'
 import { useNewTableFilterContext } from './new-table-filter-context'
@@ -17,7 +18,17 @@ export function NewTableFilters<T extends { filterable: FilterableValue[] }>({
     <div className="flex justify-between gap-2">
       <div className="flex flex-wrap items-center gap-2">
         {state.map((filter) => (
-          <NewTableFilterItem key={filter.id} filter={filter} />
+          <NewTableFilterItem
+            key={filter.id}
+            filter={filter}
+            possibleValues={uniq(
+              entries.flatMap((e) =>
+                e.filterable
+                  .filter((f) => f.id === filter.id)
+                  .map((f) => f.value),
+              ),
+            )}
+          />
         ))}
         <NewTableFilterCombobox entries={entries} />
       </div>

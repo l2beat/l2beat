@@ -69,37 +69,24 @@ export function getCommonScalingEntry({
         ? 'Rollups'
         : 'ValidiumsAndOptimiums',
     stageOrder: getStageOrder(project.scalingInfo.stage),
-    // filterable: {
-    //   type: project.scalingInfo.type,
-    //   stack: project.scalingInfo.stack ?? 'No stack',
-    //   stage: project.scalingInfo.stage,
-    //   purposes: project.scalingInfo.purposes,
-    //   hostChain: project.scalingInfo.hostChain.name,
-    //   daLayer: project.scalingInfo.daLayer,
-    //   raas: project.scalingInfo.raas ?? 'No RaaS',
-    // },
     filterable: [
-      { id: 'type', label: 'Type', value: project.scalingInfo.type },
+      { id: 'type', value: project.scalingInfo.type },
       {
         id: 'stack',
-        label: 'Stack',
         value: project.scalingInfo.stack ?? 'No stack',
       },
-      { id: 'stage', label: 'Stage', value: project.scalingInfo.stage },
+      { id: 'stage', value: project.scalingInfo.stage },
       ...project.scalingInfo.purposes.map((purpose) => ({
-        id: 'purpose',
-        label: 'Purpose',
+        id: 'purpose' as const,
         value: purpose,
       })),
       {
         id: 'hostChain',
-        label: 'Host Chain',
         value: project.scalingInfo.hostChain.name,
       },
-      { id: 'daLayer', label: 'DA Layer', value: project.scalingInfo.daLayer },
+      { id: 'daLayer', value: project.scalingInfo.daLayer },
       {
         id: 'raas',
-        label: 'RaaS',
         value: project.scalingInfo.raas ?? 'No RaaS',
       },
     ],

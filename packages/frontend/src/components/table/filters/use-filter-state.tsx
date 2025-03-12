@@ -1,10 +1,10 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { useReducer } from 'react'
+import type { FilterableValueId } from './new-types'
 
 type Filter = {
-  id: string
-  label: string
+  id: FilterableValueId
   values: string[]
   reversed: boolean
 }
@@ -19,15 +19,17 @@ type FilterAction =
 type AddFilterAction = {
   type: 'add'
   payload: {
-    id: string
-    label: string
+    id: FilterableValueId
     value: string
   }
 }
 
 type RemoveFilterAction = {
   type: 'remove'
-  id: string
+  payload: {
+    id: FilterableValueId
+    value?: string
+  }
 }
 
 type ClearFilterAction = {
@@ -37,7 +39,7 @@ type ClearFilterAction = {
 type SetReversedFilterAction = {
   type: 'setReversed'
   payload: {
-    id: string
+    id: FilterableValueId
     value: boolean
   }
 }
@@ -64,13 +66,23 @@ function filterReducer(state: FilterState, action: FilterAction) {
         ...state,
         {
           id: action.payload.id,
-          label: action.payload.label,
           values: [action.payload.value],
           reversed: false,
         },
       ]
     case 'remove':
-      return state.filter((filter) => filter.id !== action.id)
+      if (action.payload.value) {
+        const updatedState = state.map((filter) =>
+          filter.id === action.payload.id
+            ? {
+                ...filter,
+                values: filter.values.filter((v) => v !== action.payload.value),
+              }
+            : filter,
+        )
+        return updatedState.filter((filter) => filter.values.length > 0)
+      }
+      return state.filter((filter) => filter.id !== action.payload.id)
     case 'setReversed':
       return state.map((filter) =>
         filter.id === action.payload.id

@@ -1,4 +1,4 @@
-import { uniq, uniqBy } from 'lodash'
+import { partition, uniq, uniqBy } from 'lodash'
 import { useState } from 'react'
 import {
   Command,
@@ -14,8 +14,10 @@ import {
   PopoverTrigger,
 } from '~/components/core/popover'
 import { FilterIcon } from '~/icons/filter'
+import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
 import { useNewTableFilterContext } from './new-table-filter-context'
-import type { FilterableValue } from './new-types'
+import type { FilterableValueId } from './new-types'
+import { type FilterableValue, filterIdToLabel } from './new-types'
 
 export function NewTableFilterCombobox<
   T extends { filterable: FilterableValue[] },
@@ -44,8 +46,10 @@ function Content<T extends { filterable: FilterableValue[] }>({
   entries,
   setOpen,
 }: { entries: T[]; setOpen: (open: boolean) => void }) {
-  const { dispatch } = useNewTableFilterContext()
-  const [selectedId, setSelectedId] = useState<string | undefined>(undefined)
+  const { state, dispatch } = useNewTableFilterContext()
+  const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
+    undefined,
+  )
   const uniqFilterables = uniqBy(
     entries.flatMap((e) => e.filterable),
     'id',
@@ -60,13 +64,14 @@ function Content<T extends { filterable: FilterableValue[] }>({
           <CommandGroup>
             {uniqFilterables.map((filterable) => (
               <CommandItem
+                className="font-semibold"
                 key={filterable.id}
                 value={filterable.id}
-                onSelect={(id) => {
-                  setSelectedId(id)
+                onSelect={() => {
+                  setSelectedId(filterable.id)
                 }}
               >
-                {filterable.label}
+                {filterIdToLabel[filterable.id]}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -74,40 +79,78 @@ function Content<T extends { filterable: FilterableValue[] }>({
       </Command>
     )
   }
-  const selectedFilterable = uniqFilterables.find((f) => f.id === selectedId)!
 
-  const selectedFilterableValues = uniq(
-    entries.flatMap(
-      (e) => e.filterable?.find((f) => f.id === selectedId)?.value,
+  const [selectedValues, notSelectedValues] = partition(
+    uniq(
+      entries.flatMap(
+        (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
+      ),
     ),
+    (value) =>
+      state.some(
+        (filter) => filter.id === selectedId && filter.values.includes(value),
+      ),
   )
   return (
     <Command className="border border-divider">
-      <CommandInput className="h-9" placeholder="Search values..." />
+      <CommandInput
+        className="h-9"
+        placeholder={`Search ${filterIdToLabel[selectedId].toLowerCase()}...`}
+      />
       <CommandList>
         <CommandEmpty>No value found.</CommandEmpty>
-        <CommandGroup>
-          {selectedFilterableValues.map((value) => (
-            <CommandItem
-              key={value}
-              value={value}
-              onSelect={(value) => {
-                setOpen(false)
-
-                dispatch({
-                  type: 'add',
-                  payload: {
-                    id: selectedId,
-                    label: selectedFilterable.label,
-                    value,
-                  },
-                })
-              }}
-            >
-              {value}
-            </CommandItem>
-          ))}
-        </CommandGroup>
+        {selectedValues.length > 0 && (
+          <CommandGroup>
+            {selectedValues.map((value) => {
+              return (
+                <CommandItem
+                  className="flex gap-2 font-semibold"
+                  key={value}
+                  value={value}
+                  onSelect={(value) => {
+                    setOpen(false)
+                    dispatch({
+                      type: 'remove',
+                      payload: {
+                        id: selectedId,
+                        value,
+                      },
+                    })
+                  }}
+                >
+                  <NewTableFilterCheckbox checked={true} />
+                  {value}
+                </CommandItem>
+              )
+            })}
+          </CommandGroup>
+        )}
+        {notSelectedValues.length > 0 && (
+          <CommandGroup>
+            {notSelectedValues.map((value) => {
+              return (
+                <CommandItem
+                  className="flex gap-2 font-semibold"
+                  key={value}
+                  value={value}
+                  onSelect={(value) => {
+                    setOpen(false)
+                    dispatch({
+                      type: 'add',
+                      payload: {
+                        id: selectedId,
+                        value,
+                      },
+                    })
+                  }}
+                >
+                  <NewTableFilterCheckbox checked={false} />
+                  {value}
+                </CommandItem>
+              )
+            })}
+          </CommandGroup>
+        )}
       </CommandList>
     </Command>
   )
