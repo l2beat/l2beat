@@ -3,13 +3,13 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
 import { Checkbox } from '~/components/core/checkbox'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 
+import { useNewTableFilterContext } from '~/components/table/filters/new-table-filter-context'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
@@ -30,13 +30,13 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
-  const filters = useScalingFilterValues()
+  const { state: filters } = useNewTableFilterContext()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
 
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvs-unit', 'usd')
 
   const filter = useMemo<TvsProjectFilter>(() => {
-    if (filters.isEmpty) {
+    if (filters.length === 0) {
       return {
         type: tab,
       }
@@ -45,7 +45,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
       type: 'projects',
       projectIds: entries.map((project) => project.id),
     }
-  }, [entries, filters.isEmpty, tab])
+  }, [entries, filters, tab])
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range: timeRange,

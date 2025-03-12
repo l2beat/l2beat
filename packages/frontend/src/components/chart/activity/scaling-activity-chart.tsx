@@ -3,7 +3,7 @@
 import type { Milestone } from '@l2beat/config'
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { useActivityMetricContext } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-context'
@@ -11,6 +11,7 @@ import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_co
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
+import { useNewTableFilterContext } from '~/components/table/filters/new-table-filter-context'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -42,7 +43,7 @@ export function ScalingActivityChart({
   const { checked } = useRecategorisationPreviewContext()
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
-  const filter = useScalingFilterValues()
+  const { state: filters } = useNewTableFilterContext()
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvs-scale',
     'lin',
@@ -53,14 +54,15 @@ export function ScalingActivityChart({
     true,
   )
 
-  const chartFilter: ActivityProjectFilter = filter.isEmpty
-    ? {
-        type: typeToChartFilterType(type),
-      }
-    : {
-        type: 'projects',
-        projectIds: entries.map((project) => project.id),
-      }
+  const chartFilter: ActivityProjectFilter =
+    filters.length === 0
+      ? {
+          type: typeToChartFilterType(type),
+        }
+      : {
+          type: 'projects',
+          projectIds: entries.map((project) => project.id),
+        }
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: chartFilter,

@@ -14,17 +14,17 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
 
 export function ScalingUpcomingTables(
   props: TabbedScalingEntries<ScalingUpcomingEntry>,
 ) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
@@ -48,13 +48,14 @@ export function ScalingUpcomingTables(
 
   return (
     <>
-      <ScalingUpcomingAndArchivedFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+      <NewTableFilters
+        entries={[
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
-        className="max-md:ml-4 max-md:mt-4"
+        // TODO: are these needed?
+        // className="max-md:ml-4 max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

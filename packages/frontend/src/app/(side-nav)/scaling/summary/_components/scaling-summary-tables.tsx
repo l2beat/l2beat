@@ -19,7 +19,7 @@ import {
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { ScalingSummaryFilters } from '../../_components/scaling-summary-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
@@ -28,7 +28,7 @@ import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summar
 
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
@@ -67,7 +67,7 @@ export function ScalingSummaryTables(props: Props) {
     <>
       <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
       <ScalingSummaryFilters
-        items={[
+        entries={[
           ...entries.rollups,
           ...entries.validiumsAndOptimiums,
           ...entries.others,

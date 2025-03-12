@@ -11,18 +11,18 @@ import {
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingFinalityTable } from './table/scaling-finality-table'
 
 type Props = TabbedScalingEntries<ScalingFinalityEntry>
 
 export function ScalingFinalityTables(props: Props) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
@@ -67,11 +67,11 @@ export function ScalingFinalityTables(props: Props) {
   const showOthers = checked || entries.others.length > 0
   return (
     <>
-      <ScalingFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+      <NewTableFilters
+        entries={[
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
       />
       <DirectoryTabs value={tab} onValueChange={setTab}>

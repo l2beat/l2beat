@@ -14,20 +14,20 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { compareCosts } from '~/server/features/scaling/costs/utils/compare-stage-and-cost'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingCostsTable } from './table/scaling-costs-table'
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
 
 type Props = TabbedScalingEntries<ScalingCostsEntry> & {
   milestones: Milestone[]
 }
 
 export function ScalingCostsTabs(props: Props) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
@@ -71,13 +71,14 @@ export function ScalingCostsTabs(props: Props) {
   const showOthers = checked || entries.others.length > 0
   return (
     <>
-      <ScalingFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+      <NewTableFilters
+        entries={[
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
-        className="max-md:mt-4"
+        // TODO: are these needed?
+        // className="max-md:mt-4"
       />
       <DirectoryTabs value={tab} onValueChange={setTab}>
         <DirectoryTabsList>

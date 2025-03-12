@@ -18,10 +18,10 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
@@ -30,7 +30,7 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
 }
 
 export function ScalingActivityTabs(props: Props) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
@@ -65,10 +65,10 @@ export function ScalingActivityTabs(props: Props) {
   return (
     <>
       <ScalingActivityFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+        entries={[
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
         className="max-md:mt-4"
       />

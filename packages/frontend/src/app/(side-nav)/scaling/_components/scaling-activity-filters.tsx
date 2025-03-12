@@ -1,15 +1,15 @@
 'use client'
 import Link from 'next/link'
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
 import { useTracking } from '~/hooks/use-custom-event'
 import type { FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
-import { ScalingFilters } from './scaling-filters'
 
 interface Props {
-  items: FilterableScalingEntry[]
+  entries: FilterableScalingEntry[]
   className?: string
 }
-export function ScalingActivityFilters({ items, className }: Props) {
+export function ScalingActivityFilters({ entries, className }: Props) {
   return (
     <div
       className={cn(
@@ -17,7 +17,7 @@ export function ScalingActivityFilters({ items, className }: Props) {
         className,
       )}
     >
-      <ScalingFilters items={items} showHostChainFilter showDALayerFilter />
+      <NewTableFilters entries={entries} />
       <ExplorerButton />
     </div>
   )

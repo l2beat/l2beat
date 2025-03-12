@@ -1,7 +1,7 @@
 import { MainPageHeader } from '~/components/main-page-header'
+import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
 import { getScalingArchivedEntries } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingArchivedTables } from './_components/scaling-archived-tables'
 
 export const metadata = getDefaultMetadata({
@@ -15,9 +15,9 @@ export default async function Page() {
   return (
     <>
       <MainPageHeader>Archived</MainPageHeader>
-      <ScalingFilterContextProvider>
+      <NewTableFilterContextProvider>
         <ScalingArchivedTables {...entries} />
-      </ScalingFilterContextProvider>
+      </NewTableFilterContextProvider>
     </>
   )
 }

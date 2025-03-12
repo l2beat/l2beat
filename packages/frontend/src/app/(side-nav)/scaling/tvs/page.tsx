@@ -1,10 +1,10 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { MainPageHeader } from '~/components/main-page-header'
+import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
-import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingTvsTabs } from './_components/scaling-tvs-tabs'
 
 export const metadata = getDefaultMetadata({
@@ -27,12 +27,12 @@ export default async function Page() {
 
   return (
     <HydrateClient>
-      <ScalingFilterContextProvider>
+      <NewTableFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Value Secured</MainPageHeader>
           <ScalingTvsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
         </ScalingAssociatedTokensContextProvider>
-      </ScalingFilterContextProvider>
+      </NewTableFilterContextProvider>
     </HydrateClient>
   )
 }

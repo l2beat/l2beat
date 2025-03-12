@@ -1,19 +1,11 @@
-import { useOptionalBridgesFilterValues } from '~/app/(side-nav)/bridges/_components/bridges-filter-context'
-import { useOptionalScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { linkVariants } from '../link/custom-link'
+import { useNewTableFilterContext } from './filters/new-table-filter-context'
 
 export function TableEmptyState() {
-  const filterStates = [
-    useOptionalScalingFilterValues(),
-    useOptionalBridgesFilterValues(),
-  ]
+  const { dispatch } = useNewTableFilterContext()
 
   const reset = () => {
-    for (const filter of filterStates) {
-      if (filter) {
-        filter.reset()
-      }
-    }
+    dispatch({ type: 'clear' })
   }
 
   return (
