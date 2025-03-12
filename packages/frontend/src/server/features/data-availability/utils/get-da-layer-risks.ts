@@ -1,10 +1,16 @@
 import type { ProjectDaLayer, TableReadyValue } from '@l2beat/config'
 
+export interface AdjustedDaLayerRisks {
+  economicSecurity?: TableReadyValue
+  daLayer?: TableReadyValue
+  fraudDetection?: TableReadyValue
+}
+
 export function getDaLayerRisks(
   daLayer: ProjectDaLayer,
   totalValueSecured: number,
   economicSecurity: number | undefined,
-) {
+): AdjustedDaLayerRisks {
   return {
     ...daLayer.risks,
     economicSecurity: getEconomicSecurity(
@@ -23,19 +29,18 @@ function getEconomicSecurity(
   if (!daLayer.risks.economicSecurity) {
     return
   }
-  // TODO: This feels wrong!
-  const shouldCalculate =
-    daLayer.risks.economicSecurity.value === 'Staked assets'
+  const shouldCalculate = !!daLayer.risks.economicSecurity.adjustSecurityRisk
+
   const hasData = economicSecurity !== undefined && totalValueSecured > 0
 
   if (!shouldCalculate || !hasData) {
-    return daLayer.risks.economicSecurity
+    return daLayer.risks.economicSecurity.value
   }
 
   const sentiment = adjustSentiment(totalValueSecured, economicSecurity)
 
   return {
-    ...daLayer.risks.economicSecurity,
+    ...daLayer.risks.economicSecurity.value,
     sentiment,
   }
 }

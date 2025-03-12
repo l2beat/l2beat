@@ -496,7 +496,7 @@ export interface ProjectDaLayer {
 
 export interface DaLayerRisks {
   daLayer?: TableReadyValue
-  economicSecurity?: TableReadyValue
+  economicSecurity?: { value: TableReadyValue, adjustSecurityRisk?: boolean }
   fraudDetection?: TableReadyValue
 }
 
