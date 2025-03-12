@@ -29,19 +29,18 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger disabledOnMobile asChild>
+      <TooltipTrigger asChild disabledOnMobile>
         <TableLink href={href}>
-          <div
-            className={cn(
-              'flex gap-1',
-              isAppchain && 'max-md:pb-[5px] max-md:pt-2',
-            )}
-          >
-            <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
+          <div className="flex gap-1">
+            <StageBadge
+              stage={stageConfig.stage}
+              isAppchain={isAppchain}
+              className="flex flex-col gap-px"
+            />
             {hasNotice && (
               <CircleQuestionMarkIcon
                 className={cn(
-                  'mt-px size-5 fill-current',
+                  '-mt-px size-5 fill-current md:mt-px',
                   getStageTextClassname(stageConfig.stage),
                 )}
               />
@@ -49,7 +48,7 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
             {stageConfig.stage !== 'NotApplicable' &&
               stageConfig.stage !== 'UnderReview' &&
               stageConfig.downgradePending && (
-                <StopwatchIcon className="mt-[3px]" />
+                <StopwatchIcon className="mt-px md:mt-[3px]" />
               )}
           </div>
         </TableLink>

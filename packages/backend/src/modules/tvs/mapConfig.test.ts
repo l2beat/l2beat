@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { extractPricesAndAmounts, mapConfig } from './mapConfig'
-import { type Token, TokenId, type TvsConfig } from './types'
+import { type ProjectTvsConfig, type Token, TokenId } from './types'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
@@ -42,15 +42,7 @@ describe(mapConfig.name, () => {
               '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
             ),
             decimals: 18,
-          },
-          {
-            type: 'balanceOfEscrow',
-            address: 'native',
-            chain: 'ethereum',
-            escrowAddress: EthereumAddress(
-              '0xcEe284F754E854890e311e3280b767F80797180d',
-            ),
-            decimals: 18,
+            sinceTimestamp: UnixTime(1661457944),
           },
           {
             type: 'balanceOfEscrow',
@@ -60,6 +52,7 @@ describe(mapConfig.name, () => {
               '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             ),
             decimals: 18,
+            sinceTimestamp: UnixTime(1623784100),
           },
           {
             type: 'balanceOfEscrow',
@@ -69,10 +62,10 @@ describe(mapConfig.name, () => {
               '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
             ),
             decimals: 18,
+            sinceTimestamp: UnixTime(1622243344),
           },
         ],
       },
-      sinceTimestamp: UnixTime(1661457944),
       category: 'ether',
       source: 'canonical',
       isAssociated: false,
@@ -90,9 +83,10 @@ describe(mapConfig.name, () => {
       priceId: 'arbitrum',
       amount: {
         type: 'circulatingSupply',
-        priceId: 'arbitrum',
+        apiId: 'arbitrum',
+        decimals: 18,
+        sinceTimestamp: UnixTime(1679529600),
       },
-      sinceTimestamp: UnixTime(1679529600),
       category: 'other',
       source: 'native',
       isAssociated: true,
@@ -109,8 +103,8 @@ describe(mapConfig.name, () => {
         address: EthereumAddress('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
         chain: 'arbitrum',
         decimals: 18,
+        sinceTimestamp: UnixTime(1718150400),
       },
-      sinceTimestamp: UnixTime(1718150400),
       category: 'other',
       source: 'external',
       isAssociated: false,
@@ -120,7 +114,7 @@ describe(mapConfig.name, () => {
 
 describe(extractPricesAndAmounts.name, () => {
   it('should map amount formulas to sync configs', async () => {
-    const tvsConfig = mockObject<TvsConfig>({
+    const tvsConfig = mockObject<ProjectTvsConfig>({
       tokens: [
         mockObject<Token>({
           priceId: 'price-ARB',
@@ -133,8 +127,9 @@ describe(extractPricesAndAmounts.name, () => {
             escrowAddress: EthereumAddress(
               '0xcEe284F754E854890e311e3280b767F80797180d',
             ),
-
             decimals: 18,
+            sinceTimestamp: UnixTime(100),
+            untilTimestamp: UnixTime(200),
           },
           valueForProject: undefined,
           valueForTotal: undefined,
@@ -143,7 +138,9 @@ describe(extractPricesAndAmounts.name, () => {
           priceId: 'price-ARB',
           amount: {
             type: 'circulatingSupply',
-            priceId: 'price-ARB',
+            apiId: 'price-ARB',
+            decimals: 18,
+            sinceTimestamp: UnixTime(100),
           },
           valueForProject: undefined,
           valueForTotal: undefined,
@@ -156,7 +153,9 @@ describe(extractPricesAndAmounts.name, () => {
             arguments: [
               {
                 type: 'const',
-                value: 100,
+                value: '100',
+                decimals: 0,
+                sinceTimestamp: UnixTime(100),
               },
               {
                 type: 'totalSupply',
@@ -165,6 +164,7 @@ describe(extractPricesAndAmounts.name, () => {
                 ),
                 chain: 'arbitrum',
                 decimals: 18,
+                sinceTimestamp: UnixTime(100),
               },
             ],
           },
@@ -188,11 +188,15 @@ describe(extractPricesAndAmounts.name, () => {
             '0xcEe284F754E854890e311e3280b767F80797180d',
           ),
           type: 'balanceOfEscrow',
+          sinceTimestamp: UnixTime(100),
+          untilTimestamp: UnixTime(200),
         },
         {
           id: '4ffda8b9b469',
-          priceId: 'price-ARB',
+          apiId: 'price-ARB',
           type: 'circulatingSupply',
+          decimals: 18,
+          sinceTimestamp: UnixTime(100),
         },
         {
           id: '9c352c5b1183',
@@ -202,6 +206,7 @@ describe(extractPricesAndAmounts.name, () => {
           chain: 'arbitrum',
           decimals: 18,
           type: 'totalSupply',
+          sinceTimestamp: UnixTime(100),
         },
       ],
       prices: [
@@ -226,7 +231,7 @@ describe(extractPricesAndAmounts.name, () => {
       '0xA9cF190a5b7daE4CB1b3BD68fABf310cf1982185',
     )
 
-    const tvsConfig = mockObject<TvsConfig>({
+    const tvsConfig = mockObject<ProjectTvsConfig>({
       tokens: [
         // WBTC with amount formula as totalSupply on L2
         mockObject<Token>({
@@ -236,6 +241,7 @@ describe(extractPricesAndAmounts.name, () => {
             address: wBTCContractAddress,
             chain: 'bob',
             decimals: 18,
+            sinceTimestamp: UnixTime(100),
           },
           valueForProject: undefined,
           valueForTotal: undefined,
@@ -250,6 +256,7 @@ describe(extractPricesAndAmounts.name, () => {
             address: solvBTCContractAddress,
             chain: 'bob',
             decimals: 18,
+            sinceTimestamp: UnixTime(100),
           },
           valueForProject: {
             type: 'calculation',
@@ -262,6 +269,7 @@ describe(extractPricesAndAmounts.name, () => {
                   address: solvBTCContractAddress,
                   chain: 'bob',
                   decimals: 18,
+                  sinceTimestamp: UnixTime(100),
                 },
                 priceId: 'price-SolvBTC',
               },
@@ -273,6 +281,7 @@ describe(extractPricesAndAmounts.name, () => {
                   chain: 'bob',
                   decimals: 18,
                   escrowAddress: solvBTCEscrowAddress,
+                  sinceTimestamp: UnixTime(100),
                 },
                 priceId: 'price-WBTC',
               },
@@ -292,6 +301,7 @@ describe(extractPricesAndAmounts.name, () => {
           address: wBTCContractAddress,
           chain: 'bob',
           decimals: 18,
+          sinceTimestamp: UnixTime(100),
         },
         {
           id: 'b1828c012ce3',
@@ -299,6 +309,7 @@ describe(extractPricesAndAmounts.name, () => {
           address: solvBTCContractAddress,
           chain: 'bob',
           decimals: 18,
+          sinceTimestamp: UnixTime(100),
         },
         {
           id: '87ab15cf98f5',
@@ -307,6 +318,7 @@ describe(extractPricesAndAmounts.name, () => {
           chain: 'bob',
           decimals: 18,
           escrowAddress: solvBTCEscrowAddress,
+          sinceTimestamp: UnixTime(100),
         },
       ],
       prices: [

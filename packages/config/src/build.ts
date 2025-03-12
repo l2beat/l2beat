@@ -1,5 +1,5 @@
 import { ProjectDatabase } from './ProjectDatabase'
-import { getProjects } from './projects/project/getProjects'
+import { getProjects } from './processing/getProjects'
 import { getTokenList } from './tokens/tokens'
 
 main()

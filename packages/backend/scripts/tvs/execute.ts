@@ -11,10 +11,10 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import type {
+  ProjectTvsConfig,
   Token,
   TokenValue,
   TvsBreakdown,
-  TvsConfig,
 } from '../../src/modules/tvs/types'
 
 const args = {
@@ -42,7 +42,7 @@ const cmd = command({
     const config = {
       projectId: ProjectId(args.project),
       tokens,
-    } as TvsConfig
+    } as ProjectTvsConfig
 
     const tvs = await localExecutor.run(config, [timestamp], false)
 

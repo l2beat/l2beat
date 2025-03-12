@@ -15,9 +15,15 @@
         "escrowAddress": {
           "type": "string"
         },
+        "sinceTimestamp": {
+          "type": "number"
+        },
         "type": {
           "const": "balanceOfEscrow",
           "type": "string"
+        },
+        "untilTimestamp": {
+          "type": "number"
         }
       },
       "type": "object"
@@ -89,24 +95,42 @@
     },
     "CirculatingSupplyAmountFormula": {
       "properties": {
-        "priceId": {
+        "apiId": {
           "type": "string"
+        },
+        "decimals": {
+          "type": "number"
+        },
+        "sinceTimestamp": {
+          "type": "number"
         },
         "type": {
           "const": "circulatingSupply",
           "type": "string"
+        },
+        "untilTimestamp": {
+          "type": "number"
         }
       },
       "type": "object"
     },
     "ConstAmountFormula": {
       "properties": {
+        "decimals": {
+          "type": "number"
+        },
+        "sinceTimestamp": {
+          "type": "number"
+        },
         "type": {
           "const": "const",
           "type": "string"
         },
-        "value": {
+        "untilTimestamp": {
           "type": "number"
+        },
+        "value": {
+          "type": "string"
         }
       },
       "type": "object"
@@ -140,6 +164,9 @@
           "enum": ["ether", "other", "stablecoin"],
           "type": "string"
         },
+        "displaySymbol": {
+          "type": "string"
+        },
         "id": {
           "type": "string"
         },
@@ -156,18 +183,12 @@
         "priceId": {
           "type": "string"
         },
-        "sinceTimestamp": {
-          "type": "number"
-        },
         "source": {
           "enum": ["canonical", "external", "native"],
           "type": "string"
         },
         "symbol": {
           "type": "string"
-        },
-        "untilTimestamp": {
-          "type": "number"
         },
         "valueForProject": {
           "anyOf": [
@@ -259,9 +280,15 @@
         "decimals": {
           "type": "number"
         },
+        "sinceTimestamp": {
+          "type": "number"
+        },
         "type": {
           "const": "totalSupply",
           "type": "string"
+        },
+        "untilTimestamp": {
+          "type": "number"
         }
       },
       "type": "object"

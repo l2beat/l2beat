@@ -21,10 +21,10 @@ import {
   type CalculationFormula,
   type CirculatingSupplyAmountFormula,
   type PriceConfig,
+  type ProjectTvsConfig,
   type Token,
   TokenId,
   type TotalSupplyAmountFormula,
-  type TvsConfig,
   type ValueFormula,
 } from './types'
 
@@ -32,7 +32,7 @@ export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   logger: Logger,
   rpcClient?: RpcClient,
-): Promise<TvsConfig> {
+): Promise<ProjectTvsConfig> {
   const CHAINS = await getChains()
   const getChain = (name: string) => {
     const chain = CHAINS.get(name)
@@ -41,7 +41,13 @@ export async function mapConfig(
   }
 
   const tokens: Token[] = []
-  const escrowTokens: Map<string, Token> = new Map()
+  const escrowTokens: Map<
+    string,
+    {
+      token: Token
+      chain: string
+    }
+  > = new Map()
 
   for (const escrow of project.tvlConfig.escrows) {
     if (escrow.sharedEscrow) {
@@ -60,7 +66,9 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-        tokens.push(...aggLayerL2Tokens)
+        aggLayerL2Tokens.forEach((token) =>
+          escrowTokens.set(token.id, { token, chain: escrow.chain }),
+        )
       }
 
       if (escrow.sharedEscrow.type === 'ElasticChain') {
@@ -72,7 +80,9 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-        tokens.push(...elasticChainTokens)
+        elasticChainTokens.forEach((token) =>
+          escrowTokens.set(token.id, { token, chain: escrow.chain }),
+        )
       }
     } else {
       for (const legacyToken of escrow.tokens) {
@@ -87,32 +97,40 @@ export async function mapConfig(
         const previousToken = escrowTokens.get(token.id)
 
         if (previousToken === undefined) {
-          escrowTokens.set(token.id, token)
+          escrowTokens.set(token.id, { token, chain: escrow.chain })
           continue
         }
 
-        if (previousToken?.amount.type === 'balanceOfEscrow') {
+        if (previousToken?.token.amount.type === 'balanceOfEscrow') {
+          assert(previousToken.token.source === token.source, `Source mismatch`)
           escrowTokens.set(token.id, {
-            ...previousToken,
-            amount: {
-              type: 'calculation',
-              operator: 'sum',
-              arguments: [previousToken.amount, token.amount],
+            token: {
+              ...previousToken.token,
+              amount: {
+                type: 'calculation',
+                operator: 'sum',
+                arguments: [previousToken.token.amount, token.amount],
+              },
             },
+            chain: escrow.chain,
           })
           continue
         }
 
-        if (previousToken?.amount.type === 'calculation') {
+        if (previousToken.token.amount.type === 'calculation') {
           escrowTokens.set(token.id, {
-            ...previousToken,
-            amount: {
-              ...(previousToken.amount as CalculationFormula),
-              arguments: [
-                ...(previousToken.amount as CalculationFormula).arguments,
-                token.amount,
-              ],
+            token: {
+              ...previousToken.token,
+              amount: {
+                ...(previousToken.token.amount as CalculationFormula),
+                arguments: [
+                  ...(previousToken.token.amount as CalculationFormula)
+                    .arguments,
+                  token.amount,
+                ],
+              },
             },
+            chain: escrow.chain,
           })
           continue
         }
@@ -124,9 +142,29 @@ export async function mapConfig(
     tokens.push(createToken(project, legacyToken))
   }
 
+  const uniqueTokens: Map<string, Token> = new Map()
+
+  for (const token of tokens) {
+    uniqueTokens.set(token.id, token)
+  }
+
+  for (const { token, chain } of Array.from(escrowTokens.values())) {
+    if (!uniqueTokens.has(token.id)) {
+      uniqueTokens.set(token.id, token)
+    } else {
+      const suffix = `.${chain}`
+      uniqueTokens.set(TokenId(token.id + suffix), {
+        ...token,
+        id: TokenId(token.id + suffix),
+        symbol: token.symbol + suffix,
+        displaySymbol: token.symbol,
+      })
+    }
+  }
+
   return {
     projectId: project.id,
-    tokens: [...tokens, ...Array.from(escrowTokens.values())],
+    tokens: Array.from(uniqueTokens.values()),
   }
 }
 
@@ -144,9 +182,14 @@ export function createEscrowToken(
     chainOfEscrow.name === escrow.chain,
     `${legacyToken.symbol}: chain mismatch`,
   )
-  const id = TokenId.create(project.id, legacyToken.symbol)
 
   let amountFormula: CalculationFormula | AmountFormula
+
+  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+    legacyToken,
+    escrow,
+    chainOfEscrow,
+  )
 
   if (legacyToken.isPreminted) {
     amountFormula = {
@@ -155,7 +198,10 @@ export function createEscrowToken(
       arguments: [
         {
           type: 'circulatingSupply',
-          priceId: legacyToken.coingeckoId,
+          apiId: legacyToken.coingeckoId,
+          decimals: legacyToken.decimals ?? 0,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
         },
         {
           type: 'balanceOfEscrow',
@@ -163,6 +209,8 @@ export function createEscrowToken(
           escrowAddress: escrow.address,
           chain: escrow.chain,
           decimals: legacyToken.decimals,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
         },
       ],
     }
@@ -173,26 +221,43 @@ export function createEscrowToken(
       chain: escrow.chain,
       escrowAddress: escrow.address,
       decimals: legacyToken.decimals,
-    } as BalanceOfEscrowAmountFormula
+      sinceTimestamp,
+      ...(untilTimestamp ? { untilTimestamp } : {}),
+    }
   }
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
-    legacyToken,
-    escrow,
-    chainOfEscrow,
-  )
-
   const source = escrow.source ?? 'canonical'
+  const symbol =
+    source === 'external' ? legacyToken.symbol + '.ext' : legacyToken.symbol
+  const displaySymbol = source === 'external' ? legacyToken.symbol : undefined
+
+  const id = TokenId.create(project.id, symbol)
+
+  let valueForTotal: CalculationFormula | ValueFormula | undefined = undefined
+  if (escrow.chain !== 'ethereum') {
+    valueForTotal = {
+      type: 'value',
+      amount: {
+        type: 'const',
+        value: '0',
+        decimals: 0,
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
+      },
+      priceId: legacyToken.coingeckoId,
+    }
+  }
 
   return {
     mode: 'auto',
     id,
     priceId: legacyToken.coingeckoId,
-    symbol: legacyToken.symbol,
+    symbol,
+    ...(displaySymbol ? { displaySymbol } : {}),
     name: legacyToken.name,
     amount: amountFormula,
-    sinceTimestamp,
-    ...(untilTimestamp ? { untilTimestamp } : {}),
+    ...(valueForTotal ? { valueForTotal } : {}),
+
     category: legacyToken.category,
     source: source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -211,31 +276,38 @@ export function createToken(
   const id = TokenId.create(project.id, legacyToken.symbol)
   let amountFormula: AmountFormula
 
+  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+    legacyToken,
+    project.chainConfig,
+  )
+
   switch (legacyToken.supply) {
     case 'totalSupply':
+      assert(legacyToken.address, 'Only tokens have total supply')
       amountFormula = {
         type: 'totalSupply',
         address: legacyToken.address,
         chain: project.id,
         decimals: legacyToken.decimals,
-      } as TotalSupplyAmountFormula
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
+      }
+
       break
 
     case 'circulatingSupply':
       amountFormula = {
         type: 'circulatingSupply',
-        priceId: legacyToken.coingeckoId,
-      } as CirculatingSupplyAmountFormula
+        apiId: legacyToken.coingeckoId,
+        decimals: legacyToken.decimals ?? 0,
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
+      }
       break
 
     default:
       throw new Error(`Unsupported supply type ${legacyToken.supply}`)
   }
-
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
-    legacyToken,
-    project.chainConfig,
-  )
 
   return {
     mode: 'auto',
@@ -244,8 +316,7 @@ export function createToken(
     symbol: legacyToken.symbol,
     name: legacyToken.name,
     amount: amountFormula,
-    sinceTimestamp,
-    ...(untilTimestamp ? { untilTimestamp } : {}),
+
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -254,7 +325,7 @@ export function createToken(
   }
 }
 
-export function extractPricesAndAmounts(config: TvsConfig): {
+export function extractPricesAndAmounts(config: ProjectTvsConfig): {
   amounts: AmountConfig[]
   prices: PriceConfig[]
 } {
@@ -328,7 +399,7 @@ export function createAmountConfig(
       }
     case 'circulatingSupply':
       return {
-        id: hash([formula.type, formula.priceId]),
+        id: hash([formula.type, formula.apiId]),
         ...formula,
       }
   }

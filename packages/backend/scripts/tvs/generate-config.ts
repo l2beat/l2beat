@@ -6,21 +6,22 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
-// TODO: This script should probably be part of config
-import { getTokenData } from '@l2beat/config/src/tokens/getTokenData'
+import { type Project, ProjectService } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { command, positional, run, string } from 'cmd-ts'
+import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/mapConfig'
-import type { Token, TokenValue } from '../../src/modules/tvs/types'
+import type { Token, TokenId } from '../../src/modules/tvs/types'
+
+// some projects are VERY slow to sync, to get config for them you need to run this script with the project name as an argument
+const PROJECTS_TO_SKIP = ['silicon']
 
 const args = {
   project: positional({
-    type: string,
+    type: optional(string),
     displayName: 'projectId',
-    description: 'Project for which tvs will be executed',
+    description: 'Project for which tvs config will be generated',
   }),
 }
 
@@ -32,40 +33,89 @@ const cmd = command({
     const logger = initLogger(env)
     const ps = new ProjectService()
 
-    logger.info(
-      'Generating TVS config ' +
-        (args.project ? `for project '${args.project}'` : ''),
-    )
+    let projects: Project<'tvlConfig', 'chainConfig'>[] | undefined
 
-    // get token data
-    logger.info('Executing token script')
-    const sourceFilePath = '../../packages/config/src/tokens/tokens.jsonc'
-    const outputFilePath = '../../packages/config/src/tokens/generated.json'
-    const dbPath = '../../packages/config/build/db.sqlite'
-    await getTokenData(sourceFilePath, outputFilePath, dbPath)
+    if (!args.project) {
+      projects = await ps.getProjects({
+        select: ['tvlConfig'],
+        optional: ['chainConfig'],
+      })
 
-    const tvsConfig = await generateConfigForProject(ps, args.project, logger)
+      if (!projects) {
+        logger.error('No TVS projects found')
+        process.exit(1)
+      }
+    } else {
+      const project = await ps.getProject({
+        id: ProjectId(args.project),
+        select: ['tvlConfig'],
+        optional: ['chainConfig'],
+      })
 
-    logger.info('Executing TVS to exclude zero-valued tokens')
+      if (!project) {
+        logger.error(`Project '${args.project}' not found`)
+        process.exit(1)
+      }
+
+      projects = [project]
+    }
+
+    let totalTvs = 0
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
-    const localExecutor = new LocalExecutor(ps, env, logger)
-    const tvs = await localExecutor.run(tvsConfig, [timestamp], true)
 
-    const currentTvs = tvs.get(timestamp)?.filter((token) => token.value !== 0)
+    for (const project of projects) {
+      if (!args.project && PROJECTS_TO_SKIP.includes(project.id)) {
+        logger.info(`Skipping project ${project.id}`)
+        continue
+      }
 
-    assert(currentTvs, 'No data for timestamp')
+      logger.info(`Generating TVS config for project ${project.id}`)
+      const tvsConfig = await generateConfigForProject(project, logger)
 
-    const filePath = `./src/modules/tvs/config/${args.project}.json`
-    const currentConfig = readFromFile(filePath)
-    const mergedTokens = mergeWithExistingConfig(
-      currentTvs,
-      currentConfig,
-      logger,
-    )
+      // when running for the first time we want to dump the config in case TVS execution fails
+      const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
+      if (!fs.existsSync(filePath)) {
+        writeToFile(filePath, project.id, tvsConfig.tokens)
+      }
 
-    logger.info(`Writing results to file: ${filePath}`)
-    writeToFile(filePath, args.project, mergedTokens)
+      logger.info('Executing TVS to exclude zero-valued tokens')
+      const localExecutor = new LocalExecutor(ps, env, logger)
+      const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
+
+      const currentTvs = tvs.get(timestamp)
+
+      assert(currentTvs, 'No data for timestamp')
+
+      const newConfig = currentTvs
+        .filter((token) => token.value !== 0)
+        .map((token) => token.tokenConfig)
+        .sort((a, b) => a.id.localeCompare(b.id))
+
+      const currentConfig = readFromFile(filePath)
+      const mergedTokens = mergeWithExistingConfig(
+        newConfig,
+        currentConfig,
+        logger,
+      )
+
+      const valueForProject = currentTvs.reduce((acc, token) => {
+        return acc + token.valueForProject
+      }, 0)
+
+      const valueForTotal = currentTvs.reduce((acc, token) => {
+        return acc + token.valueForTotal
+      }, 0)
+
+      totalTvs += valueForTotal
+
+      logger.info(`TVS for project ${toDollarString(valueForProject)}`)
+      logger.info(`Total TVS ${toDollarString(totalTvs)}`)
+
+      logger.info(`Writing results to file: ${filePath}`)
+      writeToFile(filePath, project.id, mergedTokens)
+    }
+
     process.exit(0)
   },
 })
@@ -73,36 +123,26 @@ const cmd = command({
 run(cmd, process.argv.slice(2))
 
 async function generateConfigForProject(
-  ps: ProjectService,
-  projectId: string,
+  project: Project<'tvlConfig', 'chainConfig'>,
   logger: Logger,
 ) {
-  const project = await ps.getProject({
-    id: ProjectId(projectId),
-    select: ['tvlConfig'],
-    optional: ['chainConfig'],
-  })
-  assert(project, `${projectId}: No project found`)
-
   const env = getEnv()
-  const rpc = project.chainConfig
+
+  const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
+  const rpc = rpcApi
     ? new RpcClient({
         http: new HttpClient(),
         callsPerMinute: env.integer(
-          `${projectId.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-          120,
+          `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+          rpcApi.callsPerMinute ?? 120,
         ),
         retryStrategy: 'RELIABLE',
         logger,
-        url: env.string(
-          `${projectId.toUpperCase()}_RPC_URL`,
-          project.chainConfig.apis.find((a) => a.type === 'rpc')?.url,
-        ),
-        sourceName: projectId,
+        url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
+        sourceName: project.id,
       })
     : undefined
 
-  assert(project, `${projectId} project not found`)
   return mapConfig(project, logger, rpc)
 }
 
@@ -131,7 +171,14 @@ function writeToFile(
     tokens: nonZeroTokens,
   }
 
-  fs.writeFileSync(filePath, JSON.stringify(wrapper, null, 2) + '\n')
+  fs.writeFileSync(
+    filePath,
+    JSON.stringify(
+      wrapper,
+      (_, v) => (typeof v === 'bigint' ? v.toString() : v),
+      2,
+    ) + '\n',
+  )
 }
 
 function readFromFile(filePath: string) {
@@ -144,19 +191,17 @@ function readFromFile(filePath: string) {
 }
 
 function mergeWithExistingConfig(
-  tokenValues: TokenValue[],
+  nonZeroTokens: Token[],
   currentConfig: Token[],
   logger: Logger,
 ) {
-  const nonZeroTokens = tokenValues.map((token) => token.tokenConfig)
-
-  assert(nonZeroTokens, 'No data for timestamp')
-
   const resultMap = new Map<string, Token>()
   nonZeroTokens.forEach((token) => {
     if (resultMap.has(token.id)) {
       logger.warn(`Duplicate detected: ${token.id}`)
+      token.id = (token.id + '-duplicate') as TokenId
     }
+
     resultMap.set(token.id, token)
   })
 
@@ -166,4 +211,14 @@ function mergeWithExistingConfig(
   })
 
   return Array.from(resultMap.values()).sort((a, b) => a.id.localeCompare(b.id))
+}
+
+function toDollarString(value: number) {
+  if (value > 1e9) {
+    return `$${(value / 1e9).toFixed(2)}B`
+  } else if (value > 1e6) {
+    return `$${(value / 1e6).toFixed(2)}M`
+  } else {
+    return `$${value.toFixed(2)}`
+  }
 }

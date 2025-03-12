@@ -11,7 +11,6 @@ import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
-import { bigIntToNumber } from '../bigIntToNumber'
 import { createEscrowToken } from '../mapConfig'
 import { getTimestampsRange } from '../tools/timestamps'
 import { type Token, TokenId } from '../types'
@@ -82,8 +81,6 @@ export async function getAggLayerTokens(
         priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
-        sinceTimestamp,
-        ...(untilTimestamp ? { untilTimestamp } : {}),
         category: token.category,
         source: 'canonical' as const,
         isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -95,6 +92,8 @@ export async function getAggLayerTokens(
           chain: project.id,
           // Assumption: decimals on destination network are the same
           decimals: token.decimals,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
         },
       }
     })
@@ -115,8 +114,6 @@ export async function getAggLayerTokens(
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',
-      sinceTimestamp,
-      ...(untilTimestamp ? { untilTimestamp } : {}),
       category: 'ether' as const,
       source: 'canonical' as const,
       amount: {
@@ -124,6 +121,8 @@ export async function getAggLayerTokens(
         address: escrow.sharedEscrow.wethAddress,
         chain: project.id,
         decimals: 18,
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
       },
       isAssociated: false,
     }
@@ -140,8 +139,6 @@ export async function getAggLayerTokens(
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',
-      sinceTimestamp,
-      ...(untilTimestamp ? { untilTimestamp } : {}),
       category: 'ether' as const,
       source: 'canonical' as const,
       amount: {
@@ -150,7 +147,10 @@ export async function getAggLayerTokens(
         arguments: [
           {
             type: 'const',
-            value: bigIntToNumber(escrow.sharedEscrow.premintedAmount, 18),
+            value: escrow.sharedEscrow.premintedAmount,
+            decimals: 18,
+            sinceTimestamp,
+            ...(untilTimestamp ? { untilTimestamp } : {}),
           },
           {
             type: 'balanceOfEscrow',
@@ -158,6 +158,8 @@ export async function getAggLayerTokens(
             decimals: 18,
             address: 'native',
             escrowAddress: AGGLAYER_L2BRIDGE_ADDRESS,
+            sinceTimestamp,
+            ...(untilTimestamp ? { untilTimestamp } : {}),
           },
         ],
       },

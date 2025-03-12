@@ -33,12 +33,12 @@ export function ProjectDaThroughputChart({
   })
 
   const chartRange = useMemo(
-    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
     [data],
   )
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
-    data,
+    data?.chart,
     configuredThroughputs,
   )
 

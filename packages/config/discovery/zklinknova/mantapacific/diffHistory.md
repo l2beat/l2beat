@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x08bd766078a2c06d6263b8f92106448753c99ffa
+
+# Diff at Tue, 11 Mar 2025 08:13:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6186a4f8e3a9e415d081d4e3e85c2deceaa5530c block: 4740158
+- current block number: 4745686
+
+## Description
+
+proxyadmin template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 4740158 (main branch discovery), not current.
+
+```diff
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x44a65dc12865A1e5249b45b4868f32b0E37168FF"}]
+      template:
++        "global/ProxyAdmin"
+      displayName:
++        "ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x44a65dc12865A1e5249b45b4868f32b0E37168FF"}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
++        "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3"
+      issuedPermissions.0.via.0:
++        {"address":"0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"}
+    }
+```
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"}
+      receivedPermissions.1.from:
+-        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
+      receivedPermissions.0.from:
+-        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
++        "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
+      receivedPermissions.0.via:
++        [{"address":"0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"}]
+    }
+```
+
 Generated with discovered.json: 0x014390d96de9dabae07e7a62674f6ee4a5e1a7b7
 
 # Diff at Mon, 10 Mar 2025 16:52:34 GMT:

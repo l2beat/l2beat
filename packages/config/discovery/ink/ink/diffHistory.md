@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x5454e29f1d322d7dbc387dd8f48c149bcd243976
+
+# Diff at Tue, 11 Mar 2025 12:03:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a75ac906056abb236c14b626853813f468099f57 block: 7087697
+- current block number: 8196210
+
+## Description
+
+Contract verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 7087697 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      unverified:
+-        true
+      values.BRIDGE:
++        "0x4200000000000000000000000000000000000014"
+      values.REMOTE_CHAIN_ID:
++        1
+      values.version:
++        "1.4.1-beta.1"
+      sourceHashes:
++        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0xd05d0050b36bb2fb43c345eabc2d7f6e796571360aa2198707da64794c5f4b64"]
+    }
+```
+
 Generated with discovered.json: 0x30f8eba84377b6e723f7d6b4d7b4b8eb9e7cef8b
 
 # Diff at Tue, 04 Mar 2025 11:27:20 GMT:
