@@ -1,18 +1,17 @@
 import { execSync } from 'child_process'
-import path, { join } from 'path'
+import path from 'path'
 import { Logger } from '@l2beat/backend-tools'
-import { rimraf } from 'rimraf'
-
-import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
-import { ConfigReader } from '../discovery/config/ConfigReader'
-import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
-import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
-import { discover } from '../discovery/runDiscovery'
-
 import { HttpClient } from '@l2beat/shared'
 import { boolean, command, flag, positional } from 'cmd-ts'
+import { rimraf } from 'rimraf'
 import { getChainConfigs } from '../config/config.discovery'
+import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { TEMPLATES_PATH } from '../discovery/analysis/TemplateService'
+import { ConfigReader } from '../discovery/config/ConfigReader'
+import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
+import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
+import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
+import { discover } from '../discovery/runDiscovery'
 import { ChainValue, EthereumAddressValue } from './types'
 
 export const SingleDiscoveryCommand = command({
@@ -31,7 +30,9 @@ export const SingleDiscoveryCommand = command({
     logger.info('Starting')
 
     const chainConfigs = getChainConfigs()
-    const configReader = new ConfigReader(join(process.cwd(), '../config'))
+    const paths = getDiscoveryPaths()
+
+    const configReader = new ConfigReader(paths.discovery)
     const projectConfig = new DiscoveryConfig(
       {
         name: address.toString(),
@@ -43,7 +44,7 @@ export const SingleDiscoveryCommand = command({
     const http = new HttpClient()
 
     const { result, blockNumber } = await discover(
-      configReader.rootPath,
+      paths,
       chainConfigs,
       projectConfig,
       DiscoveryLogger.CLI,
@@ -53,7 +54,7 @@ export const SingleDiscoveryCommand = command({
     )
 
     const rootFolder = `./cache/single-discovery`
-    const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
+    const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
     await rimraf(rootFolder)
 
@@ -63,7 +64,7 @@ export const SingleDiscoveryCommand = command({
       blockNumber,
       DiscoveryLogger.CLI,
       {
-        rootFolder,
+        paths: { ...paths, discovery: rootFolder },
         templatesFolder,
       },
     )

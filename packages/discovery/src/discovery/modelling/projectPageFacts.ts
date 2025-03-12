@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { ConfigReader } from '../config/ConfigReader'
+import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { parseClingoFact } from './clingoparser'
 
 export async function runClingo(program: string) {
@@ -14,10 +15,13 @@ export async function runClingo(program: string) {
   return clingoResult
 }
 
-export async function buildProjectPageFacts(project: string, rootPath: string) {
-  const configReader = new ConfigReader(rootPath)
+export async function buildProjectPageFacts(
+  project: string,
+  paths: DiscoveryPaths,
+) {
+  const configReader = new ConfigReader(paths.discovery)
   const model = readAllModelsAndRelationsOfProject(project, configReader)
-  const projectPageClingoFile = readProjectPageClingoFile(rootPath)
+  const projectPageClingoFile = readProjectPageClingoFile(paths)
   const clingoResult = await runClingo(model + '\n' + projectPageClingoFile)
   if (clingoResult.Result === 'ERROR') {
     throw new Error(clingoResult.Error)
@@ -37,8 +41,8 @@ export async function buildProjectPageFacts(project: string, rootPath: string) {
   )
 }
 
-export function readProjectPageClingoFile(rootPath: string): string {
-  const path = join(rootPath, 'discovery', '_clingo', 'forProjectPage.lp')
+export function readProjectPageClingoFile(paths: DiscoveryPaths): string {
+  const path = join(paths.discovery, '_clingo', 'forProjectPage.lp')
   return readFileSync(path, 'utf8')
 }
 

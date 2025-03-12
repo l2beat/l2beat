@@ -1,8 +1,8 @@
-import { join } from 'path'
 import {
   ConfigReader,
   type DiscoveryOutput,
   type EntryParameters,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
@@ -15,6 +15,8 @@ import type { BaseProject, ProjectContract } from '../types'
 import { getChainNames } from '../utils/chains'
 
 describe('verification status', () => {
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
   const projects = [...layer2s, ...bridges, ...layer3s, ...refactored]
 
   for (const project of projects) {
@@ -27,7 +29,7 @@ describe('verification status', () => {
           return
         }
 
-        const discoveries = getDiscoveries(projectId, chain)
+        const discoveries = getDiscoveries(configReader, projectId, chain)
         assert(
           discoveries.length > 0,
           `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
@@ -43,9 +45,11 @@ describe('verification status', () => {
   }
 })
 
-function getDiscoveries(project: string, chain: string): DiscoveryOutput[] {
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
-
+function getDiscoveries(
+  configReader: ConfigReader,
+  project: string,
+  chain: string,
+): DiscoveryOutput[] {
   let discovery = undefined
   try {
     discovery = configReader.readDiscovery(project, chain)

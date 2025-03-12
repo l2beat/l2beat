@@ -1,6 +1,7 @@
-import path, { resolve } from 'path'
+import { join, resolve } from 'path'
 import {
   ConfigReader,
+  type DiscoveryPaths,
   type HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
@@ -25,22 +26,17 @@ interface FileId {
 
 export async function computeStackSimilarity(
   logger: CliLogger,
-  discoveryPath: string,
+  paths: DiscoveryPaths,
 ): Promise<{
   matrix: Record<string, Record<string, number>>
   projects: Project[]
 }> {
-  const configReader = new ConfigReader(path.dirname(discoveryPath))
+  const configReader = new ConfigReader(paths.discovery)
   const configs = configReader.readAllConfigs()
 
   const stackProject = await Promise.all(
     configs.map((config) =>
-      readProject(
-        logger,
-        config.name,
-        config.chain,
-        path.dirname(discoveryPath),
-      ),
+      readProject(logger, config.name, config.chain, paths),
     ),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
@@ -107,7 +103,7 @@ export async function computeComparisonBetweenProjects(
   logger: CliLogger,
   firstProjectPath: string,
   secondProjectPath: string,
-  discoveryPath: string,
+  paths: DiscoveryPaths,
 ): Promise<{
   matrix: Record<string, Record<string, number>>
   firstProject: Project
@@ -122,13 +118,13 @@ export async function computeComparisonBetweenProjects(
     logger,
     firstProjectName,
     firstProjectChain,
-    path.dirname(discoveryPath),
+    paths,
   )
   const secondProject = await readProject(
     logger,
     secondProjectName,
     secondProjectChain,
-    path.dirname(discoveryPath),
+    paths,
   )
   assert(firstProject, `Project ${firstProjectPath} not found`)
   assert(secondProject, `Project ${secondProjectPath} not found`)
@@ -181,10 +177,10 @@ async function readProject(
   logger: CliLogger,
   projectName: string,
   chain: string,
-  discoveryPath: string,
+  paths: DiscoveryPaths,
 ): Promise<Project | undefined> {
   try {
-    const sources = await getFlatSources(projectName, chain, discoveryPath)
+    const sources = await getFlatSources(projectName, chain, paths)
     const concatenatedSources = sources.map((source) => source.content).join('')
     const concatenatedSourceHashChunks =
       buildSimilarityHashmap(concatenatedSources)
@@ -211,9 +207,9 @@ async function readProject(
 async function getFlatSources(
   project: string,
   chain: string,
-  discoveryPath: string,
+  paths: DiscoveryPaths,
 ): Promise<HashedFileContent[]> {
-  const path = `${discoveryPath}/discovery/${project}/${chain}/.flat/`
+  const path = join(paths.discovery, project, chain, '.flat')
 
   const filePaths = await listFilesRecursively(path)
   const allFilesAreSol = filePaths.every((file) => file.endsWith('.sol'))

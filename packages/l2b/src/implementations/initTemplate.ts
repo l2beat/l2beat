@@ -1,14 +1,12 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
-import { readConfig } from '../config/readConfig'
 
 export function initTempalte(name: string) {
-  const config = readConfig()
-  assert(config.projectRootPath, '.l2b file not found')
-  assert(config.discoveryPath, '.l2b does not specify the discovery path')
+  const paths = getDiscoveryPaths()
 
-  const templateDir = path.join(config.discoveryPath, '_templates', name)
+  const templateDir = path.join(paths.discovery, '_templates', name)
   mkdirSync(templateDir, { recursive: true })
 
   const templatePath = path.join(templateDir, 'template.jsonc')
@@ -16,7 +14,7 @@ export function initTempalte(name: string) {
 
   const displayName = path.basename(name)
   const schemaPath = path.join(
-    config.projectRootPath,
+    paths.root,
     'packages',
     'discovery',
     'schemas',

@@ -12,6 +12,7 @@ import type { Analysis } from './analysis/AddressAnalyzer'
 import { TEMPLATES_PATH } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { DiscoveryConfig } from './config/DiscoveryConfig'
+import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
 import { printTemplatization } from './output/printTemplatization'
@@ -22,6 +23,7 @@ import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
 export async function runDiscovery(
+  paths: DiscoveryPaths,
   http: HttpClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
@@ -41,7 +43,7 @@ export async function runDiscovery(
 
   const logger = DiscoveryLogger.CLI
   const { result, blockNumber, providerStats } = await discover(
-    configReader.rootPath,
+    paths,
     chainConfigs,
     projectConfig,
     logger,
@@ -50,10 +52,10 @@ export async function runDiscovery(
     config.overwriteCache,
   )
 
-  const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
+  const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
-    rootFolder: configReader.rootPath,
+    paths,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
@@ -79,7 +81,7 @@ export async function runDiscovery(
 }
 
 export async function dryRunDiscovery(
-  discoveryPath: string,
+  paths: DiscoveryPaths,
   http: HttpClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
@@ -97,7 +99,7 @@ export async function dryRunDiscovery(
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(
-      discoveryPath,
+      paths,
       chainConfigs,
       projectConfig,
       blockNumber,
@@ -105,7 +107,7 @@ export async function dryRunDiscovery(
       config.overwriteCache,
     ),
     justDiscover(
-      discoveryPath,
+      paths,
       chainConfigs,
       projectConfig,
       blockNumberYesterday,
@@ -124,7 +126,7 @@ export async function dryRunDiscovery(
 }
 
 async function justDiscover(
-  discoveryPath: string,
+  paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
   config: DiscoveryConfig,
   blockNumber: number,
@@ -132,7 +134,7 @@ async function justDiscover(
   overwriteCache: boolean,
 ): Promise<DiscoveryOutput> {
   const { result } = await discover(
-    discoveryPath,
+    paths,
     chainConfigs,
     config,
     DiscoveryLogger.CLI,
@@ -144,7 +146,7 @@ async function justDiscover(
 }
 
 export async function discover(
-  discoveryPath: string,
+  paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
@@ -156,14 +158,14 @@ export async function discover(
   blockNumber: number
   providerStats: AllProviderStats
 }> {
-  const sqliteCache = new SQLiteCache()
+  const sqliteCache = new SQLiteCache(paths.cache)
 
   const cache = overwriteChache
     ? new OverwriteCacheWrapper(sqliteCache)
     : sqliteCache
 
   const { allProviders, discoveryEngine } = getDiscoveryEngine(
-    discoveryPath,
+    paths,
     chainConfigs,
     cache,
     http,

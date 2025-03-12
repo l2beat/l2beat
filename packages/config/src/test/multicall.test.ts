@@ -1,10 +1,10 @@
-import { join } from 'path'
-import { ConfigReader } from '@l2beat/discovery'
+import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import { expect } from 'earl'
 import { layer2s } from '../processing/layer2s'
 
 describe('update-monitor project has multicall configured', () => {
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
   const chains = configReader.readAllChains().filter((c) => c !== 'ethereum')
   for (const chain of chains) {
     const project = layer2s.find((l2) => l2.id.toString() === chain)

@@ -80,3 +80,7 @@ export type {
 } from './discovery/output/types'
 export { get$Implementations } from './discovery/utils/extractors'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
+export {
+  getDiscoveryPaths,
+  type DiscoveryPaths,
+} from './discovery/config/getDiscoveryPaths'

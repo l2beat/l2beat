@@ -1,5 +1,9 @@
 import path from 'path'
-import { type HashedFileContent, estimateSimilarity } from '@l2beat/discovery'
+import {
+  type DiscoveryPaths,
+  type HashedFileContent,
+  estimateSimilarity,
+} from '@l2beat/discovery'
 import type { CliLogger } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import {
@@ -11,7 +15,7 @@ import { colorMap } from './output'
 
 export interface CompareSourceOnSourceCommand {
   projectPath: string
-  discoveryPath: string
+  paths: DiscoveryPaths
   forceTable: boolean
   logger: CliLogger
 }
@@ -22,7 +26,7 @@ export async function executeCompareSourceOnSource(
   const { name, chain } = decodeProjectPath(command.projectPath)
   const { projects: projectsWithBase } = await computeStackSimilarity(
     command.logger,
-    command.discoveryPath,
+    command.paths,
   )
   const base = projectsWithBase.find(
     (e) => e.name === name && e.chain === chain,
