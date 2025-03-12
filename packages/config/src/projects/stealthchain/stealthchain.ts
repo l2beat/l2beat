@@ -5,6 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const stealthchain: ScalingProject = upcomingL2({
   id: 'stealthchain',
   capability: 'universal',
+  isArchived: true,
   addedAt: UnixTime(1694778975), // 2023-09-15T11:56:15Z
   display: {
     name: 'StealthChain',
