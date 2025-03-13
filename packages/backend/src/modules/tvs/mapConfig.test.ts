@@ -212,9 +212,13 @@ describe(extractPricesAndAmounts.name, () => {
       prices: [
         {
           priceId: 'price-ARB',
+          sinceTimestamp: UnixTime(100),
+          untilTimestamp: undefined,
         },
         {
           priceId: 'price-ATH',
+          sinceTimestamp: UnixTime(100),
+          untilTimestamp: undefined,
         },
       ],
     })
@@ -310,6 +314,7 @@ describe(extractPricesAndAmounts.name, () => {
           chain: 'bob',
           decimals: 18,
           sinceTimestamp: UnixTime(100),
+          untilTimestamp: undefined,
         },
         {
           id: '87ab15cf98f5',
@@ -324,9 +329,136 @@ describe(extractPricesAndAmounts.name, () => {
       prices: [
         {
           priceId: 'price-WBTC',
+          sinceTimestamp: UnixTime(100),
+          untilTimestamp: undefined,
         },
         {
           priceId: 'price-SolvBTC',
+          sinceTimestamp: UnixTime(100),
+          untilTimestamp: undefined,
+        },
+      ],
+    })
+  })
+
+  it('should extract sync configs with correct price and amount ranges', async () => {
+    const address = EthereumAddress(
+      '0x10e4C3460310a2F4b56C8DB0b3806Be29B15c15E',
+    )
+
+    const tvsConfig = mockObject<ProjectTvsConfig>({
+      tokens: [
+        mockObject<Token>({
+          priceId: 'price-A',
+          amount: {
+            type: 'totalSupply',
+            address,
+            chain: 'chain',
+            decimals: 18,
+            sinceTimestamp: UnixTime(100),
+            untilTimestamp: UnixTime(200),
+          },
+          valueForProject: undefined,
+          valueForTotal: undefined,
+        }),
+        mockObject<Token>({
+          priceId: 'price-A',
+          amount: {
+            type: 'totalSupply',
+            address,
+            chain: 'chain',
+            decimals: 18,
+            sinceTimestamp: UnixTime(50),
+            untilTimestamp: UnixTime(300),
+          },
+          valueForProject: undefined,
+          valueForTotal: undefined,
+        }),
+        mockObject<Token>({
+          priceId: 'price-B',
+          amount: {
+            type: 'totalSupply',
+            address,
+            chain: 'chain',
+            decimals: 18,
+            sinceTimestamp: UnixTime(100),
+            untilTimestamp: UnixTime(200),
+          },
+          valueForProject: undefined,
+          valueForTotal: undefined,
+        }),
+        mockObject<Token>({
+          priceId: 'price-B',
+          amount: {
+            type: 'totalSupply',
+            address,
+            chain: 'chain',
+            decimals: 18,
+            sinceTimestamp: UnixTime(100),
+          },
+          valueForProject: {
+            type: 'calculation',
+            operator: 'sum',
+            arguments: [
+              {
+                type: 'value',
+                amount: {
+                  type: 'totalSupply',
+                  address,
+                  chain: 'chain',
+                  decimals: 18,
+                  sinceTimestamp: UnixTime(50),
+                  untilTimestamp: UnixTime(300),
+                },
+                priceId: 'price-B',
+              },
+              {
+                type: 'value',
+                amount: {
+                  type: 'totalSupply',
+                  address,
+                  chain: 'chain',
+                  decimals: 18,
+                  sinceTimestamp: UnixTime(300),
+                  untilTimestamp: UnixTime(500),
+                },
+                priceId: 'price-C',
+              },
+            ],
+          },
+          valueForTotal: undefined,
+        }),
+      ],
+    })
+
+    const result = extractPricesAndAmounts(tvsConfig)
+    expect(result).toEqual({
+      amounts: [
+        {
+          id: 'ecd2a2018003',
+          type: 'totalSupply',
+          address,
+          chain: 'chain',
+          decimals: 18,
+          sinceTimestamp: 300,
+          untilTimestamp: undefined,
+        },
+      ],
+      prices: [
+        {
+          priceId: 'price-A',
+          sinceTimestamp: 50,
+          untilTimestamp: 300,
+        },
+        {
+          priceId: 'price-B',
+          sinceTimestamp: 50,
+          untilTimestamp: undefined,
+        },
+        {
+          priceId: 'price-C',
+          sinceTimestamp: 300,
+          untilTimestamp: 500,
         },
       ],
     })
