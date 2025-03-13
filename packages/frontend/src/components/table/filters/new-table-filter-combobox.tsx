@@ -1,3 +1,4 @@
+import { notUndefined } from '@l2beat/shared-pure'
 import { partition, uniq, uniqBy } from 'lodash'
 import { useState } from 'react'
 import {
@@ -64,7 +65,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
   const uniqFilterables = uniqBy(
     entries.flatMap((e) => e.filterable),
     'id',
-  )
+  ).filter(notUndefined)
 
   if (!selectedId) {
     return (
@@ -95,7 +96,9 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
     entries.flatMap(
       (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
     ),
-  ).sort(filterValuesSortFn)
+  )
+    .filter(notUndefined)
+    .sort(filterValuesSortFn)
 
   const [selectedValues, notSelectedValues] = partition(values, (value) =>
     state.some(

@@ -8,6 +8,10 @@ export function useIncludeFilters() {
   const filter = useCallback(
     ({ filterable }: FilterableEntry) => {
       return state.every((filter) => {
+        // If filterable is undefined, it means that the entry is not filterable
+        if (filterable === undefined) {
+          return true
+        }
         const filterableValue = filterable.find((f) => f.id === filter.id)
         if (!filterableValue) {
           return false
