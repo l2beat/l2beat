@@ -9,14 +9,20 @@ import { SearchBarButton } from './search-bar/search-bar-button'
 interface Props {
   children: ReactNode
   className?: string
+  withDescription?: boolean
 }
 
-export function MainPageHeader({ children, className }: Props) {
+export function MainPageHeader({
+  children,
+  className,
+  withDescription,
+}: Props) {
   const { isScalingMainPage } = useRecategorisationPreviewContext()
   return (
     <header
       className={cn(
-        'ml-2 flex items-center justify-between pb-4 pt-5 max-lg:hidden',
+        'ml-2 flex items-center justify-between py-5 max-lg:hidden',
+        withDescription && 'pb-4',
         className,
       )}
     >

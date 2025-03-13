@@ -16,7 +16,7 @@ export default async function Page() {
 
   return (
     <>
-      <MainPageHeader>Finality</MainPageHeader>
+      <MainPageHeader withDescription>Finality</MainPageHeader>
       <FinalityDescription />
       <ScalingFilterContextProvider>
         <ScalingFinalityTables {...entries} />

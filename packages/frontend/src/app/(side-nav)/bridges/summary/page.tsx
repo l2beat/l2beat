@@ -28,7 +28,7 @@ export default async function Page() {
     <>
       <HydrateClient>
         <BridgesFilterContextProvider>
-          <MainPageHeader>Summary</MainPageHeader>
+          <MainPageHeader withDescription>Summary</MainPageHeader>
           <BridgesMvpWarning className="md:mb-3" sidebar />
           <PrimaryCard>
             <BridgesTvsChart />
