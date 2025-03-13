@@ -334,32 +334,55 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig): {
 
   for (const token of config.tokens) {
     if (token.amount.type === 'calculation') {
-      const { formulaAmounts, formulaPrices } = processFormula(token.amount)
-      formulaAmounts.forEach((a) => amounts.set(a.id, a))
-      formulaPrices.forEach((p) => prices.set(p.priceId, p))
+      const { formulaAmounts, formulaPrices } = processFormulaRecursive(
+        token.amount,
+      )
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
+
+      assert(
+        formulaPrices.length === 0,
+        'Amount formula should not have any prices',
+      )
+
+      const amountFormulaRange = getTimestampsRange(
+        ...formulaAmounts.map((a) => ({
+          sinceTimestamp: a.sinceTimestamp,
+          untilTimestamp: a.untilTimestamp,
+        })),
+      )
+
+      setPrice(prices, {
+        priceId: token.priceId,
+        sinceTimestamp: amountFormulaRange.sinceTimestamp,
+        untilTimestamp: amountFormulaRange.untilTimestamp,
+      })
     } else {
       if (token.amount.type !== 'const') {
         const amount = createAmountConfig(token.amount)
-        amounts.set(amount.id, amount)
+        setAmount(amounts, amount)
+
+        setPrice(prices, {
+          priceId: token.priceId,
+          sinceTimestamp: amount.sinceTimestamp,
+          untilTimestamp: amount.untilTimestamp,
+        })
       }
     }
 
-    prices.set(token.priceId, { priceId: token.priceId })
-
     if (token.valueForProject) {
-      const { formulaAmounts, formulaPrices } = processFormula(
+      const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForProject,
       )
-      formulaAmounts.forEach((a) => amounts.set(a.id, a))
-      formulaPrices.forEach((p) => prices.set(p.priceId, p))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaPrices.forEach((p) => setPrice(prices, p))
     }
 
     if (token.valueForTotal) {
-      const { formulaAmounts, formulaPrices } = processFormula(
+      const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForTotal,
       )
-      formulaAmounts.forEach((a) => amounts.set(a.id, a))
-      formulaPrices.forEach((p) => prices.set(p.priceId, p))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaPrices.forEach((p) => setPrice(prices, p))
     }
   }
 
@@ -405,7 +428,7 @@ export function createAmountConfig(
   }
 }
 
-function processFormula(
+function processFormulaRecursive(
   formula: CalculationFormula | ValueFormula | AmountFormula,
 ): {
   formulaAmounts: AmountConfig[]
@@ -414,31 +437,44 @@ function processFormula(
   const formulaAmounts: AmountConfig[] = []
   const formulaPrices: PriceConfig[] = []
 
-  const processFormulaRecursive = (
-    f: CalculationFormula | ValueFormula | AmountFormula,
-  ) => {
-    if (f.type === 'calculation') {
-      for (const arg of f.arguments) {
-        processFormulaRecursive(arg)
-      }
-      return
+  if (formula.type === 'calculation') {
+    for (const arg of formula.arguments) {
+      const {
+        formulaAmounts: innerFormulaAmounts,
+        formulaPrices: innerFormulaPrices,
+      } = processFormulaRecursive(arg)
+      formulaAmounts.push(...innerFormulaAmounts)
+      formulaPrices.push(...innerFormulaPrices)
     }
+  } else if (formula.type === 'value') {
+    const {
+      formulaAmounts: innerFormulaAmounts,
+      formulaPrices: innerFormulaPrices,
+    } = processFormulaRecursive(formula.amount)
+    formulaAmounts.push(...innerFormulaAmounts)
+    formulaPrices.push(...innerFormulaPrices)
 
-    if (f.type === 'value') {
-      processFormulaRecursive(f.amount)
+    assert(
+      formulaPrices.length === 0,
+      'Amount formula should not have any prices',
+    )
 
-      formulaPrices.push({ priceId: f.priceId })
+    const amountFormulaRange = getTimestampsRange(
+      ...innerFormulaAmounts.map((a) => ({
+        sinceTimestamp: a.sinceTimestamp,
+        untilTimestamp: a.untilTimestamp,
+      })),
+    )
 
-      return
-    }
-
-    if (f.type !== 'const') {
-      const amount = createAmountConfig(f)
-      formulaAmounts.push(amount)
-    }
+    formulaPrices.push({
+      priceId: formula.priceId,
+      sinceTimestamp: amountFormulaRange.sinceTimestamp,
+      untilTimestamp: amountFormulaRange.untilTimestamp,
+    })
+  } else if (formula.type !== 'const') {
+    const amount = createAmountConfig(formula)
+    formulaAmounts.push(amount)
   }
-
-  processFormulaRecursive(formula)
 
   return { formulaAmounts, formulaPrices }
 }
@@ -454,4 +490,63 @@ async function getChains() {
     (p) => p.chainConfig,
   )
   return new Map(chains.map((c) => [c.name, c]))
+}
+
+function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
+  const existingPrice = prices.get(priceToAdd.priceId)
+  if (!existingPrice) {
+    prices.set(priceToAdd.priceId, priceToAdd)
+    return
+  }
+
+  const mergedPrice: PriceConfig = {
+    ...existingPrice,
+    sinceTimestamp: Math.min(
+      priceToAdd.sinceTimestamp,
+      existingPrice.sinceTimestamp,
+    ),
+  }
+
+  // set untilTimestamp only if both prices have it
+  if (priceToAdd.untilTimestamp && existingPrice.untilTimestamp) {
+    mergedPrice.untilTimestamp = Math.max(
+      priceToAdd.untilTimestamp,
+      existingPrice.untilTimestamp,
+    )
+  } else {
+    mergedPrice.untilTimestamp = undefined
+  }
+
+  prices.set(mergedPrice.priceId, mergedPrice)
+}
+
+function setAmount(
+  amounts: Map<string, AmountConfig>,
+  amountToAdd: AmountConfig,
+) {
+  const existingAmount = amounts.get(amountToAdd.id)
+  if (!existingAmount) {
+    amounts.set(amountToAdd.id, amountToAdd)
+    return
+  }
+
+  const mergedAmount: AmountConfig = {
+    ...existingAmount,
+    sinceTimestamp: Math.min(
+      amountToAdd.sinceTimestamp,
+      amountToAdd.sinceTimestamp,
+    ),
+  }
+
+  // set untilTimestamp only if both prices have it
+  if (amountToAdd.untilTimestamp && existingAmount.untilTimestamp) {
+    mergedAmount.untilTimestamp = Math.max(
+      amountToAdd.untilTimestamp,
+      existingAmount.untilTimestamp,
+    )
+  } else {
+    mergedAmount.untilTimestamp = undefined
+  }
+
+  amounts.set(mergedAmount.id, mergedAmount)
 }
