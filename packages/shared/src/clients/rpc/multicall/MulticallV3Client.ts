@@ -1,9 +1,8 @@
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { RpcClient } from '../RpcClient'
 import type { CallParameters } from '../types'
 
-interface MulticallV3Response {
+export interface MulticallV3Response {
   success: boolean
   data: Bytes
 }
@@ -15,31 +14,28 @@ export const multicallInterface = new utils.Interface([
 // ClientCore functionality is provided via RpcClient
 export class MulticallV3Client {
   constructor(
-    private readonly rpc: RpcClient,
     private readonly address: EthereumAddress,
+    readonly sinceBlock: number,
+    private readonly batchSize: number,
   ) {}
 
-  async multicall(
-    requests: CallParameters[],
-    blockNumber: number,
-  ): Promise<MulticallV3Response[]> {
-    const encoded = this.encode(requests)
-    const result = await this.rpc.call(encoded, blockNumber)
-    return this.decode(result)
-  }
+  encodeBatches(requests: CallParameters[]) {
+    const batches = toBatches(requests, this.batchSize)
 
-  encode(requests: CallParameters[]) {
-    const string = multicallInterface.encodeFunctionData('tryAggregate', [
-      false,
-      requests.map((request) => [
-        request.to.toString(),
-        request.data?.toString() ?? '',
-      ]),
-    ])
-    return {
-      to: this.address,
-      data: Bytes.fromHex(string),
-    }
+    return batches.map((batch) => {
+      const calldata = multicallInterface.encodeFunctionData('tryAggregate', [
+        false,
+        batch.map((request) => [
+          request.to.toString(),
+          request.data.toString(),
+        ]),
+      ])
+
+      return {
+        to: this.address,
+        data: Bytes.fromHex(calldata),
+      }
+    })
   }
 
   decode(result: Bytes) {
@@ -56,4 +52,12 @@ export class MulticallV3Client {
       }
     })
   }
+}
+
+function toBatches<T>(items: T[], batchSize: number): T[][] {
+  const batches: T[][] = []
+  for (let i = 0; i < items.length; i += batchSize) {
+    batches.push(items.slice(i, i + batchSize))
+  }
+  return batches
 }

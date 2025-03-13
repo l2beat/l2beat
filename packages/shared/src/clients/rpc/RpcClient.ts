@@ -12,6 +12,7 @@ import {
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
 import type { BlockClient } from '../types'
+import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import {
   type CallParameters,
   EVMBalanceResponse,
@@ -30,6 +31,7 @@ import {
 interface Dependencies extends ClientCoreDependencies {
   url: string
   generateId?: () => string
+  multicall?: MulticallV3Client
 }
 
 export class RpcClient extends ClientCore implements BlockClient {
@@ -162,6 +164,29 @@ export class RpcClient extends ClientCore implements BlockClient {
     }
 
     return Bytes.fromHex(callResult.data.result)
+  }
+
+  async callWithMulticall(calls: CallParameters[], blockNumber: number) {
+    if (this.$.multicall === undefined) {
+      this.$.logger.warn(`Multicall unconfigured`)
+      return Promise.all(calls.map((c) => this.call(c, blockNumber)))
+    }
+
+    if (blockNumber < this.$.multicall.sinceBlock) {
+      this.$.logger.warn(`Multicall not yet deployed`, { calls: calls.length })
+      return Promise.all(calls.map((c) => this.call(c, blockNumber)))
+    }
+
+    const batches = this.$.multicall.encodeBatches(calls)
+
+    const batchedResults = await Promise.all(
+      batches.map(async (batch) => {
+        assert(this.$.multicall)
+        return this.$.multicall.decode(await this.call(batch, blockNumber))
+      }),
+    )
+
+    return batchedResults.flat()
   }
 
   async batchCall(
