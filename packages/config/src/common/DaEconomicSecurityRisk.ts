@@ -1,4 +1,4 @@
-import type { AdjustableEconomicSecurityRisk, } from '../types'
+import type { AdjustableEconomicSecurityRisk } from '../types'
 
 const OnChainQuantifiable: AdjustableEconomicSecurityRisk = {
   value: {
