@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "transporter",
+  "import": ["../../ethereumConfig.jsonc"],
+  "maxAddresses": 450,
+  "maxDepth": 8,
+  "initialAddresses": [
+    "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+    "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
+    "0x66598216D8E4d9AFE0F06d525B335b762229842f" // EtherSenderReceiver
+  ],
+  "types": {
+    "ChainIdMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "465200170687744372": "gnosis",
+        "5009297550715157269": "ethereum",
+        "3734403246176062136": "optimism",
+        "4949039107694359620": "arbitrum",
+        "4051577828743386545": "polygon",
+        "6433500567565415381": "avalanche",
+        "5142893604156789321": "wemix",
+        "3719320017875267166": "kroma",
+        "1346049177634351622": "celo",
+        "7264351850409363825": "mode",
+        "11344663589394136015": "bnb",
+        "15971525489660198786": "base",
+        "4411394078118774322": "blast",
+        "8805746078405598895": "metis"
+      }
+    }
+  },
+  "names": {
+    /*
+      For a mapping of onramp addresses to dest/source chains, see:
+      https://docs.chain.link/ccip/supported-networks/v1_2_0/mainnet
+    */
+    "0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
+    "0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway",
+    "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock",
+    "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "RouterOld",
+    "0x514910771AF9Ca656af840dff83E8264EcF986CA": "LinkToken",
+    "0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5": "OffRamp1",
+    "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1": "OnRamp1",
+    "0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB": "CommitStore1",
+    "0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM"
+  },
+  "overrides": {
+    "LinkToken": {
+      "ignoreDiscovery": true
+    },
+    "ARM": {
+      "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote
+    },
+    "EtherSenderReceiver": {
+      "ignoreMethods": ["i_weth"]
+    },
+    "RBACTimelock": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "0xD3cF979e676265e4f6379749DECe4708B9A22476": {
+      // ProxyAdmin of GHO token TokenPool at 0x5756880B6a1EAba0175227bf02a7E87c1e02B28C
+      "ignoreDiscovery": true
+    }
+  }
+}

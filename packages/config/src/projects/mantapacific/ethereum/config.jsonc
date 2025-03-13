@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "mantapacific",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x3B95bC951EE0f553ba487327278cAc44f29715E5"],
+  "names": {
+    "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E": "MantaMultisig"
+  },
+  "overrides": {}
+}

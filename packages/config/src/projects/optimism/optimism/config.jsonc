@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "optimism",
+  "name": "optimism",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x4200000000000000000000000000000000000010",
+    "0x4200000000000000000000000000000000000016",
+    "0x4200000000000000000000000000000000000014",
+    "0x4200000000000000000000000000000000000011",
+    "0x4200000000000000000000000000000000000012",
+    "0x4200000000000000000000000000000000000017",
+    "0x4200000000000000000000000000000000000015",
+    "0x420000000000000000000000000000000000000F",
+    "0x4200000000000000000000000000000000000002",
+    "0x4200000000000000000000000000000000000013",
+    "0x4200000000000000000000000000000000000019",
+    "0x420000000000000000000000000000000000001A",
+    "0x4200000000000000000000000000000000000042",
+    "0x4200000000000000000000000000000000000020",
+    "0x4200000000000000000000000000000000000021"
+  ],
+  "names": {
+    "0x4200000000000000000000000000000000000042": "OPToken",
+    "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
+    "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
+    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
+    "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager",
+    "0x4200000000000000000000000000000000000002": "DeployerWhitelist"
+  },
+  "overrides": {
+    "DeployerWhitelist": {
+      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
+    },
+    "MintManager": {
+      "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "OPToken": {
+      "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply"]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Keeps track of the total stake of each operator.",
+  "ignoreRelatives": ["quorumStrategies"],
+  "fields": {
+    "quorumStrategies": {
+      "description": "The strategies for the first quorum (ETH).",
+      "handler": {
+        "type": "event",
+        "select": "strategy",
+        "groupBy": "quorumNumber",
+        "add": { "event": "StrategyAddedToQuorum" }
+      }
+    }
+  }
+}

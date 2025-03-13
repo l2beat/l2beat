@@ -58,6 +58,7 @@ export const sorare: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
+    architectureImage: 'starkex',
     name: 'Sorare',
     slug: 'sorare',
     description:

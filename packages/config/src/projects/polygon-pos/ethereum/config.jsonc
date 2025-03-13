@@ -1,0 +1,155 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "polygon-pos",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE", // StateSender
+    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77" // RootChainManager"
+  ],
+  "names": {
+    "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A": "SlashingManager",
+    "0x401F6c983eA34274ec46f84D70b31C151321188b": "DepositManager",
+    "0x2A88696e0fFA76bAA1338F2C74497cC013495922": "WithdrawManager",
+    "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT",
+    "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StakingInfo",
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
+    "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": "RootChainInitialImplementation",
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
+    "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
+    "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
+    "0x7e94d6cAbb20114b22a088d828772645f68CC67B": "ValidatorShare",
+    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
+    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate", // PREDICATES[0] -----v
+    "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": "ERC721Predicate",
+    "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7": "MintableERC721Predicate",
+    "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": "ERC1155Predicate",
+    "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30": "EtherPredicate",
+    "0x9923263fA127b3d1484cFD649df8f1831c2A74e4": "MintableERC20Predicate", // PREDICATES[5]
+    "0x2d641867411650cd05dB93B59964536b1ED5b1B7": "MintableERC1155Predicate",
+    "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35": "CustomPredicate",
+    "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": "Aavegotchi",
+    "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4": "ERC20EscrowPredicate",
+    "0xDB2382413bCb9c2F1B6b62B52238558266361D68": "ChainExitERC1155Predicate",
+    "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5": "PolygonERC20MintBurnPredicate", // PREDICATES[11]-----^
+    "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT",
+    "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
+    "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
+  },
+  "overrides": {
+    "RootChainManager": {
+      "fields": {
+        "PREDICATES": {
+          "handler": {
+            "type": "event",
+            "select": "predicateAddress",
+            "add": { "event": "PredicateRegistered" }
+          },
+          "target": { "template": "polygonposbridge/predicate" } // adds accesscontrol discovery
+        }
+      }
+    },
+    "RootChainInitialImplementation": {
+      "ignoreMethods": ["headerBlocks"]
+    },
+    "Aavegotchi": {
+      "ignoreDiscovery": true // predicate
+    },
+    "DepositManager": {
+      "ignoreMethods": ["deposits"]
+    },
+    "WithdrawManager": {
+      "ignoreMethods": ["exits"]
+    },
+    "StateSender": {
+      "fields": {
+        "REGISTRATIONS": {
+          "handler": {
+            "type": "event",
+            "select": "sender",
+            "add": { "event": "RegistrationUpdated" }
+          }
+        }
+      },
+      "ignoreInWatchMode": ["counter"],
+      "ignoreRelatives": ["REGISTRATIONS"]
+    },
+    "StakingNFT": {
+      "ignoreMethods": ["tokenByIndex"],
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "RootChain": {
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs",
+            "nameArgs": true
+          }
+        }
+      },
+      "ignoreMethods": ["headerBlocks"],
+      "ignoreInWatchMode": [
+        "_nextHeaderBlock",
+        "getLastChildBlock",
+        "currentHeaderBlock"
+      ]
+    },
+    "StakeManager": {
+      "ignoreRelatives": ["token", "tokenMatic", "migration"],
+      "ignoreMethods": [
+        "getValidatorContract",
+        "delegatedAmount",
+        "isValidator",
+        "latestSignerUpdateEpoch",
+        "signers",
+        "validatorAuction",
+        "validators",
+        "validatorStake",
+        "validatorStateChanges",
+        "accountStateRoot"
+      ],
+      "ignoreInWatchMode": [
+        "currentEpoch",
+        "currentValidatorSetTotalStake",
+        "epoch",
+        "rewardPerStake",
+        "totalRewardsLiquidated",
+        "totalStaked",
+        "validatorState",
+        "totalHeimdallFee",
+        "NFTCounter"
+      ]
+    },
+    "StakingInfo": {
+      "ignoreMethods": [
+        "getValidatorContractAddress",
+        "totalValidatorStake",
+        "validatorNonce"
+      ]
+    },
+    "StakeManagerExtension": {
+      "ignoreMethods": [
+        "latestSignerUpdateEpoch",
+        "validatorAuction",
+        "validators",
+        "validatorStateChanges"
+      ]
+    },
+    "ExitNFT": {
+      "ignoreMethods": ["exists"]
+    },
+    "ValidatorShare": {
+      "ignoreMethods": ["getRewardPerShare"]
+    },
+    "Timelock": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    }
+  }
+}

@@ -24,6 +24,7 @@ export const RolePermissionEntries = [
   'relay',
   'aggregatePolygon',
   'operateStarknet',
+  'operateStarkEx',
   'governStarknet',
 ] as const
 

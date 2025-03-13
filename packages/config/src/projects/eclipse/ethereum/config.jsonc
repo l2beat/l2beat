@@ -1,0 +1,117 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "eclipse",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xD7E4b67E735733aC98a88F13d087D8aac670E644", // Treasury
+    "0xb23B2492f7A9631104A5877F7FFA00633660968d", // Mailbox
+    "0x2b08d7cf7eaff0f5f6623d9fb09b080726d4be11" // CanonicalBridge
+  ],
+  "names": {
+    "0xb23B2492f7A9631104A5877F7FFA00633660968d": "Mailbox",
+    "0xD7E4b67E735733aC98a88F13d087D8aac670E644": "Treasury",
+    "0x2b08d7cf7eaff0f5f6623d9fb09b080726d4be11": "CanonicalBridge",
+    "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "EtherBridge",
+    "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "TreasuryOwner",
+    "0x4720342419C1D316B948690d12C86D5b485C64E0": "AuthorityMultisig",
+    "0xD02f545d57536BC1E8F12D867731F006AacE71E3": "Upgrader0to1"
+  },
+  "overrides": {
+    "Upgrader0to1": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf": "DEPOSITOR_ROLE",
+              "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d": "EMERGENCY_ROLE",
+              "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0": "FRAUD_WINDOW_SETTER_ROLE",
+              "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626": "PAUSER_ROLE",
+              "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c": "STARTER_ROLE",
+              "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f": "UPGRADER_ROLE",
+              "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53": "WITHDRAW_AUTHORITY_ROLE",
+              "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040": "WITHDRAW_CANCELLER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "Mailbox": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        },
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "Treasury": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf": "DEPOSITOR_ROLE",
+              "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d": "EMERGENCY_ROLE",
+              "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626": "PAUSER_ROLE",
+              "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c": "STARTER_ROLE",
+              "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f": "UPGRADER_ROLE",
+              "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53": "WITHDRAW_AUTHORITY_ROLE"
+            }
+          }
+        },
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "EtherBridge": {
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        },
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "CanonicalBridge": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626": "PAUSER_ROLE",
+              "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c": "STARTER_ROLE",
+              "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53": "WITHDRAW_AUTHORITY_ROLE",
+              "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc": "CLAIM_AUTHORITY_ROLE",
+              "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040": "WITHDRAW_CANCELLER_ROLE",
+              "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0": "FRAUD_WINDOW_SETTER_ROLE"
+            }
+          }
+        }
+      }
+    }
+  }
+}

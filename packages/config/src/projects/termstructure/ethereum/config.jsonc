@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "termstructure",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
+    "0x955cdD2E56Ca2776a101a552A318d28fe311398D",
+    "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
+    "0x882aBFb2F6A67d36350499991638044e8Bd83a72"
+  ],
+  "names": {
+    "0x09E01425780094a9754B2bd8A3298f73ce837CF9": "ZkTrueUp",
+    "0x955cdD2E56Ca2776a101a552A318d28fe311398D": "RollupFacet",
+    "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A": "AccountFacet",
+    "0x882aBFb2F6A67d36350499991638044e8Bd83a72": "EvacuationFacet",
+    "0xa00d50A40B1635D293c87BA36503bD2504b5D818": "TermStructureMultisig",
+    "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12": "Rolluper",
+    "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8": "Operator",
+    "0x23bCad9BFB1378cd45b32525B835F037b673f529": "VaultMultisig",
+    "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165": "InsuranceMultisig",
+    "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca": "TreasuryMultisig"
+  },
+  "overrides": {
+    "ZkTrueUp": {
+      "ignoreInWatchMode": [
+        "getAccountNum",
+        "getBlockNum",
+        "getBorrowFeeRate",
+        "getFundWeight",
+        "getL1RequestNum",
+        "getTokenNum"
+      ],
+      "ignoreRelatives": ["getAaveV3Pool", "getWETH"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": "ADMIN_ROLE",
+              "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR_ROLE",
+              "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106": "COMMITTER_ROLE",
+              "0x0ce23c3e399818cfee81a7ab0880f714e53d7672b08df0fa62f2843416e1ea09": "VERIFIER_ROLE",
+              "0xf6d4b94561d34a2e202535a880be5a411bcfa4d7aeb44117cc8d682e63ec4759": "EXECUTER_ROLE"
+            }
+          }
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "EXPIRATION_PERIOD": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 1209600 // 14 days, https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code#F30#L37
+          }
+        }
+      }
+    }
+  }
+}

@@ -30,6 +30,7 @@
   stateValidation: {
     description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve."
     orderHint: Infinity
+    secondLine: "7d challenge period"
     sentiment: "good"
     value: "Fraud proofs (INT)"
   }

@@ -1,14 +1,11 @@
-import { existsSync, readdirSync } from 'fs'
-import { readFileSync } from 'fs'
-import path from 'path'
-
 import { createHash } from 'crypto'
+import { existsSync, readFileSync, readdirSync } from 'fs'
+import path from 'path'
 import { assert, Hash160, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { merge } from 'lodash'
 import type { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
-import { TemplateService } from '../analysis/TemplateService'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
@@ -17,19 +14,15 @@ import { CommonDiscoveryConfig, RawDiscoveryConfig } from './RawDiscoveryConfig'
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
 export class ConfigReader {
-  public templateService: TemplateService
-
-  constructor(readonly rootPath: string = '') {
-    this.templateService = new TemplateService(rootPath)
-  }
+  constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): DiscoveryConfig {
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
+      fileExistsCaseSensitive(path.join(this.rootPath, name)),
       'Project not found, check if case matches',
     )
 
-    const basePath = path.join(this.rootPath, 'discovery', name, chain)
+    const basePath = path.join(this.rootPath, name, chain)
     assert(
       fileExistsCaseSensitive(path.join(basePath)),
       'Chain not found in project, check if case matches',
@@ -62,18 +55,16 @@ export class ConfigReader {
 
   readDiscovery(name: string, chain: string): DiscoveryOutput {
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
+      fileExistsCaseSensitive(path.join(this.rootPath, name)),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(
-        path.join(this.rootPath, 'discovery', name, chain),
-      ),
+      fileExistsCaseSensitive(path.join(this.rootPath, name, chain)),
       'Chain not found in project, check if case matches',
     )
 
     const contents = readFileSync(
-      path.join(this.rootPath, 'discovery', name, chain, 'discovered.json'),
+      path.join(this.rootPath, name, chain, 'discovered.json'),
       'utf-8',
     )
 
@@ -90,12 +81,12 @@ export class ConfigReader {
   }
 
   readAllChains(): string[] {
-    const folders = readdirSync(path.join(this.rootPath, 'discovery'), {
+    const folders = readdirSync(path.join(this.rootPath), {
       withFileTypes: true,
     }).filter((x) => x.isDirectory() && !x.name.startsWith('_'))
     const chains = new Set<string>()
     for (const folder of folders) {
-      readdirSync(path.join(this.rootPath, 'discovery', folder.name), {
+      readdirSync(path.join(this.rootPath, folder.name), {
         withFileTypes: true,
       })
         .filter((x) => x.isDirectory())
@@ -124,34 +115,31 @@ export class ConfigReader {
   }
 
   readAllChainsForProject(name: string) {
-    const chains = readdirSync(
-      path.join(this.rootPath, 'discovery', name),
-    ).filter((chain) => {
-      try {
-        return existsSync(
-          path.join(this.rootPath, 'discovery', name, chain, 'config.jsonc'),
-        )
-      } catch {
-        return false
-      }
-    })
+    const chains = readdirSync(path.join(this.rootPath, name)).filter(
+      (chain) => {
+        try {
+          return existsSync(
+            path.join(this.rootPath, name, chain, 'config.jsonc'),
+          )
+        } catch {
+          return false
+        }
+      },
+    )
     return chains
   }
 
   readAllProjectsForChain(chain: string): string[] {
-    const folders = readdirSync(path.join(this.rootPath, 'discovery'), {
+    const folders = readdirSync(path.join(this.rootPath), {
       withFileTypes: true,
     }).filter((x) => x.isDirectory())
 
     const projects = []
 
     for (const folder of folders) {
-      const contents = readdirSync(
-        path.join(this.rootPath, 'discovery', folder.name),
-        {
-          withFileTypes: true,
-        },
-      )
+      const contents = readdirSync(path.join(this.rootPath, folder.name), {
+        withFileTypes: true,
+      })
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
 
@@ -160,7 +148,7 @@ export class ConfigReader {
       }
 
       const chainFiles = readdirSync(
-        path.join(this.rootPath, 'discovery', folder.name, chain),
+        path.join(this.rootPath, folder.name, chain),
         {
           withFileTypes: true,
         },
@@ -182,18 +170,16 @@ export class ConfigReader {
 
   readDiffHistoryHash(name: string, chain: string): Hash160 | undefined {
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
+      fileExistsCaseSensitive(path.join(this.rootPath, name)),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(
-        path.join(this.rootPath, 'discovery', name, chain),
-      ),
+      fileExistsCaseSensitive(path.join(this.rootPath, name, chain)),
       'Chain not found in project, check if case matches',
     )
 
     const content = readFileSync(
-      path.join(this.rootPath, 'discovery', name, chain, 'diffHistory.md'),
+      path.join(this.rootPath, name, chain, 'diffHistory.md'),
       'utf-8',
     )
     const hashLine = content.split('\n')[0]
@@ -204,7 +190,7 @@ export class ConfigReader {
   }
 
   getProjectPath(project: string): string {
-    return path.join(this.rootPath, 'discovery', project)
+    return path.join(this.rootPath, project)
   }
 
   getProjectChainPath(project: string, chain: string): string {

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "frxETH Token",
+  "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "timelock_address": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can add and remove frxETH minters and set a new timelock address."
+          }
+        ]
+      }
+    },
+    "minters_array": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can mint frxETH tokens."
+          }
+        ]
+      }
+    }
+  }
+}

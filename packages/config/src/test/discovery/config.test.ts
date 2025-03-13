@@ -1,6 +1,9 @@
-import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
-import { ConfigReader, TemplateService } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  TemplateService,
+  getDiscoveryPaths,
+} from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { bridges } from '../../processing/bridges'
@@ -25,8 +28,10 @@ export const onChainProjects: string[] = [
 ]
 
 describe('discovery config.jsonc', () => {
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
-  const templateService = new TemplateService()
+  const paths = getDiscoveryPaths()
+
+  const configReader = new ConfigReader(paths.discovery)
+  const templateService = new TemplateService(paths.discovery)
 
   const chainConfigs = configReader
     .readAllChains()

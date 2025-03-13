@@ -2,13 +2,14 @@ import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { readFile } from 'fs/promises'
 
+import { join } from 'path'
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
 import { SocketVaults } from './schema'
 
 describe('socket', () => {
   it('plugs should be up to date with the discovery output', async () => {
     const file = await readFile(
-      'scripts/socketcrawl/outfiles/socket-crawl-result.json',
+      join(__dirname, 'outfiles/socket-crawl-result.json'),
       'utf-8',
     )
     const socketData = SocketVaults.parse(JSON.parse(file))

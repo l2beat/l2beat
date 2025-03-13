@@ -1,0 +1,773 @@
+{
+  "name": "layer2financezk",
+  "chain": "ethereum",
+  "blockNumber": 19825376,
+  "configHash": "0x3f9e1a15e62fb349326c5afbb7042f615ac887059aad3b70281434968ed43ab5",
+  "sharedModules": ["shared-sharp-verifier"],
+  "entries": [
+    {
+      "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "governStarknet",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+        },
+        {
+          "permission": "interact",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "manage the token admin role."
+        },
+        {
+          "permission": "operateStarkEx",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+        }
+      ]
+    },
+    {
+      "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OrderRegistry",
+      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "type": "Contract",
+      "template": "starkex/OrderRegistry",
+      "sourceHashes": [
+        "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper contract for registering limit orders from L1.",
+      "sinceTimestamp": 1626352379,
+      "sinceBlock": 12831566,
+      "values": {
+        "$immutable": true,
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_OrderRegistry_2021_1"
+      }
+    },
+    {
+      "name": "StrategyCompound",
+      "address": "0x5b000954F70B0410685193B0afd3074B744B5C97",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd4db48e0b7efb71ded88f8c4a839b0175d98cfd365e8beaf4630e60dfb8ea404"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1648452775,
+      "sinceBlock": 14473373,
+      "values": {
+        "$immutable": true,
+        "broker": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+        "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+        "uniswap": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      }
+    },
+    {
+      "name": "GpsFactRegistryAdapter",
+      "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "type": "Contract",
+      "template": "starkex/GpsFactRegistryAdapter",
+      "sourceHashes": [
+        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
+      ],
+      "proxyType": "immutable",
+      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).",
+      "sinceTimestamp": 1640107463,
+      "sinceBlock": 13849860,
+      "values": {
+        "$immutable": true,
+        "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
+        "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
+        "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
+            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (Starknet)",
+            "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
+            "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
+            "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
+            "770346231394331402493200980986217737662224545740427952627288191358999988146": "ApeX-USDT",
+            "3174901404014912024702042974619036870715605532092680335571201877913899936957": "StarkEx Spot v4.0 (RhinoFi, Sorare)",
+            "16830627573509542901909952446321116535677491650708854009406762893086223513": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)",
+            "2530337539466159944237001094809327283009177793361359619481044346150483328860": "ApeX-USDC 20250130",
+            "3114724292040200590153042023978438629733352741898912919152162079752811928849": "StarkEx Perp v2.0 ApeX-USDC",
+            "217719352201300445998518619904782191262194843262573339166404641663770051805": "StarkNet (old)",
+            "3003515909324298587247571665454372831319437787162989623104387385306791861180": "StarkNet (old)",
+            "1161178844461337253856226043908368523817098764221830529880464854589141231910": "StarkNet Aggregator (old)",
+            "1921772108187713503530008849184725638117898887391063185252422808224349294626": "StarkNet (old)",
+            "3258367057337572248818716706664617507069572185152472699066582725377748079373": "StarkNet (old)",
+            "407700941260678649793204927710478760533239334662847444187959202896452163393": "StarkNet (old)",
+            "1865367024509426979036104162713508294334262484507712987283009063059134893433": "StarkNet (old)",
+            "54878256403880350656938046611252303365750679698042371543935159963667935317": "StarkNet (old)",
+            "2479841346739966073527450029179698923866252973805981504232089731754042431018": "StarkNet (old)",
+            "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "StarkExchange",
+      "address": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+      "type": "Contract",
+      "template": "starkex/StarkExchange",
+      "sourceHashes": [
+        "0x87045c081a3bd84c271153c36a9a503f84bc3035077d34144332c329d3fcb92d",
+        "0x54407214d4211e41ecb742c3df7564e352844c1f5da38ef2e206b0465bd5345b",
+        "0x497eebe95d8d7611823ffcb6cc098a9c3c71e91941026f2b4c4989d6f9fa944d",
+        "0x452c4b92e2f090f2979fe1dec4ee28bf8b9c431b96b67966a3c2279f9e332684",
+        "0xf615d0291aa23f36d8cb749e3950b549d57d38bfef0c342331d0cedd7d769026",
+        "0x7e358cdedbf8af25ae12a5fe965db091c7751aafa68c2460ab43e81a8eb364b9",
+        "0x105353ea24f9e10459c2487f227bc285c4ca2317fac8e12a8b936bc92329aea5",
+        "0x93b21bfbef09c4e60d6a17309877245220508c54478159a8f2b9dbfb60576c4b"
+      ],
+      "proxyType": "StarkWare diamond",
+      "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
+      "issuedPermissions": [
+        {
+          "permission": "governStarknet",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "description": "manage the token admin role.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "via": []
+        },
+        {
+          "permission": "operateStarkEx",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "via": []
+        },
+        {
+          "permission": "operateStarkEx",
+          "to": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getVaultRoot",
+        "getValidiumVaultRoot"
+      ],
+      "sinceTimestamp": 1645130774,
+      "sinceBlock": 14225869,
+      "values": {
+        "$admin": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+        "$immutable": false,
+        "$implementation": [
+          "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+          "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+          "0x8536850750956c2FEebeCAB786d82271a5467687",
+          "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+          "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+          "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+          "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+        ],
+        "$pastUpgrades": [
+          [
+            "2022-02-17T20:46:14.000Z",
+            "0xc1986fcfa9adba1076e31573ea760b1b64e5dca5954623c3306f7f90f76fd3f9",
+            [
+              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "0x8536850750956c2FEebeCAB786d82271a5467687",
+              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+            ]
+          ],
+          [
+            "2022-04-25T08:12:19.000Z",
+            "0x880c2620a1b1c1bc539b81f1533ca188c76cc94cfc5288bd1f19af042ea51805",
+            [
+              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "0x8536850750956c2FEebeCAB786d82271a5467687",
+              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+            ]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "defaultVaultWithdrawalLock": 0,
+        "DEPOSIT_CANCEL_DELAY": 172800,
+        "FREEZE_GRACE_PERIOD": 604800,
+        "getAssetInfo": [],
+        "getLastBatchId": 115,
+        "getOrderRoot": "2449344249870982788470726390907865854777361400154633433874282805096307135974",
+        "getOrderTreeHeight": 63,
+        "getRegisteredAvailabilityVerifiers": [
+          "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9"
+        ],
+        "getRegisteredVerifiers": [
+          "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
+        ],
+        "getSequenceNumber": 114,
+        "getUpgradeActivationDelay": 0,
+        "getVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
+        "getVaultTreeHeight": 31,
+        "GOVERNORS": [],
+        "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "isStrictVaultBalancePolicy": false,
+        "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
+        "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
+        "MAX_VERIFIER_COUNT": 64,
+        "operators": [
+          "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
+        ],
+        "OPERATORS": [
+          "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
+        ],
+        "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
+        "StarkWareDiamond_upgradeDelay": 0,
+        "tokenAdmins": [
+          "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+          "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+        ],
+        "UNFREEZE_DELAY": 31536000,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "VERIFIER_REMOVAL_DELAY": 2419200,
+        "VERSION": "4.0.1"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."
+        },
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+        }
+      },
+      "derivedName": "Proxy",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateStarkEx",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+        }
+      ]
+    },
+    {
+      "name": "Comp",
+      "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xface33f588d07cf7b8c64c6200efc11c45d45332a47c27e8c49859d6bc5c8001"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1583280535,
+      "sinceBlock": 9601359,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DELEGATION_TYPEHASH": "0xe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf",
+        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
+        "name": "Compound",
+        "symbol": "COMP",
+        "totalSupply": "10000000000000000000000000"
+      }
+    },
+    {
+      "address": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
+    },
+    {
+      "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
+    },
+    {
+      "name": "Broker",
+      "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd9040d82f39aa8ff258f35b318bdf0fc513f4d8844c61c34f6c8ce81eee40b55"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1648452641,
+      "sinceBlock": 14473363,
+      "values": {
+        "$immutable": true,
+        "EXP_TIME": 2000000,
+        "nonce": 23,
+        "onchainVaults": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+        "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+        "PRICE_DECIMALS": "1000000000000000000",
+        "SLIPPAGE_DENOMINATOR": 10000
+      }
+    },
+    {
+      "name": "Committee",
+      "address": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1650870230,
+      "sinceBlock": 14652355,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    }
+  ],
+  "abis": {
+    "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [
+      "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
+      "event LogDepositToVault(address ethKey, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogVaultWithdrawalLockSet(address ethKey, uint256 assetId, uint256 vaultId, uint256 timeRelease)",
+      "event LogWithdrawalFromVault(address ethKey, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
+      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
+      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
+      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
+      "function MAX_VERIFIER_COUNT() view returns (uint256)",
+      "function STARKEX_MAX_DEFAULT_VAULT_LOCK() view returns (uint256)",
+      "function UNFREEZE_DELAY() view returns (uint256)",
+      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
+      "function defaultVaultWithdrawalLock() view returns (uint256)",
+      "function depositERC20ToVault(uint256 assetId, uint256 vaultId, uint256 quantizedAmount)",
+      "function depositEthToVault(uint256 assetId, uint256 vaultId) payable",
+      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
+      "function getQuantizedVaultBalance(address ethKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
+      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
+      "function getVaultBalance(address ethKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
+      "function getVaultWithdrawalLock(address ethKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes)",
+      "function initializerSize() view returns (uint256)",
+      "function isStrictVaultBalancePolicy() view returns (bool)",
+      "function isVaultLocked(address ethKey, uint256 assetId, uint256 vaultId) view returns (bool)",
+      "function lockVault(uint256 assetId, uint256 vaultId, uint256 lockTime)",
+      "function mainAcceptGovernance()",
+      "function mainCancelNomination()",
+      "function mainIsGovernor(address testGovernor) view returns (bool)",
+      "function mainNominateNewGovernor(address newGovernor)",
+      "function mainRemoveGovernor(address governorForRemoval)",
+      "function orderRegistryAddress() view returns (address)",
+      "function setDefaultVaultWithdrawalLock(uint256 newDefaultTime)",
+      "function withdrawFromVault(uint256 assetId, uint256 vaultId, uint256 quantizedAmount)"
+    ],
+    "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": [
+      "event LogFrozen()",
+      "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNftWithdrawalAllowed(uint256 ownerKey, uint256 assetId)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogOperatorAdded(address operator)",
+      "event LogOperatorRemoved(address operator)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogRootUpdate(uint256 sequenceNumber, uint256 batchId, uint256 vaultRoot, uint256 orderRoot)",
+      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
+      "event LogUnFrozen()",
+      "event LogVaultBalanceChangeApplied(address ethKey, uint256 assetId, uint256 vaultId, int256 quantizedAmountChange)",
+      "event LogWithdrawalAllowed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
+      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
+      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
+      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
+      "function MAX_VERIFIER_COUNT() view returns (uint256)",
+      "function STARKEX_MAX_DEFAULT_VAULT_LOCK() view returns (uint256)",
+      "function UNFREEZE_DELAY() view returns (uint256)",
+      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
+      "function defaultVaultWithdrawalLock() view returns (uint256)",
+      "function escape(uint256 starkKey, uint256 vaultId, uint256 assetId, uint256 quantizedAmount)",
+      "function getActionCount() view returns (uint256)",
+      "function getActionHashByIndex(uint256 actionIndex) view returns (bytes32)",
+      "function getFullWithdrawalRequest(uint256 starkKey, uint256 vaultId) view returns (uint256 res)",
+      "function getLastBatchId() view returns (uint256 batchId)",
+      "function getOrderRoot() view returns (uint256 root)",
+      "function getOrderTreeHeight() view returns (uint256 height)",
+      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
+      "function getSequenceNumber() view returns (uint256 seq)",
+      "function getVaultRoot() view returns (uint256 root)",
+      "function getVaultTreeHeight() view returns (uint256 height)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function initializerSize() view returns (uint256)",
+      "function isFrozen() view returns (bool)",
+      "function isOperator(address testedOperator) view returns (bool)",
+      "function mainAcceptGovernance()",
+      "function mainCancelNomination()",
+      "function mainIsGovernor(address testGovernor) view returns (bool)",
+      "function mainNominateNewGovernor(address newGovernor)",
+      "function mainRemoveGovernor(address governorForRemoval)",
+      "function orderRegistryAddress() view returns (address)",
+      "function registerOperator(address newOperator)",
+      "function unFreeze()",
+      "function unregisterOperator(address removedOperator)",
+      "function updateState(uint256[] publicInput, uint256[] applicationData)"
+    ],
+    "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": [
+      "event LogFrozen()",
+      "event LogFullWithdrawalRequest(uint256 starkKey, uint256 vaultId)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogUnFrozen()",
+      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
+      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
+      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
+      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
+      "function MAX_VERIFIER_COUNT() view returns (uint256)",
+      "function STARKEX_MAX_DEFAULT_VAULT_LOCK() view returns (uint256)",
+      "function UNFREEZE_DELAY() view returns (uint256)",
+      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
+      "function defaultVaultWithdrawalLock() view returns (uint256)",
+      "function freezeRequest(uint256 starkKey, uint256 vaultId)",
+      "function fullWithdrawalRequest(uint256 starkKey, uint256 vaultId)",
+      "function getActionCount() view returns (uint256)",
+      "function getActionHashByIndex(uint256 actionIndex) view returns (bytes32)",
+      "function getEthKey(uint256 ownerKey) view returns (address)",
+      "function getFullWithdrawalRequest(uint256 starkKey, uint256 vaultId) view returns (uint256 res)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes)",
+      "function initializerSize() view returns (uint256)",
+      "function isFrozen() view returns (bool)",
+      "function mainAcceptGovernance()",
+      "function mainCancelNomination()",
+      "function mainIsGovernor(address testGovernor) view returns (bool)",
+      "function mainNominateNewGovernor(address newGovernor)",
+      "function mainRemoveGovernor(address governorForRemoval)",
+      "function orderRegistryAddress() view returns (address)",
+      "function unFreeze()"
+    ],
+    "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": [
+      "function VERSION() view returns (string)",
+      "function initialize(bytes data)"
+    ],
+    "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
+      "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
+      "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
+      "function calcL1LimitOrderHash(uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp) pure returns (bytes32)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isMessageRegistered(address from, address to, bytes32 messageHash) view returns (bool)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
+      "function registerMessage(address to, bytes32 messageHash)"
+    ],
+    "0x5b000954F70B0410685193B0afd3074B744B5C97": [
+      "constructor(address _broker, address _comp, address _uniswap, address _weth)",
+      "event BrokerUpdated(address broker)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event WrapTokenUpdated(address wrapToken, bool enabled)",
+      "function broker() view returns (address)",
+      "function comp() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sellErc(address inputToken, address outputToken, uint256 inputAmt) returns (uint256 outputAmt)",
+      "function sellEth(address outputToken) payable returns (uint256 outputAmt)",
+      "function setSupportedWrapToken(address _wrapToken, bool _enabled)",
+      "function supportedWrapTokens(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function uniswap() view returns (address)",
+      "function updateBroker(address _broker)",
+      "function weth() view returns (address)"
+    ],
+    "0x62BCA4DB742A99c834e2c24b609656A70EA25379": [
+      "event LogFrozen()",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRegistered(address entry, string entryId)",
+      "event LogRemovalIntent(address entry, string entryId)",
+      "event LogRemoved(address entry, string entryId)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogUnFrozen()",
+      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
+      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
+      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
+      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
+      "function MAX_VERIFIER_COUNT() view returns (uint256)",
+      "function UNFREEZE_DELAY() view returns (uint256)",
+      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
+      "function announceAvailabilityVerifierRemovalIntent(address verifier)",
+      "function announceVerifierRemovalIntent(address verifier)",
+      "function getRegisteredAvailabilityVerifiers() view returns (address[] _verifers)",
+      "function getRegisteredVerifiers() view returns (address[] _verifers)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes)",
+      "function initializerSize() view returns (uint256)",
+      "function isAvailabilityVerifier(address verifierAddress) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isVerifier(address verifierAddress) view returns (bool)",
+      "function mainAcceptGovernance()",
+      "function mainCancelNomination()",
+      "function mainIsGovernor(address testGovernor) view returns (bool)",
+      "function mainNominateNewGovernor(address newGovernor)",
+      "function mainRemoveGovernor(address governorForRemoval)",
+      "function registerAvailabilityVerifier(address verifier, string identifier)",
+      "function registerVerifier(address verifier, string identifier)",
+      "function removeAvailabilityVerifier(address verifier)",
+      "function removeVerifier(address verifier)",
+      "function unFreeze()"
+    ],
+    "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": [
+      "constructor(address gpsStatementContract, uint256 programHash_)",
+      "function gpsContract() view returns (address)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function programHash() view returns (uint256)"
+    ],
+    "0x82123571C8a5e0910280C066bc634c4945FFcbC8": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address testGovernor) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0x8536850750956c2FEebeCAB786d82271a5467687": [
+      "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
+      "event LogDepositCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogDepositNftCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
+      "event LogFrozen()",
+      "event LogMintWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, uint256 assetId)",
+      "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNftDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
+      "event LogNftWithdrawalAllowed(uint256 ownerKey, uint256 assetId)",
+      "event LogNftWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 tokenId, uint256 assetId, address recipient)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogTokenAdminAdded(address tokenAdmin)",
+      "event LogTokenAdminRemoved(address tokenAdmin)",
+      "event LogTokenRegistered(uint256 assetType, bytes assetInfo, uint256 quantum)",
+      "event LogUnFrozen()",
+      "event LogUserRegistered(address ethKey, uint256 starkKey, address sender)",
+      "event LogWithdrawalAllowed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
+      "event LogWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
+      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
+      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
+      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
+      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
+      "function MAX_VERIFIER_COUNT() view returns (uint256)",
+      "function UNFREEZE_DELAY() view returns (uint256)",
+      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
+      "function defaultVaultWithdrawalLock() view returns (uint256)",
+      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
+      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
+      "function depositCancel(uint256 starkKey, uint256 assetId, uint256 vaultId)",
+      "function depositERC20(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
+      "function depositEth(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
+      "function depositNft(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
+      "function depositNftReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
+      "function depositReclaim(uint256 starkKey, uint256 assetId, uint256 vaultId)",
+      "function getActionCount() view returns (uint256)",
+      "function getActionHashByIndex(uint256 actionIndex) view returns (bytes32)",
+      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
+      "function getCancellationRequest(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 request)",
+      "function getDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 balance)",
+      "function getEthKey(uint256 ownerKey) view returns (address)",
+      "function getFullWithdrawalRequest(uint256 starkKey, uint256 vaultId) view returns (uint256 res)",
+      "function getQuantizedDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 balance)",
+      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
+      "function getWithdrawalBalance(uint256 ownerKey, uint256 assetId) view returns (uint256 balance)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes)",
+      "function initializerSize() view returns (uint256)",
+      "function isAssetRegistered(uint256 assetType) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isTokenAdmin(address testedAdmin) view returns (bool)",
+      "function mainAcceptGovernance()",
+      "function mainCancelNomination()",
+      "function mainIsGovernor(address testGovernor) view returns (bool)",
+      "function mainNominateNewGovernor(address newGovernor)",
+      "function mainRemoveGovernor(address governorForRemoval)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function orderRegistryAddress() view returns (address)",
+      "function registerAndDepositERC20(address ethKey, uint256 starkKey, bytes signature, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
+      "function registerAndDepositEth(address ethKey, uint256 starkKey, bytes signature, uint256 assetType, uint256 vaultId) payable",
+      "function registerEthAddress(address ethKey, uint256 starkKey, bytes starkSignature)",
+      "function registerSender(uint256 starkKey, bytes starkSignature)",
+      "function registerToken(uint256 assetType, bytes assetInfo)",
+      "function registerToken(uint256 assetType, bytes assetInfo, uint256 quantum)",
+      "function registerTokenAdmin(address newAdmin)",
+      "function unFreeze()",
+      "function unregisterTokenAdmin(address oldAdmin)",
+      "function withdraw(uint256 ownerKey, uint256 assetType)",
+      "function withdrawAndMint(uint256 ownerKey, uint256 assetType, bytes mintingBlob)",
+      "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
+    ],
+    "0xB3788a88F063B217227E27ae16Ba550db3132bE6": [
+      "event ImplementationActivationRescheduled(address indexed implementation, uint256 updatedActivationTime)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes)",
+      "function initializerSize() view returns (uint256)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address testGovernor) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)"
+    ],
+    "0xc00e94Cb662C3520282E6f5717214004A7f26888": [
+      "constructor(address account)",
+      "event Approval(address indexed owner, address indexed spender, uint256 amount)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "function DELEGATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_TYPEHASH() view returns (bytes32)",
+      "function allowance(address account, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 rawAmount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function checkpoints(address, uint32) view returns (uint32 fromBlock, uint96 votes)",
+      "function decimals() view returns (uint8)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address) view returns (address)",
+      "function getCurrentVotes(address account) view returns (uint96)",
+      "function getPriorVotes(address account, uint256 blockNumber) view returns (uint96)",
+      "function name() view returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function numCheckpoints(address) view returns (uint32)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address dst, uint256 rawAmount) returns (bool)",
+      "function transferFrom(address src, address dst, uint256 rawAmount) returns (bool)"
+    ],
+    "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": [
+      "constructor(address _onchainVaults)",
+      "event CancelSell(uint256 rideId, uint256 cancelShareAmt)",
+      "event MintAndSell(uint256 rideId, uint256 mintShareAmt, uint256 price, uint256 slippage)",
+      "event OnchainVaultsChanged(address oldAddr, address newAddr)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PriceChanged(uint256 rideId, uint256 oldVal, uint256 newVal)",
+      "event RideDeparted(uint256 rideId, uint256 usedInputTokenAmt)",
+      "event RideInfoRegistered(uint256 rideId, tuple(address share, uint256 tokenIdShare, uint256 quantumShare, address inputToken, uint256 tokenIdInput, uint256 quantumInput, address outputToken, uint256 tokenIdOutput, uint256 quantumOutput, address strategyPool) rideInfo)",
+      "event SharesBurned(uint256 rideId, uint256 burnedShareAmt)",
+      "event SharesRedeemed(uint256 rideId, uint256 redeemedShareAmt)",
+      "event SlippageChanged(uint256 rideId, uint256 oldVal, uint256 newVal)",
+      "function EXP_TIME() view returns (uint256)",
+      "function PRICE_DECIMALS() view returns (uint256)",
+      "function SLIPPAGE_DENOMINATOR() view returns (uint256)",
+      "function actualPrices(uint256) view returns (uint256)",
+      "function addRideInfo(uint256 _rideId, uint256[3] _tokenIds, address[3] _tokens, address _strategyPool)",
+      "function burnRideShares(uint256 _rideId)",
+      "function cancelSell(uint256 _rideId, uint256 _amount, uint256 _tokenIdFee, uint256 _quantizedAmtFee, uint256 _vaultIdFee)",
+      "function departRide(uint256 _rideId, uint256 _tokenIdFee, uint256 _quantizedAmtFee, uint256 _vaultIdFee)",
+      "function mintShareAndSell(uint256 _rideId, uint256 _amount, uint256 _tokenIdFee, uint256 _quantizedAmtFee, uint256 _vaultIdFee)",
+      "function nonce() view returns (uint256)",
+      "function onchainVaults() view returns (address)",
+      "function owner() view returns (address)",
+      "function prices(uint256) view returns (uint256)",
+      "function redeemShare(uint256 _rideId, uint256 _redeemAmount)",
+      "function renounceOwnership()",
+      "function rideDeparted(uint256) view returns (bool)",
+      "function rideInfos(uint256) view returns (address share, uint256 tokenIdShare, uint256 quantumShare, address inputToken, uint256 tokenIdInput, uint256 quantumInput, address outputToken, uint256 tokenIdOutput, uint256 quantumOutput, address strategyPool)",
+      "function ridesShares(uint256) view returns (uint256)",
+      "function setOnchainVaults(address _newAddr)",
+      "function setPrice(uint256 _rideId, uint256 _price)",
+      "function setSlippage(uint256 _rideId, uint256 _slippage)",
+      "function slippages(uint256) view returns (uint256)",
+      "function transferOwnership(address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "starkex/GpsFactRegistryAdapter": "0xc60e8d2a607d6e461e47bf15f6cb9e5cba1f13a2933a2aa8afa93c3b801a45f3",
+    "starkex/OrderRegistry": "0x0ffe907cb8a8111c330638d3c73ccff6cbd95d81237cf9b4ce8cc541ae6921dd",
+    "starkex/StarkExchange": "0xb7e45fd285be90d6624e1a1596e8f41fe89e2d8419a82baf7698d0af064fde3d"
+  }
+}

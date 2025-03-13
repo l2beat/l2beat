@@ -64,6 +64,7 @@ export const immutablex: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
+    architectureImage: 'starkex',
     name: 'Immutable X',
     slug: 'immutablex',
     description:

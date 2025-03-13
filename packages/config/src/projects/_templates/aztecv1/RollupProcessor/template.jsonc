@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RollupProcessor",
+  "ignoreMethods": [
+    "getSupportedAsset",
+    "getSupportedAssets",
+    "supportedAssets"
+  ],
+  "ignoreInWatchMode": [
+    "dataRoot",
+    "dataSize",
+    "getEscapeHatchStatus",
+    "getTotalDeposited",
+    "getTotalFees",
+    "getTotalPendingDeposit",
+    "getTotalWithdrawn",
+    "nextRollupId",
+    "nullRoot",
+    "rootRoot",
+    "totalDeposited",
+    "totalFees",
+    "totalPendingDeposit",
+    "totalWithdrawn"
+  ],
+  "fields": {
+    "rollupProviders": {
+      "description": "Can call the ProcessRollup function",
+      "severity": "LOW",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "providerAddress",
+        "add": {
+          "event": "RollupProviderUpdated",
+          "where": ["=", "#valid", true]
+        }
+      }
+    },
+    "removedRollupProviders": {
+      "handler": {
+        "type": "event",
+        "select": "providerAddress",
+        "add": {
+          "event": "RollupProviderUpdated",
+          "where": ["!=", "#valid", true]
+        }
+      }
+    },
+    "verifier": {
+      "description": "Address of the ZK verifier.",
+      "severity": "LOW",
+      "type": "PERMISSION"
+    }
+  }
+}

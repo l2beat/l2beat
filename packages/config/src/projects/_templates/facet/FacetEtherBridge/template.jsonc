@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FacetEtherBridge",
+  "description": "Official Facet implementation of the Ether Bridge.",
+  "fields": {
+    "getAdmin": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can withdraw all funds from the bridge."
+          }
+        ]
+      }
+    },
+    "getSigner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "can sign arbitrary withdrawals for users."
+          }
+        ]
+      }
+    }
+  }
+}

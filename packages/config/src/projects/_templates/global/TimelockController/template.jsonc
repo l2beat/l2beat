@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TimelockController",
+  "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
+  "fields": {
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "manage all access control roles."
+          }
+        ]
+      }
+    },
+    "getMinDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "Proposer": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "propose transactions."
+          }
+        ]
+      }
+    },
+    "Canceller": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "cancel queued transactions."
+          }
+        ]
+      }
+    },
+    "Executor": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "execute transactions that are ready."
+          },
+          {
+            "type": "act",
+            "delay": "{{getMinDelay}}"
+          }
+        ]
+      }
+    }
+  }
+}

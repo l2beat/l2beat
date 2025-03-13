@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1UsdcBridge",
+  "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
+  "ignoreRelatives": ["l1Usdc", "$admin", "owner"],
+  "fields": {
+    // "$admin": {
+    //   "target": {
+    //     "permissions": [
+    //       {
+    //         "type": "upgrade",
+    //         "description": "allows to access all escrowed funds and change every component of the smart contract."
+    //       }
+    //     ]
+    //   }
+    // }
+  }
+}

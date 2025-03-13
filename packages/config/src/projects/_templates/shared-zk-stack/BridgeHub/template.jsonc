@@ -1,0 +1,103 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.",
+  "ignoreMethods": ["baseToken", "stateTransitionManager"],
+  "ignoreRelatives": ["zksyncEraDiamond"],
+  "fields": {
+    "admin": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
+          }
+        ]
+      }
+    },
+    "chainsCreated": {
+      "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.",
+      "handler": {
+        "type": "event",
+        "select": ["chainId", "stateTransitionManager", "chainGovernance"],
+        "add": { "event": "NewChain" },
+        "ignoreRelative": true
+      }
+    },
+    "zksyncEraDiamond": {
+      "handler": {
+        "type": "call",
+        "method": "getHyperchain",
+        "args": [324],
+        "ignoreRelative": true
+      }
+    },
+    "zksyncEraSTM": {
+      "handler": {
+        "type": "call",
+        "method": "stateTransitionManager",
+        "args": [324]
+      }
+    },
+    "CronosDiamond": {
+      "handler": {
+        "type": "call",
+        "method": "getHyperchain",
+        "args": [388],
+        "ignoreRelative": true
+      }
+    },
+    "CronosSTM": {
+      "handler": {
+        "type": "call",
+        "method": "stateTransitionManager",
+        "args": [388]
+      }
+    },
+    "ZeroNetworkDiamond": {
+      "handler": {
+        "type": "call",
+        "method": "getHyperchain",
+        "args": [543210],
+        "ignoreRelative": true
+      }
+    },
+    "ZeroNetworkSTM": {
+      "handler": {
+        "type": "call",
+        "method": "stateTransitionManager",
+        "args": [543210]
+      }
+    },
+    "SophonDiamond": {
+      "handler": {
+        "type": "call",
+        "method": "getHyperchain",
+        "args": [50104],
+        "ignoreRelative": true
+      }
+    },
+    "SophonSTM": {
+      "handler": {
+        "type": "call",
+        "method": "stateTransitionManager",
+        "args": [50104]
+      }
+    },
+    "GrvtDiamond": {
+      "handler": {
+        "type": "call",
+        "method": "getHyperchain",
+        "args": [325],
+        "ignoreRelative": true
+      }
+    },
+    "GrvtSTM": {
+      "handler": {
+        "type": "call",
+        "method": "stateTransitionManager",
+        "args": [325]
+      }
+    }
+  },
+  "category": "shared"
+}

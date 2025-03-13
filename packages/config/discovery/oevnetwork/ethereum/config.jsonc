@@ -1,9 +1,0 @@
-{
-  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "chain": "ethereum",
-  "name": "oevnetwork",
-  "import": ["../../ethereumConfig.jsonc"],
-  "initialAddresses": [
-    "0x7ef9d2fe20307165599101e93ea05b04d46af159" // Inbox
-  ]
-}
