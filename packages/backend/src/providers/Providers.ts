@@ -76,9 +76,4 @@ export class Providers {
     assert(this.blob, 'Blob providers unintended access')
     return this.blob
   }
-
-  getDaProviders() {
-    assert(this.da, 'Da providers unintended access')
-    return this.da
-  }
 }
