@@ -8,7 +8,13 @@ Generated with discovered.json: 0xa667f37313d829f0f382da2ee1616d66ebf203e7
 
 ## Description
 
-ZKsync upgrades their diamond as a part of the v26 protocol upgrade. There are no major changes because the ChainTypeManager and other shared L1 contracts are not used yet.
+ZKsync upgrades their diamond as a part of the v26 protocol upgrade. There are no major changes because the ChainTypeManager and other shared L1 contracts are not used yet. As soon as part 2 of ZIP-6 is executed, the new features of the diamond (in relation to the new bridge and CTM) must be reviewed. part 2 of ZIP-6 is waiting for more chains to upgrade their diamonds(2 weeks).
+
+Current status of protocol upgrade v26:
+1) [ZIP-5] Upgrade Governance Contracts (new ProtocolUpgradeHandler) EXECUTED
+2) [ZIP-6] Prepare ZKsync for ZK Gateway part 1 (new protocolVersion and diamond implementations) EXECUTED, we are here
+3) [ZIP-6] Prepare ZKsync for ZK Gateway part 2 (new bridge, ChainTypeManager and shared contracts upgrade) READY L1, ready to execute
+4) [ZIP-8] patch for protocol v26, in voting on L2
 
 ## Watched changes
 
