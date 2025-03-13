@@ -69,7 +69,7 @@ const TableRow = ({
   return (
     <tr
       className={cn(
-        'group/row border-b border-b-divider',
+        'group/row border-b border-b-divider transition-colors',
         isSelected && 'animate-row-highlight',
         className,
       )}
@@ -126,7 +126,7 @@ const TableCell = ({
 }) => (
   <td
     className={cn(
-      'group h-10 whitespace-pre p-0 align-middle text-xs md:h-14 md:text-sm',
+      'group h-10 whitespace-pre p-0 align-middle text-xs transition-colors md:h-14 md:text-sm',
       'pr-3 first:pl-3 last:pr-3 md:pr-4',
       align === 'center' && 'text-center',
       align === 'right' && 'text-right',

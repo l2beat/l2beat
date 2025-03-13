@@ -25,10 +25,11 @@ function Content({
   const { highlightedId } = useHighlightedPrimaryCardContext()
   return (
     <PrimaryCard
-      data-highlighted={highlightedId && props.id === highlightedId}
       className={cn(
         'relative transition-all duration-300',
-        'data-[highlighted=true]:z-10 data-[highlighted=true]:shadow-[0px_4px_12px_10px] data-[highlighted=true]:shadow-[#FF5FFB40] data-[highlighted=true]:ring-2 data-[highlighted=true]:ring-brand max-md:data-[highlighted=true]:ring-inset',
+        highlightedId &&
+          props.id === highlightedId &&
+          'z-10 shadow-[0px_4px_12px_10px] shadow-[#FF5FFB40] ring-2 ring-brand max-md:ring-inset',
         className,
       )}
       {...props}
