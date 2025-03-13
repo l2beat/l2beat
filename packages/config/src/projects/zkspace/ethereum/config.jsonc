@@ -1,0 +1,121 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "zkspace",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"],
+  "names": {
+    "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390": "UpgradeGatekeeper",
+    "0x83Cb1531Ec8447366501aE440478da245EcffB89": "Governance",
+    "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8": "ZkSync",
+    "0xc07f850b60E0EEd49a09E455b01a869C25963735": "UniswapV2Factory",
+    "0xc632347cc96A4400653E3514eA148630455295b5": "ZkSeaNFT",
+    "0x8aA2C56dca9d59F4317c2fad632c192b18127709": "ZkSwapListing"
+  },
+  "overrides": {
+    "UpgradeGatekeeper": {
+      "ignoreMethods": ["nextTargets"],
+      "fields": {
+        "managedContracts": {
+          "handler": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "Governance": {
+      "ignoreMethods": ["totalUserTokens"],
+      "fields": {
+        "validators": {
+          "handler": {
+            "type": "event",
+            "select": "validatorAddress",
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["=", "#isActive", true]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!=", "#isActive", true]
+            }
+          }
+        }
+      }
+    },
+    "ZkSync": {
+      "proxyType": "zkSpace proxy",
+      "fields": {
+        "verifier": {
+          "handler": {
+            "type": "storage",
+            "slot": 5,
+            "returnType": "address"
+          }
+        },
+        "verifierExit": {
+          "handler": {
+            "type": "storage",
+            "slot": 6,
+            "returnType": "address"
+          }
+        },
+        "governance": {
+          "handler": {
+            "type": "storage",
+            "slot": 7,
+            "returnType": "address"
+          }
+        },
+        "zkSeaNFT": {
+          "handler": {
+            "type": "storage",
+            "slot": 8,
+            "returnType": "address"
+          }
+        },
+        "pairManager": {
+          "handler": {
+            "type": "storage",
+            "slot": 9,
+            "returnType": "address"
+          }
+        },
+        "revertedBlocks": {
+          "handler": {
+            "type": "event",
+            "select": ["totalBlocksCommitted", "totalBlocksVerified"],
+            "add": { "event": "BlocksRevert" }
+          }
+        }
+      },
+      "ignoreMethods": ["numOfPendingWithdrawalsNFT", "totalPairTokens"],
+      "ignoreInWatchMode": [
+        "firstPendingWithdrawalIndex",
+        "firstPriorityRequestId",
+        "totalBlocksChecked",
+        "totalBlocksCommitted",
+        "totalBlocksVerified",
+        "totalCommittedPriorityRequests",
+        "totalOpenPriorityRequests"
+      ]
+    },
+    "UniswapV2Factory": {
+      "ignoreMethods": ["allPairs", "allPairsLength"]
+    },
+    "ZkSwapListing": {
+      "ignoreMethods": ["listingCount"]
+    },
+    "ZkSeaNFT": {
+      "ignoreMethods": [
+        "externSeqIdMap",
+        "getApproved",
+        "getContentHash",
+        "infoMapL1",
+        "ownerOf",
+        "pendingWithdrawals",
+        "tokenByIndex",
+        "tokenURI"
+      ]
+    }
+  }
+}

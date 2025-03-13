@@ -17,14 +17,16 @@
             "address": "native",
             "chain": "base",
             "escrowAddress": "0xb765Df9d2925a82678F4B7bc60eF5294c1604514",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1719319541
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "base",
             "escrowAddress": "0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1719319541
           }
         ]
       },
@@ -33,11 +35,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1719319541
         },
         "priceId": "ethereum"
       },
-      "sinceTimestamp": 1719319541,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false

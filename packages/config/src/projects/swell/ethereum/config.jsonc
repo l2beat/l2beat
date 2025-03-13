@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "swell",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x7aA4960908B13D104bf056B23E2C76B43c5AACc8", // L1StandardBridge
+    "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121" // wsteth escrow
+  ],
+  "names": {
+    "0x06F7fB1C74147e34Fce04a6828c7BF809B038d0E": "SwellChainMultisig"
+  },
+  "overrides": {
+    "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57": {
+      // permissionedGamesTotal from the template ignored as they are using permissioned games by default
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "extends": "opstack/DisputeGameFactory"
+    }
+  }
+}

@@ -59,8 +59,7 @@ export const wirex: ScalingProject = polygonCDKStack({
     apis: [
       {
         type: 'rpc',
-        // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
-        url: 'https://pay-chain-rpc.wirexpaychain.com',
+        url: 'https://rpc.wirexpaychain.com',
         callsPerMinute: 1500,
       },
     ],

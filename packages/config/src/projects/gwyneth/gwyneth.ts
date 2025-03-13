@@ -7,10 +7,10 @@ export const gwyneth: ScalingProject = upcomingL2({
   capability: 'universal',
   addedAt: UnixTime(1721989895), // 2024-07-26T10:31:35Z
   display: {
-    name: 'Gwyneth',
+    name: 'Taiko Gwyneth',
     slug: 'gwyneth',
     description:
-      'Gwyneth is a based booster rollup synchronously composable with Ethereum utilizing Taiko technology.',
+      'Taiko Gwyneth is a based booster rollup synchronously composable with Ethereum utilizing Taiko technology.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
     stack: 'Taiko',

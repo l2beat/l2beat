@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "linea",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F", // LineaRollup
+    "0x504A330327A089d8364C4ab3811Ee26976d388ce", // USDCBridge
+    "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319" // TokenBridge
+  ],
+  "names": {
+    "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "LineaAdminMultisig",
+    "0x504A330327A089d8364C4ab3811Ee26976d388ce": "USDCBridge",
+    "0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "USDCBridgeProxyAdmin",
+    "0xC84832f69bFFbC1A94E44a157A342766E959ED27": "PlonkVerifierFull2",
+    "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "ERC20UpgradableBeacon",
+    "0xF24f1DC519d88246809B660eb56D94048575d083": "Roles",
+    "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4": "VerifierProofType1",
+    "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F": "VerifierProofType3",
+    "0xd6B95c960779c72B8C6752119849318E5d550574": "Timelock",
+    "0x3697bD0bC6C050135b8321F989a5316eACbF367D": "CallForwardingProxy"
+  },
+  "overrides": {
+    "CallForwardingProxy": {
+      "description": "A proxy contract forwarding calls to a predefined (immutable) target contract."
+    },
+    // BUG: source shapes are not matching
+    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": {
+      "extends": "linea/LineaRollup"
+    },
+    "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": {
+      "extends": "linea/TokenBridge"
+    },
+    "USDCBridge": {
+      "ignoreMethods": ["usdc"],
+      "ignoreInWatchMode": ["balance"]
+    },
+    "Roles": {
+      "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
+      "fields": {
+        "roles": {
+          "handler": {
+            "type": "lineaRolesModule"
+          }
+        }
+      }
+    }
+  }
+}

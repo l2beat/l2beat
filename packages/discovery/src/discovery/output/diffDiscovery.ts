@@ -23,12 +23,14 @@ export function diffDiscovery(
       (d) => d.address === previousContract.address,
     )
     if (currentContract === undefined) {
-      modifiedOrDeleted.push({
-        name: previousContract.name,
-        address: previousContract.address,
-        description: previousContract.description,
-        type: 'deleted',
-      })
+      if (previousContract.proxyType !== 'EOA') {
+        modifiedOrDeleted.push({
+          name: previousContract.name,
+          address: previousContract.address,
+          description: previousContract.description,
+          type: 'deleted',
+        })
+      }
       continue
     }
 
@@ -68,12 +70,14 @@ export function diffDiscovery(
       (c) => c.address === currentContract.address,
     )
     if (previousContract === undefined) {
-      created.push({
-        name: currentContract.name,
-        address: currentContract.address,
-        description: currentContract.description,
-        type: 'created',
-      })
+      if (currentContract.proxyType !== 'EOA') {
+        created.push({
+          name: currentContract.name,
+          address: currentContract.address,
+          description: currentContract.description,
+          type: 'created',
+        })
+      }
     }
   }
 

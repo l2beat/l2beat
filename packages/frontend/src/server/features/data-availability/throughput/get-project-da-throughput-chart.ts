@@ -9,6 +9,10 @@ import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
 
+export type ProjectDaThroughputChartData = {
+  chart: ProjectDaThroughputDataPoint[]
+  range: [UnixTime | null, UnixTime]
+}
 export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 
 export const ProjectDaThroughputChartParams = z.object({
@@ -33,9 +37,7 @@ const getCachedProjectDaThroughputChartData = cache(
   async ({
     range,
     projectId,
-  }: ProjectDaThroughputChartParams): Promise<
-    ProjectDaThroughputDataPoint[]
-  > => {
+  }: ProjectDaThroughputChartParams): Promise<ProjectDaThroughputChartData> => {
     const db = getDb()
     const days = rangeToDays(range)
     const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
@@ -45,15 +47,21 @@ const getCachedProjectDaThroughputChartData = cache(
       [from, to],
     )
     if (throughput.length === 0) {
-      return []
+      return {
+        chart: [],
+        range: [from, to],
+      }
     }
     const { grouped, minTimestamp, maxTimestamp } =
       groupByTimestampAndProjectId(throughput)
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
-    return timestamps.map((timestamp) => {
-      return [timestamp, grouped[timestamp] ?? 0]
-    })
+    return {
+      chart: timestamps.map((timestamp) => {
+        return [timestamp, grouped[timestamp] ?? 0]
+      }),
+      range: [minTimestamp, maxTimestamp],
+    }
   },
   ['project-da-throughput-chart-data'],
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
@@ -81,16 +89,18 @@ function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
 
 function getMockProjectDaThroughputChartData({
   range,
-}: ProjectDaThroughputChartParams): ProjectDaThroughputDataPoint[] {
+}: ProjectDaThroughputChartParams): ProjectDaThroughputChartData {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
-  return timestamps.map((timestamp) => {
-    // Generate random but somewhat realistic values
-    const throughputValue = Math.random() * 900_000_000 + 90_000_000
+  return {
+    chart: timestamps.map((timestamp) => {
+      const throughputValue = Math.random() * 900_000_000 + 90_000_000
 
-    return [timestamp, Math.round(throughputValue)]
-  })
+      return [timestamp, Math.round(throughputValue)]
+    }),
+    range: [from, to],
+  }
 }

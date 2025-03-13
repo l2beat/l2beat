@@ -13,9 +13,9 @@
         "address": "native",
         "chain": "ethereum",
         "escrowAddress": "0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1715834807
       },
-      "sinceTimestamp": 1715834807,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false

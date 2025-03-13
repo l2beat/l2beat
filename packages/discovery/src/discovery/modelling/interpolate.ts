@@ -11,7 +11,7 @@ export function interpolateModelTemplate(
     tryCastingToName(String(values['$.address']), addressToNameMap, false),
   )
   const withValuesReplaced = withSelfReplaced.replace(
-    /#([a-zA-Z0-9_$.]+)(:raw)?(\|lower)?/g,
+    /&([a-zA-Z0-9_$.]+)(:raw)?(\|lower)?/g,
     (_match, key, raw, lower) => {
       const leaveRaw = raw !== undefined
       const toLower = lower !== undefined

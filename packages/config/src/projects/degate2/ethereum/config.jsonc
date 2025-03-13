@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "degate2",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xF13e21653AEB763595D5E4baA1dC115689Da49b9"],
+  "names": {
+    "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7": "ExchangeV3",
+    "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": "FeeVault",
+    "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215": "LoopringIOExchangeOwner",
+    "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82": "LoopringOwner",
+    "0x53C8395465A84955c95159814461466053DedEDE": "DGToken"
+  },
+  "overrides": {
+    "ExchangeV3": {
+      "ignoreMethods": ["getBlockInfo"],
+      "ignoreInWatchMode": [
+        "getBlockHeight",
+        "getMerkleRoot",
+        "getMerkleAssetRoot",
+        "getProtocolFeeValues",
+        "getNumAvailableForcedSlots",
+        "state"
+      ],
+      "fields": {
+        "loopringV3": {
+          "handler": {
+            "type": "storage",
+            "slot": 5,
+            "returnType": "address"
+          }
+        },
+        "shutdownTriggered": {
+          "handler": {
+            "type": "event",
+            "select": "timestamp",
+            "add": { "event": "Shutdown" }
+          }
+        }
+      }
+    },
+    "FeeVault": {
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "owners",
+        "transactions"
+      ],
+      "ignoreInWatchMode": ["transactionCount"]
+    },
+    "LoopringIOExchangeOwner": {
+      "fields": {
+        "blockSubmitters": {
+          "handler": {
+            "type": "event",
+            "select": "user",
+            "add": {
+              "event": "PermissionUpdate",
+              "where": [
+                "and",
+                ["=", "#selector", "0x53228430"],
+                ["=", "#allowed", true]
+              ]
+            },
+            "remove": {
+              "event": "PermissionUpdate",
+              "where": [
+                "and",
+                ["=", "#selector", "0x53228430"],
+                ["!=", "#allowed", true]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LoopringOwner": {
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "owners",
+        "transactions"
+      ]
+    },
+    "DGToken": {
+      "ignoreDiscovery": true
+    }
+  }
+}

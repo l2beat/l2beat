@@ -17,18 +17,19 @@
             "address": "native",
             "chain": "ethereum",
             "escrowAddress": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1704125939
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
             "escrowAddress": "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1704126935
           }
         ]
       },
-      "sinceTimestamp": 1704125939,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false

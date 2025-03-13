@@ -1,3 +1,4 @@
+import type { DiscoveryPaths } from '@l2beat/discovery'
 import type { CliLogger } from '@l2beat/shared'
 import { computeComparisonBetweenProjects } from './common'
 import { printComparisonBetweenProjects } from './output'
@@ -6,7 +7,7 @@ export interface CompareProjectsCommand {
   firstProjectPath: string
   secondProjectPath: string
   forceTable: boolean
-  discoveryPath: string
+  paths: DiscoveryPaths
   logger: CliLogger
 }
 
@@ -18,7 +19,7 @@ export async function executeCompareProjects(
       command.logger,
       command.firstProjectPath,
       command.secondProjectPath,
-      command.discoveryPath,
+      command.paths,
     )
 
   printComparisonBetweenProjects(

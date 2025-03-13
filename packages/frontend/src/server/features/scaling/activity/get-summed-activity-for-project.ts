@@ -7,7 +7,7 @@ import { env } from '~/env'
 
 export function getSummedActivityForProject(
   projectId: string,
-  range: [UnixTime, UnixTime],
+  range: [UnixTime | null, UnixTime] | undefined,
 ) {
   if (env.MOCK) {
     return 10000
@@ -17,12 +17,18 @@ export function getSummedActivityForProject(
 }
 
 const getCachedSummedActivityForProject = cache(
-  async (projectId: string, range: [UnixTime, UnixTime]) => {
+  async (projectId: string, range: [UnixTime | null, UnixTime] | undefined) => {
+    if (!range) {
+      return 0
+    }
     const db = getDb()
     const [from, to] = range
     return db.activity.getSummedUopsCountForProjectAndTimeRange(
       ProjectId(projectId),
-      [UnixTime.toStartOf(from, 'day'), UnixTime.toStartOf(to, 'day')],
+      [
+        from ? UnixTime.toStartOf(from, 'day') : null,
+        UnixTime.toStartOf(to, 'day'),
+      ],
     )
   },
   ['summed-activity-for-project'],

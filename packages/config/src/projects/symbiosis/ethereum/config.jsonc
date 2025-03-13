@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "symbiosis",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
+    "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
+  ],
+  "names": {
+    "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0": "Bridge",
+    "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E": "BridgeV2",
+    "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": "Portal",
+    "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a": "Multisig",
+    "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": "ProxyAdminBridgeV2",
+    "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": "ProxyAdminBridge",
+    "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F": "MetaRouter"
+  },
+  "overrides": {
+    "Portal": {
+      "ignoreInWatchMode": ["requestCount"],
+      "ignoreRelatives": ["wrapper"]
+    },
+    "Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "BridgeV2": {
+      "ignoreInWatchMode": ["newMPCEffectiveTime", "mpc", "newMPC", "oldMPC"],
+      "ignoreRelatives": ["oldMPC", "newMPC", "mpc"]
+    }
+  }
+}

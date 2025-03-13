@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "reddioex",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xB62BcD40A24985f560b5a9745d478791d8F1945C"],
+  "names": {
+    "0xB62BcD40A24985f560b5a9745d478791d8F1945C": "StarkExchange",
+    "0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669": "DACommittee"
+  },
+  "sharedModules": ["shared-sharp-verifier"],
+  "overrides": {
+    "0xd19c12443977a58694Eb89E867Cd84C18c3B89F7": {
+      // spam
+      "ignoreDiscovery": true
+    },
+    "StarkExchange": {
+      "ignoreMethods": [
+        "configurationHash",
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "isAssetRegistered",
+        "validatedSelectors",
+        "getAssetInfo",
+        "getActionCount",
+        "getActionHashByIndex",
+        "initializerSize",
+        "UPGRADE_DELAY_SLOT"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getRollupVaultRoot",
+        "getValidiumVaultRoot"
+      ],
+      "fields": {
+        "OPERATORS": {
+          "handler": {
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "LogOperatorAdded" },
+            "remove": { "event": "LogOperatorRemoved" }
+          }
+        }
+      }
+    },
+    "DACommittee": {
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs"
+          }
+        }
+      }
+    }
+  }
+}
