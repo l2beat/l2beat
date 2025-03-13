@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-stacked-tvs-chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { env } from '~/env'
 import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
@@ -127,19 +128,19 @@ export default async function Page(props: Props) {
         </PrimaryCard>
 
         {canonical.length > 0 && (
-          <PrimaryCard id="canonical">
+          <HighlightablePrimaryCard id="canonical">
             <CanonicallyBridgedTable tokens={canonical} />
-          </PrimaryCard>
+          </HighlightablePrimaryCard>
         )}
         {native.length > 0 && (
-          <PrimaryCard id="native">
+          <HighlightablePrimaryCard id="native">
             <NativelyMintedTable tokens={native} />
-          </PrimaryCard>
+          </HighlightablePrimaryCard>
         )}
         {external.length > 0 && (
-          <PrimaryCard id="external">
+          <HighlightablePrimaryCard id="external">
             <ExternallyBridgedTable tokens={external} />
-          </PrimaryCard>
+          </HighlightablePrimaryCard>
         )}
       </div>
       <RequestTokenBox />
