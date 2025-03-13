@@ -3,10 +3,14 @@
   "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
   "category": "core",
   // WIP: this template shall transition together with ZIP-6 to the new ChainTypeManager paradigm
-  "ignoreMethods": ["storedBlockHash", "storedBatchHash", "getName"],
+  "ignoreMethods": [
+    "storedBlockHash",
+    "storedBatchHash",
+    "l2LogsRootHash",
+    "getName"
+  ],
   "ignoreInWatchMode": [
     "prepareChainCommitment",
-    "l2LogsRootHash",
     "getTotalPriorityTxs",
     "getTotalBlocksCommitted",
     "getTotalBlocksExecuted",
