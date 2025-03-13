@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { ActivityChartType } from '~/components/chart/activity/activity-chart'
-import type { FilterableValue } from '~/components/table/filters/new-types'
+import type { FilterableEntry } from '~/components/table/filters/new-types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
@@ -15,13 +15,9 @@ export interface FilterableScalingValues {
   raas: string
 }
 
-export interface FilterableScalingEntry {
-  filterable: FilterableValue[]
-}
-
 export interface CommonScalingEntry
   extends CommonProjectEntry,
-    FilterableScalingEntry {
+    FilterableEntry {
   tab: ActivityChartType
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number

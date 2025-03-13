@@ -1,18 +1,15 @@
+export interface FilterableEntry {
+  filterable: FilterableValue[]
+}
+
 export type FilterableValue = {
   id: FilterableValueId
   value: string
 }
 
-export type FilterableValueId =
-  | 'type'
-  | 'stack'
-  | 'stage'
-  | 'purpose'
-  | 'hostChain'
-  | 'daLayer'
-  | 'raas'
+export type FilterableValueId = keyof typeof filterIdToLabel
 
-export const filterIdToLabel: Record<FilterableValueId, string> = {
+export const filterIdToLabel = {
   type: 'Type',
   stack: 'Stack',
   stage: 'Stage',
@@ -20,4 +17,5 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   hostChain: 'Host Chain',
   daLayer: 'DA Layer',
   raas: 'RaaS',
+  validatedBy: 'Validated by',
 }

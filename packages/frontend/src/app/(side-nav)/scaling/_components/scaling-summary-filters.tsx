@@ -1,12 +1,12 @@
 'use client'
 import { Checkbox } from '~/components/core/checkbox'
 import { NewTableFilters } from '~/components/table/filters/new-table-filters'
-import type { FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import type { FilterableEntry } from '~/components/table/filters/new-types'
 import { cn } from '~/utils/cn'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
 
 interface Props {
-  entries: FilterableScalingEntry[]
+  entries: FilterableEntry[]
   className?: string
 }
 

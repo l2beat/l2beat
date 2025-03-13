@@ -6,16 +6,16 @@ import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { bridgesRisksColumns } from './columns'
 
+import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import type { BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
-import { useBridgesFilter } from '../../../_components/bridges-filter-context'
-import { BridgesFilters } from '../../../_components/bridges-filters'
 
 export interface Props {
   entries: BridgesRiskEntry[]
 }
 
 export function BridgesRiskTable({ entries }: Props) {
-  const includeFilters = useBridgesFilter()
+  const includeFilters = useIncludeFilters()
 
   const filteredEntries = useMemo(
     () => entries.filter(includeFilters),
@@ -43,7 +43,7 @@ export function BridgesRiskTable({ entries }: Props) {
 
   return (
     <div className="space-y-3 md:space-y-6">
-      <BridgesFilters entries={filteredEntries} />
+      <NewTableFilters entries={entries} />
       <BasicTable table={table} />
     </div>
   )
