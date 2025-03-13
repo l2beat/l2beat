@@ -12,7 +12,6 @@ export const multicallInterface = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',
 ])
 
-// ClientCore functionality is provided via RpcClient
 export class MulticallV3Client {
   constructor(
     readonly address: EthereumAddress,
