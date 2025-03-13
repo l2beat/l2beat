@@ -10,8 +10,8 @@ import { type Project, ProjectService } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
-import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
-import { mapConfig } from '../../src/modules/tvs/mapConfig'
+import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 import type { Token, TokenId } from '../../src/modules/tvs/types'
 
 // some projects are VERY slow to sync, to get config for them you need to run this script with the project name as an argument

@@ -1,4 +1,3 @@
-import path from 'path'
 import type { Env, Logger } from '@l2beat/backend-tools'
 import type { ChainConfig, ProjectService } from '@l2beat/config'
 import {
@@ -9,16 +8,16 @@ import {
   RpcClient,
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { BalanceProvider } from '../providers/BalanceProvider'
+import { CirculatingSupplyProvider } from '../providers/CirculatingSupplyProvider'
+import { PriceProvider } from '../providers/PriceProvider'
+import { RpcClientPOC } from '../providers/RpcClientPOC'
+import { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
+import { ValueService } from '../services/ValueService'
+import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import { LocalStorage } from './LocalStorage'
-import { ValueService } from './ValueService'
-import { extractPricesAndAmounts } from './mapConfig'
-import { BalanceProvider } from './providers/BalanceProvider'
-import { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
-import { PriceProvider } from './providers/PriceProvider'
-import { RpcClientPOC } from './providers/RpcClientPOC'
-import { TotalSupplyProvider } from './providers/TotalSupplyProvider'
-import type { AmountConfig, ProjectTvsConfig, TokenValue } from './types'
+import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 export class LocalExecutor {
   private readonly storage: LocalStorage
@@ -29,7 +28,7 @@ export class LocalExecutor {
     private readonly env: Env,
     private readonly logger: Logger,
   ) {
-    this.storage = new LocalStorage(path.join(__dirname, 'local-data.json'))
+    this.storage = new LocalStorage('./scripts/tvs/local-data.json')
     this.valueService = new ValueService(this.storage)
   }
 

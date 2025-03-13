@@ -1,14 +1,14 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
-import type { DataStorage } from './DataStorage'
-import { BigIntWithDecimals } from './bigIntWithDecimals'
-import { createAmountConfig } from './mapConfig'
+import type { DataStorage } from '../tools/DataStorage'
+import { BigIntWithDecimals } from '../tools/bigIntWithDecimals'
+import { createAmountConfig } from '../tools/extractPricesAndAmounts'
 import type {
   AmountFormula,
   CalculationFormula,
   ProjectTvsConfig,
   TokenValue,
   ValueFormula,
-} from './types'
+} from '../types'
 
 export class ValueService {
   constructor(private readonly storage: DataStorage) {}

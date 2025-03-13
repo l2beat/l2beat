@@ -1,18 +1,18 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
 import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
-import type { DataStorage } from './DataStorage'
-import type { BalanceProvider } from './providers/BalanceProvider'
-import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
-import type { PriceProvider } from './providers/PriceProvider'
-import type { TotalSupplyProvider } from './providers/TotalSupplyProvider'
+import type { BalanceProvider } from '../providers/BalanceProvider'
+import type { CirculatingSupplyProvider } from '../providers/CirculatingSupplyProvider'
+import type { PriceProvider } from '../providers/PriceProvider'
+import type { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import type {
   AmountConfig,
   BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountConfig,
   PriceConfig,
   TotalSupplyAmountConfig,
-} from './types'
+} from '../types'
+import type { DataStorage } from './DataStorage'
 
 export class DataFormulaExecutor {
   constructor(

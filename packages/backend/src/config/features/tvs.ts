@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import type { Project, ProjectService } from '@l2beat/config'
-import { extractPricesAndAmounts } from '../../modules/tvs/mapConfig'
+import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import type {
   AmountConfig,
   PriceConfig,
