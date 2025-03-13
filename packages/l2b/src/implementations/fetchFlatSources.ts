@@ -13,7 +13,7 @@ export async function fetchFlatSources(
   backendUrl: string,
 ): Promise<FlatSourcesApiResponse> {
   const httpClient = new HttpClient()
-  const response = await httpClient.fetch(`${backendUrl}${ENDPOINT}`, {
+  const response = await httpClient.fetchRaw(`${backendUrl}${ENDPOINT}`, {
     compress: true,
   })
 
