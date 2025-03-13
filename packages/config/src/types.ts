@@ -720,6 +720,7 @@ export interface BlockActivityConfig {
 export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+  | { type: 'SubtractCustom'; adjustment: number }
 
 export interface DayActivityConfig {
   type: 'day'

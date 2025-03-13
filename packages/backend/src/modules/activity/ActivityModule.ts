@@ -119,5 +119,8 @@ function assesCount(
     return (count: number, block: number) =>
       block >= adjustCount.blockNumber ? count - 1 : count
   }
+  if (adjustCount.type === 'SubtractCustom') {
+    return (count) => count - adjustCount.adjustment
+  }
   throw new Error('Unknown config for adjustCount')
 }
