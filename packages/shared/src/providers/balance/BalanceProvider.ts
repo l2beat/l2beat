@@ -15,7 +15,7 @@ export class BalanceProvider {
     queries: BalanceQuery[],
     blockNumber: number,
     chain: string,
-  ) {
+  ): Promise<bigint[]> {
     const clients = this.rpcs.filter((r) => r.chain === chain)
 
     for (const [index, client] of clients.entries()) {
@@ -25,17 +25,25 @@ export class BalanceProvider {
             assert(client.multicallClient)
             return encodeBalanceForMulticall(q, client.multicallClient)
           })
-          return client.multicall(calls, blockNumber)
+          const res = await client.multicall(calls, blockNumber)
+          return res.map((r) => {
+            if (r.success === false) {
+              return 0n
+            }
+            return BigInt(r.data.toString())
+          })
         } else {
           return Promise.all(
-            queries.map(({ token, holder }) => {
+            queries.map(async ({ token, holder }) => {
               if (token === 'native') {
                 return client.getBalance(holder, blockNumber)
               } else {
-                return client.call(
+                const res = await client.call(
                   encodeErc20Balance(token, holder),
                   blockNumber,
                 )
+
+                return BigInt(res.toString())
               }
             }),
           )
@@ -60,7 +68,7 @@ function encodeBalanceForMulticall(
   return encodeErc20Balance(query.token, query.holder)
 }
 
-export const erc20Interface = new utils.Interface([
+const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
 ])
 

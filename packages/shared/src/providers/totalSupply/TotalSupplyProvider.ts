@@ -9,7 +9,7 @@ export class TotalSupplyProvider {
     tokens: EthereumAddress[],
     blockNumber: number,
     chain: string,
-  ) {
+  ): Promise<bigint[]> {
     const clients = this.rpcs.filter((r) => r.chain === chain)
 
     for (const [i, client] of clients.entries()) {
@@ -17,9 +17,19 @@ export class TotalSupplyProvider {
         const calls = tokens.map(encodeTotalSupply)
 
         if (client.isMulticallDeployed(blockNumber)) {
-          return client.multicall(calls, blockNumber)
+          const res = await client.multicall(calls, blockNumber)
+          return res.map((r) => {
+            if (r.success === false) {
+              return 0n
+            }
+            return BigInt(r.data.toString())
+          })
         } else {
-          return Promise.all(calls.map((c) => client.call(c, blockNumber)))
+          return Promise.all(
+            calls.map(async (c) =>
+              BigInt((await client.call(c, blockNumber)).toString()),
+            ),
+          )
         }
       } catch (error) {
         if (i === this.rpcs.length - 1) throw error
@@ -30,7 +40,7 @@ export class TotalSupplyProvider {
   }
 }
 
-export const erc20Interface = new utils.Interface([
+const erc20Interface = new utils.Interface([
   'function totalSupply() view returns (uint256)',
 ])
 
