@@ -34,7 +34,7 @@ export function NewTableFilterItem({
       state.some((f) => f.id === filter.id && f.values.includes(value)),
   )
   return (
-    <div className="flex h-8 items-center rounded-lg bg-surface-primary text-base font-semibold leading-none">
+    <div className="flex h-8 items-center rounded-lg bg-surface-primary text-base font-semibold leading-none primary-card:bg-surface-secondary">
       <div className="flex h-full items-center justify-center pl-2.5 pr-2">
         {filterIdToLabel[filter.id]}
       </div>
