@@ -2,8 +2,9 @@
 
 import type { Milestone } from '@l2beat/config'
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
@@ -36,6 +37,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
+import { getAreaChartComponents } from '../../core/chart/utils/get-area-chart-components'
 import type { ChartScale } from '../types'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
@@ -100,26 +102,28 @@ export function ActivityChart({
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="projects"
-          stroke="url(#strokeProjects)"
-          strokeWidth={2}
-          fill="url(#fillProjects)"
-          fillOpacity={1}
-          dot={false}
-          isAnimationActive={false}
-        />
-        {showMainnet && (
-          <Area
-            dataKey="ethereum"
-            stroke="url(#strokeEthereum)"
-            strokeWidth={2}
-            fill="url(#fillEthereum)"
-            fillOpacity={1}
-            dot={false}
-            isAnimationActive={false}
-          />
-        )}
+        {getAreaChartComponents({
+          data: compact([
+            {
+              dataKey: 'projects',
+              stroke: 'url(#strokeProjects)',
+              fill: 'url(#fillProjects)',
+              strokeWidth: 2,
+              fillOpacity: 1,
+              dot: false,
+              isAnimationActive: false,
+            },
+            showMainnet && {
+              dataKey: 'ethereum',
+              stroke: 'url(#strokeEthereum)',
+              strokeWidth: 2,
+              fill: 'url(#fillEthereum)',
+              fillOpacity: 1,
+              dot: false,
+              isAnimationActive: false,
+            },
+          ]),
+        })}
         {getCommonChartComponents({
           data,
           isLoading,
