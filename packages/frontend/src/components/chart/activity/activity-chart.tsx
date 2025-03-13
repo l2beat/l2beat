@@ -187,7 +187,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
+            if (entry.value === undefined || entry.type === 'none') return null
             const config = meta[entry.name!]!
             return (
               <div
@@ -221,7 +221,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
+            if (entry.value === undefined || entry.type === 'none') return null
             const config = meta[entry.name!]!
             return (
               <div
