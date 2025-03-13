@@ -111,29 +111,39 @@ function calculateDataByType(
   metric: CostsMetric,
 ): ScalingCostsTableEntry[] {
   if (metric === 'total') {
-    return entries
+    return entries.sort(
+      (a, b) =>
+        (b.data?.type === 'available' ? b.data.total : -Infinity) -
+        (a.data?.type === 'available' ? a.data.total : -Infinity),
+    )
   }
 
-  return entries.map((e) => {
-    if (e.data?.type === 'not-available') return e
-    if (!e.data?.uopsCount)
+  return entries
+    .map((e) => {
+      if (e.data?.type === 'not-available') return e
+      if (!e.data?.uopsCount)
+        return {
+          ...e,
+          data: {
+            type: 'not-available',
+            reason: 'no-data',
+          },
+        } as ScalingCostsTableEntry
       return {
         ...e,
         data: {
-          type: 'not-available',
-          reason: 'no-data',
+          ...e.data,
+          total: e.data.total / e.data.uopsCount,
+          blobs: e.data.blobs ? e.data.blobs / e.data.uopsCount : undefined,
+          compute: e.data.compute / e.data.uopsCount,
+          calldata: e.data.calldata / e.data.uopsCount,
+          overhead: e.data.overhead / e.data.uopsCount,
         },
-      }
-    return {
-      ...e,
-      data: {
-        ...e.data,
-        total: e.data.total / e.data.uopsCount,
-        blobs: e.data.blobs ? e.data.blobs / e.data.uopsCount : undefined,
-        compute: e.data.compute / e.data.uopsCount,
-        calldata: e.data.calldata / e.data.uopsCount,
-        overhead: e.data.overhead / e.data.uopsCount,
-      },
-    }
-  })
+      } as ScalingCostsTableEntry
+    })
+    .sort(
+      (a, b) =>
+        (a.data.type === 'available' ? a.data.total : Infinity) -
+        (b.data.type === 'available' ? b.data.total : Infinity),
+    )
 }
