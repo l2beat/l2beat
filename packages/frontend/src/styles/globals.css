@@ -136,16 +136,6 @@
 }
 
 @layer base {
-  html {
-    scroll-padding-top: 2.5rem;
-  }
-
-  @media (min-width: 750px) {
-    html {
-      scroll-padding-top: 2rem;
-    }
-  }
-
   html:has(.smooth-scroll) {
     scroll-behavior: smooth;
   }
