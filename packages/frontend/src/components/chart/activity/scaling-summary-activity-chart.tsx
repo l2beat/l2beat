@@ -4,7 +4,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -30,6 +30,7 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/yellow-gradient-def'
+import { getAreaChartComponents } from '~/components/core/chart/utils/get-area-chart-components'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
@@ -121,39 +122,42 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
-
-          <Area
-            dataKey="rollups"
-            stroke="url(#rollups-stroke)"
-            fill="url(#rollups-fill)"
-            fillOpacity={1}
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
-          <Area
-            dataKey="validiumsAndOptimiums"
-            stroke="url(#validiums-and-optimiums-stroke)"
-            fill="url(#validiums-and-optimiums-fill)"
-            fillOpacity={1}
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
-          <Area
-            dataKey="others"
-            stroke="url(#others-stroke)"
-            fill="url(#others-fill)"
-            fillOpacity={1}
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
-          <Area
-            dataKey="ethereum"
-            stroke="url(#ethereum-stroke)"
-            fill="url(#ethereum-fill)"
-            fillOpacity={1}
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
+          {getAreaChartComponents({
+            data: [
+              {
+                dataKey: 'rollups',
+                stroke: 'url(#rollups-stroke)',
+                fill: 'url(#rollups-fill)',
+                fillOpacity: 1,
+                strokeWidth: 2,
+                isAnimationActive: false,
+              },
+              {
+                dataKey: 'validiumsAndOptimiums',
+                stroke: 'url(#validiums-and-optimiums-stroke)',
+                fill: 'url(#validiums-and-optimiums-fill)',
+                fillOpacity: 1,
+                strokeWidth: 2,
+                isAnimationActive: false,
+              },
+              {
+                dataKey: 'others',
+                stroke: 'url(#others-stroke)',
+                fill: 'url(#others-fill)',
+                fillOpacity: 1,
+                strokeWidth: 2,
+                isAnimationActive: false,
+              },
+              {
+                dataKey: 'ethereum',
+                stroke: 'url(#ethereum-stroke)',
+                fill: 'url(#ethereum-fill)',
+                fillOpacity: 1,
+                strokeWidth: 2,
+                isAnimationActive: false,
+              },
+            ],
+          })}
           <ChartTooltip
             content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
           />
@@ -196,7 +200,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
+            if (entry.value === undefined || entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -230,7 +234,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
+            if (entry.value === undefined || entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div

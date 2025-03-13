@@ -2,7 +2,7 @@
 
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
 import {
@@ -23,6 +23,7 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/pink-gradient-def'
+import { getAreaChartComponents } from '~/components/core/chart/utils/get-area-chart-components'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
@@ -60,33 +61,37 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           <EmeraldFillGradientDef id="emerald-fill" />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="ethereum"
-          fill="url(#ethereum-fill)"
-          fillOpacity={1}
-          stroke="url(#ethereum-stroke)"
-          strokeWidth={2}
-          isAnimationActive={false}
-          dot={false}
-        />
-        <Area
-          dataKey="celestia"
-          fill="url(#pink-fill)"
-          fillOpacity={1}
-          stroke="url(#pink-stroke)"
-          strokeWidth={2}
-          isAnimationActive={false}
-          dot={false}
-        />
-        <Area
-          dataKey="avail"
-          fill="url(#emerald-fill)"
-          fillOpacity={1}
-          stroke={chartMeta.avail.color}
-          strokeWidth={2}
-          isAnimationActive={false}
-          dot={false}
-        />
+        {getAreaChartComponents({
+          data: [
+            {
+              dataKey: 'ethereum',
+              stroke: 'url(#ethereum-stroke)',
+              fill: 'url(#ethereum-fill)',
+              fillOpacity: 1,
+              strokeWidth: 2,
+              isAnimationActive: false,
+              dot: false,
+            },
+            {
+              dataKey: 'celestia',
+              stroke: 'url(#pink-stroke)',
+              fill: 'url(#pink-fill)',
+              fillOpacity: 1,
+              strokeWidth: 2,
+              isAnimationActive: false,
+              dot: false,
+            },
+            {
+              dataKey: 'avail',
+              stroke: chartMeta.avail.color,
+              fill: 'url(#emerald-fill)',
+              fillOpacity: 1,
+              strokeWidth: 2,
+              isAnimationActive: false,
+              dot: false,
+            },
+          ],
+        })}
         {getCommonChartComponents({
           data: chartData,
           isLoading,
@@ -121,6 +126,7 @@ function CustomTooltip({
       <HorizontalSeparator className="my-1" />
       <div>
         {payload.map((entry, index) => {
+          if (entry.type === 'none') return null
           const configEntry = entry.name ? config[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
           return (
