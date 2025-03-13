@@ -1,4 +1,5 @@
 import { uniq } from 'lodash'
+import { cn } from '~/utils/cn'
 import { NewTableFilterClearButton } from './new-table-filter-clear-button'
 import { NewTableFilterCombobox } from './new-table-filter-combobox'
 import { useNewTableFilterContext } from './new-table-filter-context'
@@ -7,15 +8,22 @@ import type { FilterableValue } from './new-types'
 
 type Props<T extends { filterable: FilterableValue[] }> = {
   entries: T[]
+  className?: string
 }
 
 export function NewTableFilters<T extends { filterable: FilterableValue[] }>({
   entries,
+  className,
 }: Props<T>) {
   const { state } = useNewTableFilterContext()
 
   return (
-    <div className="flex justify-between gap-2">
+    <div
+      className={cn(
+        'flex justify-between gap-2 max-md:mt-4 max-md:pl-4',
+        className,
+      )}
+    >
       <div className="flex flex-wrap items-center gap-2">
         <NewTableFilterCombobox entries={entries} />
         {state.map((filter) => (

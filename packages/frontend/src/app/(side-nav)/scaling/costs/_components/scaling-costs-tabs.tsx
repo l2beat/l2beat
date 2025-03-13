@@ -77,8 +77,7 @@ export function ScalingCostsTabs(props: Props) {
           ...props.validiumsAndOptimiums,
           ...props.others,
         ]}
-        // TODO: are these needed?
-        // className="max-md:mt-4"
+        className="max-md:mt-4"
       />
       <DirectoryTabs value={tab} onValueChange={setTab}>
         <DirectoryTabsList>

@@ -77,15 +77,14 @@ export function NewTableFilterItem({
       <VerticalSeparator className="h-[30px]" />
       <Popover>
         <PopoverAnchor className="h-full" />
-
         <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-semibold">
-          {filter.values.join(', ')}
+          {filter.values.length > 1
+            ? `${filter.values.length} values`
+            : filter.values[0]}
         </PopoverTrigger>
         <PopoverContent align="start" className="p-0">
           <Command>
-            <CommandInput
-              placeholder={`Search ${filterIdToLabel[filter.id].toLowerCase()}...`}
-            />
+            <CommandInput placeholder={filterIdToLabel[filter.id]} />
             <CommandEmpty>
               No {filterIdToLabel[filter.id].toLowerCase()} found.
             </CommandEmpty>

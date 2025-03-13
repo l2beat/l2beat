@@ -54,8 +54,7 @@ export function ScalingUpcomingTables(
           ...props.validiumsAndOptimiums,
           ...props.others,
         ]}
-        // TODO: are these needed?
-        // className="max-md:ml-4 max-md:mt-4"
+        className="max-md:ml-4 max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
