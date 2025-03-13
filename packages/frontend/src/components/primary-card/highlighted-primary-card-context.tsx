@@ -7,7 +7,6 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { useEventListener } from '~/hooks/use-event-listener'
 
 interface HighlightedPrimaryCardContextType {
   highlightedId: string | undefined
@@ -44,14 +43,13 @@ export function HighlightedPrimaryCardProvider({
   }, [])
 
   useEffect(handleHashChange, [handleHashChange])
-  useEventListener('hashchange', handleHashChange)
 
   useEffect(() => {
     if (!highlightedId) return
 
     const timeoutId = setTimeout(() => {
       setHighlightedId(undefined)
-    }, 1500)
+    }, 2500)
 
     return () => clearTimeout(timeoutId)
   }, [highlightedId])

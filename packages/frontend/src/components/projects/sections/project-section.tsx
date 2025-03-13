@@ -1,7 +1,7 @@
 'use client'
 import type { ReactNode } from 'react'
 
-import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import type { ProjectSectionId } from './types'
@@ -21,12 +21,13 @@ export interface ExtendedProjectSectionProps {
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   return (
-    <PrimaryCard
+    <HighlightablePrimaryCard
       id={props.id}
       data-role="project-section"
       className={cn(
-        'border-divider bg-surface-primary px-4 py-8 max-md:border-b max-md:last:border-none md:mt-10 md:p-8',
-        'md:rounded-lg before:md:rounded-lg',
+        'scroll-mt-10 px-4 py-8 md:mt-10 md:scroll-mt-8 md:p-8',
+        'max-md:border-b max-md:border-divider max-md:last:border-none',
+        'md:rounded-lg',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
@@ -53,7 +54,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
           props.children
         )}
       </Component>
-    </PrimaryCard>
+    </HighlightablePrimaryCard>
   )
 }
 
