@@ -42,7 +42,7 @@ export const near: Bridge = {
     slug: 'near',
     links: {
       websites: ['https://near.org/'],
-      explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],
+      explorers: ['https://explorer.near.org/', 'https://explorer.aurora.dev/'],
       apps: ['https://rainbowbridge.app/'],
       repositories: ['https://github.com/aurora-is-near/rainbow-bridge'],
       socialMedia: ['https://twitter.com/auroraisnear'],
