@@ -77,7 +77,6 @@ function createIndexers(
   const daService = new DaService()
   const indexerService = new IndexerService(database)
   const blockProviders = providers.block
-  const daProviders = providers.getDaProviders()
 
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
@@ -95,8 +94,6 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    const daProvider = daProviders.getProvider(daLayer.name)
-
     const configurations = config.projects.filter(
       (c) => c.config.daLayer === daLayer.name,
     )
@@ -108,7 +105,7 @@ function createIndexers(
         maxHeight: c.config.untilBlock ?? null,
         properties: c.config,
       })),
-      daProvider,
+      daProvider: providers.da,
       daService,
       logger,
       daLayer: daLayer.name,
