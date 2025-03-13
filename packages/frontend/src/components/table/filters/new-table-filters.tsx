@@ -17,6 +17,7 @@ export function NewTableFilters<T extends { filterable: FilterableValue[] }>({
   return (
     <div className="flex justify-between gap-2">
       <div className="flex flex-wrap items-center gap-2">
+        <NewTableFilterCombobox entries={entries} />
         {state.map((filter) => (
           <NewTableFilterItem
             key={filter.id}
@@ -30,7 +31,6 @@ export function NewTableFilters<T extends { filterable: FilterableValue[] }>({
             )}
           />
         ))}
-        <NewTableFilterCombobox entries={entries} />
       </div>
       {state.length > 0 && <NewTableFilterClearButton />}
     </div>

@@ -10,6 +10,7 @@ import {
 } from '~/components/core/command'
 import {
   Popover,
+  PopoverAnchor,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/popover'
@@ -75,6 +76,8 @@ export function NewTableFilterItem({
       </Popover>
       <VerticalSeparator className="h-[30px]" />
       <Popover>
+        <PopoverAnchor className="h-full" />
+
         <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-semibold">
           {filter.values.join(', ')}
         </PopoverTrigger>

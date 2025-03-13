@@ -23,6 +23,7 @@ import { type FilterableValue, filterIdToLabel } from './new-types'
 export function NewTableFilterCombobox<
   T extends { filterable: FilterableValue[] },
 >({ entries }: { entries: T[] }) {
+  const { state } = useNewTableFilterContext()
   const [open, setOpen] = useState(false)
 
   useEventListener('keydown', (e) => {
@@ -35,15 +36,19 @@ export function NewTableFilterCombobox<
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className="flex gap-1.5">
+        <PopoverTrigger className="flex h-8 gap-1.5">
           <FilterIcon />
-          <span className="text-base font-semibold">Filters</span>
-          <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert">
-            F
-          </kbd>
+          {state.length === 0 && (
+            <>
+              <span className="text-base font-semibold">Filters</span>
+              <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert">
+                F
+              </kbd>
+            </>
+          )}
         </PopoverTrigger>
         <PopoverContent className="p-0" align="start">
-          <Content entries={entries} setOpen={setOpen} />
+          <Content entries={entries} />
         </PopoverContent>
       </Popover>
     </>
@@ -52,8 +57,7 @@ export function NewTableFilterCombobox<
 
 function Content<T extends { filterable: FilterableValue[] }>({
   entries,
-  setOpen,
-}: { entries: T[]; setOpen: (open: boolean) => void }) {
+}: { entries: T[] }) {
   const { state, dispatch } = useNewTableFilterContext()
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
@@ -116,7 +120,6 @@ function Content<T extends { filterable: FilterableValue[] }>({
                   key={value}
                   value={value}
                   onSelect={(value) => {
-                    setOpen(false)
                     dispatch({
                       type: 'remove',
                       payload: {
@@ -142,7 +145,6 @@ function Content<T extends { filterable: FilterableValue[] }>({
                   key={value}
                   value={value}
                   onSelect={(value) => {
-                    setOpen(false)
                     dispatch({
                       type: 'add',
                       payload: {
