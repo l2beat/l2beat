@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "nova",
+  "name": "playblock",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"],
+  "names": {
+    "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0": "Bridge",
+    "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad": "Inbox",
+    "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0": "RollupProxy",
+    "0x383eFE8D410285c5CbE1B4F296022640759aA834": "ChallengeManager",
+    "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": "Outbox",
+    "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "SequencerInbox",
+    "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "UpgradeExecutor",
+    "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91": "ProxyAdmin"
+  },
+  "overrides": {
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "extends": "orbitstack/RollupProxy"
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
+      "ignoreRelatives": ["nativeToken"]
+    },
+    "SequencerInbox": {
+      "extends": "orbitstack/SequencerInbox",
+      "fields": {
+        "maxTimeVariation": {
+          "handler": {
+            "type": "call",
+            "method": "function maxTimeVariation() view returns (uint256, uint256, uint256, uint256)",
+            "args": []
+          }
+        }
+      }
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    }
+  }
+}

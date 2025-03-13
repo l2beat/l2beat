@@ -8,7 +8,6 @@
       "priceId": "1inch",
       "symbol": "1INCH",
       "name": "1INCH Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -16,7 +15,8 @@
         "type": "totalSupply",
         "address": "0x3f0B8B206A7FBdB3ecFc08c9407CA83F5aB1Ce59",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -25,7 +25,6 @@
       "priceId": "aave",
       "symbol": "AAVE",
       "name": "Aave Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -33,7 +32,8 @@
         "type": "totalSupply",
         "address": "0x0e6d09D44F3A929d3030B84bFbCc9AE43F42ac8F",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -42,7 +42,6 @@
       "priceId": "altlayer",
       "symbol": "ALT",
       "name": "AltLayer Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -50,7 +49,8 @@
         "type": "totalSupply",
         "address": "0x67075857e2FCfb4C523da24C32dadBe8CFC04cFb",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -59,7 +59,6 @@
       "priceId": "api3",
       "symbol": "API3",
       "name": "API3",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -67,7 +66,8 @@
         "type": "totalSupply",
         "address": "0x426D679a0e111F96A39F44D9dAA545898Efb600B",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -76,7 +76,6 @@
       "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -84,7 +83,8 @@
         "type": "totalSupply",
         "address": "0xd5428B08b604727c43ba5a37EeD25a289978d081",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -93,7 +93,6 @@
       "priceId": "axelar",
       "symbol": "AXL",
       "name": "Axelar",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -101,7 +100,8 @@
         "type": "totalSupply",
         "address": "0x380c05c9c08DF62BaaFcf86218b37950f127bf32",
         "chain": "zksync2",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -110,7 +110,6 @@
       "priceId": "bag",
       "symbol": "BAG",
       "name": "Bag",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -118,7 +117,8 @@
         "type": "totalSupply",
         "address": "0x38C8140D77980C9729c1A68616AAdfFEda120e97",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -127,7 +127,6 @@
       "priceId": "balancer",
       "symbol": "BAL",
       "name": "Balancer",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -135,7 +134,8 @@
         "type": "totalSupply",
         "address": "0xAfF169fca5086940c890C8a04C6Db4b1DB6E0DD6",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -144,7 +144,6 @@
       "priceId": "basic-attention-token",
       "symbol": "BAT",
       "name": "Basic Attention Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -152,7 +151,8 @@
         "type": "totalSupply",
         "address": "0xfBa29bFdFD65c61747A8634D6619CDA5a7BA2FE3",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -161,7 +161,6 @@
       "priceId": "bella-protocol",
       "symbol": "BEL",
       "name": "Bella",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -169,7 +168,8 @@
         "type": "totalSupply",
         "address": "0xB83CFB285fc8D936E8647FA9b1cC641dBAae92D9",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -178,7 +178,6 @@
       "priceId": "harrypotterobamasonic10in",
       "symbol": "BITCOIN",
       "name": "HarryPotterObamaSonic10Inu",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -186,7 +185,8 @@
         "type": "totalSupply",
         "address": "0x26b7F317C440E57db2fb4b377A3f1b3BBF5463C7",
         "chain": "zksync2",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -195,7 +195,6 @@
       "priceId": "binance-usd",
       "symbol": "BUSD",
       "name": "BUSD",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -203,7 +202,8 @@
         "type": "totalSupply",
         "address": "0x9a455D1a2b4630FfDb9A2307f2E875400d28B3c5",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -212,7 +212,6 @@
       "priceId": "coinbase-wrapped-staked-eth",
       "symbol": "cbETH",
       "name": "Coinbase Wrapped Staked ETH",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -220,7 +219,8 @@
         "type": "totalSupply",
         "address": "0x75Af292c1c9a37b3EA2E6041168B4E48875b9ED5",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -229,7 +229,6 @@
       "priceId": "crypto-com-chain",
       "symbol": "CRO",
       "name": "CRO",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -237,7 +236,8 @@
         "type": "totalSupply",
         "address": "0x0bcCa089F12AE9e78f5060E1d6fbbe1C827c5990",
         "chain": "zksync2",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -246,7 +246,6 @@
       "priceId": "curve-dao-token",
       "symbol": "CRV",
       "name": "Curve DAO Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -254,7 +253,8 @@
         "type": "totalSupply",
         "address": "0x5945932099f124194452a4c62d34bB37f16183B2",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -263,7 +263,6 @@
       "priceId": "crvusd",
       "symbol": "crvUSD",
       "name": "Curve.Fi USD Stablecoin",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -271,7 +270,8 @@
         "type": "totalSupply",
         "address": "0x43cD37CC4B9EC54833c8aC362Dd55E58bFd62b86",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -280,7 +280,6 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -288,7 +287,8 @@
         "type": "totalSupply",
         "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -297,7 +297,6 @@
       "priceId": "dao-maker",
       "symbol": "DAO",
       "name": "DAO Maker",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -305,7 +304,8 @@
         "type": "totalSupply",
         "address": "0xEA42F19003eEcDD915E8EDe4567AD8b41234d1ff",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -314,7 +314,6 @@
       "priceId": "dextf",
       "symbol": "DEXTF",
       "name": "DEXTF Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -322,7 +321,8 @@
         "type": "totalSupply",
         "address": "0x9929bCAC4417A21d7e6FC86F6Dae1Cc7f27A2e41",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -331,7 +331,6 @@
       "priceId": "dogelon-mars",
       "symbol": "ELON",
       "name": "Dogelon",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -339,7 +338,8 @@
         "type": "totalSupply",
         "address": "0x716066c632032b8285E57724c9A94de13B57bbDC",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -348,14 +348,14 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "amount": {
         "type": "totalSupply",
         "address": "0x000000000000000000000000000000000000800A",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       },
       "isAssociated": false
     },
@@ -365,7 +365,6 @@
       "priceId": "ether-fi",
       "symbol": "ETHFI",
       "name": "ether.fi governance token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -373,7 +372,8 @@
         "type": "totalSupply",
         "address": "0xdB707491E4A4620a19730f6ADd13F4a00554d92C",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -382,7 +382,6 @@
       "priceId": "stader-ethx",
       "symbol": "ETHx",
       "name": "ETHx",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -390,7 +389,8 @@
         "type": "totalSupply",
         "address": "0xf6374B7726dCd61995CFF4D04C46680eD72AB678",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -399,7 +399,6 @@
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -407,7 +406,8 @@
         "type": "totalSupply",
         "address": "0x0675bFc3D1Fdc724663186F48a1Ce713ba9D3c31",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -420,9 +420,9 @@
         "type": "totalSupply",
         "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
         "chain": "zksync2",
-        "decimals": 2
+        "decimals": 2,
+        "sinceTimestamp": 1737417600
       },
-      "sinceTimestamp": 1737417600,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -437,9 +437,9 @@
         "type": "totalSupply",
         "address": "0xD405617DB7473b0A3158356Be7bC9EbEc6D88b85",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1682180023
       },
-      "sinceTimestamp": 1682180023,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -454,9 +454,9 @@
         "type": "totalSupply",
         "address": "0x36711BA13B461f1998EC9f9B36A410799560f206",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1682180042
       },
-      "sinceTimestamp": 1682180042,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -471,9 +471,9 @@
         "type": "totalSupply",
         "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1682179985
       },
-      "sinceTimestamp": 1682179985,
       "category": "stablecoin",
       "source": "native",
       "isAssociated": false
@@ -484,7 +484,6 @@
       "priceId": "frax",
       "symbol": "FRAX.ethereum",
       "name": "Frax",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -492,7 +491,8 @@
         "type": "totalSupply",
         "address": "0x1af86Fc72C4363b1e35e6f79320F94B7aC848050",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       },
       "displaySymbol": "FRAX"
     },
@@ -506,9 +506,9 @@
         "type": "totalSupply",
         "address": "0xB54aAE4A0743aeEc1d584F2b2abC1EBDC12f1b0F",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1682180065
       },
-      "sinceTimestamp": 1682180065,
       "category": "ether",
       "source": "native",
       "isAssociated": false
@@ -519,7 +519,6 @@
       "priceId": "wrapped-fantom",
       "symbol": "FTM",
       "name": "Fantom Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -527,7 +526,8 @@
         "type": "totalSupply",
         "address": "0x71d0f1A92C3Be74ACB58a0aBe2575d7552931454",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -540,9 +540,9 @@
         "type": "totalSupply",
         "address": "0x19BC97D3C223fC8a0fF0541D260f4f438d5FaF99",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1682180004
       },
-      "sinceTimestamp": 1682180004,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -553,7 +553,6 @@
       "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -561,7 +560,8 @@
         "type": "totalSupply",
         "address": "0x5865F29a5A9D5BA8950C13506b014F1377F0b89f",
         "chain": "zksync2",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -570,7 +570,6 @@
       "priceId": "govi",
       "symbol": "GOVI",
       "name": "GOVI",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -578,7 +577,8 @@
         "type": "totalSupply",
         "address": "0xD63eF5e9C628c8a0E8984CDfb7444AEE44B09044",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -587,7 +587,6 @@
       "priceId": "the-graph",
       "symbol": "GRT",
       "name": "Graph Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -595,7 +594,8 @@
         "type": "totalSupply",
         "address": "0x046B8aBEEb504439816159131b1Cc1919228358a",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -604,7 +604,6 @@
       "priceId": "gitcoin",
       "symbol": "GTC",
       "name": "Gitcoin",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -612,7 +611,8 @@
         "type": "totalSupply",
         "address": "0x92698cf0a2e4Ddd0F8c54cB8c3cD5095181Fe3c9",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -621,7 +621,6 @@
       "priceId": "heurist",
       "symbol": "HEU",
       "name": "Heurist",
-      "sinceTimestamp": 1733702400,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -629,7 +628,8 @@
         "type": "totalSupply",
         "address": "0xAbEc5eCBe08b6c02F5c9A2fF82696e1E7dB6f9bf",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1733702400
       }
     },
     {
@@ -640,10 +640,10 @@
       "name": "Holdstation",
       "amount": {
         "type": "circulatingSupply",
-        "priceId": "holdstation",
-        "decimals": 18
+        "apiId": "holdstation",
+        "decimals": 18,
+        "sinceTimestamp": 1701043200
       },
-      "sinceTimestamp": 1701043200,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -654,7 +654,6 @@
       "priceId": "hop-protocol",
       "symbol": "HOP",
       "name": "Hop",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -662,7 +661,8 @@
         "type": "totalSupply",
         "address": "0xf65F942c8a049d10549856F86F49a8AB5DA36008",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -671,7 +671,6 @@
       "priceId": "injective-protocol",
       "symbol": "INJ",
       "name": "Injective Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -679,7 +678,8 @@
         "type": "totalSupply",
         "address": "0xc17F02Bd7f44A840A39AB41cf89AA831fE3f8a18",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -688,7 +688,6 @@
       "priceId": "kyber-network-crystal",
       "symbol": "KNC",
       "name": "Kyber Network Crystal v2",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -696,7 +695,8 @@
         "type": "totalSupply",
         "address": "0x6ee46Cb7cD2f15Ee1ec9534cf29a5b51C83283e6",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -705,7 +705,6 @@
       "priceId": "koi-3",
       "symbol": "KOI",
       "name": "Koi",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -713,7 +712,8 @@
         "type": "totalSupply",
         "address": "0xa995ad25Ce5eB76972ab356168f5e1D9257E4d05",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -722,7 +722,6 @@
       "priceId": "lido-dao",
       "symbol": "LDO",
       "name": "Lido DAO Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -730,7 +729,8 @@
         "type": "totalSupply",
         "address": "0x44B809fb33C5f6B1737a3283adaeCa4aF27A8Ec9",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -739,7 +739,6 @@
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -747,7 +746,8 @@
         "type": "totalSupply",
         "address": "0x082faDe8b84B18C441d506e1D3a43a387Cc59D20",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -756,7 +756,6 @@
       "priceId": "liquity",
       "symbol": "LQTY",
       "name": "LQTY",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -764,7 +763,8 @@
         "type": "totalSupply",
         "address": "0xf755cF4f0887279a8BCBE5E39eE062a5B7188401",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -773,7 +773,6 @@
       "priceId": "liquity-usd",
       "symbol": "LUSD",
       "name": "LUSD Stablecoin",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -781,7 +780,8 @@
         "type": "totalSupply",
         "address": "0x503234F203fC7Eb888EEC8513210612a43Cf6115",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -790,7 +790,6 @@
       "priceId": "magic",
       "symbol": "MAGIC",
       "name": "MAGIC",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -798,7 +797,8 @@
         "type": "totalSupply",
         "address": "0x2e11A00806173162c307642Dfd892951155c45bC",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -807,7 +807,6 @@
       "priceId": "matic-network",
       "symbol": "MATIC",
       "name": "Matic Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -815,7 +814,8 @@
         "type": "totalSupply",
         "address": "0x770E221EC6F3e8A2E2E168399bb3aa56a63E397d",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -824,7 +824,6 @@
       "priceId": "maverick-protocol",
       "symbol": "MAV",
       "name": "Maverick Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -832,7 +831,8 @@
         "type": "totalSupply",
         "address": "0x6610190F6C984aC2E8c80f92EbB546a29a7391c4",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -843,10 +843,10 @@
       "name": "Zeek Coin",
       "amount": {
         "type": "circulatingSupply",
-        "priceId": "zeek-coin",
-        "decimals": 18
+        "apiId": "zeek-coin",
+        "decimals": 18,
+        "sinceTimestamp": 1703894400
       },
-      "sinceTimestamp": 1703894400,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -857,7 +857,6 @@
       "priceId": "metis-token",
       "symbol": "Metis",
       "name": "Metis Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -865,7 +864,8 @@
         "type": "totalSupply",
         "address": "0xC16A041ad920B786EfEF3a0005D835d98DD110b8",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -874,7 +874,6 @@
       "priceId": "mute",
       "symbol": "MUTE",
       "name": "Mute.io",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -882,7 +881,8 @@
         "type": "totalSupply",
         "address": "0x0e97C7a0F8B2C9885C8ac9fC6136e829CbC21d42",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -891,7 +891,6 @@
       "priceId": "metaverse-index",
       "symbol": "MVI",
       "name": "Metaverse Index",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -899,7 +898,8 @@
         "type": "totalSupply",
         "address": "0x159ca632689676fe729529a87DC94c18820a31e5",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -908,7 +908,6 @@
       "priceId": "connext",
       "symbol": "NEXT",
       "name": "Connext",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -916,7 +915,8 @@
         "type": "totalSupply",
         "address": "0x16895e45a73d2DfA36e07eD08008618fED423600",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -925,7 +925,6 @@
       "priceId": "ocean-protocol",
       "symbol": "OCEAN",
       "name": "Ocean Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -933,7 +932,8 @@
         "type": "totalSupply",
         "address": "0x99ABD6389692E8A42FDBA0094FA1B12B32b1CE04",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -942,7 +942,6 @@
       "priceId": "autonolas",
       "symbol": "OLAS",
       "name": "Autonolas",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -950,7 +949,8 @@
         "type": "totalSupply",
         "address": "0xb77269C22066E7F3B5E18298866Ef96eeadb4d1e",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -959,7 +959,6 @@
       "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -967,7 +966,8 @@
         "type": "totalSupply",
         "address": "0xFD282F16a64c6D304aC05d1A58Da15bed0467c71",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -976,7 +976,6 @@
       "priceId": "perpetual-protocol",
       "symbol": "PERP",
       "name": "Perpetual",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -984,7 +983,8 @@
         "type": "totalSupply",
         "address": "0x42c1c56be243c250AB24D2ecdcC77F9cCAa59601",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -993,7 +993,6 @@
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1001,7 +1000,8 @@
         "type": "totalSupply",
         "address": "0x102aC5ff8C58B8Ae41fF34d85F0541a2fDbead65",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1010,7 +1010,6 @@
       "priceId": "power-ledger",
       "symbol": "POWR",
       "name": "PowerLedger",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1018,7 +1017,8 @@
         "type": "totalSupply",
         "address": "0xa9fa5Ae28b9FAaa68723594fce3AD84ba31b2f50",
         "chain": "zksync2",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1027,7 +1027,6 @@
       "priceId": "pufeth",
       "symbol": "pufETH",
       "name": "pufETH",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1035,7 +1034,8 @@
         "type": "totalSupply",
         "address": "0x9112fF5d2a4E74db21469DC815d2A747D312a586",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1044,7 +1044,6 @@
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
       "name": "Rocket Pool ETH",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1052,7 +1051,8 @@
         "type": "totalSupply",
         "address": "0x32Fd44bB869620C0EF993754c8a00Be67C464806",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1061,7 +1061,6 @@
       "priceId": "render-token",
       "symbol": "RNDR",
       "name": "Render Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1069,7 +1068,8 @@
         "type": "totalSupply",
         "address": "0x122528C80166a74f608B2fC13c2c02C51F2e3423",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1078,7 +1078,6 @@
       "priceId": "rocket-pool",
       "symbol": "RPL",
       "name": "Rocket Pool Protocol",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1086,7 +1085,8 @@
         "type": "totalSupply",
         "address": "0x1CF8553Da5a75C20cdC33532cb19Ef7E3bFFf5BC",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1099,9 +1099,9 @@
         "type": "totalSupply",
         "address": "0x6bE2425C381eb034045b527780D2Bf4E21AB7236",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1715792840
       },
-      "sinceTimestamp": 1715792840,
       "category": "ether",
       "source": "external",
       "isAssociated": false
@@ -1112,7 +1112,6 @@
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH.ethereum",
       "name": "rsETH",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1120,7 +1119,8 @@
         "type": "totalSupply",
         "address": "0xBc3DE055bdDc9466766B0EC79E0bA1Da112a832A",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       },
       "displaySymbol": "rsETH"
     },
@@ -1130,7 +1130,6 @@
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
       "name": "rswETH",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1138,7 +1137,8 @@
         "type": "totalSupply",
         "address": "0x99879017F207AE8437C1FA06208a815c5A17325a",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1151,9 +1151,9 @@
         "type": "totalSupply",
         "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1682180085
       },
-      "sinceTimestamp": 1682180085,
       "category": "ether",
       "source": "native",
       "isAssociated": false
@@ -1164,7 +1164,6 @@
       "priceId": "shiba-inu",
       "symbol": "SHIB",
       "name": "SHIBA INU",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1172,7 +1171,8 @@
         "type": "totalSupply",
         "address": "0x5B09802d62d213c4503B4b1Ef5F727ef62c9F4eF",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1181,7 +1181,6 @@
       "priceId": "symbiosis-finance",
       "symbol": "SIS",
       "name": "Symbiosis",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1189,7 +1188,8 @@
         "type": "totalSupply",
         "address": "0xdd9f72afED3631a6C85b5369D84875e6c42f1827",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1198,7 +1198,6 @@
       "priceId": "sol-wormhole",
       "symbol": "SOL",
       "name": "Wrapped SOL",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1206,7 +1205,8 @@
         "type": "totalSupply",
         "address": "0x60e14dD50EF2FF19Cd1c71B76f1E17054a32F030",
         "chain": "zksync2",
-        "decimals": 9
+        "decimals": 9,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1215,7 +1215,6 @@
       "priceId": "stargate-finance",
       "symbol": "STG",
       "name": "StargateToken",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1223,7 +1222,8 @@
         "type": "totalSupply",
         "address": "0xe538C412011a793588A34849aCb0A7138275975E",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1232,7 +1232,6 @@
       "priceId": "storj",
       "symbol": "STORJ",
       "name": "StorjToken",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1240,7 +1239,8 @@
         "type": "totalSupply",
         "address": "0xA0806DA7835a4E63dB2CE44A2b622eF8b73B5DB5",
         "chain": "zksync2",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1249,7 +1249,6 @@
       "priceId": "sushi",
       "symbol": "SUSHI",
       "name": "SushiToken",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1257,7 +1256,8 @@
         "type": "totalSupply",
         "address": "0x3A563449A2d1e65711Aea06649EbcEABd66cEac3",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1266,7 +1266,6 @@
       "priceId": "tbtc",
       "symbol": "tBTC",
       "name": "tBTC v2",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1274,7 +1273,8 @@
         "type": "totalSupply",
         "address": "0x4e942A211C630d28F2DB6D625e72d2CF30C36e06",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1283,7 +1283,6 @@
       "priceId": "the-open-network",
       "symbol": "TONCOIN",
       "name": "Wrapped TON Coin",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1291,7 +1290,8 @@
         "type": "totalSupply",
         "address": "0x4E14EC08875c88f9B0Cf2A075F481EDa0143d1f0",
         "chain": "zksync2",
-        "decimals": 9
+        "decimals": 9,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1300,7 +1300,6 @@
       "priceId": "tellor",
       "symbol": "TRB",
       "name": "Tellor Tributes",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1308,7 +1307,8 @@
         "type": "totalSupply",
         "address": "0xf9966320BF9C2D38297036F3C4EFc9DAe929Ed37",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1317,7 +1317,6 @@
       "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1325,7 +1324,8 @@
         "type": "totalSupply",
         "address": "0x1C6f53185061D7cC387E481c350aD00C2C876f3E",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1334,7 +1334,6 @@
       "priceId": "ultra",
       "symbol": "UOS",
       "name": "Ultra Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1342,7 +1341,8 @@
         "type": "totalSupply",
         "address": "0xA99A292C5500ABBD5b8e4b97404db52746Ce4832",
         "chain": "zksync2",
-        "decimals": 4
+        "decimals": 4,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1355,9 +1355,9 @@
         "type": "totalSupply",
         "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
         "chain": "zksync2",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1706644361
       },
-      "sinceTimestamp": 1706644361,
       "category": "stablecoin",
       "source": "native",
       "isAssociated": false
@@ -1368,7 +1368,6 @@
       "priceId": "usd-coin",
       "symbol": "USDC.ethereum",
       "name": "USD Coin",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -1376,7 +1375,8 @@
         "type": "totalSupply",
         "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
         "chain": "zksync2",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1717521479
       },
       "displaySymbol": "USDC"
     },
@@ -1390,9 +1390,9 @@
         "type": "totalSupply",
         "address": "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1728957714
       },
-      "sinceTimestamp": 1728957714,
       "category": "stablecoin",
       "source": "native",
       "isAssociated": false
@@ -1407,9 +1407,9 @@
         "type": "totalSupply",
         "address": "0x0469d9d1dE0ee58fA1153ef00836B9BbCb84c0B6",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1737763200
       },
-      "sinceTimestamp": 1737763200,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -1420,7 +1420,6 @@
       "priceId": "paxos-standard",
       "symbol": "USDP",
       "name": "Pax Dollar",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -1428,7 +1427,8 @@
         "type": "totalSupply",
         "address": "0x77439055ef240ef84cbAa8332CFE2823e71dd07B",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1437,7 +1437,6 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
-      "sinceTimestamp": 1717521479,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -1445,7 +1444,8 @@
         "type": "totalSupply",
         "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
         "chain": "zksync2",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1454,7 +1454,6 @@
       "priceId": "veritaseum",
       "symbol": "VERI",
       "name": "Veritaseum",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1462,7 +1461,8 @@
         "type": "totalSupply",
         "address": "0x5E53e691A57c40443549BB0b09e8eb4FdA64326D",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1471,7 +1471,6 @@
       "priceId": "virtual-protocol",
       "symbol": "VIRTUAL",
       "name": "Virtual Protocol",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1479,7 +1478,8 @@
         "type": "totalSupply",
         "address": "0xB86c11fD839faa1cE58Ed0c78c6DC657844978F2",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1488,7 +1488,6 @@
       "priceId": "avalanche-wormhole",
       "symbol": "WAVAX",
       "name": "Wrapped AVAX",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1496,7 +1495,8 @@
         "type": "totalSupply",
         "address": "0x934120d33c2b38fdB54B6c935495eE5b19545E10",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1505,7 +1505,6 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1513,7 +1512,8 @@
         "type": "totalSupply",
         "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
         "chain": "zksync2",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1522,7 +1522,6 @@
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1530,7 +1529,8 @@
         "type": "totalSupply",
         "address": "0xe862bF1176a99E5aC9b693C1F966f266143BD8f5",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1539,7 +1539,6 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1547,7 +1546,8 @@
         "type": "totalSupply",
         "address": "0xf00DAD97284D0c6F06dc4Db3c32454D4292c6813",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1556,7 +1556,6 @@
       "priceId": "worldcoin-wld",
       "symbol": "WLD",
       "name": "Worldcoin",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1564,7 +1563,8 @@
         "type": "totalSupply",
         "address": "0x31C693F80A0dD1021D6cb097d256585f37168174",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1573,7 +1573,6 @@
       "priceId": "woo-network",
       "symbol": "WOO",
       "name": "Wootrade Network",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1581,7 +1580,8 @@
         "type": "totalSupply",
         "address": "0x9E22D758629761FC5708c171d06c2faBB60B5159",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1590,7 +1590,6 @@
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
-      "sinceTimestamp": 1717521479,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1598,7 +1597,8 @@
         "type": "totalSupply",
         "address": "0xCafB42a2654C20cb3739F04243E925aa47302bec",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1613,9 +1613,9 @@
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "chain": "ethereum",
         "escrowAddress": "0x41527B2d03844dB6b0945f25702cB958b6d55989",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1698058151
       },
-      "sinceTimestamp": 1698058151,
       "category": "ether",
       "source": "external",
       "isAssociated": false
@@ -1626,7 +1626,6 @@
       "priceId": "xcad-network",
       "symbol": "XCAD",
       "name": "XCAD Token",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1634,7 +1633,8 @@
         "type": "totalSupply",
         "address": "0x572131890832FCF595F81c7904473221a8ac6dC3",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1645,10 +1645,10 @@
       "name": "zkSwap Finance",
       "amount": {
         "type": "circulatingSupply",
-        "priceId": "zkswap-finance",
-        "decimals": 18
+        "apiId": "zkswap-finance",
+        "decimals": 18,
+        "sinceTimestamp": 1694476800
       },
-      "sinceTimestamp": 1694476800,
       "category": "other",
       "source": "native",
       "isAssociated": false
@@ -1661,10 +1661,10 @@
       "name": "ZKsync",
       "amount": {
         "type": "circulatingSupply",
-        "priceId": "zksync",
-        "decimals": 18
+        "apiId": "zksync",
+        "decimals": 18,
+        "sinceTimestamp": 1718668800
       },
-      "sinceTimestamp": 1718668800,
       "category": "other",
       "source": "native",
       "isAssociated": true
@@ -1675,7 +1675,6 @@
       "priceId": "zkspace",
       "symbol": "ZKS",
       "name": "Zks",
-      "sinceTimestamp": 1717521479,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -1683,7 +1682,8 @@
         "type": "totalSupply",
         "address": "0xA51710195Cdc29c43d3BeeEb6B255cFd97B3Dd88",
         "chain": "zksync2",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1717521479
       }
     },
     {
@@ -1694,10 +1694,10 @@
       "name": "Zorro",
       "amount": {
         "type": "circulatingSupply",
-        "priceId": "zorro",
-        "decimals": 18
+        "apiId": "zorro",
+        "decimals": 18,
+        "sinceTimestamp": 1704758400
       },
-      "sinceTimestamp": 1704758400,
       "category": "other",
       "source": "native",
       "isAssociated": false

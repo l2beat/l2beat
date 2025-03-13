@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "mode",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x735aDBbE72226BD52e818E7181953f42E3b0FF21", //L1StandardBridge
+    "0x2901dA832a4D0297FF0691100A8E496626cc626D" //L1ERC721Bridge"
+  ],
+  "names": {
+    "0x309Fe2536d01867018D120b40e4676723C53A14C": "ModeMultisig"
+  }
+}

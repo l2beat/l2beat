@@ -1,0 +1,219 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "sygma",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089", // sygma bridge address
+    "0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7" // fee handler, TODO: find via discovery
+  ],
+  "names": {
+    "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": "Bridge",
+    "0xC832588193cd5ED2185daDA4A531e0B26eC5B830": "ERC20 Bridge Handler",
+    "0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E": "AccessControlSegregator",
+    "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF": "FeeHandlerRouter",
+    "0x31282123E7bcd947e2c1Bc364d564839574fAdCD": "Permissionless Generic Handler",
+    "0xc4d8b2F5501C765dE0C5E12550118F397B197D05": "Community Multisig", // manages fee handler's liquidity
+    "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53": "Admin Multisig",
+    "0x6c5bA91642F10282b576d91922Ae6448C9d52f4E": "PHA" // Phala Network token contract - currently the integrated route on Sygma protocol between EVM<->PHA/KHA on Polkadot
+  },
+  "overrides": {
+    "FeeHandlerRouter": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "Bridge": {
+      // TODO: query all handlers
+      "fields": {
+        "handler1": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xabd6e7cb50984ff9c2f3e18a2660c3353dadf4e3291deeb275dae2cd1e44fe05",
+            "returnType": "address"
+          }
+        },
+        "handler2": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x17ef568e3e12ab5b9c7254a8d58478811de00f9e6eb34345acd53bf8fd09d3ec",
+            "returnType": "address"
+          }
+        }
+      }
+    },
+    "AccessControlSegregator": {
+      "fields": {
+        "role_pauseTransfers": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xbbaf89ae0a065842f3c160f42e2e74efcf4235e4811562e654698575ecbc49db",
+            "returnType": "address"
+          }
+        },
+        "role_unpauseTransfers": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x77c5f5e17b8ac58cbf856a799633c99cc04b61d5e21a6f46477dea0fc6da1984",
+            "returnType": "address"
+          }
+        },
+        "role_changeAccessControl": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xaa4d86368e42ee9fd4d3131912f7448169d594ca8698ee0cca973dfb336df1aa",
+            "returnType": "address"
+          }
+        },
+        "role_changeFeeHandler": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x8dceb9a03224c2f4bf778f59d66d562f0c1b5c33073ebf7ce47494e8e69d65e0",
+            "returnType": "address"
+          }
+        },
+        "role_setBurnable": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xad941346ac5b9e8a08897105fa77b67eeec5f3f2656ac2027a2736c979b48b02",
+            "returnType": "address"
+          }
+        },
+        "role_setDepositNonce": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x6646cc3fbe17a35e1e357b267c1cfc8f0adcc9a4e489ec2aae567d5a181dc354",
+            "returnType": "address"
+          }
+        },
+        "role_setForwarder": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x7d6bd0be7b20cb404c5830dfc5df0601dde8f59c473a37d9659e3c29ad0102d4",
+            "returnType": "address"
+          }
+        },
+        "role_setResource": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xab098ab9b878c655634f7c7563ab4e1755f48ecdb95343ed53a01d71fb4db62b",
+            "returnType": "address"
+          }
+        },
+        "role_Withdraw": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xc4cba4c52cc2732e6d455f3a60d2c6c7a8889b0f87f5b539c4acb58c2819a9fc",
+            "returnType": "address"
+          }
+        },
+        "role_endKeyGen": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x48db447ccbdcd4626ad19e30eec7b4072b22f6f2bcd9c6de1518b849f51bc75d",
+            "returnType": "address"
+          }
+        },
+        "role_refreshKey": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xba2bf6a2fff9823467606ae3a63eaf9b170cb9bbdde7dfe38d7ba72cce67caff",
+            "returnType": "address"
+          }
+        },
+        "role_retry": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xc0bf71b1e7cd95f8ce5619edb49dea1f2b3de35e85168201b14351d39d7b7377",
+            "returnType": "address"
+          }
+        },
+        "role_startKeyGen": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xff2192d9780ed3833009189336fc62955588bc311c05fb4d1780faeb3ab1f36a",
+            "returnType": "address"
+          }
+        },
+        "role_grantAccess": {
+          "handler": {
+            "type": "storage",
+            "slot": "0xd777efdeb12ce631e4e7bb4096e8e44d294f90a879efcd2b8ba060ee12cec7fc",
+            "returnType": "address"
+          }
+        }
+      }
+    }
+  }
+}
+/*
+        "0xffaac0eb": {
+          "type": "storage",
+          "slot": "0x77c5f5e17b8ac58cbf856a799633c99cc04b61d5e21a6f46477dea0fc6da1984",
+          "returnType": "address"
+        },
+        "0x9d33b6d4": {
+          "type": "storage",
+          "slot": "0xaa4d86368e42ee9fd4d3131912f7448169d594ca8698ee0cca973dfb336df1aa",
+          "returnType": "address"
+        },
+        "0x8b63aebf": {
+          "type": "storage",
+          "slot": "0x8dceb9a03224c2f4bf778f59d66d562f0c1b5c33073ebf7ce47494e8e69d65e0",
+          "returnType": "address"
+        },
+        "0x8c0c2631": {
+          "type": "storage",
+          "slot": "0xad941346ac5b9e8a08897105fa77b67eeec5f3f2656ac2027a2736c979b48b02",
+          "returnType": "address"
+        },
+        "0xedc20c3c": {
+          "type": "storage",
+          "slot": "0x6646cc3fbe17a35e1e357b267c1cfc8f0adcc9a4e489ec2aae567d5a181dc354",
+          "returnType": "address"
+        },
+        "0xd15ef64e": {
+          "type": "storage",
+          "slot": "0x7d6bd0be7b20cb404c5830dfc5df0601dde8f59c473a37d9659e3c29ad0102d4",
+          "returnType": "address"
+        },
+        "0x8a3234c7": {
+          "type": "storage",
+          "slot": "0xab098ab9b878c655634f7c7563ab4e1755f48ecdb95343ed53a01d71fb4db62b",
+          "returnType": "address"
+        },
+        "0xbd2a182": {
+          "type": "storage",
+          "slot": "0xc4cba4c52cc2732e6d455f3a60d2c6c7a8889b0f87f5b539c4acb58c2819a9fc",
+          "returnType": "address"
+        },
+        "0xd2e5fae9": {
+          "type": "storage",
+          "slot": "0x48db447ccbdcd4626ad19e30eec7b4072b22f6f2bcd9c6de1518b849f51bc75d",
+          "returnType": "address"
+        },
+        "0xd8236744": {
+          "type": "storage",
+          "slot": "0xba2bf6a2fff9823467606ae3a63eaf9b170cb9bbdde7dfe38d7ba72cce67caff",
+          "returnType": "address"
+        },
+        "0x366b4885": {
+          "type": "storage",
+          "slot": "0xc0bf71b1e7cd95f8ce5619edb49dea1f2b3de35e85168201b14351d39d7b7377",
+          "returnType": "address"
+        },
+        "0x6ba6db6b": {
+          "type": "storage",
+          "slot": "0xff2192d9780ed3833009189336fc62955588bc311c05fb4d1780faeb3ab1f36a",
+          "returnType": "address"
+        },
+        "0xa973ec93": {
+          "type": "storage",
+          "slot": "0xd777efdeb12ce631e4e7bb4096e8e44d294f90a879efcd2b8ba060ee12cec7fc",
+          "returnType": "address"
+        }
+        */

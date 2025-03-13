@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": [
+    "getToken",
+    "getAllowList",
+    "owner",
+    "i_messageTransmitter",
+    "i_tokenMessenger"
+  ],
+  "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"]
+}

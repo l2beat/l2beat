@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2BaseFee",
+  "description": "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.",
+  "fields": {
+    "recipientsData": {
+      "description": "Lists recipients and weights using events, while the latest represents the current state.",
+      "handler": {
+        "type": "event",
+        "select": ["recipients", "weights"],
+        "add": { "event": "RecipientsUpdated" }
+      }
+    }
+  },
+  "ignoreRelatives": ["recipientsData"]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "mantle",
+  "name": "zklinknova",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+    "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"
+  ],
+  "names": {
+    "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": "zkLink",
+    "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2": "L1ERC20Bridge",
+    "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "MantleL2Gateway",
+    "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60": "MantleOwner",
+    "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82": "MantleProxyAdmin"
+  },
+  "overrides": {
+    "zkLink": {
+      "extends": "zklinknova/secondaryZkLink"
+    },
+    "MantleL2Gateway": {
+      "extends": "zklinknova/secondaryGateway"
+    }
+  }
+}

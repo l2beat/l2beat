@@ -1,0 +1,4 @@
+{
+  "discovery": "./packages/config/src/projects",
+  "cache": "./packages/config/cache/discovery.sqlite"
+}

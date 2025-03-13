@@ -17,14 +17,16 @@
             "address": "native",
             "chain": "arbitrum",
             "escrowAddress": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1714618907
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "arbitrum",
             "escrowAddress": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1714620855
           }
         ]
       },
@@ -33,11 +35,11 @@
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1714618907
         },
         "priceId": "ethereum"
       },
-      "sinceTimestamp": 1714618907,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -54,18 +56,19 @@
         "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
         "chain": "arbitrum",
         "escrowAddress": "0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1713781465
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1713781465
         },
         "priceId": "renzo-restaked-eth"
       },
-      "sinceTimestamp": 1713781465,
       "category": "ether",
       "source": "external",
       "isAssociated": false
@@ -81,18 +84,19 @@
         "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "chain": "arbitrum",
         "escrowAddress": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1714620855
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1714620855
         },
         "priceId": "usd-coin"
       },
-      "sinceTimestamp": 1714620855,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false

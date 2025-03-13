@@ -44,7 +44,9 @@ export interface ScalingProject {
   type: 'layer2' | 'layer3'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  /** If the project is an L3, ProjectId that serves as the base layer */
   hostChain?: ProjectId
+  /** Is the project univeral or app specific (e.g. DEX) */
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
@@ -64,19 +66,19 @@ export interface ScalingProject {
   dataAvailability?: ProjectScalingDa
   /** Details about the custom availability solution */
   customDa?: ProjectCustomDa
-  /** Risk view values for this layer2 */
+  /** Risk view values for this project */
   riskView: ProjectScalingRiskView
-  /** Stacked risk view values for this layer3 and it's base chain */
+  /** Stacked risk view values for this project and it's base chain - only applicable to layer3s */
   stackedRiskView?: ProjectScalingRiskView
   /** Rollup stage */
   stage: ProjectScalingStage
-  /** Deep dive into layer2 technology */
+  /** Deep dive into project technology */
   technology: ProjectScalingTechnology
   /** Open-source node details */
   stateDerivation?: ProjectScalingStateDerivation
   /** Explains how project validates state */
   stateValidation?: ProjectScalingStateValidation
-  /** List of smart contracts used in the layer2 */
+  /** List of smart contracts used in the project */
   contracts: ProjectContracts
   /** List of permissioned addresses on a given chain */
   permissions?: Record<string, ProjectPermissions>
@@ -86,8 +88,9 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Things we have or haven't checked while assesing the stage */
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
-  /** Discodrive markers */
+  /** Discodrive markers - shouldn't be configured by a user */
   discoveryInfo?: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string

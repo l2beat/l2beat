@@ -1,7 +1,5 @@
 import { hashJson } from '@l2beat/shared'
 import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
-
-import { join } from 'lodash'
 import type { DiscoveryOutput } from '../output/types'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
@@ -10,6 +8,7 @@ import {
   type RawDiscoveryConfig,
 } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
+import { getDiscoveryPaths } from './getDiscoveryPaths'
 
 export type ContractOverrides = DiscoveryContract & {
   name?: string
@@ -25,10 +24,9 @@ export class DiscoveryConfig {
 
   constructor(
     private readonly config: RawDiscoveryConfig,
-    configReader: ConfigReader = new ConfigReader(
-      join(process.cwd(), '../config'),
-    ),
+    configReader?: ConfigReader,
   ) {
+    configReader ??= new ConfigReader(getDiscoveryPaths().discovery)
     this.sharedModuleDiscovery = (config.sharedModules ?? []).map(
       (projectName) => {
         return configReader.readDiscovery(projectName, config.chain)

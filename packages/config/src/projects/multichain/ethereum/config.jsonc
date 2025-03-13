@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "multichain",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    // NOTE(radomski): All addresses below this comment were added into the
+    // initialAddresses automatically during the process of removing the
+    // check-verified-contracts. When going over this project again please bear in
+    // mind that these addresses could not be used by the project anymore. Decide
+    // for yourself whether keep them here or should they be removed or fetched
+    // from some fields of other contracts.
+    "0x6b7a87899490EcE95443e979cA9485CBE7E71522",
+    "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705",
+
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00" // Multichain "Liquidity Tool"
+  ],
+  "names": {
+    "0x6b7a87899490EcE95443e979cA9485CBE7E71522": "AnyswapV4Router",
+    "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": "AnyswapV6Router"
+  },
+  "overrides": {
+    "AnyswapV4Router": {
+      "ignoreRelatives": ["wNATIVE", "factory"]
+    },
+    "AnyswapV6Router": {
+      "ignoreRelatives": ["wNATIVE", "factory"]
+    }
+  }
+}

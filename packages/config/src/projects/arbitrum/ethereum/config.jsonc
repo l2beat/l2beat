@@ -1,0 +1,132 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "arbitrum",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
+    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+    "0xcEe284F754E854890e311e3280b767F80797180d",
+    "0xD3B5b60020504bc3489D6949d545893982BA3011",
+    "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+    "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A"
+  ],
+  "names": {
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "Bridge",
+    "0xcEe284F754E854890e311e3280b767F80797180d": "L1CustomGateway",
+    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": "L1ERC20Gateway",
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "SecurityCouncil",
+    "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ArbitrumProxyAdmin",
+    "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "UpgradeExecutorAdmin",
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock",
+    "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0": "RollupProxy",
+    "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": "SequencerInbox",
+    "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "Inbox",
+    "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": "OutboxV0",
+    "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": "OutboxV1",
+    "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": "Outbox",
+    "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "GatewaysAdmin",
+    "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway",
+    "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils",
+    "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager",
+    "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": "wstETHEscrow",
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
+    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig",
+    "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "BatchPosterManagerMultisig",
+    "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": "LPTL1Escrow",
+    "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": "UpgradeableBeacon",
+    "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0": "EdgeChallengeManager",
+    "0xA10c7CE4b876998858b1a9E12b10092229539400": "L1Escrow",
+    "0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
+  },
+  "overrides": {
+    "Outbox": {
+      // description override as long as permissions are stuck on L1 and Outbox is an actor
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."
+    },
+    "Bridge": {
+      // manual override to inherit perms to the Outbox
+      "fields": {
+        "mainOutboxAddress": {
+          "handler": {
+            "type": "call",
+            "method": "function allowedOutboxList(uint256) view returns (address)",
+            "args": [0]
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "act"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": {
+      // pre-nitro rollup contract
+      "ignoreDiscovery": true
+    },
+    "OutboxV1": {
+      "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
+    },
+    "L1DaiGateway": {
+      "ignoreRelatives": [
+        "counterpartGateway",
+        "inbox",
+        "l1Dai",
+        "l1Router",
+        "l2Counterpart",
+        "l2Dai"
+      ],
+      "category": "bridge-external"
+    },
+    "ValidatorUtils": {
+      "fields": {
+        "ARBITRUM_STAKERS": {
+          "handler": {
+            "type": "call",
+            "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+            "args": ["0x5eF0D09d1E6204141B4d37530808eD19f60FBa35", 0, 100]
+          }
+        }
+      },
+      "ignoreRelatives": ["ARBITRUM_STAKERS"]
+    },
+    "OutboxV0": {
+      "ignoreMethods": [
+        "l2ToL1BatchNum",
+        "l2ToL1OutputId",
+        "outboxEntryExists",
+        "outboxes"
+      ]
+    },
+    "wstETHEscrow": {
+      "category": "bridge-external",
+      "ignoreRelatives": ["l2Token", "l1Token"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "wstETHEscrowAdmin": {
+      "ignoreDiscovery": true
+    },
+    "LidoEmergencyBrakeMultisig": {
+      "ignoreDiscovery": true
+    },
+
+    "LPTL1Escrow": { "category": "bridge-external" },
+    "L1Escrow": { "category": "bridge-external" },
+
+    "ArbitrumProxyAdmin": { "category": "spam" },
+    "UpgradeExecutorAdmin": { "category": "spam" },
+    "UpgradeableBeacon": { "category": "spam" },
+    "GatewaysAdmin": { "category": "spam" },
+    "OutboxEntry": { "category": "spam" }
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "SecurityCouncilMemberSyncAction",
-  "description": "Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.",
-  "ignoreMethods": ["computeKey"],
-  "ignoreRelatives": ["store"]
-}

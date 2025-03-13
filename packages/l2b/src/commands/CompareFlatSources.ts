@@ -1,5 +1,5 @@
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { CliLogger } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
 import {
   boolean,
   command,
@@ -10,7 +10,6 @@ import {
   string,
   subcommands,
 } from 'cmd-ts'
-import { readConfig } from '../config/readConfig'
 import { executeCompareAll } from '../implementations/compare-flat-sources/executeCompareAll'
 import { executeCompareProjects } from '../implementations/compare-flat-sources/executeCompareProjects'
 import { executeCompareSourceOnSource } from '../implementations/compare-flat-sources/executeCompareSourceOnSource'
@@ -38,15 +37,16 @@ const CompareProjectSources = command({
   },
   handler: async (args) => {
     const logger = new CliLogger()
-    const config = readConfig()
-    const discoveryPath = config.discoveryPath ?? args.discoveryPath
-    assert(discoveryPath !== undefined)
+    const paths = getDiscoveryPaths()
+    if (args.discoveryPath) {
+      paths.discovery = args.discoveryPath
+    }
 
     await executeCompareProjects({
       forceTable: args.forceTableFlag,
       firstProjectPath: args.firstProject,
       secondProjectPath: args.secondProject,
-      discoveryPath,
+      paths,
       logger,
     })
   },
@@ -63,14 +63,15 @@ const CompareProjectSourceOnSource = command({
   },
   handler: async (args) => {
     const logger = new CliLogger()
-    const config = readConfig()
-    const discoveryPath = config.discoveryPath ?? args.discoveryPath
-    assert(discoveryPath !== undefined)
+    const paths = getDiscoveryPaths()
+    if (args.discoveryPath) {
+      paths.discovery = args.discoveryPath
+    }
 
     await executeCompareSourceOnSource({
       forceTable: args.forceTableFlag,
       projectPath: args.projectPath,
-      discoveryPath,
+      paths,
       logger,
     })
   },
@@ -87,14 +88,15 @@ const MostSimilarFlatSources = command({
   },
   handler: async (args) => {
     const logger = new CliLogger()
-    const config = readConfig()
-    const discoveryPath = config.discoveryPath ?? args.discoveryPath
-    assert(discoveryPath !== undefined)
+    const paths = getDiscoveryPaths()
+    if (args.discoveryPath) {
+      paths.discovery = args.discoveryPath
+    }
 
     await executeFindSimilar({
       projectPath: args.project,
       forceTable: args.forceTableFlag,
-      discoveryPath,
+      paths,
       logger,
     })
   },
@@ -127,15 +129,16 @@ const CompareAllFlatSources = command({
   },
   handler: async (args) => {
     const logger = new CliLogger()
-    const config = readConfig()
-    const discoveryPath = config.discoveryPath ?? args.discoveryPath
-    assert(discoveryPath !== undefined)
+    const paths = getDiscoveryPaths()
+    if (args.discoveryPath) {
+      paths.discovery = args.discoveryPath
+    }
 
     await executeCompareAll({
       minClusterSimilarity: args.minClusterSimilarity,
       minProjectSimilarity: args.minProjectSimilarity,
       showGraph: args.showGraph,
-      discoveryPath,
+      paths,
       logger,
     })
   },

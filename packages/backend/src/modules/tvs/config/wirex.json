@@ -8,7 +8,6 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
-      "sinceTimestamp": 1720093223,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -16,7 +15,8 @@
         "type": "totalSupply",
         "address": "0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4",
         "chain": "wirex",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1720093223
       }
     },
     {
@@ -25,7 +25,6 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
-      "sinceTimestamp": 1720093223,
       "category": "ether",
       "source": "canonical",
       "amount": {
@@ -35,14 +34,16 @@
           {
             "type": "const",
             "value": "340282366920938463463374607431768211455",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1720093223
           },
           {
             "type": "balanceOfEscrow",
             "chain": "wirex",
             "decimals": 18,
             "address": "native",
-            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+            "sinceTimestamp": 1720093223
           }
         ]
       },
@@ -54,7 +55,6 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
-      "sinceTimestamp": 1720093223,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -62,7 +62,8 @@
         "type": "totalSupply",
         "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
         "chain": "wirex",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1720093223
       }
     },
     {
@@ -71,7 +72,6 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
-      "sinceTimestamp": 1720093223,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -79,7 +79,8 @@
         "type": "totalSupply",
         "address": "0x1E4a5963aBFD975d8c9021ce480b42188849D41d",
         "chain": "wirex",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1720093223
       }
     }
   ]

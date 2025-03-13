@@ -13,18 +13,19 @@
         "address": "native",
         "chain": "base",
         "escrowAddress": "0x29e464A7E6331E80f0E707E2cbDbaFb1a6aF0a76",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1710831600
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1710831600
         },
         "priceId": "ethereum"
       },
-      "sinceTimestamp": 1710831600,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
