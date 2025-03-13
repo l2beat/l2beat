@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa667f37313d829f0f382da2ee1616d66ebf203e7
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+ZKsync upgrades their diamond as a part of the v26 protocol upgrade. There are no major changes because the ChainTypeManager and other shared L1 contracts are not used yet.
 
 ## Watched changes
 
