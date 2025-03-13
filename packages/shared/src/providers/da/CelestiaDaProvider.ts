@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcClient'
-import type { CelestiaBlob } from './types'
 import type { DaBlobProvider } from './DaProvider'
+import type { CelestiaBlob } from './types'
 
 export class CelestiaDaProvider implements DaBlobProvider {
   constructor(
