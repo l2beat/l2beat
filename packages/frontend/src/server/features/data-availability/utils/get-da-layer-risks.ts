@@ -1,4 +1,8 @@
-import type { ProjectDaLayer, TableReadyValue } from '@l2beat/config'
+import type {
+  AdjustableEconomicSecurityRisk,
+  ProjectDaLayer,
+  TableReadyValue,
+} from '@l2beat/config'
 
 export interface AdjustedDaLayerRisks {
   economicSecurity?: TableReadyValue
