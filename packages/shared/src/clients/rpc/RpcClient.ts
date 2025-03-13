@@ -271,16 +271,8 @@ function encodeBlockNumber(blockNumber: number | 'latest'): string {
 }
 
 function buildCallObject(callParams: CallParameters): Record<string, string> {
-  const callObject: Record<string, string> = {
+  return {
     to: callParams.to.toString(),
+    data: callParams.data.toString(),
   }
-
-  if (callParams.from) {
-    callObject.from = callParams.from.toString()
-  }
-  if (callParams.data) {
-    callObject.data = callParams.data.toString()
-  }
-
-  return callObject
 }
