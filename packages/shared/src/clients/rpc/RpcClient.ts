@@ -31,12 +31,15 @@ import {
 interface Dependencies extends ClientCoreDependencies {
   url: string
   generateId?: () => string
-  multicall?: MulticallV3Client
+  multicallClient?: MulticallV3Client
 }
 
 export class RpcClient extends ClientCore implements BlockClient {
+  multicallClient?: MulticallV3Client
+
   constructor(private readonly $: Dependencies) {
     super($)
+    this.multicallClient = $.multicallClient
   }
 
   async getLatestBlockNumber() {
@@ -166,23 +169,27 @@ export class RpcClient extends ClientCore implements BlockClient {
     return Bytes.fromHex(callResult.data.result)
   }
 
-  async callWithMulticall(calls: CallParameters[], blockNumber: number) {
-    if (this.$.multicall === undefined) {
-      this.$.logger.warn(`Multicall unconfigured`)
-      return Promise.all(calls.map((c) => this.call(c, blockNumber)))
-    }
+  isMulticallDeployed(blockNumber: number) {
+    return (
+      this.$.multicallClient && this.$.multicallClient.sinceBlock <= blockNumber
+    )
+  }
 
-    if (blockNumber < this.$.multicall.sinceBlock) {
-      this.$.logger.warn(`Multicall not yet deployed`, { calls: calls.length })
-      return Promise.all(calls.map((c) => this.call(c, blockNumber)))
-    }
+  async multicall(calls: CallParameters[], blockNumber: number) {
+    assert(
+      this.$.multicallClient &&
+        blockNumber >= this.$.multicallClient.sinceBlock,
+      `Multicall not configured for block ${blockNumber}`,
+    )
 
-    const batches = this.$.multicall.encodeBatches(calls)
+    const batches = this.$.multicallClient.encodeBatches(calls)
 
     const batchedResults = await Promise.all(
       batches.map(async (batch) => {
-        assert(this.$.multicall)
-        return this.$.multicall.decode(await this.call(batch, blockNumber))
+        assert(this.$.multicallClient)
+        return this.$.multicallClient.decode(
+          await this.call(batch, blockNumber),
+        )
       }),
     )
 

@@ -9,14 +9,15 @@ export interface MulticallV3Response {
 
 export const multicallInterface = new utils.Interface([
   'function tryAggregate(bool requireSuccess, tuple(address target, bytes callData)[] calls) public returns (tuple(bool success, bytes returnData)[] returnData)',
+  'function getEthBalance(address account) view returns (uint256)',
 ])
 
 // ClientCore functionality is provided via RpcClient
 export class MulticallV3Client {
   constructor(
-    private readonly address: EthereumAddress,
+    readonly address: EthereumAddress,
     readonly sinceBlock: number,
-    private readonly batchSize: number,
+    readonly batchSize: number,
   ) {}
 
   encodeBatches(requests: CallParameters[]) {
@@ -51,6 +52,15 @@ export class MulticallV3Client {
         data: bytes,
       }
     })
+  }
+
+  encodeGetEthBalance(holder: string) {
+    return {
+      to: this.address,
+      data: Bytes.fromHex(
+        multicallInterface.encodeFunctionData('getEthBalance', [holder]),
+      ),
+    }
   }
 }
 
