@@ -1,8 +1,9 @@
 import type {
-  AdjustableEconomicSecurityRisk,
+  ProjectCustomDa,
   ProjectDaLayer,
   TableReadyValue,
 } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 
 export interface AdjustedDaLayerRisks {
   economicSecurity?: TableReadyValue
@@ -10,10 +11,15 @@ export interface AdjustedDaLayerRisks {
   fraudDetection?: TableReadyValue
 }
 
+/**
+ * DA Layer risks *might* be adjusted based on the total value secured and the economic security of the project.
+ * This is done by the `adjustSecurityRisk` flag in the config.
+ * It will yield an error if the values are required yet missing.
+ */
 export function getDaLayerRisks(
-  daLayer: ProjectDaLayer,
-  totalValueSecured: number,
-  economicSecurity: number | undefined,
+  daLayer: ProjectDaLayer | ProjectCustomDa,
+  totalValueSecured?: number,
+  economicSecurity?: number,
 ): AdjustedDaLayerRisks {
   return {
     ...daLayer.risks,
@@ -26,20 +32,24 @@ export function getDaLayerRisks(
 }
 
 function getEconomicSecurity(
-  daLayer: ProjectDaLayer,
-  totalValueSecured: number,
-  economicSecurity?: number,
+  daLayer: ProjectDaLayer | ProjectCustomDa,
+  totalValueSecured: number | undefined,
+  economicSecurity: number | undefined,
 ): TableReadyValue | undefined {
   if (!daLayer.risks.economicSecurity) {
     return
   }
+
   const shouldCalculate = daLayer.risks.economicSecurity.adjustSecurityRisk
 
-  const hasData = economicSecurity !== undefined && totalValueSecured > 0
-
-  if (!shouldCalculate || !hasData) {
+  if (!shouldCalculate) {
     return daLayer.risks.economicSecurity.value
   }
+
+  assert(
+    economicSecurity !== undefined && totalValueSecured !== undefined,
+    'Economic security value and total value secured must be defined in order to evaluate DA Layer risks - double check `adjustSecurityRisk` flag in the config or the project data',
+  )
 
   const sentiment = adjustSentiment(totalValueSecured, economicSecurity)
 

@@ -1,6 +1,6 @@
 import type { DaBridgeRisks } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
-import { AdjustedDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
+import type { AdjustedDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
 
 export function mapLayerRisksToRosetteValues(
   risks: AdjustedDaLayerRisks,
