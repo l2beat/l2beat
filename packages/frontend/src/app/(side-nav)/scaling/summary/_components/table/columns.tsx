@@ -19,17 +19,22 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { sortStages } from '~/components/table/sorting/sort-stages'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { TableLink } from '../../../../../../components/table/table-link'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import type { ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingSummaryColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => (
       <PizzaRosetteCell
+        href={`/scaling/risk?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
         values={ctx.row.original.risks}
         isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
       />
@@ -70,15 +75,13 @@ export const scalingSummaryColumns = [
       id: 'stage',
       cell: (ctx) => (
         <StageCell
+          href={`/scaling/projects/${ctx.row.original.slug}#stage`}
           stageConfig={ctx.row.original.stage}
           isAppchain={ctx.row.original.capability === 'appchain'}
         />
       ),
       sortingFn: sortStages,
       sortUndefined: 'last',
-      meta: {
-        hash: 'stage',
-      },
     },
   ),
   columnHelper.accessor(
@@ -93,6 +96,7 @@ export const scalingSummaryColumns = [
 
         return (
           <TotalCell
+            href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
             associatedTokenSymbols={value.associatedTokens}
             tvsWarnings={value.warnings}
             breakdown={value.breakdown}
@@ -118,11 +122,15 @@ export const scalingSummaryColumns = [
       }
 
       return (
-        <SyncStatusWrapper isSynced={data.isSynced}>
-          <ValueWithPercentageChange change={data?.change}>
-            {formatActivityCount(ctx.getValue())}
-          </ValueWithPercentageChange>
-        </SyncStatusWrapper>
+        <TableLink
+          href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+        >
+          <SyncStatusWrapper isSynced={data.isSynced}>
+            <ValueWithPercentageChange change={data?.change}>
+              {formatActivityCount(ctx.getValue())}
+            </ValueWithPercentageChange>
+          </SyncStatusWrapper>
+        </TableLink>
       )
     },
     sortUndefined: 'last',
@@ -151,6 +159,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
                 ? 'No bridge'
                 : latestValue.bridge.value,
           }}
+          href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
         />
       )
     },

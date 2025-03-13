@@ -12,7 +12,10 @@ import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
 export const bridgesSummaryActiveColumns = [
-  ...getBridgesCommonProjectColumns(columnHelper),
+  ...getBridgesCommonProjectColumns(
+    columnHelper,
+    (row) => `/bridges/projects/${row.slug}`,
+  ),
   columnHelper.accessor((e) => adjustTableValue(e.validatedBy), {
     header: 'Validated by',
     meta: {
@@ -43,6 +46,7 @@ export const bridgesSummaryActiveColumns = [
       const value = ctx.row.original.tvs
       return (
         <TotalCell
+          href={`/bridges/projects/${ctx.row.original.slug}#tvs`}
           associatedTokenSymbols={value.associatedTokens}
           tvsWarnings={value.warnings}
           breakdown={value.breakdown}

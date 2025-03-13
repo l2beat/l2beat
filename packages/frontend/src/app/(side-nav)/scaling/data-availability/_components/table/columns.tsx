@@ -12,11 +12,15 @@ import {
 } from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
+import { TableLink } from '../../../../../../components/table/table-link'
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()
 
 export const columns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.accessor('category', {
     header: 'Type',
     meta: {
@@ -46,7 +50,10 @@ export const columns = [
         'The data availability layer where the data (transaction data or state diffs) is published.',
     },
     cell: (ctx) => (
-      <TableValueCell value={ctx.row.original.dataAvailability.layer} />
+      <TableValueCell
+        value={ctx.row.original.dataAvailability.layer}
+        href={ctx.row.original.daHref?.summary}
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -63,7 +70,10 @@ export const columns = [
         'The DA bridge used for informing Ethereum contracts if data has been made available.',
     },
     cell: (ctx) => (
-      <TableValueCell value={ctx.row.original.dataAvailability.bridge} />
+      <TableValueCell
+        value={ctx.row.original.dataAvailability.bridge}
+        href={ctx.row.original.daHref?.risk}
+      />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -81,10 +91,12 @@ export const columns = [
       }
 
       return (
-        <CombinedGrissiniCell
-          daLayerRisks={ctx.row.original.risks.daLayer}
-          daBridgeRisks={ctx.row.original.risks.daBridge}
-        />
+        <TableLink href={ctx.row.original.daHref?.risk}>
+          <CombinedGrissiniCell
+            daLayerRisks={ctx.row.original.risks.daLayer}
+            daBridgeRisks={ctx.row.original.risks.daBridge}
+          />
+        </TableLink>
       )
     },
     meta: {

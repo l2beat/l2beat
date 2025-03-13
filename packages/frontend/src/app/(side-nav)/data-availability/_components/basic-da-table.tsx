@@ -9,10 +9,7 @@ import { flexRender } from '@tanstack/react-table'
 import { range } from 'lodash'
 import type { CSSProperties } from 'react'
 import React from 'react'
-import {
-  getBasicTableGroupParams,
-  getBasicTableHref,
-} from '~/components/table/basic-table'
+import { getBasicTableGroupParams } from '~/components/table/basic-table'
 import { SortingArrows } from '~/components/table/sorting/sorting-arrows'
 import {
   Table,
@@ -183,6 +180,7 @@ export function BasicDaTable<T extends BasicEntry>({
           return (
             <React.Fragment key={row.id}>
               <TableRow
+                slug={row.original.slug}
                 className={cn(
                   getRowTypeClassNames({
                     isEthereum: row.original.slug === 'ethereum',
@@ -192,7 +190,6 @@ export function BasicDaTable<T extends BasicEntry>({
                 {row.getVisibleCells().map((cell) => {
                   const { meta } = cell.column.columnDef
                   const groupParams = getBasicTableGroupParams(cell.column)
-                  const href = getBasicTableHref(row.original.href, meta?.hash)
 
                   const rowSpan = meta?.rowSpan
                     ? meta.rowSpan(cell.getContext())
@@ -207,7 +204,6 @@ export function BasicDaTable<T extends BasicEntry>({
                   return (
                     <TableCell
                       key={`${row.id}-${cell.id}`}
-                      href={href}
                       align={meta?.align}
                       className={cn(
                         cell.column.getIsPinned() &&

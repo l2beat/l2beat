@@ -18,6 +18,7 @@ export type CanonicallyBridgedTokenEntry =
 
 interface Props {
   tokens: CanonicallyBridgedTokenEntry[]
+  id: string
 }
 
 export function CanonicallyBridgedTable(props: Props) {
@@ -58,7 +59,7 @@ export function CanonicallyBridgedTable(props: Props) {
   return (
     <div className="flex flex-col">
       <h2 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">
-        Canonically Bridged Value
+        <a href={`#${props.id}`}>Canonically Bridged Value</a>
       </h2>
 
       <TokenTable table={table} />
