@@ -29,11 +29,7 @@ export default async function RootLayout({
     // - our restoreCollapsibleNavStateScript
     // which cause a mismatch between the server and client render.
     // This is completely fine and applies to the `html` tag only.
-    <html
-      lang="en-us"
-      suppressHydrationWarning
-      className="scroll-pt-10 md:scroll-pt-8"
-    >
+    <html lang="en-us" suppressHydrationWarning>
       <head>
         {/* The rest of the icons are handled by the App Router */}
         <link rel="mask-icon" href="/mask-icon.svg" />

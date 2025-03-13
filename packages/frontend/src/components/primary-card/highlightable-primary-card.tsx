@@ -29,7 +29,7 @@ function Content({
         'relative transition-all duration-300',
         highlightedId &&
           props.id === highlightedId &&
-          'z-10 shadow-[0px_4px_12px_10px] shadow-[#FF5FFB40] ring-2 ring-brand max-md:ring-inset',
+          'md:z-10 md:shadow-[0px_4px_12px_10px] md:shadow-[#FF5FFB40] md:ring-2 md:ring-brand',
         className,
       )}
       {...props}
