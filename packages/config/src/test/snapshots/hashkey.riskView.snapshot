@@ -30,6 +30,7 @@
   stateValidation: {
     description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed."
     orderHint: Infinity
+    secondLine: "3d 12h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
   }
