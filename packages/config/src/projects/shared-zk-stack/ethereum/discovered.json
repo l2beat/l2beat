@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22030561,
+  "blockNumber": 22037103,
   "configHash": "0x71855febe3a1f40ef64a239209565db6f663472d4562500daaea2def7a3d4c67",
   "entries": [
     {
@@ -593,7 +593,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 179,
+        "nonce": 180,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -646,13 +646,22 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d"],
-        "$threshold": 1,
+        "$members": [
+          "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001",
+          "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f",
+          "0x160669864cDe95c190364ad01eDfbAA32E9DA430",
+          "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf",
+          "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D",
+          "0xb799FF3DeF706045B5061B22d748E8F52737415d",
+          "0x227230CD05e89f41E67df3E5fC61B18411d147A9",
+          "0x7461633b1Fc7CdAa64A5B7bAb1b1F0145Acd7953"
+        ],
+        "$threshold": 5,
         "domainSeparator": "0x567c3af0158b9327873cbee71998af25aff119723a8693a6fcdba100bf3024e2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 2,
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "category": { "name": "Spam", "priority": -1 }
@@ -960,6 +969,11 @@
         "VERSION": "1.3.0"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "0x7461633b1Fc7CdAa64A5B7bAb1b1F0145Acd7953",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x78834238C8F4CA04c73256D221cd6a1d29b9A81c",
@@ -1467,11 +1481,6 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0xd9f8460f3081dC29dF1e3b6e5404B245B96F4A30",
