@@ -1,3 +1,208 @@
+Generated with discovered.json: 0xfe18957808cdee6a310e32911cc19eb09836324b
+
+# Diff at Thu, 13 Mar 2025 09:37:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9dd209f83894c1f6612b7ed3bb249aa61692d929 block: 22030583
+- current block number: 22037096
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
+    +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+```
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      template:
+-        "shared-zk-stack/Diamond"
+      sourceHashes.4:
+-        "0xdf47c6cd4fcffcfa4a670e1544e2391acc365cd7fd9b8e7583d58b28dff50c40"
++        "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
+      sourceHashes.3:
+-        "0x91db58e4059dfed7357e56dac17d2963c6f9cfb540f527988ed25172251a2584"
++        "0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6"
+      sourceHashes.2:
+-        "0x981d4f2ae5949ab33c6ba83f6446595d3b853bf6f7157884304445d70b185374"
++        "0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da"
+      sourceHashes.1:
+-        "0x081a1805983e86cd6a80ed48c012c26bf9a39473c0f1e69b357afff240f027a0"
++        "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31"
+      description:
+-        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+      values.$implementation.3:
+-        "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
++        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+      values.$implementation.2:
+-        "0x5575218cECd370E1d630d1AdB03c254B0B376821"
++        "0x36b026c39125964D99596CE302866B5A59E4dE27"
+      values.$implementation.1:
+-        "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
++        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
+      values.$implementation.0:
+-        "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
++        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
+      values.$pastUpgrades.19:
++        ["2025-03-12T14:59:11.000Z","0x2c6aa40efd0500a015b036cf03de961b6e2aa2c726d21b5b8cede9a91964c12f",["0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb","0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1","0x36b026c39125964D99596CE302866B5A59E4dE27","0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"]]
+      values.$upgradeCount:
+-        19
++        20
+      values.daMode:
+-        0
+      values.facetAddresses.3:
+-        "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
++        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+      values.facetAddresses.2:
+-        "0x5575218cECd370E1d630d1AdB03c254B0B376821"
++        "0x36b026c39125964D99596CE302866B5A59E4dE27"
+      values.facetAddresses.1:
+-        "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
++        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
+      values.facetAddresses.0:
+-        "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
++        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
+      values.facets:
+-        {"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a":["acceptAdmin()","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","freezeDiamond()","setPendingAdmin(address)","setPorterAvailability(bool)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)","setTokenMultiplier(uint128,uint128)","setTransactionFilterer(address)","setValidator(address,bool)","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))"],"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9":["baseTokenGasPriceMultiplierDenominator()","baseTokenGasPriceMultiplierNominator()","facetAddress(bytes4)","facetAddresses()","facetFunctionSelectors(address)","facets()","getAdmin()","getBaseToken()","getBaseTokenBridge()","getBridgehub()","getFirstUnprocessedPriorityTx()","getL2BootloaderBytecodeHash()","getL2DefaultAccountBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","getL2SystemContractsUpgradeBlockNumber()","getL2SystemContractsUpgradeTxHash()","getPendingAdmin()","getPriorityQueueSize()","getPriorityTxMaxGasLimit()","getProtocolVersion()","getPubdataPricingMode()","getSemverProtocolVersion()","getStateTransitionManager()","getTotalBatchesCommitted()","getTotalBatchesExecuted()","getTotalBatchesVerified()","getTotalBlocksCommitted()","getTotalBlocksExecuted()","getTotalBlocksVerified()","getTotalPriorityTxs()","getVerifier()","getVerifierParams()","isDiamondStorageFrozen()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","isFunctionFreezable(bytes4)","isValidator(address)","l2LogsRootHash(uint256)","priorityQueueFrontOperation()","storedBatchHash(uint256)","storedBlockHash(uint256)"],"0x5575218cECd370E1d630d1AdB03c254B0B376821":["bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","transferEthToSharedBridge()"],"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712":["commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])","commitBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])","executeBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])","executeBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])","proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))","proveBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))","revertBatches(uint256)","revertBatchesSharedBridge(uint256,uint256)"]}
++        [{"addr":"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb","selectors":["0x0e18b681","0x17338945","0xfc57565f","0x1cc5d103","0x21f603d7","0x235d9eb5","0x27ae4c16","0x2878fe74","0x3f42d5dd","0x41cf49bb","0x4623c91d","0x4dd18bf5","0x6223258e","0x64b554ad","0x64bf8d66","0x6e762e98","0xa9f6d941","0xb7846107","0xbe6f11cf","0xe76db865"]},{"addr":"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1","selectors":["0x06d49e5b","0x0ec6b0b7","0xfe26699e","0x18e3a941","0x1de72e34","0x22c5cf23","0x29b98c67","0x33ce93fe","0x3408e470","0x3591c1a0","0x39607382","0x39d7d4aa","0x46657fe9","0x52ef6b2c","0x5a590335","0x631f4bac","0x6a27e8b5","0x6e9960c3","0x74f4d30d","0x79823c9a","0x7a0ed627","0x7b30c8da","0x8708474e","0x946ebad1","0x960dcf24","0x98acd7a6","0x9cd939e4","0x9d1b5a81","0xa1954fc5","0xadfca15e","0xaf6a2dcd","0xb22dd78e","0xb8c2f66f","0xbd7c5412","0xc3bbd2d7","0xcdffacc6","0xd0468156","0xd86970d8","0xdb1f0bf9","0xe5355c75","0xe81e0ba1","0xea6c029c","0xef3f0bae","0xf4ff5e2e","0xf5c1182c","0xfacd743b","0xfd791f3c"]},{"addr":"0x36b026c39125964D99596CE302866B5A59E4dE27","selectors":["0x042901c7","0x12f43dab","0xeb672419","0x263b7f8e","0x6c0960f9","0x7efda2ae","0xb473318e","0xd0772551","0xddcc9eec","0xe4948f43"]},{"addr":"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800","selectors":["0x0f23da43","0xe12a6137","0x98f81962","0xcf02827d"]}]
+      values.getBaseTokenBridge:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.getFirstUnprocessedPriorityTx:
+-        3270697
++        3270739
+      values.getL2BootloaderBytecodeHash:
+-        "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678"
++        "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30"
++        "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0"
+      values.getPriorityQueueSize:
+-        12
++        13
+      values.getProtocolVersion:
+-        107374182400
++        111669149696
+      values.getSemverProtocolVersion.1:
+-        25
++        26
+      values.getStateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.getTotalBatchesCommitted:
+-        497821
++        497846
+      values.getTotalBatchesExecuted:
+-        497813
++        497841
+      values.getTotalBatchesVerified:
+-        497818
++        497844
+      values.getTotalBlocksCommitted:
+-        497821
++        497846
+      values.getTotalBlocksExecuted:
+-        497813
++        497841
+      values.getTotalBlocksVerified:
+-        497818
++        497844
+      values.getTotalPriorityTxs:
+-        3270709
++        3270752
+      values.getVerifier:
+-        "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66"
++        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5"
+      values.txFilterer:
+-        []
+      values.validators:
+-        ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
+      values.getBaseTokenAssetId:
++        "0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609"
+      values.getChainId:
++        324
+      values.getChainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.getDAValidatorPair:
++        ["0x72213dfe8CA61B0A782970dCFebFb877778f9119","0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"]
+      values.getPriorityTreeRoot:
++        "0xc9d30d1ee8c5eda4ba5a13c649a11bef83e8e80318187e11437a70ca4cfca5f1"
+      values.getPriorityTreeStartIndex:
++        3270719
+      values.getSettlementLayer:
++        "0x0000000000000000000000000000000000000000"
+      values.getTransactionFilterer:
++        "0x0000000000000000000000000000000000000000"
+      values.isPriorityQueueActive:
++        false
+      values.l2LogsRootHash:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x79d356bbe291d9c82f3d49e431e5bca2d4c39a5332058f9a39025ffaec36e708","0x758b2c324c08e32ba67a1971e6acdb6261b3af7db9f5d053919f60163fb70559","0x443c0ff22759be7b23f47f647ef90739e60e2604fd86a4fb52da51285659f46b","0x7ddd61320147edc90732f9f2516ea65186f65e8b285b21fba15ed8fcc13c713b"]
+      values.prepareChainCommitment:
++        {"totalBatchesExecuted":497841,"totalBatchesVerified":497844,"totalBatchesCommitted":497846,"l2SystemContractsUpgradeTxHash":"0x0000000000000000000000000000000000000000000000000000000000000000","l2SystemContractsUpgradeBatchNumber":0,"batchHashes":["0x993c065059795f2ee750098f44cf2f820c99348194a67b2a3194335bb86bf245","0x799ecd5eab1003d9b29984c731ad306de7928df6cbc6fa238e1c3e286171d037","0x387c724d69ccc3f771f3e32340a72f8f379c4f5ef33705c9a67c85a933af427e","0x1aa6cdeb00440ecb2fc5b99d1ddc58fa710b44c61aa2a450f035456b9fc3c485","0xb972ee2294f25c11b4d7f8e1b35634a333f08856a6ce3a5ce09f16c57fc47c55","0xbe9896e2632947a3ea8d142f43bde5f34144c9682ec9aad5645d278c035e9e02"],"priorityTree":{"nextLeafIndex":33,"startIndex":3270719,"unprocessedIndex":20,"sides":["0xf18d2dea79b21b42e1c502df8dff2595116cc68212dece5482a4b6ff8d3bb35b","0x19b532da4fc003e8ec8c671f838485f3d55fd0f1cd90dfdc1aa7878fcaec2a6b","0x0b5084b469e90b00828ba4f34540e916f415a4d9788140fd054152f1262be275","0x5930be40fe6113e9373fbe7ebf27241a19df4e482a5990e2456ee8893cc5f2e8","0x32317ed2af4da95f318c45e9207eefcdaa85d49b6ad21b362d0fbf1bd9f43bc4","0xc5b1e324c83773f5769fba7edbf5512ab2daace12d7ae13a3bfb7a35816ae586","0xc9d30d1ee8c5eda4ba5a13c649a11bef83e8e80318187e11437a70ca4cfca5f1"]},"isPermanentRollup":true}
+      values.storedBatchHash:
++        ["0x0ac272ab86763ec2bc093492128eb0bb7afac0ddb385e4ceb2fdb107f2946f2b","0x476876ca9c9fa49b1390ae47a04f7434936b77c22af7a055077f2e3486e6fb65","0x41de068e7043f90c7a5b6c9c80251979c333dc931859a2ec10ef17c9032db250","0x545ada4b4f784c3a471137da517a9f99ae401c7daa63d951a20222605b12ccbf","0xdf353be1f590760d533530c19b53309dde820f3c962a5317c89bcd299130c834"]
+      values.storedBlockHash:
++        ["0x0ac272ab86763ec2bc093492128eb0bb7afac0ddb385e4ceb2fdb107f2946f2b","0x476876ca9c9fa49b1390ae47a04f7434936b77c22af7a055077f2e3486e6fb65","0x41de068e7043f90c7a5b6c9c80251979c333dc931859a2ec10ef17c9032db250","0x545ada4b4f784c3a471137da517a9f99ae401c7daa63d951a20222605b12ccbf","0xdf353be1f590760d533530c19b53309dde820f3c962a5317c89bcd299130c834"]
+      fieldMeta:
+-        {"txFilterer":{"severity":"HIGH","description":"This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."},"getProtocolVersion":{"severity":"MEDIUM","description":"Protocol version, increments with each protocol upgrade."},"getVerifierParams":{"severity":"LOW","description":"Verifier parameters used for proving batches."}}
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"getName":"Processing error occurred.","l2LogsRootHash":"Processing error occurred.","storedBatchHash":"Processing error occurred.","storedBlockHash":"Processing error occurred."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelockOld (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD)
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@22030583/Governance.sol => /dev/null     |  440 ----
+ .../zksync2/ethereum/.flat/RollupL1DAValidator.sol |  337 +++
+ .../ValidatorTimelock.sol => /dev/null             |  541 -----
+ .../ValidatorTimelockOld.sol => /dev/null          |  464 -----
+ .../{.flat@22030583 => .flat}/Verifier.sol         |   41 +-
+ .../ZKsync/AdminFacet.1.sol                        | 1442 ++++++++++++-
+ .../ZKsync/ExecutorFacet.4.sol                     | 2016 ++++++++++++++----
+ .../ZKsync/GettersFacet.2.sol                      | 1153 +++++++++-
+ .../ZKsync/MailboxFacet.3.sol                      | 2195 ++++++++++++++------
+ 9 files changed, 6014 insertions(+), 2615 deletions(-)
+```
+
 Generated with discovered.json: 0x8d149434e612266253c142e6f44dbcfe48293254
 
 # Diff at Tue, 11 Mar 2025 08:00:35 GMT:
