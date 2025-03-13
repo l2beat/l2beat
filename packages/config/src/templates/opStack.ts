@@ -697,10 +697,14 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT.description +
           ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
         sentiment: 'bad',
+        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
       }
     }
     case 'Permissionless': {
-      return RISK_VIEW.STATE_FP_INT
+      return {
+        ...RISK_VIEW.STATE_FP_INT,
+        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+      }
     }
   }
 }
