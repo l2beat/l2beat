@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 308283361,
+  "blockNumber": 314982694,
   "configHash": "0xd00de7eeca2b2a0b0236bf7cd6a3a412852130f4c848803ffabce6e6a57fd75c",
   "entries": [
     {
@@ -82,7 +82,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 30482,
+        "exitNum": 31044,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       }
     },
@@ -1085,7 +1085,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2016,
+        "exitNum": 2022,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"
