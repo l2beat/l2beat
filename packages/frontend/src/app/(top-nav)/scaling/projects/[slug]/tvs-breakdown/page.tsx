@@ -128,18 +128,18 @@ export default async function Page(props: Props) {
         </PrimaryCard>
 
         {canonical.length > 0 && (
-          <HighlightablePrimaryCard id="canonical">
-            <CanonicallyBridgedTable tokens={canonical} />
+          <HighlightablePrimaryCard id="canonical" className="md:scroll-mt-6">
+            <CanonicallyBridgedTable tokens={canonical} id="canonical" />
           </HighlightablePrimaryCard>
         )}
         {native.length > 0 && (
-          <HighlightablePrimaryCard id="native">
-            <NativelyMintedTable tokens={native} />
+          <HighlightablePrimaryCard id="native" className="md:scroll-mt-6">
+            <NativelyMintedTable tokens={native} id="native" />
           </HighlightablePrimaryCard>
         )}
         {external.length > 0 && (
-          <HighlightablePrimaryCard id="external">
-            <ExternallyBridgedTable tokens={external} />
+          <HighlightablePrimaryCard id="external" className="md:scroll-mt-6">
+            <ExternallyBridgedTable tokens={external} id="external" />
           </HighlightablePrimaryCard>
         )}
       </div>

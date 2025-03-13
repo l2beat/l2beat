@@ -75,7 +75,9 @@ export function ContractEntry({
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
-            <strong id={contract.name}>{contract.name}</strong>{' '}
+            <strong id={contract.name} className="scroll-mt-14 md:scroll-mt-10">
+              {contract.name}
+            </strong>{' '}
             {entries.map((address, i) => (
               <HighlightableLink
                 key={i}
