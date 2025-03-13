@@ -691,7 +691,7 @@
       "sinceTimestamp": 1739108915,
       "sinceBlock": 21809357,
       "values": { "$immutable": true },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "ValidatorTimelockOld",
@@ -1239,7 +1239,7 @@
   },
   "usedTemplates": {
     "shared-zk-stack/Diamond_v26": "0x3efce750208e80d77259e20760741cc110c781dad67f75575f37cc2abf3d1a51",
-    "shared-zk-stack/RollupL1DAValidator": "0xf8b99dac9dd912bd2d95d5b37b05758f0ed20e4b6fac44b969197eba55b01b37",
+    "shared-zk-stack/RollupL1DAValidator": "0x89f3fc33c5fb826681001a19c5982f059b841b7460d0d5c44d8bfa5ef5580c8f",
     "shared-zk-stack/ValidatorTimelock": "0x58f7bef19010ef32f238898c7b274dfe08c8412e455fb6bdaf21a44ef0611ca6",
     "shared-zk-stack/Verifier": "0xdf758e791d4b50d840b7b4546467e86c3b081e1499c51f4ab37caa07476968eb"
   }
