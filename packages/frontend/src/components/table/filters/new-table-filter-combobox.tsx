@@ -19,6 +19,7 @@ import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
 import { useNewTableFilterContext } from './new-table-filter-context'
 import type { FilterableValueId } from './new-types'
 import { type FilterableValue, filterIdToLabel } from './new-types'
+import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 
 export function NewTableFilterCombobox<
   T extends { filterable: FilterableValue[] },
@@ -92,16 +93,16 @@ function Content<T extends { filterable: FilterableValue[] }>({
     )
   }
 
-  const [selectedValues, notSelectedValues] = partition(
-    uniq(
-      entries.flatMap(
-        (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
-      ),
+  const values = uniq(
+    entries.flatMap(
+      (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
     ),
-    (value) =>
-      state.some(
-        (filter) => filter.id === selectedId && filter.values.includes(value),
-      ),
+  ).sort(filterValuesSortFn)
+
+  const [selectedValues, notSelectedValues] = partition(values, (value) =>
+    state.some(
+      (filter) => filter.id === selectedId && filter.values.includes(value),
+    ),
   )
   return (
     <Command className="border border-divider">

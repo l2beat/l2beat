@@ -20,6 +20,7 @@ import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
 import { useNewTableFilterContext } from './new-table-filter-context'
 import { filterIdToLabel } from './new-types'
 import type { FilterState } from './use-filter-state'
+import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 
 export function NewTableFilterItem({
   filter,
@@ -29,7 +30,7 @@ export function NewTableFilterItem({
   const { state, dispatch } = useNewTableFilterContext()
 
   const [selectedValues, notSelectedValues] = partition(
-    possibleValues,
+    possibleValues.sort(filterValuesSortFn),
     (value) =>
       state.some((f) => f.id === filter.id && f.values.includes(value)),
   )
