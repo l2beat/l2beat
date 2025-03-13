@@ -5,16 +5,6 @@ import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
 
-export interface FilterableScalingValues {
-  type: string
-  stack: string
-  stage: string
-  purposes: string[]
-  hostChain: string
-  daLayer: string
-  raas: string
-}
-
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {

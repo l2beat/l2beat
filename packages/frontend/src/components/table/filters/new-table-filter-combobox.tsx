@@ -17,13 +17,13 @@ import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
 import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
 import { useNewTableFilterContext } from './new-table-filter-context'
-import type { FilterableValueId } from './new-types'
-import { type FilterableValue, filterIdToLabel } from './new-types'
+import type { FilterableEntry, FilterableValueId } from './new-types'
+import { filterIdToLabel } from './utils/filter-id-to-label'
 import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 
-export function NewTableFilterCombobox<
-  T extends { filterable: FilterableValue[] },
->({ entries }: { entries: T[] }) {
+export function NewTableFilterCombobox({
+  entries,
+}: { entries: FilterableEntry[] }) {
   const { state } = useNewTableFilterContext()
   const [open, setOpen] = useState(false)
 
@@ -56,9 +56,7 @@ export function NewTableFilterCombobox<
   )
 }
 
-function Content<T extends { filterable: FilterableValue[] }>({
-  entries,
-}: { entries: T[] }) {
+function Content({ entries }: { entries: FilterableEntry[] }) {
   const { state, dispatch } = useNewTableFilterContext()
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,

@@ -1,12 +1,12 @@
 import { useCallback } from 'react'
 import { useNewTableFilterContext } from './new-table-filter-context'
-import type { FilterableValue } from './new-types'
+import type { FilterableEntry } from './new-types'
 
 export function useIncludeFilters() {
   const { state } = useNewTableFilterContext()
 
   const filter = useCallback(
-    ({ filterable }: { filterable: FilterableValue[] }) => {
+    ({ filterable }: FilterableEntry) => {
       return state.every((filter) => {
         const filterableValue = filterable.find((f) => f.id === filter.id)
         if (!filterableValue) {

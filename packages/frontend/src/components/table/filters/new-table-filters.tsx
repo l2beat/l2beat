@@ -4,17 +4,14 @@ import { NewTableFilterClearButton } from './new-table-filter-clear-button'
 import { NewTableFilterCombobox } from './new-table-filter-combobox'
 import { useNewTableFilterContext } from './new-table-filter-context'
 import { NewTableFilterItem } from './new-table-filter-item'
-import type { FilterableValue } from './new-types'
+import type { FilterableEntry } from './new-types'
 
-type Props<T extends { filterable: FilterableValue[] }> = {
-  entries: T[]
+type Props = {
+  entries: FilterableEntry[]
   className?: string
 }
 
-export function NewTableFilters<T extends { filterable: FilterableValue[] }>({
-  entries,
-  className,
-}: Props<T>) {
+export function NewTableFilters({ entries, className }: Props) {
   const { state } = useNewTableFilterContext()
 
   return (

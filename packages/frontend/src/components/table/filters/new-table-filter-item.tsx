@@ -18,8 +18,8 @@ import { VerticalSeparator } from '~/components/core/vertical-separator'
 import { CloseIcon } from '~/icons/close'
 import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
 import { useNewTableFilterContext } from './new-table-filter-context'
-import { filterIdToLabel } from './new-types'
 import type { FilterState } from './use-filter-state'
+import { filterIdToLabel } from './utils/filter-id-to-label'
 import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 
 export function NewTableFilterItem({
