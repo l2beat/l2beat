@@ -47,7 +47,7 @@ export function NewTableFilterCombobox<
             </>
           )}
         </PopoverTrigger>
-        <PopoverContent className="p-0" align="start">
+        <PopoverContent className="p-0" align="start" side="bottom">
           <Content entries={entries} />
         </PopoverContent>
       </Popover>

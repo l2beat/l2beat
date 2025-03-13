@@ -43,7 +43,7 @@ export function NewTableFilterItem({
         <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-semibold">
           {conditionLabel(filter)}
         </PopoverTrigger>
-        <PopoverContent align="start" className="p-0">
+        <PopoverContent align="start" className="p-0" side="bottom">
           <Command>
             <CommandList>
               <CommandGroup>
@@ -82,7 +82,7 @@ export function NewTableFilterItem({
             ? `${filter.values.length} values`
             : filter.values[0]}
         </PopoverTrigger>
-        <PopoverContent align="start" className="p-0">
+        <PopoverContent align="start" className="p-0" side="bottom">
           <Command>
             <CommandInput placeholder={filterIdToLabel[filter.id]} />
             <CommandEmpty>
