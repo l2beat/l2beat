@@ -1,10 +1,10 @@
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card'
+import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesRiskTable } from './_components/table/bridges-risks-table'
-import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
