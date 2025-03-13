@@ -33,7 +33,7 @@ function getEconomicSecurity(
   if (!daLayer.risks.economicSecurity) {
     return
   }
-  const shouldCalculate = !!daLayer.risks.economicSecurity.adjustSecurityRisk
+  const shouldCalculate = daLayer.risks.economicSecurity.adjustSecurityRisk
 
   const hasData = economicSecurity !== undefined && totalValueSecured > 0
 
