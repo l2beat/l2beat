@@ -1,8 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { DataStorage } from './DataStorage'
-import { ValueService } from './ValueService'
-import { createAmountConfig } from './mapConfig'
+import type { DataStorage } from '../tools/DataStorage'
+import { createAmountConfig } from '../tools/extractPricesAndAmounts'
 import {
   type BalanceOfEscrowAmountFormula,
   type CalculationFormula,
@@ -12,7 +11,8 @@ import {
   TokenId,
   type TokenValue,
   type TotalSupplyAmountFormula,
-} from './types'
+} from '../types'
+import { ValueService } from './ValueService'
 
 describe(ValueService.name, () => {
   describe(ValueService.prototype.calculate.name, () => {
