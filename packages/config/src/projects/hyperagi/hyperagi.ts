@@ -11,7 +11,7 @@ export const hyperagi: ScalingProject = upcomingL3({
     name: 'HyperAGI',
     slug: 'hyperagi',
     description:
-        'HyperAGI is a multi-tiered decentralized platform designed to provide powerful computational support and innovative applications for AI. Built on Ethereum Layer 3 and based on Arbitrum.',
+        'HyperAGI is a multi-tiered decentralized platform designed to provide powerful computational support and innovative applications for AI.',
     purposes: ['AI'],
     category: 'Optimium',
     stack: 'Arbitrum',
