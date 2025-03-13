@@ -2,29 +2,29 @@
 
 {
   dataAvailability: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   exitWindow: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   proposerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   sequencerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   stateValidation: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
 }
 
@@ -32,28 +32,28 @@
 
 {
   dataAvailability: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   exitWindow: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   proposerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   sequencerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
   stateValidation: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
   }
 }

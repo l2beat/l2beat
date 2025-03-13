@@ -15,7 +15,7 @@ export const prom: ScalingProject = upcomingL2({
     category: 'ZK Rollup',
     stack: 'Polygon',
     links: {
-      websites: ['http://prom.io/'],
+      websites: ['https://prom.io/'],
       apps: ['https://prom.io/bridge'],
       documentation: ['https://prom.gitbook.io/'],
       explorers: ['https://promscan.io/'],
@@ -24,7 +24,7 @@ export const prom: ScalingProject = upcomingL2({
         'https://t.me/prom_io',
         'https://twitter.com/prom_io',
         'https://discord.gg/prom',
-        'http://instagram.com/prom_io_official',
+        'https://instagram.com/prom_io_official',
         'https://medium.com/@prom-io',
       ],
     },
