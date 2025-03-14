@@ -1,5 +1,7 @@
+import { createHash } from 'crypto'
 import * as fs from 'fs'
-import type { Project, ProjectService } from '@l2beat/config'
+import { type Project, ProjectService } from '@l2beat/config'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import type {
   AmountConfig,
@@ -27,12 +29,13 @@ export async function getTvsConfig(
     (p) => p.tokens.length > 0,
   )
 
-  const { amounts, prices } = getAmountsAndPrices(projects)
+  const { amounts, prices, chains } = await getAmountsAndPrices(projects)
 
   return {
     projects,
     amounts,
     prices,
+    chains,
   }
 }
 
@@ -59,11 +62,23 @@ export function readConfigs(
   return projectConfigs
 }
 
-export function getAmountsAndPrices(projects: ProjectTvsConfig[]): {
-  amounts: AmountConfig[]
+export async function getAmountsAndPrices(
+  projects: ProjectTvsConfig[],
+): Promise<{
+  chains: {
+    name: string
+    configurationId: string
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime
+  }[]
+  amounts: (AmountConfig & { project: string; chain?: string })[]
   prices: PriceConfig[]
-} {
-  const amounts = new Map<string, AmountConfig>()
+}> {
+  const chains = new Set<string>()
+  const amounts = new Map<
+    string,
+    AmountConfig & { project: string; chain?: string }
+  >()
   const prices = new Map<string, PriceConfig>()
 
   for (const project of projects) {
@@ -71,7 +86,19 @@ export function getAmountsAndPrices(projects: ProjectTvsConfig[]): {
       extractPricesAndAmounts(project)
 
     for (const amount of projectAmounts) {
-      amounts.set(amount.id, amount)
+      if (amount.type === 'balanceOfEscrow' || amount.type === 'totalSupply') {
+        amounts.set(amount.id, {
+          ...amount,
+          project: project.projectId,
+          chain: amount.chain,
+        })
+        chains.add(amount.chain)
+      } else {
+        amounts.set(amount.id, {
+          ...amount,
+          project: project.projectId,
+        })
+      }
     }
 
     for (const price of projectPrices) {
@@ -79,8 +106,29 @@ export function getAmountsAndPrices(projects: ProjectTvsConfig[]): {
     }
   }
 
+  console.log(chains)
+
+  const chainConfigs = await new ProjectService().getProjects({
+    select: ['chainConfig'],
+  })
+
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
+    chains: Array.from(chains.values()).map((c) => {
+      const chain = chainConfigs.find((cc) => cc.id === c)
+      assert(chain, `${c}: chainConfig not configured`)
+      assert(chain.chainConfig.sinceTimestamp)
+
+      return {
+        name: c,
+        configurationId: createHash('sha1')
+          .update(c)
+          .digest('hex')
+          .slice(0, 12),
+        sinceTimestamp: chain.chainConfig.sinceTimestamp,
+        untilTimestamp: chain.chainConfig.untilTimestamp,
+      }
+    }),
   }
 }

@@ -1,5 +1,4 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
-import type { Database } from '@l2beat/database'
 import type { BalanceProvider, TotalSupplyProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -15,21 +14,20 @@ import type {
   TotalSupplyAmountFormula,
 } from '../types'
 
-type AmountConfig = (
+export type OnchainAmountConfig = (
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
 ) & { project: string }
 
 interface OnchainAmountIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<AmountConfig>, 'name'> {
-  db: Database
+  extends Omit<ManagedMultiIndexerOptions<OnchainAmountConfig>, 'name'> {
   syncOptimizer: SyncOptimizer
   chain: string
   totalSupplyProvider: TotalSupplyProvider
   balanceProvider: BalanceProvider
 }
 
-export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
+export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfig> {
   constructor(private readonly $: OnchainAmountIndexerDeps) {
     super({
       ...$,
@@ -45,7 +43,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<AmountConfig>[],
+    configurations: Configuration<OnchainAmountConfig>[],
   ) {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
     if (timestamp > to) {
@@ -100,7 +98,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
   }
 
   private async fetchEscrowBalances(
-    configurations: Configuration<AmountConfig>[],
+    configurations: Configuration<OnchainAmountConfig>[],
     timestamp: number,
     blockNumber: number,
   ) {
@@ -133,7 +131,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
   }
 
   private async fetchTokensTotalSupplies(
-    configurations: Configuration<AmountConfig>[],
+    configurations: Configuration<OnchainAmountConfig>[],
     timestamp: number,
     blockNumber: number,
   ) {

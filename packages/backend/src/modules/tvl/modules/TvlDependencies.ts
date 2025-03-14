@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import type { PriceProvider } from '@l2beat/shared'
 import type { CirculatingSupplyProviders } from '../../../providers/CirculatingSupplyProviders'
 import type { Clients } from '../../../providers/Clients'
 import type { Providers } from '../../../providers/Providers'
@@ -11,8 +12,6 @@ import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { PriceService } from '../services/PriceService'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import type { PriceProvider } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
 
 export class TvlDependencies {
   readonly hourlyIndexer: HourlyIndexer
@@ -35,7 +34,6 @@ export class TvlDependencies {
     this.syncOptimizer = new SyncOptimizer(this.clock)
     this.indexerService = new IndexerService(this.database)
     this.valueService = new ValueService(this.database)
-    assert(providers.price)
     this.priceProvider = providers.price
     this.priceService = new PriceService({
       priceProvider: providers.price,

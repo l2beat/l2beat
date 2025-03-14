@@ -1,5 +1,4 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
-import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import {
   assert,
@@ -18,7 +17,6 @@ export interface BlockTimestampConfig {
 
 interface BlockTimestampIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<BlockTimestampConfig>, 'name'> {
-  db: Database
   syncOptimizer: SyncOptimizer
   blockTimestampProvider: BlockTimestampProvider
 }

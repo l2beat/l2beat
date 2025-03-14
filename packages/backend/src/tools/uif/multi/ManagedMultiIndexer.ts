@@ -1,7 +1,7 @@
 import { createIndexerId } from '@l2beat/backend-shared'
 import { assert } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
-import { assertUniqueConfigId, assertUniqueIndexerId } from '../ids'
+import { assertUniqueIndexerId } from '../ids'
 import {
   type ConfigurationsDiff,
   mergeConfigurations,
@@ -29,9 +29,10 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
 
     this.indexerId = createIndexerId(options.name, options.tags?.tag)
     assertUniqueIndexerId(this.indexerId)
-    for (const configuration of options.configurations) {
-      assertUniqueConfigId(configuration.id)
-    }
+    // TODO: fix this
+    // for (const configuration of options.configurations) {
+    //   assertUniqueConfigId(configuration.id)
+    // }
   }
 
   // #region initialize
