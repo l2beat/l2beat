@@ -31,6 +31,7 @@ export interface Clients {
   avail: { daLayer: string; client: PolkadotRpcClient }[]
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
+  rpcClients: RpcClient[]
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -247,5 +248,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     avail,
     getStarknetClient,
     getRpcClient,
+    rpcClients,
   }
 }

@@ -230,7 +230,6 @@ describe(RpcClient.name, () => {
 
       await rpc.call(
         {
-          from: EthereumAddress('0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa'),
           to: EthereumAddress('0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'),
           data: Bytes.fromHex('0x123456'),
         },
@@ -243,7 +242,6 @@ describe(RpcClient.name, () => {
           params: [
             {
               to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-              from: '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
               data: '0x123456',
             },
             'latest',
@@ -311,7 +309,6 @@ describe(RpcClient.name, () => {
         },
         {
           params: {
-            from: EthereumAddress('0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa'),
             to: EthereumAddress('0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'),
             data: Bytes.fromHex('0x123456'),
           },
@@ -360,7 +357,6 @@ describe(RpcClient.name, () => {
             params: [
               {
                 to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-                from: '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
                 data: '0x123456',
               },
               'latest',

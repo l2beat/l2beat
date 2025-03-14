@@ -12,6 +12,7 @@ import {
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
 import type { BlockClient } from '../types'
+import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import {
   type CallParameters,
   EVMBalanceResponse,
@@ -30,11 +31,15 @@ import {
 interface Dependencies extends ClientCoreDependencies {
   url: string
   generateId?: () => string
+  multicallClient?: MulticallV3Client
 }
 
 export class RpcClient extends ClientCore implements BlockClient {
+  multicallClient?: MulticallV3Client
+
   constructor(private readonly $: Dependencies) {
     super($)
+    this.multicallClient = $.multicallClient
   }
 
   async getLatestBlockNumber() {
@@ -164,6 +169,33 @@ export class RpcClient extends ClientCore implements BlockClient {
     return Bytes.fromHex(callResult.data.result)
   }
 
+  isMulticallDeployed(blockNumber: number) {
+    return (
+      this.$.multicallClient && this.$.multicallClient.sinceBlock <= blockNumber
+    )
+  }
+
+  async multicall(calls: CallParameters[], blockNumber: number) {
+    assert(
+      this.$.multicallClient &&
+        blockNumber >= this.$.multicallClient.sinceBlock,
+      `Multicall not configured for block ${blockNumber}`,
+    )
+
+    const batches = this.$.multicallClient.encodeBatches(calls)
+
+    const batchedResults = await Promise.all(
+      batches.map(async (batch) => {
+        assert(this.$.multicallClient)
+        return this.$.multicallClient.decode(
+          await this.call(batch, blockNumber),
+        )
+      }),
+    )
+
+    return batchedResults.flat()
+  }
+
   async batchCall(
     calls: {
       params: CallParameters
@@ -271,16 +303,8 @@ function encodeBlockNumber(blockNumber: number | 'latest'): string {
 }
 
 function buildCallObject(callParams: CallParameters): Record<string, string> {
-  const callObject: Record<string, string> = {
+  return {
     to: callParams.to.toString(),
+    data: callParams.data.toString(),
   }
-
-  if (callParams.from) {
-    callObject.from = callParams.from.toString()
-  }
-  if (callParams.data) {
-    callObject.data = callParams.data.toString()
-  }
-
-  return callObject
 }
