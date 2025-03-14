@@ -1,0 +1,100 @@
+import { INDEXER_NAMES } from '@l2beat/backend-shared'
+import type { TvsPriceRecord } from '@l2beat/database/dist/tvs/price/entity'
+import type { PriceProvider } from '@l2beat/shared'
+import {
+  CoingeckoId,
+  type RemovalConfiguration,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
+import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+} from '../../../tools/uif/multi/types'
+import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
+import type { PriceConfig } from '../types'
+
+export interface TvsPriceIndexerDeps
+  extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name'> {
+  syncOptimizer: SyncOptimizer
+  priceProvider: PriceProvider
+}
+
+export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
+  constructor(private readonly $: TvsPriceIndexerDeps) {
+    super({
+      ...$,
+      name: INDEXER_NAMES.TVS_PRICE,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+    })
+  }
+
+  override async multiUpdate(
+    from: number,
+    to: number,
+    configurations: Configuration<PriceConfig>[],
+  ) {
+    const adjustedTo = this.$.priceProvider.getAdjustedTo(from, to)
+
+    this.logger.info('Fetching prices', {
+      from,
+      to: adjustedTo,
+      configurations: configurations.length,
+    })
+
+    const records: TvsPriceRecord[] = []
+    for (const configuration of configurations) {
+      const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
+        CoingeckoId(configuration.properties.priceId),
+        UnixTime(from),
+        adjustedTo,
+      )
+
+      const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
+        priceId: configuration.properties.priceId,
+        timestamp: p.timestamp,
+        priceUsd: p.value,
+      }))
+
+      const optimizedRecords = configurationRecords.filter((p) =>
+        this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+      )
+
+      records.push(...optimizedRecords)
+    }
+
+    return async () => {
+      await Promise.resolve()
+      await this.$.db.tvsPrice.insertMany(records)
+
+      this.logger.info('Saved prices into DB', {
+        from,
+        to: adjustedTo,
+        configurations: configurations.length,
+        records: records.length,
+      })
+
+      return adjustedTo
+    }
+  }
+
+  override async removeData(configurations: RemovalConfiguration[]) {
+    for (const configuration of configurations) {
+      const deletedRecords = await this.$.db.tvsPrice.deleteByConfigInTimeRange(
+        configuration.id,
+        UnixTime(configuration.from),
+        UnixTime(configuration.to),
+      )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted records', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          deletedRecords,
+        })
+      }
+    }
+  }
+}

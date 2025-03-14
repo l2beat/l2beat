@@ -6,6 +6,7 @@ import type {
   BalanceOfEscrowAmountFormula,
   CalculationFormula,
   CirculatingSupplyAmountFormula,
+  ConstAmountFormula,
   PriceConfig,
   ProjectTvsConfig,
   TotalSupplyAmountFormula,
@@ -45,16 +46,14 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig): {
         untilTimestamp: amountFormulaRange.untilTimestamp,
       })
     } else {
-      if (token.amount.type !== 'const') {
-        const amount = createAmountConfig(token.amount)
-        setAmount(amounts, amount)
+      const amount = createAmountConfig(token.amount)
+      setAmount(amounts, amount)
 
-        setPrice(prices, {
-          priceId: token.priceId,
-          sinceTimestamp: amount.sinceTimestamp,
-          untilTimestamp: amount.untilTimestamp,
-        })
-      }
+      setPrice(prices, {
+        priceId: token.priceId,
+        sinceTimestamp: amount.sinceTimestamp,
+        untilTimestamp: amount.untilTimestamp,
+      })
     }
 
     if (token.valueForProject) {
@@ -123,7 +122,7 @@ function processFormulaRecursive(
       sinceTimestamp: amountFormulaRange.sinceTimestamp,
       untilTimestamp: amountFormulaRange.untilTimestamp,
     })
-  } else if (formula.type !== 'const') {
+  } else {
     const amount = createAmountConfig(formula)
     formulaAmounts.push(amount)
   }
@@ -163,6 +162,10 @@ function setAmount(
   amounts: Map<string, AmountConfig>,
   amountToAdd: AmountConfig,
 ) {
+  if (amountToAdd.type === 'const') {
+    return
+  }
+
   const existingAmount = amounts.get(amountToAdd.id)
   if (!existingAmount) {
     amounts.set(amountToAdd.id, amountToAdd)
@@ -194,7 +197,8 @@ export function createAmountConfig(
   formula:
     | BalanceOfEscrowAmountFormula
     | TotalSupplyAmountFormula
-    | CirculatingSupplyAmountFormula,
+    | CirculatingSupplyAmountFormula
+    | ConstAmountFormula,
 ): AmountConfig {
   switch (formula.type) {
     case 'balanceOfEscrow':
@@ -221,6 +225,12 @@ export function createAmountConfig(
     case 'circulatingSupply':
       return {
         id: hash([formula.type, formula.apiId]),
+        ...formula,
+      }
+    // we need to create config to be able to deduce sync range for related price config
+    case 'const':
+      return {
+        id: 'const',
         ...formula,
       }
   }

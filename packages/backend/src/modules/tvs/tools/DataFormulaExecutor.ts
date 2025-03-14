@@ -68,7 +68,7 @@ export class DataFormulaExecutor {
     blockNumbers: Map<string, number>,
   ) {
     return amounts
-      .filter((a) => a.type !== 'circulatingSupply')
+      .filter((a) => a.type !== 'circulatingSupply' && a.type !== 'const')
       .map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
