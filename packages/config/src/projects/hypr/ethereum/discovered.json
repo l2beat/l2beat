@@ -1,7 +1,7 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 21637077,
+  "blockNumber": 22046063,
   "configHash": "0xbc3ffed4ef486632ae49aeeda8adba53454e14d84fad5f55afa1cbc53fdf0cde",
   "entries": [
     {
@@ -324,6 +324,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -338,8 +339,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 74,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -401,6 +402,11 @@
     },
     {
       "address": "0x7A28B193dab5566bB1781f131A1d15603F2577D8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
       "type": "EOA",
       "proxyType": "EOA"
     },

@@ -35,7 +35,10 @@
     "messenger",
     "L1_OP_USDC_BRIDGE",
     "CUSTOM_GAS_TOKEN",
-    "CUSTOM_GAS_TOKEN_FUNDER"
+    "CUSTOM_GAS_TOKEN_FUNDER",
+    "BRIDGE_HUB",
+    "L2_REFUND_ADDRESS",
+    "SHARED_BRIDGE"
   ],
   "ignoreMethods": ["getL1CallValue"],
   "ignoreInWatchMode": [

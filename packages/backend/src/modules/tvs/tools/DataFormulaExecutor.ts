@@ -68,7 +68,7 @@ export class DataFormulaExecutor {
     blockNumbers: Map<string, number>,
   ) {
     return amounts
-      .filter((a) => a.type !== 'circulatingSupply')
+      .filter((a) => a.type !== 'circulatingSupply' && a.type !== 'const')
       .map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
@@ -161,22 +161,19 @@ export class DataFormulaExecutor {
               `${price.priceId}: No latest price found`,
             )
 
-            await this.storage.writePrice(price.priceId, timestamp, latest)
+            await this.storage.writePrice(price.id, timestamp, latest)
           }
         })(),
       ]
     } else {
       return prices.map(async (price) => {
-        const cachedValue = await this.storage.getPrice(
-          price.priceId,
-          timestamp,
-        )
+        const cachedValue = await this.storage.getPrice(price.id, timestamp)
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${price.priceId}`)
           return
         }
         const v = await this.fetchPrice(price, timestamp)
-        await this.storage.writePrice(price.priceId, timestamp, v)
+        await this.storage.writePrice(price.id, timestamp, v)
       })
     }
   }

@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xb99cafb65baee6c945d2f2365502ec48630e32dc
+
+# Diff at Fri, 14 Mar 2025 15:37:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@002bac09dea3b1154ecc36736323fb7552478ce4 block: 298730887
+- current block number: 315644724
+
+## Description
+
+Conduit MS changes.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.9:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.8:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.7:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.6:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.5:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.4:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.3:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.2:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.1:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.$members.0:
+-        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 9 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x8f21be10c6a12ce468f7c48ab6a8935f47ba9489
 
 # Diff at Thu, 06 Mar 2025 14:24:10 GMT:
