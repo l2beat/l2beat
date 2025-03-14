@@ -214,7 +214,9 @@ export function BasicDaTable<T extends BasicEntry>({
                       align={meta?.align}
                       className={cn(
                         cell.column.getIsPinned() &&
-                          getRowTypeClassNamesWithoutOpacity(),
+                          getRowTypeClassNamesWithoutOpacity({
+                            isEthereum: row.original.slug === 'ethereum',
+                          }),
                         groupParams?.isFirstInGroup && 'pl-6',
                         groupParams?.isLastInGroup && '!pr-6',
                         cell.column.getCanSort() && meta?.align === undefined
@@ -289,6 +291,8 @@ export function getRowTypeClassNames({ isEthereum }: { isEthereum?: boolean }) {
   )
 }
 
-function getRowTypeClassNamesWithoutOpacity() {
-  return 'bg-surface-primary'
+function getRowTypeClassNamesWithoutOpacity({
+  isEthereum,
+}: { isEthereum?: boolean } = {}) {
+  return cn('bg-surface-primary', isEthereum && 'bg-blue-400 dark:bg-blue-900')
 }
