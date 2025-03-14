@@ -1,4 +1,3 @@
-import { createHash } from 'crypto'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
@@ -41,7 +40,7 @@ export function initTvsModule(
     indexerService,
     configurations: config.tvs.prices.map((price) => ({
       // configurationId has to be 12 characters long so we cannot use the priceId directly
-      id: createPriceConfigurationId(price),
+      id: price.id,
       minHeight: price.sinceTimestamp,
       maxHeight: price.untilTimestamp ?? null,
       properties: price,
@@ -60,9 +59,4 @@ export function initTvsModule(
   return {
     start,
   }
-}
-
-function createPriceConfigurationId(price: PriceConfig) {
-  const hash = createHash('sha1').update(price.priceId).digest('hex')
-  return hash.slice(0, 12)
 }

@@ -1,7 +1,10 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from '../tools/DataStorage'
 import { BigIntWithDecimals } from '../tools/bigIntWithDecimals'
-import { createAmountConfig } from '../tools/extractPricesAndAmounts'
+import {
+  createAmountConfig,
+  createPriceConfigId,
+} from '../tools/extractPricesAndAmounts'
 import type {
   AmountFormula,
   CalculationFormula,
@@ -78,7 +81,8 @@ export class ValueService {
     formula: ValueFormula,
     timestamp: UnixTime,
   ): Promise<BigIntWithDecimals> {
-    const price = await this.storage.getPrice(formula.priceId, timestamp)
+    const configurationId = createPriceConfigId(formula.priceId)
+    const price = await this.storage.getPrice(configurationId, timestamp)
     assert(price !== undefined, `Price not found for ${formula.priceId}`)
 
     const amount = await this.executeFormula(formula.amount, timestamp)

@@ -41,18 +41,20 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig): {
       )
 
       setPrice(prices, {
-        priceId: token.priceId,
+        id: createPriceConfigId(token.priceId),
         sinceTimestamp: amountFormulaRange.sinceTimestamp,
         untilTimestamp: amountFormulaRange.untilTimestamp,
+        priceId: token.priceId,
       })
     } else {
       const amount = createAmountConfig(token.amount)
       setAmount(amounts, amount)
 
       setPrice(prices, {
-        priceId: token.priceId,
+        id: createPriceConfigId(token.priceId),
         sinceTimestamp: amount.sinceTimestamp,
         untilTimestamp: amount.untilTimestamp,
+        priceId: token.priceId,
       })
     }
 
@@ -118,9 +120,10 @@ function processFormulaRecursive(
     )
 
     formulaPrices.push({
-      priceId: formula.priceId,
+      id: createPriceConfigId(formula.priceId),
       sinceTimestamp: amountFormulaRange.sinceTimestamp,
       untilTimestamp: amountFormulaRange.untilTimestamp,
+      priceId: formula.priceId,
     })
   } else {
     const amount = createAmountConfig(formula)
@@ -131,9 +134,9 @@ function processFormulaRecursive(
 }
 
 function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
-  const existingPrice = prices.get(priceToAdd.priceId)
+  const existingPrice = prices.get(priceToAdd.id)
   if (!existingPrice) {
-    prices.set(priceToAdd.priceId, priceToAdd)
+    prices.set(priceToAdd.id, priceToAdd)
     return
   }
 
@@ -155,7 +158,7 @@ function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
     mergedPrice.untilTimestamp = undefined
   }
 
-  prices.set(mergedPrice.priceId, mergedPrice)
+  prices.set(mergedPrice.id, mergedPrice)
 }
 
 function setAmount(
@@ -234,6 +237,11 @@ export function createAmountConfig(
         ...formula,
       }
   }
+}
+
+export function createPriceConfigId(priceId: string): string {
+  const hash = createHash('sha1').update(priceId).digest('hex')
+  return hash.slice(0, 12)
 }
 
 export function hash(input: string[]): string {

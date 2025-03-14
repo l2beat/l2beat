@@ -41,7 +41,11 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         saved('a', UnixTime(3), 3),
       ])
 
-      await repository.deleteByConfigInTimeRange('a', UnixTime(2), UnixTime(3))
+      await repository.deleteByConfigInTimeRange(
+        'a'.repeat(12),
+        UnixTime(2),
+        UnixTime(3),
+      )
 
       const results = await repository.getAll()
       expect(results).toEqual([saved('a', UnixTime(1), 1)])
@@ -53,7 +57,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         saved('b', UnixTime(1), 1),
       ])
 
-      await repository.deleteByConfigInTimeRange('a', 0, UnixTime(1))
+      await repository.deleteByConfigInTimeRange('a'.repeat(12), 0, UnixTime(1))
 
       const results = await repository.getAll()
       expect(results).toEqual([saved('b', UnixTime(1), 1)])
@@ -82,8 +86,9 @@ function saved(
   priceUsd: number,
 ): TvsPriceRecord {
   return {
-    priceId,
+    configurationId: priceId.repeat(12),
     timestamp,
     priceUsd,
+    priceId,
   }
 }

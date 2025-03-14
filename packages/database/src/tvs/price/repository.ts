@@ -19,13 +19,13 @@ export class TvsPriceRepository extends BaseRepository {
   }
 
   async deleteByConfigInTimeRange(
-    priceId: string,
+    configurationId: string,
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
       .deleteFrom('TvsPrice')
-      .where('priceId', '=', priceId)
+      .where('configurationId', '=', configurationId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()

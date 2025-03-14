@@ -54,9 +54,10 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
           )
 
           const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
-            priceId: configuration.properties.priceId,
+            configurationId: configuration.id,
             timestamp: p.timestamp,
             priceUsd: p.value,
+            priceId: configuration.properties.priceId,
           }))
 
           const optimizedRecords = configurationRecords.filter((p) =>

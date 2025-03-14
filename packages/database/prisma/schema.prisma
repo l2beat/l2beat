@@ -255,9 +255,11 @@ model FlatSources {
 }
 
 model TvsPrice {
-  priceId   String   @db.VarChar(255)
-  timestamp DateTime @db.Timestamp(6)
-  priceUsd  Float    @db.Real
+  configurationId String   @db.Char(12)
+  timestamp       DateTime @db.Timestamp(6)
+  priceUsd        Float    @db.Real
+  priceId         String   @db.VarChar(255)
 
-  @@id([priceId, timestamp])
+  @@id([configurationId, timestamp])
+  @@index([priceId])
 }
