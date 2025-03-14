@@ -58,7 +58,7 @@ export function TopNavbar({
           <ul className="hidden items-center gap-4 xl:flex">
             <SocialLinks />
           </ul>
-          <VerticalSeparator className="hidden h-8 xl:block" />
+          <VerticalSeparator className="hidden h-8 max-md:border-none xl:block" />
           <ul className="flex h-full items-center">
             <TopNavLink title="About Us" href="/about-us" />
             <TopNavLink title="Forum" href={externalLinks.forum} />
@@ -71,7 +71,7 @@ export function TopNavbar({
             </TopNavLink>
             <TopNavLink title="FAQ" href="/faq" />
           </ul>
-          <VerticalSeparator className="h-8" />
+          <VerticalSeparator className="h-8 max-md:border-none" />
           <div className="flex gap-4">
             <DarkThemeToggle />
             <SmallSearchBarButton />

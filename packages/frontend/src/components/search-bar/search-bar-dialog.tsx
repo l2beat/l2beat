@@ -110,6 +110,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
+      fullScreenMobile
     >
       <Command shouldFilter={false} className="rounded-none">
         <CommandInput

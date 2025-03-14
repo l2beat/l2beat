@@ -15,18 +15,18 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingArchivedTable } from './table/scaling-archived-table'
 
 export function ScalingArchivedTables(
   props: TabbedScalingEntries<ScalingArchivedEntry>,
 ) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
@@ -54,11 +54,11 @@ export function ScalingArchivedTables(
   const showOthers = checked || entries.others.length > 0
   return (
     <>
-      <ScalingUpcomingAndArchivedFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+      <TableFilters
+        entries={[
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
         className="max-md:ml-4 max-md:mt-4"
       />

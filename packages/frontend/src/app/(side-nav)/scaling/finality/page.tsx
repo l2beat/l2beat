@@ -1,7 +1,7 @@
 import { MainPageHeader } from '~/components/main-page-header'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ScalingFinalityTables } from './_components/scaling-finality-tables'
 import { FinalityWarning } from './_components/warning'
 
@@ -18,9 +18,9 @@ export default async function Page() {
     <>
       <MainPageHeader>Finality</MainPageHeader>
       <FinalityWarning />
-      <ScalingFilterContextProvider>
+      <TableFilterContextProvider>
         <ScalingFinalityTables {...entries} />
-      </ScalingFilterContextProvider>
+      </TableFilterContextProvider>
       {/* <FinalityDiagramsSection className="mt-20" diagrams={finalityDiagrams} /> */}
     </>
   )

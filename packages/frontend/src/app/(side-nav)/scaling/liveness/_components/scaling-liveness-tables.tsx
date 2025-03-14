@@ -16,11 +16,11 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { useLivenessTimeRangeContext } from './liveness-time-range-context'
 import { LivenessTimeRangeControls } from './liveness-time-range-controls'
@@ -29,7 +29,7 @@ import { ScalingLivenessTable } from './table/scaling-liveness-table'
 type Props = TabbedScalingEntries<ScalingLivenessEntry>
 
 export function ScalingLivenessTables(props: Props) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
@@ -77,9 +77,9 @@ export function ScalingLivenessTables(props: Props) {
     <>
       <Controls
         entries={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
       />
       <DirectoryTabs value={tab} onValueChange={setTab}>
@@ -131,7 +131,7 @@ function Controls({ entries }: { entries: ScalingLivenessEntry[] }) {
 
   return (
     <div className="flex flex-col justify-between gap-2 md:flex-row">
-      <ScalingFilters items={entries} />
+      <TableFilters entries={entries} />
       <LivenessTimeRangeControls
         timeRange={timeRange}
         setTimeRange={setTimeRange}

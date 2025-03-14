@@ -110,7 +110,7 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
         native={params.usage.native}
         className="my-3 h-1 w-full md:my-0 md:hidden [@media(min-width:1000px)]:flex"
       />
-      <VerticalSeparator className="row-span-2 hidden w-px md:block [@media(min-width:1000px)]:hidden" />
+      <VerticalSeparator className="row-span-2 hidden w-px max-md:border-none md:block [@media(min-width:1000px)]:hidden" />
       <div className="row-span-2 flex h-1/2 flex-wrap gap-3 @container md:h-full md:gap-0 [@media(min-width:1000px)]:h-1/2">
         {tvsStats.map((s, i) => (
           <div

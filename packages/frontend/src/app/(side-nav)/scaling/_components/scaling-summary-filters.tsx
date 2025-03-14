@@ -1,16 +1,16 @@
 'use client'
 import { Checkbox } from '~/components/core/checkbox'
-import type { FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import type { FilterableEntry } from '~/components/table/filters/types'
 import { cn } from '~/utils/cn'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
-import { ScalingFilters } from './scaling-filters'
 
 interface Props {
-  items: FilterableScalingEntry[]
+  entries: FilterableEntry[]
   className?: string
 }
 
-export function ScalingSummaryFilters({ items, className }: Props) {
+export function ScalingSummaryFilters({ entries, className }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
@@ -21,7 +21,7 @@ export function ScalingSummaryFilters({ items, className }: Props) {
         className,
       )}
     >
-      <ScalingFilters items={items} showHostChainFilter showDALayerFilter />
+      <TableFilters entries={entries} />
       <Checkbox
         name="excludeAssociatedTokens"
         checked={excludeAssociatedTokens}

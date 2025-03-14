@@ -18,11 +18,11 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingTvsTable } from './table/scaling-tvs-table'
 
@@ -31,7 +31,7 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 }
 
 export function ScalingTvsTabs(props: Props) {
-  const includeFilters = useScalingFilter()
+  const includeFilters = useIncludeFilters()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
@@ -64,13 +64,12 @@ export function ScalingTvsTabs(props: Props) {
 
   return (
     <>
-      <ScalingFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+      <TableFilters
+        entries={[
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
-        showHostChainFilter
         className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
