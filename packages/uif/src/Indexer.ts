@@ -426,7 +426,11 @@ export abstract class Indexer {
   }
 
   private logMetrics(current: number, target: number): void {
-    this.logger.info('Metrics', { delay: target - current, current, target })
+    this.logger.info('Metrics', {
+      delay: target - current,
+      current,
+      target,
+    })
   }
 
   // #endregion

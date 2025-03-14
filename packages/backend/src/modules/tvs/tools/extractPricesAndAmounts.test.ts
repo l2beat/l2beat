@@ -102,14 +102,16 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          priceId: 'price-ARB',
+          id: '2c139cafd2fc',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
+          priceId: 'price-ARB',
         },
         {
-          priceId: 'price-ATH',
+          id: '17ca46353457',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
+          priceId: 'price-ATH',
         },
       ],
     })
@@ -219,14 +221,16 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          priceId: 'price-WBTC',
+          id: 'b1094eff0b2f',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
+          priceId: 'price-WBTC',
         },
         {
-          priceId: 'price-SolvBTC',
+          id: 'e0e7a23aa426',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
+          priceId: 'price-SolvBTC',
         },
       ],
     })
@@ -337,19 +341,22 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          priceId: 'price-A',
+          id: '5805b54d53ce',
           sinceTimestamp: 50,
           untilTimestamp: 300,
+          priceId: 'price-A',
         },
         {
+          id: '319118d11330',
           priceId: 'price-B',
           sinceTimestamp: 50,
           untilTimestamp: undefined,
         },
         {
-          priceId: 'price-C',
+          id: '67821b81fda4',
           sinceTimestamp: 300,
           untilTimestamp: 500,
+          priceId: 'price-C',
         },
       ],
     })

@@ -37,9 +37,10 @@ export class Providers {
     this.circulatingSupply = config.tvl
       ? initCirculatingSupplyProviders(this.clients.coingecko)
       : undefined
-    this.price = config.tvl
-      ? initPriceProviders(this.clients.coingecko)
-      : undefined
+    this.price =
+      config.tvl || config.tvs
+        ? initPriceProviders(this.clients.coingecko)
+        : undefined
     this.uops = new UopsAnalyzers(config.chainConfig)
     this.day = new DayProviders(config.chainConfig, this.clients.starkex)
     this.blob =

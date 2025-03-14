@@ -22,6 +22,7 @@ import { BlockTimestampRepository } from './tvl/block-timestamp/repository'
 import { PriceRepository } from './tvl/price/repository'
 import { TvlCleanerRepository } from './tvl/tvl-cleaner/repository'
 import { ValueRepository } from './tvl/value/repository'
+import { TvsPriceRepository } from './tvs/price/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 
@@ -73,6 +74,10 @@ export function createDatabase(config?: PoolConfig) {
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
+    // #endregion
+
+    // #region Tvs
+    tvsPrice: new TvsPriceRepository(db),
     // #endregion
   }
 }
