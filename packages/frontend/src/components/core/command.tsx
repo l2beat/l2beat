@@ -30,10 +30,12 @@ const CommandDialog = ({
   title,
   description,
   onEscapeKeyDown,
+  fullScreenMobile,
   ...props
 }: DialogProps & {
   title: string
   description: string
+  fullScreenMobile?: boolean
   onEscapeKeyDown?: (event: KeyboardEvent) => void
 }) => {
   return (
@@ -41,9 +43,9 @@ const CommandDialog = ({
       <DialogTitle className="sr-only">{title}</DialogTitle>
       <DialogDescription className="sr-only">{description}</DialogDescription>
       <DialogContent
-        className="top-1/2 overflow-hidden p-0 shadow-popover max-md:h-screen max-md:border-none md:top-1/4 max-md:[@supports(height:100dvh)]:h-dvh"
-        overlayClassName="max-md:hidden"
+        className="overflow-hidden p-0 max-md:border-none"
         onEscapeKeyDown={onEscapeKeyDown}
+        fullScreenMobile={fullScreenMobile}
       >
         <Slot className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}

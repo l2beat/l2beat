@@ -33,13 +33,13 @@ export function NewTableFilterItem({
       state.some((f) => f.id === filter.id && f.values.includes(value)),
   )
   return (
-    <div className="flex h-8 select-none items-center rounded-lg bg-surface-primary text-base font-semibold leading-none primary-card:bg-surface-secondary">
+    <div className="flex h-8 select-none items-center rounded-lg bg-surface-primary text-base font-medium leading-none primary-card:bg-surface-secondary">
       <div className="flex h-full items-center justify-center pl-2.5 pr-2">
         {filterIdToLabel[filter.id]}
       </div>
       <VerticalSeparator className="h-[30px]" />
       <button
-        className="flex h-full items-center justify-center rounded-none px-2 font-semibold focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
+        className="flex h-full items-center justify-center rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
         onClick={() => {
           dispatch({
             type: 'setReversed',
@@ -52,7 +52,7 @@ export function NewTableFilterItem({
       <VerticalSeparator className="h-[30px]" />
       <Popover>
         <PopoverAnchor className="h-full" />
-        <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-semibold">
+        <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-medium">
           {filter.values.length > 1
             ? `${filter.values.length} values`
             : filter.values[0]}

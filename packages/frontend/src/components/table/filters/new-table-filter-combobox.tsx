@@ -1,8 +1,10 @@
 import { notUndefined } from '@l2beat/shared-pure'
 import { partition, uniq, uniqBy } from 'lodash'
+import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -13,9 +15,12 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  popoverTriggerClasses,
 } from '~/components/core/popover'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
+import { cn } from '~/utils/cn'
 import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
 import { useNewTableFilterContext } from './new-table-filter-context'
 import type { FilterableEntry, FilterableValueId } from './new-types'
@@ -25,8 +30,9 @@ import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 export function NewTableFilterCombobox({
   entries,
 }: { entries: FilterableEntry[] }) {
-  const { state } = useNewTableFilterContext()
+  useNewTableFilterContext()
   const [open, setOpen] = useState(false)
+  const isMobile = useIsMobile()
 
   useEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'f') {
@@ -35,6 +41,62 @@ export function NewTableFilterCombobox({
     }
   })
 
+  if (isMobile) {
+    return <MobileFilters entries={entries} open={open} setOpen={setOpen} />
+  }
+
+  return (
+    <>
+      <DesktopFilters entries={entries} open={open} setOpen={setOpen} />
+    </>
+  )
+}
+
+function MobileFilters({
+  entries,
+  open,
+  setOpen,
+}: {
+  entries: FilterableEntry[]
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+}) {
+  const { state } = useNewTableFilterContext()
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className={cn(popoverTriggerClasses, 'h-8')}
+      >
+        <FilterIcon />
+        {state.length === 0 && (
+          <span className="text-base font-medium">Filters</span>
+        )}
+      </button>
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={'Filters'}
+        description={'Select filters to apply'}
+      >
+        <Content entries={entries} />
+      </CommandDialog>
+    </>
+  )
+}
+
+function DesktopFilters({
+  entries,
+  open,
+  setOpen,
+}: {
+  entries: FilterableEntry[]
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+}) {
+  const { state } = useNewTableFilterContext()
+
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
@@ -42,7 +104,7 @@ export function NewTableFilterCombobox({
           <FilterIcon />
           {state.length === 0 && (
             <>
-              <span className="text-base font-semibold">Filters</span>
+              <span className="text-base font-medium">Filters</span>
               <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert">
                 F
               </kbd>
@@ -76,7 +138,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
           <CommandGroup>
             {uniqFilterables.map((filterable) => (
               <CommandItem
-                className="font-semibold"
+                className="font-medium"
                 key={filterable.id}
                 value={filterable.id}
                 onSelect={() => {
@@ -115,7 +177,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
             {selectedValues.map((value) => {
               return (
                 <CommandItem
-                  className="flex gap-2 font-semibold"
+                  className="flex gap-2 font-medium"
                   key={value}
                   value={value}
                   onSelect={(value) => {
@@ -140,7 +202,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
             {notSelectedValues.map((value) => {
               return (
                 <CommandItem
-                  className="flex gap-2 font-semibold"
+                  className="flex gap-2 font-medium"
                   key={value}
                   value={value}
                   onSelect={(value) => {

@@ -17,7 +17,7 @@ export function NewTableFilters({ entries, className }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-wrap items-center gap-2 max-md:mt-4 max-md:pl-4',
+        'flex flex-wrap items-center gap-2 max-md:mt-4 max-md:px-4',
         className,
       )}
     >
