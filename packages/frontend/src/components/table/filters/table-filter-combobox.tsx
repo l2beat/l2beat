@@ -1,16 +1,8 @@
 import { notUndefined } from '@l2beat/shared-pure'
-import { partition, uniq, uniqBy } from 'lodash'
+import { uniq, uniqBy } from 'lodash'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '~/components/core/command'
+import { CommandDialog } from '~/components/core/command'
 import {
   Popover,
   PopoverContent,
@@ -21,11 +13,10 @@ import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
 import { cn } from '~/utils/cn'
-import { TableFilterCheckbox } from './table-filter-checkbox'
 import { useTableFilterContext } from './table-filter-context'
+import { TableFilterIdMenu } from './table-filter-id-menu'
+import { TableFilterValueMenu } from './table-filter-value-menu'
 import type { FilterableEntry, FilterableValueId } from './types'
-import { filterIdToLabel } from './utils/filter-id-to-label'
-import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 
 export function TableFilterCombobox({
   entries,
@@ -45,11 +36,7 @@ export function TableFilterCombobox({
     return <MobileFilters entries={entries} open={open} setOpen={setOpen} />
   }
 
-  return (
-    <>
-      <DesktopFilters entries={entries} open={open} setOpen={setOpen} />
-    </>
-  )
+  return <DesktopFilters entries={entries} open={open} setOpen={setOpen} />
 }
 
 function MobileFilters({
@@ -71,7 +58,7 @@ function MobileFilters({
       >
         <FilterIcon />
         {state.length === 0 && (
-          <span className="text-base font-medium">Filters</span>
+          <span className="text-xs font-medium md:text-sm">Filters</span>
         )}
       </button>
       <CommandDialog
@@ -103,7 +90,7 @@ function DesktopFilters({
         <FilterIcon />
         {state.length === 0 && (
           <>
-            <span className="text-base font-medium">Filters</span>
+            <span className="text-xs font-medium md:text-sm">Filters</span>
             <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert">
               F
             </kbd>
@@ -124,37 +111,22 @@ function Content({
   entries: FilterableEntry[]
   onValueSelect?: (value: string) => void
 }) {
-  const { state, dispatch } = useTableFilterContext()
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
   )
-  const uniqFilterables = uniqBy(
+  const uniqFilterablesIds = uniqBy(
     entries.flatMap((e) => e.filterable),
     'id',
-  ).filter(notUndefined)
+  )
+    .filter(notUndefined)
+    .map((f) => f.id)
 
   if (!selectedId) {
     return (
-      <Command className="border border-divider">
-        <CommandInput className="h-9" placeholder="Search filters..." />
-        <CommandList>
-          <CommandEmpty>No filter found.</CommandEmpty>
-          <CommandGroup>
-            {uniqFilterables.map((filterable) => (
-              <CommandItem
-                className="font-medium"
-                key={filterable.id}
-                value={filterable.id}
-                onSelect={() => {
-                  setSelectedId(filterable.id)
-                }}
-              >
-                {filterIdToLabel[filterable.id]}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </CommandList>
-      </Command>
+      <TableFilterIdMenu
+        ids={uniqFilterablesIds}
+        onSelect={(id) => setSelectedId(id)}
+      />
     )
   }
 
@@ -162,73 +134,13 @@ function Content({
     entries.flatMap(
       (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
     ),
-  )
-    .filter(notUndefined)
-    .sort(filterValuesSortFn)
+  ).filter(notUndefined)
 
-  const [selectedValues, notSelectedValues] = partition(values, (value) =>
-    state.some(
-      (filter) => filter.id === selectedId && filter.values.includes(value),
-    ),
-  )
   return (
-    <Command className="border border-divider">
-      <CommandInput className="h-9" placeholder={filterIdToLabel[selectedId]} />
-      <CommandList>
-        <CommandEmpty>No value found.</CommandEmpty>
-        {selectedValues.length > 0 && (
-          <CommandGroup>
-            {selectedValues.map((value) => {
-              return (
-                <CommandItem
-                  className="flex gap-2 font-medium"
-                  key={value}
-                  value={value}
-                  onSelect={(value) => {
-                    onValueSelect?.(value)
-                    dispatch({
-                      type: 'remove',
-                      payload: {
-                        id: selectedId,
-                        value,
-                      },
-                    })
-                  }}
-                >
-                  <TableFilterCheckbox checked={true} />
-                  {value}
-                </CommandItem>
-              )
-            })}
-          </CommandGroup>
-        )}
-        {notSelectedValues.length > 0 && (
-          <CommandGroup>
-            {notSelectedValues.map((value) => {
-              return (
-                <CommandItem
-                  className="flex gap-2 font-medium"
-                  key={value}
-                  value={value}
-                  onSelect={(value) => {
-                    onValueSelect?.(value)
-                    dispatch({
-                      type: 'add',
-                      payload: {
-                        id: selectedId,
-                        value,
-                      },
-                    })
-                  }}
-                >
-                  <TableFilterCheckbox checked={false} />
-                  {value}
-                </CommandItem>
-              )
-            })}
-          </CommandGroup>
-        )}
-      </CommandList>
-    </Command>
+    <TableFilterValueMenu
+      filterId={selectedId}
+      values={values}
+      onSelect={onValueSelect}
+    />
   )
 }
