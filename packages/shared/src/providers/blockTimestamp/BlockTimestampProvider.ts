@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { BlockIndexerClient } from '../../clients'
 import type { BlockProvider } from '../block/BlockProvider'
 
@@ -15,21 +15,25 @@ export class BlockTimestampProvider {
     chain: string,
   ): Promise<number> {
     const indexers = this.$.indexerClients.filter((i) => i.chain === chain)
-    for (const client of indexers) {
-      try {
-        return await client.getBlockNumberAtOrBefore(timestamp)
-      } catch (_) {}
-    }
-
-    const clients = this.$.blockProviders.filter((b) => b.chain === chain)
-    for (const [index, client] of clients.entries()) {
+    for (const [index, client] of indexers.entries()) {
       try {
         return await client.getBlockNumberAtOrBefore(timestamp)
       } catch (error) {
-        if (index === clients.length - 1) throw error
+        if (index === indexers.length - 1) {
+          const block = this.$.blockProviders.find((b) => b.chain === chain)
+
+          if (block) {
+            return await block.getBlockNumberAtOrBefore(timestamp)
+          } else {
+            throw error
+          }
+        }
       }
     }
 
-    throw new Error(`BlockTimestamp data sources`)
+    const block = this.$.blockProviders.find((b) => b.chain === chain)
+    assert(block, 'Missing BlockTimestamp data sources')
+
+    return await block.getBlockNumberAtOrBefore(timestamp)
   }
 }
