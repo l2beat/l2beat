@@ -273,6 +273,7 @@ export abstract class Indexer {
     const from = this.state.height + 1
     this.logger.info('Updating', { from, to: effect.targetHeight })
     try {
+      const start = Date.now()
       const newHeight = await this.update(from, effect.targetHeight)
       if (newHeight < from || newHeight > effect.targetHeight) {
         this.logger.critical('Update returned invalid height', {
@@ -283,7 +284,11 @@ export abstract class Indexer {
         this.dispatch({ type: 'UpdateFailed', fatal: true })
       } else {
         this.dispatch({ type: 'UpdateSucceeded', from, newHeight })
-        this.logMetrics(newHeight, effect.targetHeight)
+        this.logMetrics(
+          newHeight,
+          effect.targetHeight,
+          Math.round((Date.now() - start) / 1000),
+        )
         this.updateRetryStrategy.clear()
       }
     } catch (error) {
@@ -425,8 +430,13 @@ export abstract class Indexer {
     await this.setSafeHeight(effect.safeHeight)
   }
 
-  private logMetrics(current: number, target: number): void {
-    this.logger.info('Metrics', { delay: target - current, current, target })
+  private logMetrics(current: number, target: number, duration?: number): void {
+    this.logger.info('Metrics', {
+      delay: target - current,
+      current,
+      target,
+      ...(duration ? { duration } : {}),
+    })
   }
 
   // #endregion

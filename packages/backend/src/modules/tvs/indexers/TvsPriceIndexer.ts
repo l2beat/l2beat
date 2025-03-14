@@ -43,7 +43,6 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       configurations: configurations.length,
     })
 
-    const start = Date.now()
     const records = (
       await Promise.all(
         configurations.map(async (configuration) => {
@@ -74,7 +73,6 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       to: adjustedTo,
       configurations: configurations.length,
       records: records.length,
-      duration: Math.round((Date.now() - start) / 1000),
     })
 
     return async () => {
