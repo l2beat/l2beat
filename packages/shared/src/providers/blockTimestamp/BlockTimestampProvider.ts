@@ -14,26 +14,22 @@ export class BlockTimestampProvider {
     timestamp: UnixTime,
     chain: string,
   ): Promise<number> {
-    const indexers = this.$.indexerClients.filter((i) => i.chain === chain)
-    for (const [index, client] of indexers.entries()) {
-      try {
-        return await client.getBlockNumberAtOrBefore(timestamp)
-      } catch (error) {
-        if (index === indexers.length - 1) {
-          const block = this.$.blockProviders.find((b) => b.chain === chain)
+    const indexer = this.$.indexerClients.find((b) => b.chain === chain)
+    const block = this.$.blockProviders.find((b) => b.chain === chain)
 
-          if (block) {
-            return await block.getBlockNumberAtOrBefore(timestamp)
-          } else {
-            throw error
-          }
-        }
-      }
+    if (!indexer) {
+      assert(block, 'Missing BlockTimestamp data sources')
+      return await block.getBlockNumberAtOrBefore(timestamp)
     }
 
-    const block = this.$.blockProviders.find((b) => b.chain === chain)
-    assert(block, 'Missing BlockTimestamp data sources')
-
-    return await block.getBlockNumberAtOrBefore(timestamp)
+    try {
+      return await indexer.getBlockNumberAtOrBefore(timestamp)
+    } catch (error) {
+      if (block) {
+        return await block.getBlockNumberAtOrBefore(timestamp)
+      } else {
+        throw error
+      }
+    }
   }
 }
