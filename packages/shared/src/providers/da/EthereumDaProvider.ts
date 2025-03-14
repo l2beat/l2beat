@@ -1,14 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { BlobScanClient } from '../../clients'
-import type { DaBlob, DaProvider } from './DaProvider'
+import type { DaBlobProvider } from './DaProvider'
+import type { DaBlob } from './types'
 
 // each blob is 128 KiB so 131,072 B
 const BLOB_SIZE_BYTES = 131072n
 
-export class EthereumDaProvider implements DaProvider {
+export class EthereumDaProvider implements DaBlobProvider {
   constructor(
     private readonly client: BlobScanClient,
-    private readonly daLayer: string,
+    readonly daLayer: string,
   ) {}
 
   async getBlobs(from: number, to: number): Promise<DaBlob[]> {
