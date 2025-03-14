@@ -37,6 +37,8 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   ) {
     const adjustedTo = this.$.priceProvider.getAdjustedTo(from, to)
 
+    // TODO: return if range too small
+
     this.logger.info('Fetching prices', {
       from,
       to: adjustedTo,
