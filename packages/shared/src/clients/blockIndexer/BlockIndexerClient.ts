@@ -1,6 +1,7 @@
 import type { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, type json } from '@l2beat/shared-pure'
 import type { HttpClient } from '../http/HttpClient'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
@@ -16,8 +17,11 @@ interface BlockscoutOptions {
   chain: string
 }
 
-// TODO: add retries, use HttpClient
-export class BlockIndexerClient {
+interface Dependencies extends ClientCoreDependencies {
+  options: EtherscanOptions | BlockscoutOptions
+}
+
+export class BlockIndexerClient extends ClientCore {
   chain: string
 
   // If you ask for a timestamp
@@ -25,16 +29,14 @@ export class BlockIndexerClient {
   // API will return the error
   private readonly binTimeWidth
   private readonly maximumCallsForBlockTimestamp
+  private readonly options: EtherscanOptions | BlockscoutOptions
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly rateLimiter: RateLimiter,
-    private readonly options: EtherscanOptions | BlockscoutOptions,
-  ) {
-    this.call = this.rateLimiter.wrap(this.call.bind(this))
-    this.binTimeWidth = options.type === 'etherscan' ? 10 : 1
-    this.maximumCallsForBlockTimestamp = options.type === 'etherscan' ? 3 : 10
-    this.chain = options.chain
+  constructor(private readonly $: Dependencies) {
+    super($)
+    this.options = $.options
+    this.binTimeWidth = this.options.type === 'etherscan' ? 10 : 1
+    this.maximumCallsForBlockTimestamp = this.options.type === 'etherscan' ? 3 : 10
+    this.chain = this.options.chain
   }
 
   static create(
@@ -42,7 +44,14 @@ export class BlockIndexerClient {
     rateLimiter: RateLimiter,
     options: EtherscanOptions | BlockscoutOptions,
   ) {
-    return new BlockIndexerClient(services.httpClient, rateLimiter, options)
+    return new BlockIndexerClient({
+      http: services.httpClient,
+      logger: services.logger,
+      sourceName: options.chain,
+      callsPerMinute: rateLimiter.callsPerMinute,
+      retryStrategy: 'RELIABLE',
+      options,
+    })
   }
 
   // There is a case when there is not enough activity on a given chain
@@ -76,13 +85,7 @@ export class BlockIndexerClient {
       counter++
     }
 
-    throw new Error('Could not fetch block number', {
-      cause: {
-        current,
-        timestamp,
-        calls: this.maximumCallsForBlockTimestamp,
-      },
-    })
+    throw new Error('Could not fetch block number')
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
@@ -97,19 +100,31 @@ export class BlockIndexerClient {
     }
     const url = `${this.options.url}?${query.toString()}`
 
-    const response = await this.httpClient.fetch(url, {})
+    const response = await this.fetch(url, {})
 
+    return response
+  }
+
+  override validateResponse(response: json): {
+    success: boolean
+    message?: string
+  } {
     const etherscanResponse = EtherscanResponse.safeParse(response)
 
     if (etherscanResponse.success === false) {
-      const message = `Invalid Etherscan response [${JSON.stringify(response)}] for request [${url}].`
-      throw new TypeError(message)
+      return {
+        success: false,
+        message: `Invalid Etherscan response [${JSON.stringify(response)}]`,
+      }
     }
 
     if (etherscanResponse.data.message === 'NOTOK') {
-      throw new Error(JSON.stringify(etherscanResponse.data.result))
+      return {
+        success: false,
+        message: JSON.stringify(etherscanResponse.data.result),
+      }
     }
 
-    return etherscanResponse.data.result
+    return { success: true }
   }
 }
