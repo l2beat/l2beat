@@ -63,6 +63,12 @@
         },
         {
           "permission": "interact",
+          "to": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
           "to": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "via": []
@@ -481,7 +487,8 @@
         },
         "validators": [
           "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+          "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         ]
       },
       "fieldMeta": {
@@ -716,6 +723,13 @@
           "permission": "validateZkStack",
           "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
           "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
       ],
       "sinceTimestamp": 1739108999,
