@@ -1,4 +1,3 @@
-import { notUndefined } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { cn } from '~/utils/cn'
 import { NewTableFilterClearButton } from './new-table-filter-clear-button'
@@ -24,13 +23,11 @@ export function NewTableFilters({ entries, className }: Props) {
             key={filter.id}
             filter={filter}
             possibleValues={uniq(
-              entries
-                .flatMap((e) =>
-                  e.filterable
-                    ?.filter((f) => f.id === filter.id)
-                    .map((f) => f.value),
-                )
-                .filter(notUndefined),
+              entries.flatMap((e) =>
+                (e.filterable ?? [])
+                  ?.filter((f) => f.id === filter.id)
+                  .map((f) => f.value),
+              ),
             )}
           />
         ))}

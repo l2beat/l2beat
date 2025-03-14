@@ -107,10 +107,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
   )
   return (
     <Command className="border border-divider">
-      <CommandInput
-        className="h-9"
-        placeholder={`Search ${filterIdToLabel[selectedId].toLowerCase()}...`}
-      />
+      <CommandInput className="h-9" placeholder={filterIdToLabel[selectedId]} />
       <CommandList>
         <CommandEmpty>No value found.</CommandEmpty>
         {selectedValues.length > 0 && (
