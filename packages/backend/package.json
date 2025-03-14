@@ -25,6 +25,7 @@
     "starkware-multiplier": "ts-node --transpile-only scripts/starkwareMultiplier.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
+    "op-stack-costs": "node -r esbuild-register scripts/op-stack-costs",
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev"
   },
