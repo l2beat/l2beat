@@ -1,7 +1,7 @@
-import type { ScalingProjectRiskView } from '@l2beat/config'
+import type { ProjectScalingRiskView } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
 
-export function getL2Risks(riskView: ScalingProjectRiskView): RosetteValue[] {
+export function getL2Risks(riskView: ProjectScalingRiskView): RosetteValue[] {
   return [
     {
       name: 'Sequencer Failure',

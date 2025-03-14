@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { AdjustCount } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
@@ -78,9 +79,9 @@ export function initActivityModule(
           logger,
           projectId: project.id,
           batchSize: 10,
-          minHeight:
-            project.activityConfig.sinceTimestamp.toStartOf('day').toDays() ??
-            0,
+          minHeight: UnixTime.toDays(
+            UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day'),
+          ),
           uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
           parents: [dayTargetIndexer],
           txsCountService,

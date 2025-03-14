@@ -1,7 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { ProjectTechnologyChoice, ScalingProjectRisk } from '../types'
+import type { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
-const EXIT_CENSORSHIP: ScalingProjectRisk = {
+const EXIT_CENSORSHIP: ProjectRisk = {
   category: 'Users can be censored if',
   text: 'the operator refuses to include their transactions. However, there exists a mechanism to independently exit the system.',
 }

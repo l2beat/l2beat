@@ -8,18 +8,18 @@ const ethPriceId = createPriceId({
   assetId: AssetId.ETH,
   address: 'native',
   chain: 'ethereum',
-  sinceTimestamp: UnixTime.ZERO,
+  sinceTimestamp: 0,
 })
 
 export async function getEthPrices() {
   const db = getDb()
   const prices = await db.price.getByConfigIdsInRange(
     [ethPriceId],
-    UnixTime.ZERO,
+    0,
     UnixTime.now(),
   )
   return prices.reduce<Record<number, number>>((acc, curr) => {
-    acc[curr.timestamp.toNumber()] = curr.priceUsd
+    acc[curr.timestamp] = curr.priceUsd
     return acc
   }, {})
 }

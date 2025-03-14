@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "FacetSafeModule",
-  "description": "Module that allows the Safe to send Facet transactions.",
-  "canActIndependently": false
-}

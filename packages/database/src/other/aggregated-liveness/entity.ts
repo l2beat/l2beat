@@ -19,7 +19,7 @@ export function toRow(
 ): Insertable<AggregatedLiveness> {
   return {
     ...record,
-    updatedAt: record.updatedAt.toDate(),
+    updatedAt: UnixTime.toDate(record.updatedAt),
   }
 }
 

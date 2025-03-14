@@ -1,7 +1,7 @@
 import type {
   Project,
-  ScalingProjectCategory,
-  ScalingProjectStack,
+  ProjectScalingCategory,
+  ProjectScalingStack,
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
@@ -59,8 +59,8 @@ export async function getScalingFinalityEntries() {
 }
 
 export interface ScalingFinalityEntry extends CommonScalingEntry {
-  category: ScalingProjectCategory
-  stack: ScalingProjectStack | undefined
+  category: ProjectScalingCategory
+  stack: ProjectScalingStack | undefined
   dataAvailabilityMode: TableReadyValue | undefined
   data: {
     timeToInclusion: {

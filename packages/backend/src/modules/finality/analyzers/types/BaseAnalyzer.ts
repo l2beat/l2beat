@@ -2,7 +2,7 @@ import {
   assert,
   type ProjectId,
   type TrackedTxsConfigSubtype,
-  type UnixTime,
+  UnixTime,
   slidingWindow,
 } from '@l2beat/shared-pure'
 import { chunk } from 'lodash'
@@ -72,7 +72,7 @@ export abstract class BaseAnalyzer {
     // get ability to look back a single tx we need to query more. We're going
     // to assume that we will find at least one entry before our interval at
     // least one before.
-    const fromSafe = from.add(-1, 'days')
+    const fromSafe = from - 1 * UnixTime.DAY
     const safeTransactions = await livenessWithConfig.getWithinTimeRange(
       fromSafe,
       to,
@@ -83,10 +83,10 @@ export abstract class BaseAnalyzer {
     }
 
     const sortedSafeTransactions = safeTransactions.sort(
-      (tx1, tx2) => tx1.timestamp.toNumber() - tx2.timestamp.toNumber(),
+      (tx1, tx2) => tx1.timestamp - tx2.timestamp,
     )
-    const firstInRange = sortedSafeTransactions.findIndex((t) =>
-      t.timestamp.gte(from),
+    const firstInRange = sortedSafeTransactions.findIndex(
+      (t) => t.timestamp >= from,
     )
 
     assert(firstInRange !== 0, 'Assumption from above comment is not met')
@@ -105,7 +105,7 @@ export abstract class BaseAnalyzer {
         batch.map(
           async ([prevTx, tx]) =>
             ({
-              l1Timestamp: tx.timestamp.toNumber(),
+              l1Timestamp: tx.timestamp,
               l2Blocks: await this.analyze(
                 { txHash: prevTx.txHash, timestamp: tx.timestamp },
                 { txHash: tx.txHash, timestamp: tx.timestamp },

@@ -5332,6 +5332,13 @@
   ],
   "mint": [
     {
+      "symbol": "MINT",
+      "address": "0x8511138208529fe1b9a37b863c7EEE3Fe234b7Ab",
+      "coingeckoId": "mint-blockchain",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "MST",
       "address": "0x9f7bd1ce3412960524e86183b8f005271c09a5e0",
       "source": "native",

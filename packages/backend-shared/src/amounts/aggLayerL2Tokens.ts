@@ -4,7 +4,6 @@ import {
   type AggLayerL2Token,
   AssetId,
   type Token,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { getEscrowUntilTimestamp } from '../getEscrowUntilTimestamp'
 
@@ -19,8 +18,8 @@ export function getAggLayerL2TokenEntry(
   assert(token.address, 'Token address is required for AggLayer escrow')
 
   const source = escrow.source ?? 'canonical'
-  const sinceTimestamp = UnixTime.max(
-    UnixTime.max(chain.sinceTimestamp, token.sinceTimestamp),
+  const sinceTimestamp = Math.max(
+    Math.max(chain.sinceTimestamp, token.sinceTimestamp),
     escrow.sinceTimestamp,
   )
   const untilTimestamp = getEscrowUntilTimestamp(

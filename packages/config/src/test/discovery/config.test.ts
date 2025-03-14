@@ -1,11 +1,14 @@
-import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
-import { ConfigReader, TemplateService } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  TemplateService,
+  getDiscoveryPaths,
+} from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { bridges } from '../../projects/bridges'
-import { layer2s } from '../../projects/layer2s'
-import { layer3s } from '../../projects/layer3s'
+import { bridges } from '../../processing/bridges'
+import { layer2s } from '../../processing/layer2s'
+import { layer3s } from '../../processing/layer3s'
 
 // A list of onchain projects that are not L2s (or prelaunch) or bridges
 // (so we don't show them on the frontend), but we still
@@ -25,8 +28,10 @@ export const onChainProjects: string[] = [
 ]
 
 describe('discovery config.jsonc', () => {
-  const configReader = new ConfigReader(join(process.cwd(), '../config'))
-  const templateService = new TemplateService()
+  const paths = getDiscoveryPaths()
+
+  const configReader = new ConfigReader(paths.discovery)
+  const templateService = new TemplateService(paths.discovery)
 
   const chainConfigs = configReader
     .readAllChains()
@@ -78,7 +83,7 @@ describe('discovery config.jsonc', () => {
     })
   })
 
-  it('every discovery.json has sorted contracts', () => {
+  it('every discovery.json has sorted entries', () => {
     const notSorted: string[] = []
 
     for (const configs of chainConfigs ?? []) {
@@ -87,8 +92,8 @@ describe('discovery config.jsonc', () => {
 
         if (
           !isDeepStrictEqual(
-            discovery.contracts,
-            discovery.contracts
+            discovery.entries,
+            discovery.entries
               .slice()
               .sort((a, b) => a.address.localeCompare(b.address.toString())),
           )
@@ -100,8 +105,7 @@ describe('discovery config.jsonc', () => {
 
     assert(
       notSorted.length === 0,
-      'Following projects do not have sorted contracts: ' +
-        notSorted.join(', '),
+      'Following projects do not have sorted entries: ' + notSorted.join(', '),
     )
   })
 
@@ -130,7 +134,7 @@ describe('discovery config.jsonc', () => {
         const discovery = configReader.readDiscovery(c.name, c.chain)
 
         assert(
-          discovery.contracts.every((c) => c.errors === undefined),
+          discovery.entries.every((c) => c.errors === undefined),
           `${c.name} discovery.json includes errors. Run "l2b discover ${c.name}".`,
         )
       }
@@ -175,8 +179,8 @@ describe('discovery config.jsonc', () => {
         for (const c of configs) {
           const discovery = configReader.readDiscovery(c.name, c.chain)
           it(`${c.name}:${c.chain}`, () => {
-            for (const contract of discovery.contracts) {
-              const fields = c.for(contract.address).fields
+            for (const entry of discovery.entries) {
+              const fields = c.for(entry.address).fields
               for (const [key, value] of Object.entries(fields)) {
                 if (
                   value.handler?.type === 'accessControl' &&

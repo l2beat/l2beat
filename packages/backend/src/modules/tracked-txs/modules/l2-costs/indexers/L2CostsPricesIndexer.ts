@@ -20,8 +20,8 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const unixFrom = new UnixTime(from)
-    const unixTo = new UnixTime(to)
+    const unixFrom = UnixTime(from)
+    const unixTo = UnixTime(to)
 
     const shiftedTo = CoingeckoQueryService.calculateAdjustedTo(
       unixFrom,
@@ -45,7 +45,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       prices: prices.length,
     })
 
-    return shiftedTo.toNumber()
+    return shiftedTo
   }
 
   async fetchPrices(
@@ -65,7 +65,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    const unixTargetHeight = new UnixTime(targetHeight)
+    const unixTargetHeight = UnixTime(targetHeight)
     await this.$.db.l2CostPrice.deleteAfter(unixTargetHeight)
 
     return targetHeight

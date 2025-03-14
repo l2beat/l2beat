@@ -1,6 +1,6 @@
-import type { ProjectTechnologyChoice, ScalingProjectRisk } from '../types'
+import type { ProjectRisk, ProjectTechnologyChoice } from '../types'
 
-export const FRONTRUNNING_RISK: ScalingProjectRisk = {
+export const FRONTRUNNING_RISK: ProjectRisk = {
   category: 'MEV can be extracted if',
   text: 'the operator exploits their centralized position and frontruns user transactions.',
 }

@@ -17,7 +17,7 @@ export class HourlyIndexer extends RootIndexer {
   }
 
   tick(): Promise<number> {
-    const time = this.clock.getLastHour().toNumber()
+    const time = this.clock.getLastHour()
     return Promise.resolve(time)
   }
 }

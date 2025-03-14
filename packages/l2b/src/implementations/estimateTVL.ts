@@ -10,8 +10,9 @@ import {
 import { BigNumber, providers, utils } from 'ethers'
 
 async function loadTokenList() {
-  const { tokenList } = await import('@l2beat/config')
-  return tokenList
+  const { ProjectService } = await import('@l2beat/config')
+  const ps = new ProjectService()
+  return ps.getTokens()
 }
 
 export async function estimateTVL(rpcUrl: string, address: EthereumAddress) {

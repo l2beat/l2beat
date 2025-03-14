@@ -47,11 +47,11 @@ describe(DaIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
-        new UnixTime(100).toStartOf('day'),
-        new UnixTime(200).toEndOf('day'),
+        UnixTime.toStartOf(100, 'day'),
+        UnixTime.toEndOf(200, 'day'),
       )
       expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
         blobs,
@@ -73,7 +73,7 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
         expect(safeHeight).toEqual(150)
       })
 
@@ -85,7 +85,7 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 200)
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
         expect(safeHeight).toEqual(200)
       })
     })
@@ -99,7 +99,7 @@ describe(DaIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(100, 200, [])
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 200)
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(safeHeight).toEqual(200)
 
       expect(repository.getForDaLayerInTimeRange).not.toHaveBeenCalled()
@@ -216,7 +216,7 @@ function config(project: string): {
 function blob(timestamp: number, size: number): DaBlob {
   return {
     daLayer: DA_LAYER,
-    blockTimestamp: new UnixTime(timestamp),
+    blockTimestamp: UnixTime(timestamp),
     size: BigInt(size),
     type: 'ethereum',
     inbox: '',
@@ -232,7 +232,7 @@ function record(
   return {
     projectId,
     daLayer: DA_LAYER,
-    timestamp: new UnixTime(timestamp),
+    timestamp: UnixTime(timestamp),
     totalSize: BigInt(size),
   }
 }

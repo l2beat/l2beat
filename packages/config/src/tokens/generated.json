@@ -7212,6 +7212,20 @@
       "supply": "zero"
     },
     {
+      "name": "Mint",
+      "coingeckoId": "mint-blockchain",
+      "address": "0x8511138208529fe1b9a37b863c7EEE3Fe234b7Ab",
+      "symbol": "MINT",
+      "decimals": 18,
+      "deploymentTimestamp": 1739864407,
+      "coingeckoListingTimestamp": 1741305600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54653/large/Mint_logo_200*200.png?1740892473",
+      "chainId": 185,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "MintSwap404NFT",
       "coingeckoId": "mintswaptoken",
       "address": "0x9f7bd1Ce3412960524e86183B8F005271C09a5E0",

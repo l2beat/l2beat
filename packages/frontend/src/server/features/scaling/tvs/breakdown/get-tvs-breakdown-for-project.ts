@@ -11,9 +11,7 @@ import { ps } from '~/server/projects'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import { getTvsBreakdown } from './get-tvs-breakdown'
 
-export type ProjectTvsBreakdown = Awaited<
-  ReturnType<ReturnType<typeof getTvsBreakdown>>
->
+export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 
 export async function getTvsBreakdownForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
@@ -32,10 +30,15 @@ export const getCachedTvsBreakdownForProjectData = cache(
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
+    const tokenList = await ps.getTokens()
+    const tokenMap = new Map(tokenList.map((t) => [t.id, t]))
 
-    const configMapping = getConfigMapping(project, chains)
-    return getTvsBreakdown(configMapping, chains)(
+    const configMapping = getConfigMapping(project, chains, tokenList)
+    return getTvsBreakdown(
+      configMapping,
+      chains,
       project.id,
+      tokenMap,
       project.chainConfig?.gasTokens,
     )
   },
@@ -48,13 +51,16 @@ export const getCachedTvsBreakdownForProjectData = cache(
 
 function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
   return {
-    dataTimestamp: UnixTime.now().toNumber(),
+    dataTimestamp: UnixTime.now(),
     breakdown: {
       canonical: [
         {
           amount: 100,
           assetId: AssetId('1'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           escrows: [
@@ -68,12 +74,16 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
+          name: 'Ether',
           supply: 'totalSupply',
         },
         {
           amount: 100,
           assetId: AssetId('4'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           escrows: [
@@ -92,6 +102,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
+          name: 'Ether',
           supply: 'totalSupply',
         },
       ],
@@ -99,13 +110,17 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           amount: 100,
           assetId: AssetId('2'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
+          name: 'Token',
           supply: 'totalSupply',
         },
       ],
@@ -113,13 +128,17 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
         {
           amount: 100,
           assetId: AssetId('3'),
-          chainId: ChainId.ETHEREUM,
+          chain: {
+            id: ChainId.ETHEREUM,
+            name: 'Ethereum',
+          },
           usdValue: 100,
           usdPrice: '1',
           url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
+          name: 'Token',
           supply: 'totalSupply',
           bridgedUsing: {
             bridges: [

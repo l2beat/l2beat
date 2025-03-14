@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "celo",
+  "name": "opticsV2",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"],
+  "names": {
+    "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE": "BeaconProxy",
+    "0x070c2843402Aa0637ae0F2E2edf601aAB5E72509": "OpticsV2Governor",
+    "0x45D35F60Ccf8F7031FB5A09954Cd923A9E84F89d": "UpgradeBeacon"
+  },
+  "overrides": {
+    "BeaconProxy": {
+      "proxyType": "Optics Beacon proxy"
+    },
+    "UpgradeBeacon": {
+      "proxyType": "immutable"
+    },
+    "OpticsV2Governor": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}

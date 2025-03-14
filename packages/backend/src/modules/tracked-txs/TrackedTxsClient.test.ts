@@ -98,8 +98,8 @@ const CONFIGURATIONS = [
       projectId: ProjectId('project1'),
       type: 'l2costs',
       subtype: 'batchSubmissions',
-      sinceTimestamp: FROM.toNumber(),
-      untilTimestamp: FROM.add(2, 'days').toNumber(),
+      sinceTimestamp: FROM,
+      untilTimestamp: FROM + 2 * UnixTime.DAY,
       params: {
         formula: 'transfer',
         from: ADDRESS_1,
@@ -119,7 +119,7 @@ const CONFIGURATIONS = [
       projectId: ProjectId('project1'),
       type: 'l2costs',
       subtype: 'batchSubmissions',
-      sinceTimestamp: FROM.toNumber(),
+      sinceTimestamp: FROM,
       params: {
         formula: 'functionCall',
         address: ADDRESS_3,
@@ -140,7 +140,7 @@ const CONFIGURATIONS = [
       projectId: ProjectId('project1'),
       type: 'l2costs',
       subtype: 'batchSubmissions',
-      sinceTimestamp: FROM.toNumber(),
+      sinceTimestamp: FROM,
       params: {
         formula: 'sharpSubmission',
         address: EthereumAddress.random(),
@@ -161,7 +161,7 @@ const CONFIGURATIONS = [
       projectId: ProjectId('project1'),
       type: 'l2costs',
       subtype: 'batchSubmissions',
-      sinceTimestamp: FROM.toNumber(),
+      sinceTimestamp: FROM,
       params: {
         formula: 'sharedBridge',
         address: EthereumAddress.random(),
@@ -279,7 +279,7 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
 )
 
 function toBigQueryDate(timestamp: UnixTime) {
-  return { value: timestamp.toDate().toISOString() }
+  return { value: UnixTime.toDate(timestamp).toISOString() }
 }
 
 function getMockBiqQuery(responses: unknown[][]) {

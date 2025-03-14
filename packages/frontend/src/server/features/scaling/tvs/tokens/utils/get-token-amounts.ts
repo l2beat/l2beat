@@ -32,7 +32,7 @@ export async function getTokenAmounts({
     const amounts = amountsByTimestamp[timestamp.toString()] ?? []
 
     const interpolatedRecords = status.lagging
-      .filter((l) => timestamp.gt(l.latestTimestamp))
+      .filter((l) => timestamp > l.latestTimestamp)
       .map((l) => {
         const amount =
           amountsByTimestamp[l.latestTimestamp.toString()]?.find(

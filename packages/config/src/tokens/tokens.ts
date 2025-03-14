@@ -12,21 +12,15 @@ You can check the detailed steps on how to add new tokens in the tvl.md file in 
 
 import { assert, AssetId, type Token, UnixTime } from '@l2beat/shared-pure'
 
-import { chains } from '../projects/chains'
+import type { ChainConfig } from '../types'
 import generated from './generated.json'
 import { GeneratedToken } from './types'
 
-export const tokenList: Token[] = generated.tokens
-  .map((t) => GeneratedToken.parse(t))
-  .map(toToken)
-
-const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
-
-export function safeGetTokenByAssetId(assetId: AssetId) {
-  return tokenMapByAssetId.get(assetId)
+export function getTokenList(chains: ChainConfig[]): Token[] {
+  return generated.tokens.map((t) => toToken(GeneratedToken.parse(t), chains))
 }
 
-function toToken(generated: GeneratedToken): Token {
+function toToken(generated: GeneratedToken, chains: ChainConfig[]): Token {
   const chain = chains.find((c) => c.chainId === +generated.chainId)
   assert(chain, `Chain nor found for ${generated.symbol}`)
   assert(
@@ -34,11 +28,11 @@ function toToken(generated: GeneratedToken): Token {
     `Token added for chain without sinceTimestamp ${chain.name}`,
   )
 
-  const sinceTimestamp = new UnixTime(
+  const sinceTimestamp = UnixTime(
     Math.max(
-      generated.deploymentTimestamp.toNumber(),
-      chain.sinceTimestamp.toNumber(),
-      generated.coingeckoListingTimestamp.toNumber(),
+      generated.deploymentTimestamp,
+      chain.sinceTimestamp,
+      generated.coingeckoListingTimestamp,
     ),
   )
 

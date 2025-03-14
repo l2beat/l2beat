@@ -116,10 +116,7 @@ async function getPastProxyUpgrades(
   )
   assert(blocks.every((b) => b !== undefined))
   const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
+    blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
 
   return logs.map((l) => {
@@ -207,10 +204,7 @@ async function getPastDiamondUpgrades(
   )
   assert(blocks.every((b) => b !== undefined))
   const dateMap = Object.fromEntries(
-    blocks.map((b) => [
-      b.number,
-      new UnixTime(b.timestamp).toDate().toISOString(),
-    ]),
+    blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
 
   return await Promise.all(

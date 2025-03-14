@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type L2CostPriceRecord, toRecord, toRow } from './entity'
 import { selectL2CostPrice } from './select'
@@ -16,8 +16,8 @@ export class L2CostPriceRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('L2CostPrice')
       .select(selectL2CostPrice)
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .execute()
     return rows.map(toRecord)
   }
@@ -35,7 +35,7 @@ export class L2CostPriceRepository extends BaseRepository {
   async deleteAfter(from: UnixTime): Promise<number> {
     const result = await this.db
       .deleteFrom('L2CostPrice')
-      .where('timestamp', '>', from.toDate())
+      .where('timestamp', '>', UnixTime.toDate(from))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

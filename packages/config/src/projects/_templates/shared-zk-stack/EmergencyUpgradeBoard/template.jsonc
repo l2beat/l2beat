@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A custom contract allowing a 3/3 of {{SECURITY_COUNCIL}}, {{ZK_FOUNDATION_SAFE}} and {{GUARDIANS}} to `executeEmergencyUpgrade()` via the {{PROTOCOL_UPGRADE_HANDLER}}.",
+  "category": "gov"
+}

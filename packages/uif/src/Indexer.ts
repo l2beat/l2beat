@@ -203,7 +203,7 @@ export abstract class Indexer {
       })
     } catch (error) {
       this.logger.error(`Failed to initialize indexer`, {
-        error: JSON.stringify(error),
+        error,
       })
     }
   }

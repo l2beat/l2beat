@@ -1,5 +1,8 @@
-import { type UsableStageConfig } from '@l2beat/config'
-
+import type {
+  ProjectScalingScopeOfAssessment,
+  StageConfigured,
+  StageUnderReview,
+} from '@l2beat/config'
 import Image from 'next/image'
 import {
   Accordion,
@@ -26,13 +29,14 @@ import { Callout } from '../../callout'
 import { Markdown } from '../../markdown/markdown'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
+import { ScopeOfAssessment } from './scope-of-assessment'
 import type { ProjectSectionProps } from './types'
 
 export interface StageSectionProps extends ProjectSectionProps {
   icon: string
   name: string
   type: string
-  stageConfig: UsableStageConfig
+  stageConfig: StageUnderReview | StageConfigured
   isAppchain: boolean
   additionalConsiderations:
     | {
@@ -40,6 +44,7 @@ export interface StageSectionProps extends ProjectSectionProps {
         long: string
       }
     | undefined
+  scopeOfAssessment?: ProjectScalingScopeOfAssessment
 }
 
 export function StageSection({
@@ -49,6 +54,7 @@ export function StageSection({
   stageConfig,
   isAppchain,
   additionalConsiderations,
+  scopeOfAssessment,
   ...sectionProps
 }: StageSectionProps) {
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
@@ -81,7 +87,7 @@ export function StageSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      <span className="mb-4 inline-block w-full rounded bg-surface-secondary px-6 py-4 font-medium">
+      <span className="mb-4 inline-block w-full rounded-lg bg-surface-secondary p-4 font-medium md:px-6">
         <Image
           src={icon}
           alt={name}
@@ -99,6 +105,12 @@ export function StageSection({
         />
         <span> {type}</span>.
       </span>
+      {scopeOfAssessment && (
+        <ScopeOfAssessment
+          className="mb-4"
+          scopeOfAssessment={scopeOfAssessment}
+        />
+      )}
       {additionalConsiderations && (
         <div className="space-y-4 p-4 text-base">
           {isAppchain && (
@@ -162,7 +174,7 @@ export function StageSection({
 
           return (
             <AccordionItem key={stage.stage} value={stage.stage}>
-              <AccordionTrigger className="px-6 py-4 text-lg font-normal">
+              <AccordionTrigger className="py-4 text-lg font-normal md:px-6">
                 <div className="flex select-none items-center justify-start gap-3 max-md:text-base">
                   <StageBadge stage={stage.stage} isAppchain={false} />
                   {missingForLabel.length === 0 ? (
@@ -192,11 +204,11 @@ export function StageSection({
                   )}
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="mx-6 space-y-1 text-lg md:space-y-2">
+              <AccordionContent className="space-y-1 text-lg md:mx-6 md:space-y-2">
                 {stage.principle && (
-                  <div className="rounded-lg border border-brand p-2">
+                  <>
                     <div className="flex items-center gap-1">
-                      <span className="ml-6 text-[13px] uppercase">
+                      <span className="text-[13px] uppercase leading-normal">
                         {featureFlags.stageOneRequirementsChanged()
                           ? 'Principle'
                           : 'Upcoming principle'}
@@ -212,26 +224,28 @@ export function StageSection({
                         </TooltipContent>
                       </Tooltip>
                     </div>
-                    <div className="flex">
-                      {stage.principle.satisfied === 'UnderReview' ? (
-                        <UnderReviewIcon className="mt-0.5 size-4 shrink-0" />
-                      ) : stage.principle.satisfied === true ? (
-                        <SatisfiedIcon className="mt-0.5 size-4 shrink-0 fill-positive" />
-                      ) : (
-                        <MissingIcon className="mt-0.5 size-4 shrink-0 fill-negative" />
-                      )}
-                      <Markdown className="ml-2 font-medium leading-tight max-md:text-base">
-                        {stage.principle.description}
-                      </Markdown>
+                    <div className="rounded-lg border border-brand px-[15px] py-3">
+                      <div className="flex">
+                        {stage.principle.satisfied === 'UnderReview' ? (
+                          <UnderReviewIcon className="mt-0.5 size-4 shrink-0" />
+                        ) : stage.principle.satisfied === true ? (
+                          <SatisfiedIcon className="mt-0.5 size-4 shrink-0 fill-positive" />
+                        ) : (
+                          <MissingIcon className="mt-0.5 size-4 shrink-0 fill-negative" />
+                        )}
+                        <Markdown className="ml-2 font-medium leading-tight max-md:text-base">
+                          {stage.principle.description}
+                        </Markdown>
+                      </div>
                     </div>
-                  </div>
+                  </>
                 )}
 
                 {featureFlags.stageOneRequirementsChanged() &&
                   stage.principle && (
                     <p className="ml-8 text-[13px] uppercase">Guidelines</p>
                   )}
-                <ul className="space-y-1 px-2 md:space-y-2">
+                <ul className="space-y-1 px-4 md:space-y-2">
                   {satisfiedRequirements.map((req, i) => (
                     <li key={i} className="flex">
                       <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive" />

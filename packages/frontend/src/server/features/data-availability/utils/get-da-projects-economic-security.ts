@@ -10,7 +10,7 @@ export async function getDaProjectsEconomicSecurity(): Promise<ProjectsEconomicS
   return getProjectsEconomicSecurityData()
 }
 
-type ProjectsEconomicSecurity = Record<string, number | undefined>
+export type ProjectsEconomicSecurity = Record<string, number | undefined>
 
 async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecurity> {
   // TODO: It's probably better to not fetch all data at once

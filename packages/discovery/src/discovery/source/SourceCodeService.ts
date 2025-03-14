@@ -26,11 +26,9 @@ export interface ContractSources {
 export class SourceCodeService {
   async getSources(
     provider: IProvider,
-    address: EthereumAddress,
-    implementations: EthereumAddress[],
+    addresses: EthereumAddress[],
     manualSourcePath: Record<string, string>,
   ): Promise<ContractSources> {
-    const addresses = [address, ...(implementations ?? [])]
     const metadataPerAddress = await Promise.all(
       addresses.map(
         async (x) =>

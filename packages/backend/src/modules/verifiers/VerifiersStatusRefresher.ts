@@ -49,9 +49,7 @@ export class VerifiersStatusRefresher {
           verifier.contractAddress,
         )
 
-        transactions.sort(
-          (a, b) => b.timestamp.toNumber() - a.timestamp.toNumber(),
-        )
+        transactions.sort((a, b) => b.timestamp - a.timestamp)
 
         const lastUsed = transactions[0].timestamp
 

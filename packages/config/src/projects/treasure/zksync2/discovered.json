@@ -1,0 +1,10 @@
+{
+  "name": "treasure",
+  "chain": "zksync2",
+  "blockNumber": 54952364,
+  "configHash": "0xa28fa0d224e7a6fff4a042a3496c8048e1096216c888f032afa2b8987640576d",
+  "sharedModules": ["shared-zk-stack"],
+  "entries": [],
+  "abis": {},
+  "usedTemplates": {}
+}

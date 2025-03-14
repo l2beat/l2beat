@@ -8,25 +8,27 @@ export class SyncOptimizer {
   constructor(private readonly clock: Clock) {}
 
   get sixHourlyCutOffWithGracePeriod() {
-    return this.clock
-      .getLastHour()
-      .add(-this.clock.sixHourlyCutoffDays - this.gracePeriodDays, 'days')
-      .toEndOf('six hours')
+    return UnixTime.toEndOf(
+      this.clock.getLastHour() +
+        (-this.clock.sixHourlyCutoffDays - this.gracePeriodDays) * UnixTime.DAY,
+      'six hours',
+    )
   }
 
   get hourlyCutOffWithGracePeriod() {
-    return this.clock
-      .getLastHour()
-      .add(-this.clock.hourlyCutoffDays - this.gracePeriodDays, 'days')
-      .toEndOf('hour')
+    return UnixTime.toEndOf(
+      this.clock.getLastHour() +
+        (-this.clock.hourlyCutoffDays - this.gracePeriodDays) * UnixTime.DAY,
+      'hour',
+    )
   }
 
   shouldTimestampBeSynced(timestamp: UnixTime) {
-    return timestamp.equals(this.getTimestampToSync(timestamp.toNumber()))
+    return timestamp === this.getTimestampToSync(timestamp)
   }
 
   getTimestampToSync(_timestamp: number): UnixTime {
-    const timestamp = new UnixTime(_timestamp)
+    const timestamp = UnixTime(_timestamp)
 
     const hourlyCutOff = this.hourlyCutOffWithGracePeriod
     const sixHourlyCutOff = this.sixHourlyCutOffWithGracePeriod
@@ -38,11 +40,11 @@ export class SyncOptimizer {
     const timestamps: UnixTime[] = []
 
     let current = this.getTimestampToSync(from)
-    const last = new UnixTime(to)
+    const last = UnixTime(to)
 
-    while (current.lte(last) && timestamps.length < maxTimestamps) {
+    while (current <= last && timestamps.length < maxTimestamps) {
       timestamps.push(current)
-      current = this.getTimestampToSync(current.toNumber() + 1)
+      current = this.getTimestampToSync(current + 1)
     }
 
     return timestamps

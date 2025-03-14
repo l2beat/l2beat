@@ -4,7 +4,7 @@ import { expect, mockObject } from 'earl'
 import type { Clock } from '../../../tools/Clock'
 import { DayTargetIndexer } from './DayTargetIndexer'
 
-const LAST_HOUR = UnixTime.now().add(-1, 'hours')
+const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
 
 describe(DayTargetIndexer.name, () => {
   describe(DayTargetIndexer.prototype.start.name, () => {
@@ -32,7 +32,9 @@ describe(DayTargetIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toEqual(LAST_HOUR.toStartOf('day').toDays())
+      expect(result).toEqual(
+        UnixTime.toDays(UnixTime.toStartOf(LAST_HOUR, 'day')),
+      )
     })
   })
 })

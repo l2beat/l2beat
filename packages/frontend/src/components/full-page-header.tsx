@@ -8,7 +8,6 @@ interface Props {
   className?: string
   contentWrapperClassName?: string
   as?: 'header' | 'div'
-  type?: 'project'
 }
 
 export function FullPageHeader(props: Props) {
@@ -22,7 +21,6 @@ export function FullPageHeader(props: Props) {
       )}
     >
       <ContentWrapper
-        type={props.type}
         className={cn(
           'flex items-center justify-center',
           props.contentWrapperClassName,

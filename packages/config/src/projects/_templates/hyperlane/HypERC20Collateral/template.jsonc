@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["wrappedToken"],
+  "fields": {
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+          }
+        ]
+      }
+    }
+  }
+}

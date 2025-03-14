@@ -531,7 +531,7 @@ export class BatchingAndCachingProvider {
         return undefined
       } else {
         const parsed = parseCacheEntry(cached)
-        parsed.timestamp = new UnixTime(parsed.timestamp)
+        parsed.timestamp = UnixTime(parsed.timestamp)
         return parsed
       }
     }
@@ -555,9 +555,13 @@ export class BatchingAndCachingProvider {
     return blobs
   }
 
-  async getCelestiaBlob(height: number, namespace: string, commitment: string) {
+  async celestiaBlobExists(
+    height: number,
+    namespace: string,
+    commitment: string,
+  ) {
     const entry = await this.cache.entry(
-      'getCelestiaBlob',
+      'celestiaBlobExists',
       [height, namespace, commitment],
       undefined,
     )
@@ -566,13 +570,15 @@ export class BatchingAndCachingProvider {
       return parseCacheEntry(cached)
     }
 
-    const blob = await this.provider.getCelestiaBlob(
+    const blobExists = await this.provider.celestiaBlobExists(
       height,
       namespace,
       commitment,
     )
-    entry.write(JSON.stringify(blob))
-    return blob
+
+    entry.write(JSON.stringify(blobExists))
+
+    return blobExists
   }
 
   async getCelestiaBlockResultLogs(height: number) {

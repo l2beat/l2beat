@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
   type CleanDateRange,
@@ -19,7 +19,7 @@ export class AmountRepository extends BaseRepository {
       .selectFrom('Amount')
       .select(selectAmount)
       .where('configurationId', 'in', configIds)
-      .where('timestamp', '=', timestamp.toDate())
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
       .orderBy('timestamp')
       .execute()
     return rows.map(toRecord)
@@ -36,8 +36,8 @@ export class AmountRepository extends BaseRepository {
       .selectFrom('Amount')
       .select(selectAmount)
       .where('configurationId', 'in', configIds)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .where('timestamp', '<=', toInclusive.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .orderBy('timestamp')
       .execute()
     return rows.map(toRecord)
@@ -52,7 +52,7 @@ export class AmountRepository extends BaseRepository {
       .where(
         'timestamp',
         'in',
-        timestamps.map((t) => t.toDate()),
+        timestamps.map((t) => UnixTime.toDate(t)),
       )
       .orderBy('timestamp')
       .execute()
@@ -90,8 +90,8 @@ export class AmountRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('Amount')
       .where('configurationId', '=', configId)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .where('timestamp', '<=', toInclusive.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
@@ -103,7 +103,7 @@ export class AmountRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('Amount')
       .where('configurationId', '=', configId)
-      .where('timestamp', '>', fromExclusive.toDate())
+      .where('timestamp', '>', UnixTime.toDate(fromExclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

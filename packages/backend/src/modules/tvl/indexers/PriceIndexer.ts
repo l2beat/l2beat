@@ -26,7 +26,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     const adjustedTo = this.$.priceService.calculateAdjustedTo(from, to)
 
     const prices = await this.$.priceService.getPrices(
-      new UnixTime(from),
+      UnixTime(from),
       adjustedTo,
       this.$.coingeckoId,
       configurations,
@@ -34,7 +34,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
 
     this.logger.info('Fetched prices in range', {
       from,
-      to: adjustedTo.toNumber(),
+      to: adjustedTo,
       configurationsToSync: configurations.length,
       prices: prices.length,
     })
@@ -47,12 +47,12 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       await this.$.db.price.insertMany(optimizedPrices)
       this.logger.info('Saved prices into DB', {
         from,
-        to: adjustedTo.toNumber(),
+        to: adjustedTo,
         configurationsToSync: configurations.length,
         prices: optimizedPrices.length,
       })
 
-      return adjustedTo.toNumber()
+      return adjustedTo
     }
   }
 
@@ -60,8 +60,8 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     for (const configuration of configurations) {
       const deletedRecords = await this.$.db.price.deleteByConfigInTimeRange(
         configuration.id,
-        new UnixTime(configuration.from),
-        new UnixTime(configuration.to),
+        UnixTime(configuration.from),
+        UnixTime(configuration.to),
       )
 
       if (deletedRecords > 0) {

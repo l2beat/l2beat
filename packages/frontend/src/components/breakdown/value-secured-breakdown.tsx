@@ -21,13 +21,13 @@ export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
   const values = [
     {
       value: props.canonical,
-      className: 'bg-purple-100',
+      className: 'bg-chart-stacked-purple',
     },
+    { value: props.native, className: 'bg-chart-stacked-pink' },
     {
       value: props.external,
-      className: 'bg-yellow-200',
+      className: 'bg-chart-stacked-yellow',
     },
-    { value: props.native, className: 'bg-pink-100' },
   ]
 
   return (
@@ -52,14 +52,14 @@ export function ValueSecuredBreakdownTooltipContent({
       className: 'bg-purple-100 dark:bg-purple-100',
     },
     {
-      title: 'External',
-      value: external,
-      className: 'bg-yellow-200 dark:bg-yellow-200',
-    },
-    {
       title: 'Native',
       value: native,
       className: 'bg-pink-100 dark:bg-pink-100',
+    },
+    {
+      title: 'External',
+      value: external,
+      className: 'bg-yellow-200 dark:bg-yellow-200',
     },
   ]
   return (

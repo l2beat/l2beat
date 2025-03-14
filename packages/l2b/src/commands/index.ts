@@ -23,6 +23,7 @@ import { RefreshDiscovery } from './RefreshDiscovery'
 import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
+import { TokenScreening } from './TokenScreening'
 import { UI } from './UI'
 
 export function getSubcommands() {
@@ -52,6 +53,7 @@ export function getSubcommands() {
     Init,
     InitTemplate,
     TVL,
+    TokenScreening,
     UI,
   ]
 }

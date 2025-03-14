@@ -55,7 +55,11 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       to: adjustedTo,
     })
 
-    const blobs = await this.$.daProvider.getBlobs(from, adjustedTo)
+    const blobs = await this.$.daProvider.getBlobs(
+      this.daLayer,
+      from,
+      adjustedTo,
+    )
 
     if (blobs.length === 0) {
       this.logger.info('Empty blobs response received', {
@@ -97,13 +101,15 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
   }
 
   private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {
-    const from = new UnixTime(
-      Math.min(...blobs.map((b) => b.blockTimestamp.toNumber())),
-    ).toStartOf('day')
+    const from = UnixTime.toStartOf(
+      Math.min(...blobs.map((b) => b.blockTimestamp)),
+      'day',
+    )
 
-    const to = new UnixTime(
-      Math.max(...blobs.map((b) => b.blockTimestamp.toNumber())),
-    ).toEndOf('day')
+    const to = UnixTime.toEndOf(
+      Math.max(...blobs.map((b) => b.blockTimestamp)),
+      'day',
+    )
 
     return await this.$.db.dataAvailability.getForDaLayerInTimeRange(
       this.$.daLayer,

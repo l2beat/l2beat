@@ -1,24 +1,18 @@
+import { join } from 'path'
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
-import { type ChainConfig, ProjectService } from '..'
+import { chains } from '../processing/chains'
 import type { GeneratedToken } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
 
-const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
-const OUTPUT_FILE_PATH = './src/tokens/generated.json'
+const SOURCE_FILE_PATH = join(__dirname, 'tokens.jsonc')
+const OUTPUT_FILE_PATH = join(__dirname, 'generated.json')
 
 describe('tokens script', () => {
   const logger = ScriptLogger.SILENT
   const tokensFile = readTokensFile(SOURCE_FILE_PATH, logger)
   const generatedFile = readGeneratedFile(OUTPUT_FILE_PATH, logger)
-
-  let chains: ChainConfig[] = []
-  before(async () => {
-    const ps = new ProjectService()
-    const projects = await ps.getProjects({ select: ['chainConfig'] })
-    chains = projects.map((x) => x.chainConfig)
-  })
 
   it('every source has corresponding output entry', () => {
     for (const [chain, tokens] of Object.entries(tokensFile)) {

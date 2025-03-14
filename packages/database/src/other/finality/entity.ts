@@ -30,7 +30,7 @@ export function toRow(record: FinalityRecord): Insertable<Finality> {
   return {
     ...record,
     projectId: record.projectId.toString(),
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
   }
 }
 

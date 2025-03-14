@@ -1,9 +1,9 @@
 import type {
   Badge,
   Project,
+  ProjectScalingCategory,
+  ProjectScalingStage,
   ReasonForBeingInOther,
-  ScalingProjectCategory,
-  StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -44,7 +44,7 @@ import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
 
-export interface ScalingProjectEntry {
+export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
   slug: string
@@ -59,7 +59,7 @@ export interface ScalingProjectEntry {
     badges?: Badge[]
     links: ProjectLink[]
     hostChain?: string
-    category: ScalingProjectCategory
+    category: ProjectScalingCategory
     purposes: string[]
     tvs?: {
       breakdown?: {
@@ -93,7 +93,7 @@ export interface ScalingProjectEntry {
   countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
 }
 
 export async function getScalingProjectEntry(
@@ -117,7 +117,7 @@ export async function getScalingProjectEntry(
     | 'milestones'
     | 'trackedTxsConfig'
   >,
-): Promise<ScalingProjectEntry> {
+): Promise<ProjectScalingEntry> {
   const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
     await Promise.all([
       getProjectsChangeReport(),
@@ -125,7 +125,7 @@ export async function getScalingProjectEntry(
       getTvsProjectStats(project),
     ])
 
-  const header: ScalingProjectEntry['header'] = {
+  const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
@@ -198,7 +198,7 @@ export async function getScalingProjectEntry(
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     project.scalingInfo.layer === 'layer2'
-      ? api.costs.chartWithDataPosted.prefetch({
+      ? api.costs.projectChart.prefetch({
           range: '1y',
           projectId: project.id,
         })
@@ -216,7 +216,7 @@ export async function getScalingProjectEntry(
         filter: { type: 'projects', projectIds: [project.id] },
       }),
       project.scalingInfo.layer === 'layer2'
-        ? api.costs.chartWithDataPosted({
+        ? api.costs.projectChart({
             range: '1y',
             projectId: project.id,
           })
@@ -291,7 +291,7 @@ export async function getScalingProjectEntry(
     !project.isUpcoming &&
     trackedTransactions &&
     costsChartData &&
-    costsChartData.length > 0
+    costsChartData.chart.length > 0
   ) {
     sections.push({
       type: 'CostsSection',
@@ -409,11 +409,12 @@ export async function getScalingProjectEntry(
           project.scalingStage.stage !== 'UnderReview'
             ? project.scalingStage.additionalConsiderations
             : undefined,
+        scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
       },
     })
   }
 
-  const technologySection = await getScalingTechnologySection(project)
+  const technologySection = getScalingTechnologySection(project)
   if (technologySection) {
     sections.push({
       type: 'TechnologySection',
@@ -426,18 +427,19 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const dataAvailabilitySection = getDataAvailabilitySection(project)
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolution,
+  )
   if (dataAvailabilitySection) {
     sections.push({
-      type: 'Group',
+      type: dataAvailabilitySection.type,
       props: {
         id: 'da-layer',
         title: 'Data availability',
-        items: dataAvailabilitySection,
-        description: project.customDa?.description,
-        isUnderReview: project.statuses.isUnderReview,
+        ...dataAvailabilitySection.props,
       },
-    })
+    } as ProjectDetailsSection)
   }
 
   if (project.scalingTechnology.stateDerivation) {

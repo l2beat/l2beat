@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
 export function getEscrowUntilTimestamp(
   tokenUntil: UnixTime | undefined,
@@ -16,5 +16,5 @@ export function getEscrowUntilTimestamp(
     return tokenUntil
   }
 
-  return UnixTime.min(tokenUntil, escrowUntil)
+  return Math.min(tokenUntil, escrowUntil)
 }

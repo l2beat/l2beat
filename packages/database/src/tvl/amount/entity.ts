@@ -18,7 +18,7 @@ export function toRecord(entity: Selectable<Amount>): AmountRecord {
 
 export function toRow(amounts: AmountRecord): Insertable<Amount> {
   return {
-    timestamp: amounts.timestamp.toDate(),
+    timestamp: UnixTime.toDate(amounts.timestamp),
     amount: amounts.amount.toString(),
     configurationId: amounts.configId,
   }

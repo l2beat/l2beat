@@ -1,5 +1,5 @@
 import type { Database, IndexerStateRecord } from '@l2beat/database'
-import { UnixTime, type json } from '@l2beat/shared-pure'
+import type { json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { mockDatabase } from '../../test/database'
 import { IndexerService } from './IndexerService'
@@ -242,7 +242,7 @@ function mock(v: Partial<IndexerStateRecord>): IndexerStateRecord {
     indexerId: 'indexer',
     safeHeight: 1,
     configHash: '0x123456',
-    minTimestamp: UnixTime.ZERO,
+    minTimestamp: 0,
     ...v,
   }
 }

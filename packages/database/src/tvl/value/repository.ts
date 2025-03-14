@@ -1,4 +1,4 @@
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { QueryCreator } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import type { DB } from '../../kysely'
@@ -78,8 +78,8 @@ export class ValueRepository extends BaseRepository {
         'in',
         projectIds.map((id) => id.toString()),
       )
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)

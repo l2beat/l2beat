@@ -7,7 +7,7 @@ import type {
   AnalyzedContract,
   ExtendedTemplate,
 } from '../analysis/AddressAnalyzer'
-import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
+import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 
 describe(removeAlreadyAnalyzed.name, () => {
@@ -22,30 +22,30 @@ describe(removeAlreadyAnalyzed.name, () => {
 
   it('handles combined case', async () => {
     const resolved: Analysis[] = [
-      generateFakeAnalysis(A),
-      generateFakeAnalysis(B, {
+      mockContract(A),
+      mockContract(B, {
         template: 'templateForB',
         reason: 'byExtends',
         templateHash: Hash256(
           '0x000000000000000000000000000000000000000000000000000000000000000b',
         ),
       }),
-      generateFakeAnalysis(C, {
+      mockContract(C, {
         template: 'templateForC',
         reason: 'byReferrer',
         templateHash: Hash256(
           '0x000000000000000000000000000000000000000000000000000000000000000c',
         ),
       }),
-      { address: D, type: 'EOA' },
-      generateFakeAnalysis(E, {
+      { ...EMPTY_ANALYZED_EOA, address: D, type: 'EOA' },
+      mockContract(E, {
         template: 'templateForE',
         reason: 'byReferrer',
         templateHash: Hash256(
           '0x000000000000000000000000000000000000000000000000000000000000000e',
         ),
       }),
-      generateFakeAnalysis(F, {
+      mockContract(F, {
         template: 'templateForF',
         reason: 'byReferrer',
         templateHash: Hash256(
@@ -70,15 +70,15 @@ describe(removeAlreadyAnalyzed.name, () => {
       [H.toString()]: new Set([]),
     })
     expect(resolved).toEqual([
-      generateFakeAnalysis(A),
-      generateFakeAnalysis(B, {
+      mockContract(A),
+      mockContract(B, {
         template: 'templateForB',
         reason: 'byExtends',
         templateHash: Hash256(
           '0x000000000000000000000000000000000000000000000000000000000000000b',
         ),
       }),
-      generateFakeAnalysis(
+      mockContract(
         C,
         {
           template: 'templateForC',
@@ -91,8 +91,8 @@ describe(removeAlreadyAnalyzed.name, () => {
           '@template': 'Conflicting templates: newTemplateForC',
         },
       ),
-      { address: D, type: 'EOA' },
-      generateFakeAnalysis(
+      { ...EMPTY_ANALYZED_EOA, address: D, type: 'EOA' },
+      mockContract(
         E,
         {
           template: 'templateForE',
@@ -106,7 +106,7 @@ describe(removeAlreadyAnalyzed.name, () => {
             'Conflicting templates: newTemplateForE1, newTemplateForE2',
         },
       ),
-      generateFakeAnalysis(F, {
+      mockContract(F, {
         template: 'templateForF',
         reason: 'byReferrer',
         templateHash: Hash256(
@@ -117,7 +117,7 @@ describe(removeAlreadyAnalyzed.name, () => {
   })
 })
 
-const generateFakeAnalysis = (
+const mockContract = (
   address: EthereumAddress,
   extendedTemplate?: ExtendedTemplate,
   errors?: Record<string, string>,

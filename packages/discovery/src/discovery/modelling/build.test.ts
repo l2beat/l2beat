@@ -1,31 +1,33 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ContractParameters, EoaParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import { buildAddressToNameMap } from './build'
 
 describe(buildAddressToNameMap.name, () => {
   it('builds a map of addresses to names', () => {
-    const contracts: ContractParameters[] = [
+    const entries: EntryParameters[] = [
       {
+        type: 'Contract',
         address: EthereumAddress('0x1230000000000000000000000000000000000000'),
         name: 'ContractA',
       },
       {
+        type: 'Contract',
         address: EthereumAddress('0xdead00000000000000000000000000000000beef'),
         name: 'ContractB',
       },
-    ]
-    const eoas: EoaParameters[] = [
       {
+        type: 'EOA',
         address: EthereumAddress('0x7890000000000000000000000000000000000000'),
         name: 'EoaName',
       },
       {
+        type: 'EOA',
         address: EthereumAddress('0xabc0000000000000000000000000000000000000'),
       },
     ]
 
-    const addressToNameMap = buildAddressToNameMap('ethereum', contracts, eoas)
+    const addressToNameMap = buildAddressToNameMap('ethereum', entries)
     expect(addressToNameMap).toEqual({
       '0x1230000000000000000000000000000000000000':
         'ContractA_ethereum_0x1230000000000000000000000000000000000000',

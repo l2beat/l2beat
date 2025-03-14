@@ -68,7 +68,7 @@ function createCirculatingSupplyIndexers(
     const indexer = new CirculatingSupplyIndexer({
       logger,
       parents: [hourlyIndexer],
-      minHeight: circulatingSupply.sinceTimestamp.toNumber(),
+      minHeight: circulatingSupply.sinceTimestamp,
       indexerService,
       configuration: circulatingSupply,
       circulatingSupplyService,
@@ -92,11 +92,9 @@ function createCirculatingSupplyIndexers(
       return indexer
     })
 
-    const minHeight = Math.min(
-      ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
-    )
+    const minHeight = Math.min(...amountConfigs.map((c) => c.sinceTimestamp))
     const maxHeight = Math.max(
-      ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+      ...amountConfigs.map((c) => c.untilTimestamp ?? Infinity),
     )
 
     const indexer = new ValueIndexer({

@@ -17,7 +17,7 @@ describe(decodeBatch.name, () => {
     const batch = byteArrFromHexStr(stub.batch)
     const data = decodeBatch(batch, {
       l2BlockTimeSeconds: 2,
-      genesisTimestamp: new UnixTime(1686789347),
+      genesisTimestamp: UnixTime(1686789347),
       blockOffset: 0,
     })
     expect(data).toEqual(stub.decoded)
@@ -33,7 +33,7 @@ describe(decodeBatch.name, () => {
     const batch = byteArrFromHexStr(stub.batch)
     const data = decodeBatch(batch, {
       l2BlockTimeSeconds: 2,
-      genesisTimestamp: new UnixTime(1708809815),
+      genesisTimestamp: UnixTime(1708809815),
       blockOffset: 0,
     })
     expect(data).toEqual(stub.decoded)

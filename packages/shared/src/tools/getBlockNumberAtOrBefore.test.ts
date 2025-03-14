@@ -6,7 +6,7 @@ import { getBlockNumberAtOrBefore } from './getBlockNumberAtOrBefore'
 describe(getBlockNumberAtOrBefore.name, () => {
   it('works properly', async () => {
     const result = await getBlockNumberAtOrBefore(
-      new UnixTime(69420),
+      UnixTime(69420),
       0,
       100000,
       fakeGetBlock,
@@ -17,7 +17,7 @@ describe(getBlockNumberAtOrBefore.name, () => {
 
   it('finds before when at not available', async () => {
     const result = await getBlockNumberAtOrBefore(
-      new UnixTime(4275),
+      UnixTime(4275),
       0,
       100000,
       fakeGetBlock,

@@ -1,17 +1,18 @@
 import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
-import type { ConfigReader } from '@l2beat/discovery'
+import type { ConfigReader, DiscoveryPaths } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery'
 import { getChainFullName } from '@l2beat/discovery/dist/config/config.discovery'
 import { getProjectDiscoveries } from './getDiscoveries'
 import type { ApiCodeResponse } from './types'
 
 export function getCode(
+  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   address: string,
 ): ApiCodeResponse {
-  const codePaths = getCodePaths(configReader, project, address)
+  const codePaths = getCodePaths(paths, configReader, project, address)
   return {
     sources: codePaths
       .map(({ name, path }) => ({
@@ -23,6 +24,7 @@ export function getCode(
 }
 
 export function getCodePaths(
+  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   address: string,
@@ -32,30 +34,20 @@ export function getCodePaths(
   const discoveries = getProjectDiscoveries(configReader, project, chain)
 
   for (const discovery of discoveries) {
-    const contract = discovery.contracts.find(
-      (x) => x.address === simpleAddress,
-    )
-    if (!contract) {
+    const entry = discovery.entries.find((x) => x.address === simpleAddress)
+    if (!entry) {
       continue
     }
 
-    const similar = discovery.contracts.filter((x) => x.name === contract.name)
-    const hasImplementations = get$Implementations(contract.values).length > 0
+    const similar = discovery.entries.filter((x) => x.name === entry.name)
+    const hasImplementations = get$Implementations(entry.values).length > 0
 
     const name =
-      similar.length > 1
-        ? `${contract.name}-${contract.address}`
-        : `${contract.name}`
-    const root = join(
-      configReader.rootPath,
-      'discovery',
-      discovery.name,
-      chain,
-      '.flat',
-    )
+      similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
+    const root = join(paths.discovery, discovery.name, chain, '.flat')
 
     if (!hasImplementations) {
-      return [{ name: `${contract.name}.sol`, path: join(root, name + '.sol') }]
+      return [{ name: `${entry.name}.sol`, path: join(root, name + '.sol') }]
     } else {
       const dir = readdirSync(join(root, name))
       return dir

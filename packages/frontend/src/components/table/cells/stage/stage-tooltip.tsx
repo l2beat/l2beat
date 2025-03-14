@@ -1,4 +1,4 @@
-import type { Stage, StageConfig } from '@l2beat/config'
+import type { ProjectScalingStage, Stage } from '@l2beat/config'
 import {
   StageBadge,
   getStageTextClassname,
@@ -15,7 +15,7 @@ import { UnderReviewIcon } from '~/icons/under-review'
 import { cn } from '~/utils/cn'
 
 export interface StageTooltipProps {
-  stageConfig: StageConfig
+  stageConfig: ProjectScalingStage
   isAppchain: boolean
 }
 

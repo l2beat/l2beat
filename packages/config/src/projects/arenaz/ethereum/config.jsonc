@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "arenaz",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x564Eb0CeFCcA86160649a8986C419693c82F3678" // L1StandardBridge
+  ],
+  "overrides": {
+    "0x658656A14AFdf9c507096aC406564497d13EC754": {
+      // permissionedGamesTotal from the template ignored as they are using permissioned games by default
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    }
+  }
+}

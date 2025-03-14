@@ -1,7 +1,7 @@
-import type { StageConfig } from '@l2beat/config'
+import type { ProjectScalingStage } from '@l2beat/config'
 import type { Row } from '@tanstack/react-table'
 
-export function sortStages<TData extends { stage: StageConfig }>(
+export function sortStages<TData extends { stage: ProjectScalingStage }>(
   rowA: Row<TData>,
   rowB: Row<TData>,
 ) {
@@ -17,7 +17,7 @@ export function sortStages<TData extends { stage: StageConfig }>(
   return stageOrderValueA > stageOrderValueB ? 1 : -1
 }
 
-function getStageOrderValue(stageConfig: StageConfig) {
+function getStageOrderValue(stageConfig: ProjectScalingStage) {
   const stage = stageConfig.stage
   if (stage === 'NotApplicable' || stage === 'UnderReview') {
     return undefined

@@ -36,7 +36,7 @@ describe(BlockActivityIndexer.name, () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([
           activityRecord('a', START, 7, 7, 0, 8),
-          activityRecord('a', START.add(1, 'days'), 3, 4, 11, 13),
+          activityRecord('a', START + 1 * UnixTime.DAY, 3, 4, 11, 13),
         ]),
         upsertMany: mockFn().resolvesTo(undefined),
       })
@@ -44,8 +44,8 @@ describe(BlockActivityIndexer.name, () => {
       const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo([
           activityRecord('a', START, 5, 5, 9, 10),
-          activityRecord('a', START.add(1, 'days'), 4, 5, 13, 15),
-          activityRecord('a', START.add(2, 'days'), 2, 2, 16, 20),
+          activityRecord('a', START + 1 * UnixTime.DAY, 4, 5, 13, 15),
+          activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 20),
         ]),
       })
 
@@ -60,8 +60,8 @@ describe(BlockActivityIndexer.name, () => {
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith([
         activityRecord('a', START, 12, 12, 0, 10),
-        activityRecord('a', START.add(1, 'days'), 7, 9, 11, 15),
-        activityRecord('a', START.add(2, 'days'), 2, 2, 16, 20),
+        activityRecord('a', START + 1 * UnixTime.DAY, 7, 9, 11, 15),
+        activityRecord('a', START + 2 * UnixTime.DAY, 2, 2, 16, 20),
       ])
       expect(newSafeHeight).toEqual(10)
     })
@@ -115,8 +115,8 @@ describe(BlockActivityIndexer.name, () => {
     it('returns a map of timestamps to records', async () => {
       const mockActivityRecords = [
         activityRecord('a', START, 1, 1),
-        activityRecord('a', START.add(1, 'days'), 2, 2),
-        activityRecord('a', START.add(2, 'days'), 4, 6),
+        activityRecord('a', START + 1 * UnixTime.DAY, 2, 2),
+        activityRecord('a', START + 2 * UnixTime.DAY, 4, 6),
       ]
 
       const activityRepository = mockObject<Database['activity']>({
@@ -129,8 +129,8 @@ describe(BlockActivityIndexer.name, () => {
       })
 
       const entries = await indexer.getDatabaseEntries([
-        activityRecord('a', START.add(2, 'days'), 4, 6),
-        activityRecord('a', START.add(1, 'hours'), 4, 4),
+        activityRecord('a', START + 2 * UnixTime.DAY, 4, 6),
+        activityRecord('a', START + 1 * UnixTime.HOUR, 4, 4),
         activityRecord('a', START, 1, 1),
       ])
 
@@ -139,15 +139,15 @@ describe(BlockActivityIndexer.name, () => {
         activityRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(1, ProjectId('a'), [
         START,
-        START.add(2, 'days'),
+        START + 2 * UnixTime.DAY,
       ])
 
       // returns a map of timestamps to counts
       expect(entries).toEqual(
         new Map([
-          [START.toNumber(), mockActivityRecords[0]],
-          [START.add(1, 'days').toNumber(), mockActivityRecords[1]],
-          [START.add(2, 'days').toNumber(), mockActivityRecords[2]],
+          [START, mockActivityRecords[0]],
+          [START + 1 * UnixTime.DAY, mockActivityRecords[1]],
+          [START + 2 * UnixTime.DAY, mockActivityRecords[2]],
         ]),
       )
     })
@@ -172,8 +172,8 @@ describe(BlockActivityIndexer.name, () => {
     it('throws assertion when more than one record found', async () => {
       const mockProjectId = ProjectId('a')
       const mockActivityRecords = [
-        activityRecord(mockProjectId, START.add(-1, 'days'), 2, 11, 20),
-        activityRecord(mockProjectId, START.add(-2, 'days'), 4, 11, 20),
+        activityRecord(mockProjectId, START - 1 * UnixTime.DAY, 2, 11, 20),
+        activityRecord(mockProjectId, START - 2 * UnixTime.DAY, 4, 11, 20),
       ]
 
       const activityRepository = mockObject<Database['activity']>({
@@ -196,7 +196,7 @@ describe(BlockActivityIndexer.name, () => {
     it('deletes records and returns adjusted targetHeight', async () => {
       const mockProjectId = ProjectId('a')
       const mockActivityRecords = [
-        activityRecord(mockProjectId, START.add(-1, 'days'), 2, 11, 20),
+        activityRecord(mockProjectId, START - 1 * UnixTime.DAY, 2, 11, 20),
       ]
 
       const activityRepository = mockObject<Database['activity']>({

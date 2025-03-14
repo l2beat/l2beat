@@ -93,10 +93,10 @@ export interface IProvider {
 
   getBlobs(txHash: string): Promise<BlobsInBlock>
 
-  getCelestiaBlob(
+  celestiaBlobExists(
     height: number,
     namespace: string,
     commitment: string,
-  ): Promise<string | undefined>
+  ): Promise<boolean>
   getCelestiaBlockResultLogs(height: number): Promise<string[]>
 }

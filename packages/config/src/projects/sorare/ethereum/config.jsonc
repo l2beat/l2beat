@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "sorare",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xF5C9F957705bea56a7e806943f98F7777B995826"],
+  "sharedModules": ["shared-sharp-verifier"],
+  "names": {
+    "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B": "SorareAdminMultisig"
+  }
+}

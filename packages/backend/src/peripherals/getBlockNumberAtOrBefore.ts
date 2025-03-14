@@ -9,8 +9,8 @@ export async function getBlockNumberAtOrBefore(
   while (start + 1 < end) {
     const mid = start + Math.floor((end - start) / 2)
     const midBlock = await getBlock(Number(mid))
-    const midTimestamp = new UnixTime(midBlock.timestamp)
-    if (midTimestamp.lte(timestamp)) {
+    const midTimestamp = UnixTime(midBlock.timestamp)
+    if (midTimestamp <= timestamp) {
       start = mid
     } else {
       end = mid

@@ -1,0 +1,24 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sxnetwork",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sxnetwork-SX",
+      "priceId": "sx-network-2",
+      "symbol": "SX",
+      "name": "SX Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
+        "chain": "ethereum",
+        "escrowAddress": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
+        "decimals": 18,
+        "sinceTimestamp": 1720173479
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

@@ -1,14 +1,12 @@
-import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
+import { getSummedActivityForProjects } from '../activity/get-summed-activity-for-projects'
 import { getCostsForProjects } from './get-costs-for-projects'
 import type { LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { isCostsSynced } from './utils/is-costs-synced'
 import type { CostsTimeRange } from './utils/range'
-import { getFullySyncedCostsRange } from './utils/range'
 
 export function getCostsTable(
   ...parameters: Parameters<typeof getCachedCostsTableData>
@@ -24,10 +22,17 @@ export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 export const getCachedCostsTableData = cache(
   async (timeRange: CostsTimeRange) => {
     const projects = (await getCostsProjects()).filter((p) => !p.isArchived)
+
     const projectsCosts = await getCostsForProjects(projects, timeRange)
-    const projectsActivity = await getLatestActivityForProjects(
+    const rangeByProject = Object.fromEntries(
+      Object.entries(projectsCosts).map(([projectId, data]) => {
+        return [projectId, data.range]
+      }),
+    )
+    const projectsActivity = await getSummedActivityForProjects(
       projects.map((p) => p.id),
       timeRange,
+      rangeByProject,
     )
 
     return Object.fromEntries(
@@ -50,20 +55,6 @@ export const getCachedCostsTableData = cache(
     revalidate: UnixTime.HOUR,
   },
 )
-
-async function getLatestActivityForProjects(
-  projects: ProjectId[],
-  timeRange: CostsTimeRange,
-) {
-  const db = getDb()
-  const range = getFullySyncedCostsRange(timeRange)
-  const summedCounts =
-    await db.activity.getSummedUopsCountForProjectsAndTimeRange(projects, range)
-
-  return Object.fromEntries(
-    summedCounts.map((record) => [record.projectId, record.uopsCount]),
-  )
-}
 
 function withTotal(data: LatestCostsProjectResponse) {
   return {

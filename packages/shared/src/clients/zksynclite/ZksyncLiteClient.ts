@@ -50,9 +50,7 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
       async (blockNumber) => {
         const transactions = await this.getTransactionsInBlock(blockNumber)
         return {
-          timestamp: Math.min(
-            ...transactions.map((t) => t.createdAt.toNumber()),
-          ),
+          timestamp: Math.min(...transactions.map((t) => t.createdAt)),
         }
       },
     )
@@ -67,7 +65,7 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
     return {
       number: blockNumber,
       hash: 'UNSUPPORTED',
-      timestamp: Math.min(...transactions.map((t) => t.createdAt.toNumber())),
+      timestamp: Math.min(...transactions.map((t) => t.createdAt)),
       transactions: transactions.map((t) => ({
         hash: t.txHash,
       })),

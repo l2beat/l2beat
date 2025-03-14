@@ -19,7 +19,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('project-a', 'layer-a', START, 100n),
         record('project-b', 'layer-a', START, 200n),
         record('project-c', 'layer-b', START, 300n),
-        record('project-c', 'layer-b', START.add(1, 'days'), 400n),
+        record('project-c', 'layer-b', START + 1 * UnixTime.DAY, 400n),
       ])
 
       const results = await repository.getAll()
@@ -27,7 +27,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('project-a', 'layer-a', START, 100n),
         record('project-b', 'layer-a', START, 200n),
         record('project-c', 'layer-b', START, 300n),
-        record('project-c', 'layer-b', START.add(1, 'days'), 400n),
+        record('project-c', 'layer-b', START + 1 * UnixTime.DAY, 400n),
       ])
     })
 
@@ -70,21 +70,21 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     it('returns records for a DA layer within time range', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 200n),
-        record('project-a', 'layer-a', START.add(2, 'days'), 300n),
-        record('project-a', 'layer-a', START.add(3, 'days'), 400n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 200n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 300n),
+        record('project-a', 'layer-a', START + 3 * UnixTime.DAY, 400n),
       ])
 
       const results = await repository.getForDaLayerInTimeRange(
         'layer-a',
         START,
-        START.add(2, 'days'),
+        START + 2 * UnixTime.DAY,
       )
 
       expect(results).toEqualUnsorted([
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 200n),
-        record('project-a', 'layer-a', START.add(2, 'days'), 300n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 200n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 300n),
       ])
     })
 
@@ -97,7 +97,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       const results = await repository.getForDaLayerInTimeRange(
         'layer-c',
         START,
-        START.add(1, 'days'),
+        START + 1 * UnixTime.DAY,
       )
 
       expect(results).toEqual([])
@@ -106,13 +106,13 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     it('returns empty array when no records exist in time range', async () => {
       await repository.upsertMany([
         record('project-1', 'layer-1', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 200n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 200n),
       ])
 
       const results = await repository.getForDaLayerInTimeRange(
         'ethereum',
-        START.add(2, 'days'),
-        START.add(3, 'days'),
+        START + 2 * UnixTime.DAY,
+        START + 3 * UnixTime.DAY,
       )
 
       expect(results).toEqual([])
@@ -122,7 +122,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       const results = await repository.getForDaLayerInTimeRange(
         'ethereum',
         START,
-        START.add(1, 'days'),
+        START + 1 * UnixTime.DAY,
       )
 
       expect(results).toEqual([])
@@ -134,41 +134,41 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     it('should return records for projects in given time range', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
-        record('project-a', 'layer-a', START.add(2, 'days'), 10_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 10_000n),
         record('project-b', 'layer-a', START, 200n),
-        record('project-b', 'layer-a', START.add(1, 'days'), 2_000n),
+        record('project-b', 'layer-a', START + 1 * UnixTime.DAY, 2_000n),
         record('project-c', 'layer-a', START, 300n),
       ])
 
       const results = await repository.getByProjectIdsAndTimeRange(
         ['project-a', 'project-b'],
-        [START, START.add(1, 'days')],
+        [START, START + 1 * UnixTime.DAY],
       )
 
       expect(results).toEqualUnsorted([
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
         record('project-b', 'layer-a', START, 200n),
-        record('project-b', 'layer-a', START.add(1, 'days'), 2_000n),
+        record('project-b', 'layer-a', START + 1 * UnixTime.DAY, 2_000n),
       ])
     })
 
     it('allows to query for null from', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
-        record('project-a', 'layer-a', START.add(2, 'days'), 1_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 1_000n),
       ])
 
       const results = await repository.getByProjectIdsAndTimeRange(
         ['project-a', 'project-b'],
-        [null, START.add(1, 'days')],
+        [null, START + 1 * UnixTime.DAY],
       )
 
       expect(results).toEqualUnsorted([
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
       ])
     })
   })
@@ -178,43 +178,43 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     it('should return records for projects in given time range', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
-        record('project-a', 'layer-a', START.add(2, 'days'), 10_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 10_000n),
         record('project-b', 'layer-b', START, 200n),
-        record('project-b', 'layer-b', START.add(1, 'days'), 2_000n),
-        record('project-b', 'layer-b', START.add(2, 'days'), 2_000n),
+        record('project-b', 'layer-b', START + 1 * UnixTime.DAY, 2_000n),
+        record('project-b', 'layer-b', START + 2 * UnixTime.DAY, 2_000n),
         record('project-c', 'layer-a', START, 300n),
       ])
 
       const results = await repository.getByDaLayersAndTimeRange(
         ['layer-b'],
-        [START, START.add(1, 'days')],
+        [START, START + 1 * UnixTime.DAY],
       )
 
       expect(results).toEqual([
         record('project-b', 'layer-b', START, 200n),
-        record('project-b', 'layer-b', START.add(1, 'days'), 2_000n),
+        record('project-b', 'layer-b', START + 1 * UnixTime.DAY, 2_000n),
       ])
     })
 
     it('allows to query for null from', async () => {
       await repository.upsertMany([
-        record('project-a', 'layer-a', START.add(-1, 'days'), 100n),
+        record('project-a', 'layer-a', START - 1 * UnixTime.DAY, 100n),
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
-        record('project-a', 'layer-a', START.add(2, 'days'), 1_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 1_000n),
         record('project-b', 'layer-b', START, 1_000n),
       ])
 
       const results = await repository.getByDaLayersAndTimeRange(
         ['layer-a'],
-        [null, START.add(1, 'days')],
+        [null, START + 1 * UnixTime.DAY],
       )
 
       expect(results).toEqual([
-        record('project-a', 'layer-a', START.add(-1, 'days'), 100n),
+        record('project-a', 'layer-a', START - 1 * UnixTime.DAY, 100n),
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
       ])
     })
   })
@@ -223,26 +223,26 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     .getSummedProjectsByDaLayersAndTimeRange.name, () => {
     it('returns summed PROJECTS (not the daLayer itself)', async () => {
       await repository.upsertMany([
-        record('project-a', 'layer-a', START.add(-1, 'days'), 100n),
+        record('project-a', 'layer-a', START - 1 * UnixTime.DAY, 100n),
         record('project-a', 'layer-a', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
-        record('project-a', 'layer-a', START.add(2, 'days'), 1_000n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 1_000n),
         record('project-c', 'layer-b', START, 1_000n),
         record('project-b', 'layer-a', START, 10n),
-        record('project-b', 'layer-a', START.add(1, 'days'), 2_000n),
-        record('layer-a', 'layer-a', START.add(1, 'days'), 1_000_000n),
+        record('project-b', 'layer-a', START + 1 * UnixTime.DAY, 2_000n),
+        record('layer-a', 'layer-a', START + 1 * UnixTime.DAY, 1_000_000n),
       ])
 
       const results = await repository.getSummedProjectsByDaLayersAndTimeRange(
         ['layer-a'],
-        [START, START.add(1, 'days')],
+        [START, START + 1 * UnixTime.DAY],
       )
 
       expect(results).toEqual([
         { daLayer: 'layer-a', timestamp: START, totalSize: 110n },
         {
           daLayer: 'layer-a',
-          timestamp: START.add(1, 'days'),
+          timestamp: START + 1 * UnixTime.DAY,
           totalSize: 3_000n,
         },
       ])
@@ -255,7 +255,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('project-a', 'layer-a', START, 100n),
         record('project-b', 'layer-a', START, 100n),
         record('project-a', 'layer-b', START, 100n),
-        record('project-a', 'layer-a', START.add(1, 'days'), 200n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 200n),
       ])
 
       const deletedCount = await repository.deleteByProject(

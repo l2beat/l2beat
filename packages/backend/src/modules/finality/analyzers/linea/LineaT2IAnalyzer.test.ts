@@ -41,7 +41,7 @@ describe(LineaT2IAnalyzer.name, () => {
         mockObject<Database>(),
         ProjectId('linea'),
       )
-      const tx = { txHash: '0x121', timestamp: new UnixTime(1708352483) }
+      const tx = { txHash: '0x121', timestamp: UnixTime(1708352483) }
       const previousTx = tx // not used
       const results = await calculator.analyze(previousTx, tx)
 

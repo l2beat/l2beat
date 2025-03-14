@@ -1,4 +1,4 @@
-import type { ScalingProjectStack } from '@l2beat/config'
+import type { ProjectScalingStack } from '@l2beat/config'
 import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
@@ -19,7 +19,7 @@ import {
 
 export interface TypeInfoProps {
   children: string | undefined
-  stack?: ScalingProjectStack
+  stack?: ProjectScalingStack
 }
 
 export function TypeInfo({ stack, children }: TypeInfoProps) {
@@ -47,7 +47,7 @@ interface ProviderProps {
 }
 
 export const providerMap: Record<
-  ScalingProjectStack,
+  ProjectScalingStack,
   ProviderProps | undefined
 > = {
   StarkEx: {

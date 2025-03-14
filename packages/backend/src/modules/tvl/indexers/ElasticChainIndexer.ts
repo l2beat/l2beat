@@ -31,11 +31,11 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
     configurations: Configuration<ElasticChainAmountConfig>[],
   ) {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
-    if (timestamp.toNumber() > to) {
+    if (timestamp > to) {
       this.logger.info('Skipping update due to sync optimization', {
         from,
         to,
-        optimizedTimestamp: timestamp.toNumber(),
+        optimizedTimestamp: timestamp,
       })
       return () => Promise.resolve(to)
     }
@@ -49,7 +49,7 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
     )
 
     this.logger.info('Fetched Elastic Chain amounts for timestamp', {
-      timestamp: timestamp.toNumber(),
+      timestamp: timestamp,
       blockNumber,
       tokens: configurations.length,
       responseSize: amounts.length,
@@ -60,11 +60,11 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
     return async () => {
       await this.$.db.amount.insertMany(nonZeroAmounts)
       this.logger.info('Saved Elastic Chain amounts for timestamp into DB', {
-        timestamp: timestamp.toNumber(),
+        timestamp: timestamp,
         records: nonZeroAmounts.length,
       })
 
-      return timestamp.toNumber()
+      return timestamp
     }
   }
 
@@ -74,10 +74,7 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
         this.$.chain,
         timestamp,
       )
-    assert(
-      blockNumber,
-      `Block number not found for timestamp: ${timestamp.toNumber()}`,
-    )
+    assert(blockNumber, `Block number not found for timestamp: ${timestamp}`)
     return blockNumber
   }
 
@@ -85,8 +82,8 @@ export class ElasticChainIndexer extends ManagedMultiIndexer<ElasticChainAmountC
     for (const configuration of configurations) {
       const deletedRecords = await this.$.db.amount.deleteByConfigInTimeRange(
         configuration.id,
-        new UnixTime(configuration.from),
-        new UnixTime(configuration.to),
+        UnixTime(configuration.from),
+        UnixTime(configuration.to),
       )
 
       if (deletedRecords > 0) {

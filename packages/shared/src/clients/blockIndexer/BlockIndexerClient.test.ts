@@ -27,7 +27,7 @@ describe(BlockIndexerClient.name, () => {
 
       const arbiscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
-        new UnixTime(3141592653),
+        UnixTime(3141592653),
       )
 
       expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
@@ -61,15 +61,15 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
         {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
-          .toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${
+          timestamp - (10) * UnixTime.MINUTE
+        }&closest=before&apikey=key`,
         {},
       )
 
@@ -102,15 +102,15 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
         {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
-          .toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${
+          timestamp - (10) * UnixTime.MINUTE
+        }&closest=before&apikey=key`,
         {},
       )
     })
@@ -137,15 +137,15 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
         {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
-          .toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${
+          timestamp - (10) * UnixTime.MINUTE
+        }&closest=before&apikey=key`,
         {},
       )
     })
@@ -171,15 +171,15 @@ describe(BlockIndexerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp}&closest=before&apikey=key`,
         {},
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
-          .toNumber()}&closest=before&apikey=key`,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${
+          timestamp - (10) * UnixTime.MINUTE
+        }&closest=before&apikey=key`,
         {},
       )
     })

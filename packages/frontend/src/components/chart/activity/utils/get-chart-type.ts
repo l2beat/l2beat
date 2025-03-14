@@ -1,9 +1,9 @@
-import type { ScalingProjectCategory } from '@l2beat/config'
+import type { ProjectScalingCategory } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { ActivityChartType } from '../activity-chart'
 
 export function getChartType(
-  category?: ScalingProjectCategory,
+  category?: ProjectScalingCategory,
 ): ActivityChartType {
   switch (category) {
     case 'Optimistic Rollup':

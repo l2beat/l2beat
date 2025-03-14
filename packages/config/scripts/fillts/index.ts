@@ -62,7 +62,7 @@ async function processFile() {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
-    if (line.includes('sinceTimestamp: new UnixTime()')) {
+    if (line.includes('sinceTimestamp: UnixTime()')) {
       const addressMatch = lines[i - 1].match(
         /address: EthereumAddress\('(.+?)'\)/,
       )
@@ -75,8 +75,8 @@ async function processFile() {
           const rpcUrl = getRpcUrl(chain)
           const timestamp = await getDeploymentTimestamp(address, rpcUrl)
           const updatedLine = line.replace(
-            'new UnixTime()',
-            `new UnixTime(${timestamp})`,
+            'UnixTime()',
+            `UnixTime(${timestamp})`,
           )
           updatedLines.push(updatedLine)
           console.log(

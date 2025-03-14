@@ -1,4 +1,4 @@
-import type { DaLayer, Project, UsedInProject } from '@l2beat/config'
+import type { Project, UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -24,7 +24,7 @@ import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-se
 interface CommonDaProjectPageEntry {
   name: string
   slug: string
-  kind: DaLayer['type']
+  kind: string
   type: string
   description: string
   isUnderReview: boolean

@@ -12,8 +12,7 @@ export function calculateIntervals(
   for (let i = 1; i < records.length; i++) {
     intervals.push({
       record: records[i],
-      duration:
-        records[i - 1].timestamp.toNumber() - records[i].timestamp.toNumber(),
+      duration: records[i - 1].timestamp - records[i].timestamp,
     })
   }
   return intervals

@@ -1,5 +1,5 @@
 import type { ValueRecord } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
 import { groupBy } from 'lodash'
 import { getDb } from '~/server/database'
@@ -20,9 +20,8 @@ export async function getTvsValuesForProjects(
 
   const from =
     days !== null &&
-    target
-      .toStartOf(resolution === 'hourly' ? 'hour' : 'day')
-      .add(-days, 'days')
+    UnixTime.toStartOf(target, resolution === 'hourly' ? 'hour' : 'day') -
+      days * UnixTime.DAY
 
   // NOTE: This cannot be optimized using from because the values need to be interpolated
   const valueRecords = await db.value.getForProjects(
@@ -47,9 +46,10 @@ export async function getTvsValuesForProjects(
       continue
     }
 
-    minTimestamp = !from || minTimestamp.gte(from) ? minTimestamp : from
+    minTimestamp = !from || minTimestamp >= from ? minTimestamp : from
 
-    minTimestamp = minTimestamp.toEndOf(
+    minTimestamp = UnixTime.toEndOf(
+      minTimestamp,
       resolution === 'hourly'
         ? 'hour'
         : resolution === 'sixHourly'
@@ -59,7 +59,7 @@ export async function getTvsValuesForProjects(
 
     const timestamps = generateTimestamps([minTimestamp, target], resolution, {
       addTarget: true,
-    }).filter((t) => t.lte(target))
+    }).filter((t) => t <= target)
 
     for (const timestamp of timestamps) {
       const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(
@@ -72,12 +72,12 @@ export async function getTvsValuesForProjects(
             return false
           }
 
-          return timestamp.gte(projectSource.minTimestamp)
+          return timestamp >= projectSource.minTimestamp
         },
       )
 
       const interpolatedValues = status.lagging
-        .filter((l) => timestamp.gt(l.latestTimestamp))
+        .filter((l) => timestamp > l.latestTimestamp)
         .map((l) => {
           const record = valuesByTimestamp[l.latestTimestamp.toString()]?.find(
             (v) => l.id === v.dataSource,

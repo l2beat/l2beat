@@ -4,7 +4,7 @@ import type {
   ContractValueType,
 } from '../config/RawDiscoveryConfig'
 import { normalizeDiffPath } from '../utils/normalizeDiffPath'
-import type { ContractParameters } from './types'
+import type { EntryParameters } from './types'
 
 export interface FieldDiff {
   key: string
@@ -16,8 +16,8 @@ export interface FieldDiff {
 }
 
 export function diffContracts(
-  before: ContractParameters,
-  after: ContractParameters,
+  before: EntryParameters,
+  after: EntryParameters,
   ignore: string[],
 ): FieldDiff[] {
   const differences = diff(before, after)

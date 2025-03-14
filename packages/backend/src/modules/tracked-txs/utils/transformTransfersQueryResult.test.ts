@@ -24,7 +24,7 @@ const ADDRESS_3 = EthereumAddress.random()
 const ADDRESS_4 = EthereumAddress.random()
 const ADDRESS_5 = EthereumAddress.random()
 const ADDRESS_6 = EthereumAddress.random()
-const SINCE_TIMESTAMP = UnixTime.now().toNumber()
+const SINCE_TIMESTAMP = UnixTime.now()
 
 const RESULT_TIMESTAMP = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
 

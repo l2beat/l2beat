@@ -32,7 +32,7 @@ const ADDRESS_1 = EthereumAddress.random()
 const SELECTOR_1 = '0x095e4'
 const ADDRESS_2 = EthereumAddress.random()
 const SELECTOR_2 = '0x915d9'
-const SINCE_TIMESTAMP = UnixTime.now().toNumber()
+const SINCE_TIMESTAMP = UnixTime.now()
 
 const timestamp = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
 const block = 1

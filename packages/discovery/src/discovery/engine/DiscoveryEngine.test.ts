@@ -16,7 +16,7 @@ const base = {
   ...EMPTY_ANALYZED_CONTRACT,
   derivedName: undefined,
   isVerified: true,
-  deploymentTimestamp: new UnixTime(1234),
+  deploymentTimestamp: UnixTime(1234),
   deploymentBlockNumber: 9876,
   selfMeta: undefined,
   targetsMeta: undefined,

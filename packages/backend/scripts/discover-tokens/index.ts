@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs'
 import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
-import { type ChainConfig, ProjectService, tokenList } from '@l2beat/config'
+import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter } from '@l2beat/shared-pure'
@@ -24,6 +24,8 @@ async function main() {
   const projects = await ps.getProjects({
     select: ['tvlConfig'],
   })
+  const tokenList = await ps.getTokens()
+
   const escrowsByChain = groupBy(
     projects
       .flatMap((p) =>

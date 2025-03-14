@@ -15,7 +15,7 @@ describe(StarknetClient.name, () => {
       const mockStarknetBlock: Block = {
         hash: '0xabcdef',
         number: 100,
-        timestamp: UnixTime.now().toNumber(),
+        timestamp: UnixTime.now(),
         transactions: [
           {
             type: 'INVOKE',
@@ -128,7 +128,7 @@ const mockStarknetGetBlockResponse = (
   id: 1,
   result: {
     block_number: blockNumber,
-    timestamp: UnixTime.now().toNumber(),
+    timestamp: UnixTime.now(),
     transactions: [],
   },
 })

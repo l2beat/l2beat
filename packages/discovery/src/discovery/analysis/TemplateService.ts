@@ -16,7 +16,7 @@ import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
-export const TEMPLATES_PATH = path.join('discovery', '_templates')
+export const TEMPLATES_PATH = path.join('_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
 
 interface ShapeCriteria {
@@ -33,7 +33,7 @@ export class TemplateService {
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
 
-  constructor(private readonly rootPath: string = '') {}
+  constructor(private readonly rootPath: string) {}
 
   /**
    * @returns A record where the keys are template IDs (relative paths from the templates
@@ -177,7 +177,7 @@ export class TemplateService {
     const allTemplateHashes = this.getAllTemplateHashes()
     const allShapes = this.getAllShapes()
 
-    for (const contract of discovery.contracts) {
+    for (const contract of discovery.entries) {
       if (contract.sourceHashes === undefined) {
         continue
       }
@@ -192,7 +192,10 @@ export class TemplateService {
       }
 
       const hash = hashes[0]
-      assert(hash !== undefined)
+      assert(
+        hash !== undefined,
+        `Source hash is undefined for contract "${contract.name}" at address "${contract.address}". This indicates an issue with the discovery process or contract deployment.`,
+      )
       const sourcesHash = Hash256(hash)
       const matchingTemplates = this.findMatchingTemplatesByHash(
         sourcesHash,

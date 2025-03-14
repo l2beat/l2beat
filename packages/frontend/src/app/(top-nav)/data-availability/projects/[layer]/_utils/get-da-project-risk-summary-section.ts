@@ -1,4 +1,4 @@
-import type { Project, ScalingProjectRisk } from '@l2beat/config'
+import type { Project, ProjectRisk } from '@l2beat/config'
 import type { DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { groupRisks } from '~/utils/project/risk-summary/group-risks'
@@ -26,7 +26,7 @@ export function getDaProjectRiskSummarySection(
     },
   ]
 
-  const layerRisks: (ScalingProjectRisk & { referencedId: string })[] = []
+  const layerRisks: (ProjectRisk & { referencedId: string })[] = []
 
   for (const { id, value } of layerSections) {
     if (value.risks) {
@@ -34,7 +34,7 @@ export function getDaProjectRiskSummarySection(
     }
   }
 
-  const bridgeRisks: (ScalingProjectRisk & { referencedId: string })[] = []
+  const bridgeRisks: (ProjectRisk & { referencedId: string })[] = []
 
   for (const { id, value } of bridgeSections) {
     if (value?.risks) {

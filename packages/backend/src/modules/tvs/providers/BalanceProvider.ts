@@ -1,6 +1,5 @@
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { bigIntToNumber } from '../bigIntToNumber'
 import type { RpcClientPOC } from './RpcClientPOC'
 
 export const erc20Interface = new utils.Interface([
@@ -14,9 +13,8 @@ export class BalanceProvider {
     chain: string,
     tokenAddress: EthereumAddress,
     holderAddress: EthereumAddress,
-    decimals: number,
     blockNumber: number,
-  ): Promise<number> {
+  ): Promise<bigint> {
     const rpc = this.rpcClients.get(chain)
     assert(rpc, `${chain}: No RPC configured`)
 
@@ -30,28 +28,26 @@ export class BalanceProvider {
     )
 
     if (response.toString() === '0x') {
-      return 0
+      return 0n
     }
 
-    // we want to to have 2 decimals precision
-    return bigIntToNumber(response.toString(), decimals)
+    return BigInt(response.toString())
   }
 
   async getNativeAssetBalance(
     chain: string,
     holderAddress: EthereumAddress,
-    decimals: number,
     blockNumber: number,
-  ): Promise<number> {
+  ): Promise<bigint> {
     const rpc = this.rpcClients.get(chain)
     assert(rpc, `${chain}: No RPC configured`)
 
     const response = await rpc.getBalance(holderAddress, blockNumber)
 
     if (response.toString() === '0x') {
-      return 0
+      return 0n
     }
 
-    return bigIntToNumber(response.toString(), decimals)
+    return BigInt(response.toString())
   }
 }

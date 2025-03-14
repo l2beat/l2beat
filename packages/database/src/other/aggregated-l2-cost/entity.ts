@@ -27,7 +27,7 @@ export function toRow(
 ): Insertable<AggregatedL2Cost> {
   return {
     ...record,
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
     projectId: record.projectId.toString(),
   }
 }

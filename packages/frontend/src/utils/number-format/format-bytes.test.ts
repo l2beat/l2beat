@@ -4,13 +4,13 @@ import { formatBytes } from './format-bytes'
 describe(formatBytes.name, () => {
   describe('automatic unit scaling', () => {
     it('handles 0 bytes', () => {
-      expect(formatBytes(0)).toEqual('0 B')
+      expect(formatBytes(0)).toEqual('0.00 B')
       expect(formatBytes(0, { decimals: 0 })).toEqual('0 B')
     })
 
     it('bytes range', () => {
-      expect(formatBytes(1)).toEqual('1 B')
-      expect(formatBytes(1023)).toEqual('1023 B')
+      expect(formatBytes(1)).toEqual('1.00 B')
+      expect(formatBytes(1023)).toEqual('1023.00 B')
       expect(formatBytes(1023, { decimals: 0 })).toEqual('1023 B')
     })
 

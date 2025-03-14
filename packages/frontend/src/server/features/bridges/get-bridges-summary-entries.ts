@@ -1,5 +1,5 @@
 import type {
-  BridgeDisplay,
+  BridgeCategory,
   Project,
   TableReadyValue,
   WarningWithSentiment,
@@ -38,7 +38,7 @@ export async function getBridgesSummaryEntries() {
 }
 
 export interface BridgesSummaryEntry extends CommonBridgesEntry {
-  type: BridgeDisplay['category']
+  type: BridgeCategory
   tvs: TvsData
   validatedBy: TableReadyValue
   tvsOrder: number

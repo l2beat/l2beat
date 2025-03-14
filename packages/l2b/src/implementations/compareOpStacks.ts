@@ -1,5 +1,4 @@
-import path from 'path'
-import { ConfigReader } from '@l2beat/discovery'
+import { ConfigReader, type DiscoveryPaths } from '@l2beat/discovery'
 
 type OpStackProject = {
   project: string
@@ -13,9 +12,9 @@ type OpStackProject = {
 
 export async function analyseAllOpStackChains(
   projectToCompare: string | null,
-  discoveryPath: string,
+  paths: DiscoveryPaths,
 ): Promise<void> {
-  const configReader = new ConfigReader(path.dirname(discoveryPath))
+  const configReader = new ConfigReader(paths.discovery)
   const allL2s = configReader.readAllProjectsForChain('ethereum')
 
   const opStackChains = [] as OpStackProject[]
@@ -23,25 +22,25 @@ export async function analyseAllOpStackChains(
   for (const l2 of allL2s) {
     const discovery = configReader.readDiscovery(l2, 'ethereum')
 
-    const L2OutputOracle = discovery.contracts.find(
+    const L2OutputOracle = discovery.entries.find(
       (obj) => obj.name === 'L2OutputOracle',
     )
-    const optimismPortal = discovery.contracts.find(
+    const optimismPortal = discovery.entries.find(
       (obj) => obj.name === 'OptimismPortal',
     )
-    const l1StandardBridge = discovery.contracts.find(
+    const l1StandardBridge = discovery.entries.find(
       (obj) => obj.name === 'L1StandardBridge',
     )
-    const l1ERC721Bridge = discovery.contracts.find(
+    const l1ERC721Bridge = discovery.entries.find(
       (obj) => obj.name === 'L1ERC721Bridge',
     )
-    const systemConfig = discovery.contracts.find(
+    const systemConfig = discovery.entries.find(
       (obj) => obj.name === 'SystemConfig',
     )
-    const l1CrossDomainMessenger = discovery.contracts.find(
+    const l1CrossDomainMessenger = discovery.entries.find(
       (obj) => obj.name === 'L1CrossDomainMessenger',
     )
-    const disputeGameFactory = discovery.contracts.find(
+    const disputeGameFactory = discovery.entries.find(
       (obj) => obj.name === 'DisputeGameFactory',
     )
 

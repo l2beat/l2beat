@@ -1,10 +1,6 @@
 import { getTvlAmountsConfig, getTvlPricesConfig } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
-import {
-  type ChainConfig,
-  type ProjectService,
-  tokenList,
-} from '@l2beat/config'
+import type { ChainConfig, ProjectService } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { toMulticallConfigEntry } from '../../peripherals/multicall/MulticallConfig'
 import type { ChainTvlConfig, TvlConfig } from '../Config'
@@ -21,6 +17,7 @@ export async function getTvlConfig(
     select: ['tvlConfig'],
     optional: ['chainConfig'],
   })
+  const tokenList = await ps.getTokens()
 
   const tvlChainNames = new Set<string>()
   for (const { chainName } of tokenList) {
@@ -39,8 +36,8 @@ export async function getTvlConfig(
     .map((chain) => getChainTvlConfig(env, chain, minTimestampOverride))
 
   return {
-    amounts: getTvlAmountsConfig(projects, chains),
-    prices: getTvlPricesConfig(chains, minTimestampOverride),
+    amounts: getTvlAmountsConfig(projects, chains, tokenList),
+    prices: getTvlPricesConfig(chains, tokenList, minTimestampOverride),
     chains: chainConfigs,
     maxTimestampsToAggregateAtOnce: env.integer(
       'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',

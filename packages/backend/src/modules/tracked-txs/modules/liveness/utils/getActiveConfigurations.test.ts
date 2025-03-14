@@ -24,7 +24,7 @@ describe(getActiveConfigurations.name, () => {
           id: mockConfigurationId,
           type: 'liveness',
           subtype: 'batchSubmissions',
-          untilTimestamp: UnixTime.now().toNumber(),
+          untilTimestamp: UnixTime.now(),
         }),
       ],
     }

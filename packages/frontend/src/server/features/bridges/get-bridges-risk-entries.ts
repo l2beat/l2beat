@@ -1,7 +1,7 @@
 import type {
-  BridgeDisplay,
-  BridgeRiskView,
+  BridgeCategory,
   Project,
+  ProjectBridgeRisks,
   Sentiment,
 } from '@l2beat/config'
 import { ps } from '~/server/projects'
@@ -35,13 +35,13 @@ export async function getBridgeRiskEntries() {
 }
 
 export interface BridgesRiskEntry extends CommonBridgesEntry {
-  type: BridgeDisplay['category']
+  type: BridgeCategory
   destination: {
     value: string
     description?: string
     sentiment: Sentiment
   }
-  riskView: BridgeRiskView
+  riskView: ProjectBridgeRisks
   tvsOrder: number
 }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone, ScalingProjectCategory } from '@l2beat/config'
+import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
@@ -22,7 +22,7 @@ import { getChartType } from './utils/get-chart-type'
 interface Props {
   milestones: Milestone[]
   projectId: string
-  category?: ScalingProjectCategory
+  category?: ProjectScalingCategory
   projectName?: string
 }
 

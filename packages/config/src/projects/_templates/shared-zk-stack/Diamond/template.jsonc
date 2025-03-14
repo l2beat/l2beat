@@ -1,0 +1,89 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+  "ignoreMethods": [
+    "l2LogsRootHash",
+    "storedBlockHash",
+    "storedBatchHash",
+    "getName",
+    "priorityQueueFrontOperation"
+  ],
+  "ignoreInWatchMode": [
+    "getPriorityQueueSize",
+    "getTotalBlocksCommitted",
+    "getTotalBlocksExecuted",
+    "getTotalBlocksVerified",
+    "getTotalBatchesExecuted",
+    "getTotalBatchesVerified",
+    "getTotalBatchesCommitted",
+    "getTotalPriorityTxs",
+    "getFirstUnprocessedPriorityTx",
+    "baseTokenGasPriceMultiplierNominator",
+    "baseTokenGasPriceMultiplierDenominator"
+  ],
+  "ignoreRelatives": ["getBaseToken"],
+  "fields": {
+    "getAdmin": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+          }
+        ]
+      }
+    },
+    "txFilterer": {
+      "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["newTransactionFilterer"],
+        "add": { "event": "NewTransactionFilterer" }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
+          }
+        ]
+      }
+    },
+    "validators": {
+      "handler": {
+        "type": "zksynceraValidators"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+          }
+        ]
+      }
+    },
+    "getProtocolVersion": {
+      "description": "Protocol version, increments with each protocol upgrade.",
+      "severity": "MEDIUM"
+    },
+    "getVerifierParams": {
+      "description": "Verifier parameters used for proving batches.",
+      "severity": "LOW"
+    },
+    "facets": {
+      "handler": {
+        "type": "eip2535Facets"
+      }
+    },
+    "daMode": {
+      "handler": {
+        "type": "storage",
+        "slot": 38,
+        "offset": 0,
+        "returnType": "uint8"
+      }
+    }
+  },
+  "category": "core"
+}

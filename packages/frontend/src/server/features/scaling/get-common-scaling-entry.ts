@@ -55,8 +55,7 @@ export function getCommonScalingEntry({
       verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
         isUnderReview: project.statuses.isUnderReview,
-        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
-        implementationChanged: !!changes?.implementationChanged,
+        impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
       countdowns: {
@@ -80,7 +79,7 @@ export function getCommonScalingEntry({
       raas: project.scalingInfo.raas ?? 'No RaaS',
     },
     description: project.display?.description,
-    badges: project.scalingInfo.badges,
+    badges: project.display.badges,
   }
 }
 

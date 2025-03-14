@@ -34,7 +34,7 @@ describe(LoopringClient.name, () => {
       const result = await degateClient.queryBlock(42)
       expect(result).toEqual({
         blockId: 10,
-        createdAt: new UnixTime(1),
+        createdAt: UnixTime(1),
         transactions: [{ txType: 'foo' }],
       })
       expect(http.fetch).toHaveBeenOnlyCalledWith(
@@ -56,7 +56,7 @@ describe(LoopringClient.name, () => {
       const result = await degateClient.queryBlock('latest')
       expect(result).toEqual({
         blockId: 10,
-        createdAt: new UnixTime(1),
+        createdAt: UnixTime(1),
         transactions: [{ txType: 'foo' }],
       })
       expect(http.fetch).toHaveBeenOnlyCalledWith(
@@ -78,7 +78,7 @@ describe(LoopringClient.name, () => {
       const result = await degateClient.queryBlock('latest')
       expect(result).toEqual({
         blockId: 10,
-        createdAt: new UnixTime(1),
+        createdAt: UnixTime(1),
         transactions: [{ txType: 'foo' }],
       })
       expect(http.fetch).toHaveBeenOnlyCalledWith(

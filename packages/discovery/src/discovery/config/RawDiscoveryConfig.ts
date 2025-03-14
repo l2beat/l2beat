@@ -24,6 +24,7 @@ export const RolePermissionEntries = [
   'relay',
   'aggregatePolygon',
   'operateStarknet',
+  'operateStarkEx',
   'governStarknet',
 ] as const
 
@@ -112,6 +113,7 @@ export const ManualProxyType = z.enum([
   'Optics Beacon proxy',
   'Axelar proxy',
   'LightLink proxy',
+  'Everclear proxy',
   'immutable',
 ])
 

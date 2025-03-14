@@ -8,6 +8,8 @@ import {
   getCommonDaEntry,
   getCommonDacDaEntry,
 } from '../get-common-da-entry'
+import { getDaLayerRisks } from '../utils/get-da-layer-risks'
+import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
@@ -17,10 +19,11 @@ import { getDaUsers } from '../utils/get-da-users'
 export async function getDaRiskEntries(): Promise<
   TabbedDaEntries<DaRiskEntry>
 > {
-  const [layers, bridges, dacs] = await Promise.all([
+  const [layers, bridges, dacs, economicSecurity] = await Promise.all([
     ps.getProjects({ select: ['daLayer', 'statuses'] }),
     ps.getProjects({ select: ['daBridge', 'statuses'] }),
     ps.getProjects({ select: ['customDa', 'statuses'] }),
+    getDaProjectsEconomicSecurity(),
   ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
@@ -34,6 +37,7 @@ export async function getDaRiskEntries(): Promise<
         project,
         bridges.filter((x) => x.daBridge.daLayer === project.id),
         getTvs,
+        economicSecurity[project.id],
       ),
     )
 
@@ -59,6 +63,7 @@ function getDaRiskEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge' | 'statuses'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
+  economicSecurity: number | undefined,
 ): DaRiskEntry {
   const daBridges = bridges.map(
     (b): DaBridgeRiskEntry => ({
@@ -91,18 +96,15 @@ function getDaRiskEntry(
   }
 
   daBridges.sort((a, b) => b.tvs - a.tvs)
-
+  const tvs = getTvs(
+    layer.daLayer.usedWithoutBridgeIn
+      .concat(bridges.flatMap((p) => p.daBridge.usedIn))
+      .map((x) => x.id),
+  ).latest
   return {
     ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
-    tvs: getTvs(
-      layer.daLayer.usedWithoutBridgeIn
-        .concat(bridges.flatMap((p) => p.daBridge.usedIn))
-        .map((x) => x.id),
-    ).latest,
-    risks: {
-      economicSecurity: layer.daLayer.risks.economicSecurity,
-      fraudDetection: layer.daLayer.risks.fraudDetection,
-    },
+    tvs,
+    risks: getDaLayerRisks(layer.daLayer, tvs, economicSecurity),
     bridges: daBridges,
   }
 }

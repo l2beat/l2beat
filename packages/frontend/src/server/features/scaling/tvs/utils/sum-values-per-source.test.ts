@@ -1,5 +1,5 @@
 import type { ValueRecord } from '@l2beat/database'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { sumValuesPerSource } from './sum-values-per-source'
 
@@ -59,7 +59,7 @@ describe(sumValuesPerSource.name, () => {
 
 const projectId = ProjectId('irrelevant')
 const dataSource = 'irrelevant'
-const timestamp = new UnixTime(0)
+const timestamp = 0
 
 const mockRecord = {
   projectId,

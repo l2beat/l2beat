@@ -1,8 +1,8 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type {
-  ContractParameters,
   DiscoveryOutput,
+  EntryParameters,
   ReceivedPermission,
 } from '../output/types'
 import { buildAddressToNameMap } from './build'
@@ -26,7 +26,8 @@ describe(findAllDirectlyReceivedPermissions.name, () => {
       from: EthereumAddress.from('0x789'),
       via: [],
     }
-    const contract: ContractParameters = {
+    const contract: EntryParameters = {
+      type: 'Contract',
       address: EthereumAddress.from('0xdeadbeef'),
       name: 'ContactMsigA',
       directlyReceivedPermissions: [permission1],
@@ -52,8 +53,9 @@ describe(buildRelationsModels.name, () => {
       chain: 'ethereum',
       blockNumber: 21829679,
       configHash: Hash256.random(),
-      contracts: [
+      entries: [
         {
+          type: 'Contract',
           address: EthereumAddress.from('0xccc1'),
           name: 'ContractA',
           description: 'Description of ContractA',
@@ -75,14 +77,14 @@ describe(buildRelationsModels.name, () => {
           ],
         },
         {
+          type: 'Contract',
           address: EthereumAddress.from('0xccc2'),
           name: 'ContractB',
           description: 'Description of ContractB',
           values: {},
         },
-      ],
-      eoas: [
         {
+          type: 'EOA',
           address: EthereumAddress.from('0xeee1'),
           name: 'EoaA',
           receivedPermissions: [
@@ -107,8 +109,7 @@ describe(buildRelationsModels.name, () => {
     }
     const addressToNameMap = buildAddressToNameMap(
       discoveryOutput.chain,
-      discoveryOutput.contracts,
-      discoveryOutput.eoas,
+      discoveryOutput.entries,
     )
     const relationsModel = buildRelationsModels(
       discoveryOutput,

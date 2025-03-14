@@ -15,7 +15,7 @@ export function toRow(record: UpdateMessageRecord): Insertable<UpdateMessage> {
     projectName: record.projectName,
     chain: record.chain,
     blockNumber: record.blockNumber,
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
     message: record.message,
   }
 }

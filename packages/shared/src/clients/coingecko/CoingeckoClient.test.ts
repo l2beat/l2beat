@@ -51,8 +51,8 @@ describe(CoingeckoClient.name, () => {
       const result = await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
         'usd',
-        new UnixTime(1592577232),
-        new UnixTime(1622577232),
+        UnixTime(1592577232),
+        UnixTime(1622577232),
       )
 
       expect(result).toEqual(MOCK_TRANSFORMED_DATA)
@@ -73,8 +73,8 @@ describe(CoingeckoClient.name, () => {
       await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
         'usd',
-        new UnixTime(1592577232),
-        new UnixTime(1622577232),
+        UnixTime(1592577232),
+        UnixTime(1622577232),
       )
     })
   })

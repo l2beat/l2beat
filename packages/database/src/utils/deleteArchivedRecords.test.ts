@@ -19,12 +19,12 @@ export function testDeletingArchivedRecords<T>(
   fakeRecord: (timestamp: UnixTime) => T,
 ) {
   it('deletes hourly records to given date', async () => {
-    const start = UnixTime.now().toStartOf('day')
-    const to = start.add(25, 'hours')
+    const start = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const to = start + 25 * UnixTime.HOUR
 
     const entries = []
-    for (let i = start.toNumber(); i <= to.toNumber(); i += UnixTime.HOUR) {
-      entries.push(fakeRecord(new UnixTime(i)))
+    for (let i = start; i <= to; i += UnixTime.HOUR) {
+      entries.push(fakeRecord(UnixTime(i)))
     }
 
     await repository.insertMany(entries)
@@ -33,22 +33,22 @@ export function testDeletingArchivedRecords<T>(
 
     expect(results).toEqualUnsorted([
       fakeRecord(start),
-      fakeRecord(start.add(6, 'hours')),
-      fakeRecord(start.add(12, 'hours')),
-      fakeRecord(start.add(18, 'hours')),
-      fakeRecord(start.add(24, 'hours')),
-      fakeRecord(start.add(25, 'hours')),
+      fakeRecord(start + 6 * UnixTime.HOUR),
+      fakeRecord(start + 12 * UnixTime.HOUR),
+      fakeRecord(start + 18 * UnixTime.HOUR),
+      fakeRecord(start + 24 * UnixTime.HOUR),
+      fakeRecord(start + 25 * UnixTime.HOUR),
     ])
   })
 
   it('deletes hourly records from to', async () => {
-    const start = UnixTime.now().toStartOf('day')
-    const to = start.add(25, 'hours')
-    const from = start.add(6, 'hours')
+    const start = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const to = start + 25 * UnixTime.HOUR
+    const from = start + 6 * UnixTime.HOUR
 
     const entries = []
-    for (let i = start.toNumber(); i <= to.toNumber(); i += UnixTime.HOUR) {
-      entries.push(fakeRecord(new UnixTime(i)))
+    for (let i = start; i <= to; i += UnixTime.HOUR) {
+      entries.push(fakeRecord(UnixTime(i)))
     }
 
     await repository.insertMany(entries)
@@ -57,26 +57,26 @@ export function testDeletingArchivedRecords<T>(
 
     expect(results).toEqualUnsorted([
       fakeRecord(start),
-      fakeRecord(start.add(1, 'hours')),
-      fakeRecord(start.add(2, 'hours')),
-      fakeRecord(start.add(3, 'hours')),
-      fakeRecord(start.add(4, 'hours')),
-      fakeRecord(start.add(5, 'hours')),
-      fakeRecord(start.add(6, 'hours')),
-      fakeRecord(start.add(12, 'hours')),
-      fakeRecord(start.add(18, 'hours')),
-      fakeRecord(start.add(24, 'hours')),
-      fakeRecord(start.add(25, 'hours')),
+      fakeRecord(start + 1 * UnixTime.HOUR),
+      fakeRecord(start + 2 * UnixTime.HOUR),
+      fakeRecord(start + 3 * UnixTime.HOUR),
+      fakeRecord(start + 4 * UnixTime.HOUR),
+      fakeRecord(start + 5 * UnixTime.HOUR),
+      fakeRecord(start + 6 * UnixTime.HOUR),
+      fakeRecord(start + 12 * UnixTime.HOUR),
+      fakeRecord(start + 18 * UnixTime.HOUR),
+      fakeRecord(start + 24 * UnixTime.HOUR),
+      fakeRecord(start + 25 * UnixTime.HOUR),
     ])
   })
 
   it('deletes six hourly records to given date', async () => {
-    const start = UnixTime.now().toStartOf('day')
-    const to = start.add(7, 'hours')
+    const start = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const to = start + 7 * UnixTime.HOUR
 
     const entries = []
-    for (let i = start.toNumber(); i <= to.toNumber(); i += UnixTime.HOUR) {
-      entries.push(fakeRecord(new UnixTime(i)))
+    for (let i = start; i <= to; i += UnixTime.HOUR) {
+      entries.push(fakeRecord(UnixTime(i)))
     }
 
     await repository.insertMany(entries)
@@ -85,23 +85,23 @@ export function testDeletingArchivedRecords<T>(
 
     expect(results).toEqualUnsorted([
       fakeRecord(start),
-      fakeRecord(start.add(1, 'hours')),
-      fakeRecord(start.add(2, 'hours')),
-      fakeRecord(start.add(3, 'hours')),
-      fakeRecord(start.add(4, 'hours')),
-      fakeRecord(start.add(5, 'hours')),
-      fakeRecord(start.add(7, 'hours')),
+      fakeRecord(start + 1 * UnixTime.HOUR),
+      fakeRecord(start + 2 * UnixTime.HOUR),
+      fakeRecord(start + 3 * UnixTime.HOUR),
+      fakeRecord(start + 4 * UnixTime.HOUR),
+      fakeRecord(start + 5 * UnixTime.HOUR),
+      fakeRecord(start + 7 * UnixTime.HOUR),
     ])
   })
 
   it('deletes six hourly records from to', async () => {
-    const start = UnixTime.now().toStartOf('day')
-    const to = start.add(13, 'hours')
-    const from = start.add(7, 'hours')
+    const start = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const to = start + 13 * UnixTime.HOUR
+    const from = start + 7 * UnixTime.HOUR
 
     const entries = []
-    for (let i = start.toNumber(); i <= to.toNumber(); i += UnixTime.HOUR) {
-      entries.push(fakeRecord(new UnixTime(i)))
+    for (let i = start; i <= to; i += UnixTime.HOUR) {
+      entries.push(fakeRecord(UnixTime(i)))
     }
 
     await repository.insertMany(entries)
@@ -110,18 +110,18 @@ export function testDeletingArchivedRecords<T>(
 
     expect(results).toEqualUnsorted([
       fakeRecord(start),
-      fakeRecord(start.add(1, 'hours')),
-      fakeRecord(start.add(2, 'hours')),
-      fakeRecord(start.add(3, 'hours')),
-      fakeRecord(start.add(4, 'hours')),
-      fakeRecord(start.add(5, 'hours')),
-      fakeRecord(start.add(6, 'hours')),
-      fakeRecord(start.add(7, 'hours')),
-      fakeRecord(start.add(8, 'hours')),
-      fakeRecord(start.add(9, 'hours')),
-      fakeRecord(start.add(10, 'hours')),
-      fakeRecord(start.add(11, 'hours')),
-      fakeRecord(start.add(13, 'hours')),
+      fakeRecord(start + 1 * UnixTime.HOUR),
+      fakeRecord(start + 2 * UnixTime.HOUR),
+      fakeRecord(start + 3 * UnixTime.HOUR),
+      fakeRecord(start + 4 * UnixTime.HOUR),
+      fakeRecord(start + 5 * UnixTime.HOUR),
+      fakeRecord(start + 6 * UnixTime.HOUR),
+      fakeRecord(start + 7 * UnixTime.HOUR),
+      fakeRecord(start + 8 * UnixTime.HOUR),
+      fakeRecord(start + 9 * UnixTime.HOUR),
+      fakeRecord(start + 10 * UnixTime.HOUR),
+      fakeRecord(start + 11 * UnixTime.HOUR),
+      fakeRecord(start + 13 * UnixTime.HOUR),
     ])
   })
 }

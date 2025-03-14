@@ -1,4 +1,4 @@
-import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
@@ -39,14 +39,13 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
       projectName,
       chainId: ChainId.ETHEREUM,
       blockNumber: -1,
-      timestamp: new UnixTime(0),
+      timestamp: 0,
       discovery: {
         name: projectName,
         chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
+        entries: [],
         abis: {},
         usedTemplates: {},
       },
@@ -67,14 +66,13 @@ function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
     projectName: 'project',
     chainId: ChainId.ETHEREUM,
     blockNumber: -1,
-    timestamp: new UnixTime(0),
+    timestamp: 0,
     discovery: {
       name: 'project',
       chain: 'ethereum',
       blockNumber: -1,
       configHash: Hash256.random(),
-      contracts: [],
-      eoas: [],
+      entries: [],
       abis: {},
       usedTemplates: {},
     },

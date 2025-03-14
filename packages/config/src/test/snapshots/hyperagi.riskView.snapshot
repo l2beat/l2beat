@@ -1,0 +1,59 @@
+// hyperagi riskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  exitWindow: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  proposerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  sequencerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  stateValidation: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+}
+
+// hyperagi stackedRiskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  exitWindow: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  proposerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  sequencerFailure: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+  stateValidation: {
+    description: "No information available."
+    sentiment: "neutral"
+    value: ""
+  }
+}

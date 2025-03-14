@@ -3,8 +3,8 @@ import { expect } from 'earl'
 import { generateTimestamps } from './generate-timestamps'
 
 describe('generateTimestamps', () => {
-  const from = new UnixTime(0) // Jan 1, 1970
-  const to = new UnixTime(86400 * 3) // Jan 4, 1970
+  const from = 0 // Jan 1, 1970
+  const to = UnixTime(86400 * 3) // Jan 4, 1970
 
   it('generates hourly timestamps', () => {
     const timestamps = generateTimestamps([from, to], 'hourly')
@@ -22,16 +22,16 @@ describe('generateTimestamps', () => {
   })
 
   it('adds target timestamp if addTarget is true and last generated is not target', () => {
-    const to = new UnixTime(86400 * 3 + 3600) // Jan 4, 1970, 01:00
+    const to = UnixTime(86400 * 3 + 3600) // Jan 4, 1970, 01:00
     const timestamps = generateTimestamps([from, to], 'daily', {
       addTarget: true,
     })
     expect(timestamps.length).toEqual(5) // 3 days + 1 for the start + 1 for the target
-    expect(timestamps.at(-1)?.equals(to)).toEqual(true)
+    expect(timestamps.at(-1) === to).toEqual(true)
   })
 
   it('does not add target timestamp if addTarget is false', () => {
-    const to = new UnixTime(86400 * 3 + 3600) // Jan 4, 1970, 01:00
+    const to = UnixTime(86400 * 3 + 3600) // Jan 4, 1970, 01:00
     const timestamps = generateTimestamps([from, to], 'daily', {
       addTarget: false,
     })

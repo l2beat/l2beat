@@ -89,7 +89,7 @@ function createIndexers(
         parents: [blockTimestampIndexer],
         indexerService,
         configuration: preminted,
-        minHeight: preminted.sinceTimestamp.toNumber(),
+        minHeight: preminted.sinceTimestamp,
         amountService,
         circulatingSupplyService,
         syncOptimizer,
@@ -109,8 +109,8 @@ function createIndexers(
         parents: [descendantPriceIndexer, indexer],
         indexerService,
         logger,
-        minHeight: preminted.sinceTimestamp.toNumber(),
-        maxHeight: preminted.untilTimestamp?.toNumber(),
+        minHeight: preminted.sinceTimestamp,
+        maxHeight: preminted.untilTimestamp,
         maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
       })
 

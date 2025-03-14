@@ -1,12 +1,16 @@
 import type {
   ChainConfig,
-  Layer2FinalityConfig,
   OnchainVerifier,
   Project,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
+  ProjectFinalityConfig,
 } from '@l2beat/config'
-import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type {
+  ConfigReader,
+  DiscoveryChainConfig,
+  DiscoveryPaths,
+} from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
@@ -14,6 +18,11 @@ import type {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type {
+  AmountConfig,
+  PriceConfig,
+  ProjectTvsConfig,
+} from '../modules/tvs/types'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
@@ -28,6 +37,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig | false
+  readonly tvs: TvsConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
@@ -94,6 +104,12 @@ export interface TvlConfig {
   readonly tvlCleanerEnabled: boolean
 }
 
+export interface TvsConfig {
+  readonly projects: ProjectTvsConfig[]
+  readonly amounts: AmountConfig[]
+  readonly prices: PriceConfig[]
+}
+
 export interface TrackedTxProject {
   readonly id: ProjectId
   readonly isArchived: boolean
@@ -122,7 +138,7 @@ export interface FinalityConfig {
   readonly configurations: FinalityConfigProject[]
 }
 
-export type FinalityConfigProject = Layer2FinalityConfig & {
+export type FinalityConfigProject = ProjectFinalityConfig & {
   projectId: ProjectId
   url?: string
   callsPerMinute?: number
@@ -175,6 +191,8 @@ export interface MetricsAuthConfig {
 }
 
 export interface UpdateMonitorConfig {
+  readonly configReader: ConfigReader
+  readonly paths: DiscoveryPaths
   readonly runOnStart?: boolean
   readonly cacheEnabled?: boolean
   readonly cacheUri: string

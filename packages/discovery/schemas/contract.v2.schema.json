@@ -112,6 +112,7 @@
             "act",
             "aggregatePolygon",
             "operateStarknet",
+            "operateStarkEx",
             "governStarknet"
           ]
         },

@@ -167,7 +167,7 @@ export class LowLevelProvider {
           transactionHash,
           deployer: EthereumAddress.ZERO,
           blockNumber: 0,
-          timestamp: new UnixTime((await this.getBlock(1)).timestamp),
+          timestamp: UnixTime((await this.getBlock(1)).timestamp),
         }
       }
 
@@ -180,7 +180,7 @@ export class LowLevelProvider {
       const deployer = EthereumAddress(tx.from)
       const blockNumber = tx.blockNumber
       const block = await this.getBlock(blockNumber)
-      const timestamp = new UnixTime(block.timestamp)
+      const timestamp = UnixTime(block.timestamp)
 
       return {
         transactionHash,
@@ -215,12 +215,20 @@ export class LowLevelProvider {
     return await this.blobClient.getRelevantBlobs(txHash)
   }
 
-  async getCelestiaBlob(height: number, namespace: string, commitment: string) {
+  async celestiaBlobExists(
+    height: number,
+    namespace: string,
+    commitment: string,
+  ) {
     assert(
       this.celestiaApiClient,
       'CelestiaApiClient is not available, configure the .env to include celestia API url.',
     )
-    return await this.celestiaApiClient.getBlob(height, namespace, commitment)
+    return await this.celestiaApiClient.blobExists(
+      height,
+      namespace,
+      commitment,
+    )
   }
 
   async getCelestiaBlockResultLogs(height: number) {

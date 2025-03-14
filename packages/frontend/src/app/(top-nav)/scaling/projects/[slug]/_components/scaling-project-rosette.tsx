@@ -2,15 +2,15 @@
 import { useState } from 'react'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
-import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import type { RosetteType } from './rosette-selector'
 import { RosetteSelector } from './rosette-selector'
 
 interface Props {
-  project: ScalingProjectEntry
+  project: ProjectScalingEntry
 }
 
-export function ScalingProjectRosette({ project }: Props) {
+export function ProjectScalingRosette({ project }: Props) {
   const [rosetteType, setRosetteType] = useState<RosetteType>(
     project.rosette.stacked ? 'combined' : 'individual',
   )

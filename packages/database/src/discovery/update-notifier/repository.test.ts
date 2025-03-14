@@ -47,7 +47,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
       const secondId = await repository.insert(arbRecord1)
       const thirdId = await repository.insert(arbRecord2)
       const result = await repository.getNewerThan(
-        NOW.add(-2, 'days'),
+        NOW - 2 * UnixTime.DAY,
         PROJECT1,
         ChainId.ARBITRUM,
       )
@@ -62,7 +62,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
 
       await repository.insert(ethRecord)
       const result = await repository.getNewerThan(
-        NOW.add(2, 'days'),
+        NOW + 2 * UnixTime.DAY,
         PROJECT1,
         ChainId.ETHEREUM,
       )
@@ -75,7 +75,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
 
       await repository.insert(ethRecord)
       const result = await repository.getNewerThan(
-        NOW.add(-2, 'days'),
+        NOW - 2 * UnixTime.DAY,
         PROJECT1,
         ChainId.ARBITRUM,
       )

@@ -1,10 +1,10 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import { type FieldDiff, diffContracts } from './diffContracts'
-import type { ContractParameters } from './types'
+import type { EntryParameters } from './types'
 
 export interface DiscoveryDiff {
-  name: string
+  name?: string
   address: EthereumAddress
   description?: string
   diff?: FieldDiff[]
@@ -12,8 +12,8 @@ export interface DiscoveryDiff {
 }
 
 export function diffDiscovery(
-  previous: ContractParameters[],
-  current: ContractParameters[],
+  previous: EntryParameters[],
+  current: EntryParameters[],
   unverifiedContracts?: string[],
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
@@ -23,16 +23,19 @@ export function diffDiscovery(
       (d) => d.address === previousContract.address,
     )
     if (currentContract === undefined) {
-      modifiedOrDeleted.push({
-        name: previousContract.name,
-        address: previousContract.address,
-        description: previousContract.description,
-        type: 'deleted',
-      })
+      if (previousContract.proxyType !== 'EOA') {
+        modifiedOrDeleted.push({
+          name: previousContract.name,
+          address: previousContract.address,
+          description: previousContract.description,
+          type: 'deleted',
+        })
+      }
       continue
     }
 
     if (
+      currentContract.name !== undefined &&
       unverifiedContracts?.includes(currentContract.name) &&
       !currentContract.unverified
     ) {
@@ -67,12 +70,14 @@ export function diffDiscovery(
       (c) => c.address === currentContract.address,
     )
     if (previousContract === undefined) {
-      created.push({
-        name: currentContract.name,
-        address: currentContract.address,
-        description: currentContract.description,
-        type: 'created',
-      })
+      if (currentContract.proxyType !== 'EOA') {
+        created.push({
+          name: currentContract.name,
+          address: currentContract.address,
+          description: currentContract.description,
+          type: 'created',
+        })
+      }
     }
   }
 

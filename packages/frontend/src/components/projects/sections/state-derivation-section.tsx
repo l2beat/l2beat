@@ -1,10 +1,10 @@
-import type { ScalingProjectStateDerivation } from '@l2beat/config'
+import type { ProjectScalingStateDerivation } from '@l2beat/config'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
 
 export interface StateDerivationSectionProps
-  extends ScalingProjectStateDerivation,
+  extends ProjectScalingStateDerivation,
     ProjectSectionProps {}
 
 export function StateDerivationSection({

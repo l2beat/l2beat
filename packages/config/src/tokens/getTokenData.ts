@@ -14,7 +14,7 @@ import {
 } from '@l2beat/shared-pure'
 import { isEqual } from 'earl'
 import { providers } from 'ethers'
-import { ProjectService } from '../projects/project/ProjectService'
+import { ProjectService } from '../ProjectService'
 import type { ChainConfig } from '../types'
 import type { GeneratedToken, Output, SourceEntry } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'
@@ -29,6 +29,7 @@ import { getTokenInfo } from './utils/getTokenInfo'
 export async function getTokenData(
   sourceFilePath: string,
   outputFilePath: string,
+  dbPath?: string,
 ) {
   const logger: ScriptLogger = new ScriptLogger({})
   const coingeckoClient = getCoingeckoClient()
@@ -37,7 +38,7 @@ export async function getTokenData(
   const output = readGeneratedFile(outputFilePath, logger)
   const result: GeneratedToken[] = output.tokens
 
-  const ps = new ProjectService()
+  const ps = new ProjectService(dbPath)
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (x) => x.chainConfig,
   )

@@ -29,7 +29,7 @@ describe(LoopringT2IAnalyzer.name, () => {
 
       const tx = {
         txHash: MOCK_DATA.txHash,
-        timestamp: new UnixTime(MOCK_DATA.l1Timestamp),
+        timestamp: UnixTime(MOCK_DATA.l1Timestamp),
       }
       const previousTx = tx // not used
       const result = await analyzer.analyze(previousTx, tx)

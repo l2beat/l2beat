@@ -14,7 +14,7 @@ export function TabInfoWithDrawer({
 }: { title: string; content: string }) {
   return (
     <div className="mb-3 flex flex-row sm:mb-3">
-      <div className="text-[11px] leading-snug text-zinc-500 dark:text-secondary md:text-[13px] md:leading-tight">
+      <div className="text-[11px] !leading-[15px] text-zinc-500 dark:text-secondary md:text-[13px]">
         <p className="max-sm:hidden">{content}</p>
         <Drawer>
           <DrawerTrigger className="flex items-center gap-1 sm:hidden">

@@ -12,7 +12,7 @@ export interface AnomalyRecord {
 export function toRow(record: AnomalyRecord): Insertable<Anomaly> {
   return {
     ...record,
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
   }
 }
 

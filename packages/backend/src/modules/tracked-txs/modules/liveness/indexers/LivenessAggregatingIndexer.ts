@@ -39,12 +39,10 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     parentSafeHeight: number,
   ): Promise<number> {
     const now = UnixTime.now()
-    const endOfPreviousDay = now.toStartOf('day').add(-1, 'seconds')
-    let targetHeight = new UnixTime(safeHeight)
-      .toEndOf('day')
-      .add(-1, 'seconds')
+    const endOfPreviousDay = UnixTime.toStartOf(now, 'day') - 1
+    let targetHeight = UnixTime.toEndOf(safeHeight, 'day') - 1
 
-    if (parentSafeHeight <= endOfPreviousDay.toNumber()) {
+    if (parentSafeHeight <= endOfPreviousDay) {
       this.logger.info('Not enough data to calculate - skipping', {
         parentSafeHeight,
       })
@@ -56,7 +54,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       this.logger.info('Adjusting target height', { targetHeight })
     }
 
-    if (targetHeight.toNumber() > parentSafeHeight) {
+    if (targetHeight > parentSafeHeight) {
       this.logger.info('Up to date - skipping', {
         targetHeight,
         parentSafeHeight,

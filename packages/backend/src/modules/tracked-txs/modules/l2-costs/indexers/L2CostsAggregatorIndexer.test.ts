@@ -24,8 +24,8 @@ import {
   type TrackedTxMultiplier,
 } from './L2CostsAggregatorIndexer'
 
-const MIN = new UnixTime(1682899200)
-const NOW = new UnixTime(1714662000)
+const MIN = UnixTime(1682899200)
+const NOW = UnixTime(1714662000)
 
 const MOCK_PROJECTS: TrackedTxProject[] = [
   {
@@ -93,7 +93,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
   describe(L2CostsAggregatorIndexer.prototype.update.name, () => {
     it('updates correctly', async () => {
       // 2023-05-01 00:01:00
-      const txTime = MIN.add(1, 'minutes')
+      const txTime = MIN + 1 * UnixTime.MINUTE
 
       const trackedTxId = 'adaw'
 
@@ -104,7 +104,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ]
 
       const ethPrices: L2CostPriceRecord[] = [
-        { timestamp: txTime.toStartOf('hour'), priceUsd: 2000 },
+        { timestamp: UnixTime.toStartOf(txTime, 'hour'), priceUsd: 2000 },
       ]
 
       const l2CostsRepositoryMock = mockObject<Database['l2Cost']>({
@@ -149,11 +149,11 @@ describe(L2CostsAggregatorIndexer.name, () => {
       indexer.findTxConfigsWithMultiplier = mockFn().returns(multipliers)
 
       // 2023-05-02 23:59:59
-      const endOfFirstDay = NOW.add(1, 'days').add(-1, 'seconds')
+      const endOfFirstDay = NOW + 1 * UnixTime.DAY - 1
       indexer.shift = mockFn().returns([MIN, endOfFirstDay])
 
       // from 2023-05-01 00:00:00 to 2024-05-02 15:00:00
-      const to = await indexer.update(MIN.toNumber(), NOW.toNumber())
+      const to = await indexer.update(MIN, NOW)
 
       // should get records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
       expect(l2CostsRepositoryMock.getByTimeRange).toHaveBeenOnlyCalledWith([
@@ -167,22 +167,22 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ).toHaveBeenOnlyCalledWith(MIN, endOfFirstDay)
 
       // 2023-05-02 00:00:00
-      expect(to).toEqual(endOfFirstDay.add(1, 'seconds').toNumber())
+      expect(to).toEqual(endOfFirstDay + 1)
     })
 
     it('does nothing if range shorter than hour', async () => {
       // 2023-05-01 00:30:00
-      const to = MIN.add(30, 'minutes')
+      const to = MIN + 30 * UnixTime.MINUTE
 
       const indexer = createIndexer({ tags: { tag: 'update-nothing' } })
 
       indexer.shift = mockFn().returns([MIN, MIN])
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:30:00
-      const result = await indexer.update(MIN.toNumber(), to.toNumber())
+      const result = await indexer.update(MIN, to)
 
       // 2023-05-01 00:30:00
-      expect(result).toEqual(to.toNumber())
+      expect(result).toEqual(to)
     })
   })
 
@@ -226,13 +226,13 @@ describe(L2CostsAggregatorIndexer.name, () => {
           projectId: ProjectId('random2'),
         }),
         tx(trackedTxId, {
-          timestamp: NOW.add(1, 'hours'),
+          timestamp: NOW + 1 * UnixTime.HOUR,
         }),
       ]
 
       const ethPrices: L2CostPriceRecord[] = [
         { timestamp: NOW, priceUsd: 2000 },
-        { timestamp: NOW.add(1, 'hours'), priceUsd: 2100 },
+        { timestamp: NOW + 1 * UnixTime.HOUR, priceUsd: 2100 },
       ]
 
       const result = indexer.aggregate(txs, ethPrices)
@@ -277,7 +277,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           overheadGasUsd: 1,
         },
         {
-          timestamp: NOW.add(1, 'hours'),
+          timestamp: NOW + 1 * UnixTime.HOUR,
           projectId: ProjectId('random'),
           totalGas: 1,
           totalGasEth: 1,
@@ -324,13 +324,13 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const txs = [tx('wada')]
 
       const ethPrices: L2CostPriceRecord[] = [
-        { timestamp: NOW.add(1, 'hours'), priceUsd: 2100 },
+        { timestamp: NOW + 1 * UnixTime.HOUR, priceUsd: 2100 },
       ]
 
       expect(() => indexer.aggregate(txs, ethPrices)).toThrow(
         `Assertion Error: [${
           L2CostsAggregatorIndexer.name
-        }]: ETH price not found: ${NOW.toStartOf('hour').toNumber()}`,
+        }]: ETH price not found: ${UnixTime.toStartOf(NOW, 'hour')}`,
       )
     })
   })
@@ -346,15 +346,15 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       const txs = [
         mockObject<L2CostRecord>({
-          timestamp: new UnixTime(1),
+          timestamp: UnixTime(1),
           configurationId: id1,
         }),
         mockObject<L2CostRecord>({
-          timestamp: new UnixTime(2),
+          timestamp: UnixTime(2),
           configurationId: id1,
         }),
         mockObject<L2CostRecord>({
-          timestamp: new UnixTime(3),
+          timestamp: UnixTime(3),
           configurationId: id2,
         }),
       ]
@@ -393,23 +393,23 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
 
       const result = await indexer.getL2CostRecordsWithProjectId([
-        new UnixTime(0),
-        new UnixTime(4),
+        0,
+        UnixTime(4),
       ])
 
       expect(result).toEqual([
         mockObject<ProjectL2Cost>({
-          timestamp: new UnixTime(1),
+          timestamp: UnixTime(1),
           projectId: project1,
           configurationId: id1,
         }),
         mockObject<ProjectL2Cost>({
-          timestamp: new UnixTime(2),
+          timestamp: UnixTime(2),
           projectId: project1,
           configurationId: id1,
         }),
         mockObject<ProjectL2Cost>({
-          timestamp: new UnixTime(3),
+          timestamp: UnixTime(3),
           projectId: project2,
           configurationId: id2,
         }),
@@ -505,44 +505,47 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
     it('shift to a single day if range longer than day', async () => {
       // 2023-05-01 00:00:01
-      const from = MIN.add(1, 'seconds')
+      const from = MIN + 1
       // 2024-05-02 15:00:00
       const to = NOW
 
-      const result = indexer.shift(from.toNumber(), to.toNumber())
+      const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 23:59:59
       expect(result).toEqual([
-        from.toStartOf('hour'),
-        from.toStartOf('hour').add(1, 'days').add(-1, 'seconds'),
+        UnixTime.toStartOf(from, 'hour'),
+        UnixTime.toStartOf(from, 'hour') + 1 * UnixTime.DAY - 1,
       ])
     })
 
     it('shift to include full hours only', async () => {
       // 2023-05-01 00:0:01
-      const from = MIN.add(1, 'seconds')
+      const from = MIN + 1
       // 2023-05-01 01:30:00
-      const to = MIN.add(1, 'hours').add(1, 'minutes')
+      const to = MIN + 1 * UnixTime.HOUR + 1 * UnixTime.MINUTE
 
-      const result = indexer.shift(from.toNumber(), to.toNumber())
+      const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:59:59
       expect(result).toEqual([
-        from.toStartOf('hour'),
-        to.toStartOf('hour').add(-1, 'seconds'),
+        UnixTime.toStartOf(from, 'hour'),
+        UnixTime.toStartOf(to, 'hour') - 1,
       ])
     })
 
     it('shift zero span if less than an hour', async () => {
       // 2023-05-01 00:0:01
-      const from = MIN.add(1, 'seconds')
+      const from = MIN + 1
       // 2023-05-01 00:30:00
-      const to = MIN.add(1, 'minutes')
+      const to = MIN + 1 * UnixTime.MINUTE
 
-      const result = indexer.shift(from.toNumber(), to.toNumber())
+      const result = indexer.shift(from, to)
 
       // from 2023-05-01 00:00:00 to 2023-05-01 00:00:00
-      expect(result).toEqual([from.toStartOf('hour'), from.toStartOf('hour')])
+      expect(result).toEqual([
+        UnixTime.toStartOf(from, 'hour'),
+        UnixTime.toStartOf(from, 'hour'),
+      ])
     })
   })
 })

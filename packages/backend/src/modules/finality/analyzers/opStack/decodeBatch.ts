@@ -35,7 +35,7 @@ function decodeBatchVersion0(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
   const timestamp = data[3].reduce((acc, byte) => (acc << 8) | byte, 0)
   const txCount = data[4].length
   const blockNumber =
-    (timestamp - opts.genesisTimestamp.toNumber()) / opts.l2BlockTimeSeconds
+    (timestamp - opts.genesisTimestamp) / opts.l2BlockTimeSeconds
 
   const blockWithTimestamps = {
     timestamp,
@@ -66,7 +66,7 @@ function decodeSpanBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
     .fill(0)
     .map((_) => reader.uint32())
 
-  const absTimestamp = relTimestamp + opts.genesisTimestamp.toNumber()
+  const absTimestamp = relTimestamp + opts.genesisTimestamp
   const blocksWithTimestamps = tsxPerBlock.map((txCount, i) => ({
     timestamp: absTimestamp + i * opts.l2BlockTimeSeconds,
     blockNumber: relTimestamp / opts.l2BlockTimeSeconds + i + opts.blockOffset,

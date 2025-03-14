@@ -22,7 +22,8 @@ async function getTvsProjectStatsData(
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const tvsProject = await toTvsProject(project, chains)
+  const tokenList = await ps.getTokens()
+  const tvsProject = await toTvsProject(project, chains, tokenList)
   const tvsValues = await getTvsValuesForProjects([tvsProject], '7d')
   const projectTvsValues = tvsValues[project.id]
   if (!projectTvsValues) {

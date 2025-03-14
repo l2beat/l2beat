@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { BlobScanClient } from '../../clients'
-import type { EthereumBlob } from './DaProvider'
 import { EthereumDaProvider } from './EthereumDaProvider'
+import type { EthereumBlob } from './types'
 
 describe(EthereumDaProvider.name, () => {
   describe(EthereumDaProvider.prototype.getBlobs.name, () => {

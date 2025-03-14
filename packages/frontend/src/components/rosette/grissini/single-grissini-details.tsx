@@ -12,6 +12,7 @@ import type { RosetteValue } from '../types'
 import { SingleGrissini } from './single-grissini'
 interface SingleGrissiniDetailsProps extends RosetteValue {
   className?: string
+  size?: 'small' | 'regular'
   showTooltip?: boolean
 }
 
@@ -20,13 +21,16 @@ export function SingleGrissiniDetails({
   sentiment,
   value,
   className,
+  size = 'regular',
   description,
   showTooltip,
 }: SingleGrissiniDetailsProps) {
   const content = (
     <div
       className={cn(
-        'flex h-12 flex-row items-stretch rounded md:h-[5.125rem]',
+        'flex flex-row items-stretch rounded',
+        size === 'small' && 'h-12',
+        size === 'regular' && 'h-12 md:h-[5.125rem]',
         sentimentToTransparentBgColor(sentiment ?? 'neutral'),
         className,
       )}

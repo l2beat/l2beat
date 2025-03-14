@@ -15,10 +15,10 @@ export const GeneratedToken = z.object({
   address: stringAs((s) => EthereumAddress(s)).optional(),
   symbol: z.string(),
   decimals: z.number(),
-  deploymentTimestamp: numberAs((n) => new UnixTime(n)),
+  deploymentTimestamp: numberAs((n) => UnixTime(n)),
   // This is either coingecko listing timestamp or min timestamp of ethereum
-  coingeckoListingTimestamp: numberAs((n) => new UnixTime(n)),
-  untilTimestamp: numberAs((n) => new UnixTime(n)).optional(),
+  coingeckoListingTimestamp: numberAs((n) => UnixTime(n)),
+  untilTimestamp: numberAs((n) => UnixTime(n)).optional(),
   /** @deprecated */
   category: z.enum(['ether', 'stablecoin', 'other']),
   iconUrl: z.optional(z.string()),
@@ -58,7 +58,7 @@ export const SourceEntry = z.object({
       warning: z.string().optional(),
     }),
   ),
-  deploymentTimestamp: numberAs((n) => new UnixTime(n)).optional(),
+  deploymentTimestamp: numberAs((n) => UnixTime(n)).optional(),
   excludeFromTotal: z.literal(true).optional(),
 })
 

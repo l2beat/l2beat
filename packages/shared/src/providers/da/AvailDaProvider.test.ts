@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { PolkadotRpcClient } from '../../clients'
 import { AvailDaProvider } from './AvailDaProvider'
-import type { AvailBlob } from './DaProvider'
+import type { AvailBlob } from './types'
 
 describe(AvailDaProvider.name, () => {
   describe(AvailDaProvider.prototype.getBlobs.name, () => {
@@ -22,14 +22,14 @@ describe(AvailDaProvider.name, () => {
           type: 'avail',
           daLayer: 'avail',
           appId: '1',
-          blockTimestamp: new UnixTime(1720092420),
+          blockTimestamp: UnixTime(1720092420),
           size: 64n,
         } as AvailBlob,
         {
           type: 'avail',
           daLayer: 'avail',
           appId: '2',
-          blockTimestamp: new UnixTime(1720092420),
+          blockTimestamp: UnixTime(1720092420),
           size: 77n,
         } as AvailBlob,
       ])

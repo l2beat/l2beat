@@ -27,7 +27,7 @@ export class CelestiaApiClient extends ClientCore {
     return json.result.txs_results.map((tx) => tx.log)
   }
 
-  async getBlob(height: number, namespace: string, commitment: string) {
+  async blobExists(height: number, namespace: string, commitment: string) {
     const body = {
       id: '1',
       jsonrpc: '2.0',
@@ -47,10 +47,10 @@ export class CelestiaApiClient extends ClientCore {
     const json = GetBlobResponseSchema.parse(response)
 
     if ('error' in json) {
-      return
+      return false
     }
 
-    return json.result.data
+    return true
   }
 
   override validateResponse(_response: json): {

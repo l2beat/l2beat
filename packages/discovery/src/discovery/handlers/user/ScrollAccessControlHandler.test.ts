@@ -90,6 +90,8 @@ describe(ScrollAccessControlHandler.name, () => {
   it('no logs', async () => {
     const address = EthereumAddress.random()
     const provider = mockObject<IProvider>({
+      getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+      getDeployment: mockFn().resolvesTo(undefined),
       async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
@@ -150,6 +152,8 @@ describe(ScrollAccessControlHandler.name, () => {
 
     const address = EthereumAddress.random()
     const provider = mockObject<IProvider>({
+      getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
+      getDeployment: mockFn().resolvesTo(undefined),
       async getLogs() {
         return [
           RoleGranted(WARRIOR_ROLE, Alice),

@@ -11,8 +11,14 @@ export interface TvlCleanerRecord {
 export function toRow(record: TvlCleanerRecord): Insertable<TvlCleaner> {
   return {
     repositoryName: record.repositoryName,
-    hourlyCleanedUntil: record.hourlyCleanedUntil?.toDate() ?? null,
-    sixHourlyCleanedUntil: record.sixHourlyCleanedUntil?.toDate() ?? null,
+    hourlyCleanedUntil:
+      record.hourlyCleanedUntil !== null
+        ? UnixTime.toDate(record.hourlyCleanedUntil)
+        : null,
+    sixHourlyCleanedUntil:
+      record.sixHourlyCleanedUntil !== null
+        ? UnixTime.toDate(record.sixHourlyCleanedUntil)
+        : null,
   }
 }
 

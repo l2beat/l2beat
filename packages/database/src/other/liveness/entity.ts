@@ -20,6 +20,6 @@ export function toRecord(row: Selectable<Liveness>): LivenessRecord {
 export function toRow(record: LivenessRecord): Insertable<Liveness> {
   return {
     ...record,
-    timestamp: record.timestamp.toDate(),
+    timestamp: UnixTime.toDate(record.timestamp),
   }
 }

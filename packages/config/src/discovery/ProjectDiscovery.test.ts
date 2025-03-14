@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
@@ -15,6 +15,7 @@ describe(ProjectDiscovery.name, () => {
     readConfig: (projectName: string, chain: string) =>
       mockConfig(projectName, chain),
     readDiscovery: () => discoveredJsonStub,
+    getDisplayMode: () => 'fromDiscovery',
   })
 
   const discovery = new ProjectDiscovery(projectName, 'ethereum', configReader)
@@ -35,6 +36,7 @@ describe(ProjectDiscovery.name, () => {
     })
 
     it('should return contract for given name', () => {
+      assert(contractStub.name !== undefined)
       const contract = discovery.getContract(contractStub.name)
 
       expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
@@ -59,6 +61,7 @@ describe(ProjectDiscovery.name, () => {
 
   describe(ProjectDiscovery.prototype.getContractValue.name, () => {
     it('should return given contract value', () => {
+      assert(contractStub.name !== undefined)
       const value = discovery.getContractValue(
         contractStub.name,
         'CHILD_BLOCK_INTERVAL',
@@ -67,8 +70,10 @@ describe(ProjectDiscovery.name, () => {
     })
 
     it('should throw an error if given contract value does not exist', () => {
+      assert(contractStub.name !== undefined)
+      const name = contractStub.name
       const key = 'randomValue'
-      expect(() => discovery.getContractValue(contractStub.name, key)).toThrow(
+      expect(() => discovery.getContractValue(name, key)).toThrow(
         `Assertion Error: Value of key ${key} does not exist in ${contractStub.name} contract (${projectName})`,
       )
     })

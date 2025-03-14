@@ -65,20 +65,20 @@ export const getCachedActivityChartData = cache(
 
     const aggregatedEntries = aggregateActivityRecords(entries)
     if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
-      return { data: [], syncWarning, syncedUntil: syncedUntil.toNumber() }
+      return { data: [], syncWarning, syncedUntil: syncedUntil }
     }
 
     const startTimestamp = Math.min(
       ...Object.keys(aggregatedEntries).map(Number),
     )
     const timestamps = generateTimestamps(
-      [new UnixTime(startTimestamp), adjustedRange[1]],
+      [UnixTime(startTimestamp), adjustedRange[1]],
       'daily',
     )
 
     const data: [number, number, number, number, number][] = timestamps.map(
       (timestamp) => {
-        const entry = aggregatedEntries[timestamp.toNumber()]
+        const entry = aggregatedEntries[timestamp]
         if (!entry) {
           return [+timestamp, 0, 0, 0, 0]
         }
@@ -94,7 +94,7 @@ export const getCachedActivityChartData = cache(
     return {
       data,
       syncWarning,
-      syncedUntil: syncedUntil.toNumber(),
+      syncedUntil: syncedUntil,
     }
   },
   ['activity-chart-data'],
@@ -119,6 +119,6 @@ function getMockActivityChart(
   return {
     data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),
     syncWarning: getActivitySyncWarning(adjustedRange[1]),
-    syncedUntil: adjustedRange[1].toNumber(),
+    syncedUntil: adjustedRange[1],
   }
 }

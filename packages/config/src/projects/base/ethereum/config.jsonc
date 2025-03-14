@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "base",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72", //wstETHEscrow
+    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35", //L1StandardBridge
+    "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3"
+  ],
+  "names": {
+    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "BaseMultisig1",
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "BaseMultisig2",
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "BaseAdminMultisig",
+    "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72": "wstETHEscrow",
+    "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e": "OptimismPortal",
+    "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8": "DelayedWETH_PermissionlessGames",
+    "0x3E8a0B63f57e975c268d610ece93da5f78c01321": "DelayedWETH_PermissionedGames"
+  },
+  "overrides": {
+    "0x73a79Fab69143498Ed3712e519A88a918e1f4072": {
+      "ignoreInWatchMode": ["gasLimit"], // custom ignore for weekly gas limit raise on Base
+      "extends": "opstack/SystemConfig"
+    },
+    "wstETHEscrow": {
+      "ignoreRelatives": ["l2Token", "l1Token"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "ignoreRelative": true
+          }
+        }
+      }
+    }
+  }
+}

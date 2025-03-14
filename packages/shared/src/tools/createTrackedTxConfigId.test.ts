@@ -13,12 +13,12 @@ describe(createTrackedTxId.name, () => {
     },
     {
       key: 'sinceTimestamp',
-      newValue: new UnixTime(1),
+      newValue: UnixTime(1),
       shouldUpdateHash: true,
     },
     {
       key: 'untilTimestamp',
-      newValue: new UnixTime(1),
+      newValue: UnixTime(1),
       shouldUpdateHash: false,
     },
     {

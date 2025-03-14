@@ -1,5 +1,10 @@
-import { type Project, type ProjectTvlEscrow, tokenList } from '@l2beat/config'
-import { assert, type AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
+import type { Project, ProjectTvlEscrow } from '@l2beat/config'
+import {
+  assert,
+  type AmountConfigEntry,
+  AssetId,
+  type Token,
+} from '@l2beat/shared-pure'
 import { getAggLayerL2TokenEntry } from '../aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from '../aggLayerNativeEtherPreminted'
 import { getAggLayerNativeEtherWrappedEntry } from '../aggLayerNativeEtherWrapped'
@@ -8,6 +13,7 @@ export function aggLayerEscrowToEntries(
   escrow: ProjectTvlEscrow,
   project: Project<'tvlConfig', 'chainConfig'>,
   aggLayerIncludedL1Tokens: string[],
+  tokenList: Token[],
 ) {
   assert(escrow.sharedEscrow?.type === 'AggLayer', 'AggLayer escrow expected')
   const entries: AmountConfigEntry[] = []

@@ -23,7 +23,7 @@ async function main() {
     'scripts/multichain/intermediate.json',
     JSON.stringify({ comment, ...intermediate }, null, 2),
   )
-  const final = generateFinalConfig(intermediate)
+  const final = await generateFinalConfig(intermediate)
   await writeFile(
     'src/bridges/multichain-config.json',
     JSON.stringify({ comment, ...final }, null, 2),

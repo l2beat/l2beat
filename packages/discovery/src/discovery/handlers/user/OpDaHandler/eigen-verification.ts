@@ -92,7 +92,7 @@ async function getEthereumBlock(provider: IProvider) {
   const currentBlock = await provider.getBlock(provider.blockNumber)
   assert(currentBlock, 'Current block is undefined')
 
-  const timestamp = new UnixTime(currentBlock.timestamp)
+  const timestamp = UnixTime(currentBlock.timestamp)
 
   // We need to switch to ethereum to get the block number.
   // Eigen AVS lives there.

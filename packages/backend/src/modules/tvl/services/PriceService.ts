@@ -48,8 +48,8 @@ export class PriceService {
       .map((c) =>
         prices
           .filter((p) =>
-            p.timestamp.gte(new UnixTime(c.minHeight)) && c.maxHeight
-              ? p.timestamp.lte(new UnixTime(c.maxHeight))
+            p.timestamp >= UnixTime(c.minHeight) && c.maxHeight
+              ? p.timestamp <= UnixTime(c.maxHeight)
               : true,
           )
           .map((p) => ({
@@ -101,7 +101,7 @@ export class PriceService {
       `${coingeckoId}: DB fallback triggered: failed to fetch price from Coingecko`,
       {
         coingeckoId,
-        latestHour: latestHour.toNumber(),
+        latestHour: latestHour,
         fallbackPrice: fallbackPrice.priceUsd,
       },
     )
@@ -114,8 +114,8 @@ export class PriceService {
 
   calculateAdjustedTo(from: number, to: number): UnixTime {
     return CoingeckoQueryService.calculateAdjustedTo(
-      new UnixTime(from),
-      new UnixTime(to),
+      UnixTime(from),
+      UnixTime(to),
     )
   }
 }
@@ -127,14 +127,14 @@ function assertLatestHour(
   coingeckoId: CoingeckoId,
   logger: Logger,
 ) {
-  const diff = to.toNumber() - from.toNumber()
+  const diff = to - from
   if (diff >= 3600) {
     logger.error(`Timestamps diff to large to perform fallback`, { diff })
     throw error
   }
   assert(
-    to.isFull('hour'),
-    `Latest hour assert failed for ${coingeckoId} <${from.toNumber()},${to.toNumber()}>`,
+    UnixTime.isFull(to, 'hour'),
+    `Latest hour assert failed for ${coingeckoId} <${from},${to}>`,
   )
 
   return to
