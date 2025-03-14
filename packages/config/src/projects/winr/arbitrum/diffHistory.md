@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x8085f93ec0066a4670816b971466cc240bd1a1f0
+
+# Diff at Fri, 14 Mar 2025 12:56:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 305988230
+- current block number: 315606171
+
+## Description
+
+ConduitMultisig2 member change.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 9 (33%)"
++        "4 of 9 (44%)"
+    }
+```
+
 Generated with discovered.json: 0x29741e2e0c248234bd7e32ff2bcb92e25ed8904a
 
 # Diff at Thu, 06 Mar 2025 14:25:18 GMT:

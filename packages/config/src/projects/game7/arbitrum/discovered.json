@@ -1,7 +1,7 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "blockNumber": 307386152,
+  "blockNumber": 315606013,
   "configHash": "0x794d4fd554e8b717e53b8c6785ad0e13f326d9fc141ce92267d5c0a0bec20dde",
   "entries": [
     {
@@ -66,7 +66,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 42,
+        "nonce": 579,
         "VERSION": "1.3.0"
       }
     },
@@ -115,7 +115,7 @@
           "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
         ],
         "allowedOutboxList": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
-        "delayedMessageCount": 260,
+        "delayedMessageCount": 355,
         "inboxHistory": [
           "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
           "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
@@ -125,8 +125,8 @@
         "outboxHistory": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 536,
-        "sequencerReportedSubMessageCount": 486670
+        "sequencerMessageCount": 1235,
+        "sequencerReportedSubMessageCount": 1499196
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -356,7 +356,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 536,
+        "batchCount": 1235,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"],
         "bridge": "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
@@ -386,7 +386,7 @@
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 260,
+        "totalDelayedMessagesRead": 355,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -485,13 +485,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 150,
+        "firstUnresolvedNode": 687,
         "inbox": "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20938249,
-        "latestConfirmed": 149,
-        "latestNodeCreated": 149,
+        "latestConfirmed": 686,
+        "latestNodeCreated": 686,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -686,12 +686,12 @@
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
         ],
-        "$threshold": 3,
+        "$threshold": 4,
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 9 (33%)",
-        "nonce": 67,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 68,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
