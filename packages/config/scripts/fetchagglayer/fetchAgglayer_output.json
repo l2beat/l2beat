@@ -151,7 +151,7 @@
     "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
     "forkID": "9",
     "lastLocalExitRoot": "0x765050b04c9fb54504506909b376becc428195c77d1b85a057dae76c89f64abc",
-    "lastBatchSequenced": "30537",
+    "lastBatchSequenced": "30543",
     "lastVerifiedBatch": "30537",
     "lastVerifiedBatchBeforeUpgrade": "0",
     "rollupTypeID": "4 (validiumV1)",

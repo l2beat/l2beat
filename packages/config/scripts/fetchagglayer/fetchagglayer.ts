@@ -18,9 +18,9 @@ interface ConfigType {
 }
 
 const CONFIG: ConfigType = {
-  rpcUrl: 'https://ethereum.publicnode.com',
+  rpcUrl: 'https://eth.drpc.org',
   rollupManagerAddress: '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-  outputFilePath: './fetchAgglayer_output.json',
+  outputFilePath: './scripts/fetchagglayer/fetchAgglayer_output.json',
 
   // Known rollup names
   rollupNames: {
