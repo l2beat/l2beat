@@ -43,26 +43,38 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       configurations: configurations.length,
     })
 
-    const records: TvsPriceRecord[] = []
-    for (const configuration of configurations) {
-      const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
-        CoingeckoId(configuration.properties.priceId),
-        UnixTime(from),
-        adjustedTo,
+    const start = Date.now()
+    const records = (
+      await Promise.all(
+        configurations.map(async (configuration) => {
+          const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
+            CoingeckoId(configuration.properties.priceId),
+            UnixTime(from),
+            adjustedTo,
+          )
+
+          const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
+            priceId: configuration.properties.priceId,
+            timestamp: p.timestamp,
+            priceUsd: p.value,
+          }))
+
+          const optimizedRecords = configurationRecords.filter((p) =>
+            this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+          )
+
+          return optimizedRecords
+        }),
       )
+    ).flat()
 
-      const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
-        priceId: configuration.properties.priceId,
-        timestamp: p.timestamp,
-        priceUsd: p.value,
-      }))
-
-      const optimizedRecords = configurationRecords.filter((p) =>
-        this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
-      )
-
-      records.push(...optimizedRecords)
-    }
+    this.logger.info('Fetched prices', {
+      from,
+      to: adjustedTo,
+      configurations: configurations.length,
+      records: records.length,
+      duration: Math.round((Date.now() - start) / 1000),
+    })
 
     return async () => {
       await Promise.resolve()
@@ -71,7 +83,6 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       this.logger.info('Saved prices into DB', {
         from,
         to: adjustedTo,
-        configurations: configurations.length,
         records: records.length,
       })
 
