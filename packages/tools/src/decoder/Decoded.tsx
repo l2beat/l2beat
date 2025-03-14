@@ -84,10 +84,20 @@ export function Decoded(props: DecodedProps) {
               Cannot decode with provided ABI. See console for details.
             </div>
           ) : (
-            <div className="text-xs">
-              Examples: 1. <code>function foo(address, uint)</code> 2.{' '}
-              <code>(address, uint[], string)</code>
-            </div>
+            <ol className="list-decimal pl-4 text-xs">
+              <li>
+                <span className="text-zinc-400">function</span>{' '}
+                <code>function foo(address, uint)</code>
+              </li>
+              <li>
+                <span className="text-zinc-400">a tuple</span>{' '}
+                <code>(address, uint[], string)</code>
+              </li>
+              <li>
+                <span className="text-zinc-400">multiple parameters</span>{' '}
+                <code>address, bytes</code>
+              </li>
+            </ol>
           )}
         </div>
       )}
