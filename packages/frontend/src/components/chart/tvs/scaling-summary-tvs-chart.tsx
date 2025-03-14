@@ -24,8 +24,8 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/yellow-gradient-def'
-import { getAreaChartComponents } from '~/components/core/chart/utils/get-area-chart-components'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
@@ -109,7 +109,7 @@ export function ScalingSummaryTvsChart({
             <YellowStrokeGradientDef id="others-stroke" />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
-          {getAreaChartComponents({
+          {getStrokeOverFillAreaComponents({
             data: [
               {
                 dataKey: 'rollups',

@@ -23,8 +23,8 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/pink-gradient-def'
-import { getAreaChartComponents } from '~/components/core/chart/utils/get-area-chart-components'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
@@ -61,7 +61,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           <EmeraldFillGradientDef id="emerald-fill" />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        {getAreaChartComponents({
+        {getStrokeOverFillAreaComponents({
           data: [
             {
               dataKey: 'ethereum',

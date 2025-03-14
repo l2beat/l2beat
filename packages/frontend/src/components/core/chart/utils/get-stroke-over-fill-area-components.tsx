@@ -13,10 +13,12 @@ interface AreaChartProps {
  * @param data - array of area chart props
  * @example
  * <AreaChart>
- *   {getAreaChartComponents({ data })}
+ *   {getStrokeOverFillAreaComponents({ data })}
  * </AreaChart>
  */
-export function getAreaChartComponents({ data }: AreaChartProps): ReactNode[] {
+export function getStrokeOverFillAreaComponents({
+  data,
+}: AreaChartProps): ReactNode[] {
   const fillComponents = []
   const strokeComponents = []
 

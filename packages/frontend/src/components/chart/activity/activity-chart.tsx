@@ -37,7 +37,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { getAreaChartComponents } from '../../core/chart/utils/get-area-chart-components'
+import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/get-stroke-over-fill-area-components'
 import type { ChartScale } from '../types'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
@@ -102,22 +102,22 @@ export function ActivityChart({
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {getAreaChartComponents({
+        {getStrokeOverFillAreaComponents({
           data: compact([
-            {
-              dataKey: 'projects',
-              stroke: 'url(#strokeProjects)',
-              fill: 'url(#fillProjects)',
+            showMainnet && {
+              dataKey: 'ethereum',
+              stroke: 'url(#strokeEthereum)',
+              fill: 'url(#fillEthereum)',
               strokeWidth: 2,
               fillOpacity: 1,
               dot: false,
               isAnimationActive: false,
             },
-            showMainnet && {
-              dataKey: 'ethereum',
-              stroke: 'url(#strokeEthereum)',
+            {
+              dataKey: 'projects',
+              stroke: 'url(#strokeProjects)',
+              fill: 'url(#fillProjects)',
               strokeWidth: 2,
-              fill: 'url(#fillEthereum)',
               fillOpacity: 1,
               dot: false,
               isAnimationActive: false,
