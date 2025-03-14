@@ -1,6 +1,5 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { Database } from '@l2beat/database'
-import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
 import type { BalanceProvider, TotalSupplyProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -50,7 +49,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
   ) {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
     if (timestamp > to) {
-      this.logger.info('Skipping update due to sync optimization', {
+      this.logger.info('Timestamp out of range', {
         from,
         to,
         optimizedTimestamp: timestamp,
@@ -60,59 +59,23 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
 
     const blockNumber = await this.getBlockNumber(timestamp)
 
-    const escrows = configurations.filter(
-      (c) => c.properties.type === 'balanceOfEscrow',
-    ) as Configuration<BalanceOfEscrowAmountFormula & { project: string }>[]
-
-    const balances = await this.$.balanceProvider.getBalances(
-      escrows.map((ee) => ({
-        token: ee.properties.address,
-        holder: ee.properties.escrowAddress,
-      })),
+    const escrowBalanceRecords = await this.fetchEscrowBalances(
+      configurations,
+      timestamp,
       blockNumber,
-      this.$.chain,
     )
 
-    this.logger.info('Fetched balances', {
-      timestamp: timestamp,
+    const totalSupplyRecords = await this.fetchTokensTotalSupplies(
+      configurations,
+      timestamp,
       blockNumber,
-      balances: balances.length,
-    })
-
-    const tokens = configurations.filter(
-      (c) => c.properties.type === 'totalSupply',
-    ) as Configuration<TotalSupplyAmountFormula & { project: string }>[]
-
-    const totalSupplies = await this.$.totalSupplyProvider.getTotalSupplies(
-      tokens.map((ee) => ee.properties.address),
-      blockNumber,
-      this.$.chain,
     )
 
-    this.logger.info('Fetched totalSupplies', {
-      timestamp: timestamp,
-      blockNumber,
-      balances: totalSupplies.length,
-    })
-
-    const amounts: TvsAmountRecord[] = [
-      ...balances.map((supply, i) => ({
-        configId: escrows[i].id,
-        amount: supply,
-        timestamp,
-        project: escrows[i].properties.project,
-      })),
-      ...totalSupplies.map((supply, i) => ({
-        configId: tokens[i].id,
-        amount: supply,
-        timestamp,
-        project: tokens[i].properties.project,
-      })),
-    ]
+    const amounts = [...escrowBalanceRecords, ...totalSupplyRecords]
 
     return async () => {
       await this.$.db.tvsAmount.insertMany(amounts)
-      this.logger.info('Saved amounts for timestamp into DB', {
+      this.logger.info('Saved onchain amounts into DB', {
         timestamp: timestamp,
         amounts: amounts.length,
       })
@@ -128,7 +91,75 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
         timestamp,
       )
     assert(blockNumber, `Block number not found for timestamp: ${timestamp}`)
+
+    this.logger.info('Found block number for timestamp', {
+      timestamp,
+      blockNumber,
+    })
     return blockNumber
+  }
+
+  private async fetchEscrowBalances(
+    configurations: Configuration<AmountConfig>[],
+    timestamp: number,
+    blockNumber: number,
+  ) {
+    const escrows = configurations.filter(
+      (c) => c.properties.type === 'balanceOfEscrow',
+    ) as Configuration<BalanceOfEscrowAmountFormula & { project: string }>[]
+
+    this.logger.info('Fetching escrow balances', {
+      blockNumber,
+      balances: escrows.length,
+    })
+
+    const balances = await this.$.balanceProvider.getBalances(
+      escrows.map((escrow) => ({
+        token: escrow.properties.address,
+        holder: escrow.properties.escrowAddress,
+      })),
+      blockNumber,
+      this.$.chain,
+    )
+
+    this.logger.info('Fetched escrow balances')
+
+    return balances.map((supply, i) => ({
+      configId: escrows[i].id,
+      amount: supply,
+      timestamp,
+      project: escrows[i].properties.project,
+    }))
+  }
+
+  private async fetchTokensTotalSupplies(
+    configurations: Configuration<AmountConfig>[],
+    timestamp: number,
+    blockNumber: number,
+  ) {
+    const tokens = configurations.filter(
+      (c) => c.properties.type === 'totalSupply',
+    ) as Configuration<TotalSupplyAmountFormula & { project: string }>[]
+
+    this.logger.info('Fetching tokens total supplies', {
+      blockNumber,
+      balances: tokens.length,
+    })
+
+    const totalSupplies = await this.$.totalSupplyProvider.getTotalSupplies(
+      tokens.map((token) => token.properties.address),
+      blockNumber,
+      this.$.chain,
+    )
+
+    this.logger.info('Fetched tokens total supplies')
+
+    return totalSupplies.map((supply, i) => ({
+      configId: tokens[i].id,
+      amount: supply,
+      timestamp,
+      project: tokens[i].properties.project,
+    }))
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
@@ -140,14 +171,12 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
           UnixTime(configuration.to),
         )
 
-      if (deletedRecords > 0) {
-        this.logger.info('Deleted amounts for configuration', {
-          id: configuration.id,
-          from: configuration.from,
-          to: configuration.to,
-          deletedRecords,
-        })
-      }
+      this.logger.info('Deleted amounts for configuration', {
+        id: configuration.id,
+        from: configuration.from,
+        to: configuration.to,
+        deletedRecords,
+      })
     }
   }
 }
