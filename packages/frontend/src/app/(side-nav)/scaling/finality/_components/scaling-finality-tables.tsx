@@ -11,7 +11,7 @@ import {
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { TableFilters } from '~/components/table/filters/table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
@@ -67,7 +67,7 @@ export function ScalingFinalityTables(props: Props) {
   const showOthers = checked || entries.others.length > 0
   return (
     <>
-      <NewTableFilters
+      <TableFilters
         entries={[
           ...props.rollups,
           ...props.validiumsAndOptimiums,

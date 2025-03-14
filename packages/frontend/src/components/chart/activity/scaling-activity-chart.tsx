@@ -11,7 +11,7 @@ import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_co
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { useNewTableFilterContext } from '~/components/table/filters/new-table-filter-context'
+import { useTableFilterContext } from '~/components/table/filters/table-filter-context'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -43,7 +43,7 @@ export function ScalingActivityChart({
   const { checked } = useRecategorisationPreviewContext()
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
-  const { state: filters } = useNewTableFilterContext()
+  const { state: filters } = useTableFilterContext()
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvs-scale',
     'lin',

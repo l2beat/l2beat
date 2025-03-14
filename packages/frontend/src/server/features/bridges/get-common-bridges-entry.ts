@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { FilterableEntry } from '~/components/table/filters/new-types'
+import type { FilterableEntry } from '~/components/table/filters/types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'

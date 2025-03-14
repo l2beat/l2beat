@@ -10,7 +10,7 @@ import { useCostsUnitContext } from '~/app/(side-nav)/scaling/costs/_components/
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { useNewTableFilterContext } from '~/components/table/filters/new-table-filter-context'
+import { useTableFilterContext } from '~/components/table/filters/table-filter-context'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
@@ -34,7 +34,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { checked } = useRecategorisationPreviewContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { metric, setMetric } = useCostsMetricContext()
-  const { state: filters } = useNewTableFilterContext()
+  const { state: filters } = useTableFilterContext()
 
   const onMetricChange = (metric: CostsMetric) => {
     setMetric(metric)

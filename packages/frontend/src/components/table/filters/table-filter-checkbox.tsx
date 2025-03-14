@@ -1,7 +1,7 @@
 import { CheckIcon } from '~/icons/check'
 import { cn } from '~/utils/cn'
 
-export function NewTableFilterCheckbox({ checked }: { checked: boolean }) {
+export function TableFilterCheckbox({ checked }: { checked: boolean }) {
   return (
     <div
       className={cn(

@@ -2,7 +2,7 @@ import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/scaling-summary-tvs-chart'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card'
-import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -52,9 +52,9 @@ export default async function Page() {
       </div>
       <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
       <ScalingAssociatedTokensContextProvider>
-        <NewTableFilterContextProvider>
+        <TableFilterContextProvider>
           <ScalingSummaryTables {...entries} />
-        </NewTableFilterContextProvider>
+        </TableFilterContextProvider>
       </ScalingAssociatedTokensContextProvider>
     </HydrateClient>
   )

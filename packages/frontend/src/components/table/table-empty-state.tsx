@@ -1,8 +1,8 @@
 import { linkVariants } from '../link/custom-link'
-import { useNewTableFilterContext } from './filters/new-table-filter-context'
+import { useTableFilterContext } from './filters/table-filter-context'
 
 export function TableEmptyState() {
-  const { dispatch } = useNewTableFilterContext()
+  const { dispatch } = useTableFilterContext()
 
   const reset = () => {
     dispatch({ type: 'clear' })

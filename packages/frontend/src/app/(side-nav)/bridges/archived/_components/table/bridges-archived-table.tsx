@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { TableFilters } from '~/components/table/filters/table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { bridgesArchivedColumns } from './columns'
@@ -43,7 +43,7 @@ export function BridgesArchivedTable({ entries }: Props) {
 
   return (
     <div className="space-y-3 md:space-y-6">
-      <NewTableFilters entries={entries} />
+      <TableFilters entries={entries} />
       <BasicTable table={activeTable} />
     </div>
   )

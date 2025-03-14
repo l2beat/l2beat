@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { useReducer } from 'react'
-import type { FilterableValueId } from './new-types'
+import type { FilterableValueId } from './types'
 
 type Filter = {
   id: FilterableValueId

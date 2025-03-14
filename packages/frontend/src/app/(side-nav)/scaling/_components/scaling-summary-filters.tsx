@@ -1,7 +1,7 @@
 'use client'
 import { Checkbox } from '~/components/core/checkbox'
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
-import type { FilterableEntry } from '~/components/table/filters/new-types'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import type { FilterableEntry } from '~/components/table/filters/types'
 import { cn } from '~/utils/cn'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
 
@@ -21,7 +21,7 @@ export function ScalingSummaryFilters({ entries, className }: Props) {
         className,
       )}
     >
-      <NewTableFilters entries={entries} />
+      <TableFilters entries={entries} />
       <Checkbox
         name="excludeAssociatedTokens"
         checked={excludeAssociatedTokens}

@@ -1,5 +1,5 @@
 import { MainPageHeader } from '~/components/main-page-header'
-import { NewTableFilterContextProvider } from '~/components/table/filters/new-table-filter-context'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingDaEntries } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingDaTables } from './_components/scaling-da-tables'
@@ -16,9 +16,9 @@ export default async function Page() {
   return (
     <>
       <MainPageHeader>Data Availability</MainPageHeader>
-      <NewTableFilterContextProvider>
+      <TableFilterContextProvider>
         <ScalingDaTables {...entries} />
-      </NewTableFilterContextProvider>
+      </TableFilterContextProvider>
     </>
   )
 }

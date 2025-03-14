@@ -1,100 +1,138 @@
-'use client'
-import type { KeyboardEvent, MouseEvent } from 'react'
-import { useCallback } from 'react'
+import { partition } from 'lodash'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/core/select'
-import { useTracking } from '~/hooks/use-custom-event'
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '~/components/core/command'
+import {
+  Popover,
+  PopoverAnchor,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/core/popover'
+import { VerticalSeparator } from '~/components/core/vertical-separator'
 import { CloseIcon } from '~/icons/close'
-import { cn } from '~/utils/cn'
+import { TableFilterCheckbox } from './table-filter-checkbox'
+import { useTableFilterContext } from './table-filter-context'
+import type { FilterState } from './use-filter-state'
+import { filterIdToLabel } from './utils/filter-id-to-label'
+import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 
-interface Props {
-  title: string
-  options: string[]
-  value: string | undefined
-  onValueChange: (option: string | undefined) => void
+export function TableFilter({
+  filter,
+  possibleValues,
+}: { filter: FilterState[number]; possibleValues: string[] }) {
+  const { state, dispatch } = useTableFilterContext()
+
+  const [selectedValues, notSelectedValues] = partition(
+    possibleValues.sort(filterValuesSortFn),
+    (value) =>
+      state.some((f) => f.id === filter.id && f.values.includes(value)),
+  )
+  return (
+    <div className="flex h-8 select-none items-center rounded-lg bg-surface-primary text-base font-medium leading-none primary-card:bg-surface-secondary">
+      <div className="flex h-full items-center justify-center pl-2.5 pr-2">
+        {filterIdToLabel[filter.id]}
+      </div>
+      <VerticalSeparator className="h-[30px]" />
+      <button
+        className="flex h-full items-center justify-center rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
+        onClick={() => {
+          dispatch({
+            type: 'setReversed',
+            payload: { id: filter.id, value: !filter.reversed },
+          })
+        }}
+      >
+        {operatorLabel(filter)}
+      </button>
+      <VerticalSeparator className="h-[30px]" />
+      <Popover>
+        <PopoverAnchor className="h-full" />
+        <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-medium">
+          {filter.values.length > 1
+            ? `${filter.values.length} values`
+            : filter.values[0]}
+        </PopoverTrigger>
+        <PopoverContent align="start" className="p-0" side="bottom">
+          <Command>
+            <CommandInput placeholder={filterIdToLabel[filter.id]} />
+            <CommandEmpty>
+              No {filterIdToLabel[filter.id].toLowerCase()} found.
+            </CommandEmpty>
+            <CommandList>
+              {selectedValues.length > 0 && (
+                <CommandGroup>
+                  {selectedValues.map((value) => {
+                    return (
+                      <CommandItem
+                        key={value}
+                        className="flex gap-2"
+                        onSelect={() => {
+                          dispatch({
+                            type: 'remove',
+                            payload: {
+                              id: filter.id,
+                              value,
+                            },
+                          })
+                        }}
+                      >
+                        <TableFilterCheckbox checked={true} />
+                        {value}
+                      </CommandItem>
+                    )
+                  })}
+                </CommandGroup>
+              )}
+              {notSelectedValues.length > 0 && (
+                <CommandGroup>
+                  {notSelectedValues.map((value) => {
+                    return (
+                      <CommandItem
+                        key={value}
+                        className="flex gap-2"
+                        onSelect={() => {
+                          dispatch({
+                            type: 'add',
+                            payload: {
+                              id: filter.id,
+                              value,
+                            },
+                          })
+                        }}
+                      >
+                        <TableFilterCheckbox checked={false} />
+                        {value}
+                      </CommandItem>
+                    )
+                  })}
+                </CommandGroup>
+              )}
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+      <VerticalSeparator className="h-[30px]" />
+      <button
+        className="h-full rounded-r-lg pl-2 pr-2.5 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
+        onClick={() => dispatch({ type: 'remove', payload: { id: filter.id } })}
+      >
+        <div className="inline-flex size-3 items-center justify-center rounded-sm bg-brand">
+          <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
+        </div>
+      </button>
+    </div>
+  )
 }
 
-export function TableFilter({ title, options, value, onValueChange }: Props) {
-  const { track } = useTracking()
-  const onClick = useCallback(
-    (e: MouseEvent) => {
-      if (value !== undefined) {
-        e.preventDefault()
-        onValueChange(undefined)
-      }
-    },
-    [value, onValueChange],
-  )
+function operatorLabel(filter: FilterState[number]) {
+  if (filter.reversed) {
+    return 'is not'
+  }
 
-  const onKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (value !== undefined) {
-        if (e.code === 'Space' || e.code === 'Enter') {
-          e.preventDefault()
-          onValueChange(undefined)
-        } else if (e.code === 'ArrowDown' || e.code === 'ArrowUp') {
-          e.preventDefault()
-        }
-      }
-    },
-    [value, onValueChange],
-  )
-
-  return (
-    <Select
-      value={value ?? ''}
-      onValueChange={(newValue) => {
-        if (value !== undefined) {
-          onValueChange(undefined)
-          return
-        }
-        track('filterChanged', {
-          props: {
-            name: title,
-            value: newValue,
-          },
-        })
-        onValueChange(newValue)
-      }}
-      disabled={options.length < 2 && !value}
-    >
-      <SelectTrigger
-        className={cn(
-          'primary-card:bg-surface-secondary primary-card:data-[state=open]:hover:bg-surface-tertiary',
-          value !== undefined && 'text-brand',
-        )}
-        icon={
-          value !== undefined ? (
-            <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
-              <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
-            </div>
-          ) : undefined
-        }
-        onClick={onClick}
-        onPointerDown={onClick}
-        onKeyDown={onKeyDown}
-      >
-        <SelectValue placeholder={title} />
-      </SelectTrigger>
-      <SelectContent
-        className={cn('flex flex-col primary-card:bg-surface-secondary')}
-        align="start"
-      >
-        {options.map((option) => (
-          <SelectItem
-            key={option}
-            value={option}
-            className="primary-card:focus:bg-surface-tertiary"
-          >
-            {option}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
+  return filter.values.length > 1 ? 'is any of' : 'is'
 }

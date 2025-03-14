@@ -21,16 +21,16 @@ import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
 import { cn } from '~/utils/cn'
-import { NewTableFilterCheckbox } from './new-table-filter-checkbox'
-import { useNewTableFilterContext } from './new-table-filter-context'
-import type { FilterableEntry, FilterableValueId } from './new-types'
+import { TableFilterCheckbox } from './table-filter-checkbox'
+import { useTableFilterContext } from './table-filter-context'
+import type { FilterableEntry, FilterableValueId } from './types'
 import { filterIdToLabel } from './utils/filter-id-to-label'
 import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 
-export function NewTableFilterCombobox({
+export function TableFilterCombobox({
   entries,
 }: { entries: FilterableEntry[] }) {
-  useNewTableFilterContext()
+  useTableFilterContext()
   const [open, setOpen] = useState(false)
   const isMobile = useIsMobile()
 
@@ -61,7 +61,7 @@ function MobileFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const { state } = useNewTableFilterContext()
+  const { state } = useTableFilterContext()
 
   return (
     <>
@@ -95,7 +95,7 @@ function DesktopFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const { state } = useNewTableFilterContext()
+  const { state } = useTableFilterContext()
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -124,7 +124,7 @@ function Content({
   entries: FilterableEntry[]
   onValueSelect?: (value: string) => void
 }) {
-  const { state, dispatch } = useNewTableFilterContext()
+  const { state, dispatch } = useTableFilterContext()
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
   )
@@ -195,7 +195,7 @@ function Content({
                     })
                   }}
                 >
-                  <NewTableFilterCheckbox checked={true} />
+                  <TableFilterCheckbox checked={true} />
                   {value}
                 </CommandItem>
               )
@@ -221,7 +221,7 @@ function Content({
                     })
                   }}
                 >
-                  <NewTableFilterCheckbox checked={false} />
+                  <TableFilterCheckbox checked={false} />
                   {value}
                 </CommandItem>
               )

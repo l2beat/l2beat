@@ -6,7 +6,7 @@ import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { bridgesRisksColumns } from './columns'
 
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { TableFilters } from '~/components/table/filters/table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import type { BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 
@@ -43,7 +43,7 @@ export function BridgesRiskTable({ entries }: Props) {
 
   return (
     <div className="space-y-3 md:space-y-6">
-      <NewTableFilters entries={entries} />
+      <TableFilters entries={entries} />
       <BasicTable table={table} />
     </div>
   )

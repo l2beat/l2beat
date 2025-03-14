@@ -1,9 +1,9 @@
 'use client'
 
-import { useNewTableFilterContext } from './new-table-filter-context'
+import { useTableFilterContext } from './table-filter-context'
 
-export function NewTableFilterClearButton() {
-  const { dispatch } = useNewTableFilterContext()
+export function TableFilterClearButton() {
+  const { dispatch } = useTableFilterContext()
   return (
     <button
       className="h-8 shrink-0 text-xs text-secondary"

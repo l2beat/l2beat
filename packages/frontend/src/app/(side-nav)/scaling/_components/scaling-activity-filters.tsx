@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
-import type { FilterableEntry } from '~/components/table/filters/new-types'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import type { FilterableEntry } from '~/components/table/filters/types'
 import { useTracking } from '~/hooks/use-custom-event'
 import { cn } from '~/utils/cn'
 
@@ -17,7 +17,7 @@ export function ScalingActivityFilters({ entries, className }: Props) {
         className,
       )}
     >
-      <NewTableFilters entries={entries} />
+      <TableFilters entries={entries} />
       <ExplorerButton />
     </div>
   )

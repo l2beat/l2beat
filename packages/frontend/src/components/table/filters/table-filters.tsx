@@ -1,18 +1,18 @@
 import { uniq } from 'lodash'
 import { cn } from '~/utils/cn'
-import { NewTableFilterClearButton } from './new-table-filter-clear-button'
-import { NewTableFilterCombobox } from './new-table-filter-combobox'
-import { useNewTableFilterContext } from './new-table-filter-context'
-import { NewTableFilterItem } from './new-table-filter-item'
-import type { FilterableEntry } from './new-types'
+import { TableFilter } from './table-filter'
+import { TableFilterClearButton } from './table-filter-clear-button'
+import { TableFilterCombobox } from './table-filter-combobox'
+import { useTableFilterContext } from './table-filter-context'
+import type { FilterableEntry } from './types'
 
 type Props = {
   entries: FilterableEntry[]
   className?: string
 }
 
-export function NewTableFilters({ entries, className }: Props) {
-  const { state } = useNewTableFilterContext()
+export function TableFilters({ entries, className }: Props) {
+  const { state } = useTableFilterContext()
 
   return (
     <div
@@ -21,9 +21,9 @@ export function NewTableFilters({ entries, className }: Props) {
         className,
       )}
     >
-      <NewTableFilterCombobox entries={entries} />
+      <TableFilterCombobox entries={entries} />
       {state.map((filter) => (
-        <NewTableFilterItem
+        <TableFilter
           key={filter.id}
           filter={filter}
           possibleValues={uniq(
@@ -35,7 +35,7 @@ export function NewTableFilters({ entries, className }: Props) {
           )}
         />
       ))}
-      {state.length > 0 && <NewTableFilterClearButton />}
+      {state.length > 0 && <TableFilterClearButton />}
     </div>
   )
 }

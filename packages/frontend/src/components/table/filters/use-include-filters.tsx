@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
-import { useNewTableFilterContext } from './new-table-filter-context'
-import type { FilterableEntry } from './new-types'
+import { useTableFilterContext } from './table-filter-context'
+import type { FilterableEntry } from './types'
 
 export function useIncludeFilters() {
-  const { state } = useNewTableFilterContext()
+  const { state } = useTableFilterContext()
 
   const filter = useCallback(
     ({ filterable }: FilterableEntry) => {

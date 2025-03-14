@@ -16,7 +16,7 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { TableFilters } from '~/components/table/filters/table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
@@ -131,7 +131,7 @@ function Controls({ entries }: { entries: ScalingLivenessEntry[] }) {
 
   return (
     <div className="flex flex-col justify-between gap-2 md:flex-row">
-      <NewTableFilters entries={entries} />
+      <TableFilters entries={entries} />
       <LivenessTimeRangeControls
         timeRange={timeRange}
         setTimeRange={setTimeRange}

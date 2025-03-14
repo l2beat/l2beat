@@ -15,7 +15,7 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
-import { NewTableFilters } from '~/components/table/filters/new-table-filters'
+import { TableFilters } from '~/components/table/filters/table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
@@ -58,7 +58,7 @@ export function ScalingRiskTables(props: Props) {
 
   return (
     <>
-      <NewTableFilters
+      <TableFilters
         entries={[
           ...props.rollups,
           ...props.validiumsAndOptimiums,
