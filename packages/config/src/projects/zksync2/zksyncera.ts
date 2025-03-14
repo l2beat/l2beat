@@ -17,10 +17,10 @@ const validatorsVTLold = () => {
   // get validators added in the constructor args
   const constructorArgsValis = discovery.getContractValue<{
     _validators: string[]
-  }>('ValidatorTimelockOld', 'constructorArgs')
+  }>('ValidatorTimelock3', 'constructorArgs')
   // add the validators from events
   const allValis = discovery
-    .getContractValue<string[]>('ValidatorTimelockOld', 'validatorsVTLold')
+    .getContractValue<string[]>('ValidatorTimelock3', 'validatorsVTLold')
     .concat(constructorArgsValis._validators)
   // dedup
   return [...new Set(allValis)]

@@ -46,7 +46,8 @@
         }
       }
     },
-    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+    "ValidatorTimelock2": {
+      "category": "spam",
       // local override over the template to fetch the validators from the shared contract
       "fields": {
         "validatorsVTL": {
@@ -72,29 +73,8 @@
         }
       }
     },
-    "Governance": {
-      "description": "Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is {{minDelay_formatted}}.",
-      "fields": {
-        "minDelay_formatted": {
-          "handler": {
-            "type": "call",
-            "method": "minDelay",
-            "args": []
-          },
-          "returnType": "(FormatSeconds)"
-        },
-        "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "act"
-              }
-            ]
-          }
-        }
-      }
-    },
-    "ValidatorTimelockOld": {
+    "ValidatorTimelock3": {
+      "category": "spam",
       "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_formatted}}. This contract is a remnant from pre Elastic Chain times.",
       "ignoreMethods": [
         "committedBlockTimestamp",
@@ -162,11 +142,36 @@
         }
       }
     },
+    "Governance": {
+      "category": "gov",
+      "description": "Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is {{minDelay_formatted}}.",
+      "fields": {
+        "minDelay_formatted": {
+          "handler": {
+            "type": "call",
+            "method": "minDelay",
+            "args": []
+          },
+          "returnType": "(FormatSeconds)"
+        },
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "act"
+              }
+            ]
+          }
+        }
+      }
+    },
     "L1ERC20Bridge": {
+      "category": "bridge-canonical",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
       "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
     },
     "L1ERC20Bridge_wstETH": {
+      "category": "bridge-external",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
       "ignoreRelatives": [
         "l1Token",

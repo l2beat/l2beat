@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x20d4dd78f15031c32ece601e57dbe41b4810842d
+Generated with discovered.json: 0x9d96ae41ba5cdffd90aedd02752323357de15ec5
 
-# Diff at Fri, 14 Mar 2025 11:01:18 GMT:
+# Diff at Fri, 14 Mar 2025 12:01:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6e1953985181f2818bd03a4f52e9b348b5c930b2 block: 22030583
-- current block number: 22044661
+- current block number: 22044942
 
 ## Description
 
@@ -53,6 +53,11 @@ Current status of protocol upgrade v26:
       description:
 -        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
 +        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}
+      issuedPermissions.1.to:
+-        "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
       values.$implementation.3:
 -        "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
 +        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
@@ -123,6 +128,8 @@ Current status of protocol upgrade v26:
 +        "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5"
       values.txFilterer:
 -        []
+      values.validators.2:
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
       values.getBaseTokenAssetId:
 +        "0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609"
       values.getChainId:
@@ -175,6 +182,8 @@ Current status of protocol upgrade v26:
 +        "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
       issuedPermissions:
 +        [{"permission":"validateZkStack","to":"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","via":[]},{"permission":"validateZkStack","to":"0x3527439923a63F8C13CF72b8Fe80a77f6e572092","via":[]}]
+      receivedPermissions:
++        [{"permission":"interact","from":"0x32400084C286CF3E17e7B677ea9583e60a000324","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."}]
     }
 ```
 
@@ -211,8 +220,24 @@ discovery. Values are for block 22030583 (main branch discovery), not current.
 ```diff
     contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
     +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
-      receivedPermissions:
--        [{"permission":"interact","from":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"set addresses (validators) that can commit, prove, execute, revert batches through this contract."}]
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract L1ERC20Bridge_wstETH (0x41527B2d03844dB6b0945f25702cB958b6d55989) {
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      category:
++        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -222,31 +247,23 @@ discovery. Values are for block 22030583 (main branch discovery), not current.
       name:
 -        "ValidatorTimelock"
 +        "ValidatorTimelock2"
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
     }
 ```
 
 ```diff
     contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
-    +++ description: None
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
       name:
 -        "ValidatorTimelockOld"
 +        "ValidatorTimelock3"
-      description:
--        "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times."
-      issuedPermissions:
--        [{"permission":"interact","to":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","description":"set addresses (validators) that can commit, prove, execute, revert batches through this contract.","via":[]}]
-      values.constructorArgs:
--        {"_initialOwner":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","_zkSyncContract":"0x32400084C286CF3E17e7B677ea9583e60a000324","_executionDelay":75600,"_validators":["0x3527439923a63F8C13CF72b8Fe80a77f6e572092","0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"]}
-      values.executionDelay_formatted:
--        "21h"
-      values.revertedBlocks:
--        []
-      values.validatorsVTLold:
--        []
-      values.getCommittedBatchTimestamp:
-+        [0,0,0,0,0]
-      errors:
-+        {"getCommittedBatchTimestamp":"Processing error occurred."}
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
