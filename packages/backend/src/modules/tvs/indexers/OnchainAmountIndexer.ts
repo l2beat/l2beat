@@ -52,7 +52,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<AmountConfig> {
       this.logger.info('Timestamp out of range', {
         from,
         to,
-        optimizedTimestamp: timestamp,
+        timestamp,
       })
       return () => Promise.resolve(to)
     }
