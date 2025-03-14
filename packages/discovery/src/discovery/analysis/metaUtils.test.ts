@@ -10,7 +10,6 @@ import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
   type ContractMeta,
   findHighestSeverity,
-  getMetaFromUpgradeability,
   getTargetsMeta,
   interpolateString,
   invertMeta,
@@ -384,7 +383,6 @@ describe('metaUtils', () => {
           displayName: undefined,
           description: undefined,
           permissions: [
-            { type: 'upgrade', delay: 0, target: selfAddress },
             {
               type: 'interact',
               delay: 0,
@@ -393,6 +391,7 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 allows to change this number: 1122',
               condition: undefined,
             },
+            { type: 'upgrade', delay: 0, target: selfAddress },
           ],
           severity: 'LOW',
           types: new Set(['CODE_CHANGE']),
@@ -450,6 +449,69 @@ describe('metaUtils', () => {
           types: new Set(['EXTERNAL', 'L2']),
           references: undefined,
         },
+      })
+    })
+
+    it('should not override existing upgrade permission with default', () => {
+      const selfAddress = EthereumAddress.from('0x1234')
+      const existingUpgradeAddress = EthereumAddress.from('0x456')
+
+      const handlerResults = [
+        {
+          field: 'configuredUpgrade',
+          value: existingUpgradeAddress.toString(),
+        },
+        {
+          field: '$admin',
+          value: existingUpgradeAddress.toString(),
+        },
+      ]
+
+      const fields: { [field: string]: DiscoveryContractField } = {
+        configuredUpgrade: {
+          target: {
+            permissions: [
+              {
+                type: 'upgrade',
+                delay: 100,
+                description: 'Existing configured upgrade permission',
+              },
+            ],
+          },
+          severity: 'HIGH',
+          type: 'CODE_CHANGE',
+        },
+      }
+
+      const mergedValues = {
+        ...Object.fromEntries(
+          handlerResults.map(({ field, value }) => [field, value]),
+        ),
+      }
+
+      const result = getTargetsMeta(
+        selfAddress,
+        mergedValues,
+        fields,
+        generateFakeAnalysis(selfAddress),
+      )
+
+      expect(result?.[existingUpgradeAddress.toString()]).toEqual({
+        canActIndependently: undefined,
+        description: undefined,
+        displayName: undefined,
+        permissions: [
+          {
+            condition: undefined,
+            type: 'upgrade',
+            delay: 100,
+            target: selfAddress,
+            description: 'Existing configured upgrade permission',
+          },
+        ],
+        references: undefined,
+        severity: 'HIGH',
+        types: new Set(['CODE_CHANGE']),
       })
     })
   })
@@ -602,25 +664,6 @@ describe('metaUtils', () => {
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
           references: undefined,
-        },
-      })
-    })
-  })
-
-  describe('getMetaFromUpgradeability', () => {
-    it('should properly get meta from upgradeability', () => {
-      const selfAddress = EthereumAddress.from('0x1234')
-      const admin = EthereumAddress.from('0xabcd')
-
-      const result = getMetaFromUpgradeability(selfAddress, [admin])
-
-      expect(result).toEqual({
-        [admin.toString()]: {
-          displayName: undefined,
-          description: undefined,
-          severity: undefined,
-          types: undefined,
-          permissions: [{ type: 'upgrade', delay: 0, target: selfAddress }],
         },
       })
     })
