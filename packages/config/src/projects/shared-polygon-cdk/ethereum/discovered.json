@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22045330,
+  "blockNumber": 22045960,
   "configHash": "0x74f9345db7d9646da76d5e9c19dfac1a09557f1da3f9c06c42a3c3d9335ea5a8",
   "entries": [
     {
@@ -500,7 +500,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xabf9e15499d6fb7424f4119e7318f89648eab77392cdd7f31a0f4ec6bd23a3bd",
+        "getRollupExitRoot": "0x522646771547089698b2b701abc42146a6cb2f22e79284650e0cd61784d5ab96",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -521,7 +521,7 @@
           [false],
           [false]
         ],
-        "lastAggregationTimestamp": 1741957223,
+        "lastAggregationTimestamp": 1741965479,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -748,8 +748,8 @@
             "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
-        "totalSequencedBatches": 668643,
-        "totalVerifiedBatches": 668108,
+        "totalSequencedBatches": 668820,
+        "totalVerifiedBatches": 668288,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -828,8 +828,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 55811,
-        "getRoot": "0x2415203d67e6f2d94ecfe9df50d5a7dc5e63ebd82e1642545ce44d7f2882cffc",
+        "depositCount": 55814,
+        "getRoot": "0x6110af0332288104ad3dbe70dbcc2610f6820edaeacaf5e0720c75f8803007c5",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2",

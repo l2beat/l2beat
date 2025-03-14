@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xe0fd07f1a82ca9ebdf8a9d43947281f8636b40bd
+Generated with discovered.json: 0x8c0476de442f317284132c49f6b444ddd13199ab
 
-# Diff at Fri, 14 Mar 2025 13:12:20 GMT:
+# Diff at Fri, 14 Mar 2025 15:19:06 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 21988681
-- current block number: 22045330
+- comparing to: main@002bac09dea3b1154ecc36736323fb7552478ce4 block: 21988681
+- current block number: 22045960
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Transaction queued to add a new rollupType. This is the second rollupType with a pessimistic verifier, using the same forkID as polygon zkevm.
+
+added current agglayer chain data from the `l2b fetchagg` script.
 
 ## Watched changes
 
