@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa667f37313d829f0f382da2ee1616d66ebf203e7
+Generated with discovered.json: 0x20d4dd78f15031c32ece601e57dbe41b4810842d
 
-# Diff at Thu, 13 Mar 2025 14:19:21 GMT:
+# Diff at Fri, 14 Mar 2025 11:01:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f462834c104b15f183c47ddf2b3050268d976193 block: 22030583
-- current block number: 22037096
+- comparing to: main@6e1953985181f2818bd03a4f52e9b348b5c930b2 block: 22030583
+- current block number: 22044661
 
 ## Description
 
@@ -22,6 +22,14 @@ Current status of protocol upgrade v26:
 -   Status: DELETED
     contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66)
     +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
+    contract undefined (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
+    }
 ```
 
 ```diff
@@ -151,6 +159,26 @@ Current status of protocol upgrade v26:
 ```
 
 ```diff
+    contract undefined (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.1:
++        "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+      values.validatorsVTL.0:
++        "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
+      issuedPermissions:
++        [{"permission":"validateZkStack","to":"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","via":[]},{"permission":"validateZkStack","to":"0x3527439923a63F8C13CF72b8Fe80a77f6e572092","via":[]}]
+    }
+```
+
+```diff
 +   Status: CREATED
     contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
     +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
@@ -172,6 +200,60 @@ Current status of protocol upgrade v26:
  .../ZKsync/GettersFacet.2.sol                      | 1153 +++++++++-
  .../ZKsync/MailboxFacet.3.sol                      | 2195 ++++++++++++++------
  6 files changed, 6014 insertions(+), 1170 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22030583 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"set addresses (validators) that can commit, prove, execute, revert batches through this contract."}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      name:
+-        "ValidatorTimelock"
++        "ValidatorTimelock2"
+    }
+```
+
+```diff
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: None
+      name:
+-        "ValidatorTimelockOld"
++        "ValidatorTimelock3"
+      description:
+-        "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times."
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","description":"set addresses (validators) that can commit, prove, execute, revert batches through this contract.","via":[]}]
+      values.constructorArgs:
+-        {"_initialOwner":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","_zkSyncContract":"0x32400084C286CF3E17e7B677ea9583e60a000324","_executionDelay":75600,"_validators":["0x3527439923a63F8C13CF72b8Fe80a77f6e572092","0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"]}
+      values.executionDelay_formatted:
+-        "21h"
+      values.revertedBlocks:
+-        []
+      values.validatorsVTLold:
+-        []
+      values.getCommittedBatchTimestamp:
++        [0,0,0,0,0]
+      errors:
++        {"getCommittedBatchTimestamp":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
 ```
 
 Generated with discovered.json: 0x8d149434e612266253c142e6f44dbcfe48293254

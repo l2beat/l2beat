@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 22037096,
-  "configHash": "0xa40715cceb116275e701392cd2721e0a6a668e763e928832b0f56ad04f887e41",
+  "blockNumber": 22044661,
+  "configHash": "0x4676744c71c96cf93086501be0b235ab6c1c138b0699ab172ab93e76de237df2",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -14,13 +14,6 @@
       ],
       "proxyType": "immutable",
       "description": "Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract."
-        }
-      ],
       "sinceTimestamp": 1701258227,
       "sinceBlock": 18677050,
       "values": {
@@ -40,6 +33,10 @@
         {
           "permission": "validateZkStack",
           "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        },
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
     },
@@ -420,28 +417,28 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3270739,
+        "getFirstUnprocessedPriorityTx": 3270789,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 13,
-        "getPriorityTreeRoot": "0xc9d30d1ee8c5eda4ba5a13c649a11bef83e8e80318187e11437a70ca4cfca5f1",
+        "getPriorityQueueSize": 6,
+        "getPriorityTreeRoot": "0xaaf48299a8704843a7ae5ba0300c2aa43357c2f5f718808ecbfe1aa6396e4530",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 497846,
-        "getTotalBatchesExecuted": 497841,
-        "getTotalBatchesVerified": 497844,
-        "getTotalBlocksCommitted": 497846,
-        "getTotalBlocksExecuted": 497841,
-        "getTotalBlocksVerified": 497844,
-        "getTotalPriorityTxs": 3270752,
+        "getTotalBatchesCommitted": 497873,
+        "getTotalBatchesExecuted": 497868,
+        "getTotalBatchesVerified": 497871,
+        "getTotalBlocksCommitted": 497873,
+        "getTotalBlocksExecuted": 497868,
+        "getTotalBlocksVerified": 497871,
+        "getTotalPriorityTxs": 3270795,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -452,31 +449,32 @@
         "isDiamondStorageFrozen": false,
         "isPriorityQueueActive": false,
         "prepareChainCommitment": {
-          "totalBatchesExecuted": 497841,
-          "totalBatchesVerified": 497844,
-          "totalBatchesCommitted": 497846,
+          "totalBatchesExecuted": 497868,
+          "totalBatchesVerified": 497871,
+          "totalBatchesCommitted": 497873,
           "l2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "l2SystemContractsUpgradeBatchNumber": 0,
           "batchHashes": [
-            "0x993c065059795f2ee750098f44cf2f820c99348194a67b2a3194335bb86bf245",
-            "0x799ecd5eab1003d9b29984c731ad306de7928df6cbc6fa238e1c3e286171d037",
-            "0x387c724d69ccc3f771f3e32340a72f8f379c4f5ef33705c9a67c85a933af427e",
-            "0x1aa6cdeb00440ecb2fc5b99d1ddc58fa710b44c61aa2a450f035456b9fc3c485",
-            "0xb972ee2294f25c11b4d7f8e1b35634a333f08856a6ce3a5ce09f16c57fc47c55",
-            "0xbe9896e2632947a3ea8d142f43bde5f34144c9682ec9aad5645d278c035e9e02"
+            "0x1dc55a16fa7d6f8eddb1f2d0f0e35d067f8327624edea69574d667b9b0bd2ae0",
+            "0x9f357dedf552baf20550e31412dc785608da3ee8fd7862d9ffb7c23c08cdb170",
+            "0x7c68f5c5ae85dac45341cfdc87aeb5e492641fcf7bc4aee3a61c94f8154291c2",
+            "0x749e1edf9074f1bf9767c9cac19f20a457c73207fd88cf4ebe0f6a7a68cf2fcc",
+            "0xa4daba9a6e4af05110f8f6560424208bc2d87aa56e013c68a3237827dfc0112d",
+            "0x4682fa1ce3ac5765db668c5a3cd7775a0f119351b7ca6938a4b1cfecfc7d36f8"
           ],
           "priorityTree": {
-            "nextLeafIndex": 33,
+            "nextLeafIndex": 76,
             "startIndex": 3270719,
-            "unprocessedIndex": 20,
+            "unprocessedIndex": 70,
             "sides": [
-              "0xf18d2dea79b21b42e1c502df8dff2595116cc68212dece5482a4b6ff8d3bb35b",
-              "0x19b532da4fc003e8ec8c671f838485f3d55fd0f1cd90dfdc1aa7878fcaec2a6b",
-              "0x0b5084b469e90b00828ba4f34540e916f415a4d9788140fd054152f1262be275",
-              "0x5930be40fe6113e9373fbe7ebf27241a19df4e482a5990e2456ee8893cc5f2e8",
-              "0x32317ed2af4da95f318c45e9207eefcdaa85d49b6ad21b362d0fbf1bd9f43bc4",
+              "0xfc1c3502736659b8aabf638d609cc3dcafccc880d47a8abd0c047db95037cc25",
+              "0xa7ab3aed27632eda34ea09c8e3230615b111dc7779a63d44607742b335c4ea86",
+              "0x07b9611ca8b372fd1473ca5487fe0d7368c12deb26362afdb119874a1e3f908d",
+              "0x9f0b35143e17929f615affdf1899907c80b9a458d0fb1ce6070a767256f975fd",
+              "0x5325102c812959c2dc95aa46b388d680d37751c4056b74b8c5829254e74fce5e",
               "0xc5b1e324c83773f5769fba7edbf5512ab2daace12d7ae13a3bfb7a35816ae586",
-              "0xc9d30d1ee8c5eda4ba5a13c649a11bef83e8e80318187e11437a70ca4cfca5f1"
+              "0x183451e7453218c629d33a77620ca05816e307c0e77a3960efcd37d636aa08c2",
+              "0xaaf48299a8704843a7ae5ba0300c2aa43357c2f5f718808ecbfe1aa6396e4530"
             ]
           },
           "isPermanentRollup": true
@@ -518,6 +516,10 @@
         {
           "permission": "validateZkStack",
           "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        },
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
     },
@@ -632,7 +634,7 @@
       }
     },
     {
-      "name": "ValidatorTimelock",
+      "name": "ValidatorTimelock2",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
@@ -676,6 +678,7 @@
           "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -694,22 +697,53 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "ValidatorTimelockOld",
+      "name": "ValidatorTimelock",
+      "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+      "type": "Contract",
+      "template": "shared-zk-stack/ValidatorTimelock",
+      "sourceHashes": [
+        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
+      ],
+      "proxyType": "immutable",
+      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "issuedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+          "via": []
+        },
+        {
+          "permission": "validateZkStack",
+          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1739108999,
+      "sinceBlock": 21809364,
+      "values": {
+        "$immutable": true,
+        "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "executionDelay": 10800,
+        "executionDelay_fmt": "3h",
+        "getName": "ValidatorTimelock",
+        "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "revertedBlocks": [],
+        "validatorsVTL": [
+          "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+          "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+        ]
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "ValidatorTimelock3",
       "address": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
       "type": "Contract",
       "sourceHashes": [
         "0x2aff1337a5d8a9be27e6d384ec8a2efd746fb4b73195773c82f3e42e2210c8ed"
       ],
       "proxyType": "immutable",
-      "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract.",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -721,24 +755,14 @@
       "sinceBlock": 19386286,
       "values": {
         "$immutable": true,
-        "constructorArgs": {
-          "_initialOwner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-          "_zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "_executionDelay": 75600,
-          "_validators": [
-            "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-            "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
-          ]
-        },
         "executionDelay": 75600,
-        "executionDelay_formatted": "21h",
+        "getCommittedBatchTimestamp": [0, 0, 0, 0, 0],
         "getName": "ValidatorTimelock",
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "revertedBlocks": [],
-        "validatorsVTLold": [],
         "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
+      "errors": { "getCommittedBatchTimestamp": "Processing error occurred." },
       "derivedName": "ValidatorTimelock"
     },
     {
@@ -988,6 +1012,41 @@
       "function isBlobAvailable(bytes32 _blobCommitment) view returns (bool)",
       "function publishBlobs(bytes _pubdataCommitments)",
       "function publishedBlobCommitments(bytes32 blobCommitment) view returns (uint256 blockOfPublishing)"
+    ],
+    "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
+      "constructor(address _initialOwner, uint32 _executionDelay)",
+      "error AddressAlreadyValidator(uint256 _chainId)",
+      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
+      "error Unauthorized(address caller)",
+      "error ValidatorDoesNotExist(uint256 _chainId)",
+      "error ZeroAddress()",
+      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
+      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
+      "event NewExecutionDelay(uint256 _newExecutionDelay)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ValidatorAdded(uint256 indexed _chainId, address _addedValidator)",
+      "event ValidatorRemoved(uint256 indexed _chainId, address _removedValidator)",
+      "function acceptOwnership()",
+      "function addValidator(uint256 _chainId, address _newValidator)",
+      "function chainTypeManager() view returns (address)",
+      "function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
+      "function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
+      "function executionDelay() view returns (uint32)",
+      "function getCommittedBatchTimestamp(uint256 _chainId, uint256 _l2BatchNumber) view returns (uint256)",
+      "function getName() view returns (string)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)",
+      "function removeValidator(uint256 _chainId, address _validator)",
+      "function renounceOwnership()",
+      "function revertBatchesSharedBridge(uint256 _chainId, uint256)",
+      "function setChainTypeManager(address _chainTypeManager)",
+      "function setExecutionDelay(uint32 _executionDelay)",
+      "function transferOwnership(address newOwner)",
+      "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
     "0x8D231E4097C3cb200Ed62134B466AA615cE60336": [
       "constructor(address _sharedBridge)",
