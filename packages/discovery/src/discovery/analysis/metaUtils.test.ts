@@ -311,53 +311,43 @@ describe('metaUtils', () => {
       const selfAddress = EthereumAddress.from('0x1234')
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
-          target: {
-            permissions: [{ type: 'interact', delay: 0 }],
-          },
+          targetPermissions: [{ type: 'interact', delay: 0 }],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
         owner: {
-          target: {
-            permissions: [
-              {
-                type: 'interact',
-                delay: 0,
-                description:
-                  'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
-              },
-            ],
-          },
+          targetPermissions: [
+            {
+              type: 'interact',
+              delay: 0,
+              description:
+                'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
+            },
+          ],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
         resourceConfig: {
-          target: {
-            // description: 'The resource config of the contract {{ $.address }}',
-            permissions: [
-              {
-                type: 'upgrade',
-                delay: 0,
-                description:
-                  'upgrading the {{ $.address }} contract gives access to all funds',
-              },
-              {
-                type: 'interact',
-                condition: 'condition C1 is met',
-                delay: 0,
-                description:
-                  'configuring the {{ $.address }} contract allows freeze funds',
-              },
-            ],
-          },
+          targetPermissions: [
+            {
+              type: 'upgrade',
+              delay: 0,
+              description:
+                'upgrading the {{ $.address }} contract gives access to all funds',
+            },
+            {
+              type: 'interact',
+              condition: 'condition C1 is met',
+              delay: 0,
+              description:
+                'configuring the {{ $.address }} contract allows freeze funds',
+            },
+          ],
           severity: 'HIGH',
           type: ['L2', 'EXTERNAL'],
         },
         scalar: {
-          target: {
-            // description: 'The scalar of the contract',
-            permissions: [{ type: 'interact', delay: 0 }],
-          },
+          targetPermissions: [{ type: 'interact', delay: 0 }],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
@@ -469,15 +459,13 @@ describe('metaUtils', () => {
 
       const fields: { [field: string]: DiscoveryContractField } = {
         configuredUpgrade: {
-          target: {
-            permissions: [
-              {
-                type: 'upgrade',
-                delay: 100,
-                description: 'Existing configured upgrade permission',
-              },
-            ],
-          },
+          targetPermissions: [
+            {
+              type: 'upgrade',
+              delay: 100,
+              description: 'Existing configured upgrade permission',
+            },
+          ],
           severity: 'HIGH',
           type: 'CODE_CHANGE',
         },
