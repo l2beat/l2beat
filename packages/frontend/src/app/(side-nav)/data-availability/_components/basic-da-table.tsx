@@ -105,6 +105,9 @@ export function BasicDaTable<T extends BasicEntry>({
                       colSpan={header.colSpan}
                       className={cn(
                         'font-medium tracking-[-0.13px] text-primary',
+                        header.column.getIsPinned() &&
+                          getRowTypeClassNamesWithoutOpacity(),
+
                         !header.isPlaceholder &&
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
@@ -287,5 +290,5 @@ export function getRowTypeClassNames({ isEthereum }: { isEthereum?: boolean }) {
 }
 
 function getRowTypeClassNamesWithoutOpacity() {
-  return 'bg-surface-primary group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
+  return 'bg-surface-primary'
 }
