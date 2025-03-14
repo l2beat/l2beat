@@ -1,10 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import {
-  type CleanDateRange,
-  deleteHourlyUntil,
-  deleteSixHourlyUntil,
-} from '../../utils/deleteArchivedRecords'
 import { type TvsPriceRecord, toRecord, toRow } from './entity'
 
 export class TvsPriceRepository extends BaseRepository {
@@ -30,14 +25,6 @@ export class TvsPriceRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteHourlyUntil(this.db, 'TvsPrice', dateRange)
-  }
-
-  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return deleteSixHourlyUntil(this.db, 'TvsPrice', dateRange)
   }
 
   async getAll(): Promise<TvsPriceRecord[]> {

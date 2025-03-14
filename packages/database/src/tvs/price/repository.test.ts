@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { testDeletingArchivedRecords } from '../../utils/deleteArchivedRecords.test'
 import type { TvsPriceRecord } from './entity'
 import { TvsPriceRepository } from './repository'
 
@@ -73,11 +72,6 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
     expect(results).toEqual([])
   })
-
-  // TvlCleaner test
-  testDeletingArchivedRecords(repository, (timestamp) =>
-    saved('a', timestamp, 1),
-  )
 })
 
 function saved(
