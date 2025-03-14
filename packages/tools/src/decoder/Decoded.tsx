@@ -132,6 +132,7 @@ function DecodedValue({ value }: DecodedValueProps) {
       <ValueHeading
         stack={value.stack}
         type={value.type}
+        address={value.type === 'address' ? (value.value as string) : undefined}
         options={options}
         selectedOption={selected}
         onSelect={setSelected}

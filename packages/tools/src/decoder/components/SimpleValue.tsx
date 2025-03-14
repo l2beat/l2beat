@@ -48,7 +48,12 @@ function toTxData(value: string) {
   }
 }
 
+const MAX_UINT = 2n ** 256n - 1n
+
 function formatInt(value: bigint, transform?: string) {
+  if (value === MAX_UINT) {
+    return 'MAX_UINT (2^256 - 1)'
+  }
   if (transform === '18') {
     return formatDecimals(value, 18)
   }
