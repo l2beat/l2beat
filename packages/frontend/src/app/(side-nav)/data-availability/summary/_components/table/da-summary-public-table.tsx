@@ -22,6 +22,11 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
     data: items,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
+    },
   })
 
   const renderSpanFill = ({ row }: { row: Row<DaSummaryEntry> }) => {
