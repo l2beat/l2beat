@@ -99,14 +99,12 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
         UnixTime(configuration.to),
       )
 
-      if (deletedRecords > 0) {
-        this.logger.info('Deleted records', {
-          from: configuration.from,
-          to: configuration.to,
-          id: configuration.id,
-          deletedRecords,
-        })
-      }
+      this.logger.info('Deleted records', {
+        from: configuration.from,
+        to: configuration.to,
+        id: configuration.id,
+        deletedRecords,
+      })
     }
   }
 }
