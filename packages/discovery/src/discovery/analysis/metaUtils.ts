@@ -76,11 +76,11 @@ export function mergePermissions(
   const grouping = groupBy(a.concat(b), encodeKey)
   for (const key in grouping) {
     const allEntries = grouping[key] ?? []
-    const highestDelay = allEntries.reduce(
-      (a, b) => Math.max(a, b.delay),
-      -Infinity,
+    const shortestDelay = allEntries.reduce(
+      (a, b) => Math.min(a, b.delay),
+      Infinity,
     )
-    const entries = allEntries.filter((e) => e.delay === highestDelay)
+    const entries = allEntries.filter((e) => e.delay === shortestDelay)
 
     const withDescription = entries.filter((e) => e.description !== undefined)
     if (withDescription.length > 0) {
