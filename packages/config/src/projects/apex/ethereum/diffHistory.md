@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x5ed9816eb247d39246223ba5c69e3a284c82b761
+
+# Diff at Fri, 14 Mar 2025 12:37:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 21981180
+- current block number: 22045162
+
+## Description
+
+The upgrade delay did not change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981180 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
+    +++ description: None
+      receivedPermissions.2.delay:
+-        1209600
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.8.delay:
+-        1209600
+      issuedPermissions.7.delay:
+-        1209600
+    }
+```
+
+```diff
+    contract ApexAdminMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      receivedPermissions.2.delay:
+-        1209600
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.5.delay:
+-        1209600
+    }
+```
+
+```diff
+    contract undefined (0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
+    +++ description: None
+      receivedPermissions.2.delay:
+-        1209600
+    }
+```
+
 Generated with discovered.json: 0x8846183834460efea98f88f83e68c7c5e23344c1
 
 # Diff at Thu, 06 Mar 2025 15:18:04 GMT:

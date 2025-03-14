@@ -1,7 +1,7 @@
 {
   "name": "apex",
   "chain": "ethereum",
-  "blockNumber": 21981180,
+  "blockNumber": 22045162,
   "configHash": "0x786a867107e5e0ebf0b235e922c67f755398e4f59526f0aa9cb4206bf93959f5",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -131,8 +131,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "delay": 1209600
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
         }
       ]
     },
@@ -293,13 +292,11 @@
         {
           "permission": "upgrade",
           "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
-          "delay": 1209600,
           "via": []
         },
         {
           "permission": "upgrade",
           "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
-          "delay": 1209600,
           "via": []
         }
       ],
@@ -392,7 +389,7 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 15016,
+        "getLastBatchId": 15251,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -403,7 +400,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 14854,
+        "getSequenceNumber": 15089,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -500,8 +497,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "delay": 1209600
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -571,7 +567,6 @@
         {
           "permission": "upgrade",
           "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
-          "delay": 1209600,
           "via": []
         }
       ],
@@ -750,8 +745,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "delay": 1209600
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ]
     }
