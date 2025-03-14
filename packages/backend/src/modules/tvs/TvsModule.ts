@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
@@ -30,7 +31,7 @@ export function initTvsModule(
 
   const syncOptimizer = new SyncOptimizer(clock)
   const indexerService = new IndexerService(database)
-  const priceProvider = providers.getPriceProviders().getPriceProvider()
+  assert(providers.price)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
@@ -46,7 +47,7 @@ export function initTvsModule(
       properties: price,
     })),
     serializeConfiguration: (value: PriceConfig) => JSON.stringify(value),
-    priceProvider,
+    priceProvider: providers.price,
     syncOptimizer,
     db: database,
   })

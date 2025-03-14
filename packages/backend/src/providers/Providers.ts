@@ -2,8 +2,10 @@ import type { Logger } from '@l2beat/backend-tools'
 import {
   AvailDaProvider,
   CelestiaDaProvider,
+  CoingeckoQueryService,
   DaProvider,
   EthereumDaProvider,
+  PriceProvider,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
@@ -15,12 +17,11 @@ import {
 } from './CirculatingSupplyProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './DayProviders'
-import { type PriceProviders, initPriceProviders } from './PriceProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
 
 export class Providers {
   block: BlockProviders
-  price: PriceProviders | undefined
+  price: PriceProvider | undefined
   uops: UopsAnalyzers
   day: DayProviders
   circulatingSupply: CirculatingSupplyProviders | undefined
@@ -39,7 +40,12 @@ export class Providers {
       : undefined
     this.price =
       config.tvl || config.tvs
-        ? initPriceProviders(this.clients.coingecko)
+        ? new PriceProvider(
+            new CoingeckoQueryService(
+              this.clients.coingecko,
+              logger.tag({ tag: 'prices' }),
+            ),
+          )
         : undefined
     this.uops = new UopsAnalyzers(config.chainConfig)
     this.day = new DayProviders(config.chainConfig, this.clients.starkex)
