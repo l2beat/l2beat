@@ -47,7 +47,7 @@ export function NewTableFilterItem({
           })
         }}
       >
-        {conditionLabel(filter)}
+        {operatorLabel(filter)}
       </button>
       <VerticalSeparator className="h-[30px]" />
       <Popover>
@@ -129,7 +129,7 @@ export function NewTableFilterItem({
   )
 }
 
-function conditionLabel(filter: FilterState[number]) {
+function operatorLabel(filter: FilterState[number]) {
   if (filter.reversed) {
     return 'is not'
   }
