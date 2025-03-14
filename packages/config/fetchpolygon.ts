@@ -18,18 +18,28 @@ const CONFIG = {
     '1': 'polygon zkEVM',
     '2': 'astar',
     '3': 'OkX X Layer',
-    '4': 'OEV network',
-    '5': 'gptprotocol.org',
-    '6': 'witnesschain',
+    '4': 'OEV network (dead)',
+    '5': 'gptprotocol.org (dead)',
+    '6': 'witnesschain (dead)',
     '7': 'lumia.org',
     '8': 'pay network (wirex)',
-    '9': 'silicon-zk',
+    '9': 'silicon-zk testnet',
     '10': 'silicon-zk',
-    '11': 'haust.network',
+    '11': 'haust.network testnet',
     '12': 'haust.network',
     '13': 'ternoa.network',
-    '14': 'unknown cdk sov chain (z-chain, z token)',
+    '14': 'cdk-sov test (z-chain/token)',
     '15': 'pentagon.games/pen-chain'
+  },
+
+  // Rollup type ID descriptions
+  rollupTypeNames: {
+    '6': 'zk rollup',
+    '4': 'validiumV1',
+    '7': 'validiumV2',
+    '8': 'okx validium',
+    '9': 'pessimistic test',
+    
   }
 };
 
@@ -41,14 +51,14 @@ const rollupManagerAbi = [
 // Type definition for rollup data
 interface RollupData {
   rollupContract: string;
-  chainID: bigint;
+  chainID: ethers.BigNumber;
   verifier: string;
-  forkID: bigint;
+  forkID: ethers.BigNumber;
   lastLocalExitRoot: string;
-  lastBatchSequenced: bigint;
-  lastVerifiedBatch: bigint;
-  lastVerifiedBatchBeforeUpgrade: bigint;
-  rollupTypeID: bigint;
+  lastBatchSequenced: ethers.BigNumber;
+  lastVerifiedBatch: ethers.BigNumber;
+  lastVerifiedBatchBeforeUpgrade: ethers.BigNumber;
+  rollupTypeID: ethers.BigNumber;
   rollupVerifierType: number;
   lastPessimisticRoot: string;
   programVKey: string;
@@ -62,7 +72,7 @@ interface RollupDataExtended extends RollupData {
 
 async function main() {
   // Connect to Ethereum network
-  const provider = new ethers.JsonRpcProvider(CONFIG.rpcUrl);
+  const provider = new ethers.providers.JsonRpcProvider(CONFIG.rpcUrl);
 
   // Create contract instance
   const rollupManager = new ethers.Contract(
@@ -82,27 +92,50 @@ async function main() {
     try {
       const data: RollupData = await rollupManager.rollupIDToRollupDataV2(rollupID);
 
-      // Add to our list with extended information
-      rollupDataList.push({
-        ...data,
-        rollupID,
-        name: CONFIG.rollupNames[rollupID.toString()] || 'Unknown'
-      });
+      // Check if rollupContract is the zero address
+      if (data.rollupContract === '0x0000000000000000000000000000000000000000') {
+        console.log(`No more rollups found after ID ${rollupID - 1}`);
+        continueLoop = false;
+      } else {
+        // Add to our list with extended information
+        rollupDataList.push({
+          ...data,
+          rollupID,
+          name: CONFIG.rollupNames[rollupID.toString()] || 'Unknown'
+        });
 
-      console.log(`Fetched data for rollupID: ${rollupID}`);
-      rollupID++;
+        console.log(`Fetched data for rollupID: ${rollupID}`);
+        rollupID++;
+      }
     } catch (error) {
-      console.log(`No more rollups found after ID ${rollupID - 1}`);
+      console.log(`Error fetching rollupID ${rollupID}: ${error.message}`);
       continueLoop = false;
     }
   }
 
-  // Save complete data to file
+  // Save complete data to file in a more human-readable format
+  const formattedData = rollupDataList.map(data => {
+    return {
+      rollupID: data.rollupID,
+      name: data.name,
+      rollupContract: data.rollupContract,
+      chainID: data.chainID.toString(),
+      verifier: data.verifier,
+      forkID: data.forkID.toString(),
+      lastLocalExitRoot: data.lastLocalExitRoot,
+      lastBatchSequenced: data.lastBatchSequenced.toString(),
+      lastVerifiedBatch: data.lastVerifiedBatch.toString(),
+      lastVerifiedBatchBeforeUpgrade: data.lastVerifiedBatchBeforeUpgrade.toString(),
+      rollupTypeID: `${data.rollupTypeID.toString()} (${CONFIG.rollupTypeNames[data.rollupTypeID.toString()] || 'Unknown'})`,
+      rollupVerifierType: data.rollupVerifierType === 0 ? "standard (0)" : "pessimistic (1)",
+      lastPessimisticRoot: data.lastPessimisticRoot,
+      programVKey: data.programVKey
+    };
+  });
+
   fs.writeFileSync(
     CONFIG.outputFilePath,
-    JSON.stringify(rollupDataList, (key, value) => 
-      typeof value === 'bigint' ? value.toString() : value, 
-    2)
+    JSON.stringify(formattedData, null, 2)
   );
   console.log(`Full data saved to ${CONFIG.outputFilePath}`);
 
@@ -112,13 +145,18 @@ async function main() {
   ];
 
   rollupDataList.forEach(data => {
+    const verifierTypeString = data.rollupVerifierType === 0 ? "standard" : "pessimistic";
+    const rollupTypeID = data.rollupTypeID.toString();
+    const rollupTypeName = CONFIG.rollupTypeNames[rollupTypeID] || 'Unknown';
+    const rollupTypeString = `${rollupTypeID} (${rollupTypeName})`;
+
     tableData.push([
       data.rollupID.toString(),
       data.name,
       data.chainID.toString(),
       data.forkID.toString(),
-      data.rollupTypeID.toString(),
-      data.rollupVerifierType.toString()
+      rollupTypeString,
+      verifierTypeString
     ]);
   });
 
