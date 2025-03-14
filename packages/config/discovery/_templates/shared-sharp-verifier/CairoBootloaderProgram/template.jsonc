@@ -1,5 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Bootloader program for the SHARPVerifier.",
-  "category": "spam"
-}

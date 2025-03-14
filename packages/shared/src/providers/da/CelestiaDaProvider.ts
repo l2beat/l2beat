@@ -1,11 +1,12 @@
 import { assert } from '@l2beat/shared-pure'
 import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcClient'
-import type { CelestiaBlob, DaProvider } from './DaProvider'
+import type { DaBlobProvider } from './DaProvider'
+import type { CelestiaBlob } from './types'
 
-export class CelestiaDaProvider implements DaProvider {
+export class CelestiaDaProvider implements DaBlobProvider {
   constructor(
     private readonly rpcClient: CelestiaRpcClient,
-    private readonly daLayer: string,
+    readonly daLayer: string,
   ) {}
 
   async getBlobs(from: number, to: number): Promise<CelestiaBlob[]> {

@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in {{withdrawalKeepalivePeriodSecondsFmt}}.",
+  "ignoreMethods": [
+    "getL2OutputAfter",
+    "getL2OutputIndexAfter",
+    "getL2Output",
+    "computeL2Timestamp",
+    "getL2OutputRootWithFinalization",
+    "getL2OutputEx"
+  ],
+  "ignoreInWatchMode": [
+    "latestBlockNumber",
+    "latestOutputIndex",
+    "nextBlockNumber",
+    "nextOutputIndex"
+  ],
+  "fields": {
+    "proposer": {
+      "severity": "HIGH",
+      "target": {
+        "permissions": [{ "type": "propose" }]
+      }
+    },
+    "challenger": {
+      "severity": "HIGH",
+      "target": {
+        "permissions": [{ "type": "challenge" }]
+      }
+    },
+    "deletedOutputs": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["prevNextOutputIndex", "newNextOutputIndex"],
+        "add": { "event": "OutputsDeleted" }
+      }
+    },
+    "withdrawalKeepalivePeriodSecondsFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function withdrawalKeepalivePeriodSeconds() view returns (uint256)",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    }
+  }
+}

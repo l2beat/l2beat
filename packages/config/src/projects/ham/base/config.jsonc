@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "base",
+  "name": "ham",
+  "import": ["../../baseConfig.jsonc"],
+  "initialAddresses": [
+    "0x936c137699230c4732d534c7E968cC7cEAa6Cf45" // bridge
+  ],
+  "names": {
+    "0x211A8defcF685E0Ef5Ed8eEf0c43dc1B0ba56aEA": "HamMultisig1"
+  }
+}

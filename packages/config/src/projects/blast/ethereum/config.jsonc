@@ -1,0 +1,121 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "blast",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d", //LaunchBridge
+    "0x697402166Fbf2F22E970df8a6486Ef171dbfc524", //L1StandardBridge
+    "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115", //L1BlastBridge
+    "0x0733F618118bF420b6b604c969498ecf143681a8", //DSRYieldProvider
+    "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db" //LidoYieldProvider
+  ],
+  "names": {
+    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": "LaunchBridge",
+    "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": "BridgeOwner",
+    "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05": "BlastMultisig",
+    "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db": "LidoYieldProvider",
+    "0x0733F618118bF420b6b604c969498ecf143681a8": "DSRYieldProvider",
+    "0x98078db053902644191f93988341E31289E1C8FE": "ETHYieldManager",
+    "0xa230285d5683C74935aD14c446e137c8c8828438": "USDYieldManager",
+    "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115": "L1BlastBridge",
+    "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": "WithdrawalQueueERC721"
+  },
+  "overrides": {
+    "L1BlastBridge": {
+      "description": "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."
+    },
+    "LidoYieldProvider": {
+      "description": "Yield Provider for ETH investing ETH into stETH.",
+      "ignoreRelatives": ["LIDO", "THIS", "WITHDRAWAL_QUEUE"],
+      "ignoreMethods": [
+        "insuranceBalance",
+        "lastClaimedIndex",
+        "lastUnstakeRequestIndex",
+        "unstakeRequests",
+        "yield",
+        "claimBatchSize",
+        "pendingBalance",
+        "stakedBalance",
+        "stakedPrincipal",
+        "totalValue"
+      ]
+    },
+    "DSRYieldProvider": {
+      "description": "Yield Provider for DAI investing DAI into the MakerDAO DSR.",
+      "ignoreRelatives": ["DAI", "DSR_MANAGER"],
+      "ignoreMethods": [
+        "insuranceBalance",
+        "pendingBalance",
+        "stakedBalance",
+        "stakedPrincipal",
+        "totalValue",
+        "yield"
+      ]
+    },
+    //TODO: Read ProviderInfo
+    "USDYieldManager": {
+      "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
+      "ignoreRelatives": ["TOKEN", "insurance"],
+      "ignoreMethods": [
+        "availableBalance",
+        "tokenBalance",
+        "getProviderInfoAt",
+        "totalProviderValue",
+        "totalValue",
+        "getLastRequestId",
+        "unfinalizedRequestNumber",
+        "getLastCheckpointId",
+        "getLastFinalizedRequestId"
+      ],
+      "ignoreInWatchMode": ["getLockedBalance"],
+      "fields": {
+        "insuranceFeeBips": {
+          "description": "Insurance fee taken from positive yields",
+          "severity": "MEDIUM"
+        }
+      }
+    },
+    //TODO: Read ProviderInfo
+    "ETHYieldManager": {
+      "description": "Contract managing Yield Providers for ETH.",
+      "ignoreRelatives": ["insurance"],
+      "ignoreMethods": [
+        "availableBalance",
+        "tokenBalance",
+        "getProviderInfoAt",
+        "totalProviderValue",
+        "totalValue",
+        "getLastCheckpointId",
+        "getLastFinalizedRequestId",
+        "getLastRequestId",
+        "unfinalizedRequestNumber"
+      ],
+      "ignoreInWatchMode": ["getLockedBalance"],
+      "fields": {
+        "insuranceFeeBips": {
+          "description": "Insurance fee taken from positive yields",
+          "severity": "MEDIUM"
+        }
+      }
+    },
+    "LaunchBridge": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreRelatives": [
+        "CURVE_3POOL",
+        "DAI",
+        "DSR_MANAGER",
+        "LIDO",
+        "PSM",
+        "USDC",
+        "USDT"
+      ],
+      "ignoreInWatchMode": [
+        "totalETHBalance",
+        "totalETHShares",
+        "totalUSDBalanceNoUpdate",
+        "totalUSDShares"
+      ]
+    }
+  }
+}

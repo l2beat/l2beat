@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "alienx",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x7b0159484f5cb4F3D4bb496A2eD7A01F409e70D1", // Inbox
+    "0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D" // L1ERC20Gateway
+  ],
+  "names": {
+    "0x32f6CAE58A89aA7c91D736Bb1100E377C570bb27": "AlienXMultisig"
+  }
+}

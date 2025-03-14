@@ -130,6 +130,8 @@ export type ProjectTvsConfig = {
 
 export type PriceConfig = {
   priceId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface TokenValue {

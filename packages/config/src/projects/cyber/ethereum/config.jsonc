@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "cyber",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x12a580c05466eefb2c467C6b115844cDaF55B255",
+    "0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49" // DataAvailabilityChallenge
+    // probably DisputeGame related, but unverified: 0xFe42cC6ac1f47D1b343a631a31B6D242dBF36b0c
+  ],
+  "names": {
+    "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398": "CyberMultisig"
+  }
+}

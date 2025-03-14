@@ -65,18 +65,22 @@ export function mergePermissions(
   b: PermissionConfiguration[] = [],
 ): PermissionConfiguration[] | undefined {
   const encodeKey = (v: PermissionConfiguration): string => {
-    return `${v.type}-${v.target.toString()}-${v.condition ?? ''}`
+    const key = `${v.type}-${v.target.toString()}-${v.condition ?? ''}`
+    // 'interact' permission is special - what it does is in its description,
+    // e.g. [interact "cancel tx"] and [interact "add tx"] shouldn't be grouped,
+    // regardless of the delay.
+    return v.type === 'interact' ? `${key}-${v.description ?? ''}` : key
   }
 
   const result: PermissionConfiguration[] = []
   const grouping = groupBy(a.concat(b), encodeKey)
   for (const key in grouping) {
     const allEntries = grouping[key] ?? []
-    const highestDelay = allEntries.reduce(
-      (a, b) => Math.max(a, b.delay),
-      -Infinity,
+    const shortestDelay = allEntries.reduce(
+      (a, b) => Math.min(a, b.delay),
+      Infinity,
     )
-    const entries = allEntries.filter((e) => e.delay === highestDelay)
+    const entries = allEntries.filter((e) => e.delay === shortestDelay)
 
     const withDescription = entries.filter((e) => e.description !== undefined)
     if (withDescription.length > 0) {

@@ -103,10 +103,22 @@ describe('metaUtils', () => {
   })
 
   describe('mergePermissions', () => {
-    it('should merge two permission objects correctly', () => {
+    it('should merge two permission objects correctly, but not merge interact permissions with the same description', () => {
       const a: PermissionConfiguration[] = [
         { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
         { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
+        {
+          type: 'interact',
+          description: 'can add tx',
+          delay: 0,
+          target: EthereumAddress.from('0xbeed'),
+        },
+        {
+          type: 'interact',
+          description: 'can remove tx',
+          delay: 100,
+          target: EthereumAddress.from('0xbeed'),
+        },
         { type: 'act', delay: 0, target: EthereumAddress.from('0x5678') },
       ]
       const b: PermissionConfiguration[] = [
@@ -118,6 +130,18 @@ describe('metaUtils', () => {
       expect(mergePermissions(a, b)).toEqual([
         { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
         { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
+        {
+          type: 'interact',
+          description: 'can add tx',
+          delay: 0,
+          target: EthereumAddress.from('0xbeed'),
+        },
+        {
+          type: 'interact',
+          description: 'can remove tx',
+          delay: 100,
+          target: EthereumAddress.from('0xbeed'),
+        },
         { type: 'act', delay: 0, target: EthereumAddress.from('0x5678') },
         { type: 'interact', delay: 0, target: EthereumAddress.from('0xabcd') },
         { type: 'upgrade', delay: 15, target: EthereumAddress.from('0x1234') },
@@ -136,29 +160,28 @@ describe('metaUtils', () => {
       expect(mergePermissions([], a)).toEqual(a)
     })
 
-    it('keeps only entries with the highest delay', () => {
+    it('keeps only entries with the shortest delay', () => {
       const a: PermissionConfiguration[] = [
         { type: 'interact', delay: 5, target: EthereumAddress.from('0x1234') },
-        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
       ]
       const b: PermissionConfiguration[] = [
         {
           type: 'interact',
-          delay: 10,
+          delay: 5,
           target: EthereumAddress.from('0x1234'),
         },
       ]
       expect(mergePermissions(a, b)).toEqual([
         {
           type: 'interact',
-          delay: 10,
+          delay: 0,
           target: EthereumAddress.from('0x1234'),
         },
-        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
       ])
     })
 
-    it('prefers entries with a description at the same highest delay', () => {
+    it('prefers entries with a description at the same shortest delay', () => {
       const a: PermissionConfiguration[] = [
         {
           type: 'upgrade',
@@ -189,7 +212,7 @@ describe('metaUtils', () => {
       ])
     })
 
-    it('retains multiple described entries if they share the same largest delay', () => {
+    it('retains multiple described entries if they share the same shorest delay', () => {
       const a: PermissionConfiguration[] = [
         {
           type: 'interact',

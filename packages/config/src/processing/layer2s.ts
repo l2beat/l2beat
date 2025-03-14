@@ -173,7 +173,6 @@ import { sorare } from '../projects/sorare/sorare'
 import { specular } from '../projects/specular/specular'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
-import { stealthchain } from '../projects/stealthchain/stealthchain'
 import { superlumio } from '../projects/superlumio/superlumio'
 import { superseed } from '../projects/superseed/superseed'
 import { swan } from '../projects/swan/swan'
@@ -389,7 +388,6 @@ export const layer2s: ScalingProject[] = [
   specular,
   starknet,
   status,
-  stealthchain,
   superlumio,
   superseed,
   swan,

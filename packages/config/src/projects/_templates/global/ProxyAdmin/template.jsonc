@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProxyAdmin",
+  "fields": {
+    "owner": {
+      "target": {
+        "permissions": [{ "type": "act" }]
+      }
+    }
+  }
+}

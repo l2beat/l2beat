@@ -11,7 +11,7 @@ import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import { type RosetteValue } from '~/components/rosette/types'
+import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
 import {
   type CommonDaEntry,
@@ -201,7 +201,7 @@ function getDacEntry(
 
   return {
     ...getCommonDacDaEntry({ project }),
-    risks: mapLayerRisksToRosetteValues(project.customDa.risks),
+    risks: mapLayerRisksToRosetteValues(getDaLayerRisks(project.customDa)),
     fallback: project.customDa.fallback,
     challengeMechanism: project.customDa.challengeMechanism ?? 'None',
     economicSecurity: undefined,
@@ -246,6 +246,6 @@ function getEthereumEntry(
     ],
     challengeMechanism: undefined,
     fallback: undefined,
-    risks: mapLayerRisksToRosetteValues(layer.daLayer.risks),
+    risks: mapLayerRisksToRosetteValues(getDaLayerRisks(layer.daLayer)),
   }
 }

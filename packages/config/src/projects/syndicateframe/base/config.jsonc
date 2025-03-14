@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "base",
+  "name": "syndicateframe",
+  "import": ["../../baseConfig.jsonc"],
+  "initialAddresses": ["0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b"]
+}

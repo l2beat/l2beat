@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to {{ MIN_BRIDGE_VALUE }} ETH.",
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "MIN_BRIDGE_VALUE": {
+      "returnType": "(Undecimal18)",
+      "description": "Minimum deposit value."
+    },
+    "guardian": {
+      "target": {
+        "permissions": [
+          { "type": "guard" },
+          { "type": "interact", "description": "freeze specific withdrawals." }
+        ]
+      }
+    },
+    "frozenWithdrawals": {
+      "description": "Lists all frozen withdrawals.",
+      "handler": {
+        "type": "event",
+        "select": "withdrawalHash",
+        "add": {
+          "event": "WithdrawalFrozenStateUpdated",
+          "where": ["=", "#frozen", true]
+        },
+        "remove": {
+          "event": "WithdrawalFrozenStateUpdated",
+          "where": ["=", "#frozen", false]
+        }
+      }
+    }
+  },
+  "category": "core"
+}

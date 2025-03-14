@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getNops",
+    "getAllowList",
+    "getStaticConfig",
+    "currentRateLimiterState"
+  ],
+  "ignoreRelatives": [
+    "getSupportedTokens",
+    "tokenAddresses",
+    "linkToken",
+    "owner"
+  ],
+  "ignoreInWatchMode": [
+    "getExpectedNextSequenceNumber",
+    "getNopFeesJuels",
+    "linkAvailableForPayment",
+    "tokenAddresses",
+    "tokenPools"
+  ],
+  "fields": {
+    "tokenPools": {
+      "handler": {
+        "type": "event",
+        "select": "pool",
+        "add": { "event": "PoolAdded" },
+        "remove": { "event": "PoolRemoved" }
+      }
+    },
+    "linkToken": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig",
+        "pickFields": ["linkToken"]
+      }
+    },
+    "staticConfigAddresses": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig",
+        "pickFields": ["prevOnRamp", "armProxy"]
+      }
+    },
+    "staticConfigChains": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig",
+        "pickFields": ["chainSelector", "destChainSelector"]
+      },
+      "returnType": "(ChainIdMap[])"
+    },
+    "tokenAddresses": {
+      "handler": {
+        "type": "call",
+        "method": "getSupportedTokens",
+        "args": [],
+        "ignoreRelative": true
+      }
+    }
+  }
+}

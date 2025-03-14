@@ -1,7 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
+import {
+  AvailDaProvider,
+  CelestiaDaProvider,
+  DaProvider,
+  EthereumDaProvider,
+} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
-import type { DataAvailabilityTrackingConfig } from '../config/Config'
 import { BlobProviders } from './BlobProviders'
 import { BlockProviders } from './BlockProviders'
 import {
@@ -9,7 +14,6 @@ import {
   initCirculatingSupplyProviders,
 } from './CirculatingSupplyProviders'
 import { type Clients, initClients } from './Clients'
-import { DaProviders } from './DaProviders'
 import { DayProviders } from './DayProviders'
 import { type PriceProviders, initPriceProviders } from './PriceProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
@@ -21,7 +25,7 @@ export class Providers {
   day: DayProviders
   circulatingSupply: CirculatingSupplyProviders | undefined
   blob: BlobProviders | undefined
-  da: DaProviders | undefined
+  da: DaProvider
   clients: Clients
 
   constructor(
@@ -42,7 +46,17 @@ export class Providers {
       config.finality && this.clients.blob
         ? new BlobProviders(this.clients.blob)
         : undefined
-    this.da = initDaProviders(config.da, this.clients)
+    this.da = new DaProvider([
+      ...this.clients.blobscan.map(
+        (c) => new EthereumDaProvider(c.client, c.daLayer),
+      ),
+      ...this.clients.celestia.map(
+        (c) => new CelestiaDaProvider(c.client, c.daLayer),
+      ),
+      ...this.clients.avail.map(
+        (c) => new AvailDaProvider(c.client, c.daLayer),
+      ),
+    ])
   }
 
   getPriceProviders() {
@@ -62,18 +76,4 @@ export class Providers {
     assert(this.blob, 'Blob providers unintended access')
     return this.blob
   }
-
-  getDaProviders() {
-    assert(this.da, 'Da providers unintended access')
-    return this.da
-  }
-}
-
-function initDaProviders(
-  config: DataAvailabilityTrackingConfig | false,
-  clients: Clients,
-) {
-  if (config === false) return undefined
-
-  return new DaProviders(clients.blobscan, clients.celestia, clients.avail)
 }

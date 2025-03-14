@@ -146,7 +146,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const protLateQuorumVoteExtensionS =
     discovery_ZKstackGovL2.getContractValue<number>(
       'ZkProtocolGovernor',
-      'votingPeriod',
+      'lateQuorumVoteExtension',
     )
   const protTlMinDelayS = discovery_ZKstackGovL2.getContractValue<number>(
     'ProtocolTimelockController',
@@ -231,8 +231,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       'ZkProtocolGovernor',
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
-  const scThresholdString = `${scMainThreshold} / ${scMemberCount}`
-  const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
+  const scThresholdString = `${scMainThreshold}/${scMemberCount}`
+  const guardiansThresholdString = `${guardiansMainThreshold}/${guardiansMemberCount}`
 
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
   return {
