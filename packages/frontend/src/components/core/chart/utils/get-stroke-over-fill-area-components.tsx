@@ -27,6 +27,8 @@ export function getStrokeOverFillAreaComponents({
     fillComponents.push(
       <Area
         key={`fill-${index}`}
+        isAnimationActive={false}
+        fillOpacity={1}
         {...props}
         tooltipType="none"
         legendType="none"
@@ -34,7 +36,13 @@ export function getStrokeOverFillAreaComponents({
       />,
     )
     strokeComponents.push(
-      <Area key={`stroke-${index}`} {...props} fill="none" />,
+      <Area
+        key={`stroke-${index}`}
+        isAnimationActive={false}
+        strokeWidth={2}
+        {...props}
+        fill="none"
+      />,
     )
     index++
   }
