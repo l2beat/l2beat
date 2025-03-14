@@ -80,7 +80,7 @@ function MobileFilters({
         title={'Filters'}
         description={'Select filters to apply'}
       >
-        <Content entries={entries} />
+        <Content entries={entries} onValueSelect={() => setOpen(false)} />
       </CommandDialog>
     </>
   )
@@ -98,28 +98,32 @@ function DesktopFilters({
   const { state } = useNewTableFilterContext()
 
   return (
-    <>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className="flex h-8 gap-1.5">
-          <FilterIcon />
-          {state.length === 0 && (
-            <>
-              <span className="text-base font-medium">Filters</span>
-              <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert">
-                F
-              </kbd>
-            </>
-          )}
-        </PopoverTrigger>
-        <PopoverContent className="p-0" align="start" side="bottom">
-          <Content entries={entries} />
-        </PopoverContent>
-      </Popover>
-    </>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger className="flex h-8 gap-1.5">
+        <FilterIcon />
+        {state.length === 0 && (
+          <>
+            <span className="text-base font-medium">Filters</span>
+            <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert">
+              F
+            </kbd>
+          </>
+        )}
+      </PopoverTrigger>
+      <PopoverContent className="p-0" align="start" side="bottom">
+        <Content entries={entries} />
+      </PopoverContent>
+    </Popover>
   )
 }
 
-function Content({ entries }: { entries: FilterableEntry[] }) {
+function Content({
+  entries,
+  onValueSelect,
+}: {
+  entries: FilterableEntry[]
+  onValueSelect?: (value: string) => void
+}) {
   const { state, dispatch } = useNewTableFilterContext()
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
@@ -181,6 +185,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
                   key={value}
                   value={value}
                   onSelect={(value) => {
+                    onValueSelect?.(value)
                     dispatch({
                       type: 'remove',
                       payload: {
@@ -206,6 +211,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
                   key={value}
                   value={value}
                   onSelect={(value) => {
+                    onValueSelect?.(value)
                     dispatch({
                       type: 'add',
                       payload: {
