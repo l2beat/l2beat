@@ -216,8 +216,11 @@ export class ParsedFilesManager {
         importedFile.normalizedPath,
       )
       if (alreadyImported !== undefined) {
-        const gotEverything =
-          alreadyImported.length >= importedFile.topLevelDeclarations.length
+        let gotEverything = true
+        for (const declaration of importedFile.topLevelDeclarations) {
+          gotEverything &&= alreadyImported.includes(declaration.name)
+        }
+
         if (gotEverything) {
           return []
         }
