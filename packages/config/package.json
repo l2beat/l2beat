@@ -18,6 +18,7 @@
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "socket-crawl": "node -r esbuild-register scripts/socketcrawl",
     "socket-convert": "node -r esbuild-register scripts/socketconvert",
+    "fetchagglayer": "node -r esbuild-register scripts/fetchagglayer/fetchagglayer.ts",
     "fill-ts": "node -r esbuild-register scripts/fillts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",
