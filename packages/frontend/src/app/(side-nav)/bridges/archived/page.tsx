@@ -16,7 +16,7 @@ export default async function Page() {
   const entries = await getBridgesArchivedEntries()
   return (
     <BridgesFilterContextProvider>
-      <MainPageHeader>Archived</MainPageHeader>
+      <MainPageHeader withDescription>Archived</MainPageHeader>
       <BridgesMvpWarning className="md:mb-3" sidebar />
       <PrimaryCard>
         <BridgesArchivedTable entries={entries} />

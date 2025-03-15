@@ -99,7 +99,7 @@ const DrawerDescription = ({
 }: React.ComponentProps<typeof DrawerPrimitive.Description>) => (
   <DrawerPrimitive.Description
     ref={ref}
-    className={cn('text-sm', className)}
+    className={cn('text-xs', className)}
     {...props}
   />
 )

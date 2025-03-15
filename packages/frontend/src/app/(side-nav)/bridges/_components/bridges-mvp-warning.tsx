@@ -1,5 +1,5 @@
 import { CustomLink } from '~/components/link/custom-link'
-import { MainPageWarning } from '~/components/main-page-warning'
+import { PageDescription } from '~/components/page-description'
 import { externalLinks } from '~/consts/external-links'
 import { cn } from '~/utils/cn'
 
@@ -9,12 +9,17 @@ export function BridgesMvpWarning({
 }: { className?: string; sidebar?: boolean }) {
   if (sidebar) {
     return (
-      <MainPageWarning className={className}>
-        L2BEAT Bridges is a work in progress. You might find incomplete research
-        or inconsistent naming. Join our{' '}
-        <CustomLink href={externalLinks.discord}>Discord</CustomLink> to suggest
-        improvements!
-      </MainPageWarning>
+      <PageDescription
+        pageTitle="Bridges"
+        warning={
+          <>
+            L2BEAT Bridges is a work in progress. You might find incomplete
+            research or inconsistent naming. Join our{' '}
+            <CustomLink href={externalLinks.discord}>Discord</CustomLink> to
+            suggest improvements!
+          </>
+        }
+      />
     )
   }
 
