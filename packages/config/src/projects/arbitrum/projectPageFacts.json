@@ -2745,7 +2745,7 @@
         "interact",
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
         0,
         [
           {
@@ -4417,7 +4417,7 @@
         "interact",
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
         1500216,
         [
           {
@@ -4471,7 +4471,7 @@
         "interact",
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
         1500216,
         [
           {
@@ -4525,7 +4525,7 @@
         "interact",
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
         1500216,
         [
           {
@@ -7218,7 +7218,7 @@
         "interact",
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
         0,
         null,
         "nonFinal"

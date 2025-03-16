@@ -64,7 +64,7 @@
         {
           "permission": "interact",
           "from": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             {
@@ -651,7 +651,7 @@
         {
           "permission": "interact",
           "from": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "interact",
@@ -886,7 +886,7 @@
         {
           "permission": "interact",
           "to": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [
             { "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a" },
             {
@@ -899,7 +899,7 @@
         {
           "permission": "interact",
           "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
@@ -3823,7 +3823,7 @@
         {
           "permission": "interact",
           "from": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
@@ -5124,7 +5124,7 @@
     "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/ParentToChildRewardRouter": "0x6dc8b188b923e4d062919c1b8d1658eb4d65863c8ebbc7304a00b3f92688ef1f",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxyBoLD": "0xa3a864b1d3f2e11ba4ede1a3dc84af5767d2a68710787e9b4a39c71d0754c5cb",
+    "orbitstack/RollupProxyBoLD": "0x8e28acd419be4fd73f80fbf499c1fe24b50758de67953c31fa9de3068e64a17f",
     "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa",
     "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
     "orbitstack/Timelock": "0x3548083a8f68fe20dc020b39ed8ed83cedf25667a3f77d5ef0d7f9f3a167e8b0",
