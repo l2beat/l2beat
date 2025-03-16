@@ -7,15 +7,67 @@ import {
   type Permission,
   parseExportedFacts,
 } from '@l2beat/discovery'
-import { groupFacts } from '@l2beat/discovery/dist/discovery/modelling/KnowledgeBase'
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
+import { BulletListBuilder } from './BulletListBuilder'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
-import {
-  DirectPermissionToPrefix,
-  UltimatePermissionToPrefix,
-} from './descriptions'
 import { formatPermissionDelay, trimTrailingDots } from './utils'
+import { UltimatePermissionToPrefix } from './descriptions'
+
+export interface TransitivePermissionFact {
+  atom: 'transitivePermission'
+  params: [
+    string,
+    string,
+    string,
+    number,
+    string | undefined,
+    number,
+    TransitivePermissionVia[] | undefined,
+    'isFinal' | 'nonFinal',
+  ]
+}
+
+type ParsedTransitivePermissionFact = ReturnType<
+  typeof parseTransitivePermissionFact
+>
+
+function orUndefined<V, C>(
+  caster: (value: V) => C,
+  value: V | undefined,
+): C | undefined {
+  return value === undefined ? undefined : caster(value)
+}
+
+export function parseTransitivePermissionFact(fact: TransitivePermissionFact) {
+  return {
+    from: String(fact.params[0]),
+    permission: String(fact.params[1]) as Permission,
+    giver: String(fact.params[2]),
+    delay: Number(fact.params[3]),
+    description: orUndefined(String, fact.params[4]),
+    totalDelay: Number(fact.params[5]),
+    viaList: fact.params[6]?.map(parseTransitivePermissionVia) ?? undefined,
+    isFinal: fact.params[7] === 'isFinal',
+  }
+}
+
+interface TransitivePermissionVia {
+  atom: 'tuple'
+  params: [string, string, number]
+}
+
+type ParsedTransitivePermissionVia = ReturnType<
+  typeof parseTransitivePermissionVia
+>
+
+export function parseTransitivePermissionVia(via: TransitivePermissionVia) {
+  return {
+    contract: String(via.params[0]),
+    permission: String(via.params[1]),
+    delay: Number(via.params[2]),
+  }
+}
 
 export interface GroupedTransitivePermissionFact {
   atom: 'transitivePermission'
@@ -26,14 +78,9 @@ export interface GroupedTransitivePermissionFact {
     number,
     string | undefined,
     number,
-    TransitivePermissionVia[],
+    TransitivePermissionVia[] | undefined,
     'isFinal' | 'nonFinal',
   ]
-}
-
-interface TransitivePermissionVia {
-  atom: 'tuple'
-  params: [string, string, number]
 }
 
 export const PermissionsRequiringTarget: Permission[] = [
@@ -78,70 +125,73 @@ export class PermissionsFromModel implements PermissionRegistry {
       .map((data) => EthereumAddress.from(data.address))
   }
 
-  describePermissions(
-    contractOrEoa: EntryParameters,
-    includeDirectPermissions: boolean = true,
-  ): string[] {
+  describePermissions(contractOrEoa: EntryParameters): string[] {
     const id = this.modelIdRegistry.getModelId(
       this.projectDiscovery.chain,
       contractOrEoa.address,
     )
-    const transitivePermissionFacts = this.knowledgeBase.getFacts(
+    const upgradeFacts = this.knowledgeBase.getFacts(
       'filteredTransitivePermission',
       [id],
-    )
-    const grouped = groupFacts(
-      transitivePermissionFacts,
-      2,
-    ) as GroupedTransitivePermissionFact[]
-    const result: string[] = []
-    for (const fact of grouped) {
-      if (fact.params[7] === 'nonFinal' && !includeDirectPermissions) {
-        continue
-      }
-      const rendered = this.renderGroupedTransitivePermissionFact(fact)
-      result.push(this.modelIdRegistry.replaceIdsWithNames(rendered))
-    }
-    return result
+    ) as TransitivePermissionFact[]
+    const result =
+      upgradeFacts.length > 0
+        ? this.renderNonInteractPermission(
+            upgradeFacts.map(parseTransitivePermissionFact),
+          )
+        : ''
+    return [this.modelIdRegistry.replaceIdsWithNames(result).slice(1)]
   }
 
-  renderGroupedTransitivePermissionFact(
-    fact: GroupedTransitivePermissionFact,
-  ): string {
-    const result: string[] = []
-    const permission = fact.params[1] as Permission
-    const giver = fact.params[2]
-    const delay = Number(fact.params[3])
-    const description = fact.params[4]
-    const _totalDelay = fact.params[5]
-    const viaList = fact.params[6]
-    const isFinal = fact.params[7]
+  renderNonInteractPermission(facts: ParsedTransitivePermissionFact[]): string {
+    // sort by permission, then by total delay
+    facts.sort((a, b) => {
+      if (a.permission !== b.permission) {
+        return a.permission.localeCompare(b.permission)
+      }
+      return a.totalDelay - b.totalDelay
+    })
+    const result = new BulletListBuilder()
+    let currentPermission: Permission | undefined
+    let currentDelay: number | undefined
 
-    const permissionToPrefixMapping =
-      isFinal === 'isFinal'
-        ? UltimatePermissionToPrefix
-        : DirectPermissionToPrefix
+    for (const fact of facts) {
+      // Check if we have a new permission type
+      if (fact.permission !== currentPermission) {
+        currentPermission = fact.permission
+        currentDelay = undefined
+        result.resetIndent(0)
+        result.addItem(
+          UltimatePermissionToPrefix[currentPermission] ??
+            `has ${currentPermission} permission`,
+        )
+        result.indent()
+      }
 
-    result.push(
-      permissionToPrefixMapping[permission] ??
-        `has permission ${permission} from`,
-    )
-    if (PermissionsRequiringTarget.includes(permission)) {
-      result.push(giver.map((x) => `@@${x}`).join(', '))
+      // Check if we have a new delay
+      if (fact.totalDelay !== currentDelay) {
+        currentDelay = fact.totalDelay
+        result.resetIndent(1)
+        result.addItem(
+          currentDelay === 0
+            ? '(with no delay)'
+            : `**(${formatPermissionDelay(currentDelay)})**`,
+        )
+        result.indent()
+      }
+
+      let value = `@@${fact.giver}`
+      if (fact.description !== undefined) {
+        value += ' ' + trimTrailingDots(fact.description)
+      }
+      if (fact.viaList !== undefined && fact.viaList?.length > 0) {
+        value += ` [via: - acting via ${fact.viaList.map(renderTransitivePermissionVia).join(', ')}]`
+      }
+      result.addItem(value)
     }
-    if (delay > 0) {
-      result.push(formatPermissionDelay(delay))
-    }
-    if (description) {
-      result.push('- ' + trimTrailingDots(description))
-    }
-    if (viaList !== null && viaList.length > 0) {
-      const reversedViaList = [...viaList].reverse()
-      result.push(
-        `- acting via ${reversedViaList.map(renderTransitivePermissionVia).join(', ')}`,
-      )
-    }
-    return result.join(' ') + '.'
+
+    return result.renderMd({ mergeSingleSubpoints: true })
+    // return result.renderMd()
   }
 
   getUpgradableBy(
@@ -175,10 +225,11 @@ export class PermissionsFromModel implements PermissionRegistry {
   }
 }
 
-function renderTransitivePermissionVia(via: TransitivePermissionVia): string {
-  const delay = Number(via.params[2])
-  if (delay === 0) {
-    return `@@${via.params[0]}`
+function renderTransitivePermissionVia(
+  via: ParsedTransitivePermissionVia,
+): string {
+  if (via.delay === 0) {
+    return `@@${via.contract}`
   }
-  return `@@${via.params[0]} ${formatPermissionDelay(delay)}`
+  return `@@${via.contract} ${formatPermissionDelay(via.delay)}`
 }

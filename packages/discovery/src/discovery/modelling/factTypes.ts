@@ -1,8 +1,20 @@
 import * as z from 'zod'
 
-export type ClingoValue = string | number | null | ClingoFact | ClingoValue[]
+export type ClingoValue =
+  | string
+  | number
+  | null
+  | undefined
+  | ClingoFact
+  | ClingoValue[]
 export const ClingoValue: z.ZodType<ClingoValue> = z.lazy(() =>
-  z.union([z.string(), z.number(), z.null(), ClingoFact, z.array(ClingoValue)]),
+  z.union([
+    z.string(),
+    z.number(),
+    z.null().transform(() => undefined),
+    ClingoFact,
+    z.array(ClingoValue),
+  ]),
 )
 
 export type ClingoFact = {

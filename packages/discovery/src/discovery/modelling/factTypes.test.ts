@@ -2,7 +2,7 @@ import { expect } from 'earl'
 import { parseClingoFact } from './clingoparser'
 import { parseExportedFacts } from './factTypes'
 
-describe(parseExportedFacts.name, () => {
+describe.only(parseExportedFacts.name, () => {
   it('should parse exported facts', () => {
     const clingoFact = String.raw`
 complexFact(
@@ -12,7 +12,9 @@ complexFact(
   nestedFact(a, b, 123),
   -12.345,
   nil,
+  pair(nil, 3),
   cons(a, cons(b, nil)),
+  cons(x, cons(nil, cons(y,nil))),
   cons(
     pair(a, b),
     cons(
@@ -38,8 +40,13 @@ complexFact(
               params: ['a', 'b', 123],
             },
             -12.345,
-            null,
+            undefined,
+            {
+              atom: 'pair',
+              params: [undefined, 3],
+            },
             ['a', 'b'],
+            ['x', undefined, 'y'],
             [
               {
                 atom: 'pair',
