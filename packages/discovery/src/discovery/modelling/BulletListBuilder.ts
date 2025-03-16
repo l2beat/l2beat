@@ -3,6 +3,20 @@ interface BulletListNode {
   children: BulletListNode[]
 }
 
+// Helper class to build a bullet list in Markdown format.
+// It supports merging of single subpoints to their parent
+// during rendering. For example:
+//
+// * can upgrade
+//   * with 1d delay     // <- single child, so can be merge to parent
+//     * Contract A
+//     * Contract B
+//
+// will be rendered as:
+//
+// * can upgrade with 1d delay
+//   * Contract A
+//   * Contract B
 export class BulletListBuilder {
   private root: BulletListNode = { text: '', children: [] }
   private indentStack: BulletListNode[] = [this.root]
