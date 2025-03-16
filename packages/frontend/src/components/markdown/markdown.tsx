@@ -78,7 +78,7 @@ export function processCollapsibleText(markdown: string): string {
   return markdown.replace(collapsiblePattern, (match, label, content) => {
     return `<span class="inline relative">
       <details class="inline">
-        <summary class="inline-block text-gray-600 bg-gray-100 rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300">${label}</summary>
+        <summary class="inline-block text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600">${label}</summary>
         ${content}
       </details>
     </span>`
