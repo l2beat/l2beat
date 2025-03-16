@@ -197,4 +197,48 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           : formatSeconds(upgradersWithDelay[actor]),
     }))
   }
+
+  getControllingEoa(): string | undefined {
+    const eoas = this.projectDiscovery.getEoas()
+    const contracts = this.projectDiscovery.getContracts()
+    const allEntries = [...eoas, ...contracts]
+
+    const countUpgradePermissions = ({
+      directlyReceivedPermissions = [],
+      receivedPermissions = [],
+    }: EntryParameters) => {
+      const permissions = [
+        ...directlyReceivedPermissions,
+        ...receivedPermissions,
+      ]
+      return permissions.filter((p) => p.permission === 'upgrade').length
+    }
+
+    const analysis = allEntries
+      .map((entry) => ({
+        address: entry.address.toString(),
+        count: countUpgradePermissions(entry),
+        type: entry.type,
+      }))
+      .filter((result) => result.count > 0)
+      .sort((a, b) => b.count - a.count)
+
+    // It's sorted, it will select first of type
+    const mostControllingEoa = analysis.find((c) => c.type === 'EOA')
+    const mostControllingContract = analysis.find((c) => c.type === 'Contract')
+
+    if (
+      mostControllingEoa === undefined ||
+      mostControllingContract === undefined
+    ) {
+      return
+    }
+
+    const isControlling =
+      mostControllingEoa.count >= mostControllingContract.count
+
+    if (isControlling) {
+      return mostControllingEoa.address
+    }
+  }
 }

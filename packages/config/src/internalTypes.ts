@@ -128,7 +128,7 @@ export interface ProjectScalingDisplay {
   /** A warning displayed above the description of the project */
   warning?: string
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
-  redWarning?: string
+  redWarning?: string | false
   /** A few sentences describing the scaling project */
   description: string
   /** Detailed description of the scaling project, will be visible in detailed description section */

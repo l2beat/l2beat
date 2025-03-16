@@ -84,8 +84,6 @@ export default async function Page(props: Props) {
     ],
   })
 
-  console.dir(project?.statuses, { depth: null })
-
   if (!project) {
     notFound()
   }

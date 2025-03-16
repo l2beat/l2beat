@@ -1,4 +1,5 @@
 import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import clsx from 'clsx'
 import { Callout } from '~/components/callout'
 import {
   Tooltip,
@@ -26,6 +27,7 @@ export interface TechnologyContract {
   admins: TechnologyContractAddress[]
   chain: string
   description?: string
+  isControllingEoa?: boolean
   upgradeableBy?: ProjectUpgradeableActor[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
@@ -72,9 +74,16 @@ export function ContractEntry({
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
       color={color}
       icon={icon}
+      // TO BE REMOVED, preview only
       body={
         <>
-          <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
+          <div
+            className={clsx(
+              'flex flex-wrap items-center gap-x-2 !leading-[1.15]',
+              contract.isControllingEoa &&
+                'bg-red-600/10 border border-red-500',
+            )}
+          >
             <strong id={contract.name}>{contract.name}</strong>{' '}
             {entries.map((address, i) => (
               <HighlightableLink

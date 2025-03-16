@@ -105,6 +105,7 @@ describe(ProjectDiscovery.name, () => {
           isVerified: true,
           name: '0x0D4C…72ac',
           url: 'https://etherscan.io/address/0x0D4C1222f5e839a911e2053860e45F18921D72ac',
+          isControllingEoa: false,
         },
         {
           address: EthereumAddress(
@@ -112,6 +113,7 @@ describe(ProjectDiscovery.name, () => {
           ),
           type: 'EOA',
           isVerified: true,
+          isControllingEoa: true,
           name: '0x0000…Bb22',
           url: 'https://etherscan.io/address/0x000000000000000000000000000000000000Bb22',
         },

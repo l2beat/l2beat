@@ -124,11 +124,9 @@ export interface BaseProject {
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
-  redWarning: string | undefined
+  redWarning: string | undefined | false
   isUnderReview: boolean
   isUnverified: boolean
-  /** Array of EOA addresses that have high upgrade permissions, used to highlight them in UI */
-  highRiskEoaAddresses?: string[]
   // countdowns
   otherMigration?: {
     expiresAt: number
@@ -861,6 +859,7 @@ export interface ProjectPermissionedAccount {
   address: EthereumAddress
   isVerified: boolean
   type: 'EOA' | 'Contract'
+  isControllingEoa: boolean
 }
 
 export interface ProjectContracts {

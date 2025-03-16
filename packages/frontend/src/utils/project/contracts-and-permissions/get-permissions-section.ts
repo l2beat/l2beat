@@ -189,6 +189,7 @@ function toTechnologyContract(
       references: permission.references ?? [],
       implementationChanged: false,
       highSeverityFieldChanged: false,
+      isControllingEoa: permission.accounts.some((a) => a.isControllingEoa),
     },
   ]
 
