@@ -113,7 +113,7 @@ describe(ProjectDiscovery.name, () => {
           ),
           type: 'EOA',
           isVerified: true,
-          isControllingEoa: true,
+          isControllingEoa: false,
           name: '0x0000…Bb22',
           url: 'https://etherscan.io/address/0x000000000000000000000000000000000000Bb22',
         },
