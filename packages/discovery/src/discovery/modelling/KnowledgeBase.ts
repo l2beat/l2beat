@@ -5,36 +5,46 @@ export class KnowledgeBase {
 
   getFacts(
     id: string,
-    params: (string | number | undefined)[] = [],
+    matching: (string | number | undefined)[] = [],
+    excluding: (string | number | undefined)[] = [],
   ): ClingoFact[] {
     return this.facts.filter(
       (fact) =>
         fact.atom === id &&
         fact.params.every(
           (param, index) =>
-            params[index] === undefined || param === params[index],
+            matching[index] === undefined || param === matching[index],
+        ) &&
+        fact.params.every(
+          (param, index) =>
+            excluding[index] === undefined || param !== excluding[index],
         ),
     )
   }
 
   getFactOrUndefined(
     id: string,
-    params: (string | number | undefined)[],
+    matching: (string | number | undefined)[] = [],
+    excluding: (string | number | undefined)[] = [],
   ): ClingoFact | undefined {
-    const facts = this.getFacts(id, params)
+    const facts = this.getFacts(id, matching, excluding)
     if (facts.length > 1) {
       throw new Error(
-        `Found multiple facts with "${id}" id and params: ${JSON.stringify(params)}`,
+        `Found multiple facts with "${id}" id matching: ${JSON.stringify(matching)} excluding: ${JSON.stringify(excluding)}`,
       )
     }
     return facts[0]
   }
 
-  getFact(id: string, params: (string | number | undefined)[]): ClingoFact {
-    const fact = this.getFactOrUndefined(id, params)
+  getFact(
+    id: string,
+    matching: (string | number | undefined)[] = [],
+    excluding: (string | number | undefined)[] = [],
+  ): ClingoFact {
+    const fact = this.getFactOrUndefined(id, matching, excluding)
     if (fact === undefined) {
       throw new Error(
-        `No fact found with id "${id}" and params: ${JSON.stringify(params)}`,
+        `No fact found with id "${id}" matching: ${JSON.stringify(matching)} excluding: ${JSON.stringify(excluding)}`,
       )
     }
     return fact
