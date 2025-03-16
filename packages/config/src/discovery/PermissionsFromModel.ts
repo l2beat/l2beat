@@ -170,8 +170,8 @@ export class PermissionsFromModel implements PermissionRegistry {
         result.resetIndent(1)
         result.addItem(
           currentDelay === 0
-            ? '(with no delay)'
-            : `**(${formatPermissionDelay(currentDelay).trim()})**`,
+            ? 'with no delay'
+            : `**${formatPermissionDelay(currentDelay).trim()}**`,
         )
         result.indent()
       }
