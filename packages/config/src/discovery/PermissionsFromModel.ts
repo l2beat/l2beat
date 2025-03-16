@@ -132,11 +132,11 @@ export class PermissionsFromModel implements PermissionRegistry {
     const interactDescribed = this.renderInteractPermission(
       permissionFacts.filter((fact) => fact.permission === 'interact'),
     )
-    return [
+    const result =
       this.modelIdRegistry.replaceIdsWithNames(nonInteractDescribed).slice(2) +
-        '\n' +
-        this.modelIdRegistry.replaceIdsWithNames(interactDescribed),
-    ]
+      '\n' +
+      this.modelIdRegistry.replaceIdsWithNames(interactDescribed)
+    return result.trim() === '' ? [] : [result]
   }
 
   renderNonInteractPermission(facts: ParsedTransitivePermissionFact[]): string {
