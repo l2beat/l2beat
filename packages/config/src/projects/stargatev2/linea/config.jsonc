@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "linea",
+  "name": "stargatev2",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["0x5f688F563Dc16590e570f97b542FA87931AF2feD"],
+  "names": {
+    "0x5f688F563Dc16590e570f97b542FA87931AF2feD": "TokenMessaging"
+  },
+  "overrides": {
+    "TokenMessaging": {
+      "ignoreRelatives": ["endpoint", "oApp", "owner"],
+      "fields": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        },
+        "pools": {
+          "handler": {
+            "type": "array",
+            "method": "stargateImpls",
+            "startIndex": 1,
+            "length": "{{ maxAssetId }}"
+          }
+        }
+      }
+    },
+    "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    }
+  }
+}

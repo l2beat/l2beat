@@ -1,9 +1,7 @@
-import { join } from 'path'
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
-import { ConfigReader } from '@l2beat/discovery'
 import type { UnixTime } from '@l2beat/shared-pure'
-import type { Config, DiscordConfig } from './Config'
+import type { Config } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
 import { getActivityConfig } from './features/activity'
@@ -13,7 +11,7 @@ import { getFinalityConfig } from './features/finality'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvlConfig } from './features/tvl'
 import { getTvsConfig } from './features/tvs'
-import { getChainDiscoveryConfig } from './features/updateMonitor'
+import { getUpdateMonitorConfig } from './features/updateMonitor'
 import { getVerifiersConfig } from './features/verifiers'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -119,22 +117,9 @@ export async function makeConfig(
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
-    updateMonitor: flags.isEnabled('updateMonitor') && {
-      runOnStart: isLocal
-        ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
-        : undefined,
-      discord: getDiscordConfig(env, isLocal),
-      chains: new ConfigReader(join(process.cwd(), '../config'))
-        .readAllChains()
-        .filter((chain) => flags.isEnabled('updateMonitor', chain))
-        .map((chain) => getChainDiscoveryConfig(env, chain, chains)),
-      cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
-      cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
-      updateMessagesRetentionPeriodDays: env.integer(
-        ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
-        30,
-      ),
-    },
+    updateMonitor:
+      flags.isEnabled('updateMonitor') &&
+      getUpdateMonitorConfig(env, flags, chains, isLocal),
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),
@@ -176,22 +161,4 @@ function getEthereumMinTimestamp(chains: ChainConfig[]) {
     throw new Error('Missing minBlockTimestamp for ethereum')
   }
   return minBlockTimestamp
-}
-
-function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
-  const token = env.optionalString('DISCORD_TOKEN')
-  const internalChannelId = env.optionalString('INTERNAL_DISCORD_CHANNEL_ID')
-  const publicChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
-
-  const discordEnabled =
-    !!token && !!internalChannelId && (isLocal || !!publicChannelId)
-
-  return (
-    discordEnabled && {
-      token,
-      publicChannelId,
-      internalChannelId,
-      callsPerMinute: 3000,
-    }
-  )
 }

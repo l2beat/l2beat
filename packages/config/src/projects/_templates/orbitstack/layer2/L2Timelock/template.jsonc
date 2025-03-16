@@ -1,0 +1,75 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2Timelock",
+  "description": "Delays constitutional AIPs from the CoreGovernor by 8d.",
+  "fields": {
+    "timelockAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "delay": "{{getMinDelay}}",
+            "description": "manage all access control roles and change the minimum delay."
+          }
+        ]
+      }
+    },
+    "getMinDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "Proposer": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "propose transactions."
+          },
+          {
+            "type": "act",
+            "delay": "{{getMinDelay}}"
+          }
+        ]
+      }
+    },
+    "Canceller": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "cancel queued transactions."
+          }
+        ]
+      }
+    },
+    "Executor": {
+      "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "severity": "HIGH"
+    }
+  }
+}

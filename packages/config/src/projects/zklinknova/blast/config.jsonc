@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "blast",
+  "name": "zklinknova",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
+    "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+  ],
+  "names": {
+    "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD": "zkLink",
+    "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b": "L1ERC20Bridge",
+    "0x3f64e2e09732969813904a8473074CFADeE66AF1": "BlastL2Gateway",
+    "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E": "BlastOwner",
+    "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19": "BlastProxyAdmin"
+  },
+  "overrides": {
+    "BlastL2Gateway": {
+      "extends": "zklinknova/secondaryGateway"
+    }
+  }
+}

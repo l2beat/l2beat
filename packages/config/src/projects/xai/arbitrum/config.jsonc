@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "xai",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9", // Inbox
+    "0xb591cE747CF19cF30e11d656EB94134F523A9e77", // L1ERC20Gateway
+    "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5" // PoolFactory
+  ],
+  "names": {
+    "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "XaiMultisig",
+    "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": "XaiMultisig2",
+    "0xfD41041180571C5D371BEA3D9550E55653671198": "SentryReferee",
+    "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry",
+    "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5": "PoolFactory",
+    "0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool",
+    "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878": "XaiFundsReiceiverMultisig",
+    "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD": "PoolProxyDeployer"
+  },
+  "overrides": {
+    "PoolProxyDeployer": {
+      "description": "Manages beacon addresses for the v2 staking pools.",
+      "ignoreRelatives": ["esXaiBeacon", "keyBucketBeacon", "poolBeacon"]
+    },
+    "XaiFundsReiceiverMultisig": {
+      "description": "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints."
+    },
+    "PoolFactory": {
+      "description": "The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to {{ stakingEnabled }}.",
+      "ignoreMethods": ["getPoolAddress", "stakingPools"],
+      "ignoreRelatives": ["esXaiAddress", "xaiVotingAddress"],
+      "ignoreInWatchMode": ["getPoolsCount"]
+    },
+    "SentryReferee": {
+      "description": "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.",
+      "ignoreMethods": [
+        "challenges",
+        "getBoostFactor",
+        "getChallenge",
+        "getMaxStakeAmount",
+        "getKycWalletAtIndex",
+        "getCombinedTotalSupply",
+        "assignedKeyToPool",
+        "getBoostFactorForKeyId"
+      ],
+      "ignoreInWatchMode": [
+        "challengeCounter",
+        "getKycWalletCount",
+        "calculateChallengeEmissionAndTier"
+      ],
+      "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
+    },
+    "NodeLicenseRegistry": {
+      "description": "This is the contract where Xai Sentry Keys for running a sentry node are minted.",
+      "ignoreMethods": [
+        "getPricingTier",
+        "tokenByIndex",
+        "getApproved",
+        "getAverageCost",
+        "getMintTimestamp",
+        "ownerOf",
+        "tokenURI",
+        "_averageCost",
+        "_mintTimestamps",
+        "ethToXai"
+      ],
+      "ignoreInWatchMode": ["totalSupply"],
+      "ignoreRelatives": ["esXaiAddress", "xaiAddress", "usdcAddress"]
+    }
+  }
+}

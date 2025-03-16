@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "dbk",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x28f1b9F457CB51E0af56dff1d11CD6CEdFfD1977"],
+  "names": {
+    "0xcCcc98e93CeE060a03604D3916EE527a57078c8b": "SystemConfig",
+    "0xfB04A190dC7D91E86109433858A48E0B98EF1450": "DeBankChainMultisig"
+  },
+  "overrides": {
+    "SystemConfig": {
+      "ignoreRelatives": ["disputeGameFactory", "gasPayingToken"] // current OptimismPortal doesn't support dispute games
+    }
+  }
+}

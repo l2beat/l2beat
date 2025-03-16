@@ -253,3 +253,13 @@ model FlatSources {
 
   @@id([projectName, chainId])
 }
+
+model TvsPrice {
+  configurationId String   @db.Char(12)
+  timestamp       DateTime @db.Timestamp(6)
+  priceUsd        Float    @db.Real
+  priceId         String   @db.VarChar(255)
+
+  @@id([configurationId, timestamp])
+  @@index([priceId])
+}

@@ -1,5 +1,6 @@
 import { readdirSync } from 'fs'
 import path from 'path'
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import {
   type Type,
@@ -10,7 +11,6 @@ import {
   string,
   subcommands,
 } from 'cmd-ts'
-import { readConfig } from '../config/readConfig'
 import {
   DIFFING_MODES,
   DISPLAY_MODES,
@@ -125,12 +125,8 @@ const PowerdiffDiscovery = command({
     displayMode,
     diffContext,
   }) => {
-    const config = readConfig()
-    assert(
-      config.discoveryPath !== undefined,
-      'Discovery path is not set in the configuration file, set it in .l2b',
-    )
-    const projectPath = path.join(config.discoveryPath, project, chain)
+    const paths = getDiscoveryPaths()
+    const projectPath = path.join(paths.discovery, project, chain)
     const contents = readdirSync(projectPath)
 
     const flatAt = contents.filter((f) => f.startsWith('.flat@'))

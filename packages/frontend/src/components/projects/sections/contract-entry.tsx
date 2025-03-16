@@ -34,8 +34,7 @@ export interface TechnologyContract {
   participants?: Participant[]
   upgradeConsiderations?: string
   references: ReferenceLink[]
-  implementationChanged: boolean
-  highSeverityFieldChanged: boolean
+  impactfulChange: boolean
 }
 
 export interface TechnologyContractAddress {
@@ -190,7 +189,7 @@ function getCalloutProps(
     } as const
   }
 
-  if (contract.implementationChanged || contract.highSeverityFieldChanged) {
+  if (contract.impactfulChange) {
     return {
       color: undefined,
       icon: (

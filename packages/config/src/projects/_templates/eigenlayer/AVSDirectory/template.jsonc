@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "avs": {
+      "handler": {
+        "type": "event",
+        "select": "avs",
+        "add": { "event": "OperatorAVSRegistrationStatusUpdated" }
+      }
+    }
+  },
+  "ignoreRelatives": ["avs"],
+  "ignoreInWatchMode": ["avs"]
+}

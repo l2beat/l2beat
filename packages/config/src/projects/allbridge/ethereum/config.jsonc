@@ -1,0 +1,170 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "allbridge",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xA314330482f325D38A83B492EF6B006224a3bea9",
+    "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+    "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA",
+    // NEW
+    "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e", // LPBridge
+    "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA", // allbridgeMessenger
+    "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74", // wormholeMessenger
+    "0xC51397b75B783E31469bFaADE79913F3f82210d6", // cctp adapter
+    "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0", // gasoracle
+
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x7234dB900E907398EdfAdA744d5Bf8A842B335BA", // AllbridgeMessenger EOA
+    "0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5", // WormholeMessenger EOA
+    "0xb7C522Adb3429e2C7474df324c7a3744A5803414" // CctpBridge messenger EOA
+  ],
+  "names": {
+    "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F": "OldWormholeMessenger",
+    "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50": "OldAllbridgeMessenger",
+    "0xA314330482f325D38A83B492EF6B006224a3bea9": "OldLPBridge",
+
+    "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": "LPBridge",
+    "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": "TokenBridge",
+    "0x93746538D4519C809827205Bd1C2c7a0E15bd74b": "Validator",
+    "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA": "AllbridgeMessenger",
+    "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74": "WormholeMessenger",
+    "0xC51397b75B783E31469bFaADE79913F3f82210d6": "CctpBridge",
+    "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6": "FeeOracle",
+    "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": "GasOracle",
+
+    // Other
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT"
+  },
+  "overrides": {
+    "CctpBridge": {
+      "ignoreMethods": [
+        "gasUsage",
+        "getBridgingCostInTokens",
+        "getTransactionCost"
+      ]
+    },
+    "GasOracle": {
+      "ignoreMethods": ["chainData", "crossRate", "price"],
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
+        }
+      }
+    },
+    "FeeOracle": {
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
+        }
+      },
+      "ignoreMethods": ["chainData", "crossRate", "price"]
+    },
+    "LPBridge": {
+      "ignoreMethods": ["gasUsage", "getTransactionCost", "otherBridges"],
+      "fields": {
+        "DAI_POOL": {
+          "target": {
+            "template": "allbridge/pool"
+          },
+          "handler": {
+            "type": "call",
+            "method": "pools",
+            "args": [
+              "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f"
+            ]
+          }
+        },
+        "USDC_POOL": {
+          "target": {
+            "template": "allbridge/pool"
+          },
+          "handler": {
+            "type": "call",
+            "method": "pools",
+            "args": [
+              "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+            ]
+          }
+        },
+        "USDT_POOL": {
+          "target": {
+            "template": "allbridge/pool"
+          },
+          "handler": {
+            "type": "call",
+            "method": "pools",
+            "args": [
+              "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7"
+            ]
+          }
+        }
+      }
+    },
+    "TokenBridge": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d": "BRIDGE_MANAGER",
+              "0x55ca0725c70a9ecebe86dd2b8b3a414983f6cb638e1a0fa17c64bbdd59b4d4c1": "STOP_MANAGER",
+              "0x593fb413ec9f9ad9f53f309300b515310ff474591268ca3cbe9752fd88eb76a0": "TOKEN_MANAGER"
+            }
+          }
+        }
+      },
+      "ignoreMethods": [
+        "DEFAULT_ADMIN_ROLE",
+        "BRIDGE_MANAGER",
+        "STOP_MANAGER",
+        "TOKEN_MANAGER"
+      ]
+    },
+    "AllbridgeMessenger": {
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
+        }
+      },
+      "ignoreMethods": ["gasUsage", "getTransactionCost"]
+    },
+    "WormholeMessenger": {
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
+        }
+      },
+      "ignoreMethods": ["gasUsage", "getTransactionCost"]
+    },
+    "USDT": {
+      "ignoreDiscovery": true
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "DAI": {
+      "ignoreDiscovery": true
+    }
+  }
+}

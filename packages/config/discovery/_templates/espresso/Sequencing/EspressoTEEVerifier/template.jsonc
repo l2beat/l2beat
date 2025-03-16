@@ -1,9 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "EspressoTEEVerifier",
-  "description": "The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.",
-  "ignoreMethods": [""],
-  "ignoreInWatchMode": [""],
-  "ignoreRelatives": [""],
-  "fields": {}
-}

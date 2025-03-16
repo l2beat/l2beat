@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["tsconfig.json"],
+  "globalDependencies": ["tsconfig.json", ".discovery.json"],
   "tasks": {
     "build": {
       "dependsOn": ["^build", "db:generate-types"],

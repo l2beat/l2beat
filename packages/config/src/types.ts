@@ -494,9 +494,14 @@ export interface ProjectDaLayer {
   economicSecurity?: DaEconomicSecurity
 }
 
+export interface AdjustableEconomicSecurityRisk {
+  value: TableReadyValue
+  adjustSecurityRisk: boolean
+}
+
 export interface DaLayerRisks {
   daLayer?: TableReadyValue
-  economicSecurity?: TableReadyValue
+  economicSecurity?: AdjustableEconomicSecurityRisk
   fraudDetection?: TableReadyValue
 }
 

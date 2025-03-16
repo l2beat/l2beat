@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "worldcoin",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"],
+  "names": {
+    "0xf7134CE138832c1456F2a91D64621eE90c2bddEa": "WorldIdIdentityManager2",
+    "0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49": "RegisterIdentitiesVerifierLookupTable",
+    "0x39CcB3b670651a14da8b3835f42924f49C2C5986": "DeleteIdentitiesVerifierLookupTable",
+    "0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258": "RegisterVerifierSize100",
+    "0xFC1c26E964F791f81a33F49D91f79456891AA1c1": "RegisterVerifierSize600",
+    "0xE44c83b9e1971A24EC698829297A0C4026B0CeF9": "RegisterVerifierSize1200",
+    "0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1": "DeleteVerifierSize10",
+    "0x43B68ccBa7FC726540768fD1537c3179283140ed": "DeleteVerifierSize100"
+  },
+  "overrides": {
+    "WorldIdIdentityManager2": {
+      "description": "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.",
+      "ignoreMethods": ["proxiableUUID", "queryRoot"],
+      "ignoreInWatchMode": ["latestRoot"],
+      "fields": {
+        "identityOperator": {
+          "description": "Can call functions (manage identities) in the WorldIdIdentityManager2 implementation"
+        }
+      }
+    },
+    "RegisterIdentitiesVerifierLookupTable": {
+      "fields": {
+        "additionalBatchSizes": {
+          "handler": {
+            "type": "event",
+            "select": "batchSize",
+            "add": {
+              "event": "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)"
+            }
+          }
+        },
+        "initialVerifiers": {
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": [10, 100]
+          }
+        },
+        "additionalVerifiers": {
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": "{{ additionalBatchSizes }}"
+          }
+        }
+      }
+    },
+    "DeleteIdentitiesVerifierLookupTable": {
+      "fields": {
+        "additionalBatchSizes": {
+          "handler": {
+            "type": "event",
+            "select": "batchSize",
+            "add": {
+              "event": "event VerifierDeleted(uint256 indexed batchSize, address indexed verifierAddress)"
+            }
+          }
+        },
+        "initialVerifiers": {
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": [10, 100]
+          }
+        },
+        "additionalVerifiers": {
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": "{{ additionalBatchSizes }}"
+          }
+        }
+      }
+    }
+  }
+}

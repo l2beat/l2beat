@@ -1,0 +1,426 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "stargate",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x8731d54E9D02c286767d56ac03e8037C07e01e98"],
+  "names": {
+    "0x8731d54E9D02c286767d56ac03e8037C07e01e98": "Router",
+    "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": "Factory",
+    "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F": "StarGateFeeLibrary7",
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": "StarGate Multisig",
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig",
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
+    "0x5a54fe5234E811466D5366846283323c954310B2": "TSS Oracle",
+    "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "Google Cloud Oracle",
+    "0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero Relayer",
+    "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56": "USDC Pool",
+    "0x38EA452219524Bb87e18dE1C24D3bB59510BD783": "USDT Pool",
+    "0x692953e758c3669290cb1677180c64183cEe374e": "USDD Pool",
+    "0x101816545F6bd2b1076434B54383a1E633390A2E": "SG-ETH Pool",
+    "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d": "DAI Pool",
+    "0xfA0F307783AC21C39E939ACFF795e27b650F6e68": "Frax Pool",
+    "0x590d4f8A68583639f215f675F3a259Ed84790580": "sUSD Pool",
+    "0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2": "LUSD Pool",
+    "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8": "MAI Pool",
+    "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47": "METIS Pool",
+    "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d": "USDT Pool2",
+    "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09": "WOO Pool",
+    "0xA572d137666DCbAdFA47C3fC41F15e90134C618c": "mETH Pool",
+    "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
+  },
+  "overrides": {
+    "PriceFeed": {
+      "ignoreDiscovery": true
+    },
+    "Factory": {
+      "ignoreMethods": ["getPool"],
+      "fields": {
+        "allPools": {
+          "handler": {
+            "type": "array",
+            "method": "allPools",
+            "length": "{{ allPoolsLength }}"
+          }
+        }
+      }
+    },
+    "StarGateFeeLibrary7": {
+      "ignoreMethods": [
+        "poolIdToLpId",
+        "poolIdToPriceFeed",
+        "poolIdToPriceSD",
+        "stargatePoolIdToLPStaking"
+      ]
+    },
+    "StarGate Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "LayerZero Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "UltraLightNodeV2": {
+      "fields": {
+        "stargateOracles": {
+          "handler": {
+            "type": "event",
+            "select": "newConfig",
+            "add": {
+              "event": "AppConfigUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#userApplication",
+                  "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                ],
+                ["=", "#configType", 6]
+              ]
+            }
+          }
+        },
+        "stargateRelayers": {
+          "handler": {
+            "type": "event",
+            "select": "newConfig",
+            "add": {
+              "event": "AppConfigUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#userApplication",
+                  "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                ],
+                ["=", "#configType", 3]
+              ]
+            }
+          }
+        },
+        "stargateScrollConfig": {
+          "handler": {
+            "type": "call",
+            "method": "getAppConfig",
+            "args": [
+              // scroll chain id (https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids#scroll)
+              "214",
+              // stargate bridge address
+              "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+            ]
+          }
+        },
+        "stargateArbConfig": {
+          "handler": {
+            "type": "call",
+            "method": "getAppConfig",
+            "args": [
+              // arbitrum chain id (https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids#arbitrum)
+              "110",
+              // stargate bridge address
+              "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+            ]
+          }
+        }
+      }
+    },
+    "USDC Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "USDT Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "USDD Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "SG-ETH Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "Frax Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "sUSD Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "LUSD Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "MAI Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "METIS Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "USDT Pool2": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "WOO Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "DAI Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    },
+    "mETH Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "handler": {
+            "type": "array",
+            "method": "chainPaths",
+            "length": "{{ getChainPathsLength }}"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "pNetwork",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
+    "0x9f8622b11984AfC8f0a42A394928702017c5968D",
+    "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135"
+  ],
+  "names": {
+    "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB": "pNetwork Multisig",
+    "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": "ERC20 Vault V1",
+    "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8": "ERC20 Vault V2",
+    "0x9f8622b11984AfC8f0a42A394928702017c5968D": "UOS Vault",
+    "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E": "MiniMeToken",
+    "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478": "EVMScriptRegistry",
+    "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4": "pNetworkDAOVoting",
+    "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2": "EthPntv2"
+  },
+  "overrides": {
+    "pNetwork Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "ERC20 Vault V2": {
+      "ignoreMethods": ["getSupportedTokens", "weth"],
+      "ignoreRelatives": ["PNT_TOKEN_ADDRESS"]
+    },
+    "UOS Vault": {
+      "ignoreMethods": ["getSupportedTokens", "weth"]
+    },
+    "ERC20 Vault V1": {
+      "ignoreMethods": ["getSupportedTokens", "weth"]
+    },
+    "MiniMeToken": {
+      "ignoreMethods": ["totalSupplyAt"],
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "EVMScriptRegistry": {
+      "ignoreMethods": ["executors"]
+    },
+    "pNetworkDAOVoting": {
+      "ignoreInWatchMode": ["votesLength"]
+    },
+    "EthPntv2": {
+      "ignoreInWatchMode": [
+        "currentMonthWithdrawnAmount",
+        "currentYearWithdrawnAmount",
+        "maxWithdrawableAmounts",
+        "totalSupply",
+        "currentMonthNumber",
+        "currentYearNumber"
+      ]
+    },
+    "0xD216153c06E857cD7f72665E0aF1d7D82172F494": {
+      "ignoreMethods": ["requiredGas"]
+    }
+  }
+}

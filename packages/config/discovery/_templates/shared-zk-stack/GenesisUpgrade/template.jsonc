@@ -1,4 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts."
-}
