@@ -2,7 +2,7 @@ import { expect } from 'earl'
 import { parseClingoFact } from './clingoparser'
 import { parseExportedFacts } from './factTypes'
 
-describe.only(parseExportedFacts.name, () => {
+describe(parseExportedFacts.name, () => {
   it('should parse exported facts', () => {
     const clingoFact = String.raw`
 complexFact(
