@@ -33,7 +33,10 @@ export function Markdown(props: MarkdownProps) {
   // This is a hack to remove leading spaces, to prevent the appearance of
   // unwanted code blocks. Use backticks instead.
   // Don't strip spaces if they're followed by a '*' (bullet point in markdown)
-  const stripped = props.children.replace(/(^|\n)(?:\t|\s{4})(?!\*)(.+)/g, '$1$2')
+  const stripped = props.children.replace(
+    /(^|\n)(?:\t|\s{4})(?!\*)(.+)/g,
+    '$1$2',
+  )
 
   if (props.ignoreGlossary) {
     const rendered = render(stripped)
@@ -69,8 +72,8 @@ export function Markdown(props: MarkdownProps) {
 export function processCollapsibleText(markdown: string): string {
   // Regular expression to match the pattern [label: content]
   // Using non-greedy matching with .*? to handle nested content properly
-  const collapsiblePattern = /\[([^:]+):\s*(.*?)\]/g;
-  
+  const collapsiblePattern = /\[([^:]+):\s*(.*?)\]/g
+
   // Replace each match with the HTML details/summary structure with Tailwind classes
   return markdown.replace(collapsiblePattern, (match, label, content) => {
     return `<span class="inline relative">
@@ -78,6 +81,6 @@ export function processCollapsibleText(markdown: string): string {
         <summary class="inline-block text-gray-600 bg-gray-100 rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300">${label}</summary>
         ${content}
       </details>
-    </span>`;
-  });
+    </span>`
+  })
 }
