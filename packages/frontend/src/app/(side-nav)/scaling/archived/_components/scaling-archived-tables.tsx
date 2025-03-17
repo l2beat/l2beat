@@ -41,8 +41,8 @@ export function ScalingArchivedTables(
     : filteredEntries
 
   const initialSort = {
-    id: 'total',
-    desc: true,
+    id: '#',
+    desc: false,
   }
 
   useEffect(() => {
