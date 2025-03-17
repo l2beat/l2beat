@@ -63,6 +63,8 @@
 
     "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "AbstractChainAdminMultisig",
 
+    "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
   },
   "types": {
