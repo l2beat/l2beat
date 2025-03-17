@@ -47,7 +47,7 @@ const escapeBlockUpperBound = 4800 // in blocks, immutable
 const escapeBlockLowerBound = 4560 // in blocks, immutable
 const assumedBlockTime = 12 // in seconds
 
-export const aztecV1: ScalingProject = {
+export const aztec: ScalingProject = {
   type: 'layer2',
   id: ProjectId('aztec'),
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z

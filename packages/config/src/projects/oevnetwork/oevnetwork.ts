@@ -8,7 +8,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('oevnetwork')
 
-export const oev: ScalingProject = orbitStackL2({
+export const oevnetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
   additionalBadges: [BADGES.RaaS.Caldera],

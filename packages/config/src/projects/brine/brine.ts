@@ -45,7 +45,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const tanx: ScalingProject = {
+export const brine: ScalingProject = {
   type: 'layer2',
   id: ProjectId('brine'),
   capability: 'appchain',

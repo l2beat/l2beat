@@ -7,7 +7,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('worldchain')
 const genesisTimestamp = UnixTime(1719335639)
 
-export const world = opStackL2({
+export const worldchain = opStackL2({
   addedAt: UnixTime(1729586060), // 2024-10-22T08:34:20Z
   genesisTimestamp,
   discovery,

@@ -45,7 +45,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-export const rhinofi: ScalingProject = {
+export const deversifi: ScalingProject = {
   type: 'layer2',
   id: ProjectId('deversifi'),
   capability: 'appchain',

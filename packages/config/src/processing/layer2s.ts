@@ -17,14 +17,14 @@ import { astarzkevm } from '../projects/astarzkevm/astarzkevm'
 import { automata } from '../projects/automata/automata'
 import { axonum } from '../projects/axonum/axonum'
 import { azchain } from '../projects/azchain/azchain'
-import { aztecV1 } from '../projects/aztec/aztecV1'
 import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
+import { aztec } from '../projects/aztec/aztec'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { base } from '../projects/base/base'
 import { blast } from '../projects/blast/blast'
 import { bob } from '../projects/bob/bob'
 import { bobanetwork } from '../projects/bobanetwork/bobanetwork'
-import { tanx } from '../projects/brine/tanx'
+import { brine } from '../projects/brine/brine'
 import { camp } from '../projects/camp/camp'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
@@ -42,7 +42,7 @@ import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
 import { degenlayer } from '../projects/degenlayer/degenlayer'
 import { destra } from '../projects/destra/destra'
-import { rhinofi } from '../projects/deversifi/rhinofi'
+import { deversifi } from '../projects/deversifi/deversifi'
 import { dydx } from '../projects/dydx/dydx'
 import { ebichain } from '../projects/ebichain/ebichain'
 import { eclipse } from '../projects/eclipse/eclipse'
@@ -120,7 +120,7 @@ import { network3 } from '../projects/network3/network3'
 import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
 import { nova } from '../projects/nova/nova'
-import { oev } from '../projects/oevnetwork/oev'
+import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
 import { ola } from '../projects/ola/ola'
 import { omgnetwork } from '../projects/omgnetwork/omgnetwork'
 import { openzk } from '../projects/openzk/openzk'
@@ -138,7 +138,7 @@ import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
 import { phala } from '../projects/phala/phala'
 import { plumenetwork } from '../projects/plumenetwork/plumenetwork'
-import { polygonpos } from '../projects/polygon-pos/polygonpos'
+import { polygonpos } from '../projects/polygon-pos/polygon-pos'
 import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
 import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
@@ -196,7 +196,7 @@ import { union } from '../projects/union/union'
 import { wirex } from '../projects/wirex/wirex'
 import { witness } from '../projects/witness/witness'
 import { wonderfi } from '../projects/wonderfi/wonderfi'
-import { world } from '../projects/worldchain/world'
+import { worldchain } from '../projects/worldchain/worldchain'
 import { xchain } from '../projects/xchain/xchain'
 import { xlayer } from '../projects/xlayer/xlayer'
 import { xpla } from '../projects/xpla/xpla'
@@ -211,8 +211,8 @@ import { zklighter } from '../projects/zklighter/zklighter'
 import { zkspace } from '../projects/zkspace/zkspace'
 import { zkswap } from '../projects/zkswap/zkswap'
 import { zkswap2 } from '../projects/zkswap2/zkswap2'
-import { zksynclite } from '../projects/zksync/zksynclite'
-import { zksyncera } from '../projects/zksync2/zksyncera'
+import { zksync } from '../projects/zksync/zksync'
+import { zksync2 } from '../projects/zksync2/zksync2'
 import { zora } from '../projects/zora/zora'
 
 export const layer2s: ScalingProject[] = [
@@ -234,7 +234,7 @@ export const layer2s: ScalingProject[] = [
   axonum,
   azchain,
   aztecconnect,
-  aztecV1,
+  aztec,
   aztecV2,
   base,
   blast,
@@ -334,7 +334,7 @@ export const layer2s: ScalingProject[] = [
   neva,
   nil,
   nova,
-  oev,
+  oevnetwork,
   ola,
   omgnetwork,
   openzk,
@@ -367,7 +367,7 @@ export const layer2s: ScalingProject[] = [
   reddiozkvm,
   redstone,
   reya,
-  rhinofi,
+  deversifi,
   rise,
   river,
   rss3,
@@ -396,7 +396,7 @@ export const layer2s: ScalingProject[] = [
   sxt,
   t1,
   taiko,
-  tanx,
+  brine,
   tea,
   telos,
   ten,
@@ -412,7 +412,7 @@ export const layer2s: ScalingProject[] = [
   wirex,
   witness,
   wonderfi,
-  world,
+  worldchain,
   xchain,
   xlayer,
   xpla,
@@ -427,8 +427,8 @@ export const layer2s: ScalingProject[] = [
   zkspace,
   zkswap,
   zkswap2,
-  zksyncera,
-  zksynclite,
+  zksync2,
+  zksync,
   zora,
 ]
 

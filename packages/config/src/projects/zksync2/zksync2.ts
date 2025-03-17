@@ -45,7 +45,7 @@ assert(
   )}`,
 )
 
-export const zksyncera: ScalingProject = zkStackL2({
+export const zksync2: ScalingProject = zkStackL2({
   addedAt: UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,

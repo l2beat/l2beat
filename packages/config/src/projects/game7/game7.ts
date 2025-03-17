@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('game7', 'arbitrum')
 
 const L1OrbitERC20Gateway = discovery.getContract('ERC20Gateway')
 
-export const g7: ScalingProject = orbitStackL3({
+export const game7: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1738899615),
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],

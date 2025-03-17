@@ -1,3 +1,4 @@
+import { existsSync } from 'fs'
 import {
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
@@ -16,7 +17,6 @@ import {
 import { getProjects } from './getProjects'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
-import { existsSync } from 'fs'
 
 describe('getProjects', () => {
   const projects = getProjects()
@@ -40,7 +40,7 @@ describe('getProjects', () => {
         expect(slugs.has(project.slug)).toEqual(false)
         slugs.add(project.slug)
 
-        const dir = `./src/projects/${project.id}`
+        const dir = `./src/projects/${project.id}/${project.id}.ts`
         expect(existsSync(dir)).toEqual(true)
       })
     }

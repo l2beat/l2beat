@@ -59,7 +59,7 @@ const upgrades = {
 const forcedWithdrawalDelay = HARDCODED.ZKSYNC.PRIORITY_EXPIRATION_PERIOD
 const finalizationPeriod = 0
 
-export const zksynclite: ScalingProject = {
+export const zksync: ScalingProject = {
   type: 'layer2',
   id: ProjectId('zksync'),
   capability: 'appchain',
