@@ -30,7 +30,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     this.indexerId = createIndexerId(options.name, options.tags?.tag)
     assertUniqueIndexerId(this.indexerId)
     for (const configuration of options.configurations) {
-      assertUniqueConfigId(configuration.id)
+      assertUniqueConfigId(configuration.id, this.indexerId)
     }
   }
 
