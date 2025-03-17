@@ -3,7 +3,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
 export const polygonmiden: ScalingProject = upcomingL2({
-  id: 'polygon-miden',
+  id: 'polygonmiden',
   capability: 'universal',
   addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z
   display: {

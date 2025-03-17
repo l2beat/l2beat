@@ -7,4 +7,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   ink: 'https://explorer.inkonchain.com/address/',
   unichain: 'https://uniscan.xyz/address/',
   zksync2: 'https://era.zksync.network/',
+  everclear: 'https://scan.everclear.org/address/',
 }
